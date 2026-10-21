@@ -123,4 +123,15 @@ assert(mainJs.includes('FEATURE_REGISTRY'), 'app.js must consume window.FEATURE_
 assert(mainJs.includes('IntersectionObserver'), 'app.js must lazy-mount live preview iframes via IntersectionObserver');
 assert(mainJs.includes('localStorage'), 'app.js must support localStorage custom feature persistence');
 
+const vm = require('vm');
+const regCtx = { window: {} };
+vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'registry.js'), 'utf8'), regCtx);
+const loadedItems = Array.isArray(regCtx.window.FEATURE_REGISTRY)
+  ? regCtx.window.FEATURE_REGISTRY
+  : (regCtx.window.FEATURE_REGISTRY && regCtx.window.FEATURE_REGISTRY.items);
+assert(Array.isArray(loadedItems) && loadedItems.length === 26, 'window.FEATURE_REGISTRY must load all 26 items in browser context');
+for (const it of loadedItems) {
+  assert(it.name && it.title && it.slug, `Missing name/title/slug on registry item ${it.slug}`);
+}
+
 console.log('Task 6 main 21st.local web application verified.');

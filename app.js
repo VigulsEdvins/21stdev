@@ -2,9 +2,10 @@
   const STORAGE_KEY = '21st_local_custom_features_v1';
   const WORKSPACE_ROOT = '/home/edvins/features-for-web/web-for-options';
 
-  const baseRegistry = (window.FEATURE_REGISTRY && Array.isArray(window.FEATURE_REGISTRY.items))
-    ? window.FEATURE_REGISTRY.items
-    : [];
+  const rawReg = window.FEATURE_REGISTRY;
+  const baseRegistry = Array.isArray(rawReg)
+    ? rawReg
+    : (rawReg && Array.isArray(rawReg.items) ? rawReg.items : []);
 
   function loadCustomFeatures() {
     try {
@@ -79,14 +80,23 @@
     showToast(label || 'Copied to clipboard');
   }
 
+  function getItemName(item) {
+    return item.name || item.title || item.slug;
+  }
+
+  function getRelativeFolderPath(item) {
+    return item.relativePath || `features/${item.slug}`;
+  }
+
   function getAbsoluteFolderPath(item) {
     if (item.sourceFolder) return item.sourceFolder;
-    return `${WORKSPACE_ROOT}/${item.folderPath || ('features/' + item.slug)}`;
+    if (item.folderPath && item.folderPath.startsWith('/')) return item.folderPath;
+    return `${WORKSPACE_ROOT}/${getRelativeFolderPath(item)}`;
   }
 
   function getAgentReference(item) {
     const absPath = getAbsoluteFolderPath(item);
-    return `Take the "${item.name}" feature from ${absPath} (index.html, style.css, script.js) and integrate it.`;
+    return `Take the "${getItemName(item)}" feature from ${absPath} (index.html, style.css, script.js) and integrate it.`;
   }
 
   function downloadHtmlFile(item) {
@@ -122,7 +132,7 @@
       if (state.search.trim()) {
         const q = state.search.toLowerCase();
         const hay = [
-          item.name,
+          getItemName(item),
           item.slug,
           item.category,
           item.source,
@@ -179,7 +189,7 @@
       if (entry.isIntersecting) {
         if (!iframe) {
           iframe = document.createElement('iframe');
-          iframe.title = item.name;
+          iframe.title = getItemName(item);
           iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
           iframe.srcdoc = item.files.combined;
           box.appendChild(iframe);
@@ -221,7 +231,8 @@
 
       const info = document.createElement('div');
       info.className = 'card-info';
-      const folderDisplay = item.folderPath || `features/${item.slug}`;
+      const folderDisplay = getRelativeFolderPath(item);
+      const itemName = getItemName(item);
 
       let extraTemplateBtns = '';
       if (item.liveSiteUrl) {
@@ -234,7 +245,7 @@
       info.innerHTML = `
         <div>
           <div class="card-title-row">
-            <h2 class="card-title">${item.name}</h2>
+            <h2 class="card-title">${itemName}</h2>
             <code class="card-slug">${folderDisplay}</code>
           </div>
           <p class="card-desc">${item.description}</p>
@@ -255,7 +266,7 @@
         if (!btn) return;
         const action = btn.getAttribute('data-action');
         if (action === 'copy-code') {
-          copyText(item.files.combined, `Copied 1-File bundle for ${item.name}`);
+          copyText(item.files.combined, `Copied 1-File bundle for ${itemName}`);
         } else if (action === 'copy-path') {
           copyText(getAbsoluteFolderPath(item), `Copied path: ${getAbsoluteFolderPath(item)}`);
         } else if (action === 'inspect') {
@@ -286,7 +297,7 @@
       id: 'meta',
       label: 'meta.json',
       content: JSON.stringify({
-        name: item.name,
+        name: getItemName(item),
         slug: item.slug,
         category: item.category,
         source: item.source,
@@ -314,10 +325,10 @@
     state.inspActiveTab = 'combined';
 
     document.getElementById('inspSourceBadge').textContent = item.source;
-    document.getElementById('inspTitle').textContent = item.name;
+    document.getElementById('inspTitle').textContent = getItemName(item);
     document.getElementById('inspFolderPath').textContent = getAbsoluteFolderPath(item);
     document.getElementById('inspDescription').textContent = item.description;
-    document.getElementById('inspStandaloneLink').href = `${item.folderPath || ('features/' + item.slug)}/index.html`;
+    document.getElementById('inspStandaloneLink').href = `${getRelativeFolderPath(item)}/index.html`;
 
     const tplBtns = document.getElementById('inspTemplateBtns');
     tplBtns.innerHTML = '';
@@ -424,7 +435,7 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'tree-item' + (item.slug === state.activeSlug ? ' is-active' : '');
-        btn.innerHTML = `<span>${item.name}</span>`;
+        btn.innerHTML = `<span>${getItemName(item)}</span>`;
         btn.addEventListener('click', () => {
           state.activeSlug = item.slug;
           renderWorkbench();
@@ -437,10 +448,10 @@
     if (!activeItem) return;
 
     document.getElementById('wbActiveSource').textContent = activeItem.source;
-    document.getElementById('wbActiveName').textContent = activeItem.name;
+    document.getElementById('wbActiveName').textContent = getItemName(activeItem);
     document.getElementById('wbActivePath').textContent = getAbsoluteFolderPath(activeItem);
     document.getElementById('wbActiveDesc').textContent = activeItem.description;
-    document.getElementById('wbOpenStandaloneBtn').href = `${activeItem.folderPath || ('features/' + activeItem.slug)}/index.html`;
+    document.getElementById('wbOpenStandaloneBtn').href = `${getRelativeFolderPath(activeItem)}/index.html`;
 
     const tplLinks = document.getElementById('wbTemplateLinks');
     tplLinks.innerHTML = '';

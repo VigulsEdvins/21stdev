@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-21T07:01:26.114Z",
+  "generatedAt": "2026-10-21T08:31:40.244Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 26,
   "categories": [
@@ -435,7 +435,7 @@
     },
     {
       "slug": "parallax-5col-gallery",
-      "title": "parallax-5col-gallery",
+      "title": "5-Column Staggered Parallax Gallery",
       "category": "Scroll & Parallax",
       "source": "vivmgmt",
       "type": "component",
@@ -464,7 +464,7 @@
     },
     {
       "slug": "split-screen-entrance",
-      "title": "split-screen-entrance",
+      "title": "Split-Screen Curtain Entrance",
       "category": "Scroll & Parallax",
       "source": "vivmgmt",
       "type": "component",
@@ -492,7 +492,7 @@
     },
     {
       "slug": "fullscreen-parallax-footer",
-      "title": "fullscreen-parallax-footer",
+      "title": "Full-Screen Parallax Footer Reveal",
       "category": "Scroll & Parallax",
       "source": "vivmgmt",
       "type": "component",
@@ -520,7 +520,7 @@
     },
     {
       "slug": "news-3col-masonry",
-      "title": "news-3col-masonry",
+      "title": "3-Column Editorial Masonry Grid",
       "category": "Galleries & Grids",
       "source": "vivmgmt",
       "type": "component",
@@ -548,7 +548,7 @@
     },
     {
       "slug": "artist-portfolio-lightbox",
-      "title": "artist-portfolio-lightbox",
+      "title": "Artist Portfolio Modal Lightbox",
       "category": "Galleries & Grids",
       "source": "vivmgmt",
       "type": "component",
@@ -576,7 +576,7 @@
     },
     {
       "slug": "responsive-burger-menu",
-      "title": "responsive-burger-menu",
+      "title": "Morphing Burger & Staggered Overlay Menu",
       "category": "Navigation & UI",
       "source": "vivmgmt",
       "type": "component",
@@ -604,7 +604,7 @@
     },
     {
       "slug": "oklch-ambient-glow-hero",
-      "title": "oklch-ambient-glow-hero",
+      "title": "OKLCH Ambient Aurora Hero",
       "category": "Audio & Shaders",
       "source": "21st-crafted",
       "type": "component",
@@ -632,7 +632,7 @@
     },
     {
       "slug": "spotlight-bento-grid",
-      "title": "spotlight-bento-grid",
+      "title": "Cursor-Tracked Spotlight Bento Grid",
       "category": "Galleries & Grids",
       "source": "21st-crafted",
       "type": "component",
@@ -660,7 +660,7 @@
     },
     {
       "slug": "liquid-metal-shader-card",
-      "title": "liquid-metal-shader-card",
+      "title": "Iridescent Liquid-Metal Shader Card",
       "category": "Audio & Shaders",
       "source": "21st-crafted",
       "type": "component",
@@ -688,7 +688,7 @@
     },
     {
       "slug": "kinetic-typography-strapline",
-      "title": "kinetic-typography-strapline",
+      "title": "Kinetic Editorial Strapline Scrub",
       "category": "Scroll & Parallax",
       "source": "21st-crafted",
       "type": "component",
@@ -716,7 +716,7 @@
     },
     {
       "slug": "template-betteroff",
-      "title": "template-betteroff",
+      "title": "BetterOff Studio — Lookback Annual & CMS Template",
       "category": "Full Templates",
       "source": "betteroff",
       "type": "template",
@@ -739,7 +739,7 @@
       "previewUrl": "features/template-betteroff/index.html",
       "liveSiteUrl": "../betteroff/index.html",
       "adminUrl": "../betteroff/admin.html",
-      "sourceRepoPath": null,
+      "sourceRepoPath": "/home/edvins/features-for-web/betteroff",
       "availableFiles": [
         "combined",
         "html",
@@ -749,7 +749,7 @@
     },
     {
       "slug": "template-carousel-play",
-      "title": "template-carousel-play",
+      "title": "PLAY Sports Agency — 3D Cylinder & CMS Template",
       "category": "Full Templates",
       "source": "carousel-gallery-play",
       "type": "template",
@@ -772,7 +772,7 @@
       "previewUrl": "features/template-carousel-play/index.html",
       "liveSiteUrl": "../carousel-gallery-play/index.html",
       "adminUrl": "../carousel-gallery-play/admin.html",
-      "sourceRepoPath": null,
+      "sourceRepoPath": "/home/edvins/features-for-web/carousel-gallery-play",
       "availableFiles": [
         "combined",
         "html",
@@ -782,7 +782,7 @@
     },
     {
       "slug": "template-vivmgmt",
-      "title": "template-vivmgmt",
+      "title": "Vivienne Mgmt — 5-Column Editorial & CMS Template",
       "category": "Full Templates",
       "source": "vivmgmt",
       "type": "template",
@@ -801,7 +801,7 @@
       "previewUrl": "features/template-vivmgmt/index.html",
       "liveSiteUrl": "../vivmgmt/index.html",
       "adminUrl": "../vivmgmt/admin.html",
-      "sourceRepoPath": null,
+      "sourceRepoPath": "/home/edvins/features-for-web/vivmgmt",
       "availableFiles": [
         "combined",
         "html",

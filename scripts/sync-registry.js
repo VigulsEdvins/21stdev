@@ -75,14 +75,17 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
 
     const combined = combineFeatureHtml(html, css, js);
 
+    const displayName = meta.name || meta.title || slug;
     const item = {
       slug: meta.slug || slug,
-      title: meta.title || slug,
+      name: displayName,
+      title: displayName,
       category: meta.category || 'Components',
       source: meta.source || 'custom',
       type: meta.type || 'component', // 'component' | 'template'
       description: meta.description || '',
       tags: Array.isArray(meta.tags) ? meta.tags : [],
+      tech: Array.isArray(meta.tech) ? meta.tech : (Array.isArray(meta.dependencies) ? meta.dependencies : ['Vanilla HTML/CSS/JS']),
       dependencies: Array.isArray(meta.dependencies) ? meta.dependencies : ['Vanilla HTML/CSS/JS'],
       order: typeof meta.order === 'number' ? meta.order : 999,
       folderPath: `/home/edvins/features-for-web/web-for-options/features/${slug}`,
@@ -90,7 +93,8 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       previewUrl: meta.previewUrl || `features/${slug}/index.html`,
       liveSiteUrl: meta.liveSiteUrl || null,
       adminUrl: meta.adminUrl || null,
-      sourceRepoPath: meta.sourceRepoPath || null,
+      sourceRepoPath: meta.sourceRepoPath || meta.sourceFolder || null,
+      sourceFolder: meta.sourceFolder || meta.sourceRepoPath || null,
       files: {
         combined,
         html,
