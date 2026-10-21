@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polaroid Sagging String & Breeze Physics Carousel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="pl-root" id="pl-root" tabindex="0" role="region" aria-label="Polaroid line carousel">
+    <svg class="pl-string" aria-hidden="true">
+      <path id="pl-path" fill="none" stroke="#9b8f80" stroke-width="1.6" stroke-linecap="round"></path>
+    </svg>
+    <div id="pl-cards"></div>
+    <div class="pl-bar">
+      <div class="pl-cap">
+        <span class="pl-title" id="pl-title">First Light</span>
+        <span class="pl-sub" id="pl-sub">Haze lifting off the eastern ridges.</span>
+      </div>
+      <span class="pl-count"><b id="pl-curr">01</b> / <span id="pl-total">06</span></span>
+      <button type="button" class="pl-btn" id="pl-prev" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+      </button>
+      <button type="button" class="pl-btn" id="pl-next" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="m6 3 5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+      </button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

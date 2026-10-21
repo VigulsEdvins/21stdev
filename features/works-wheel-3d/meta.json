@@ -1,0 +1,11 @@
+{
+  "slug": "works-wheel-3d",
+  "title": "Works Wheel 3D Ring-to-Drum Index",
+  "category": "3D & Carousels",
+  "source": "photo-caroulsel",
+  "type": "component",
+  "description": "At rest, work cards sit tangent to a circular ring around a central title. Scrolling or dragging unfolds the ring into a 3D vertical perspective drum curved along a horizontal bow arc, with right-hand index navigation.",
+  "tags": ["3d", "carousel", "wheel", "drum", "perspective", "portfolio", "physics", "react", "vanilla"],
+  "dependencies": ["Vanilla HTML/CSS/JS", "React (.tsx included)"],
+  "order": 1
+}
