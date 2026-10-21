@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>21st.local — Personal Component, Feature &amp; Design Vault</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient-aurora" aria-hidden="true">
+    <div class="aurora-blob blob-a"></div>
+    <div class="aurora-blob blob-b"></div>
+    <div class="aurora-grid"></div>
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <header class="vault-header">
+    <div class="header-left">
+      <a href="#top" class="brand-logo" id="brandReset">
+        <span class="brand-cube">21</span>
+        <span class="brand-text">21st<span class="brand-dot">.local</span></span>
+        <span class="brand-tag" id="totalCountBadge">26 BLOCKS</span>
+      </a>
+
+      <nav class="collection-tabs" id="collectionTabs" aria-label="Collection Type">
+        <button class="col-tab is-active" data-type="all" type="button">
+          All Vault <span class="tab-count" id="countAll">26</span>
+        </button>
+        <button class="col-tab" data-type="component" type="button">
+          Components &amp; Physics <span class="tab-count" id="countComponents">23</span>
+        </button>
+        <button class="col-tab" data-type="template" type="button">
+          Full Templates &amp; CMS <span class="tab-count" id="countTemplates">3</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="header-center">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search 3D carousels, shaders, cursors, templates, tags..."
+          autocomplete="off"
+        />
+        <kbd class="search-kbd">/</kbd>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="mode-switcher" role="group" aria-label="Workspace Mode">
+        <button class="mode-btn is-active" id="modeCatalogBtn" data-mode="catalog" type="button" title="21st.dev Catalog Grid Mode">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+          <span>Catalog Grid</span>
+        </button>
+        <button class="mode-btn" id="modeWorkbenchBtn" data-mode="workbench" type="button" title="IDE Split-Screen Workbench Mode">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+            <line x1="15" y1="3" x2="15" y2="21"></line>
+          </svg>
+          <span>IDE Workbench</span>
+        </button>
+      </div>
+
+      <button class="add-feature-btn" id="openAddModalBtn" type="button">
+        <span>+ Add Feature</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MODE A: 21st.dev Catalog Grid View -->
+  <main class="catalog-view" id="catalogView">
+    <section class="hero-banner">
+      <div class="hero-eyebrow">
+        <span class="status-dot"></span>
+        <span>LOCAL COMPONENT &amp; DESIGN REGISTRY &bull; ZERO DEPENDENCY LOCK-IN &bull; 100% WORKING CODE</span>
+      </div>
+      <h1 class="hero-headline">
+        Copy working features, <span class="hero-gradient">3D physics &amp; full templates</span> in one click.
+      </h1>
+      <p class="hero-subtitle">
+        Every block is pre-extracted from <code>photo-caroulsel</code>, <code>carousel-gallery-play</code>, <code>betteroff</code>, <code>vivmgmt</code>, and <code>21st.dev</code> into standalone files inside <code>features/&lt;slug&gt;/</code>. Copy the single-file bundle, inspect individual source files, or hand the folder path to your coding agent.
+      </p>
+
+      <!-- Source Filter Bar -->
+      <div class="filter-section">
+        <div class="filter-row" id="sourceFilterBar" aria-label="Filter by source project"></div>
+        <div class="filter-row category-row" id="categoryFilterBar" aria-label="Filter by category"></div>
+      </div>
+    </section>
+
+    <section class="catalog-toolbar">
+      <div class="results-summary" id="resultsSummary">Showing 26 features</div>
+      <div class="toolbar-actions">
+        <button class="subtle-btn" id="pauseAllPreviewsBtn" type="button">Pause Offscreen Previews: ON</button>
+        <button class="subtle-btn" id="resetFiltersBtn" type="button">Reset Filters</button>
+      </div>
+    </section>
+
+    <section class="catalog-grid" id="catalogGrid" aria-live="polite"></section>
+  </main>
+
+  <!-- MODE B: IDE Split-Screen Workbench View -->
+  <section class="workbench-view is-hidden" id="workbenchView" aria-label="IDE Split-Screen Workbench">
+    <!-- Left Sidebar: Explorer Tree -->
+    <aside class="wb-sidebar">
+      <div class="wb-pane-header">
+        <span>EXPLORER // FEATURES</span>
+        <span class="wb-count" id="wbTreeCount">26</span>
+      </div>
+      <div class="wb-tree" id="wbTree"></div>
+    </aside>
+
+    <!-- Center Stage: Live Interactive Preview -->
+    <section class="wb-stage">
+      <div class="wb-stage-toolbar">
+        <div class="wb-active-title">
+          <span class="wb-source-pill" id="wbActiveSource">source</span>
+          <strong id="wbActiveName">Select a feature</strong>
+          <code class="wb-slug-code" id="wbActivePath">features/slug</code>
+        </div>
+        <div class="wb-stage-controls">
+          <div class="viewport-group" id="wbViewportGroup">
+            <button class="vp-btn is-active" data-vp="100%" type="button">Desktop</button>
+            <button class="vp-btn" data-vp="768px" type="button">Tablet</button>
+            <button class="vp-btn" data-vp="375px" type="button">Mobile</button>
+          </div>
+          <button class="icon-btn" id="wbReloadBtn" type="button" title="Reload Live Sandbox">&#8635;</button>
+          <a class="icon-btn" id="wbOpenStandaloneBtn" href="#" target="_blank" rel="noopener" title="Open Standalone File">&nearr;</a>
+        </div>
+      </div>
+
+      <div class="wb-preview-canvas">
+        <div class="wb-iframe-wrap" id="wbIframeWrap">
+          <iframe id="wbPreviewFrame" title="Workbench Live Preview" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+        </div>
+      </div>
+
+      <div class="wb-stage-footer">
+        <p id="wbActiveDesc">Feature description</p>
+        <div class="wb-template-links" id="wbTemplateLinks"></div>
+      </div>
+    </section>
+
+    <!-- Right Pane: Multi-Tab Source Code & Copy Actions -->
+    <aside class="wb-code-pane">
+      <div class="wb-code-header">
+        <div class="code-tabs" id="wbCodeTabs"></div>
+        <div class="code-actions">
+          <button class="action-btn" id="wbCopyPathBtn" type="button" title="Copy absolute folder path">Copy Path</button>
+          <button class="action-btn primary" id="wbCopyCodeBtn" type="button">Copy Active Code</button>
+        </div>
+      </div>
+      <div class="wb-code-body">
+        <pre><code id="wbCodeDisplay"></code></pre>
+      </div>
+      <div class="wb-code-footer">
+        <button class="subtle-btn" id="wbDownloadHtmlBtn" type="button">Download Single-File .html</button>
+        <button class="subtle-btn" id="wbCopyAgentRefBtn" type="button">Copy Agent Folder Reference</button>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Slide-Over Code & Preview Inspector Modal -->
+  <div class="modal-backdrop is-hidden" id="inspectorModal" role="dialog" aria-modal="true" aria-labelledby="inspTitle">
+    <div class="inspector-drawer">
+      <header class="insp-header">
+        <div class="insp-title-group">
+          <span class="source-badge" id="inspSourceBadge">source</span>
+          <h2 id="inspTitle">Feature Title</h2>
+          <code class="insp-folder-code" id="inspFolderPath">features/slug</code>
+        </div>
+        <div class="insp-header-actions">
+          <button class="action-btn" id="inspCopyPathBtn" type="button">Copy Folder Path</button>
+          <button class="action-btn" id="inspCopyAgentBtn" type="button">Copy Agent Ref</button>
+          <button class="action-btn primary" id="inspCopyCombinedBtn" type="button">Copy 1-File Bundle</button>
+          <button class="close-modal-btn" id="closeInspectorBtn" type="button" aria-label="Close Inspector">&times;</button>
+        </div>
+      </header>
+
+      <div class="insp-body">
+        <!-- Left: Live Interactive Stage -->
+        <div class="insp-preview-col">
+          <div class="insp-preview-bar">
+            <div class="viewport-group" id="inspViewportGroup">
+              <button class="vp-btn is-active" data-vp="100%" type="button">100% Desktop</button>
+              <button class="vp-btn" data-vp="768px" type="button">768px Tablet</button>
+              <button class="vp-btn" data-vp="375px" type="button">375px Mobile</button>
+            </div>
+            <div class="insp-preview-links">
+              <span id="inspTemplateBtns"></span>
+              <button class="subtle-btn" id="inspReloadFrameBtn" type="button">&#8635; Reload</button>
+              <a class="subtle-btn" id="inspStandaloneLink" href="#" target="_blank" rel="noopener">Standalone &nearr;</a>
+            </div>
+          </div>
+          <div class="insp-stage-center">
+            <div class="insp-iframe-holder" id="inspIframeHolder">
+              <iframe id="inspPreviewFrame" title="Inspector Live Preview" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+            </div>
+          </div>
+          <div class="insp-meta-strip">
+            <p id="inspDescription"></p>
+            <div class="insp-tags" id="inspTags"></div>
+          </div>
+        </div>
+
+        <!-- Right: Source Files Viewer -->
+        <div class="insp-code-col">
+          <div class="insp-code-bar">
+            <div class="code-tabs" id="inspCodeTabs"></div>
+            <div class="code-bar-right">
+              <button class="subtle-btn" id="inspDownloadBtn" type="button">Download .html</button>
+              <button class="action-btn primary" id="inspCopyActiveTabBtn" type="button">Copy File</button>
+            </div>
+          </div>
+          <div class="insp-code-scroll">
+            <pre><code id="inspCodeContent"></code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- "+ Add Feature / Design" Studio Modal -->
+  <div class="modal-backdrop is-hidden" id="addFeatureModal" role="dialog" aria-modal="true" aria-labelledby="addModalTitle">
+    <div class="studio-modal">
+      <header class="studio-header">
+        <div>
+          <span class="studio-kicker">VAULT STUDIO // EXTEND REGISTRY</span>
+          <h2 id="addModalTitle">Add New Feature or Design Block</h2>
+        </div>
+        <button class="close-modal-btn" id="closeAddModalBtn" type="button" aria-label="Close Add Feature Modal">&times;</button>
+      </header>
+
+      <form id="addFeatureForm" class="studio-form">
+        <div class="form-grid-3">
+          <label class="form-field">
+            <span>Feature Name *</span>
+            <input type="text" id="newFeatureName" required placeholder="e.g. Magnetic Glass Dock" />
+          </label>
+          <label class="form-field">
+            <span>Folder Slug *</span>
+            <input type="text" id="newFeatureSlug" required placeholder="e.g. magnetic-glass-dock" />
+          </label>
+          <label class="form-field">
+            <span>Category *</span>
+            <select id="newFeatureCategory">
+              <option value="3D & WebGL">3D &amp; WebGL</option>
+              <option value="Carousels & Sliders">Carousels &amp; Sliders</option>
+              <option value="Cursor & Physics">Cursor &amp; Physics</option>
+              <option value="Scroll & Parallax">Scroll &amp; Parallax</option>
+              <option value="Galleries & Grids">Galleries &amp; Grids</option>
+              <option value="Navigation & UI">Navigation &amp; UI</option>
+              <option value="Audio & Shaders">Audio &amp; Shaders</option>
+              <option value="Full Templates">Full Templates</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-grid-3">
+          <label class="form-field">
+            <span>Source Project</span>
+            <input type="text" id="newFeatureSource" value="custom" placeholder="custom" />
+          </label>
+          <label class="form-field">
+            <span>Type</span>
+            <select id="newFeatureType">
+              <option value="component">Component / Physics</option>
+              <option value="template">Full Template</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>Tags (comma-separated)</span>
+            <input type="text" id="newFeatureTags" placeholder="magnetic, dock, glass, 21st" />
+          </label>
+        </div>
+
+        <label class="form-field">
+          <span>Description *</span>
+          <input type="text" id="newFeatureDesc" required placeholder="Concise summary of the interaction, physics, and layout." />
+        </label>
+
+        <div class="form-code-grid">
+          <label class="form-field">
+            <span>index.html *</span>
+            <textarea id="newFeatureHtml" rows="7" required>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;link rel="stylesheet" href="style.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="custom-stage"&gt;
+    &lt;button class="glow-btn" id="demoBtn"&gt;Interactive Custom Block&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+          </label>
+          <label class="form-field">
+            <span>style.css *</span>
+            <textarea id="newFeatureCss" rows="7" required>body, html { margin: 0; height: 100%; display: grid; place-items: center; background: #09090b; color: #fff; font-family: sans-serif; }
+.glow-btn { padding: 14px 24px; border-radius: 999px; border: 1px solid rgba(168,85,247,0.5); background: rgba(168,85,247,0.15); color: #fff; font-weight: 600; cursor: pointer; transition: transform 0.2s ease; }
+.glow-btn:hover { transform: scale(1.06); }</textarea>
+          </label>
+          <label class="form-field">
+            <span>script.js *</span>
+            <textarea id="newFeatureJs" rows="7" required>document.getElementById('demoBtn')?.addEventListener('click', (e) => {
+  e.target.textContent = 'Activated ' + new Date().toLocaleTimeString();
+});</textarea>
+          </label>
+        </div>
+
+        <div class="studio-agent-tip">
+          <strong>Agent Workflow:</strong> You can also tell your coding agent:
+          <code>"Add a new feature to /home/edvins/features-for-web/web-for-options/features/&lt;slug&gt; and run node scripts/sync-registry.js"</code>
+          (documented in <code>AGENT_GUIDE.md</code>).
+        </div>
+
+        <footer class="studio-footer">
+          <button class="subtle-btn" id="clearCustomFeaturesBtn" type="button">Reset LocalStorage Custom Blocks</button>
+          <div class="studio-submit-group">
+            <button class="action-btn" id="exportCustomBundleBtn" type="button">Download Folder JSON Bundle</button>
+            <button class="action-btn primary" type="submit">Save &amp; Mount Live Feature</button>
+          </div>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <script src="registry.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

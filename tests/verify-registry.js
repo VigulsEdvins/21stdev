@@ -107,5 +107,20 @@ for (const item of synced.items) {
 
 console.log('Task 5 all 26 features & templates verified.');
 
+// Test 6: Verify main 21st.local Web Application (index.html, styles.css, app.js)
+for (const appFile of ['index.html', 'styles.css', 'app.js']) {
+  const p = path.join(ROOT, appFile);
+  assert(fs.existsSync(p), `Missing main application file: ${appFile}`);
+}
 
+const mainHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+const mainJs = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
+assert(mainHtml.includes('registry.js'), 'index.html must load registry.js');
+assert(mainHtml.includes('catalogView') && mainHtml.includes('workbenchView'), 'index.html must include both Catalog Grid and IDE Workbench views');
+assert(mainHtml.includes('inspectorModal') && mainHtml.includes('addFeatureModal'), 'index.html must include Inspector Modal and Add Feature Studio Modal');
+assert(!/sign in|log in|pricing|pro tier/i.test(mainHtml), 'index.html must have zero login/auth/pricing bloat');
+assert(mainJs.includes('FEATURE_REGISTRY'), 'app.js must consume window.FEATURE_REGISTRY');
+assert(mainJs.includes('IntersectionObserver'), 'app.js must lazy-mount live preview iframes via IntersectionObserver');
+assert(mainJs.includes('localStorage'), 'app.js must support localStorage custom feature persistence');
 
+console.log('Task 6 main 21st.local web application verified.');
