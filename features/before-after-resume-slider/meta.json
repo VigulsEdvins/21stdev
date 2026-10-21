@@ -1,0 +1,12 @@
+{
+  "name": "Before / After Resume Transformation Slider",
+  "slug": "before-after-resume-slider",
+  "category": "Interactions & Physics",
+  "source": "cvmaker",
+  "type": "component",
+  "description": "Interactive split comparison slider with draggable divider and touch support, comparing an unformatted plain text CV with a sleek modern ATS layout.",
+  "tags": ["slider", "before-after", "comparison", "resume", "cvmaker", "interaction"],
+  "tech": ["Vanilla JS", "Clip-Path", "Pointer Events"],
+  "dependencies": ["vanilla-js"],
+  "order": 36
+}

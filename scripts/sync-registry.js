@@ -78,16 +78,21 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
     const sourceRepoPath = meta.sourceRepoPath || meta.sourceFolder || null;
     const extraTemplateFiles = {};
     if ((meta.type === 'template') && sourceRepoPath && fs.existsSync(sourceRepoPath)) {
-      const tryRead = (fname) => {
-        const p = path.join(sourceRepoPath, fname);
-        return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
+      const tryRead = (...fnames) => {
+        for (const fname of fnames) {
+          const p = path.join(sourceRepoPath, fname);
+          if (fs.existsSync(p) && fs.statSync(p).isFile()) return fs.readFileSync(p, 'utf8');
+        }
+        return null;
       };
       const siteHtml = tryRead('index.html');
-      const siteCss = tryRead('styles.css');
-      const siteJs = tryRead('app.js');
-      const siteDataJs = tryRead('site-data.js');
-      const adminHtml = tryRead('admin.html');
+      const siteWorkHtml = tryRead('work.html');
+      const siteCss = tryRead('styles.css', 'src/style.css', 'src/index.css');
+      const siteJs = tryRead('app.js', 'src/main.js', 'src/App.jsx');
+      const siteDataJs = tryRead('site-data.js', 'src/default_grid.json', 'src/data/defaultData.js');
+      const adminHtml = tryRead('admin.html', 'admin8225.html', 'dist/admin8225.html');
       if (siteHtml) extraTemplateFiles.siteHtml = siteHtml;
+      if (siteWorkHtml) extraTemplateFiles.siteWorkHtml = siteWorkHtml;
       if (siteCss) extraTemplateFiles.siteCss = siteCss;
       if (siteJs) extraTemplateFiles.siteJs = siteJs;
       if (siteDataJs) extraTemplateFiles.siteDataJs = siteDataJs;

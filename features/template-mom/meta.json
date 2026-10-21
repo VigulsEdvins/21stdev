@@ -1,0 +1,15 @@
+{
+  "name": "Margarita Vigule — Editorial Photography & Grid CMS Template",
+  "slug": "template-mom",
+  "category": "Full Templates",
+  "source": "mom",
+  "type": "template",
+  "description": "High-fashion & sports photography portfolio featuring an interactive 3x3 multi-image hover grid, Lenis smooth scrolling, multilingual support (LV/EN/RU), filterable work masonry, and CMS visual grid manager.",
+  "tags": ["full-template", "cms", "photography", "editorial", "i18n", "lenis", "mom", "admin"],
+  "tech": ["Lenis Scroll", "Multilingual i18n", "Visual Grid CMS", "CSS Grid 3x3"],
+  "dependencies": ["lenis", "vanilla-js"],
+  "liveSiteUrl": "/mom/index.html",
+  "adminUrl": "/mom/admin8225.html",
+  "sourceFolder": "/home/edvins/features-for-web/mom",
+  "order": 27
+}

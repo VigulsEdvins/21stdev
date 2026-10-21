@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Info Slide-Over Drawer</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="stage-wrapper">
+    <div class="demo-trigger-card">
+      <div class="badge">STUDIO DRAWER COMPONENT</div>
+      <h2 class="demo-title">Margarita Vigule Studio</h2>
+      <p class="demo-desc">Interactive slide-over info panel with multi-pane navigation, photographer portrait, contact links, and gear inventory.</p>
+      <div class="trigger-group">
+        <button type="button" class="trigger-btn primary" data-open-drawer="about">Open "About" Pane</button>
+        <button type="button" class="trigger-btn" data-open-drawer="gear">View "Gear" Pane</button>
+        <button type="button" class="trigger-btn" data-open-drawer="contact">Contact &amp; Booking</button>
+      </div>
+    </div>
+
+    <!-- Slide-Over Drawer -->
+    <aside class="studio-drawer is-closed" id="studioDrawer" role="dialog" aria-modal="true" aria-label="Studio Information">
+      <div class="drawer-header">
+        <nav class="drawer-nav" id="drawerNav">
+          <button type="button" class="nav-tab active" data-pane="about">About</button>
+          <button type="button" class="nav-tab" data-pane="gear">Gear &amp; Studio</button>
+          <button type="button" class="nav-tab" data-pane="contact">Contact</button>
+          <button type="button" class="nav-tab" data-pane="terms">Terms</button>
+        </nav>
+        <button type="button" class="close-btn" id="drawerClose" aria-label="Close drawer">&times;</button>
+      </div>
+
+      <div class="drawer-body">
+        <!-- Pane 1: About -->
+        <div class="pane active" id="pane-about">
+          <div class="about-hero">
+            <img src="/mom/public/images/margarita-vigule.png" alt="Margarita Vigule" class="about-portrait">
+            <div class="about-lead">
+              <span class="sub-tag">PHOTOGRAPHER &bull; DAUGAVPILS, LV</span>
+              <h3 class="lead-text">"Capturing genuine human action and raw emotional atmosphere."</h3>
+            </div>
+          </div>
+          <p class="bio-paragraph">
+            Margarita Vigule is an editorial and sports photographer working between Daugavpils and Riga, Latvia. Known for directional lighting, high-contrast monochrome studies, and cinematic sideline reportage.
+          </p>
+        </div>
+
+        <!-- Pane 2: Gear -->
+        <div class="pane" id="pane-gear">
+          <h3 class="pane-title">Equipment &amp; Optics</h3>
+          <p class="pane-desc">Field-tested equipment engineered for high-speed sports action and controlled editorial lighting:</p>
+          <div class="gear-list">
+            <div class="gear-item">
+              <span class="gear-name">Sony A1 &bull; 50.1MP Flagship</span>
+              <span class="gear-desc">30fps blackout-free burst for high-speed athletics</span>
+            </div>
+            <div class="gear-item">
+              <span class="gear-name">Sony FE 400mm f/2.8 GM OSS</span>
+              <span class="gear-desc">Prime stadium reach and background compression</span>
+            </div>
+            <div class="gear-item">
+              <span class="gear-name">Sony FE 50mm f/1.2 GM</span>
+              <span class="gear-desc">Extreme low-light portraiture and razor sharpness</span>
+            </div>
+            <div class="gear-item">
+              <span class="gear-name">Profoto B10X Plus Battery Monolights</span>
+              <span class="gear-desc">Location studio strobe with high-speed sync</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pane 3: Contact -->
+        <div class="pane" id="pane-contact">
+          <h3 class="pane-title">Booking &amp; Inquiries</h3>
+          <p class="pane-desc">Available for commercial campaigns, sports tournament coverage, and editorial monographs across the Baltics and Europe.</p>
+          <div class="contact-card">
+            <div class="contact-row">
+              <span class="contact-label">DIRECT EMAIL</span>
+              <a href="mailto:margaritavigule@inbox.lv" class="contact-value">margaritavigule@inbox.lv &nearr;</a>
+            </div>
+            <div class="contact-row">
+              <span class="contact-label">INSTAGRAM</span>
+              <a href="https://www.instagram.com/vigule_photographer/" target="_blank" rel="noopener" class="contact-value">@vigule_photographer &nearr;</a>
+            </div>
+            <div class="contact-row">
+              <span class="contact-label">PRIMARY LOCATION</span>
+              <span class="contact-value text-muted">Daugavpils, Latgale &bull; Riga &bull; Europe</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pane 4: Terms -->
+        <div class="pane" id="pane-terms">
+          <h3 class="pane-title">Copyright &amp; Usage Rights</h3>
+          <p class="terms-text">
+            &copy; 2026 Margarita Vigule. All rights reserved. Every photograph and video element featured across this domain is the protected intellectual property of the author. Commercial usage, redistribution, or AI training without written consent is strictly prohibited.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Backdrop -->
+    <div class="drawer-backdrop is-hidden" id="drawerBackdrop" aria-hidden="true"></div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

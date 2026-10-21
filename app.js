@@ -342,9 +342,10 @@
     const tabs = [];
     if (item.type === 'template' && item.files && item.files.siteHtml) {
       tabs.push({ id: 'siteHtml', label: 'Full Site index.html', content: item.files.siteHtml });
+      if (item.files.siteWorkHtml) tabs.push({ id: 'siteWorkHtml', label: 'Work work.html', content: item.files.siteWorkHtml });
       if (item.files.siteCss) tabs.push({ id: 'siteCss', label: 'Full Site styles.css', content: item.files.siteCss });
-      if (item.files.siteJs) tabs.push({ id: 'siteJs', label: 'Full Site app.js', content: item.files.siteJs });
-      if (item.files.siteDataJs) tabs.push({ id: 'siteDataJs', label: 'CMS site-data.js', content: item.files.siteDataJs });
+      if (item.files.siteJs) tabs.push({ id: 'siteJs', label: 'Full Site app.js / main.js', content: item.files.siteJs });
+      if (item.files.siteDataJs) tabs.push({ id: 'siteDataJs', label: 'CMS / Config Data', content: item.files.siteDataJs });
       if (item.files.adminHtml) tabs.push({ id: 'adminHtml', label: 'CMS admin.html', content: item.files.adminHtml });
       tabs.push({ id: 'combined', label: 'Card Showcase HTML', content: item.files.combined });
     } else {

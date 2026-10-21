@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Before / After Resume Transformation Slider</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="slider-stage">
+    <div class="stage-header">
+      <span class="badge">INTERACTIVE COMPARISON</span>
+      <h2 class="title">Resume Transformation Engine</h2>
+      <p class="subtitle">Drag the divider to compare raw unformatted text with recruiter-ready ATS architecture.</p>
+    </div>
+
+    <!-- Dual Slider Container -->
+    <div class="slider-container" id="sliderContainer">
+      <!-- BEFORE: Raw Plain Text (Underneath) -->
+      <div class="side before-side">
+        <span class="side-pill before-pill">BEFORE &bull; UNSTRUCTURED</span>
+        <div class="raw-sheet">
+          <pre class="raw-text">
+EDVINS VIGULS
+Developer - Riga, Latvia - edvins@example.com
+
+SUMMARY:
+I am a developer who has worked on web apps for several years.
+Responsible for coding frontends and doing backend tasks too.
+
+EXPERIENCE:
+Software Company (2022-2025)
+- worked on the website redesign
+- helped make things faster
+- helped with the database
+- fixed bugs when reported
+
+SKILLS:
+javascript, react, css, html, node, git, databases
+          </pre>
+        </div>
+      </div>
+
+      <!-- AFTER: Polished ATS Layout (Clipped on top) -->
+      <div class="side after-side" id="afterSide">
+        <span class="side-pill after-pill">AFTER &bull; ATS ARCHITECT</span>
+        <div class="polished-sheet">
+          <div class="polished-sidebar">
+            <div class="pol-avatar">EV</div>
+            <h3 class="pol-name">Edvīns Vīguls</h3>
+            <span class="pol-role">Lead Frontend Architect</span>
+            <div class="pol-skills">
+              <span class="pol-chip">TypeScript</span>
+              <span class="pol-chip">React</span>
+              <span class="pol-chip">Node.js</span>
+              <span class="pol-chip">WebGL</span>
+            </div>
+          </div>
+          <div class="polished-main">
+            <h4 class="pol-heading">Executive Summary</h4>
+            <p class="pol-summary">High-impact engineer architecting 60fps visual applications and distributed services.</p>
+            <h4 class="pol-heading mt">Work Experience</h4>
+            <div class="pol-exp">
+              <div class="pol-exp-head">
+                <strong>NextGen Digital Labs</strong>
+                <span class="pol-date">2022 &ndash; Present</span>
+              </div>
+              <ul class="pol-list">
+                <li><strong>Spearheaded</strong> portal overhaul, reducing load times by 42% for 120k DAU.</li>
+                <li><strong>Architected</strong> modular component vault adopted across 18 pods.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Draggable Divider Handle -->
+      <div class="slider-handle" id="sliderHandle">
+        <div class="handle-line"></div>
+        <div class="handle-button">
+          <span class="arrow">&lsaquo;&rsaquo;</span>
+        </div>
+        <div class="handle-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

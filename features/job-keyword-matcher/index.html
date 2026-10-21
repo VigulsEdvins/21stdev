@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Description Keyword Matcher</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="matcher-card">
+    <div class="matcher-header">
+      <div>
+        <span class="badge">ATS OPTIMIZATION ENGINE</span>
+        <h2 class="title">Job Keyword Gap Analyzer</h2>
+      </div>
+      <!-- Preset selector -->
+      <div class="presets">
+        <span class="preset-label">Presets:</span>
+        <button type="button" class="preset-btn active" data-preset="frontend">Senior Frontend</button>
+        <button type="button" class="preset-btn" data-preset="devops">Cloud &amp; DevOps</button>
+      </div>
+    </div>
+
+    <!-- Match Score Gauge -->
+    <div class="score-banner">
+      <div class="score-circle">
+        <span class="score-number" id="scoreVal">72%</span>
+        <span class="score-sub">MATCH</span>
+      </div>
+      <div class="score-info">
+        <h3 class="score-title" id="scoreVerdict">Strong ATS Candidate Match</h3>
+        <p class="score-desc" id="scoreDesc">Your resume contains 8 out of 11 critical competencies mentioned in this job description. Add the missing tags below to reach 100%.</p>
+      </div>
+    </div>
+
+    <!-- Job Description Input -->
+    <div class="input-block">
+      <label for="jobInput" class="label-row">
+        <span>Target Job Description (LinkedIn / Indeed)</span>
+        <button type="button" class="clear-btn" id="clearBtn">Clear</button>
+      </label>
+      <textarea id="jobInput" class="job-textarea" rows="4" placeholder="Paste full job posting requirements here..."></textarea>
+    </div>
+
+    <!-- Keyword Results Breakdown -->
+    <div class="breakdown-grid">
+      <!-- Matched Tags (Green) -->
+      <div class="tag-column">
+        <div class="col-head">
+          <span class="dot green"></span>
+          <span class="col-title">Matched Competencies (<span id="matchedCount">0</span>)</span>
+        </div>
+        <div class="chip-container" id="matchedChips"></div>
+      </div>
+
+      <!-- Missing Tags (Amber / Red) with 1-click add -->
+      <div class="tag-column">
+        <div class="col-head">
+          <span class="dot red"></span>
+          <span class="col-title">Missing From Resume &mdash; <em>Click to Add</em> (<span id="missingCount">0</span>)</span>
+        </div>
+        <div class="chip-container" id="missingChips"></div>
+      </div>
+    </div>
+
+    <!-- Candidate Current Resume Skills -->
+    <div class="current-skills-bar">
+      <span class="current-label">Your Active Skills:</span>
+      <div class="active-skills-list" id="activeSkillsList"></div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

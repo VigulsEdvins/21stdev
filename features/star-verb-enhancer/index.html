@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STAR Accomplishment Builder &amp; Linter</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="star-card">
+    <div class="star-header">
+      <div>
+        <span class="badge">RESUME WRITING ASSISTANT</span>
+        <h2 class="title">STAR Accomplishment Builder &amp; Verb Linter</h2>
+      </div>
+      <span class="method-tag">Situation &bull; Task &bull; Action &bull; Result</span>
+    </div>
+
+    <!-- Live Bullet Input -->
+    <div class="input-section">
+      <label for="bulletInput" class="label-bar">
+        <span>Draft Experience Bullet Point</span>
+        <span class="linter-status" id="linterStatus">2 Weak Verbs Detected</span>
+      </label>
+      <textarea id="bulletInput" class="bullet-textarea" rows="3">Responsible for managing frontend codebase and helped with speeding up database queries for our clients.</textarea>
+    </div>
+
+    <!-- Linter Suggestions Box -->
+    <div class="suggestions-box" id="suggestionsBox">
+      <div class="box-head">
+        <span class="warn-dot"></span>
+        <span class="box-title">Passive Phrases Detected &mdash; 1-Click Power Replacements:</span>
+      </div>
+      <div class="replacements-list" id="replacementsList"></div>
+    </div>
+
+    <!-- Metric Injectors -->
+    <div class="metrics-bar">
+      <span class="metrics-label">Quick Metric Injectors:</span>
+      <div class="metric-chips">
+        <button type="button" class="metric-btn" data-inject=" by 42%">+ by 42%</button>
+        <button type="button" class="metric-btn" data-inject=" saving $35k annually">+ saving $35k</button>
+        <button type="button" class="metric-btn" data-inject=" across 120k daily active users">+ across 120k DAU</button>
+        <button type="button" class="metric-btn" data-inject=" cutting deployment from 4 days to 30 mins">+ 4d &rarr; 30m release</button>
+      </div>
+    </div>
+
+    <!-- Final High-Impact Output Preview -->
+    <div class="preview-box">
+      <span class="preview-label">Final Executive Resume Bullet Preview:</span>
+      <div class="rendered-bullet" id="renderedBullet"></div>
+      <button type="button" class="copy-btn" id="copyBulletBtn">Copy Bullet</button>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

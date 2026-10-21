@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editorial 3x3 Interactive Hover Grid</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="hover-grid-wrapper">
+    <!-- Floating Center Headline Overlay -->
+    <div class="center-headline-zone" id="centerHeadlineZone">
+      <h1 class="center-title" id="centerTitle">Margarita Vigule</h1>
+      <span class="hover-badge" id="hoverBadge">PHOTOGRAPHY ARCHIVE &bull; 2026</span>
+    </div>
+
+    <!-- Scattered Multi-Image Stage (triggered by active cell hover) -->
+    <div class="hover-stage-container" id="hoverStage" aria-hidden="true"></div>
+
+    <!-- 3x3 Grid Layout -->
+    <div class="grid-3x3" id="grid3x3">
+      <!-- Row 1 -->
+      <div class="grid-cell" data-key="sports" data-title="Patrick Mahomes" data-tag="SPORTS ACTION" data-url="/mom/work.html?tag=sports" data-images="/mom/public/images/patrick-mahomes-thumb.png,/mom/public/images/patrick-mahomes-mesh-1.png,/mom/public/images/patrick-mahomes-mesh-2.png">
+        <span class="cell-idx">01</span>
+        <span class="cell-label">Sports</span>
+      </div>
+      <div class="grid-cell" data-key="craft" data-title="La Marzocco Craft" data-tag="COMMERCIAL ARCHIVE" data-url="/mom/work.html?tag=craft" data-images="/mom/public/images/la-marzocco-thumb.png,/mom/public/images/la-marzocco-mesh-1.png,/mom/public/images/la-marzocco-mesh-2.png">
+        <span class="cell-idx">02</span>
+        <span class="cell-label">Craft</span>
+      </div>
+      <div class="grid-cell" data-key="aero" data-title="Air Space Intelligence" data-tag="AEROSPACE MONOGRAPH" data-url="/mom/work.html?tag=aero" data-images="/mom/public/images/air-space-intelligence-thumb.png,/mom/public/images/air-space-intelligence-mesh-1.png,/mom/public/images/air-space-intelligence-mesh-2.png">
+        <span class="cell-idx">03</span>
+        <span class="cell-label">Aerospace</span>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="grid-cell" data-key="editorial" data-title="Applause Monolith" data-tag="EDITORIAL SERIES" data-url="/mom/work.html?tag=editorial" data-images="/mom/public/images/applause-thumb.png,/mom/public/images/applause-mesh-1.png,/mom/public/images/applause-mesh-2.png">
+        <span class="cell-idx">04</span>
+        <span class="cell-label">Editorial</span>
+      </div>
+      <div class="grid-cell center-neutral" id="centerCell">
+        <div class="pulse-ring"></div>
+      </div>
+      <div class="grid-cell" data-key="street" data-title="Bad Boys Cinema" data-tag="CINEMATIC STREET" data-url="/mom/work.html?tag=street" data-images="/mom/public/images/bad-boys-thumb.png,/mom/public/images/bad-boys-mesh-1.png,/mom/public/images/bad-boys-mesh-2.png">
+        <span class="cell-idx">06</span>
+        <span class="cell-label">Street</span>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="grid-cell" data-key="motion" data-title="0G Spatial Motion" data-tag="GRAVITY EXPERIMENTAL" data-url="/mom/work.html?tag=motion" data-images="/mom/public/images/0g-thumb.png,/mom/public/images/0g-mesh-1.png,/mom/public/images/0g-mesh-2.png">
+        <span class="cell-idx">07</span>
+        <span class="cell-label">Motion</span>
+      </div>
+      <div class="grid-cell" data-key="portrait" data-title="Margarita Studio" data-tag="PORTRAIT MONOGRAPH" data-url="/mom/work.html?tag=portrait" data-images="/mom/public/images/margarita-vigule.png,/mom/public/images/iyo-thumb.png,/mom/public/images/iyo-mesh-1.png">
+        <span class="cell-idx">08</span>
+        <span class="cell-label">Portraits</span>
+      </div>
+      <div class="grid-cell" data-key="culture" data-title="Pelé Heritage" data-tag="CULTURAL LEGACY" data-url="/mom/work.html?tag=culture" data-images="/mom/public/images/pele-foundation-thumb.png,/mom/public/images/pele-foundation-mesh-1.png,/mom/public/images/pele-foundation-mesh-2.png">
+        <span class="cell-idx">09</span>
+        <span class="cell-label">Heritage</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

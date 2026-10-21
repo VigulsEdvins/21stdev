@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-21T08:54:31.476Z",
+  "generatedAt": "2026-10-21T09:11:49.418Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 26,
+  "totalFeatures": 36,
   "categories": [
     "3D & Carousels",
     "Cursors & Physics",
@@ -9,14 +9,22 @@
     "Navigation & UI",
     "Scroll & Parallax",
     "Audio & Shaders",
-    "Full Templates"
+    "Full Templates",
+    "Galleries & Portfolios",
+    "Navigation & Headers",
+    "Drawers & Modals",
+    "Layouts & Grids",
+    "Forms & Inputs",
+    "Interactions & Physics"
   ],
   "sources": [
     "photo-caroulsel",
     "carousel-gallery-play",
     "betteroff",
     "vivmgmt",
-    "21st-crafted"
+    "21st-crafted",
+    "mom",
+    "cvmaker"
   ],
   "items": [
     {
@@ -822,6 +830,341 @@
         "siteJs",
         "siteDataJs",
         "adminHtml"
+      ]
+    },
+    {
+      "slug": "template-mom",
+      "title": "Margarita Vigule — Editorial Photography & Grid CMS Template",
+      "category": "Full Templates",
+      "source": "mom",
+      "type": "template",
+      "description": "High-fashion & sports photography portfolio featuring an interactive 3x3 multi-image hover grid, Lenis smooth scrolling, multilingual support (LV/EN/RU), filterable work masonry, and CMS visual grid manager.",
+      "tags": [
+        "full-template",
+        "cms",
+        "photography",
+        "editorial",
+        "i18n",
+        "lenis",
+        "mom",
+        "admin"
+      ],
+      "dependencies": [
+        "lenis",
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-mom",
+      "relativePath": "features/template-mom",
+      "previewUrl": "features/template-mom/index.html",
+      "liveSiteUrl": "/mom/index.html",
+      "adminUrl": "/mom/admin8225.html",
+      "sourceRepoPath": "/home/edvins/features-for-web/mom",
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "siteHtml",
+        "siteWorkHtml",
+        "siteCss",
+        "siteJs",
+        "siteDataJs",
+        "adminHtml"
+      ]
+    },
+    {
+      "slug": "template-cvmaker",
+      "title": "CV Craft Pro — Intelligent Resume Builder & Career Suite Template",
+      "category": "Full Templates",
+      "source": "cvmaker",
+      "type": "template",
+      "description": "Full-stack client-side resume architect built with React & Vite. Features 8 professional templates, real-time A4 document preview, job description ATS keyword matcher, STAR accomplishment enhancer, and matching cover letter suite.",
+      "tags": [
+        "full-template",
+        "resume-builder",
+        "react",
+        "ats-matcher",
+        "cover-letter",
+        "cvmaker",
+        "a4-preview"
+      ],
+      "dependencies": [
+        "react",
+        "vite",
+        "html2pdf.js",
+        "lucide-react"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-cvmaker",
+      "relativePath": "features/template-cvmaker",
+      "previewUrl": "features/template-cvmaker/index.html",
+      "liveSiteUrl": "/cvmaker/index.html",
+      "adminUrl": "/cvmaker/index.html",
+      "sourceRepoPath": "/home/edvins/features-for-web/cvmaker",
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "siteHtml",
+        "siteCss",
+        "siteJs",
+        "siteDataJs"
+      ]
+    },
+    {
+      "slug": "editorial-3x3-hover-grid",
+      "title": "Editorial 3x3 Interactive Hover Grid",
+      "category": "Galleries & Portfolios",
+      "source": "mom",
+      "type": "component",
+      "description": "Signature 3x3 photography grid with dynamic center headline transformation and scattered multi-image hover stage with staggered entry and real photography.",
+      "tags": [
+        "3x3-grid",
+        "hover-stage",
+        "photography",
+        "editorial",
+        "mom",
+        "stagger"
+      ],
+      "dependencies": [
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/editorial-3x3-hover-grid",
+      "relativePath": "features/editorial-3x3-hover-grid",
+      "previewUrl": "features/editorial-3x3-hover-grid/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "tsx"
+      ]
+    },
+    {
+      "slug": "multilingual-lang-switcher",
+      "title": "Multilingual Language Switcher & Reactive Translator",
+      "category": "Navigation & Headers",
+      "source": "mom",
+      "type": "component",
+      "description": "Minimal studio language switcher supporting instant reactive translation, cross-fade text transitions, persistent locale caching, and data-i18n bindings.",
+      "tags": [
+        "i18n",
+        "multilingual",
+        "language-switcher",
+        "mom",
+        "ui",
+        "reactive"
+      ],
+      "dependencies": [
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/multilingual-lang-switcher",
+      "relativePath": "features/multilingual-lang-switcher",
+      "previewUrl": "features/multilingual-lang-switcher/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "tsx"
+      ]
+    },
+    {
+      "slug": "portfolio-masonry-filter",
+      "title": "Portfolio Masonry Filter & Project Lightbox",
+      "category": "Galleries & Portfolios",
+      "source": "mom",
+      "type": "component",
+      "description": "Filterable multi-column photography portfolio masonry with category pills, live count badges, hover metadata overlays, and click-to-expand project modal.",
+      "tags": [
+        "masonry",
+        "filter",
+        "portfolio",
+        "photography",
+        "lightbox",
+        "mom"
+      ],
+      "dependencies": [
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/portfolio-masonry-filter",
+      "relativePath": "features/portfolio-masonry-filter",
+      "previewUrl": "features/portfolio-masonry-filter/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "tsx"
+      ]
+    },
+    {
+      "slug": "studio-info-drawer",
+      "title": "Studio Info Slide-Over Drawer with Tabbed Panes",
+      "category": "Drawers & Modals",
+      "source": "mom",
+      "type": "component",
+      "description": "High-end dark studio slide-over drawer featuring blur backdrop, tabbed sub-panes (About, Gear, Inquiries, Terms), keyboard ESC handler, and portrait vignette.",
+      "tags": [
+        "drawer",
+        "slide-over",
+        "tabs",
+        "photography",
+        "studio",
+        "mom"
+      ],
+      "dependencies": [
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/studio-info-drawer",
+      "relativePath": "features/studio-info-drawer",
+      "previewUrl": "features/studio-info-drawer/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "tsx"
+      ]
+    },
+    {
+      "slug": "a4-resume-previewer",
+      "title": "A4 Resume Document Previewer & Print Engine",
+      "category": "Layouts & Grids",
+      "source": "cvmaker",
+      "type": "component",
+      "description": "Pixel-perfect A4 document previewer modeled after Signature Teal CV layout with zoom scaling, visual page-break boundary guide, print stylesheet, and structured dual-column cards.",
+      "tags": [
+        "resume",
+        "a4-preview",
+        "pdf-print",
+        "signature-teal",
+        "cvmaker",
+        "cv"
+      ],
+      "dependencies": [
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/a4-resume-previewer",
+      "relativePath": "features/a4-resume-previewer",
+      "previewUrl": "features/a4-resume-previewer/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "tsx"
+      ]
+    },
+    {
+      "slug": "job-keyword-matcher",
+      "title": "Job Description Keyword Matcher & Gap Analyzer",
+      "category": "Forms & Inputs",
+      "source": "cvmaker",
+      "type": "component",
+      "description": "ATS job description parser that calculates live match score %, detects matched vs missing keyword tags, and provides 1-click insertion into the applicant profile.",
+      "tags": [
+        "ats",
+        "keyword-matcher",
+        "job-description",
+        "gap-analyzer",
+        "cvmaker",
+        "nlp"
+      ],
+      "dependencies": [
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/job-keyword-matcher",
+      "relativePath": "features/job-keyword-matcher",
+      "previewUrl": "features/job-keyword-matcher/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "tsx"
+      ]
+    },
+    {
+      "slug": "star-verb-enhancer",
+      "title": "STAR Accomplishment Builder & Passive Verb Linter",
+      "category": "Forms & Inputs",
+      "source": "cvmaker",
+      "type": "component",
+      "description": "Guided career accomplishment writer based on the STAR methodology with real-time passive verb linting, 1-click power action verb replacements, and metric injection chips.",
+      "tags": [
+        "star-method",
+        "linter",
+        "passive-verbs",
+        "resume",
+        "action-verbs",
+        "cvmaker"
+      ],
+      "dependencies": [
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/star-verb-enhancer",
+      "relativePath": "features/star-verb-enhancer",
+      "previewUrl": "features/star-verb-enhancer/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "tsx"
+      ]
+    },
+    {
+      "slug": "before-after-resume-slider",
+      "title": "Before / After Resume Transformation Slider",
+      "category": "Interactions & Physics",
+      "source": "cvmaker",
+      "type": "component",
+      "description": "Interactive split comparison slider with draggable divider and touch support, comparing an unformatted plain text CV with a sleek modern ATS layout.",
+      "tags": [
+        "slider",
+        "before-after",
+        "comparison",
+        "resume",
+        "cvmaker",
+        "interaction"
+      ],
+      "dependencies": [
+        "vanilla-js"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/before-after-resume-slider",
+      "relativePath": "features/before-after-resume-slider",
+      "previewUrl": "features/before-after-resume-slider/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js",
+        "tsx"
       ]
     }
   ]

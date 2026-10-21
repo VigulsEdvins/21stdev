@@ -1,0 +1,12 @@
+{
+  "name": "Portfolio Masonry Filter & Project Lightbox",
+  "slug": "portfolio-masonry-filter",
+  "category": "Galleries & Portfolios",
+  "source": "mom",
+  "type": "component",
+  "description": "Filterable multi-column photography portfolio masonry with category pills, live count badges, hover metadata overlays, and click-to-expand project modal.",
+  "tags": ["masonry", "filter", "portfolio", "photography", "lightbox", "mom"],
+  "tech": ["Vanilla JS", "CSS Grid/Columns", "Responsive"],
+  "dependencies": ["vanilla-js"],
+  "order": 31
+}

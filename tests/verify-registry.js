@@ -78,7 +78,7 @@ for (const slug of betteroffSlugs) {
 
 console.log('Task 4 betteroff feature checks passed.');
 
-// Test 5: Verify vivmgmt (6), 21st-crafted (4), and full website templates (3) -> Total 26 items
+// Test 5: Verify vivmgmt (6), 21st-crafted (4), mom (4+1), cvmaker (4+1), and full website templates (5) -> Total 36 items
 const task5Slugs = [
   'parallax-5col-gallery',
   'split-screen-entrance',
@@ -92,7 +92,17 @@ const task5Slugs = [
   'kinetic-typography-strapline',
   'template-betteroff',
   'template-carousel-play',
-  'template-vivmgmt'
+  'template-vivmgmt',
+  'template-mom',
+  'template-cvmaker',
+  'editorial-3x3-hover-grid',
+  'multilingual-lang-switcher',
+  'portfolio-masonry-filter',
+  'studio-info-drawer',
+  'a4-resume-previewer',
+  'job-keyword-matcher',
+  'star-verb-enhancer',
+  'before-after-resume-slider'
 ];
 
 for (const slug of task5Slugs) {
@@ -100,12 +110,12 @@ for (const slug of task5Slugs) {
 }
 
 const synced = syncRegistry(ROOT);
-assert.strictEqual(synced.count, 26, `Expected exactly 26 features in registry, got ${synced.count}`);
+assert.strictEqual(synced.count, 36, `Expected exactly 36 features in registry, got ${synced.count}`);
 for (const item of synced.items) {
   assert(item.files && item.files.combined && item.files.combined.length > 50, `Invalid combined HTML for ${item.slug}`);
 }
 
-console.log('Task 5 all 26 features & templates verified.');
+console.log('Task 5 all 36 features & templates verified.');
 
 // Test 6: Verify main 21st.local Web Application (index.html, styles.css, app.js)
 for (const appFile of ['index.html', 'styles.css', 'app.js']) {
@@ -129,7 +139,7 @@ vm.runInNewContext(fs.readFileSync(path.join(ROOT, 'registry.js'), 'utf8'), regC
 const loadedItems = Array.isArray(regCtx.window.FEATURE_REGISTRY)
   ? regCtx.window.FEATURE_REGISTRY
   : (regCtx.window.FEATURE_REGISTRY && regCtx.window.FEATURE_REGISTRY.items);
-assert(Array.isArray(loadedItems) && loadedItems.length === 26, 'window.FEATURE_REGISTRY must load all 26 items in browser context');
+assert(Array.isArray(loadedItems) && loadedItems.length === 36, 'window.FEATURE_REGISTRY must load all 36 items in browser context');
 for (const it of loadedItems) {
   assert(it.name && it.title && it.slug, `Missing name/title/slug on registry item ${it.slug}`);
 }

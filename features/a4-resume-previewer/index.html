@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A4 Resume Document Previewer</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="previewer-shell">
+    <!-- Top Document Toolbar -->
+    <header class="doc-toolbar">
+      <div class="toolbar-left">
+        <span class="doc-title-badge">A4 DOCUMENT PREVIEW</span>
+        <span class="doc-dim">210 &times; 297 mm &bull; Vector Scaled</span>
+      </div>
+      <div class="toolbar-controls">
+        <button type="button" class="tool-btn" id="zoomOutBtn" title="Zoom Out">&minus;</button>
+        <span class="zoom-readout" id="zoomVal">85%</span>
+        <button type="button" class="tool-btn" id="zoomInBtn" title="Zoom In">&plus;</button>
+        <button type="button" class="tool-btn" id="toggleBreakBtn">Page Break: ON</button>
+        <button type="button" class="tool-btn primary" id="printBtn">Print / PDF &nearr;</button>
+      </div>
+    </header>
+
+    <!-- Canvas Stage -->
+    <main class="canvas-stage" id="canvasStage">
+      <div class="a4-sheet" id="a4Sheet">
+        <!-- Visual Page Break Indicator at 297mm -->
+        <div class="page-break-line" id="pageBreakGuide">
+          <span class="page-break-tag">PAGE 1 ENDS HERE (297mm)</span>
+        </div>
+
+        <!-- Left Sidebar: Signature Teal -->
+        <aside class="sidebar-teal">
+          <div class="profile-box">
+            <div class="avatar-ring">
+              <div class="avatar-inner">EV</div>
+            </div>
+            <h1 class="candidate-name">Edvīns Vīguls</h1>
+            <p class="candidate-role">Senior Full-Stack Engineer &amp; Systems Architect</p>
+          </div>
+
+          <div class="side-section">
+            <h2 class="side-heading">Contact Details</h2>
+            <ul class="contact-list">
+              <li><span>Email:</span> edvins@example.com</li>
+              <li><span>Phone:</span> +371 20 000 000</li>
+              <li><span>Location:</span> Riga, Latvia</li>
+              <li><span>GitHub:</span> github.com/edvins</li>
+              <li><span>Portfolio:</span> 21st.local</li>
+            </ul>
+          </div>
+
+          <div class="side-section">
+            <h2 class="side-heading">Technical Skills</h2>
+            <div class="skill-tags">
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">React / Next.js</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">Docker / K8s</span>
+              <span class="skill-tag">Three.js / WebGL</span>
+              <span class="skill-tag">Tailwind CSS</span>
+              <span class="skill-tag">Cloud Architecture</span>
+            </div>
+          </div>
+
+          <div class="side-section">
+            <h2 class="side-heading">Languages</h2>
+            <ul class="contact-list">
+              <li>Latvian &bull; Native</li>
+              <li>English &bull; Full Professional</li>
+              <li>Russian &bull; Fluent</li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Right Main Column: Crisp White -->
+        <section class="main-column">
+          <div class="main-section">
+            <h2 class="section-title">Executive Summary</h2>
+            <p class="summary-text">
+              High-impact Software Engineer with 8+ years architecting web applications, interactive 3D graphics, and resilient distributed microservices. Proven track record turning complex visual requirements into blazing-fast 60fps web experiences.
+            </p>
+          </div>
+
+          <div class="main-section">
+            <h2 class="section-title">Work Experience</h2>
+
+            <article class="exp-card">
+              <div class="exp-header">
+                <div>
+                  <h3 class="role-title">Lead Frontend Architect</h3>
+                  <span class="company-name">NextGen Digital Labs &bull; Riga, LV</span>
+                </div>
+                <span class="exp-dates">2022 &ndash; Present</span>
+              </div>
+              <ul class="exp-bullets">
+                <li><strong>Spearheaded</strong> redesign of core client portal, boosting sub-second page loads by 42% across 120k daily active users.</li>
+                <li><strong>Architected</strong> modular WebGL component design system adopted by 18 cross-functional engineering pods.</li>
+                <li><strong>Automated</strong> CI/CD deployment pipelines, cutting release cycle turnaround from 4 days to 35 minutes.</li>
+              </ul>
+            </article>
+
+            <article class="exp-card">
+              <div class="exp-header">
+                <div>
+                  <h3 class="role-title">Senior Full-Stack Developer</h3>
+                  <span class="company-name">Nordic Cloud Solutions</span>
+                </div>
+                <span class="exp-dates">2019 &ndash; 2022</span>
+              </div>
+              <ul class="exp-bullets">
+                <li><strong>Engineered</strong> real-time data streaming visualization using WebSockets, Web Workers, and Canvas API.</li>
+                <li><strong>Optimized</strong> backend PostgreSQL query execution plans, saving $38k annually in cloud compute resources.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="main-section">
+            <h2 class="section-title">Education &amp; Credentials</h2>
+            <article class="exp-card">
+              <div class="exp-header">
+                <div>
+                  <h3 class="role-title">B.Sc. in Computer Science</h3>
+                  <span class="company-name">Riga Technical University</span>
+                </div>
+                <span class="exp-dates">2015 &ndash; 2019</span>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

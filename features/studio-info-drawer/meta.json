@@ -1,0 +1,12 @@
+{
+  "name": "Studio Info Slide-Over Drawer with Tabbed Panes",
+  "slug": "studio-info-drawer",
+  "category": "Drawers & Modals",
+  "source": "mom",
+  "type": "component",
+  "description": "High-end dark studio slide-over drawer featuring blur backdrop, tabbed sub-panes (About, Gear, Inquiries, Terms), keyboard ESC handler, and portrait vignette.",
+  "tags": ["drawer", "slide-over", "tabs", "photography", "studio", "mom"],
+  "tech": ["Vanilla JS", "CSS Transitions", "Backdrop Filter"],
+  "dependencies": ["vanilla-js"],
+  "order": 32
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Job Description Keyword Matcher & Gap Analyzer",
+  "slug": "job-keyword-matcher",
+  "category": "Forms & Inputs",
+  "source": "cvmaker",
+  "type": "component",
+  "description": "ATS job description parser that calculates live match score %, detects matched vs missing keyword tags, and provides 1-click insertion into the applicant profile.",
+  "tags": ["ats", "keyword-matcher", "job-description", "gap-analyzer", "cvmaker", "nlp"],
+  "tech": ["Vanilla JS", "Heuristic Parser", "CSS Meter"],
+  "dependencies": ["vanilla-js"],
+  "order": 34
+}

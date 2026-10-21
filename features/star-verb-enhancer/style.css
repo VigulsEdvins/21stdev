@@ -1,0 +1,273 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  background-color: #0b0f17;
+  color: #ececf1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.star-card {
+  width: 100%;
+  max-width: 740px;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.star-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #14b8a6;
+}
+
+.title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.method-tag {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.linter-status {
+  color: #f59e0b;
+  font-weight: 700;
+  font-size: 11px;
+}
+.linter-status.green {
+  color: #10b981;
+}
+
+.bullet-textarea {
+  width: 100%;
+  background: #0b0f17;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.bullet-textarea:focus {
+  outline: none;
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+}
+
+/* Suggestions Box */
+.suggestions-box {
+  background: rgba(245, 158, 11, 0.05);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.suggestions-box.is-clean {
+  background: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.box-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.warn-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f59e0b;
+}
+.suggestions-box.is-clean .warn-dot {
+  background: #10b981;
+}
+
+.box-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #fcd34d;
+}
+.suggestions-box.is-clean .box-title {
+  color: #6ee7b7;
+}
+
+.replacements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.replacement-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  flex-wrap: wrap;
+}
+
+.weak-phrase {
+  color: #f87171;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.arrow {
+  color: #64748b;
+}
+
+.replacement-options {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.verb-chip {
+  background: rgba(20, 184, 166, 0.15);
+  border: 1px solid rgba(20, 184, 166, 0.35);
+  color: #2dd4bf;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.verb-chip:hover {
+  background: #0d9488;
+  color: #ffffff;
+}
+
+/* Metric Chips */
+.metrics-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.metrics-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.metric-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.metric-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.metric-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* Preview Box */
+.preview-box {
+  background: #f8fafc;
+  color: #0f172a;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.preview-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  color: #0f766e;
+}
+
+.rendered-bullet {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #1e293b;
+}
+
+.rendered-bullet strong {
+  color: #0f172a;
+}
+
+.copy-btn {
+  align-self: flex-end;
+  background: #0f766e;
+  border: none;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.copy-btn:hover {
+  background: #0d9488;
+}
