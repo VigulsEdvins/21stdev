@@ -1,15 +1,68 @@
 (function () {
   const ARTISTS = [
-    { name: 'Camille Vivier', role: 'Photography', palettes: [['#1e1b18', '#c89d7c'], ['#3d2b1f', '#e5c3a6'], ['#14213d', '#fca311']] },
-    { name: 'Lukas Wassmann', role: 'Editorial', palettes: [['#2b2d42', '#8d99ae'], ['#1b4332', '#95d5b2'], ['#3c096c', '#e0aaff']] },
-    { name: 'Sonia Sieff', role: 'Direction', palettes: [['#5f0f40', '#fb8b24'], ['#0f4c5c', '#e36414'], ['#22223b', '#c9ada7']] },
-    { name: 'Harley Weir', role: 'Set Design', palettes: [['#370617', '#f48c06'], ['#03071e', '#dc2f02'], ['#1d3557', '#a8dadc']] },
-    { name: 'Carlijn Jacobs', role: 'Creative', palettes: [['#6b2737', '#e08dac'], ['#2d3142', '#bfc0c0'], ['#0b132b', '#5bc0be']] },
-    { name: 'quent.in Studio', role: 'Archive', palettes: [['#283618', '#dda15e'], ['#606c38', '#fefae0'], ['#003049', '#eae2b7']] },
-    { name: 'Elizaveta Porodina', role: 'Motion', palettes: [['#3a0ca3', '#f72585'], ['#240046', '#ff9e00'], ['#10002b', '#c77dff']] },
-    { name: 'Fumiko Imano', role: 'Collage', palettes: [['#3d405b', '#e07a5f'], ['#81b29a', '#f2cc8f'], ['#264653', '#e9c46a']] },
-    { name: 'lotte van raalte', role: 'Sculpture', palettes: [['#4a4e69', '#9a8c98'], ['#22223b', '#f2e9e4'], ['#5c677d', '#33415c']] },
-    { name: 'Thibaut Grevet', role: 'Film', palettes: [['#141413', '#8c7a6b'], ['#1f2421', '#9cc5a1'], ['#2f3e46', '#cad2c5']] }
+    {
+      name: 'Arturo Torres',
+      role: 'Fashion & Motion',
+      images: [
+        '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg',
+        '/vivmgmt/assets/images/1779142866-arturo-torres-advertising-photographer-lifestyle-fashion-sports88.jpg',
+        '/vivmgmt/assets/images/1779142866-arturo-torres-advertising-photographer-lifestyle-fashion-sports30.jpg'
+      ]
+    },
+    {
+      name: 'Danielle Moore',
+      role: 'Editorial',
+      images: [
+        '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg',
+        '/vivmgmt/assets/images/1778184121-danielle-moore-tidal-magazine-black-and-white-fashion-portrait.jpg',
+        '/vivmgmt/assets/images/1773702313-danielle-moore-arturo-torres-summer-25-quay19.jpg'
+      ]
+    },
+    {
+      name: 'Quinn Gravier',
+      role: 'Portraiture',
+      images: [
+        '/vivmgmt/assets/images/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26.jpg',
+        '/vivmgmt/assets/images/1778795294-quinn-gravier-advertising-photographer-portraits-celebrity36.jpg',
+        '/vivmgmt/assets/images/1778795294-quinn-gravier-advertising-photographer-portraits-celebrity47.jpg'
+      ]
+    },
+    {
+      name: 'Cera Hensley',
+      role: 'Still Life',
+      images: [
+        '/vivmgmt/assets/images/1777466641-cera-hensley-beauty-photography-stilllife-cosmetics-21.jpg',
+        '/vivmgmt/assets/images/1777465200-cera-hensley-food-photography-beverage-stilllife-16.jpg',
+        '/vivmgmt/assets/images/1778275287-kinship-makeup-sunscreen-stilllife-photoshoot-production-6.jpg'
+      ]
+    },
+    {
+      name: 'Zac Posen Studio',
+      role: 'Campaign',
+      images: [
+        '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg',
+        '/vivmgmt/assets/images/1778184121-fashion-editorial-horse-barragan-stables-mexico.jpg',
+        '/vivmgmt/assets/images/1778772904-danielle-moore-phils-skincare-mens-beauty-portrait.jpg'
+      ]
+    },
+    {
+      name: 'Byrum Archive',
+      role: 'Sport & Studio',
+      images: [
+        '/vivmgmt/assets/images/1774484653-byrum-20200305-nike-basketball-studio-0416.jpg',
+        '/vivmgmt/assets/images/1774484687-221112_nike-hydrostrong_5316.jpg',
+        '/vivmgmt/assets/images/1774484866-byrum-191105-adidas-victor-702.jpg'
+      ]
+    },
+    {
+      name: 'Harper Christian',
+      role: 'Monograph',
+      images: [
+        '/vivmgmt/assets/images/1774485213-160609-harper-christian-1484-3.jpg',
+        '/vivmgmt/assets/images/1777465143-20180623_foam_test_585.jpg',
+        '/vivmgmt/assets/images/1778793996-arturo-torres-fashion-photography-advertising-photographer-25.jpg'
+      ]
+    }
   ];
 
   const columnsEl = document.getElementById('vivColumns');
@@ -17,7 +70,7 @@
   if (!columnsEl || !panStage) return;
 
   const colSpeeds = [1.0, -0.85, 1.15, -0.95, 0.9];
-  const colInitialOffsets = [0, -70, -25, -90, -40];
+  const colInitialOffsets = [0, -55, -20, -70, -30];
   const colElements = [];
   const topCardLayers = [];
 
@@ -32,11 +85,12 @@
       const media = document.createElement('div');
       media.className = 'viv-card-media';
 
-      const layers = artist.palettes.map((pal, idx) => {
+      const layers = artist.images.map((imgSrc, idx) => {
         const layer = document.createElement('div');
         layer.className = 'viv-card-layer' + (idx === 0 ? ' is-active' : '');
-        layer.style.background = `radial-gradient(circle at ${30 + idx * 25}% ${25 + idx * 20}%, ${pal[1]} 0%, ${pal[0]} 75%)`;
-        layer.innerHTML = `<svg viewBox="0 0 120 160" width="100%" height="100%" style="opacity:0.25"><circle cx="${45 + idx * 15}" cy="${65 + idx * 10}" r="36" fill="none" stroke="#fff" stroke-width="1"/><line x1="15" y1="${125 - idx * 15}" x2="105" y2="${40 + idx * 15}" stroke="#fff" stroke-width="0.75"/></svg>`;
+        layer.style.backgroundImage = `url('${imgSrc}')`;
+        layer.style.backgroundSize = 'cover';
+        layer.style.backgroundPosition = 'center';
         media.appendChild(layer);
         return layer;
       });

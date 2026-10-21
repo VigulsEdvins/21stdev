@@ -1,17 +1,17 @@
 /**
  * Filterable Roster & Portrait Hover Showcase
- * Extracted from carousel-gallery-play/app.js
+ * Extracted from carousel-gallery-play/app.js (with real athlete photography)
  */
 (function () {
   const ROSTER = [
-    { name: 'Kaye Furo', role: 'Club Brugge // Forward', category: 'exclusive', grad: 'linear-gradient(150deg, #1d4ed8, #0f172a)' },
-    { name: 'Rein Van Helden', role: 'Royal Antwerp FC // Defender', category: 'exclusive', grad: 'linear-gradient(150deg, #e11d48, #1f2937)' },
-    { name: 'Thibaud Verlinden', role: 'OH Leuven // Winger', category: 'all', grad: 'linear-gradient(150deg, #ea580c, #18181b)' },
-    { name: 'Sebastiaan Bornauw', role: 'VfL Wolfsburg // Center Back', category: 'exclusive', grad: 'linear-gradient(150deg, #16a34a, #052e16)' },
-    { name: 'Ignace Van Der Brempt', role: 'Como 1907 // Fullback', category: 'all', grad: 'linear-gradient(150deg, #0284c7, #0c4a6e)' },
-    { name: 'Daan Dierckx', role: 'Standard Liège // Defender', category: 'exclusive', grad: 'linear-gradient(150deg, #dc2626, #450a0a)' },
-    { name: 'Pieter Slembrouck', role: 'Founder & Creative Director', category: 'creative', grad: 'linear-gradient(150deg, #9333ea, #2e1065)' },
-    { name: 'Jerry Lawyer', role: 'Visual Director & Photographer', category: 'creative', grad: 'linear-gradient(150deg, #eab308, #422006)' }
+    { name: 'Kaye Furo', role: 'Club Brugge // Forward', category: 'exclusive', img: '/carousel-gallery-play/assets/images/20241106_Pieter-Slembrouck-KAYE-100.webp' },
+    { name: 'Kasper Dolberg', role: 'AFC Ajax // Striker', category: 'exclusive', img: '/carousel-gallery-play/assets/images/20250328_Pieter-Slembrouck-AJAX-Dolberg-110.webp' },
+    { name: 'Thibaud Verlinden', role: 'OH Leuven // Winger', category: 'all', img: '/carousel-gallery-play/assets/images/20240612_Thibaud-Verlinden-121.webp' },
+    { name: 'Sebastiaan Bornauw', role: 'VfL Wolfsburg // Center Back', category: 'exclusive', img: '/carousel-gallery-play/assets/images/20250630_Pieter-Slembrouck-Sebastiaan-Bornauw-323.webp' },
+    { name: 'Ignace Van Der Brempt', role: 'Como 1907 // Fullback', category: 'all', img: '/carousel-gallery-play/assets/images/20250125_Pieter-Slembrouck-COMO1907-104.webp' },
+    { name: 'Tolu Arokodare', role: 'KRC Genk // Striker', category: 'exclusive', img: '/carousel-gallery-play/assets/images/20250226_Pieter-Slembrouck-Tolu-100.webp' },
+    { name: 'Steven Berghuis', role: 'AFC Ajax // Creative Midfielder', category: 'creative', img: '/carousel-gallery-play/assets/images/20250728_Pieter-Slembrouck-Skechers-Steven-Berghuis-PR-Retouches-106.webp' },
+    { name: 'Jerry Lawyer', role: 'Visual Director & Photographer', category: 'creative', img: '/carousel-gallery-play/assets/images/20251007_Pieter-Slembrouck-Jerry-selection-119-scaled.webp' }
   ];
 
   const rail = document.getElementById('athletes-rail');
@@ -24,7 +24,7 @@
       .map(
         (ath) => `
       <article class="portrait-card" data-category="${ath.category}">
-        <div class="portrait-card__media" style="background-image: ${ath.grad};">
+        <div class="portrait-card__media" style="background: linear-gradient(180deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.75) 100%), url('${ath.img}') center/cover no-repeat;">
           <span class="portrait-card__badge">${ath.category.toUpperCase()}</span>
           <a href="#contact" class="portrait-card__overlay" onclick="event.preventDefault()">
             <div class="portrait-card__overlay-top">

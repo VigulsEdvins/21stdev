@@ -75,6 +75,25 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
 
     const combined = combineFeatureHtml(html, css, js);
 
+    const sourceRepoPath = meta.sourceRepoPath || meta.sourceFolder || null;
+    const extraTemplateFiles = {};
+    if ((meta.type === 'template') && sourceRepoPath && fs.existsSync(sourceRepoPath)) {
+      const tryRead = (fname) => {
+        const p = path.join(sourceRepoPath, fname);
+        return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null;
+      };
+      const siteHtml = tryRead('index.html');
+      const siteCss = tryRead('styles.css');
+      const siteJs = tryRead('app.js');
+      const siteDataJs = tryRead('site-data.js');
+      const adminHtml = tryRead('admin.html');
+      if (siteHtml) extraTemplateFiles.siteHtml = siteHtml;
+      if (siteCss) extraTemplateFiles.siteCss = siteCss;
+      if (siteJs) extraTemplateFiles.siteJs = siteJs;
+      if (siteDataJs) extraTemplateFiles.siteDataJs = siteDataJs;
+      if (adminHtml) extraTemplateFiles.adminHtml = adminHtml;
+    }
+
     const displayName = meta.name || meta.title || slug;
     const item = {
       slug: meta.slug || slug,
@@ -93,14 +112,15 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       previewUrl: meta.previewUrl || `features/${slug}/index.html`,
       liveSiteUrl: meta.liveSiteUrl || null,
       adminUrl: meta.adminUrl || null,
-      sourceRepoPath: meta.sourceRepoPath || meta.sourceFolder || null,
+      sourceRepoPath,
       sourceFolder: meta.sourceFolder || meta.sourceRepoPath || null,
       files: {
         combined,
         html,
         css,
         js,
-        ...(tsx ? { tsx } : {})
+        ...(tsx ? { tsx } : {}),
+        ...extraTemplateFiles
       }
     };
 

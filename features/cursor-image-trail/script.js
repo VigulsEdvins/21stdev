@@ -1,28 +1,28 @@
 /**
  * Interactive Velocity Cursor Image Trail
- * Extracted from carousel-gallery-play/app.js (initImageTrail)
+ * Extracted from carousel-gallery-play/app.js (with real photography & idle preview demo)
  */
 (function () {
   const container = document.getElementById('main-container');
   if (!container) return;
 
   const TRAIL_CARDS = [
-    { label: '01 // AJAX 125', bg: 'linear-gradient(135deg, #dc2626, #7f1d1d)' },
-    { label: '02 // RED DEVILS', bg: 'linear-gradient(135deg, #ea580c, #431407)' },
-    { label: '03 // COMO 1907', bg: 'linear-gradient(135deg, #0284c7, #0c4a6e)' },
-    { label: '04 // ADIDAS X TZOLIS', bg: 'linear-gradient(135deg, #10b981, #064e3b)' },
-    { label: '05 // HOKA SPEED', bg: 'linear-gradient(135deg, #3b82f6, #172554)' },
-    { label: '06 // LIMBXL CAMPAIGN', bg: 'linear-gradient(135deg, #a855f7, #3b0764)' },
-    { label: '07 // BNXT ARENA', bg: 'linear-gradient(135deg, #6366f1, #1e1b4b)' },
-    { label: '08 // ROYAL ANTWERP', bg: 'linear-gradient(135deg, #f43f5e, #4c0519)' },
-    { label: '09 // AL QADSIAH', bg: 'linear-gradient(135deg, #eab308, #422006)' },
-    { label: '10 // DAZN STUDIO', bg: 'linear-gradient(135deg, #14b8a6, #042f2e)' }
+    { label: '01 // AJAX 125', img: '/carousel-gallery-play/assets/images/20250328_Pieter-Slembrouck-AJAX-Dolberg-115.webp' },
+    { label: '02 // RED DEVILS', img: '/carousel-gallery-play/assets/images/20260603_Pieter-Slembrouck_BRD-101-1.webp' },
+    { label: '03 // COMO 1907', img: '/carousel-gallery-play/assets/images/20250125_Pieter-Slembrouck-COMO1907-104.webp' },
+    { label: '04 // SPA GP F1', img: '/carousel-gallery-play/assets/images/20240726-Pieter-Slembrouck-SPA-GP-131.webp' },
+    { label: '05 // PSG UCL', img: '/carousel-gallery-play/assets/images/20250219_Pieter-Slembrouck-PSG-148.webp' },
+    { label: '06 // LIMBXL CAMPAIGN', img: '/carousel-gallery-play/assets/images/20251003_Pieter-Slembrouck-LIMBXL-106-scaled.jpg' },
+    { label: '07 // BNXT ARENA', img: '/carousel-gallery-play/assets/images/20240903_Pieter-Slembrouck-Donar-101.webp' },
+    { label: '08 // HSV DERBY', img: '/carousel-gallery-play/assets/images/20240421_HSV-Pieter-Slembrouck-106.webp' },
+    { label: '09 // AL QADSIAH', img: '/carousel-gallery-play/assets/images/20240609_pieter-Slembrouck-AL-QADSIAH-118.webp' },
+    { label: '10 // LEGIA WARSAW', img: '/carousel-gallery-play/assets/images/20241103_Pieter-Slembrouck-LEGIA-131.webp' }
   ];
 
   const images = TRAIL_CARDS.map((card) => {
     const el = document.createElement('div');
     el.className = 'image-trail';
-    el.style.background = card.bg;
+    el.style.background = `linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.75)), url('${card.img}') center/cover no-repeat`;
     el.innerHTML = `<span>${card.label}</span>`;
     container.appendChild(el);
     return el;
@@ -31,6 +31,7 @@
   let currentIndex = 0;
   let zCounter = 10;
   let lastPos = null;
+  let lastMoveAt = 0;
   const minDistance = 80;
 
   function getLocalCoords(e) {
@@ -72,7 +73,7 @@
         }
       ],
       {
-        duration: 1050,
+        duration: 1150,
         easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
         fill: 'forwards'
       }
@@ -82,6 +83,7 @@
   container.addEventListener(
     'pointermove',
     (e) => {
+      lastMoveAt = performance.now();
       const pos = getLocalCoords(e);
       if (!lastPos) {
         lastPos = pos;
@@ -99,4 +101,19 @@
     },
     { passive: true }
   );
+
+  // Automatic figure-8 demo trail when pointer is idle so the preview is always alive with photos
+  let demoAngle = 0;
+  setInterval(() => {
+    if (performance.now() - lastMoveAt < 1600) return;
+    const rect = container.getBoundingClientRect();
+    const cx = rect.width * 0.5;
+    const cy = rect.height * 0.52;
+    const prevX = cx + Math.sin(demoAngle) * (rect.width * 0.26);
+    const prevY = cy + Math.sin(demoAngle * 2) * (rect.height * 0.2);
+    demoAngle += 0.55;
+    const nextX = cx + Math.sin(demoAngle) * (rect.width * 0.26);
+    const nextY = cy + Math.sin(demoAngle * 2) * (rect.height * 0.2);
+    spawnTrailImage(nextX, nextY, nextX - prevX, nextY - prevY);
+  }, 420);
 })();

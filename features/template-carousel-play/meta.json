@@ -8,8 +8,8 @@
   "tags": ["full-template", "cms", "admin", "threejs", "sports-agency", "carousel-gallery-play"],
   "tech": ["Three.js", "GSAP", "Lenis", "LocalStorage CMS"],
   "dependencies": ["three", "gsap", "lenis"],
-  "liveSiteUrl": "../carousel-gallery-play/index.html",
-  "adminUrl": "../carousel-gallery-play/admin.html",
+  "liveSiteUrl": "/carousel-gallery-play/index.html",
+  "adminUrl": "/carousel-gallery-play/admin.html",
   "sourceFolder": "/home/edvins/features-for-web/carousel-gallery-play",
   "order": 25
 }

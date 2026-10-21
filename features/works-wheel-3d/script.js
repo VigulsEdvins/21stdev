@@ -78,16 +78,16 @@
   }
 
   const ITEMS = [
-    { title: 'Kinetic Archive', sub: '3D WebGL & Motion Direction', colors: ['#1e1b4b', '#4338ca', '#0f172a'] },
-    { title: 'Solaris Studio', sub: 'Interactive Brand Experience', colors: ['#3b0764', '#7e22ce', '#111827'] },
-    { title: 'Monolith OS', sub: 'Spatial Interface System', colors: ['#064e3b', '#047857', '#09090b'] },
-    { title: 'Aether Shaders', sub: 'Real-time OKLCH Gradients', colors: ['#4c0519', '#be123c', '#18181b'] },
-    { title: 'Chronos Ribbon', sub: 'Inertia Timeline Architecture', colors: ['#172554', '#1d4ed8', '#09090b'] },
-    { title: 'Velvet Editorial', sub: '5-Column Parallax Lookbook', colors: ['#451a03', '#b45309', '#0c0a09'] },
-    { title: 'Hyperion Sound', sub: 'WebAudio Synthesizer Jukebox', colors: ['#31102f', '#a21caf', '#09090b'] },
-    { title: 'Polaroid Line', sub: 'Catenary String & Breeze Physics', colors: ['#0f2942', '#0284c7', '#09090b'] },
-    { title: 'Vertex Cylinder', sub: '360° Cylindrical Showcase', colors: ['#1e293b', '#475569', '#09090b'] },
-    { title: 'Obsidian Vault', sub: 'Design Engineer Component Hub', colors: ['#2e1065', '#6d28d9', '#09090b'] }
+    { title: 'Kinetic Archive', sub: '3D WebGL & Motion Direction', img: '/betteroff/assets/images/defective-units-vol-1.webp', colors: ['#1e1b4b', '#4338ca', '#0f172a'] },
+    { title: 'Solaris Studio', sub: 'Interactive Brand Experience', img: '/betteroff/assets/images/asap-x-rayban.webp', colors: ['#3b0764', '#7e22ce', '#111827'] },
+    { title: 'Monolith OS', sub: 'Spatial Interface System', img: '/carousel-gallery-play/assets/images/20250328_Pieter-Slembrouck-AJAX-Dolberg-115.webp', colors: ['#064e3b', '#047857', '#09090b'] },
+    { title: 'Aether Shaders', sub: 'Real-time OKLCH Gradients', img: '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg', colors: ['#4c0519', '#be123c', '#18181b'] },
+    { title: 'Chronos Ribbon', sub: 'Inertia Timeline Architecture', img: '/betteroff/assets/images/ch-11-shit-waves-hawaii.webp', colors: ['#172554', '#1d4ed8', '#09090b'] },
+    { title: 'Velvet Editorial', sub: '5-Column Parallax Lookbook', img: '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg', colors: ['#451a03', '#b45309', '#0c0a09'] },
+    { title: 'Hyperion Sound', sub: 'WebAudio Synthesizer Jukebox', img: '/betteroff/assets/images/converse-shoe-drop-by-works-studio.webp', colors: ['#31102f', '#a21caf', '#09090b'] },
+    { title: 'Polaroid Line', sub: 'Catenary String & Breeze Physics', img: '/carousel-gallery-play/assets/images/20240726-Pieter-Slembrouck-SPA-GP-131.webp', colors: ['#0f2942', '#0284c7', '#09090b'] },
+    { title: 'Vertex Cylinder', sub: '360° Cylindrical Showcase', img: '/carousel-gallery-play/assets/images/20250219_Pieter-Slembrouck-PSG-148.webp', colors: ['#1e293b', '#475569', '#09090b'] },
+    { title: 'Obsidian Vault', sub: 'Design Engineer Component Hub', img: '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg', colors: ['#2e1065', '#6d28d9', '#09090b'] }
   ];
 
   const stageEl = document.getElementById('ww-stage');
@@ -125,7 +125,11 @@
     face.className = 'ww-face';
 
     const img = document.createElement('img');
-    img.src = makeCoverArt(item.title, item.sub, item.colors, i);
+    img.src = item.img;
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = makeCoverArt(item.title, item.sub, item.colors, i);
+    };
     img.alt = item.title;
     img.draggable = false;
 

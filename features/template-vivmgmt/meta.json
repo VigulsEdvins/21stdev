@@ -8,8 +8,8 @@
   "tags": ["full-template", "cms", "admin", "editorial", "vivmgmt", "parallax"],
   "tech": ["Vanilla JS", "Packery Masonry", "LocalStorage CMS"],
   "dependencies": [],
-  "liveSiteUrl": "../vivmgmt/index.html",
-  "adminUrl": "../vivmgmt/admin.html",
+  "liveSiteUrl": "/vivmgmt/index.html",
+  "adminUrl": "/vivmgmt/admin.html",
   "sourceFolder": "/home/edvins/features-for-web/vivmgmt",
   "order": 26
 }

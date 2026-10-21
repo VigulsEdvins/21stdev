@@ -8,8 +8,8 @@
   "tags": ["full-template", "cms", "admin", "threejs", "betteroff", "annual-report"],
   "tech": ["Three.js", "GSAP", "Lenis", "LocalStorage CMS"],
   "dependencies": ["three", "gsap", "lenis"],
-  "liveSiteUrl": "../betteroff/index.html",
-  "adminUrl": "../betteroff/admin.html",
+  "liveSiteUrl": "/betteroff/index.html",
+  "adminUrl": "/betteroff/admin.html",
   "sourceFolder": "/home/edvins/features-for-web/betteroff",
   "order": 24
 }

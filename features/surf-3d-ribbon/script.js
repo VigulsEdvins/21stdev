@@ -1,6 +1,6 @@
 /**
  * Surf 3D Sine-Wave Ribbon & Physics Engine
- * Extracted from betteroff/app.js (updateSurfFrame, wrap, measureSurf)
+ * Extracted from betteroff/app.js (with real Lookback cover photography)
  */
 (function () {
   const ribbon = document.getElementById('surf-ribbon');
@@ -10,10 +10,21 @@
 
   if (!ribbon || !container) return;
 
-  const PALETTES = [
-    ['#1e1b4b', '#4338ca'], ['#0c4a6e', '#0284c7'], ['#3b0764', '#9333ea'],
-    ['#064e3b', '#10b981'], ['#4c0519', '#e11d48'], ['#451a03', '#d97706'],
-    ['#172554', '#2563eb'], ['#31102f', '#c026d3']
+  const COVERS = [
+    { title: 'A$AP × Ray-Ban', img: '/betteroff/assets/images/asap-x-rayban.webp' },
+    { title: '99 Cents Only Exhibition', img: '/betteroff/assets/images/99-cents-only-store-gallery-exhibition.webp' },
+    { title: 'Broncho Jams', img: '/betteroff/assets/images/broncho-jams.webp' },
+    { title: 'Ch. 11 Waves Hawaii', img: '/betteroff/assets/images/ch-11-shit-waves-hawaii.webp' },
+    { title: 'Converse × Works Studio', img: '/betteroff/assets/images/converse-shoe-drop-by-works-studio.webp' },
+    { title: 'Defective Units Vol. 1', img: '/betteroff/assets/images/defective-units-vol-1.webp' },
+    { title: 'Helge Tscharn Capsule', img: '/betteroff/assets/images/helge-tscharn-capsule.webp' },
+    { title: 'Kelly Slater Retires', img: '/betteroff/assets/images/kelly-slater-retires.webp' },
+    { title: 'Super Bowl Halftime', img: '/betteroff/assets/images/kendrick-lamar-taps-willy-chavarria-for-super-bowl-halftime-collection.webp' },
+    { title: 'New Balance 933', img: '/betteroff/assets/images/new-balance-933-andrew-reynolds.webp' },
+    { title: 'Nigo & Pharrell Advisors', img: '/betteroff/assets/images/nigo-and-pharrell-williams-appointed-as-creative-advisors-for-not-a-hotel.webp' },
+    { title: 'Off-White Resistance', img: '/betteroff/assets/images/off-white-state-of-resistance.webp' },
+    { title: 'Pocket Vol. 12', img: '/betteroff/assets/images/pocket-vol-12.webp' },
+    { title: 'Wild Horses Festival', img: '/betteroff/assets/images/post-malone-at-wild-horses-festival-in-san-diego.webp', fallback: '/betteroff/assets/images/mascot-book.webp' }
   ];
 
   const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -21,13 +32,14 @@
 
   const TOTAL_CARDS = 28;
   const cardsData = Array.from({ length: TOTAL_CARDS }, (_, i) => {
-    const pal = PALETTES[i % PALETTES.length];
+    const cov = COVERS[i % COVERS.length];
+    const imgUrl = cov.fallback || cov.img;
     return {
       index: i,
-      title: `Artifact Vol. ${i + 1}`,
+      title: cov.title,
       month: MONTHS[i % 12] + " '26",
       tag: TAGS[i % TAGS.length],
-      bg: `linear-gradient(145deg, ${pal[0]}, ${pal[1]})`
+      bg: `linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.82) 100%), url('${imgUrl}') center/cover no-repeat`
     };
   });
 

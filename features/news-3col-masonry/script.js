@@ -1,11 +1,47 @@
 (function () {
   const ITEMS = [
-    { title: 'Camille Vivier for Miu Miu Autumn Monograph', tag: 'Campaign', date: 'Oct 2026', height: 240, c1: '#231942', c2: '#be95c4' },
-    { title: 'Palais de Tokyo: Shadow & Silver Gelatin Retrospective', tag: 'Exhibition', date: 'Oct 2026', height: 170, c1: '#1b4332', c2: '#74c69d' },
-    { title: 'Vogue Italia September Issue by Carlijn Jacobs', tag: 'Cover', date: 'Sep 2026', height: 280, c1: '#641220', c2: '#e07a5f' },
-    { title: 'Lukas Wassmann: Alpine Brutalism Series', tag: 'Exhibition', date: 'Sep 2026', height: 190, c1: '#003049', c2: '#669bbc' },
-    { title: 'Hermès Silk & Motion Directed by Thibaut Grevet', tag: 'Campaign', date: 'Aug 2026', height: 250, c1: '#7f4f24', c2: '#ddb892' },
-    { title: 'Dazed & Confused Winter Feature: Elizaveta Porodina', tag: 'Cover', date: 'Aug 2026', height: 200, c1: '#240046', c2: '#9d4edd' }
+    {
+      title: 'Arturo Torres for Autumn Editorial Monograph',
+      tag: 'Campaign',
+      date: 'Oct 2026',
+      height: 220,
+      img: '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg'
+    },
+    {
+      title: 'Danielle Moore: Desert Couture Retrospective',
+      tag: 'Exhibition',
+      date: 'Oct 2026',
+      height: 175,
+      img: '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg'
+    },
+    {
+      title: 'Zac Posen Studio Denim Portrait Series',
+      tag: 'Cover',
+      date: 'Sep 2026',
+      height: 245,
+      img: '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg'
+    },
+    {
+      title: 'Quinn Gravier: Portrait Study Archive',
+      tag: 'Exhibition',
+      date: 'Sep 2026',
+      height: 190,
+      img: '/vivmgmt/assets/images/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26.jpg'
+    },
+    {
+      title: 'Cera Hensley Sculptural Still Life Commission',
+      tag: 'Campaign',
+      date: 'Aug 2026',
+      height: 230,
+      img: '/vivmgmt/assets/images/1777466641-cera-hensley-beauty-photography-stilllife-cosmetics-21.jpg'
+    },
+    {
+      title: 'Barragan Stables Architectural Fashion Feature',
+      tag: 'Cover',
+      date: 'Aug 2026',
+      height: 200,
+      img: '/vivmgmt/assets/images/1778184121-fashion-editorial-horse-barragan-stables-mexico.jpg'
+    }
   ];
 
   const grid = document.getElementById('masonryGrid');
@@ -27,7 +63,7 @@
       card.className = 'masonry-card';
       card.style.transitionDelay = `${idx * 65}ms`;
       card.innerHTML = `
-        <div class="card-visual" style="height:${item.height}px;background:linear-gradient(135deg, ${item.c1}, ${item.c2});"></div>
+        <div class="card-visual" style="height:${item.height}px;background:url('${item.img}') center/cover no-repeat;"></div>
         <div class="card-body">
           <span class="card-tag">${item.tag}</span>
           <h2 class="card-title">${item.title}</h2>

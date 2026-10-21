@@ -1,9 +1,21 @@
 (function () {
   const PLATES = [
-    { title: 'Plate I — Chromatic Silhouette, Paris', bg: 'radial-gradient(circle at 35% 30%, #f72585, #240046 75%)' },
-    { title: 'Plate II — Sculpted Minimalist Forms, Milan', bg: 'radial-gradient(circle at 65% 35%, #fca311, #14213d 75%)' },
-    { title: 'Plate III — Surrealist Portrait Study, Tokyo', bg: 'radial-gradient(circle at 40% 60%, #4cc9f0, #10002b 75%)' },
-    { title: 'Plate IV — Nocturnal Architecture, Antwerp', bg: 'radial-gradient(circle at 50% 35%, #e07a5f, #2b2d42 75%)' }
+    {
+      title: 'Plate I — Arturo Torres Chromatic Study, Paris',
+      img: '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg'
+    },
+    {
+      title: 'Plate II — Danielle Moore Desert Couture, Milan',
+      img: '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg'
+    },
+    {
+      title: 'Plate III — Zac Posen Studio Denim Portrait, NY',
+      img: '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg'
+    },
+    {
+      title: 'Plate IV — Barragan Stables Editorial, Mexico City',
+      img: '/vivmgmt/assets/images/1778184121-fashion-editorial-horse-barragan-stables-mexico.jpg'
+    }
   ];
 
   const grid = document.getElementById('plateGrid');
@@ -18,7 +30,7 @@
   PLATES.forEach((p, idx) => {
     const card = document.createElement('div');
     card.className = 'plate-thumb';
-    card.style.background = p.bg;
+    card.style.background = `linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.75)), url('${p.img}') center/cover no-repeat`;
     card.innerHTML = `<span style="font-size:12px;font-weight:500">${p.title}</span>`;
     card.addEventListener('click', () => {
       setPlate(idx);
@@ -28,7 +40,7 @@
 
     const mini = document.createElement('button');
     mini.className = 'mini-thumb';
-    mini.style.background = p.bg;
+    mini.style.background = `url('${p.img}') center/cover no-repeat`;
     mini.addEventListener('click', () => setPlate(idx));
     thumbs.appendChild(mini);
   });
@@ -36,7 +48,7 @@
   function setPlate(idx) {
     activeIdx = (idx + PLATES.length) % PLATES.length;
     const p = PLATES[activeIdx];
-    canvas.style.background = p.bg;
+    canvas.style.background = `url('${p.img}') center/contain no-repeat #0b0b0c`;
     counter.textContent = `PLATE 0${activeIdx + 1} / 0${PLATES.length}`;
     caption.textContent = p.title;
     Array.from(thumbs.children).forEach((el, i) => {

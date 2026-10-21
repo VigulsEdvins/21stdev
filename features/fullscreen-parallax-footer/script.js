@@ -5,8 +5,21 @@
   const art = document.getElementById('floatingArt');
   const caption = document.getElementById('floatingCaption');
 
-  let mouseX = window.innerWidth * 0.65;
-  let mouseY = window.innerHeight * 0.5;
+  const STUDIO_IMAGES = [
+    '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg',
+    '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg',
+    '/vivmgmt/assets/images/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26.jpg',
+    '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg'
+  ];
+
+  // Show default studio preview card immediately so preview is visually rich
+  art.style.backgroundImage = `url('${STUDIO_IMAGES[0]}')`;
+  art.style.backgroundSize = 'cover';
+  art.style.backgroundPosition = 'center';
+  card.classList.add('is-visible');
+
+  let mouseX = window.innerWidth * 0.72;
+  let mouseY = window.innerHeight * 0.48;
   let cardX = mouseX;
   let cardY = mouseY;
 
@@ -15,19 +28,19 @@
     mouseY = e.clientY;
   });
 
-  links.forEach((link) => {
+  links.forEach((link, idx) => {
     link.addEventListener('mouseenter', () => {
       const bg = link.getAttribute('data-bg');
-      const accent = link.getAttribute('data-accent');
       const city = link.getAttribute('data-city');
       footer.style.backgroundColor = bg;
-      art.style.background = `radial-gradient(circle at 35% 30%, ${accent}, ${bg} 80%)`;
+      art.style.backgroundImage = `url('${STUDIO_IMAGES[idx % STUDIO_IMAGES.length]}')`;
+      art.style.backgroundSize = 'cover';
+      art.style.backgroundPosition = 'center';
       caption.textContent = city;
       card.classList.add('is-visible');
     });
 
     link.addEventListener('mouseleave', () => {
-      card.classList.remove('is-visible');
       footer.style.backgroundColor = '#141413';
     });
 

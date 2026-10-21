@@ -1,25 +1,25 @@
 /**
  * 3D Cylindrical Image Carousel — With Scroll Velocity & Drag-to-Spin Inertia
- * Extracted & adapted from carousel-gallery-play/app.js (zero external dependencies)
+ * Extracted & adapted from carousel-gallery-play/app.js (with real default photography)
  */
 (function () {
   const PROJECTS = [
-    { title: '125 Years AFC Ajax', tag: 'Heritage Documentary', c1: '#7f1d1d', c2: '#dc2626' },
-    { title: 'Belgian Red Devils', tag: 'National Campaign', c1: '#450a0a', c2: '#ea580c' },
-    { title: 'BNXT League Media', tag: 'Arena Production', c1: '#1e1b4b', c2: '#4f46e5' },
-    { title: 'Como 1907 Lake', tag: 'Club Identity', c1: '#0c4a6e', c2: '#0284c7' },
-    { title: 'Adidas × Tzolis', tag: 'Athlete Commercial', c1: '#064e3b', c2: '#10b981' },
-    { title: 'Royal Antwerp FC', tag: 'Matchday Visuals', c1: '#4c0519', c2: '#e11d48' },
-    { title: 'HOKA Speed Run', tag: 'Endurance Series', c1: '#172554', c2: '#3b82f6' },
-    { title: 'DAZN Broadcast', tag: 'Live Motion Kit', c1: '#27272a', c2: '#71717a' },
-    { title: 'Al Qadsiah FC', tag: 'Global Launch', c1: '#422006', c2: '#eab308' },
-    { title: 'Club Brugge UCL', tag: 'Champions Anthem', c1: '#0f172a', c2: '#2563eb' },
-    { title: 'VfL Wolfsburg', tag: 'Tunnel Lighting', c1: '#052e16', c2: '#22c55e' },
-    { title: 'LIMBXL Street', tag: 'Editorial Lookbook', c1: '#3b0764', c2: '#a855f7' },
-    { title: 'OH Leuven Kit', tag: 'Studio Reveal', c1: '#1f2937', c2: '#f97316' },
-    { title: 'Standard Liège', tag: 'Red Inferno', c1: '#450a0a', c2: '#ef4444' },
-    { title: 'Play Sports 3D', tag: 'Title Sequence', c1: '#042f2e', c2: '#14b8a6' },
-    { title: 'Red Bull Arena', tag: 'Drone Cinematography', c1: '#1e1b4b', c2: '#ec4899' }
+    { title: '125 Years AFC Ajax', tag: 'Heritage Documentary', img: '/carousel-gallery-play/assets/images/20250328_Pieter-Slembrouck-AJAX-Dolberg-115.webp' },
+    { title: 'Belgian Red Devils', tag: 'National Campaign', img: '/carousel-gallery-play/assets/images/20260603_Pieter-Slembrouck_BRD-101-1.webp' },
+    { title: 'BNXT League Media', tag: 'Arena Production', img: '/carousel-gallery-play/assets/images/20240903_Pieter-Slembrouck-Donar-101.webp' },
+    { title: 'Como 1907 Lake', tag: 'Club Identity', img: '/carousel-gallery-play/assets/images/20250125_Pieter-Slembrouck-COMO1907-104.webp' },
+    { title: 'Formula 1 Spa GP', tag: 'Motorsport Visuals', img: '/carousel-gallery-play/assets/images/20240726-Pieter-Slembrouck-SPA-GP-131.webp' },
+    { title: 'PSG Champions League', tag: 'Matchday Visuals', img: '/carousel-gallery-play/assets/images/20250219_Pieter-Slembrouck-PSG-148.webp' },
+    { title: 'Hamburger Derby HSV', tag: 'Endurance Series', img: '/carousel-gallery-play/assets/images/20240421_HSV-Pieter-Slembrouck-106.webp' },
+    { title: 'Legia Warsaw', tag: 'Live Motion Kit', img: '/carousel-gallery-play/assets/images/20241103_Pieter-Slembrouck-LEGIA-131.webp' },
+    { title: 'Al Qadsiah FC', tag: 'Global Launch', img: '/carousel-gallery-play/assets/images/20240609_pieter-Slembrouck-AL-QADSIAH-118.webp' },
+    { title: 'Skechers Football', tag: 'Athlete Commercial', img: '/carousel-gallery-play/assets/images/20250728_Pieter-Slembrouck-Skechers-Steven-Berghuis-PR-Retouches-106.webp' },
+    { title: 'VfL Wolfsburg', tag: 'Tunnel Lighting', img: '/carousel-gallery-play/assets/images/20250630_Pieter-Slembrouck-Sebastiaan-Bornauw-323.webp' },
+    { title: 'LIMBXL Street', tag: 'Editorial Lookbook', img: '/carousel-gallery-play/assets/images/20251003_Pieter-Slembrouck-LIMBXL-106-scaled.jpg' },
+    { title: 'Ibiza Off-Season', tag: 'Studio Reveal', img: '/carousel-gallery-play/assets/images/20240806-Pieter-Slembrouck-IBZ-Woodwork-110.webp' },
+    { title: 'Tolu Arokodare', tag: 'Portrait Series', img: '/carousel-gallery-play/assets/images/20250226_Pieter-Slembrouck-Tolu-100.webp' },
+    { title: 'Jouer – à L’aise', tag: 'Title Sequence', img: '/carousel-gallery-play/assets/images/20250226_Pieter-Slembrouck-JOUER-135.webp' },
+    { title: 'Rosemary FC', tag: 'Editorial Archive', img: '/carousel-gallery-play/assets/images/20230318_Rosemary_Pieter.Slembrouck-56.webp' }
   ];
 
   const listEl = document.getElementById('carousel-3d-list');
@@ -31,7 +31,6 @@
 
   if (!listEl || !wrapEl) return;
 
-  // Group into alternating 2-item and 1-item panels around the cylinder
   const panelsData = [];
   let cursor = 0;
   let panelIdx = 0;
@@ -48,7 +47,7 @@
         .map(
           (p) => `
         <div class="cyl-item" tabindex="0">
-          <div class="cyl-card-bg" style="background: linear-gradient(135deg, ${p.c1}, ${p.c2});"></div>
+          <div class="cyl-card-bg" style="background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.78) 100%), url('${p.img}') center/cover no-repeat;"></div>
           <div class="cyl-card-info">
             <span class="cyl-card-tag">${p.tag}</span>
             <h3 class="cyl-card-name">${p.title}</h3>
@@ -67,7 +66,7 @@
 
   let radius = Math.max(380, window.innerWidth * 0.44);
   let angleOffset = 0;
-  let baseSpeed = 0.22; // deg per frame
+  let baseSpeed = 0.22;
   let currentDirection = -1;
   let timeScale = -1;
   let targetTimeScale = -1;
@@ -88,17 +87,11 @@
   updateRadius();
   window.addEventListener('resize', updateRadius);
 
-  // Hover pause on individual cards
   items.forEach((item) => {
-    item.addEventListener('mouseenter', () => {
-      isHoverPaused = true;
-    });
-    item.addEventListener('mouseleave', () => {
-      isHoverPaused = false;
-    });
+    item.addEventListener('mouseenter', () => { isHoverPaused = true; });
+    item.addEventListener('mouseleave', () => { isHoverPaused = false; });
   });
 
-  // Pointer drag-to-spin
   wrapEl.addEventListener('pointerdown', (e) => {
     isPointerDown = true;
     lastX = e.clientX;
@@ -137,7 +130,6 @@
   window.addEventListener('pointerup', onPointerUp);
   window.addEventListener('pointercancel', onPointerUp);
 
-  // Wheel velocity boost
   window.addEventListener(
     'wheel',
     (e) => {

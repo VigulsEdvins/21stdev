@@ -1,6 +1,6 @@
 /**
  * Slide-Over Editorial Article Reader Drawer
- * Extracted from betteroff/app.js (openArticleDrawer, closeArticleDrawer)
+ * Extracted from betteroff/app.js (with real Lookback editorial photography)
  */
 (function () {
   const ARTICLES = [
@@ -9,7 +9,7 @@
       title: 'Defective Units Vol. 1 — Tactile Industrial Synthesis',
       tag: 'SHOWCASE',
       month: "OCTOBER '26",
-      grad: 'linear-gradient(135deg, #0284c7, #1e1b4b)',
+      img: '/betteroff/assets/images/defective-units-vol-1.webp',
       body: [
         'Designed as an exploration into imperfect hardware surfaces, Defective Units combines physical rotary encoders with real-time WebGL shaders.',
         'Every transition uses critically damped spring curves so the interface responds with mechanical weight rather than linear CSS keyframes.'
@@ -17,10 +17,10 @@
     },
     {
       slug: 'kinetic-monograph',
-      title: 'Kinetic Typography & Editorial Grid Systems',
+      title: 'A$AP × Ray-Ban — Optical Campaign & Grid Systems',
       tag: 'INSPIRE',
       month: "SEPTEMBER '26",
-      grad: 'linear-gradient(135deg, #9333ea, #4c0519)',
+      img: '/betteroff/assets/images/asap-x-rayban.webp',
       body: [
         'Modern web typography bridges Swiss international grids with variable font axes driven by scroll velocity and cursor proximity.',
         'By isolating layout geometry from repaint-heavy properties, 60fps editorial motion runs effortlessly across desktop and mobile viewports.'
@@ -28,10 +28,10 @@
     },
     {
       slug: 'spatial-sound-architecture',
-      title: 'Procedural WebAudio Micro-Interactions',
+      title: 'Converse × Works Studio — Footwear Drop Architecture',
       tag: 'ARCHIVE',
       month: "AUGUST '26",
-      grad: 'linear-gradient(135deg, #10b981, #064e3b)',
+      img: '/betteroff/assets/images/converse-shoe-drop-by-works-studio.webp',
       body: [
         'Instead of loading megabytes of external audio samples, subtle triangle and sine oscillators synthesize tactile clicks and harmonic swells on the fly.',
         'The result is a zero-latency sonic identity that reinforces every hover, drag, and drawer transition.'
@@ -53,7 +53,7 @@
 
   grid.innerHTML = ARTICLES.map(
     (a) => `
-    <article class="story-card" data-slug="${a.slug}" tabindex="0">
+    <article class="story-card" data-slug="${a.slug}" tabindex="0" style="background: linear-gradient(180deg, rgba(12,12,15,0.55), rgba(12,12,15,0.92)), url('${a.img}') center/cover no-repeat;">
       <span class="story-card__tag">${a.tag} • ${a.month}</span>
       <h3>${a.title}</h3>
       <p>Click to inspect full story in slide-over drawer →</p>
@@ -65,7 +65,7 @@
     tagEl.textContent = art.tag;
     monthEl.textContent = art.month;
     titleEl.textContent = art.title;
-    mediaEl.style.background = art.grad;
+    mediaEl.style.background = `url('${art.img}') center/cover no-repeat`;
     bodyEl.innerHTML = art.body.map((p) => `<p>${p}</p>`).join('');
     drawer.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
@@ -86,6 +86,5 @@
     if (e.key === 'Escape') closeArticleDrawer();
   });
 
-  // Auto-open first article briefly on load so card preview shows the drawer
   openArticleDrawer('defective-units');
 })();

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-21T08:31:40.244Z",
+  "generatedAt": "2026-10-21T08:54:31.476Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 26,
   "categories": [
@@ -737,14 +737,19 @@
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-betteroff",
       "relativePath": "features/template-betteroff",
       "previewUrl": "features/template-betteroff/index.html",
-      "liveSiteUrl": "../betteroff/index.html",
-      "adminUrl": "../betteroff/admin.html",
+      "liveSiteUrl": "/betteroff/index.html",
+      "adminUrl": "/betteroff/admin.html",
       "sourceRepoPath": "/home/edvins/features-for-web/betteroff",
       "availableFiles": [
         "combined",
         "html",
         "css",
-        "js"
+        "js",
+        "siteHtml",
+        "siteCss",
+        "siteJs",
+        "siteDataJs",
+        "adminHtml"
       ]
     },
     {
@@ -770,14 +775,19 @@
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-carousel-play",
       "relativePath": "features/template-carousel-play",
       "previewUrl": "features/template-carousel-play/index.html",
-      "liveSiteUrl": "../carousel-gallery-play/index.html",
-      "adminUrl": "../carousel-gallery-play/admin.html",
+      "liveSiteUrl": "/carousel-gallery-play/index.html",
+      "adminUrl": "/carousel-gallery-play/admin.html",
       "sourceRepoPath": "/home/edvins/features-for-web/carousel-gallery-play",
       "availableFiles": [
         "combined",
         "html",
         "css",
-        "js"
+        "js",
+        "siteHtml",
+        "siteCss",
+        "siteJs",
+        "siteDataJs",
+        "adminHtml"
       ]
     },
     {
@@ -799,14 +809,19 @@
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-vivmgmt",
       "relativePath": "features/template-vivmgmt",
       "previewUrl": "features/template-vivmgmt/index.html",
-      "liveSiteUrl": "../vivmgmt/index.html",
-      "adminUrl": "../vivmgmt/admin.html",
+      "liveSiteUrl": "/vivmgmt/index.html",
+      "adminUrl": "/vivmgmt/admin.html",
       "sourceRepoPath": "/home/edvins/features-for-web/vivmgmt",
       "availableFiles": [
         "combined",
         "html",
         "css",
-        "js"
+        "js",
+        "siteHtml",
+        "siteCss",
+        "siteJs",
+        "siteDataJs",
+        "adminHtml"
       ]
     }
   ]

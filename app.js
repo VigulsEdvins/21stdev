@@ -146,6 +146,12 @@
     });
   }
 
+  function syncCollectionTabsUI() {
+    document.querySelectorAll('#collectionTabs .col-tab').forEach((t) => {
+      t.classList.toggle('is-active', t.getAttribute('data-type') === state.collectionType);
+    });
+  }
+
   function renderFilterBars() {
     const sources = ['all', ...Array.from(new Set(allFeatures.map((i) => i.source)))];
     sourceFilterBar.innerHTML = '';
@@ -157,6 +163,18 @@
       btn.textContent = src === 'all' ? `All Sources (${count})` : `${src} (${count})`;
       btn.addEventListener('click', () => {
         state.source = src;
+        if (src !== 'all') {
+          const hasMatchingInCollection = allFeatures.some((i) => {
+            if (i.source !== src) return false;
+            if (state.collectionType === 'template') return i.type === 'template';
+            if (state.collectionType === 'component') return i.type !== 'template';
+            return true;
+          });
+          if (!hasMatchingInCollection) {
+            state.collectionType = 'all';
+            syncCollectionTabsUI();
+          }
+        }
         renderAll();
       });
       sourceFilterBar.appendChild(btn);
@@ -171,10 +189,28 @@
       btn.textContent = cat === 'all' ? 'All Categories' : cat;
       btn.addEventListener('click', () => {
         state.category = cat;
+        if (cat === 'Full Templates' && state.collectionType === 'component') {
+          state.collectionType = 'all';
+          syncCollectionTabsUI();
+        } else if (cat !== 'all' && cat !== 'Full Templates' && state.collectionType === 'template') {
+          state.collectionType = 'all';
+          syncCollectionTabsUI();
+        }
         renderAll();
       });
       categoryFilterBar.appendChild(btn);
     });
+  }
+
+  function loadPreviewIntoFrame(frame, item) {
+    if (!frame || !item) return;
+    if (item.type === 'template' && item.liveSiteUrl) {
+      frame.removeAttribute('srcdoc');
+      frame.src = item.liveSiteUrl;
+    } else {
+      frame.removeAttribute('src');
+      frame.srcdoc = item.files.combined;
+    }
   }
 
   // Lazy-mount IntersectionObserver for Catalog Iframes
@@ -205,6 +241,24 @@
     const filtered = getFilteredFeatures();
     resultsSummary.textContent = `Showing ${filtered.length} of ${allFeatures.length} features & designs`;
     catalogGrid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      const emptyEl = document.createElement('div');
+      emptyEl.style.cssText = 'grid-column: 1 / -1; padding: 48px 24px; text-align: center; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.14); border-radius: 14px;';
+      emptyEl.innerHTML = `
+        <p style="font-size: 15px; color: #ececf1; margin: 0 0 8px; font-weight: 600;">No features match the active filter combination</p>
+        <p style="font-size: 13px; color: #8e8ea0; margin: 0 0 16px;">Try resetting your active category, source, or search filter.</p>
+        <button type="button" class="action-btn primary" id="emptyResetBtn">Show All 26 Features &amp; Templates</button>
+      `;
+      catalogGrid.appendChild(emptyEl);
+      const resetBtn = emptyEl.querySelector('#emptyResetBtn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          document.getElementById('resetFiltersBtn').click();
+        });
+      }
+      return;
+    }
 
     filtered.forEach((item) => {
       const card = document.createElement('article');
@@ -251,9 +305,9 @@
           <p class="card-desc">${item.description}</p>
         </div>
         <div class="card-footer-actions">
-          <button class="action-btn primary" data-action="copy-code" type="button">Copy 1-File Code</button>
+          <button class="action-btn primary" data-action="copy-code" type="button">${item.type === 'template' ? 'Copy Site HTML' : 'Copy 1-File Code'}</button>
           <button class="action-btn" data-action="copy-path" type="button">Copy Folder Path</button>
-          <button class="action-btn" data-action="inspect" type="button">Inspect Files</button>
+          <button class="action-btn" data-action="inspect" type="button">${item.type === 'template' ? 'Live Full Preview & Code' : 'Inspect Files'}</button>
           ${extraTemplateBtns}
         </div>
       `;
@@ -266,7 +320,8 @@
         if (!btn) return;
         const action = btn.getAttribute('data-action');
         if (action === 'copy-code') {
-          copyText(item.files.combined, `Copied 1-File bundle for ${itemName}`);
+          const codeToCopy = (item.type === 'template' && item.files.siteHtml) ? item.files.siteHtml : item.files.combined;
+          copyText(codeToCopy, `Copied code for ${itemName}`);
         } else if (action === 'copy-path') {
           copyText(getAbsoluteFolderPath(item), `Copied path: ${getAbsoluteFolderPath(item)}`);
         } else if (action === 'inspect') {
@@ -284,12 +339,22 @@
 
   // File Tab Helper
   function getAvailableTabs(item) {
-    const tabs = [
-      { id: 'combined', label: 'Combined (1-File)', content: item.files.combined },
-      { id: 'html', label: 'index.html', content: item.files.html },
-      { id: 'css', label: 'style.css', content: item.files.css },
-      { id: 'js', label: 'script.js', content: item.files.js }
-    ];
+    const tabs = [];
+    if (item.type === 'template' && item.files && item.files.siteHtml) {
+      tabs.push({ id: 'siteHtml', label: 'Full Site index.html', content: item.files.siteHtml });
+      if (item.files.siteCss) tabs.push({ id: 'siteCss', label: 'Full Site styles.css', content: item.files.siteCss });
+      if (item.files.siteJs) tabs.push({ id: 'siteJs', label: 'Full Site app.js', content: item.files.siteJs });
+      if (item.files.siteDataJs) tabs.push({ id: 'siteDataJs', label: 'CMS site-data.js', content: item.files.siteDataJs });
+      if (item.files.adminHtml) tabs.push({ id: 'adminHtml', label: 'CMS admin.html', content: item.files.adminHtml });
+      tabs.push({ id: 'combined', label: 'Card Showcase HTML', content: item.files.combined });
+    } else {
+      tabs.push(
+        { id: 'combined', label: 'Combined (1-File)', content: item.files.combined },
+        { id: 'html', label: 'index.html', content: item.files.html },
+        { id: 'css', label: 'style.css', content: item.files.css },
+        { id: 'js', label: 'script.js', content: item.files.js }
+      );
+    }
     if (item.files && item.files.tsx) {
       tabs.push({ id: 'tsx', label: 'component.tsx', content: item.files.tsx });
     }
@@ -322,13 +387,14 @@
     const item = allFeatures.find((f) => f.slug === slug);
     if (!item) return;
     inspectedItem = item;
-    state.inspActiveTab = 'combined';
+    const tabs = getAvailableTabs(item);
+    state.inspActiveTab = tabs[0] ? tabs[0].id : 'combined';
 
     document.getElementById('inspSourceBadge').textContent = item.source;
     document.getElementById('inspTitle').textContent = getItemName(item);
     document.getElementById('inspFolderPath').textContent = getAbsoluteFolderPath(item);
     document.getElementById('inspDescription').textContent = item.description;
-    document.getElementById('inspStandaloneLink').href = `${getRelativeFolderPath(item)}/index.html`;
+    document.getElementById('inspStandaloneLink').href = item.liveSiteUrl || `${getRelativeFolderPath(item)}/index.html`;
 
     const tplBtns = document.getElementById('inspTemplateBtns');
     tplBtns.innerHTML = '';
@@ -342,7 +408,7 @@
     const tagsEl = document.getElementById('inspTags');
     tagsEl.innerHTML = (item.tags || []).map((t) => `<span class="tag-chip">#${t}</span>`).join('');
 
-    inspPreviewFrame.srcdoc = item.files.combined;
+    loadPreviewIntoFrame(inspPreviewFrame, item);
     renderInspectorCodeTabs();
     inspectorModal.classList.remove('is-hidden');
   }
@@ -368,6 +434,7 @@
 
   document.getElementById('closeInspectorBtn').addEventListener('click', () => {
     inspectorModal.classList.add('is-hidden');
+    inspPreviewFrame.removeAttribute('src');
     inspPreviewFrame.srcdoc = '';
   });
 
@@ -380,7 +447,12 @@
   });
 
   document.getElementById('inspCopyCombinedBtn').addEventListener('click', () => {
-    if (inspectedItem) copyText(inspectedItem.files.combined, 'Copied 1-File HTML bundle');
+    if (inspectedItem) {
+      const code = (inspectedItem.type === 'template' && inspectedItem.files.siteHtml)
+        ? inspectedItem.files.siteHtml
+        : inspectedItem.files.combined;
+      copyText(code, 'Copied HTML bundle');
+    }
   });
 
   document.getElementById('inspCopyActiveTabBtn').addEventListener('click', () => {
@@ -395,7 +467,7 @@
   });
 
   document.getElementById('inspReloadFrameBtn').addEventListener('click', () => {
-    if (inspectedItem) inspPreviewFrame.srcdoc = inspectedItem.files.combined;
+    if (inspectedItem) loadPreviewIntoFrame(inspPreviewFrame, inspectedItem);
   });
 
   document.querySelectorAll('#inspViewportGroup .vp-btn').forEach((btn) => {
@@ -451,7 +523,7 @@
     document.getElementById('wbActiveName').textContent = getItemName(activeItem);
     document.getElementById('wbActivePath').textContent = getAbsoluteFolderPath(activeItem);
     document.getElementById('wbActiveDesc').textContent = activeItem.description;
-    document.getElementById('wbOpenStandaloneBtn').href = `${getRelativeFolderPath(activeItem)}/index.html`;
+    document.getElementById('wbOpenStandaloneBtn').href = activeItem.liveSiteUrl || `${getRelativeFolderPath(activeItem)}/index.html`;
 
     const tplLinks = document.getElementById('wbTemplateLinks');
     tplLinks.innerHTML = '';
@@ -463,11 +535,14 @@
     }
 
     if (wbPreviewFrame.getAttribute('data-loaded-slug') !== activeItem.slug) {
-      wbPreviewFrame.srcdoc = activeItem.files.combined;
+      loadPreviewIntoFrame(wbPreviewFrame, activeItem);
       wbPreviewFrame.setAttribute('data-loaded-slug', activeItem.slug);
     }
 
     const tabs = getAvailableTabs(activeItem);
+    if (!tabs.some((t) => t.id === state.wbActiveTab) && tabs[0]) {
+      state.wbActiveTab = tabs[0].id;
+    }
     wbCodeTabs.innerHTML = '';
     tabs.forEach((tab) => {
       const b = document.createElement('button');
@@ -487,7 +562,7 @@
 
   document.getElementById('wbReloadBtn').addEventListener('click', () => {
     const activeItem = allFeatures.find((f) => f.slug === state.activeSlug);
-    if (activeItem) wbPreviewFrame.srcdoc = activeItem.files.combined;
+    if (activeItem) loadPreviewIntoFrame(wbPreviewFrame, activeItem);
   });
 
   document.getElementById('wbCopyPathBtn').addEventListener('click', () => {
@@ -527,6 +602,12 @@
       document.querySelectorAll('#collectionTabs .col-tab').forEach((t) => t.classList.remove('is-active'));
       tab.classList.add('is-active');
       state.collectionType = tab.getAttribute('data-type');
+      if (state.collectionType === 'template') {
+        state.category = 'all';
+        state.source = 'all';
+      } else if (state.collectionType === 'component' && state.category === 'Full Templates') {
+        state.category = 'all';
+      }
       renderAll();
     });
   });

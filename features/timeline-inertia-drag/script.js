@@ -1,21 +1,21 @@
 /**
  * Horizontal Inertia Drag Timeline & Mechanical Tick Ruler
- * Extracted from betteroff/app.js
+ * Extracted from betteroff/app.js (with real Lookback photography)
  */
 (function () {
   const ITEMS = [
-    { title: 'Defective Units Vol. 1', group: "OCTOBER '26", tag: 'SHOWCASE', aspect: 1.15, bg: 'linear-gradient(135deg, #1e1b4b, #4338ca)' },
-    { title: 'Kinetic Type Systems', group: "OCTOBER '26", tag: 'INSPIRE', aspect: 1.35, bg: 'linear-gradient(135deg, #3b0764, #9333ea)' },
-    { title: 'Spatial Audio Lab', group: "OCTOBER '26", tag: 'EXPERIMENT', aspect: 1.0, bg: 'linear-gradient(135deg, #064e3b, #10b981)' },
-    { title: 'Brutalist Grid Study', group: "SEPTEMBER '26", tag: 'ARCHIVE', aspect: 1.25, bg: 'linear-gradient(135deg, #4c0519, #e11d48)' },
-    { title: 'Chrome & Glass Shaders', group: "SEPTEMBER '26", tag: 'SHOWCASE', aspect: 1.1, bg: 'linear-gradient(135deg, #0c4a6e, #0284c7)' },
-    { title: 'Modular Synth UI', group: "SEPTEMBER '26", tag: 'INSPIRE', aspect: 1.3, bg: 'linear-gradient(135deg, #451a03, #d97706)' },
-    { title: 'Editorial Monograph', group: "AUGUST '26", tag: 'PRINT', aspect: 1.2, bg: 'linear-gradient(135deg, #172554, #2563eb)' },
-    { title: 'Motion Identity 08', group: "AUGUST '26", tag: 'SHOWCASE', aspect: 1.05, bg: 'linear-gradient(135deg, #31102f, #c026d3)' },
-    { title: 'Tactile Hardware Controls', group: "JULY '26", tag: 'CRAFT', aspect: 1.3, bg: 'linear-gradient(135deg, #18181b, #52525b)' },
-    { title: 'Generative Flora', group: "JULY '26", tag: 'EXPERIMENT', aspect: 1.15, bg: 'linear-gradient(135deg, #042f2e, #14b8a6)' },
-    { title: 'Optical Illusion Deck', group: "JUNE '26", tag: 'INSPIRE', aspect: 1.25, bg: 'linear-gradient(135deg, #450a0a, #ef4444)' },
-    { title: 'Solstice Release', group: "JUNE '26", tag: 'SHOWCASE', aspect: 1.1, bg: 'linear-gradient(135deg, #2e1065, #7c3aed)' }
+    { title: 'Defective Units Vol. 1', group: "OCTOBER '26", tag: 'SHOWCASE', aspect: 1.15, img: '/betteroff/assets/images/defective-units-vol-1.webp' },
+    { title: 'A$AP × Ray-Ban', group: "OCTOBER '26", tag: 'INSPIRE', aspect: 1.35, img: '/betteroff/assets/images/asap-x-rayban.webp' },
+    { title: '99 Cents Exhibition', group: "OCTOBER '26", tag: 'EXPERIMENT', aspect: 1.0, img: '/betteroff/assets/images/99-cents-only-store-gallery-exhibition.webp' },
+    { title: 'Converse × Works Studio', group: "SEPTEMBER '26", tag: 'ARCHIVE', aspect: 1.25, img: '/betteroff/assets/images/converse-shoe-drop-by-works-studio.webp' },
+    { title: 'Ch. 11 Waves Hawaii', group: "SEPTEMBER '26", tag: 'SHOWCASE', aspect: 1.1, img: '/betteroff/assets/images/ch-11-shit-waves-hawaii.webp' },
+    { title: 'Broncho Jams', group: "SEPTEMBER '26", tag: 'INSPIRE', aspect: 1.3, img: '/betteroff/assets/images/broncho-jams.webp' },
+    { title: 'Helge Tscharn Capsule', group: "AUGUST '26", tag: 'PRINT', aspect: 1.2, img: '/betteroff/assets/images/helge-tscharn-capsule.webp' },
+    { title: 'Kelly Slater Retires', group: "AUGUST '26", tag: 'SHOWCASE', aspect: 1.05, img: '/betteroff/assets/images/kelly-slater-retires.webp' },
+    { title: 'New Balance 933', group: "JULY '26", tag: 'CRAFT', aspect: 1.3, img: '/betteroff/assets/images/new-balance-933-andrew-reynolds.webp' },
+    { title: 'Off-White Resistance', group: "JULY '26", tag: 'EXPERIMENT', aspect: 1.15, img: '/betteroff/assets/images/off-white-state-of-resistance.webp' },
+    { title: 'Pocket Vol. 12', group: "JUNE '26", tag: 'INSPIRE', aspect: 1.25, img: '/betteroff/assets/images/pocket-vol-12.webp' },
+    { title: 'North Face Early Days', group: "JUNE '26", tag: 'SHOWCASE', aspect: 1.1, img: '/betteroff/assets/images/north-face-in-early-days.webp' }
   ];
 
   const viewport = document.getElementById('timeline-viewport');
@@ -34,14 +34,13 @@
       <article class="timeline-card" data-group="${item.group}" data-index="${idx}">
         ${isNew ? `<div class="timeline-month-flag">${item.group}</div>` : ''}
         <span class="timeline-card__badge-top">#${String(idx + 1).padStart(2, '0')}</span>
-        <div class="timeline-card__media" style="aspect-ratio: ${item.aspect}; background: ${item.bg};">
+        <div class="timeline-card__media" style="aspect-ratio: ${item.aspect}; background: linear-gradient(180deg, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.82) 100%), url('${item.img}') center/cover no-repeat;">
           <h3 class="timeline-card__title">${item.title}</h3>
         </div>
         <span class="timeline-card__badge-bottom">${item.tag} (${item.group})</span>
       </article>`;
   }).join('');
 
-  // Render 140 ruler ticks
   let ticksHtml = '';
   for (let i = 0; i < 140; i++) {
     ticksHtml += `<div class="ruler-tick ${i % 5 === 0 ? 'ruler-tick--major' : ''}"></div>`;
