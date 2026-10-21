@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebAudio Synth Jukebox Pill & Sound Gate Modal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="jukebox-stage">
+    <div class="sound-gate" id="sound-gate">
+      <h2>ENTER ARCHIVE AUDIO EXPERIENCE</h2>
+      <p>Procedural Web Audio API synthesizer &amp; tactile UI click engine</p>
+      <div class="gate-actions">
+        <button type="button" class="gate-btn gate-btn--primary" id="btn-enter-sound">Enter with Sound ♪</button>
+        <button type="button" class="gate-btn" id="btn-enter-silent">Enter Silent</button>
+      </div>
+    </div>
+
+    <div class="audio-pill" id="audio-pill">
+      <div class="audio-pill__bar">
+        <button type="button" class="audio-play-btn" id="audio-play-toggle" aria-label="Toggle playback">▶</button>
+        <div class="audio-marquee" id="audio-marquee-text"><span>SELECT TRACK TO PLAY</span></div>
+        <div class="eq-bars" aria-hidden="true">
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+          <span class="eq-bar"></span>
+        </div>
+      </div>
+      <div class="tracklist" id="audio-tracklist"></div>
+    </div>
+
+    <button type="button" class="gate-btn" id="reopen-gate">Re-open Sound Gate Intro</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

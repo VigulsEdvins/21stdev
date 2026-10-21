@@ -1,0 +1,11 @@
+{
+  "slug": "audio-jukebox-player",
+  "title": "WebAudio Synth Jukebox Pill & Sound Gate Modal",
+  "category": "Audio & Shaders",
+  "source": "betteroff",
+  "type": "component",
+  "description": "Floating pill audio jukebox with scrolling marquee track ticker, expandable playlist drawer, animated equalizer bars, Sound Gate intro modal, and built-in Web Audio API ambient synth + UI click SFX (needs zero external MP3 files).",
+  "tags": ["audio", "jukebox", "webaudio", "equalizer", "sound-gate", "player"],
+  "dependencies": ["Vanilla HTML/CSS/JS (Web Audio API)"],
+  "order": 12
+}

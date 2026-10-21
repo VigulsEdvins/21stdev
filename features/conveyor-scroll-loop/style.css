@@ -1,0 +1,101 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #08080a;
+  color: #f4f4f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+.conv-stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  cursor: ns-resize;
+}
+
+.conv-orb {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  margin-left: -110px;
+  margin-top: -110px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #a855f7, #3b0764 60%, #09090b);
+  box-shadow: 0 0 80px rgba(168, 85, 247, 0.35), inset 0 0 30px rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+  z-index: 5;
+  will-change: transform;
+}
+
+.conv-content {
+  position: relative;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 28px;
+  z-index: 10;
+}
+
+.conv-block {
+  padding: 56px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  will-change: transform;
+}
+
+.conv-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #a855f7;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.conv-display {
+  font-size: clamp(32px, 5vw, 62px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+
+.conv-pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.conv-pillar {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.conv-pillar strong {
+  display: block;
+  color: #a855f7;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.conv-pillar h3 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+.conv-pillar p {
+  font-size: 13px;
+  color: rgba(244, 244, 245, 0.62);
+  line-height: 1.5;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slide-Over Editorial Article Reader Drawer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="drawer-demo-stage">
+    <h2>Click any card to slide open the Editorial Drawer</h2>
+    <div class="story-grid" id="story-grid"></div>
+  </div>
+
+  <aside class="article-drawer" id="article-drawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <div class="drawer-panel">
+      <div class="drawer-top">
+        <div class="drawer-badges">
+          <span class="drawer-badge" id="drawer-badge-tag">SHOWCASE</span>
+          <span class="drawer-badge" id="drawer-badge-month">OCTOBER '26</span>
+        </div>
+        <button type="button" class="drawer-close" id="drawer-btn-close">Close (Esc)</button>
+      </div>
+      <h1 id="drawer-title" style="font-size:28px;font-weight:800;letter-spacing:-0.03em;"></h1>
+      <div class="drawer-hero" id="drawer-media"></div>
+      <div class="drawer-body" id="drawer-body"></div>
+    </div>
+  </aside>
+  <script src="script.js"></script>
+</body>
+</html>

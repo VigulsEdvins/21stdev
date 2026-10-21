@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinite Vertical Conveyor Scroll & 3D Trajectory Loop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="conv-stage" id="about-scroller">
+    <div class="conv-orb" id="about-globe-media"></div>
+    <div class="conv-content" id="about-content">
+      <section class="conv-block" data-smooth>
+        <div class="conv-eyebrow">(TLB / 01) — INFINITE CONVEYOR</div>
+        <h1 class="conv-display">"The Lookback"<br/>Living Archive<br/>Never Hits Bottom</h1>
+      </section>
+
+      <section class="conv-block" data-smooth>
+        <div class="conv-eyebrow">(TLB / 02) — CORE PILLARS</div>
+        <div class="conv-pillars">
+          <div class="conv-pillar">
+            <strong>01 // CURATION</strong>
+            <h3>Zero Dead Ends</h3>
+            <p>Every block measures its own top/bottom bounds and wraps seamlessly via modulo arithmetic.</p>
+          </div>
+          <div class="conv-pillar">
+            <strong>02 // TRAJECTORY</strong>
+            <h3>Orbital Sculpture</h3>
+            <p>The background 3D orb interpolates across a 4-stage sine curve synced to normalized cycle progress.</p>
+          </div>
+          <div class="conv-pillar">
+            <strong>03 // INERTIA</strong>
+            <h3>60fps Lerp</h3>
+            <p>Wheel and touch deltas accumulate into an unbounded target position with zero scrollbars.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="conv-block" data-smooth>
+        <div class="conv-eyebrow">(TLB / 03) — MANIFESTO</div>
+        <h2 class="conv-display">Keep scrolling in either direction — top and bottom loop infinitely.</h2>
+      </section>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

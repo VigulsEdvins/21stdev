@@ -63,3 +63,19 @@ for (const slug of carouselPlaySlugs) {
 
 console.log('Task 3 carousel-gallery-play feature checks passed.');
 
+// Test 4: Verify betteroff (The Lookback) extracted features (5 items)
+const betteroffSlugs = [
+  'surf-3d-ribbon',
+  'timeline-inertia-drag',
+  'conveyor-scroll-loop',
+  'audio-jukebox-player',
+  'article-slide-drawer'
+];
+
+for (const slug of betteroffSlugs) {
+  verifyFeatureFolder(slug, ['meta.json', 'index.html', 'style.css', 'script.js']);
+}
+
+console.log('Task 4 betteroff feature checks passed.');
+
+

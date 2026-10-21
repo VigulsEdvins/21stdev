@@ -1,0 +1,159 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #f4f3ef;
+  color: #111111;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", monospace;
+  overflow: hidden;
+  user-select: none;
+}
+
+.tl-root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100vh;
+}
+
+.tl-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.tl-viewport {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  cursor: grab;
+  perspective: 1000px;
+}
+
+.tl-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.tl-track {
+  display: flex;
+  align-items: flex-end;
+  gap: 36px;
+  padding: 0 120px;
+}
+
+.timeline-card {
+  position: relative;
+  flex-shrink: 0;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-month-flag {
+  position: absolute;
+  top: -36px;
+  left: 0;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: #111;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.timeline-card__badge-top {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.timeline-card__media {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.15s ease-out;
+  box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+  color: #fff;
+}
+
+.timeline-card__title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.timeline-card__badge-bottom {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.tl-ruler-wrap {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: #eae8e1;
+  padding: 14px 0 18px;
+  overflow: hidden;
+}
+
+.ruler-ticks {
+  display: flex;
+  gap: 14px;
+  padding: 0 24px;
+  margin-bottom: 12px;
+  will-change: transform;
+}
+
+.ruler-tick {
+  width: 1px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.ruler-tick--major {
+  height: 16px;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.ruler-months {
+  display: flex;
+  gap: 10px;
+  padding: 0 32px;
+  overflow-x: auto;
+}
+
+.ruler-month-btn {
+  appearance: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: transparent;
+  color: #111;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.ruler-month-btn.is-active {
+  background: #111111;
+  color: #ffffff;
+}

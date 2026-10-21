@@ -1,16 +1,19 @@
 {
-  "generatedAt": "2026-10-21T06:49:22.567Z",
+  "generatedAt": "2026-10-21T06:53:54.835Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 8,
+  "totalFeatures": 13,
   "categories": [
     "3D & Carousels",
     "Cursors & Physics",
     "Galleries & Grids",
-    "Navigation & UI"
+    "Navigation & UI",
+    "Scroll & Parallax",
+    "Audio & Shaders"
   ],
   "sources": [
     "photo-caroulsel",
-    "carousel-gallery-play"
+    "carousel-gallery-play",
+    "betteroff"
   ],
   "items": [
     {
@@ -261,6 +264,162 @@
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/faq-accordion-smooth",
       "relativePath": "features/faq-accordion-smooth",
       "previewUrl": "features/faq-accordion-smooth/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "surf-3d-ribbon",
+      "title": "Surf 3D Sine-Wave Ribbon & Physics Stream",
+      "category": "3D & Carousels",
+      "source": "betteroff",
+      "type": "component",
+      "description": "Infinite wrapping 3D perspective card stream moving along a diagonal sine-wave ribbon trajectory. Velocity amplifies wave amplitude while cards rotate on the Y-axis (-70° to -85°) and elevate on hover.",
+      "tags": [
+        "3d",
+        "ribbon",
+        "sine-wave",
+        "surf",
+        "infinite",
+        "inertia",
+        "physics"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/surf-3d-ribbon",
+      "relativePath": "features/surf-3d-ribbon",
+      "previewUrl": "features/surf-3d-ribbon/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "timeline-inertia-drag",
+      "title": "Horizontal Inertia Drag Timeline & Mechanical Tick Ruler",
+      "category": "Scroll & Parallax",
+      "source": "betteroff",
+      "type": "component",
+      "description": "Horizontal inertia-draggable archive timeline grouped by months with velocity-driven 3D Y-axis card tilt, synchronized mechanical tick ruler, month jump buttons, and subtle Web Audio tick feedback.",
+      "tags": [
+        "timeline",
+        "inertia",
+        "drag",
+        "ruler",
+        "horizontal-scroll",
+        "archive"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/timeline-inertia-drag",
+      "relativePath": "features/timeline-inertia-drag",
+      "previewUrl": "features/timeline-inertia-drag/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "conveyor-scroll-loop",
+      "title": "Infinite Vertical Conveyor Scroll & 3D Trajectory Loop",
+      "category": "Scroll & Parallax",
+      "source": "betteroff",
+      "type": "component",
+      "description": "Endless wrapping vertical virtual scroll engine using modulo wrap(-(totalHeight - item.end), item.end, scroll) math, paired with a central 3D orbital sculpture that travels along a multi-stage sine trajectory.",
+      "tags": [
+        "infinite-scroll",
+        "conveyor",
+        "virtual-scroll",
+        "wrap",
+        "editorial",
+        "trajectory"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/conveyor-scroll-loop",
+      "relativePath": "features/conveyor-scroll-loop",
+      "previewUrl": "features/conveyor-scroll-loop/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "audio-jukebox-player",
+      "title": "WebAudio Synth Jukebox Pill & Sound Gate Modal",
+      "category": "Audio & Shaders",
+      "source": "betteroff",
+      "type": "component",
+      "description": "Floating pill audio jukebox with scrolling marquee track ticker, expandable playlist drawer, animated equalizer bars, Sound Gate intro modal, and built-in Web Audio API ambient synth + UI click SFX (needs zero external MP3 files).",
+      "tags": [
+        "audio",
+        "jukebox",
+        "webaudio",
+        "equalizer",
+        "sound-gate",
+        "player"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS (Web Audio API)"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/audio-jukebox-player",
+      "relativePath": "features/audio-jukebox-player",
+      "previewUrl": "features/audio-jukebox-player/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "article-slide-drawer",
+      "title": "Slide-Over Editorial Article Reader Drawer",
+      "category": "Navigation & UI",
+      "source": "betteroff",
+      "type": "component",
+      "description": "Backdrop-blurred slide-over editorial reading drawer with rich typography, tag/month metadata badges, gallery blocks, next/prev article navigation, and Esc/backdrop dismissal.",
+      "tags": [
+        "drawer",
+        "slide-over",
+        "modal",
+        "editorial",
+        "article",
+        "reader"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/article-slide-drawer",
+      "relativePath": "features/article-slide-drawer",
+      "previewUrl": "features/article-slide-drawer/index.html",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,
