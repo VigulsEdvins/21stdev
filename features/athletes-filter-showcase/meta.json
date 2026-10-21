@@ -1,0 +1,11 @@
+{
+  "slug": "athletes-filter-showcase",
+  "title": "Filterable Roster & Portrait Hover Showcase",
+  "category": "Galleries & Grids",
+  "source": "carousel-gallery-play",
+  "type": "component",
+  "description": "Category-filtered portrait showcase with animated pill tabs, horizontal snap rail, synced pagination dots, and directional hover CTA overlays.",
+  "tags": ["filter", "tabs", "cards", "roster", "gallery", "portraits"],
+  "dependencies": ["Vanilla HTML/CSS/JS"],
+  "order": 6
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Cylindrical Drag & Velocity Carousel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="cyl-section" id="work">
+    <div class="cyl-header">
+      <h2 class="cyl-title">Selected <span>Campaigns</span> 360°</h2>
+      <div class="cyl-controls">
+        <button type="button" class="cyl-btn" id="carousel-prev">← Prev</button>
+        <button type="button" class="cyl-btn" id="carousel-toggle" aria-pressed="false">Pause</button>
+        <button type="button" class="cyl-btn" id="carousel-next">Next →</button>
+      </div>
+    </div>
+
+    <div class="cyl-viewport" id="carousel-3d-wrap">
+      <div class="cyl-list" id="carousel-3d-list"></div>
+    </div>
+
+    <div class="cyl-footer">
+      <span>Drag horizontally or scroll wheel to spin cylinder</span>
+      <span id="cyl-speed-readout">Velocity: 1.0x</span>
+    </div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>

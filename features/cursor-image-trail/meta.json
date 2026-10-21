@@ -1,0 +1,11 @@
+{
+  "slug": "cursor-image-trail",
+  "title": "Interactive Velocity Cursor Image Trail",
+  "category": "Cursors & Physics",
+  "source": "carousel-gallery-play",
+  "type": "component",
+  "description": "Spawns momentum-thrown visual cards along the cursor path whenever pointer travel exceeds 90px. Cards drift along the movement vector with random rotation, scale up, and smoothly decay out.",
+  "tags": ["cursor", "trail", "momentum", "interactive", "hero", "velocity"],
+  "dependencies": ["Vanilla HTML/CSS/JS"],
+  "order": 4
+}

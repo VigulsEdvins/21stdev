@@ -1,0 +1,11 @@
+{
+  "slug": "custom-magnetic-cursor",
+  "title": "Custom Glassmorphic & Magnetic Target Cursor",
+  "category": "Cursors & Physics",
+  "source": "carousel-gallery-play",
+  "type": "component",
+  "description": "Smooth lerp-driven dual-ring glassmorphic cursor follower that expands with contextual action labels (PLAY, VIEW, EXPLORE) and magnetically pulls buttons toward the pointer.",
+  "tags": ["cursor", "magnetic", "glassmorphism", "lerp", "micro-interaction"],
+  "dependencies": ["Vanilla HTML/CSS/JS"],
+  "order": 7
+}

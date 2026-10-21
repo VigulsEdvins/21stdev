@@ -46,3 +46,20 @@ verifyFeatureFolder(
 );
 
 console.log('Task 2 photo-caroulsel feature checks passed.');
+
+// Test 3: Verify carousel-gallery-play extracted features (6 items)
+const carouselPlaySlugs = [
+  'cylindrical-3d-carousel',
+  'cursor-image-trail',
+  'client-logo-marquee',
+  'athletes-filter-showcase',
+  'custom-magnetic-cursor',
+  'faq-accordion-smooth'
+];
+
+for (const slug of carouselPlaySlugs) {
+  verifyFeatureFolder(slug, ['meta.json', 'index.html', 'style.css', 'script.js']);
+}
+
+console.log('Task 3 carousel-gallery-play feature checks passed.');
+

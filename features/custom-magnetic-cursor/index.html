@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Glassmorphic & Magnetic Target Cursor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="mag-stage">
+    <div class="mag-cards">
+      <div class="mag-zone" data-cursor-zone="PLAY REEL">
+        <h3>Showreel 2026</h3>
+        <p>Hover to morph cursor into PLAY REEL</p>
+      </div>
+      <div class="mag-zone" data-cursor-zone="EXPLORE">
+        <h3>3D Case Studies</h3>
+        <p>Hover to morph cursor into EXPLORE</p>
+      </div>
+      <div class="mag-zone" data-cursor-zone="DRAG 360°">
+        <h3>Interactive Stage</h3>
+        <p>Hover to morph cursor into DRAG 360°</p>
+      </div>
+    </div>
+
+    <div class="mag-buttons">
+      <button type="button" class="mag-btn" data-magnetic>Magnetic Action</button>
+      <button type="button" class="mag-btn" data-magnetic>Start Project ↗</button>
+      <button type="button" class="mag-btn" data-magnetic>Download Kit</button>
+    </div>
+  </div>
+
+  <div class="custom-cursor" id="custom-cursor"><span id="cursor-label">PLAY</span></div>
+  <script src="script.js"></script>
+</body>
+</html>

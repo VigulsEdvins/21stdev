@@ -1,12 +1,16 @@
 {
-  "generatedAt": "2026-10-21T06:43:46.363Z",
+  "generatedAt": "2026-10-21T06:49:22.567Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 2,
+  "totalFeatures": 8,
   "categories": [
-    "3D & Carousels"
+    "3D & Carousels",
+    "Cursors & Physics",
+    "Galleries & Grids",
+    "Navigation & UI"
   ],
   "sources": [
-    "photo-caroulsel"
+    "photo-caroulsel",
+    "carousel-gallery-play"
   ],
   "items": [
     {
@@ -79,6 +83,192 @@
         "css",
         "js",
         "tsx"
+      ]
+    },
+    {
+      "slug": "cylindrical-3d-carousel",
+      "title": "3D Cylindrical Drag & Velocity Carousel",
+      "category": "3D & Carousels",
+      "source": "carousel-gallery-play",
+      "type": "component",
+      "description": "12-panel 3D cylinder with alternating dual/single project slots, tilted 5° on the Z-axis. Supports 1:1 pointer drag-to-spin with throw inertia, scroll-wheel velocity acceleration, pause on card hover, and prev/pause/next controls.",
+      "tags": [
+        "3d",
+        "cylinder",
+        "carousel",
+        "drag",
+        "inertia",
+        "velocity",
+        "showcase"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/cylindrical-3d-carousel",
+      "relativePath": "features/cylindrical-3d-carousel",
+      "previewUrl": "features/cylindrical-3d-carousel/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "cursor-image-trail",
+      "title": "Interactive Velocity Cursor Image Trail",
+      "category": "Cursors & Physics",
+      "source": "carousel-gallery-play",
+      "type": "component",
+      "description": "Spawns momentum-thrown visual cards along the cursor path whenever pointer travel exceeds 90px. Cards drift along the movement vector with random rotation, scale up, and smoothly decay out.",
+      "tags": [
+        "cursor",
+        "trail",
+        "momentum",
+        "interactive",
+        "hero",
+        "velocity"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/cursor-image-trail",
+      "relativePath": "features/cursor-image-trail",
+      "previewUrl": "features/cursor-image-trail/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "client-logo-marquee",
+      "title": "Infinite Dual-Direction Partner Logo Marquee",
+      "category": "Galleries & Grids",
+      "source": "carousel-gallery-play",
+      "type": "component",
+      "description": "Seamless hardware-accelerated infinite dual-track partner logo marquee with soft gradient edge masks, hover speed modulation, and direction reversal toggle.",
+      "tags": [
+        "marquee",
+        "logos",
+        "clients",
+        "infinite",
+        "ticker",
+        "marketing"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/client-logo-marquee",
+      "relativePath": "features/client-logo-marquee",
+      "previewUrl": "features/client-logo-marquee/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "athletes-filter-showcase",
+      "title": "Filterable Roster & Portrait Hover Showcase",
+      "category": "Galleries & Grids",
+      "source": "carousel-gallery-play",
+      "type": "component",
+      "description": "Category-filtered portrait showcase with animated pill tabs, horizontal snap rail, synced pagination dots, and directional hover CTA overlays.",
+      "tags": [
+        "filter",
+        "tabs",
+        "cards",
+        "roster",
+        "gallery",
+        "portraits"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/athletes-filter-showcase",
+      "relativePath": "features/athletes-filter-showcase",
+      "previewUrl": "features/athletes-filter-showcase/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "custom-magnetic-cursor",
+      "title": "Custom Glassmorphic & Magnetic Target Cursor",
+      "category": "Cursors & Physics",
+      "source": "carousel-gallery-play",
+      "type": "component",
+      "description": "Smooth lerp-driven dual-ring glassmorphic cursor follower that expands with contextual action labels (PLAY, VIEW, EXPLORE) and magnetically pulls buttons toward the pointer.",
+      "tags": [
+        "cursor",
+        "magnetic",
+        "glassmorphism",
+        "lerp",
+        "micro-interaction"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/custom-magnetic-cursor",
+      "relativePath": "features/custom-magnetic-cursor",
+      "previewUrl": "features/custom-magnetic-cursor/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "faq-accordion-smooth",
+      "title": "Editorial Smooth-Height FAQ Accordion",
+      "category": "Navigation & UI",
+      "source": "carousel-gallery-play",
+      "type": "component",
+      "description": "Accessible ARIA-compliant editorial FAQ accordion using CSS grid-template-rows 0fr->1fr smooth height interpolation and rotating plus/cross indicators.",
+      "tags": [
+        "faq",
+        "accordion",
+        "ui",
+        "editorial",
+        "accessible",
+        "collapsible"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/faq-accordion-smooth",
+      "relativePath": "features/faq-accordion-smooth",
+      "previewUrl": "features/faq-accordion-smooth/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
       ]
     }
   ]

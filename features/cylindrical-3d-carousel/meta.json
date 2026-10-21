@@ -1,0 +1,11 @@
+{
+  "slug": "cylindrical-3d-carousel",
+  "title": "3D Cylindrical Drag & Velocity Carousel",
+  "category": "3D & Carousels",
+  "source": "carousel-gallery-play",
+  "type": "component",
+  "description": "12-panel 3D cylinder with alternating dual/single project slots, tilted 5° on the Z-axis. Supports 1:1 pointer drag-to-spin with throw inertia, scroll-wheel velocity acceleration, pause on card hover, and prev/pause/next controls.",
+  "tags": ["3d", "cylinder", "carousel", "drag", "inertia", "velocity", "showcase"],
+  "dependencies": ["Vanilla HTML/CSS/JS"],
+  "order": 3
+}
