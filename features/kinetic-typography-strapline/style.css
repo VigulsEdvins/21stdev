@@ -1,0 +1,75 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background: #0b0b0e;
+  color: #f4f4f6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+}
+
+.strapline-stage {
+  height: 100vh;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.strapline-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-family: monospace;
+  letter-spacing: 0.16em;
+  color: #71717a;
+}
+
+.strapline-copy {
+  font-size: clamp(1.75rem, 3.8vw, 3.1rem);
+  line-height: 1.22;
+  letter-spacing: -0.03em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28em;
+}
+
+.k-word {
+  transition: color 0.2s ease, opacity 0.2s ease, transform 0.25s ease;
+  opacity: 0.18;
+  transform: translateY(4px);
+}
+
+.k-word.is-serif {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.k-word.is-lit {
+  opacity: 1;
+  color: #fafafa;
+  transform: translateY(0);
+}
+
+.k-word.is-lit.is-serif {
+  color: #d8b4fe;
+}
+
+.strapline-controls {
+  display: flex;
+  align-items: center;
+}
+
+#wordScrubber {
+  width: 100%;
+  accent-color: #a855f7;
+  cursor: pointer;
+}

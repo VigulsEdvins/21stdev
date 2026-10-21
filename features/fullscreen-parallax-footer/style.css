@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+}
+
+.viv-footer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #141413;
+  color: #f4f1ea;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px 40px;
+  transition: background-color 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.footer-top-meta,
+.footer-bottom-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244, 241, 234, 0.55);
+  z-index: 3;
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+
+.footer-link {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: baseline;
+  padding: 18px 0;
+  border-top: 1px solid rgba(244, 241, 234, 0.14);
+  color: #f4f1ea;
+  text-decoration: none;
+  transition: padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+.footer-link:last-child {
+  border-bottom: 1px solid rgba(244, 241, 234, 0.14);
+}
+
+.footer-nav:hover .footer-link {
+  opacity: 0.38;
+}
+
+.footer-nav .footer-link:hover {
+  opacity: 1;
+  padding-left: 18px;
+}
+
+.link-index {
+  font-size: 11px;
+  font-family: monospace;
+  color: rgba(244, 241, 234, 0.5);
+}
+
+.link-label {
+  font-size: clamp(1.85rem, 4.2vw, 3.4rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.link-label em {
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
+.link-arrow {
+  font-size: 24px;
+}
+
+.floating-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-50%, -50%, 0) scale(0.86);
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.floating-card.is-visible {
+  opacity: 1;
+}
+
+.floating-art {
+  width: 100%;
+  height: 170px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background: radial-gradient(circle at 30% 30%, #eab676, #1a1423);
+}
+
+.floating-caption {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #f4f1ea;
+}

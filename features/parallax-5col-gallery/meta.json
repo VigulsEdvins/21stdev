@@ -1,0 +1,12 @@
+{
+  "name": "5-Column Staggered Parallax Gallery",
+  "slug": "parallax-5col-gallery",
+  "category": "Scroll & Parallax",
+  "source": "vivmgmt",
+  "type": "component",
+  "description": "5-column editorial artist gallery with horizontal cursor pan, opposing vertical wheel parallax per column, and automatic top-card media cycling on idle.",
+  "tags": ["parallax", "gallery", "5-column", "editorial", "mouse-pan", "vivmgmt"],
+  "tech": ["Vanilla JS", "requestAnimationFrame", "CSS Grid"],
+  "dependencies": [],
+  "order": 14
+}

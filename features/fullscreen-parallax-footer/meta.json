@@ -1,0 +1,12 @@
+{
+  "name": "Full-Screen Parallax Footer Reveal",
+  "slug": "fullscreen-parallax-footer",
+  "category": "Scroll & Parallax",
+  "source": "vivmgmt",
+  "type": "component",
+  "description": "Uncovering full-screen parallax footer with cursor-tracking hover image previews and dynamic ambient background color transitions.",
+  "tags": ["footer", "parallax", "hover-reveal", "color-shift", "vivmgmt"],
+  "tech": ["Vanilla JS", "CSS Transitions", "Cursor Tracking"],
+  "dependencies": [],
+  "order": 16
+}

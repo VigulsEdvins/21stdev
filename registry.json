@@ -1,19 +1,22 @@
 {
-  "generatedAt": "2026-10-21T06:53:54.835Z",
+  "generatedAt": "2026-10-21T07:01:26.114Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 13,
+  "totalFeatures": 26,
   "categories": [
     "3D & Carousels",
     "Cursors & Physics",
     "Galleries & Grids",
     "Navigation & UI",
     "Scroll & Parallax",
-    "Audio & Shaders"
+    "Audio & Shaders",
+    "Full Templates"
   ],
   "sources": [
     "photo-caroulsel",
     "carousel-gallery-play",
-    "betteroff"
+    "betteroff",
+    "vivmgmt",
+    "21st-crafted"
   ],
   "items": [
     {
@@ -422,6 +425,382 @@
       "previewUrl": "features/article-slide-drawer/index.html",
       "liveSiteUrl": null,
       "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "parallax-5col-gallery",
+      "title": "parallax-5col-gallery",
+      "category": "Scroll & Parallax",
+      "source": "vivmgmt",
+      "type": "component",
+      "description": "5-column editorial artist gallery with horizontal cursor pan, opposing vertical wheel parallax per column, and automatic top-card media cycling on idle.",
+      "tags": [
+        "parallax",
+        "gallery",
+        "5-column",
+        "editorial",
+        "mouse-pan",
+        "vivmgmt"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/parallax-5col-gallery",
+      "relativePath": "features/parallax-5col-gallery",
+      "previewUrl": "features/parallax-5col-gallery/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "split-screen-entrance",
+      "title": "split-screen-entrance",
+      "category": "Scroll & Parallax",
+      "source": "vivmgmt",
+      "type": "component",
+      "description": "Hero SVG split-clip reveal and scale-down curtain choreography with replay trigger and scroll-linked split separation.",
+      "tags": [
+        "entrance",
+        "curtain",
+        "split-screen",
+        "choreography",
+        "vivmgmt"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/split-screen-entrance",
+      "relativePath": "features/split-screen-entrance",
+      "previewUrl": "features/split-screen-entrance/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "fullscreen-parallax-footer",
+      "title": "fullscreen-parallax-footer",
+      "category": "Scroll & Parallax",
+      "source": "vivmgmt",
+      "type": "component",
+      "description": "Uncovering full-screen parallax footer with cursor-tracking hover image previews and dynamic ambient background color transitions.",
+      "tags": [
+        "footer",
+        "parallax",
+        "hover-reveal",
+        "color-shift",
+        "vivmgmt"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/fullscreen-parallax-footer",
+      "relativePath": "features/fullscreen-parallax-footer",
+      "previewUrl": "features/fullscreen-parallax-footer/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "news-3col-masonry",
+      "title": "news-3col-masonry",
+      "category": "Galleries & Grids",
+      "source": "vivmgmt",
+      "type": "component",
+      "description": "3-column Packery-style editorial masonry grid with category filtering and IntersectionObserver staggered card reveal.",
+      "tags": [
+        "masonry",
+        "editorial",
+        "grid",
+        "intersection-observer",
+        "vivmgmt"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/news-3col-masonry",
+      "relativePath": "features/news-3col-masonry",
+      "previewUrl": "features/news-3col-masonry/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "artist-portfolio-lightbox",
+      "title": "artist-portfolio-lightbox",
+      "category": "Galleries & Grids",
+      "source": "vivmgmt",
+      "type": "component",
+      "description": "High-fashion portfolio lightbox with keyboard arrow navigation, plate counter, metadata drawer, and interactive thumbnail strip.",
+      "tags": [
+        "lightbox",
+        "portfolio",
+        "modal",
+        "keyboard-nav",
+        "vivmgmt"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/artist-portfolio-lightbox",
+      "relativePath": "features/artist-portfolio-lightbox",
+      "previewUrl": "features/artist-portfolio-lightbox/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "responsive-burger-menu",
+      "title": "responsive-burger-menu",
+      "category": "Navigation & UI",
+      "source": "vivmgmt",
+      "type": "component",
+      "description": "Morphing two-line architectural burger button and full-screen staggered navigation curtain with office directory.",
+      "tags": [
+        "navigation",
+        "burger-menu",
+        "overlay",
+        "stagger",
+        "vivmgmt"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/responsive-burger-menu",
+      "relativePath": "features/responsive-burger-menu",
+      "previewUrl": "features/responsive-burger-menu/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "oklch-ambient-glow-hero",
+      "title": "oklch-ambient-glow-hero",
+      "category": "Audio & Shaders",
+      "source": "21st-crafted",
+      "type": "component",
+      "description": "21st.dev signature dark hero with wide-gamut oklch() radial pulsing aurora shaders, blur-to-sharp entrance choreography, and interactive category chip river.",
+      "tags": [
+        "oklch",
+        "aurora",
+        "hero",
+        "21st-dev",
+        "glow"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/oklch-ambient-glow-hero",
+      "relativePath": "features/oklch-ambient-glow-hero",
+      "previewUrl": "features/oklch-ambient-glow-hero/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spotlight-bento-grid",
+      "title": "spotlight-bento-grid",
+      "category": "Galleries & Grids",
+      "source": "21st-crafted",
+      "type": "component",
+      "description": "Multi-card bento grid with shared mouse-tracking radial border illumination and inner surface spotlight.",
+      "tags": [
+        "bento",
+        "spotlight",
+        "21st-dev",
+        "cursor-glow",
+        "grid"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spotlight-bento-grid",
+      "relativePath": "features/spotlight-bento-grid",
+      "previewUrl": "features/spotlight-bento-grid/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "liquid-metal-shader-card",
+      "title": "liquid-metal-shader-card",
+      "category": "Audio & Shaders",
+      "source": "21st-crafted",
+      "type": "component",
+      "description": "Interactive HTML5 Canvas iridescent liquid-chrome shader card with pointer ripple waves and 3D perspective tilt.",
+      "tags": [
+        "shader",
+        "canvas",
+        "liquid-metal",
+        "iridescent",
+        "21st-dev"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/liquid-metal-shader-card",
+      "relativePath": "features/liquid-metal-shader-card",
+      "previewUrl": "features/liquid-metal-shader-card/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "kinetic-typography-strapline",
+      "title": "kinetic-typography-strapline",
+      "category": "Scroll & Parallax",
+      "source": "21st-crafted",
+      "type": "component",
+      "description": "Wheel- and scrubber-driven word-by-word illumination mixing upright neo-grotesk sans and italic editorial serif typography.",
+      "tags": [
+        "typography",
+        "kinetic",
+        "scroll-scrub",
+        "serif",
+        "21st-dev"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/kinetic-typography-strapline",
+      "relativePath": "features/kinetic-typography-strapline",
+      "previewUrl": "features/kinetic-typography-strapline/index.html",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "template-betteroff",
+      "title": "template-betteroff",
+      "category": "Full Templates",
+      "source": "betteroff",
+      "type": "template",
+      "description": "Complete multi-chapter interactive annual review website with 3D WebGL Surf ribbon, inertia timeline, jukebox audio player, and live visual Admin CMS studio.",
+      "tags": [
+        "full-template",
+        "cms",
+        "admin",
+        "threejs",
+        "betteroff",
+        "annual-report"
+      ],
+      "dependencies": [
+        "three",
+        "gsap",
+        "lenis"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-betteroff",
+      "relativePath": "features/template-betteroff",
+      "previewUrl": "features/template-betteroff/index.html",
+      "liveSiteUrl": "../betteroff/index.html",
+      "adminUrl": "../betteroff/admin.html",
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "template-carousel-play",
+      "title": "template-carousel-play",
+      "category": "Full Templates",
+      "source": "carousel-gallery-play",
+      "type": "template",
+      "description": "Complete creative sports agency website featuring a 3D cylindrical WebGL hero carousel, cursor image trail, athlete roster filter, and live Admin CMS.",
+      "tags": [
+        "full-template",
+        "cms",
+        "admin",
+        "threejs",
+        "sports-agency",
+        "carousel-gallery-play"
+      ],
+      "dependencies": [
+        "three",
+        "gsap",
+        "lenis"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-carousel-play",
+      "relativePath": "features/template-carousel-play",
+      "previewUrl": "features/template-carousel-play/index.html",
+      "liveSiteUrl": "../carousel-gallery-play/index.html",
+      "adminUrl": "../carousel-gallery-play/admin.html",
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "template-vivmgmt",
+      "title": "template-vivmgmt",
+      "category": "Full Templates",
+      "source": "vivmgmt",
+      "type": "template",
+      "description": "High-fashion artist representation & syndication website featuring a 5-column parallax roster, split-curtain entrance, masonry newsroom, and visual Admin CMS.",
+      "tags": [
+        "full-template",
+        "cms",
+        "admin",
+        "editorial",
+        "vivmgmt",
+        "parallax"
+      ],
+      "dependencies": [],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-vivmgmt",
+      "relativePath": "features/template-vivmgmt",
+      "previewUrl": "features/template-vivmgmt/index.html",
+      "liveSiteUrl": "../vivmgmt/index.html",
+      "adminUrl": "../vivmgmt/admin.html",
       "sourceRepoPath": null,
       "availableFiles": [
         "combined",

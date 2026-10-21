@@ -78,4 +78,34 @@ for (const slug of betteroffSlugs) {
 
 console.log('Task 4 betteroff feature checks passed.');
 
+// Test 5: Verify vivmgmt (6), 21st-crafted (4), and full website templates (3) -> Total 26 items
+const task5Slugs = [
+  'parallax-5col-gallery',
+  'split-screen-entrance',
+  'fullscreen-parallax-footer',
+  'news-3col-masonry',
+  'artist-portfolio-lightbox',
+  'responsive-burger-menu',
+  'oklch-ambient-glow-hero',
+  'spotlight-bento-grid',
+  'liquid-metal-shader-card',
+  'kinetic-typography-strapline',
+  'template-betteroff',
+  'template-carousel-play',
+  'template-vivmgmt'
+];
+
+for (const slug of task5Slugs) {
+  verifyFeatureFolder(slug, ['meta.json', 'index.html', 'style.css', 'script.js']);
+}
+
+const synced = syncRegistry(ROOT);
+assert.strictEqual(synced.count, 26, `Expected exactly 26 features in registry, got ${synced.count}`);
+for (const item of synced.items) {
+  assert(item.files && item.files.combined && item.files.combined.length > 50, `Invalid combined HTML for ${item.slug}`);
+}
+
+console.log('Task 5 all 26 features & templates verified.');
+
+
 

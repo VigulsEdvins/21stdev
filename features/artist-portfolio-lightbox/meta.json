@@ -1,0 +1,12 @@
+{
+  "name": "Artist Portfolio Modal Lightbox",
+  "slug": "artist-portfolio-lightbox",
+  "category": "Galleries & Grids",
+  "source": "vivmgmt",
+  "type": "component",
+  "description": "High-fashion portfolio lightbox with keyboard arrow navigation, plate counter, metadata drawer, and interactive thumbnail strip.",
+  "tags": ["lightbox", "portfolio", "modal", "keyboard-nav", "vivmgmt"],
+  "tech": ["Vanilla JS", "CSS Grid", "Keyboard Events"],
+  "dependencies": [],
+  "order": 18
+}

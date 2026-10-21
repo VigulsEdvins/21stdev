@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3-Column Editorial Masonry Grid</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="masonry-shell">
+    <header class="masonry-header">
+      <div>
+        <span class="kicker">VIVMGMT // PRESS DISPATCH</span>
+        <h1>Editorial <em>Chronicle</em></h1>
+      </div>
+      <div class="filter-bar" id="masonryFilters">
+        <button class="filter-chip is-active" data-tag="all">All Dispatches</button>
+        <button class="filter-chip" data-tag="Campaign">Campaign</button>
+        <button class="filter-chip" data-tag="Exhibition">Exhibition</button>
+        <button class="filter-chip" data-tag="Cover">Cover Story</button>
+      </div>
+    </header>
+    <section class="masonry-grid" id="masonryGrid"></section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

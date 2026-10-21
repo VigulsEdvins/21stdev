@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background: #0c0c0e;
+  color: #f4f4f6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+}
+
+.tpl-card {
+  height: 100vh;
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: radial-gradient(circle at 80% 15%, rgba(255, 94, 58, 0.18), transparent 55%), #0c0c0e;
+}
+
+.tpl-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  font-family: monospace;
+  letter-spacing: 0.14em;
+}
+
+.tpl-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 94, 58, 0.16);
+  color: #ff7b54;
+  border: 1px solid rgba(255, 94, 58, 0.35);
+}
+
+.tpl-path {
+  color: #a1a1aa;
+}
+
+.tpl-preview-visual {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, #16161a, #1f1412);
+  padding: 28px;
+  overflow: hidden;
+}
+
+.ribbon-sim {
+  position: absolute;
+  right: -40px;
+  top: -30px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: conic-gradient(from 45deg, #ff5e3a, #ff2a6d, #ffc857, #ff5e3a);
+  filter: blur(36px);
+  opacity: 0.45;
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.sim-overlay {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+}
+
+.sim-kicker {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #ff7b54;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.sim-overlay h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.sim-overlay p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #d4d4d8;
+}
+
+.tpl-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tpl-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.tpl-btn.primary {
+  background: #ff5e3a;
+  color: #09090b;
+}
+
+.tpl-btn.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fafafa;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.tpl-btn.ghost {
+  background: transparent;
+  color: #a1a1aa;
+  border-color: rgba(255, 255, 255, 0.12);
+}

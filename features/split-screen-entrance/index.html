@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Split-Screen Curtain Entrance</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="curtain-stage" id="curtainStage">
+    <div class="underlay-hero">
+      <p class="eyebrow">REPRESENTING GLOBAL VISUAL VOICES</p>
+      <h1 class="hero-headline">Curated <em>Visionaries</em> &amp; Spatial Direction</h1>
+      <div class="controls">
+        <button class="replay-btn" id="replayBtn" type="button">Replay Split Entrance</button>
+        <input type="range" id="splitScrubber" min="0" max="100" value="100" aria-label="Scrub split progress" />
+      </div>
+    </div>
+
+    <div class="curtain-half curtain-top" id="curtainTop">
+      <div class="monogram-wrap">
+        <span class="monogram-text">VIVIENNE</span>
+      </div>
+    </div>
+
+    <div class="curtain-half curtain-bottom" id="curtainBottom">
+      <div class="monogram-wrap">
+        <span class="monogram-text">VIVIENNE</span>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

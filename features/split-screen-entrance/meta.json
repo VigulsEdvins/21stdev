@@ -1,0 +1,12 @@
+{
+  "name": "Split-Screen Curtain Entrance",
+  "slug": "split-screen-entrance",
+  "category": "Scroll & Parallax",
+  "source": "vivmgmt",
+  "type": "component",
+  "description": "Hero SVG split-clip reveal and scale-down curtain choreography with replay trigger and scroll-linked split separation.",
+  "tags": ["entrance", "curtain", "split-screen", "choreography", "vivmgmt"],
+  "tech": ["Vanilla JS", "CSS Keyframes", "SVG"],
+  "dependencies": [],
+  "order": 15
+}

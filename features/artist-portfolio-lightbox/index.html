@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artist Portfolio Modal Lightbox</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="portfolio-page">
+    <header class="portfolio-top">
+      <div>
+        <span class="artist-kicker">ARTIST MONOGRAPH // 04 PLATES</span>
+        <h1 class="artist-title">Carlijn Jacobs &mdash; <em>Selected Works</em></h1>
+      </div>
+      <span class="key-hint">Click any plate or use &larr; / &rarr; keys</span>
+    </header>
+
+    <div class="plate-grid" id="plateGrid"></div>
+
+    <div class="lightbox-modal is-open" id="lightboxModal" role="dialog" aria-modal="true">
+      <div class="lightbox-topbar">
+        <span class="lightbox-counter" id="lightboxCounter">PLATE 01 / 04</span>
+        <span class="lightbox-caption" id="lightboxCaption">Prada Linea Rossa</span>
+        <button class="lightbox-close" id="lightboxClose" type="button">Grid View &times;</button>
+      </div>
+
+      <div class="lightbox-stage">
+        <button class="nav-arrow" id="prevPlate" type="button" aria-label="Previous plate">&larr;</button>
+        <div class="lightbox-canvas" id="lightboxCanvas"></div>
+        <button class="nav-arrow" id="nextPlate" type="button" aria-label="Next plate">&rarr;</button>
+      </div>
+
+      <div class="lightbox-thumbs" id="lightboxThumbs"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

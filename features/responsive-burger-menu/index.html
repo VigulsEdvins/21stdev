@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morphing Burger &amp; Staggered Overlay Menu</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="nav-demo-shell is-open" id="navShell">
+    <header class="topbar">
+      <span class="brand">VIVMGMT</span>
+      <button class="burger-btn" id="burgerBtn" type="button" aria-expanded="true" aria-label="Toggle Menu">
+        <span class="burger-label" id="burgerLabel">CLOSE</span>
+        <span class="burger-lines">
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+        </span>
+      </button>
+    </header>
+
+    <div class="page-backdrop">
+      <p>Click the top-right trigger to toggle the staggered full-screen navigation curtain.</p>
+    </div>
+
+    <nav class="overlay-menu" id="overlayMenu">
+      <ul class="menu-links">
+        <li style="--i:0"><a href="#artists"><span>01</span>Artists <em>Roster</em></a></li>
+        <li style="--i:1"><a href="#news"><span>02</span>Editorial <em>Chronicle</em></a></li>
+        <li style="--i:2"><a href="#syndication"><span>03</span>Global <em>Syndication</em></a></li>
+        <li style="--i:3"><a href="#contact"><span>04</span>Paris &amp; NY <em>Offices</em></a></li>
+      </ul>
+    </nav>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background: #f4f1ea;
+  color: #141413;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+.viv-gallery {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.viv-hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 28px;
+  background: linear-gradient(180deg, rgba(244,241,234,0.92) 0%, rgba(244,241,234,0) 100%);
+  pointer-events: none;
+}
+
+.viv-brand {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.viv-hint {
+  font-size: 11px;
+  color: rgba(20, 20, 19, 0.55);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.viv-pan-stage {
+  width: 124%;
+  height: 100%;
+  margin-left: -12%;
+  will-change: transform;
+}
+
+.viv-columns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 22px;
+  padding: 72px 32px;
+  height: 100%;
+}
+
+.viv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  will-change: transform;
+}
+
+.viv-card {
+  background: #e9e4da;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+}
+
+.viv-card:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.14);
+}
+
+.viv-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.viv-card-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.65s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 18px;
+}
+
+.viv-card-layer.is-active {
+  opacity: 1;
+}
+
+.viv-card:hover .viv-card-layer.is-active {
+  transform: scale(1.05);
+}
+
+.viv-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 4px 4px;
+  background: #f4f1ea;
+}
+
+.viv-artist-name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.viv-artist-role {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(20, 20, 19, 0.52);
+}
+
+.viv-cycle-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(20, 20, 19, 0.72);
+  color: #f4f1ea;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
