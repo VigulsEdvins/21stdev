@@ -69,4 +69,42 @@ manager.addSection('footer-simple');
 assert.strictEqual(subscriberCalled, true, 'Subscriber should be called on mutation');
 unsubscribe();
 
+// Test draggable elements state
+const sec = manager.addSection('hero-section');
+const btnElement = manager.addElement(sec.id, {
+  type: 'button',
+  x: 25,
+  y: 60,
+  text: 'Click Me',
+  link: 'https://example.com',
+  style: 'neon'
+});
+assert(btnElement && btnElement.id, 'addElement should return element with id');
+assert.strictEqual(btnElement.type, 'button');
+assert.strictEqual(btnElement.x, 25);
+assert.strictEqual(btnElement.y, 60);
+
+// Update element coordinates & text
+manager.updateElement(sec.id, btnElement.id, { x: 30, y: 70, text: 'Explore Now' });
+const updatedElements = manager.getSectionElements(sec.id);
+assert.strictEqual(updatedElements[0].x, 30);
+assert.strictEqual(updatedElements[0].y, 70);
+assert.strictEqual(updatedElements[0].text, 'Explore Now');
+
+// Add image element
+const imgElement = manager.addElement(sec.id, {
+  type: 'image',
+  x: 50,
+  y: 40,
+  imageUrl: 'https://images.unsplash.com/sample.jpg',
+  imageSize: 'medium'
+});
+assert.strictEqual(manager.getSectionElements(sec.id).length, 2);
+
+// Remove button element
+const removed = manager.removeElement(sec.id, btnElement.id);
+assert.strictEqual(removed, true);
+assert.strictEqual(manager.getSectionElements(sec.id).length, 1);
+assert.strictEqual(manager.getSectionElements(sec.id)[0].id, imgElement.id);
+
 console.log('✅ Stack manager state tests passed!');
