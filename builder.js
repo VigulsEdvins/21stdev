@@ -288,6 +288,22 @@
     const textColorInput = document.getElementById('textColor');
     const accentColorInput = document.getElementById('accentColor');
 
+    // Canvas Context Menu & Freeform Element Edit Toolbar Elements
+    const canvasContextMenu = document.getElementById('canvasContextMenu');
+    const elementEditToolbar = document.getElementById('elementEditToolbar');
+    const toolbarTypeBadge = document.getElementById('toolbarTypeBadge');
+    const toolbarCloseBtn = document.getElementById('toolbarCloseBtn');
+    const toolbarGroupButton = document.getElementById('toolbarGroupButton');
+    const toolbarBtnText = document.getElementById('toolbarBtnText');
+    const toolbarBtnLink = document.getElementById('toolbarBtnLink');
+    const toolbarBtnStylePills = document.getElementById('toolbarBtnStylePills');
+    const toolbarGroupImage = document.getElementById('toolbarGroupImage');
+    const toolbarImgUrl = document.getElementById('toolbarImgUrl');
+    const toolbarImgSizePills = document.getElementById('toolbarImgSizePills');
+    const toolbarGroupBadge = document.getElementById('toolbarGroupBadge');
+    const toolbarBadgeText = document.getElementById('toolbarBadgeText');
+    const toolbarDeleteBtn = document.getElementById('toolbarDeleteBtn');
+
     // Drawer state
     let activeCategory = 'all';
     let searchQuery = '';
@@ -518,6 +534,387 @@
       const assembledHtml = window.Assembler.assemblePreviewDocument(latestState.stack, themeConfig, featuresData);
 
       previewFrame.srcdoc = assembledHtml;
+    }
+
+    // ==========================================================================
+    // Freeform Canvas Overlay Elements & Context Menu Controller
+    // ==========================================================================
+    let activeCanvasContext = null; // { sectionId, xPct, yPct }
+    let selectedElementState = null; // { sectionId, elementId, type }
+    let pendingSelectedElement = null; // { sectionId, elementId }
+
+    function hideContextMenu() {
+      if (canvasContextMenu) {
+        canvasContextMenu.style.display = 'none';
+      }
+      activeCanvasContext = null;
+    }
+
+    function hideEditToolbar() {
+      if (elementEditToolbar) {
+        elementEditToolbar.style.display = 'none';
+      }
+      selectedElementState = null;
+      try {
+        const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
+        if (doc) {
+          doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
+        }
+      } catch (_) {}
+    }
+
+    function updateToolbarPosition() {
+      if (!selectedElementState || !elementEditToolbar || elementEditToolbar.style.display === 'none') return;
+      try {
+        const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
+        if (!doc) return;
+        const el = doc.getElementById(selectedElementState.elementId);
+        if (!el) {
+          hideEditToolbar();
+          return;
+        }
+        const elRect = el.getBoundingClientRect();
+        const frameRect = previewFrame.getBoundingClientRect();
+
+        const left = frameRect.left + elRect.left + (elRect.width / 2) - 140;
+        const top = frameRect.top + elRect.top - 200;
+
+        const clampedLeft = Math.max(10, Math.min(window.innerWidth - 300, left));
+        const clampedTop = Math.max(70, Math.min(window.innerHeight - 260, top));
+
+        elementEditToolbar.style.left = `${clampedLeft}px`;
+        elementEditToolbar.style.top = `${clampedTop}px`;
+      } catch (_) {}
+    }
+
+    function openEditToolbar(sectionId, elementId) {
+      const elements = stackManager.getSectionElements(sectionId);
+      const elData = elements.find(e => e.id === elementId);
+      if (!elData) return;
+
+      selectedElementState = { sectionId, elementId, type: elData.type };
+      if (toolbarTypeBadge) {
+        toolbarTypeBadge.textContent = elData.type.toUpperCase();
+      }
+
+      if (toolbarGroupButton) toolbarGroupButton.style.display = elData.type === 'button' ? 'flex' : 'none';
+      if (toolbarGroupImage) toolbarGroupImage.style.display = elData.type === 'image' ? 'flex' : 'none';
+      if (toolbarGroupBadge) toolbarGroupBadge.style.display = elData.type === 'badge' ? 'flex' : 'none';
+
+      if (elData.type === 'button') {
+        if (toolbarBtnText) toolbarBtnText.value = elData.text || '';
+        if (toolbarBtnLink) toolbarBtnLink.value = elData.link || '#';
+        if (toolbarBtnStylePills) {
+          toolbarBtnStylePills.querySelectorAll('.style-pill').forEach(pill => {
+            pill.classList.toggle('is-active', pill.dataset.style === (elData.style || 'solid'));
+          });
+        }
+      } else if (elData.type === 'image') {
+        if (toolbarImgUrl) toolbarImgUrl.value = elData.imageUrl || '';
+        if (toolbarImgSizePills) {
+          toolbarImgSizePills.querySelectorAll('.size-pill').forEach(pill => {
+            pill.classList.toggle('is-active', pill.dataset.size === (elData.imageSize || 'medium'));
+          });
+        }
+      } else if (elData.type === 'badge') {
+        if (toolbarBadgeText) toolbarBadgeText.value = elData.text || '';
+      }
+
+      elementEditToolbar.style.display = 'flex';
+      updateToolbarPosition();
+    }
+
+    // Toolbar Input Event Listeners
+    if (toolbarCloseBtn) {
+      toolbarCloseBtn.addEventListener('click', hideEditToolbar);
+    }
+
+    if (toolbarBtnText) {
+      toolbarBtnText.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { text: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const link = el.querySelector('.canvas-btn-link');
+            if (link) link.textContent = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarBtnLink) {
+      toolbarBtnLink.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { link: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const link = el.querySelector('.canvas-btn-link');
+            if (link) link.href = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarBtnStylePills) {
+      toolbarBtnStylePills.addEventListener('click', (e) => {
+        const pill = e.target.closest('.style-pill');
+        if (!pill || !selectedElementState) return;
+        const style = pill.dataset.style;
+        toolbarBtnStylePills.querySelectorAll('.style-pill').forEach(p => p.classList.remove('is-active'));
+        pill.classList.add('is-active');
+
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { style }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            el.className = el.className.replace(/btn-style-[a-z]+/g, '').trim() + ` btn-style-${style}`;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarImgUrl) {
+      toolbarImgUrl.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { imageUrl: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const img = el.querySelector('img');
+            if (img) img.src = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarImgSizePills) {
+      toolbarImgSizePills.addEventListener('click', (e) => {
+        const pill = e.target.closest('.size-pill');
+        if (!pill || !selectedElementState) return;
+        const size = pill.dataset.size;
+        toolbarImgSizePills.querySelectorAll('.size-pill').forEach(p => p.classList.remove('is-active'));
+        pill.classList.add('is-active');
+
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { imageSize: size }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            el.className = el.className.replace(/img-size-[a-z]+/g, '').trim() + ` img-size-${size}`;
+          }
+        } catch (_) {}
+        updateToolbarPosition();
+      });
+    }
+
+    if (toolbarBadgeText) {
+      toolbarBadgeText.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { text: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const badgeSpan = el.querySelector('.badge-text');
+            if (badgeSpan) badgeSpan.textContent = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarDeleteBtn) {
+      toolbarDeleteBtn.addEventListener('click', () => {
+        if (!selectedElementState) return;
+        const { sectionId, elementId } = selectedElementState;
+        stackManager.removeElement(sectionId, elementId);
+        hideEditToolbar();
+        showToast('Element removed');
+      });
+    }
+
+    // Context Menu Action Listeners
+    if (canvasContextMenu) {
+      canvasContextMenu.addEventListener('click', (e) => {
+        const itemBtn = e.target.closest('.context-menu-item');
+        if (!itemBtn || !activeCanvasContext) return;
+        const action = itemBtn.dataset.action;
+        let type = 'button';
+        if (action === 'add-image') type = 'image';
+        if (action === 'add-badge') type = 'badge';
+
+        const targetSectionId = activeCanvasContext.sectionId;
+        const newEl = stackManager.addElement(targetSectionId, {
+          type,
+          x: activeCanvasContext.xPct,
+          y: activeCanvasContext.yPct
+        });
+
+        hideContextMenu();
+        if (newEl) {
+          pendingSelectedElement = { sectionId: targetSectionId, elementId: newEl.id };
+          showToast(`Added ${type} to section`);
+        }
+      });
+    }
+
+    // Global click and window resize listeners
+    window.addEventListener('click', (e) => {
+      if (canvasContextMenu && !canvasContextMenu.contains(e.target)) {
+        hideContextMenu();
+      }
+    });
+
+    window.addEventListener('resize', updateToolbarPosition);
+    window.addEventListener('scroll', updateToolbarPosition, true);
+
+    // Preview Frame load handler: wire dragging & context menu inside iframe
+    if (previewFrame) {
+      previewFrame.addEventListener('load', () => {
+        let doc;
+        try {
+          doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+        } catch (_) {
+          return;
+        }
+        if (!doc) return;
+
+        // Auto-select pending element (e.g. newly created)
+        if (pendingSelectedElement) {
+          const el = doc.getElementById(pendingSelectedElement.elementId);
+          if (el) {
+            doc.querySelectorAll('.canvas-element.is-selected').forEach(e => e.classList.remove('is-selected'));
+            el.classList.add('is-selected');
+            openEditToolbar(pendingSelectedElement.sectionId, pendingSelectedElement.elementId);
+          }
+          pendingSelectedElement = null;
+        } else if (selectedElementState) {
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            el.classList.add('is-selected');
+            updateToolbarPosition();
+          } else {
+            hideEditToolbar();
+          }
+        }
+
+        doc.addEventListener('scroll', updateToolbarPosition, true);
+
+        // Right-Click Context Menu inside Iframe
+        doc.addEventListener('contextmenu', (e) => {
+          const sectionEl = e.target.closest('.page-section');
+          if (!sectionEl) return;
+
+          e.preventDefault();
+          const secRect = sectionEl.getBoundingClientRect();
+          const xPct = Math.max(2, Math.min(98, ((e.clientX - secRect.left) / secRect.width) * 100));
+          const yPct = Math.max(2, Math.min(98, ((e.clientY - secRect.top) / secRect.height) * 100));
+
+          activeCanvasContext = {
+            sectionId: sectionEl.id,
+            xPct: Math.round(xPct * 10) / 10,
+            yPct: Math.round(yPct * 10) / 10
+          };
+
+          const frameRect = previewFrame.getBoundingClientRect();
+          const menuLeft = Math.min(window.innerWidth - 220, frameRect.left + e.clientX);
+          const menuTop = Math.min(window.innerHeight - 180, frameRect.top + e.clientY);
+
+          if (canvasContextMenu) {
+            canvasContextMenu.style.left = `${menuLeft}px`;
+            canvasContextMenu.style.top = `${menuTop}px`;
+            canvasContextMenu.style.display = 'block';
+          }
+        });
+
+        // Click inside iframe
+        doc.addEventListener('click', (e) => {
+          hideContextMenu();
+          const elementEl = e.target.closest('.canvas-element');
+          if (elementEl) {
+            e.preventDefault();
+          } else {
+            hideEditToolbar();
+          }
+        });
+
+        // Draggable Elements Mousedown Handler
+        doc.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return;
+          const elementEl = e.target.closest('.canvas-element');
+          if (!elementEl) return;
+
+          e.preventDefault();
+          const elementId = elementEl.dataset.elementId;
+          const sectionEl = elementEl.closest('.page-section');
+          if (!sectionEl) return;
+          const sectionId = sectionEl.id;
+
+          doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
+          elementEl.classList.add('is-selected');
+          openEditToolbar(sectionId, elementId);
+
+          let isDragging = false;
+          const startX = e.clientX;
+          const startY = e.clientY;
+          const secRect = sectionEl.getBoundingClientRect();
+
+          const startXPct = parseFloat(elementEl.style.left) || 50;
+          const startYPct = parseFloat(elementEl.style.top) || 50;
+          let currentXPct = startXPct;
+          let currentYPct = startYPct;
+
+          function onMouseMove(moveEvent) {
+            const frameRect = previewFrame.getBoundingClientRect();
+            const mouseX = (moveEvent.view === window) ? (moveEvent.clientX - frameRect.left) : moveEvent.clientX;
+            const mouseY = (moveEvent.view === window) ? (moveEvent.clientY - frameRect.top) : moveEvent.clientY;
+
+            const deltaX = mouseX - startX;
+            const deltaY = mouseY - startY;
+
+            if (!isDragging && Math.hypot(deltaX, deltaY) > 3) {
+              isDragging = true;
+            }
+
+            if (isDragging) {
+              currentXPct = Math.max(2, Math.min(98, startXPct + (deltaX / secRect.width) * 100));
+              currentYPct = Math.max(2, Math.min(98, startYPct + (deltaY / secRect.height) * 100));
+
+              elementEl.style.left = `${currentXPct}%`;
+              elementEl.style.top = `${currentYPct}%`;
+              updateToolbarPosition();
+            }
+          }
+
+          function onMouseUp() {
+            doc.removeEventListener('mousemove', onMouseMove);
+            doc.removeEventListener('mouseup', onMouseUp);
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+
+            if (isDragging) {
+              stackManager.updateElement(sectionId, elementId, {
+                x: Math.round(currentXPct * 10) / 10,
+                y: Math.round(currentYPct * 10) / 10
+              }, true);
+            }
+          }
+
+          doc.addEventListener('mousemove', onMouseMove);
+          doc.addEventListener('mouseup', onMouseUp);
+          window.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('mouseup', onMouseUp);
+        });
+      });
     }
 
     // Subscribe to stack changes

@@ -8,6 +8,7 @@ execSync('node tests/verify-registry.js', execOptions);
 execSync('node tests/test-assembler.js', execOptions);
 execSync('node tests/test-builder-dom.js', execOptions);
 execSync('node tests/test-builder-state.js', execOptions);
+execSync('node tests/test-builder-elements.js', execOptions);
 execSync('node tests/test-preview-generation.js', execOptions);
 execSync('node tests/test-export-generation.js', execOptions);
 

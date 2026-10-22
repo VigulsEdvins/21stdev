@@ -270,6 +270,181 @@ function renderEmptyPreview(theme) {
 </html>`;
 }
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
+ * Renders the draggable overlay elements for a section.
+ */
+function renderSectionOverlayHtml(elements) {
+  if (!Array.isArray(elements) || elements.length === 0) return '';
+
+  const elementHtmls = elements.map(el => {
+    const id = el.id || 'el';
+    const left = typeof el.x === 'number' ? `${el.x}%` : '50%';
+    const top = typeof el.y === 'number' ? `${el.y}%` : '50%';
+    const styleAttr = `left: ${left}; top: ${top};`;
+
+    if (el.type === 'image') {
+      const url = el.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80';
+      const sizeClass = el.imageSize ? `img-size-${el.imageSize}` : 'img-size-medium';
+      return `      <div class="canvas-element element-image ${sizeClass}" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <img src="${escapeHtml(url)}" alt="Custom overlay image" loading="lazy" />
+      </div>`;
+    }
+
+    if (el.type === 'badge') {
+      const text = el.text || 'FEATURED';
+      return `      <div class="canvas-element element-badge" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <span class="badge-text">${escapeHtml(text)}</span>
+      </div>`;
+    }
+
+    // Default: button
+    const text = el.text || 'Click Me →';
+    const link = el.link || '#';
+    const btnStyle = el.style || 'solid';
+    return `      <div class="canvas-element element-button btn-style-${btnStyle}" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <a href="${escapeHtml(link)}" class="canvas-btn-link">${escapeHtml(text)}</a>
+      </div>`;
+  });
+
+  return `\n    <div class="section-overlay-layer">\n${elementHtmls.join('\n')}\n    </div>`;
+}
+
+const OVERLAY_ELEMENT_CSS = `
+    /* ==========================================================================
+       Freeform Canvas Overlay Elements
+       ========================================================================== */
+    .section-overlay-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 25;
+      overflow: visible;
+    }
+
+    .canvas-element {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+      cursor: grab;
+      user-select: none;
+      transition: box-shadow 0.15s ease;
+    }
+
+    .canvas-element:active {
+      cursor: grabbing;
+    }
+
+    .canvas-element.is-selected {
+      outline: 2px dashed var(--preview-accent, #6366f1);
+      outline-offset: 4px;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+
+    /* Button Variants */
+    .element-button .canvas-btn-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      text-decoration: none;
+      border-radius: 9999px;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-style-solid .canvas-btn-link {
+      background: var(--preview-accent, #6366f1);
+      color: #ffffff;
+      border: 1px solid transparent;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    }
+    .btn-style-solid .canvas-btn-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+    }
+
+    .btn-style-glass .canvas-btn-link {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--preview-text, #ffffff);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    .btn-style-glass .canvas-btn-link:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-style-neon .canvas-btn-link {
+      background: #09090b;
+      color: #a855f7;
+      border: 1.5px solid #a855f7;
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.4), inset 0 0 8px rgba(168, 85, 247, 0.2);
+    }
+    .btn-style-neon .canvas-btn-link:hover {
+      box-shadow: 0 0 24px rgba(168, 85, 247, 0.7), inset 0 0 12px rgba(168, 85, 247, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-style-outline .canvas-btn-link {
+      background: transparent;
+      color: var(--preview-text, #ffffff);
+      border: 1.5px solid var(--preview-text, #ffffff);
+    }
+    .btn-style-outline .canvas-btn-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* Image Sizes */
+    .element-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--preview-border, rgba(255, 255, 255, 0.1));
+    }
+
+    .element-image.img-size-small { width: 140px; height: 140px; }
+    .element-image.img-size-medium { width: 240px; height: 240px; }
+    .element-image.img-size-large { width: 360px; height: 360px; }
+
+    /* Badge */
+    .element-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--preview-accent, #6366f1);
+      border: 1px solid var(--preview-accent, #6366f1);
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+    }
+`;
+
 /**
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
@@ -302,7 +477,8 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
 
     // Isolated HTML
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}">\n    ${isolatedHtml}\n  </section>`);
+    const overlayHtml = renderSectionOverlayHtml(section.elements);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}">\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -356,6 +532,8 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
     }
 
 ${allScopedStyles}
+
+${OVERLAY_ELEMENT_CSS}
   </style>
 </head>
 <body>
@@ -422,7 +600,8 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
 
     // Isolated HTML
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}">\n    ${isolatedHtml}\n  </section>`);
+    const overlayHtml = renderSectionOverlayHtml(section.elements);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}">\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -496,6 +675,8 @@ body {
    ========================================================================== */
 
 ${allScopedStyles || '/* No custom section styles */'}
+
+${OVERLAY_ELEMENT_CSS}
 `;
 
   // 3. script.js

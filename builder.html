@@ -465,6 +465,99 @@
     </div>
   </div>
 
+  <!-- Canvas Right-Click Context Menu -->
+  <div class="canvas-context-menu" id="canvasContextMenu" style="display: none;">
+    <div class="context-menu-header">
+      <span class="context-menu-title">Add to Section</span>
+    </div>
+    <div class="context-menu-items">
+      <button type="button" class="context-menu-item" data-action="add-button">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="6" width="18" height="12" rx="3"></rect>
+          <path d="M8 12h8"></path>
+        </svg>
+        <span>+ Add Button</span>
+      </button>
+      <button type="button" class="context-menu-item" data-action="add-image">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+          <polyline points="21 15 16 10 5 21"></polyline>
+        </svg>
+        <span>+ Add Image</span>
+      </button>
+      <button type="button" class="context-menu-item" data-action="add-badge">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <span>+ Add Badge / Text</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Canvas Element Floating Edit Toolbar -->
+  <div class="element-edit-toolbar" id="elementEditToolbar" style="display: none;">
+    <div class="toolbar-drag-handle">
+      <span class="toolbar-type-badge" id="toolbarTypeBadge">Button</span>
+      <button type="button" class="toolbar-close-btn" id="toolbarCloseBtn" title="Close Toolbar">&times;</button>
+    </div>
+
+    <!-- Fields for Button -->
+    <div class="toolbar-field-group" id="toolbarGroupButton">
+      <label class="toolbar-label">
+        <span>Button Text</span>
+        <input type="text" id="toolbarBtnText" class="toolbar-input" placeholder="e.g. Get Started →" />
+      </label>
+      <label class="toolbar-label">
+        <span>Link URL</span>
+        <input type="text" id="toolbarBtnLink" class="toolbar-input" placeholder="e.g. #contact or https://..." />
+      </label>
+      <div class="toolbar-label">
+        <span>Style</span>
+        <div class="toolbar-style-pills" id="toolbarBtnStylePills">
+          <button type="button" class="style-pill is-active" data-style="solid">Solid</button>
+          <button type="button" class="style-pill" data-style="glass">Glass</button>
+          <button type="button" class="style-pill" data-style="neon">Neon</button>
+          <button type="button" class="style-pill" data-style="outline">Outline</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fields for Image -->
+    <div class="toolbar-field-group" id="toolbarGroupImage" style="display: none;">
+      <label class="toolbar-label">
+        <span>Image URL</span>
+        <input type="text" id="toolbarImgUrl" class="toolbar-input" placeholder="https://..." />
+      </label>
+      <div class="toolbar-label">
+        <span>Size</span>
+        <div class="toolbar-size-pills" id="toolbarImgSizePills">
+          <button type="button" class="size-pill" data-size="small">Small</button>
+          <button type="button" class="size-pill is-active" data-size="medium">Medium</button>
+          <button type="button" class="size-pill" data-size="large">Large</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fields for Badge -->
+    <div class="toolbar-field-group" id="toolbarGroupBadge" style="display: none;">
+      <label class="toolbar-label">
+        <span>Badge Text</span>
+        <input type="text" id="toolbarBadgeText" class="toolbar-input" placeholder="e.g. NEW FEATURE" />
+      </label>
+    </div>
+
+    <div class="toolbar-footer">
+      <button type="button" class="toolbar-delete-btn" id="toolbarDeleteBtn">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+        <span>Delete Element</span>
+      </button>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 

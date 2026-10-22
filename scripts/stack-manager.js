@@ -150,6 +150,66 @@ function createStackManager(initialConfig = {}) {
     return state.viewport;
   }
 
+  function addElement(sectionId, elementData = {}) {
+    const section = state.stack.find(s => s.id === sectionId);
+    if (!section) return null;
+    if (!Array.isArray(section.elements)) {
+      section.elements = [];
+    }
+
+    const type = elementData.type || 'button';
+    const element = {
+      id: generateId('el'),
+      type: type,
+      x: typeof elementData.x === 'number' ? Math.max(0, Math.min(100, elementData.x)) : 50,
+      y: typeof elementData.y === 'number' ? Math.max(0, Math.min(100, elementData.y)) : 50,
+      text: elementData.text || (type === 'image' ? '' : (type === 'badge' ? 'FEATURED' : 'Click Me →')),
+      link: elementData.link || '#',
+      style: elementData.style || 'solid', // 'solid' | 'glass' | 'neon' | 'outline'
+      imageUrl: elementData.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80',
+      imageSize: elementData.imageSize || 'medium', // 'small' | 'medium' | 'large'
+      ...elementData
+    };
+
+    section.elements.push(element);
+    notify();
+    return element;
+  }
+
+  function updateElement(sectionId, elementId, updates = {}, silent = false) {
+    const section = state.stack.find(s => s.id === sectionId);
+    if (!section || !Array.isArray(section.elements)) return null;
+
+    const element = section.elements.find(el => el.id === elementId);
+    if (!element) return null;
+
+    if (typeof updates.x === 'number') updates.x = Math.max(0, Math.min(100, updates.x));
+    if (typeof updates.y === 'number') updates.y = Math.max(0, Math.min(100, updates.y));
+
+    Object.assign(element, updates);
+    if (!silent) {
+      notify();
+    }
+    return element;
+  }
+
+  function removeElement(sectionId, elementId) {
+    const section = state.stack.find(s => s.id === sectionId);
+    if (!section || !Array.isArray(section.elements)) return false;
+
+    const index = section.elements.findIndex(el => el.id === elementId);
+    if (index === -1) return false;
+
+    section.elements.splice(index, 1);
+    notify();
+    return true;
+  }
+
+  function getSectionElements(sectionId) {
+    const section = state.stack.find(s => s.id === sectionId);
+    return section && Array.isArray(section.elements) ? [...section.elements] : [];
+  }
+
   function subscribe(fn) {
     listeners.add(fn);
     return () => listeners.delete(fn);
@@ -164,6 +224,10 @@ function createStackManager(initialConfig = {}) {
     duplicateSection,
     reorderStack,
     clearStack,
+    addElement,
+    updateElement,
+    removeElement,
+    getSectionElements,
     setTheme,
     setCustomColors,
     setViewport,
