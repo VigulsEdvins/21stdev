@@ -346,67 +346,103 @@
       </nav>
 
       <div class="modal-body">
-        <!-- Panel 1: Download ZIP -->
-        <div class="export-tab-panel is-active" id="panelZip" role="tabpanel" aria-labelledby="tabZip">
-          <div class="zip-export-card">
-            <div class="zip-meta">
-              <h3>Standard Web Project ZIP</h3>
-              <p>Includes separate clean <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, and a comprehensive <code>README.md</code> with zero dependencies.</p>
-              <div class="zip-structure-preview">
-                <div class="file-row">📄 index.html</div>
-                <div class="file-row">🎨 style.css (theme variables + combined styles)</div>
-                <div class="file-row">⚡ script.js (isolated lifecycle scripts)</div>
-                <div class="file-row">📖 README.md</div>
-              </div>
-            </div>
-            <button type="button" class="export-action-primary-btn" id="downloadZipBtn">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              <span>Download assembled-page.zip</span>
-            </button>
+        <!-- Zero-section empty guard -->
+        <div class="export-empty-guard" id="exportEmptyGuard" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 24px;">
+          <div class="empty-icon-ring" style="width: 56px; height: 56px; border-radius: 12px; background: rgba(168, 85, 247, 0.15); color: #c084fc; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
           </div>
+          <h3 style="font-size: 16px; font-weight: 600; color: var(--text-main, #fafafa); margin: 0 0 8px 0;">Your page stack is empty</h3>
+          <p style="font-size: 13px; color: var(--text-muted, #a1a1aa); max-width: 360px; line-height: 1.5; margin: 0 0 20px 0;">Please add at least one section to your page stack before exporting code or downloading your project.</p>
+          <button type="button" class="export-action-primary-btn" id="exportEmptyAddBtn">
+            <span>+ Browse &amp; Add Sections</span>
+          </button>
         </div>
 
-        <!-- Panel 2: Copy Code -->
-        <div class="export-tab-panel" id="panelCode" role="tabpanel" aria-labelledby="tabCode" style="display: none;">
-          <div class="code-export-container">
-            <div class="code-subtabs-row">
-              <div class="code-subtabs" role="tablist">
-                <button type="button" class="subtab-btn is-active" data-code-file="index.html">index.html</button>
-                <button type="button" class="subtab-btn" data-code-file="style.css">style.css</button>
-                <button type="button" class="subtab-btn" data-code-file="script.js">script.js</button>
+        <div class="export-panels-wrapper" id="exportPanelsWrapper">
+          <!-- Panel 1: Download ZIP -->
+          <div class="export-tab-panel is-active" id="panelZip" role="tabpanel" aria-labelledby="tabZip">
+            <div class="zip-export-card">
+              <div class="zip-meta">
+                <h3>Standard Web Project ZIP</h3>
+                <p>Includes separate clean <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, and a comprehensive <code>README.md</code> with zero dependencies.</p>
+                <div class="zip-structure-preview">
+                  <div class="file-row">📄 index.html</div>
+                  <div class="file-row">🎨 style.css (theme variables + combined styles)</div>
+                  <div class="file-row">⚡ script.js (isolated lifecycle scripts)</div>
+                  <div class="file-row">📖 README.md</div>
+                </div>
               </div>
-              <button type="button" class="copy-code-btn" id="copyCodeBtn">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-                <span id="copyBtnText">Copy to Clipboard</span>
-              </button>
-            </div>
-            <textarea id="exportCodeViewer" class="export-code-textarea" readonly spellcheck="false"></textarea>
-          </div>
-        </div>
-
-        <!-- Panel 3: Single HTML -->
-        <div class="export-tab-panel" id="panelSingleHtml" role="tabpanel" aria-labelledby="tabSingleHtml" style="display: none;">
-          <div class="single-html-card">
-            <div class="single-html-meta">
-              <h3>Self-Contained Single File</h3>
-              <p>Everything embedded into a single standalone <code>.html</code> file with inline <code>&lt;style&gt;</code> and <code>&lt;script&gt;</code> tags. Perfect for rapid sharing or prototyping.</p>
-            </div>
-            <div class="single-html-actions">
-              <button type="button" class="export-action-primary-btn" id="downloadSingleHtmlBtn">
+              <button type="button" class="export-action-primary-btn" id="downloadZipBtn">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
                   <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
-                <span>Download page.html</span>
+                <span>Download my-assembled-page.zip</span>
               </button>
+            </div>
+          </div>
+
+          <!-- Panel 2: Copy Code -->
+          <div class="export-tab-panel" id="panelCode" role="tabpanel" aria-labelledby="tabCode" style="display: none;">
+            <div class="code-export-container">
+              <div class="code-subtabs-row">
+                <div class="code-subtabs" role="tablist" aria-label="Code tabs">
+                  <button type="button" class="subtab-btn is-active" id="subtabIndexHtml" data-code-file="index.html">index.html</button>
+                  <button type="button" class="subtab-btn" id="subtabStyleCss" data-code-file="style.css">style.css</button>
+                  <button type="button" class="subtab-btn" id="subtabScriptJs" data-code-file="script.js">script.js</button>
+                  <button type="button" class="subtab-btn" id="subtabSingleHtml" data-code-file="single-html">Single File (.html)</button>
+                </div>
+                <div class="code-actions-group" style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" class="copy-code-btn" id="downloadCurrentCodeBtn" style="display: none;">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Download .html</span>
+                  </button>
+                  <button type="button" class="copy-code-btn" id="copyCodeBtn">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span id="copyBtnText">Copy HTML</span>
+                  </button>
+                </div>
+              </div>
+              <textarea id="exportCodeViewer" class="export-code-textarea" readonly spellcheck="false" placeholder="Generating source code..."></textarea>
+            </div>
+          </div>
+
+          <!-- Panel 3: Single HTML -->
+          <div class="export-tab-panel" id="panelSingleHtml" role="tabpanel" aria-labelledby="tabSingleHtml" style="display: none;">
+            <div class="single-html-card">
+              <div class="single-html-meta">
+                <h3>Self-Contained Single File</h3>
+                <p>Everything embedded into a single standalone <code>.html</code> file with inline <code>&lt;style&gt;</code> and <code>&lt;script&gt;</code> tags. Perfect for rapid sharing or prototyping.</p>
+              </div>
+              <div class="single-html-actions" style="display: flex; align-items: center; gap: 10px;">
+                <button type="button" class="copy-code-btn" id="copySingleBundleBtn">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span id="copyBundleBtnText">Copy Bundle</span>
+                </button>
+                <button type="button" class="export-action-primary-btn" id="downloadSingleHtmlBtn">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>Download .html</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -418,6 +454,7 @@
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <!-- Script Modules -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="registry.js"></script>
   <script src="scripts/assembler.js"></script>
   <script src="scripts/stack-manager.js" defer></script>
