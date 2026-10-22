@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>21st.local — Visual Page Builder &amp; Preview Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="builder.css" />
+</head>
+<body class="builder-body">
+  <!-- Ambient OKLCH Aurora Background -->
+  <div class="ambient-aurora" aria-hidden="true">
+    <div class="aurora-blob blob-a"></div>
+    <div class="aurora-blob blob-b"></div>
+    <div class="aurora-grid"></div>
+  </div>
+
+  <!-- Builder Top Header -->
+  <header class="vault-header builder-header">
+    <div class="header-left">
+      <a href="index.html" class="brand-logo" id="brandReset" title="Return to Catalog">
+        <span class="brand-cube">21</span>
+        <span class="brand-text">21st<span class="brand-dot">.local</span></span>
+        <span class="brand-tag">PAGE BUILDER</span>
+      </a>
+
+      <!-- Workspace Navigation Tabs -->
+      <nav class="mode-switcher" role="group" aria-label="Workspace Mode">
+        <a href="index.html" class="mode-btn" id="navCatalogLink" title="21st.dev Catalog Grid Mode">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+          <span>Catalog Grid</span>
+        </a>
+        <a href="index.html?mode=workbench" class="mode-btn" id="navWorkbenchLink" title="IDE Split-Screen Workbench Mode">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="2" width="18" height="18" rx="2"></rect>
+            <line x1="9" y1="2" x2="9" y2="20"></line>
+            <line x1="15" y1="2" x2="15" y2="20"></line>
+          </svg>
+          <span>IDE Workbench</span>
+        </a>
+        <a href="builder.html" class="mode-btn is-active" id="navBuilderLink" title="Assemble &amp; Preview Web Pages">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>Page Builder</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Center Controls: Theme & Viewports -->
+    <div class="header-center">
+      <!-- Theme Selection & Custom Theme Palette -->
+      <div class="theme-controls-group" role="group" aria-label="Theme Settings">
+        <div class="theme-select-wrapper">
+          <label for="themePresetSelect" class="builder-control-label">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <span>Theme:</span>
+          </label>
+          <select id="themePresetSelect" class="builder-select">
+            <option value="midnight-dark" selected>Midnight Dark</option>
+            <option value="cyber-glow">Cyber Glow</option>
+            <option value="clean-minimal">Clean Minimal</option>
+            <option value="warm-editorial">Warm Editorial</option>
+            <option value="modern-slate">Modern Slate</option>
+            <option value="custom">Custom Theme...</option>
+          </select>
+        </div>
+
+        <button type="button" class="custom-theme-toggle-btn" id="customThemeToggle" title="Toggle custom color controls">
+          <span>Palette</span>
+        </button>
+
+        <div class="custom-colors-container" id="customColorsControls" style="display: none;">
+          <label class="color-control-item" title="Page Background Color">
+            <span class="color-label">BG</span>
+            <input type="color" id="bgColor" value="#0b0f19" class="color-input" />
+          </label>
+          <label class="color-control-item" title="Page Text Color">
+            <span class="color-label">Text</span>
+            <input type="color" id="textColor" value="#f3f4f6" class="color-input" />
+          </label>
+          <label class="color-control-item" title="Brand Accent Color">
+            <span class="color-label">Accent</span>
+            <input type="color" id="accentColor" value="#6366f1" class="color-input" />
+          </label>
+        </div>
+      </div>
+
+      <!-- Viewport Device Switcher -->
+      <div class="viewport-mode-switcher" role="group" aria-label="Preview Viewport Mode">
+        <button type="button" class="viewport-btn is-active" data-viewport="desktop" id="viewportDesktopBtn" title="Desktop View (100% responsive)">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <span>Desktop</span>
+        </button>
+        <button type="button" class="viewport-btn" data-viewport="tablet" id="viewportTabletBtn" title="Tablet View (768px)">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          <span>Tablet</span>
+        </button>
+        <button type="button" class="viewport-btn" data-viewport="mobile" id="viewportMobileBtn" title="Mobile View (375px)">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          <span>Mobile</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Header Action Buttons -->
+    <div class="header-right builder-actions">
+      <button type="button" class="builder-btn-subtle" id="openInTabBtn" title="Open live assembled preview in a standalone tab">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+        <span>Open in Tab</span>
+      </button>
+
+      <button type="button" class="builder-btn-primary" id="openExportModalBtn" title="Export ready-to-run code &amp; ZIP bundle">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>Export Project</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Workspace: Split Screen Layout -->
+  <main class="builder-workspace">
+    <!-- Left Sidebar: Active Stack Manager -->
+    <aside class="builder-sidebar" aria-label="Page Section Stack Manager">
+      <div class="sidebar-header">
+        <div class="sidebar-title-row">
+          <div class="sidebar-title-group">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <h2 class="sidebar-heading">Active Sections</h2>
+            <span class="stack-count-badge" id="stackCountBadge">0</span>
+          </div>
+
+          <button type="button" class="icon-action-btn" id="clearStackBtn" title="Clear all sections from page stack" aria-label="Clear all sections">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+        </div>
+
+        <button type="button" class="add-section-btn" id="openDrawerBtn">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>+ Add Section</span>
+        </button>
+      </div>
+
+      <!-- Section Stack List Container -->
+      <div class="sidebar-stack-content">
+        <div class="page-stack-list" id="pageStackList" role="list" aria-label="Active Page Stack Sections">
+          <!-- Populated dynamically by builder.js -->
+          <div class="stack-empty-placeholder" id="stackEmptyPlaceholder">
+            <div class="empty-icon-ring">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <h3 class="empty-title">Your page is empty</h3>
+            <p class="empty-desc">Assemble a custom web page by adding components from your 200+ vault blocks.</p>
+            <button type="button" class="empty-browse-btn" id="emptyBrowseBtn">
+              <span>Browse Component Catalog</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Stage: Responsive Live Preview Stage -->
+    <section class="builder-viewport" aria-label="Live Page Preview Viewport">
+      <div class="viewport-stage" id="viewportStage" data-active-viewport="desktop">
+        <div class="viewport-frame-wrapper" id="viewportFrameWrapper">
+          <!-- Simulated Browser Bar -->
+          <div class="viewport-browser-bar">
+            <div class="browser-dot-group">
+              <span class="browser-dot dot-close"></span>
+              <span class="browser-dot dot-min"></span>
+              <span class="browser-dot dot-max"></span>
+            </div>
+            <div class="browser-url-bar">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <span class="url-text" id="browserUrlText">https://preview.21st.local/assembled-page</span>
+            </div>
+            <div class="browser-dimension-label" id="viewportDimensionLabel">Desktop (100%)</div>
+          </div>
+
+          <!-- Sandboxed Preview Iframe -->
+          <iframe
+            id="previewFrame"
+            class="live-preview-iframe"
+            title="Live Assembled Page Preview"
+            sandbox="allow-scripts allow-same-origin allow-modals allow-forms allow-popups"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Component Picker Drawer Slide-Over Container -->
+  <div class="component-drawer" id="componentDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <header class="drawer-header">
+        <div class="drawer-title-row">
+          <div class="drawer-title-group">
+            <h2 class="drawer-title" id="drawerTitle">Add Section to Page</h2>
+            <span class="drawer-count-badge" id="drawerCountBadge">200+ Blocks</span>
+          </div>
+          <button type="button" class="drawer-close-btn" id="closeDrawerBtn" aria-label="Close component catalog drawer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="drawer-search-row">
+          <div class="drawer-search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              id="drawerSearchInput"
+              class="drawer-search-input"
+              placeholder="Search components by title, tag, or slug..."
+              autocomplete="off"
+            />
+            <button type="button" class="clear-search-btn" id="clearDrawerSearchBtn" aria-label="Clear search" style="display: none;">&times;</button>
+          </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="drawer-category-filters" id="drawerCategories" role="group" aria-label="Component Categories">
+          <button type="button" class="drawer-cat-pill is-active" data-category="all">All</button>
+          <button type="button" class="drawer-cat-pill" data-category="Headers &amp; Nav">Headers &amp; Nav</button>
+          <button type="button" class="drawer-cat-pill" data-category="Heroes">Heroes</button>
+          <button type="button" class="drawer-cat-pill" data-category="3D &amp; Carousels">3D &amp; Carousels</button>
+          <button type="button" class="drawer-cat-pill" data-category="Scroll &amp; Parallax">Scroll &amp; Parallax</button>
+          <button type="button" class="drawer-cat-pill" data-category="Galleries &amp; Grids">Galleries &amp; Grids</button>
+          <button type="button" class="drawer-cat-pill" data-category="Buttons &amp; UI">Buttons &amp; UI</button>
+        </div>
+      </header>
+
+      <div class="drawer-body">
+        <div class="drawer-feature-grid" id="drawerFeatureGrid" role="list">
+          <!-- Dynamically populated from window.FEATURE_REGISTRY by builder.js -->
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Export Project Modal Container -->
+  <div class="export-modal" id="exportModal" aria-hidden="true">
+    <div class="modal-backdrop" id="exportModalBackdrop"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="exportModalTitle">
+      <header class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-icon-badge">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <div>
+            <h2 class="modal-title" id="exportModalTitle">Export Assembled Project</h2>
+            <p class="modal-subtitle">Download as clean standalone code or ready-to-run ZIP archive</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn" id="closeExportModalBtn" aria-label="Close export modal">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Export Tab Navigation -->
+      <nav class="export-tabs-bar" role="tablist" aria-label="Export formats">
+        <button type="button" class="export-tab-btn is-active" id="tabZip" data-tab="zip" role="tab" aria-selected="true" aria-controls="panelZip">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          </svg>
+          <span>Download Project ZIP</span>
+        </button>
+        <button type="button" class="export-tab-btn" id="tabCode" data-tab="code" role="tab" aria-selected="false" aria-controls="panelCode">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          <span>Copy Source Code</span>
+        </button>
+        <button type="button" class="export-tab-btn" id="tabSingleHtml" data-tab="single-html" role="tab" aria-selected="false" aria-controls="panelSingleHtml">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          <span>Single HTML File</span>
+        </button>
+      </nav>
+
+      <div class="modal-body">
+        <!-- Panel 1: Download ZIP -->
+        <div class="export-tab-panel is-active" id="panelZip" role="tabpanel" aria-labelledby="tabZip">
+          <div class="zip-export-card">
+            <div class="zip-meta">
+              <h3>Standard Web Project ZIP</h3>
+              <p>Includes separate clean <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, and a comprehensive <code>README.md</code> with zero dependencies.</p>
+              <div class="zip-structure-preview">
+                <div class="file-row">📄 index.html</div>
+                <div class="file-row">🎨 style.css (theme variables + combined styles)</div>
+                <div class="file-row">⚡ script.js (isolated lifecycle scripts)</div>
+                <div class="file-row">📖 README.md</div>
+              </div>
+            </div>
+            <button type="button" class="export-action-primary-btn" id="downloadZipBtn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Download assembled-page.zip</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Panel 2: Copy Code -->
+        <div class="export-tab-panel" id="panelCode" role="tabpanel" aria-labelledby="tabCode" style="display: none;">
+          <div class="code-export-container">
+            <div class="code-subtabs-row">
+              <div class="code-subtabs" role="tablist">
+                <button type="button" class="subtab-btn is-active" data-code-file="index.html">index.html</button>
+                <button type="button" class="subtab-btn" data-code-file="style.css">style.css</button>
+                <button type="button" class="subtab-btn" data-code-file="script.js">script.js</button>
+              </div>
+              <button type="button" class="copy-code-btn" id="copyCodeBtn">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copyBtnText">Copy to Clipboard</span>
+              </button>
+            </div>
+            <textarea id="exportCodeViewer" class="export-code-textarea" readonly spellcheck="false"></textarea>
+          </div>
+        </div>
+
+        <!-- Panel 3: Single HTML -->
+        <div class="export-tab-panel" id="panelSingleHtml" role="tabpanel" aria-labelledby="tabSingleHtml" style="display: none;">
+          <div class="single-html-card">
+            <div class="single-html-meta">
+              <h3>Self-Contained Single File</h3>
+              <p>Everything embedded into a single standalone <code>.html</code> file with inline <code>&lt;style&gt;</code> and <code>&lt;script&gt;</code> tags. Perfect for rapid sharing or prototyping.</p>
+            </div>
+            <div class="single-html-actions">
+              <button type="button" class="export-action-primary-btn" id="downloadSingleHtmlBtn">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download page.html</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Script Modules -->
+  <script src="registry.js"></script>
+  <script src="scripts/assembler.js"></script>
+  <script src="scripts/stack-manager.js" defer></script>
+  <script src="builder.js" defer></script>
+</body>
+</html>
