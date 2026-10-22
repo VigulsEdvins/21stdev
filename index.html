@@ -19,17 +19,36 @@
       <a href="#top" class="brand-logo" id="brandReset">
         <span class="brand-cube">21</span>
         <span class="brand-text">21st<span class="brand-dot">.local</span></span>
-        <span class="brand-tag" id="totalCountBadge">36 BLOCKS</span>
+        <span class="brand-tag" id="totalCountBadge">26 BLOCKS</span>
       </a>
 
-      <button class="mobile-sidebar-toggle" id="mobileSidebarToggle" type="button" aria-label="Toggle sidebar filters">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="15" y2="12"></line>
-          <line x1="3" y1="18" x2="9" y2="18"></line>
+      <nav class="collection-tabs" id="collectionTabs" aria-label="Collection Type">
+        <button class="col-tab is-active" data-type="all" type="button">
+          All Vault <span class="tab-count" id="countAll">26</span>
+        </button>
+        <button class="col-tab" data-type="component" type="button">
+          Components &amp; Physics <span class="tab-count" id="countComponents">23</span>
+        </button>
+        <button class="col-tab" data-type="template" type="button">
+          Full Templates &amp; CMS <span class="tab-count" id="countTemplates">3</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="header-center">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <span>Search &amp; Filters</span>
-      </button>
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search 3D carousels, shaders, cursors, templates, tags..."
+          autocomplete="off"
+        />
+        <kbd class="search-kbd">/</kbd>
+      </div>
     </div>
 
     <div class="header-right">
@@ -69,109 +88,34 @@
 
   <!-- MODE A: 21st.dev Catalog Grid View -->
   <main class="catalog-view" id="catalogView">
-    <div class="catalog-container">
-      <!-- Left Sidebar: Searching and Options -->
-      <aside class="catalog-sidebar" id="catalogSidebar" aria-label="Searching and Options">
-        <div class="sidebar-inner">
-          <!-- Search Section -->
-          <div class="sidebar-section">
-            <div class="sidebar-section-header">
-              <span class="sidebar-section-title">SEARCH</span>
-            </div>
-            <div class="search-box">
-              <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input
-                type="search"
-                id="searchInput"
-                placeholder="Search features, tags..."
-                autocomplete="off"
-              />
-              <kbd class="search-kbd">/</kbd>
-            </div>
-          </div>
-
-          <!-- Collection Type Options -->
-          <div class="sidebar-section">
-            <div class="sidebar-section-header">
-              <span class="sidebar-section-title">COLLECTION</span>
-            </div>
-            <nav class="collection-tabs sidebar-collection-tabs" id="collectionTabs" aria-label="Collection Type">
-              <button class="col-tab is-active" data-type="all" type="button">
-                <span>All Vault</span>
-                <span class="tab-count" id="countAll">36</span>
-              </button>
-              <button class="col-tab" data-type="component" type="button">
-                <span>Components</span>
-                <span class="tab-count" id="countComponents">31</span>
-              </button>
-              <button class="col-tab" data-type="template" type="button">
-                <span>Templates</span>
-                <span class="tab-count" id="countTemplates">5</span>
-              </button>
-            </nav>
-          </div>
-
-          <!-- Category Options -->
-          <div class="sidebar-section">
-            <div class="sidebar-section-header">
-              <span class="sidebar-section-title">CATEGORIES</span>
-            </div>
-            <div class="sidebar-options-list" id="categoryFilterBar" aria-label="Filter by category"></div>
-          </div>
-
-          <!-- Source Project Options -->
-          <div class="sidebar-section">
-            <div class="sidebar-section-header">
-              <span class="sidebar-section-title">SOURCE PROJECTS</span>
-            </div>
-            <div class="sidebar-options-list" id="sourceFilterBar" aria-label="Filter by source project"></div>
-          </div>
-
-          <!-- Options & Settings Section -->
-          <div class="sidebar-section">
-            <div class="sidebar-section-header">
-              <span class="sidebar-section-title">OPTIONS</span>
-            </div>
-            <div class="sidebar-options-controls">
-              <button class="sidebar-btn" id="pauseAllPreviewsBtn" type="button">
-                <span>Pause Previews</span>
-                <span class="option-state" id="pauseStateBadge">ON</span>
-              </button>
-              <button class="sidebar-btn danger" id="resetFiltersBtn" type="button">
-                <span>Reset All Filters</span>
-                <span class="btn-icon">&#8635;</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Main Catalog Stage -->
-      <div class="catalog-main">
-        <section class="hero-banner">
-          <div class="hero-eyebrow">
-            <span class="status-dot"></span>
-            <span>LOCAL COMPONENT &amp; DESIGN REGISTRY &bull; ZERO DEPENDENCY LOCK-IN &bull; 100% WORKING CODE</span>
-          </div>
-          <h1 class="hero-headline">
-            Copy working features, <span class="hero-gradient">3D physics &amp; full templates</span> in one click.
-          </h1>
-          <p class="hero-subtitle">
-            Every block is pre-extracted from <code>photo-caroulsel</code>, <code>carousel-gallery-play</code>, <code>betteroff</code>, <code>vivmgmt</code>, <code>mom</code>, <code>cvmaker</code>, and <code>21st.dev</code> into standalone files inside <code>features/&lt;slug&gt;/</code>. Copy the single-file bundle, inspect individual source files, or hand the folder path to your coding agent.
-          </p>
-        </section>
-
-        <section class="catalog-toolbar">
-          <div class="results-summary" id="resultsSummary">Showing 36 features</div>
-          <div class="toolbar-active-tags" id="toolbarActiveTags"></div>
-        </section>
-
-        <section class="catalog-grid" id="catalogGrid" aria-live="polite"></section>
+    <section class="hero-banner">
+      <div class="hero-eyebrow">
+        <span class="status-dot"></span>
+        <span>LOCAL COMPONENT &amp; DESIGN REGISTRY &bull; ZERO DEPENDENCY LOCK-IN &bull; 100% WORKING CODE</span>
       </div>
-    </div>
+      <h1 class="hero-headline">
+        Copy working features, <span class="hero-gradient">3D physics &amp; full templates</span> in one click.
+      </h1>
+      <p class="hero-subtitle">
+        Every block is pre-extracted from <code>photo-caroulsel</code>, <code>carousel-gallery-play</code>, <code>betteroff</code>, <code>vivmgmt</code>, and <code>21st.dev</code> into standalone files inside <code>features/&lt;slug&gt;/</code>. Copy the single-file bundle, inspect individual source files, or hand the folder path to your coding agent.
+      </p>
+
+      <!-- Source Filter Bar -->
+      <div class="filter-section">
+        <div class="filter-row" id="sourceFilterBar" aria-label="Filter by source project"></div>
+        <div class="filter-row category-row" id="categoryFilterBar" aria-label="Filter by category"></div>
+      </div>
+    </section>
+
+    <section class="catalog-toolbar">
+      <div class="results-summary" id="resultsSummary">Showing 26 features</div>
+      <div class="toolbar-actions">
+        <button class="subtle-btn" id="pauseAllPreviewsBtn" type="button">Pause Offscreen Previews: ON</button>
+        <button class="subtle-btn" id="resetFiltersBtn" type="button">Reset Filters</button>
+      </div>
+    </section>
+
+    <section class="catalog-grid" id="catalogGrid" aria-live="polite"></section>
   </main>
 
   <!-- MODE B: IDE Split-Screen Workbench View -->
@@ -181,9 +125,6 @@
       <div class="wb-pane-header">
         <span>EXPLORER // FEATURES</span>
         <span class="wb-count" id="wbTreeCount">26</span>
-      </div>
-      <div class="wb-search-box">
-        <input type="search" id="wbSearchInput" placeholder="Filter features..." autocomplete="off" />
       </div>
       <div class="wb-tree" id="wbTree"></div>
     </aside>
