@@ -777,6 +777,24 @@
   color: var(--text-dim, #71717a);
 }
 
+.clear-search-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim, #71717a);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+.clear-search-btn:hover {
+  color: var(--text-main, #fafafa);
+}
+
 .drawer-category-filters {
   display: flex;
   align-items: center;

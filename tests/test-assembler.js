@@ -4,6 +4,7 @@ const {
   generateExportBundle,
   scopeSectionStyles,
   isolateSectionMarkup,
+  isolateSectionScript,
   THEME_PRESETS
 } = require('../scripts/assembler.js');
 
@@ -64,5 +65,22 @@ if (typeof isolateSectionMarkup === 'function') {
   assert(!isolated.includes('<!DOCTYPE'), 'Doctype should be stripped from inner section markup');
   assert(!isolated.includes('<body'), 'body tag should be unwrapped');
 }
+
+if (typeof isolateSectionScript === 'function') {
+  const jsWithBackticks = 'const el = document.getElementById(`root`); const q = document.querySelector(`#root`);';
+  const isolatedJs = isolateSectionScript(jsWithBackticks, 'sec-bt');
+  assert(isolatedJs.includes('getElementById(`root-sec-bt`)'), 'isolateSectionScript should support backticks in getElementById');
+  assert(isolatedJs.includes('querySelector(`#root-sec-bt`)'), 'isolateSectionScript should support backticks in querySelector');
+}
+
+// Test 6: Verify console.error slug hardening
+const quoteSlugSections = [
+  { id: 'sec-q', slug: 'feat"quote', html: '<div id="root">Q</div>', css: '', js: 'console.log("Q");' }
+];
+const quoteDoc = assemblePreviewDocument(quoteSlugSections, THEME_PRESETS['midnight-dark'], {});
+assert(quoteDoc.includes('console.error(\'Error in section \' + "feat\\"quote" + \':\', err);'), 'assemblePreviewDocument should safely stringify slug in console.error');
+
+const quoteBundle = generateExportBundle(quoteSlugSections, THEME_PRESETS['midnight-dark'], {});
+assert(quoteBundle['script.js'].includes('console.error(\'Error executing \' + "feat\\"quote" + \':\', err);'), 'generateExportBundle script.js should safely stringify slug in console.error');
 
 console.log('✅ All assembler unit tests passed!');

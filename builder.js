@@ -610,17 +610,26 @@
             });
 
             // Button feedback
-            const originalText = addBtn.innerHTML;
+            if (!addBtn.dataset.originalHtml) {
+              addBtn.dataset.originalHtml = addBtn.innerHTML;
+            }
+            if (addBtn._restoreTimer) {
+              clearTimeout(addBtn._restoreTimer);
+            }
             addBtn.innerHTML = `<span>✓ Added!</span>`;
             addBtn.style.background = '#10b981';
             addBtn.style.borderColor = '#10b981';
             addBtn.style.color = '#ffffff';
 
-            setTimeout(() => {
-              addBtn.innerHTML = originalText;
+            addBtn._restoreTimer = setTimeout(() => {
+              if (addBtn.dataset.originalHtml) {
+                addBtn.innerHTML = addBtn.dataset.originalHtml;
+                delete addBtn.dataset.originalHtml;
+              }
               addBtn.style.background = '';
               addBtn.style.borderColor = '';
               addBtn.style.color = '';
+              addBtn._restoreTimer = null;
             }, 900);
 
             showToast(`Added "${title}" to page stack`);

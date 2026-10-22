@@ -160,7 +160,7 @@
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'filter-pill' + (state.source === src ? ' is-active' : '');
-      btn.textContent = src === 'all' ? `All Sources (${count})` : `${src} (${count})`;
+      btn.innerHTML = `<span class="pill-label">${src === 'all' ? 'All Sources' : src}</span><span class="pill-count">${count}</span>`;
       btn.addEventListener('click', () => {
         state.source = src;
         if (src !== 'all') {
@@ -183,10 +183,11 @@
     const categories = ['all', ...Array.from(new Set(allFeatures.map((i) => i.category)))];
     categoryFilterBar.innerHTML = '';
     categories.forEach((cat) => {
+      const count = cat === 'all' ? allFeatures.length : allFeatures.filter((i) => i.category === cat).length;
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'filter-pill' + (state.category === cat ? ' is-active' : '');
-      btn.textContent = cat === 'all' ? 'All Categories' : cat;
+      btn.innerHTML = `<span class="pill-label">${cat === 'all' ? 'All Categories' : cat}</span><span class="pill-count">${count}</span>`;
       btn.addEventListener('click', () => {
         state.category = cat;
         if (cat === 'Full Templates' && state.collectionType === 'component') {
@@ -200,6 +201,53 @@
       });
       categoryFilterBar.appendChild(btn);
     });
+
+    renderActiveFilterTags();
+  }
+
+  function renderActiveFilterTags() {
+    const tagsEl = document.getElementById('toolbarActiveTags');
+    if (!tagsEl) return;
+    tagsEl.innerHTML = '';
+    const hasFilters = state.source !== 'all' || state.category !== 'all' || state.collectionType !== 'all' || state.search.trim();
+    if (!hasFilters) return;
+
+    if (state.collectionType !== 'all') {
+      const chip = document.createElement('span');
+      chip.className = 'active-chip';
+      chip.innerHTML = `${state.collectionType === 'template' ? 'Templates' : 'Components'} <button class="active-chip-clear" title="Remove">&times;</button>`;
+      chip.querySelector('button').addEventListener('click', () => { state.collectionType = 'all'; syncCollectionTabsUI(); renderAll(); });
+      tagsEl.appendChild(chip);
+    }
+    if (state.source !== 'all') {
+      const chip = document.createElement('span');
+      chip.className = 'active-chip';
+      chip.innerHTML = `${state.source} <button class="active-chip-clear" title="Remove">&times;</button>`;
+      chip.querySelector('button').addEventListener('click', () => { state.source = 'all'; renderAll(); });
+      tagsEl.appendChild(chip);
+    }
+    if (state.category !== 'all') {
+      const chip = document.createElement('span');
+      chip.className = 'active-chip';
+      chip.innerHTML = `${state.category} <button class="active-chip-clear" title="Remove">&times;</button>`;
+      chip.querySelector('button').addEventListener('click', () => { state.category = 'all'; renderAll(); });
+      tagsEl.appendChild(chip);
+    }
+    if (state.search.trim()) {
+      const chip = document.createElement('span');
+      chip.className = 'active-chip';
+      chip.innerHTML = `"${state.search}" <button class="active-chip-clear" title="Remove">&times;</button>`;
+      chip.querySelector('button').addEventListener('click', () => { state.search = ''; searchInput.value = ''; renderAll(); });
+      tagsEl.appendChild(chip);
+    }
+    if (tagsEl.children.length > 1) {
+      const clearBtn = document.createElement('button');
+      clearBtn.type = 'button';
+      clearBtn.className = 'clear-all-chip';
+      clearBtn.textContent = 'Clear all';
+      clearBtn.addEventListener('click', () => { document.getElementById('resetFiltersBtn').click(); });
+      tagsEl.appendChild(clearBtn);
+    }
   }
 
   function loadPreviewIntoFrame(frame, item) {
@@ -646,7 +694,13 @@
 
   document.getElementById('pauseAllPreviewsBtn').addEventListener('click', (e) => {
     state.pauseOffscreen = !state.pauseOffscreen;
-    e.target.textContent = `Pause Offscreen Previews: ${state.pauseOffscreen ? 'ON' : 'OFF'}`;
+    const badge = document.getElementById('pauseStateBadge');
+    if (badge) {
+      badge.textContent = state.pauseOffscreen ? 'ON' : 'OFF';
+      badge.classList.toggle('is-off', !state.pauseOffscreen);
+    } else if (e && e.target) {
+      e.target.textContent = `Pause Offscreen Previews: ${state.pauseOffscreen ? 'ON' : 'OFF'}`;
+    }
   });
 
   document.getElementById('resetFiltersBtn').addEventListener('click', () => {
@@ -655,11 +709,34 @@
     state.category = 'all';
     state.search = '';
     searchInput.value = '';
+    const wbSearch = document.getElementById('wbSearchInput');
+    if (wbSearch) wbSearch.value = '';
     document.querySelectorAll('#collectionTabs .col-tab').forEach((t) => {
       t.classList.toggle('is-active', t.getAttribute('data-type') === 'all');
     });
     renderAll();
   });
+
+  // Mobile sidebar toggle
+  const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+  if (mobileSidebarToggle) {
+    mobileSidebarToggle.addEventListener('click', () => {
+      const sidebar = document.getElementById('catalogSidebar');
+      if (sidebar) sidebar.classList.toggle('is-open');
+    });
+  }
+
+  // Workbench sidebar search filter
+  const wbSearchInput = document.getElementById('wbSearchInput');
+  if (wbSearchInput) {
+    wbSearchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('#wbTree .tree-item').forEach((item) => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+  }
 
   // Add Feature Studio Modal
   const addFeatureModal = document.getElementById('addFeatureModal');
@@ -752,5 +829,10 @@
     }
   }
 
-  renderAll();
+  // Handle URL query parameter ?mode=workbench
+  if (typeof window !== 'undefined' && window.location && new URLSearchParams(window.location.search).get('mode') === 'workbench') {
+    setWorkspaceMode('workbench');
+  } else {
+    renderAll();
+  }
 })();

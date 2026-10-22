@@ -142,11 +142,11 @@ function isolateSectionScript(js, sectionId) {
   if (!js || typeof js !== 'string') return '';
   let isolated = js;
 
-  // Replace getElementById("root") or getElementById('root')
-  isolated = isolated.replace(/(getElementById\s*\(\s*["'])root(["']\s*\))/g, `$1root-${sectionId}$2`);
+  // Replace getElementById("root"), getElementById('root'), or getElementById(`root`)
+  isolated = isolated.replace(/(getElementById\s*\(\s*["'`])root(["'`]\s*\))/g, `$1root-${sectionId}$2`);
 
-  // Replace querySelector("#root") or querySelector('#root')
-  isolated = isolated.replace(/(querySelector(?:All)?\s*\(\s*["'])#root(["']\s*\))/g, `$1#root-${sectionId}$2`);
+  // Replace querySelector("#root"), querySelector('#root'), or querySelector(`#root`)
+  isolated = isolated.replace(/(querySelector(?:All)?\s*\(\s*["'`])#root(["'`]\s*\))/g, `$1#root-${sectionId}$2`);
 
   return isolated;
 }
@@ -307,7 +307,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
     // Isolated JS wrapped safely
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      scriptBlocks.push(`        // Section: ${slug} (${id})\n        try {\n          (function () {\n${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}\n          })();\n        } catch (err) {\n          console.error('Error in section "${slug}":', err);\n        }`);
+      scriptBlocks.push(`        // Section: ${slug} (${id})\n        try {\n          (function () {\n${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}\n          })();\n        } catch (err) {\n          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);\n        }`);
     }
   });
 
@@ -426,7 +426,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
     // Isolated JS wrapped safely
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      scriptBlocks.push(`  // Section: ${slug}\n  try {\n    (function () {\n${isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n')}\n    })();\n  } catch (err) {\n    console.error('Error executing ${slug}:', err);\n  }`);
+      scriptBlocks.push(`  // Section: ${slug}\n  try {\n    (function () {\n${isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n')}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  }`);
     }
   });
 
