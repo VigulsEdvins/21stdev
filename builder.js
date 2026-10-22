@@ -585,31 +585,42 @@
 
         const title = feature.title || feature.name || feature.slug;
         const desc = feature.description || (feature.tags ? feature.tags.join(', ') : 'Ready to stack component');
+        const category = feature.category || 'Component';
+        const tags = Array.isArray(feature.tags) ? feature.tags.slice(0, 3) : [];
 
         card.innerHTML = `
-          <div class="drawer-card-info">
-            <div class="drawer-card-title">${escapeHtml(title)}</div>
-            <div class="drawer-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
+          <div class="drawer-card-header-row">
+            <div class="drawer-card-title-group">
+              <span class="drawer-card-badge">${escapeHtml(category)}</span>
+              <div class="drawer-card-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
+            </div>
+            <button type="button" class="drawer-add-btn" aria-label="Add ${escapeHtml(title)} to page stack">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>+ Add to Stack</span>
+            </button>
           </div>
-          <button type="button" class="drawer-add-btn" aria-label="Add ${escapeHtml(title)} to page stack">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            <span>+ Add to Stack</span>
-          </button>
+          <div class="drawer-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
+          ${tags.length ? `
+            <div class="drawer-card-footer-row">
+              <div class="drawer-card-tags">
+                ${tags.map(t => `<span class="drawer-card-tag">#${escapeHtml(t)}</span>`).join('')}
+              </div>
+            </div>
+          ` : ''}
         `;
 
         const addBtn = card.querySelector('.drawer-add-btn');
-        if (addBtn) {
-          addBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            stackManager.addSection(feature.slug, {
-              title: feature.title || feature.name || feature.slug,
-              category: feature.category || 'Component'
-            });
 
-            // Button feedback
+        const triggerAdd = () => {
+          stackManager.addSection(feature.slug, {
+            title: feature.title || feature.name || feature.slug,
+            category: feature.category || 'Component'
+          });
+
+          if (addBtn) {
             if (!addBtn.dataset.originalHtml) {
               addBtn.dataset.originalHtml = addBtn.innerHTML;
             }
@@ -631,10 +642,21 @@
               addBtn.style.color = '';
               addBtn._restoreTimer = null;
             }, 900);
+          }
 
-            showToast(`Added "${title}" to page stack`);
+          showToast(`Added "${title}" to page stack`);
+        };
+
+        if (addBtn) {
+          addBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerAdd();
           });
         }
+
+        card.addEventListener('click', () => {
+          triggerAdd();
+        });
 
         fragment.appendChild(card);
       });
