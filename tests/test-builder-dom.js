@@ -18,12 +18,21 @@ assert(builderHtml.includes('data-viewport="desktop"'), 'Must contain desktop vi
 assert(builderHtml.includes('data-viewport="tablet"'), 'Must contain tablet viewport toggle');
 assert(builderHtml.includes('data-viewport="mobile"'), 'Must contain mobile viewport toggle');
 
+assert(builderHtml.includes('id="loadStarterBtn"'), 'Must contain load starter template button');
+assert(builderHtml.includes('id="viewVisualBtn"'), 'Must contain visual view mode toggle button');
+assert(builderHtml.includes('id="viewCompactBtn"'), 'Must contain compact view mode toggle button');
+
 const builderCss = fs.readFileSync('builder.css', 'utf8');
 assert(builderCss.includes('.clear-search-btn'), 'builder.css must style .clear-search-btn');
+assert(builderCss.includes('.drawer-card-preview-box'), 'builder.css must style drawer card previews');
+assert(builderCss.includes('.drawer-feature-grid.is-compact'), 'builder.css must style compact drawer mode');
 
 const builderJs = fs.readFileSync('builder.js', 'utf8');
 assert(builderJs.includes('originalHtml'), 'builder.js must cache originalHtml on addBtn');
 assert(builderJs.includes('_restoreTimer'), 'builder.js must manage _restoreTimer on addBtn');
+assert(builderJs.includes('loadStarterTemplate'), 'builder.js must contain loadStarterTemplate');
+assert(builderJs.includes('STARTER_SECTIONS'), 'builder.js must define STARTER_SECTIONS');
+assert(builderJs.includes('drawerPreviewObserver'), 'builder.js must declare lazy drawer preview observer');
 
 const appJs = fs.readFileSync('app.js', 'utf8');
 assert(appJs.includes('mode') && appJs.includes('workbench') && appJs.includes('URLSearchParams'), 'app.js must handle ?mode=workbench query parameter');

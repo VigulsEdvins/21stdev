@@ -168,12 +168,20 @@
             <span class="stack-count-badge" id="stackCountBadge">0</span>
           </div>
 
-          <button type="button" class="icon-action-btn" id="clearStackBtn" title="Clear all sections from page stack" aria-label="Clear all sections">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
-          </button>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <button type="button" class="starter-template-btn" id="loadStarterBtn" title="Load Starter Page Template">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>Starter</span>
+            </button>
+            <button type="button" class="icon-action-btn" id="clearStackBtn" title="Clear all sections from page stack" aria-label="Clear all sections">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <button type="button" class="add-section-btn" id="openDrawerBtn">
@@ -275,15 +283,21 @@
           </div>
         </div>
 
-        <!-- Category Filters -->
-        <div class="drawer-category-filters" id="drawerCategories" role="group" aria-label="Component Categories">
-          <button type="button" class="drawer-cat-pill is-active" data-category="all">All</button>
-          <button type="button" class="drawer-cat-pill" data-category="Headers &amp; Nav">Headers &amp; Nav</button>
-          <button type="button" class="drawer-cat-pill" data-category="Heroes">Heroes</button>
-          <button type="button" class="drawer-cat-pill" data-category="3D &amp; Carousels">3D &amp; Carousels</button>
-          <button type="button" class="drawer-cat-pill" data-category="Scroll &amp; Parallax">Scroll &amp; Parallax</button>
-          <button type="button" class="drawer-cat-pill" data-category="Galleries &amp; Grids">Galleries &amp; Grids</button>
-          <button type="button" class="drawer-cat-pill" data-category="Buttons &amp; UI">Buttons &amp; UI</button>
+        <!-- Category Filters & View Toggle -->
+        <div class="drawer-filters-row">
+          <div class="drawer-category-filters" id="drawerCategories" role="group" aria-label="Component Categories">
+            <button type="button" class="drawer-cat-pill is-active" data-category="all">All</button>
+            <button type="button" class="drawer-cat-pill" data-category="Headers &amp; Nav">Headers &amp; Nav</button>
+            <button type="button" class="drawer-cat-pill" data-category="Heroes">Heroes</button>
+            <button type="button" class="drawer-cat-pill" data-category="3D &amp; Carousels">3D &amp; Carousels</button>
+            <button type="button" class="drawer-cat-pill" data-category="Scroll &amp; Parallax">Scroll &amp; Parallax</button>
+            <button type="button" class="drawer-cat-pill" data-category="Galleries &amp; Grids">Galleries &amp; Grids</button>
+            <button type="button" class="drawer-cat-pill" data-category="Buttons &amp; UI">Buttons &amp; UI</button>
+          </div>
+          <div class="drawer-view-toggle">
+            <button type="button" class="view-toggle-btn is-active" id="viewVisualBtn" title="Visual Cards with Live Previews">Visual</button>
+            <button type="button" class="view-toggle-btn" id="viewCompactBtn" title="Compact Text View">Compact</button>
+          </div>
         </div>
       </header>
 

@@ -226,6 +226,7 @@
     const stackEmptyPlaceholder = document.getElementById('stackEmptyPlaceholder');
     const stackCountBadge = document.getElementById('stackCountBadge');
     const clearStackBtn = document.getElementById('clearStackBtn');
+    const loadStarterBtn = document.getElementById('loadStarterBtn');
     const openDrawerBtn = document.getElementById('openDrawerBtn');
     const emptyBrowseBtn = document.getElementById('emptyBrowseBtn');
 
@@ -238,6 +239,8 @@
     const drawerCategories = document.getElementById('drawerCategories');
     const drawerFeatureGrid = document.getElementById('drawerFeatureGrid');
     const drawerCountBadge = document.getElementById('drawerCountBadge');
+    const viewVisualBtn = document.getElementById('viewVisualBtn');
+    const viewCompactBtn = document.getElementById('viewCompactBtn');
 
     // Viewport & Preview Elements
     const previewFrame = document.getElementById('previewFrame');
@@ -503,6 +506,33 @@
       });
     }
 
+    // Starter Website Template (Default Presets)
+    const STARTER_SECTIONS = [
+      { slug: 'responsive-burger-menu', title: 'Morphing Burger & Staggered Overlay Menu', category: 'Headers & Nav' },
+      { slug: 'oklch-ambient-glow-hero', title: 'OKLCH Ambient Aurora Hero', category: 'Heroes' },
+      { slug: 'polaroid-string-carousel', title: 'Polaroid Sagging String & Breeze Physics Carousel', category: '3D & Carousels' },
+      { slug: 'beam-wordmark-footer', title: 'Beam Wordmark Footer', category: 'Footers & Endings' }
+    ];
+
+    function loadStarterTemplate(silent = false) {
+      stackManager.clearStack();
+      STARTER_SECTIONS.forEach(item => {
+        stackManager.addSection(item.slug, {
+          title: item.title,
+          category: item.category
+        });
+      });
+      if (!silent) {
+        showToast('Loaded starter website template');
+      }
+    }
+
+    if (loadStarterBtn) {
+      loadStarterBtn.addEventListener('click', () => {
+        loadStarterTemplate();
+      });
+    }
+
     // 5. Component Drawer Controller
     function openDrawer() {
       if (!componentDrawer) return;
@@ -556,8 +586,48 @@
       });
     }
 
+    // Drawer live preview observer (lazy mounts iframes into visible cards)
+    const drawerPreviewObserver = typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const box = entry.target;
+            const slug = box.getAttribute('data-slug');
+            const feature = featuresMap.get(slug);
+            if (!feature) return;
+
+            let iframe = box.querySelector('iframe');
+            if (entry.isIntersecting) {
+              if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.title = feature.title || slug;
+                iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
+                iframe.setAttribute('loading', 'lazy');
+                if (feature.files && feature.files.combined) {
+                  iframe.srcdoc = feature.files.combined;
+                } else {
+                  iframe.src = `features/${slug}/index.html`;
+                }
+                const placeholder = box.querySelector('.drawer-card-preview-placeholder');
+                iframe.addEventListener('load', () => {
+                  if (placeholder) placeholder.style.display = 'none';
+                });
+                box.appendChild(iframe);
+              }
+            } else if (iframe) {
+              iframe.remove();
+              const placeholder = box.querySelector('.drawer-card-preview-placeholder');
+              if (placeholder) placeholder.style.display = '';
+            }
+          });
+        }, { rootMargin: '250px 0px' })
+      : null;
+
     function renderDrawerFeatures() {
       if (!drawerFeatureGrid) return;
+
+      if (drawerPreviewObserver) {
+        drawerPreviewObserver.disconnect();
+      }
 
       const filtered = getFilteredFeatures();
       if (drawerCountBadge) {
@@ -589,28 +659,38 @@
         const tags = Array.isArray(feature.tags) ? feature.tags.slice(0, 3) : [];
 
         card.innerHTML = `
-          <div class="drawer-card-header-row">
-            <div class="drawer-card-title-group">
-              <span class="drawer-card-badge">${escapeHtml(category)}</span>
-              <div class="drawer-card-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
-            </div>
-            <button type="button" class="drawer-add-btn" aria-label="Add ${escapeHtml(title)} to page stack">
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              <span>+ Add to Stack</span>
-            </button>
+          <div class="drawer-card-preview-box" data-slug="${feature.slug}">
+            <div class="drawer-card-preview-placeholder">Live Preview</div>
           </div>
-          <div class="drawer-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
-          ${tags.length ? `
-            <div class="drawer-card-footer-row">
-              <div class="drawer-card-tags">
-                ${tags.map(t => `<span class="drawer-card-tag">#${escapeHtml(t)}</span>`).join('')}
+          <div class="drawer-card-body">
+            <div class="drawer-card-header-row">
+              <div class="drawer-card-title-group">
+                <span class="drawer-card-badge">${escapeHtml(category)}</span>
+                <div class="drawer-card-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
               </div>
+              <button type="button" class="drawer-add-btn" aria-label="Add ${escapeHtml(title)} to page stack">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>+ Add to Stack</span>
+              </button>
             </div>
-          ` : ''}
+            <div class="drawer-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
+            ${tags.length ? `
+              <div class="drawer-card-footer-row">
+                <div class="drawer-card-tags">
+                  ${tags.map(t => `<span class="drawer-card-tag">#${escapeHtml(t)}</span>`).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
         `;
+
+        const previewBox = card.querySelector('.drawer-card-preview-box');
+        if (previewBox && drawerPreviewObserver) {
+          drawerPreviewObserver.observe(previewBox);
+        }
 
         const addBtn = card.querySelector('.drawer-add-btn');
 
@@ -697,6 +777,21 @@
           drawerSearchInput.focus();
           renderDrawerFeatures();
         }
+      });
+    }
+
+    // Drawer View Mode Toggle (Visual vs Compact)
+    if (viewVisualBtn && viewCompactBtn && drawerFeatureGrid) {
+      viewVisualBtn.addEventListener('click', () => {
+        viewVisualBtn.classList.add('is-active');
+        viewCompactBtn.classList.remove('is-active');
+        drawerFeatureGrid.classList.remove('is-compact');
+      });
+
+      viewCompactBtn.addEventListener('click', () => {
+        viewCompactBtn.classList.add('is-active');
+        viewVisualBtn.classList.remove('is-active');
+        drawerFeatureGrid.classList.add('is-compact');
       });
     }
 
@@ -1326,6 +1421,11 @@
       if (accentColorInput && currentTheme.accent) accentColorInput.value = currentTheme.accent;
     }
 
+    // Auto-seed starter website template on empty initial stack
+    if (!initialState.stack || initialState.stack.length === 0) {
+      loadStarterTemplate(true);
+    }
+
     renderStackList();
     renderDrawerFeatures();
     updatePreview();
@@ -1343,7 +1443,9 @@
       setActiveExportTab,
       setActiveCodeSubtab,
       prepareExportData,
-      handleDownloadZip
+      handleDownloadZip,
+      loadStarterTemplate,
+      STARTER_SECTIONS
     };
 
     if (typeof window !== 'undefined') {
