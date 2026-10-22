@@ -724,11 +724,12 @@
             text: textColorInput ? textColorInput.value : '#f3f4f6',
             accent: accentColorInput ? accentColorInput.value : '#6366f1'
           };
-          stackManager.setCustomColors(customColors);
-          stackManager.setTheme('custom');
           applyDynamicTheme(customColors);
+          if (stackManager.getState().theme !== 'custom') {
+            stackManager.setTheme('custom');
+          }
+          stackManager.setCustomColors(customColors);
         } else {
-          stackManager.setTheme(themeKey);
           const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
           const preset = presets[themeKey];
           if (preset) {
@@ -737,6 +738,7 @@
             if (accentColorInput) accentColorInput.value = preset.accent;
             applyDynamicTheme(preset);
           }
+          stackManager.setTheme(themeKey);
         }
       });
     }
@@ -764,14 +766,16 @@
         themePresetSelect.value = 'custom';
       }
 
-      // Immediately propagate theme variables to iframe in real time
+      // Immediately propagate theme variables to iframe in real time via postMessage/DOM
       applyDynamicTheme(colors);
 
       // Debounce updating state and srcdoc to prevent lag during rapid slider dragging
       clearTimeout(themeDebounceTimer);
       themeDebounceTimer = setTimeout(() => {
+        if (stackManager.getState().theme !== 'custom') {
+          stackManager.setTheme('custom');
+        }
         stackManager.setCustomColors(colors);
-        stackManager.setTheme('custom');
       }, 120);
     }
 
@@ -787,10 +791,13 @@
         themePresetSelect.value = 'custom';
       }
 
-      stackManager.setCustomColors(colors);
-      stackManager.setTheme('custom');
       applyDynamicTheme(colors);
-      updatePreview();
+
+      // Consolidate updates: set theme only if needed, setCustomColors triggers notify() once
+      if (stackManager.getState().theme !== 'custom') {
+        stackManager.setTheme('custom');
+      }
+      stackManager.setCustomColors(colors);
     }
 
     if (bgColorInput) {
@@ -807,14 +814,9 @@
     }
 
     // 8. Open in New Tab Action
-    const openNewTabBtn = document.getElementById('openNewTabBtn') || document.getElementById('openInTabBtn');
-    if (openNewTabBtn) {
-      if (openNewTabBtn.id !== 'openNewTabBtn') {
-        openNewTabBtn.setAttribute('data-orig-id', openNewTabBtn.id);
-        openNewTabBtn.id = 'openNewTabBtn';
-      }
-
-      openNewTabBtn.addEventListener('click', async () => {
+    const openInTabBtn = document.getElementById('openInTabBtn') || document.getElementById('openNewTabBtn');
+    if (openInTabBtn) {
+      openInTabBtn.addEventListener('click', async () => {
         if (!window.Assembler || typeof window.Assembler.assemblePreviewDocument !== 'function') {
           showToast('Assembler engine not available');
           return;

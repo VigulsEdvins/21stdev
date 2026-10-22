@@ -40,6 +40,7 @@ presetKeys.forEach(key => {
 assert(doc.includes('<meta name="viewport" content="width=device-width, initial-scale=1.0">'), 'Must include responsive viewport meta');
 assert(doc.includes('class="page-section" id="1"'), 'Section 1 container must be present');
 assert(doc.includes('class="page-section" id="2"'), 'Section 2 container must be present');
+assert(doc.includes('UPDATE_THEME'), 'Preview document must contain postMessage listener for UPDATE_THEME');
 
 // Test 5: Verify builder.css viewport controls and frame shadows
 const cssContent = fs.readFileSync('builder.css', 'utf8');
@@ -54,7 +55,7 @@ assert(cssContent.includes('box-shadow: 0 24px 60px'), 'Tablet/Mobile viewports 
 const builderJsContent = fs.readFileSync('builder.js', 'utf8');
 assert(builderJsContent.includes('featureCache'), 'builder.js must declare client-side featureCache');
 assert(builderJsContent.includes('fetchFeatureFiles'), 'builder.js must contain fetchFeatureFiles');
-assert(builderJsContent.includes('openNewTabBtn'), 'builder.js must wire openNewTabBtn');
+assert(builderJsContent.includes('openInTabBtn') || builderJsContent.includes('openNewTabBtn'), 'builder.js must wire open tab button');
 assert(builderJsContent.includes('URL.createObjectURL'), 'builder.js must create a Blob URL for open in new tab');
 assert(builderJsContent.includes('applyDynamicTheme'), 'builder.js must contain dynamic theme propagation');
 

@@ -254,6 +254,18 @@ function renderEmptyPreview(theme) {
     <h2>Your Page Stack is Empty</h2>
     <p>Add sections to start previewing your assembled page in real time.</p>
   </div>
+  <script>
+    window.addEventListener('message', function (event) {
+      if (event.data && event.data.type === 'UPDATE_THEME' && event.data.theme) {
+        var t = event.data.theme;
+        if (t.bg) document.documentElement.style.setProperty('--preview-bg', t.bg);
+        if (t.text) document.documentElement.style.setProperty('--preview-text', t.text);
+        if (t.accent) document.documentElement.style.setProperty('--preview-accent', t.accent);
+        if (t.cardBg) document.documentElement.style.setProperty('--preview-card-bg', t.cardBg);
+        if (t.border) document.documentElement.style.setProperty('--preview-border', t.border);
+      }
+    });
+  </script>
 </body>
 </html>`;
 }
@@ -349,6 +361,18 @@ ${allScopedStyles}
 ${allHtml}
   <script>
     (function () {
+      // Dynamic live theme updates via postMessage
+      window.addEventListener('message', function (event) {
+        if (event.data && event.data.type === 'UPDATE_THEME' && event.data.theme) {
+          var t = event.data.theme;
+          if (t.bg) document.documentElement.style.setProperty('--preview-bg', t.bg);
+          if (t.text) document.documentElement.style.setProperty('--preview-text', t.text);
+          if (t.accent) document.documentElement.style.setProperty('--preview-accent', t.accent);
+          if (t.cardBg) document.documentElement.style.setProperty('--preview-card-bg', t.cardBg);
+          if (t.border) document.documentElement.style.setProperty('--preview-border', t.border);
+        }
+      });
+
       function initAllSections() {
 ${allScripts}
       }
