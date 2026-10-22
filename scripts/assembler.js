@@ -93,8 +93,8 @@ function scopeSectionStyles(css, sectionId) {
   // 3. Rewrite #root to #root-${sectionId}
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])#root(?![a-zA-Z0-9_-])/g, `#root-${sectionId}`);
 
-  // 4. Replace viewport locking 100vh on height with min-height: auto
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1');
+  // 4. Replace viewport locking 100vh on height with flexible viewport height
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1; min-height: 100vh$1; height: 100vh$1');
 
   return scoped;
 }
@@ -352,6 +352,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
     .page-section {
       position: relative;
       width: 100%;
+      clear: both;
     }
 
 ${allScopedStyles}
@@ -487,6 +488,7 @@ body {
 .page-section {
   position: relative;
   width: 100%;
+  clear: both;
 }
 
 /* ==========================================================================
