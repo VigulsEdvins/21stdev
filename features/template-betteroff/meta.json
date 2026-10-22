@@ -5,9 +5,25 @@
   "source": "betteroff",
   "type": "template",
   "description": "Complete multi-chapter interactive annual review website with 3D WebGL Surf ribbon, inertia timeline, jukebox audio player, and live visual Admin CMS studio.",
-  "tags": ["full-template", "cms", "admin", "threejs", "betteroff", "annual-report"],
-  "tech": ["Three.js", "GSAP", "Lenis", "LocalStorage CMS"],
-  "dependencies": ["three", "gsap", "lenis"],
+  "tags": [
+    "full-template",
+    "cms",
+    "admin",
+    "threejs",
+    "betteroff",
+    "annual-report"
+  ],
+  "tech": [
+    "Three.js",
+    "GSAP",
+    "Lenis",
+    "LocalStorage CMS"
+  ],
+  "dependencies": [
+    "three",
+    "gsap",
+    "lenis"
+  ],
   "liveSiteUrl": "/betteroff/index.html",
   "adminUrl": "/betteroff/admin.html",
   "sourceFolder": "/home/edvins/features-for-web/betteroff",

@@ -1,0 +1,29 @@
+{
+  "name": "Amour Sunrise Preloader",
+  "title": "Amour Sunrise Preloader",
+  "slug": "amour-sunrise-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A loading gate styled like a mid-century poster. Fat, wobbly marker letters arch over a cobalt sun rising from the bottom edge. The outer letters run long, as they do on a hand-lettered print.",
+  "tags": [
+    "amour",
+    "sunrise",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 103
+}

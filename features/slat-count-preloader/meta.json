@@ -1,0 +1,29 @@
+{
+  "name": "Slat Count Preloader",
+  "title": "Slat Count Preloader",
+  "slug": "slat-count-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A Swiss-poster loading gate built out of black slats on vermilion.",
+  "tags": [
+    "slat",
+    "count",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 226
+}

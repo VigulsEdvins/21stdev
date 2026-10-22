@@ -1,0 +1,29 @@
+{
+  "name": "Ink Orbit Hero",
+  "title": "Ink Orbit Hero",
+  "slug": "ink-orbit-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
+  "tags": [
+    "ink",
+    "orbit",
+    "hero",
+    "21st.dev",
+    "navigation",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 170
+}

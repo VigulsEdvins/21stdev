@@ -1,0 +1,26 @@
+{
+  "name": "Hover Magnetic Footer",
+  "title": "Hover Magnetic Footer",
+  "slug": "hover-footer",
+  "category": "Footers & Endings",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Interactive magnetic hover footer animation with glowing cursor dynamics and social docks.",
+  "tags": [
+    "footer",
+    "magnetic",
+    "cursor",
+    "interactive",
+    "21st.dev"
+  ],
+  "tech": [
+    "React",
+    "Framer Motion",
+    "Tailwind CSS"
+  ],
+  "dependencies": [
+    "React",
+    "Tailwind CSS"
+  ],
+  "order": 44
+}

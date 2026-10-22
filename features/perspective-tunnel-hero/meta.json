@@ -1,0 +1,36 @@
+{
+  "name": "Perspective Tunnel Hero",
+  "title": "Perspective Tunnel Hero",
+  "slug": "perspective-tunnel-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A 3D Z-axis spatial fly-through hero component where cards burst out of a golden-angle tunnel toward the camera as you scroll. Features smooth spring physics, pointer parallax, depth rings, and reactive typography.",
+  "tags": [
+    "3d",
+    "tunnel",
+    "perspective",
+    "hero",
+    "scroll",
+    "golden-angle",
+    "warp",
+    "parallax",
+    "cards",
+    "21st.dev"
+  ],
+  "tech": [
+    "3D CSS",
+    "Perspective Tunnel",
+    "Golden Angle",
+    "Parallax",
+    "Spring Physics",
+    "Vanilla JS",
+    "React Framer Motion"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS",
+    "React (.tsx included)"
+  ],
+  "author": "daiwiikharihar",
+  "order": 1
+}

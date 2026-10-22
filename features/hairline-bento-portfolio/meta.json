@@ -1,0 +1,29 @@
+{
+  "name": "Hairline Bento Portfolio",
+  "title": "Hairline Bento Portfolio",
+  "slug": "hairline-bento-portfolio",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A whole link-in-bio portfolio on one sheet. Cells sit on warm paper, divided by one-pixel rules, with a stretched black display name and one inverted panel for the thing you're launching. It's minimal, but every cell does something.",
+  "tags": [
+    "hairline",
+    "bento",
+    "portfolio",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 158
+}

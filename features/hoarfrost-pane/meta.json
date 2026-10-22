@@ -1,0 +1,28 @@
+{
+  "name": "Hoarfrost Pane",
+  "title": "Hoarfrost Pane",
+  "slug": "hoarfrost-pane",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed background: a winter window at blue hour that frosts over as the page loads. The ice is a real phase-field crystal growth model (Kobayashi) on the GPU: six-fold dendrites nucleate on specks along the cold frame, branch, and stall where the glass is warmer, so the middle stays clear for ",
+  "tags": [
+    "hoarfrost",
+    "pane",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 162
+}

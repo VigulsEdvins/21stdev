@@ -1,0 +1,28 @@
+{
+  "name": "Foundation Primitives",
+  "title": "Foundation Primitives",
+  "slug": "foundation-primitives",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A card of soft 3D primitives: an asterisk, a sphere, a stack of half-domes, an hourglass and an orb. They are shaded as frosted gradient gel and sit on pale plates, with a glass lens floating over them. The card holds only the shapes, with no text.",
+  "tags": [
+    "foundation",
+    "primitives",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 151
+}

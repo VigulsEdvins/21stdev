@@ -1,0 +1,28 @@
+{
+  "name": "Comeback Poster",
+  "title": "Comeback Poster",
+  "slug": "comeback-poster",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed hero laid out like a printed gig poster. A paper masthead carries a swash title and a grid of theme words, over an oil-painted field of red poppies. A hooded figure in a white robe stands in the field, and its empty face turns toward you.",
+  "tags": [
+    "comeback",
+    "poster",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 127
+}

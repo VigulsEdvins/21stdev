@@ -5,7 +5,17 @@
   "source": "betteroff",
   "type": "component",
   "description": "Infinite wrapping 3D perspective card stream moving along a diagonal sine-wave ribbon trajectory. Velocity amplifies wave amplitude while cards rotate on the Y-axis (-70° to -85°) and elevate on hover.",
-  "tags": ["3d", "ribbon", "sine-wave", "surf", "infinite", "inertia", "physics"],
-  "dependencies": ["Vanilla HTML/CSS/JS"],
-  "order": 9
+  "tags": [
+    "3d",
+    "ribbon",
+    "sine-wave",
+    "surf",
+    "infinite",
+    "inertia",
+    "physics"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 19
 }

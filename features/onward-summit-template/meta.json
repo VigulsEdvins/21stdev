@@ -1,0 +1,29 @@
+{
+  "name": "Onward Summit Template",
+  "title": "Onward Summit Template",
+  "slug": "onward-summit-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete one-day event page in one component. The hero runs from navy down to white and is filled with tiny arrows that lean away from the pointer, ripple out from a click and shimmer on their own, clearing a space around the event's name. Below it, on white, come seven sections: what to expect, a",
+  "tags": [
+    "onward",
+    "summit",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 199
+}

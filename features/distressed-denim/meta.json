@@ -1,0 +1,28 @@
+{
+  "name": "Distressed Denim",
+  "title": "Distressed Denim",
+  "slug": "distressed-denim",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed background of hanging denim you can rip. The cloth is a real mesh of a few thousand points, gathered so it falls in soft vertical folds. Rest the pointer on it to press it in. Drag across it to tear it: the indigo warp under the stroke snaps, the cut opens under its own weight, and the ",
+  "tags": [
+    "distressed",
+    "denim",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 136
+}

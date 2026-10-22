@@ -1,0 +1,29 @@
+{
+  "name": "Duotone Team Roster",
+  "title": "Duotone Team Roster",
+  "slug": "duotone-team-roster",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A \"meet the people\" section for an about page, a studio site or a careers page. A heavy display headline sits bottom-left on a burning colour field. Beside it, the team hangs in tall columns of portraits that drift slowly in opposite directions. Every photo goes through one tritone (shadow, midtone,",
+  "tags": [
+    "duotone",
+    "team",
+    "roster",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 140
+}

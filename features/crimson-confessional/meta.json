@@ -1,0 +1,28 @@
+{
+  "name": "Crimson Confessional",
+  "title": "Crimson Confessional",
+  "slug": "crimson-confessional",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A scroll-scrubbed noir sequence. Each chapter is one word, one cryptic line, and a procedural motif drawn from scroll position. Red, black, bone, and a lot of grain.",
+  "tags": [
+    "crimson",
+    "confessional",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 132
+}

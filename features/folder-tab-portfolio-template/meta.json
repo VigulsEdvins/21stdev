@@ -1,0 +1,30 @@
+{
+  "name": "Folder Tab Portfolio Template",
+  "title": "Folder Tab Portfolio Template",
+  "slug": "folder-tab-portfolio-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete designer portfolio built from file folders: saturated blue, green, orange and pale-yellow tabs, frosted glass bodies, a wide monoline wordmark with a pill-shaped `OO`, crosshair marks and a handwritten signature. It reads like the pages of a printed portfolio deck, one rounded \"sheet\" per",
+  "tags": [
+    "folder",
+    "tab",
+    "portfolio",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 150
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Isoline Bloom",
+  "title": "Isoline Bloom",
+  "slug": "isoline-bloom",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A living, lobed shape drawn only by its contour lines — neon hairlines flowing outward from an indigo core, violet on one side, magenta through the middle, ember red on the other. Move over it and the lines bulge around your pointer and the whole figure leans toward you; move fast and the rings pump",
+  "tags": [
+    "isoline",
+    "bloom",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 175
+}

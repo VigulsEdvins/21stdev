@@ -1,0 +1,29 @@
+{
+  "name": "Water Ripple Carousel",
+  "title": "Water Ripple Carousel",
+  "slug": "water-ripple-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed image carousel where tapping drops a ripple: a ring of bending water spreads from the tap, refracting the old picture at its edge, with the next picture inside it. One WebGL fragment shader. Off-origin images need CORS; without WebGL (or CORS) it simply cuts.",
+  "tags": [
+    "water",
+    "ripple",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 247
+}

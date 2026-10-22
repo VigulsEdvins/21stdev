@@ -1,0 +1,29 @@
+{
+  "name": "Agent Console Template",
+  "title": "Agent Console Template",
+  "slug": "agent-console-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete, working front end for an agent that plans its work as a small state machine. You ask for something, the agent writes a machine for it, and nothing runs until you approve. Then it runs state by state while you watch the transcript, a live state graph, and the store it writes to.",
+  "tags": [
+    "agent",
+    "console",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 100
+}

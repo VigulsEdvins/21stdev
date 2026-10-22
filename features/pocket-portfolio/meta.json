@@ -1,0 +1,28 @@
+{
+  "name": "Pocket Portfolio",
+  "title": "Pocket Portfolio",
+  "slug": "pocket-portfolio",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A minimal, card-stacked one-page portfolio template. White rounded cards on a soft grey page, a pill nav, one hot accent colour.",
+  "tags": [
+    "pocket",
+    "portfolio",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 210
+}

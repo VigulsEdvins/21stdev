@@ -1,0 +1,29 @@
+{
+  "name": "Glass Headline Hero",
+  "title": "Glass Headline Hero",
+  "slug": "glass-headline-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A hero section whose headline is thick refractive glass. A slow colour field flows behind it and bends through the letters, with prism fringes at the edges. The light follows the pointer, so the bevels catch sliding highlights and cast a short contact shadow. When nobody is pointing, the light drift",
+  "tags": [
+    "glass",
+    "headline",
+    "hero",
+    "21st.dev",
+    "navigation",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 156
+}

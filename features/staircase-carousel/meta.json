@@ -1,0 +1,28 @@
+{
+  "name": "Staircase Carousel",
+  "title": "Staircase Carousel",
+  "slug": "staircase-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A minimal photo carousel laid out as a staircase. The chosen photo sits level at full size, with its title beside it. Every photo before it steps up a whole storey and every photo after it steps down one, each shrunk to 80%. When you move, the strip slides along on a spring, the photos ease up or do",
+  "tags": [
+    "staircase",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 229
+}

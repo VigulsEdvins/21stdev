@@ -1,0 +1,26 @@
+{
+  "name": "WebGL Chromatic Wave Distortion",
+  "title": "WebGL Chromatic Wave Distortion",
+  "slug": "web-gl-shader",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Fullscreen interactive WebGL fluid chromatic wave distortion shader with mouse movement tracking.",
+  "tags": [
+    "webgl",
+    "shader",
+    "chromatic",
+    "distortion",
+    "waves",
+    "21st.dev"
+  ],
+  "tech": [
+    "WebGL",
+    "Fragment Shader",
+    "GLSL"
+  ],
+  "dependencies": [
+    "WebGL"
+  ],
+  "order": 46
+}

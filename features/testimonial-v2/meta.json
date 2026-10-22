@@ -1,0 +1,30 @@
+{
+  "name": "Testimonial Block v2",
+  "title": "Testimonial Block v2",
+  "slug": "testimonial-v2",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Modern reusable testimonial showcase block with social proof metrics, user avatars, verified client pill, quote typography, and interactive carousel navigation.",
+  "tags": [
+    "testimonials",
+    "social-proof",
+    "reviews",
+    "metrics",
+    "carousel",
+    "cards",
+    "21st.dev"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS Grid",
+    "Carousel",
+    "React (.tsx included)"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS",
+    "React (.tsx included)"
+  ],
+  "author": "avanishverma4",
+  "order": 7
+}

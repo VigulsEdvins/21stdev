@@ -5,8 +5,18 @@
   "source": "21st-crafted",
   "type": "component",
   "description": "Wheel- and scrubber-driven word-by-word illumination mixing upright neo-grotesk sans and italic editorial serif typography.",
-  "tags": ["typography", "kinetic", "scroll-scrub", "serif", "21st-dev"],
-  "tech": ["Vanilla JS", "CSS Transforms", "Wheel Scrubbing"],
+  "tags": [
+    "typography",
+    "kinetic",
+    "scroll-scrub",
+    "serif",
+    "21st-dev"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS Transforms",
+    "Wheel Scrubbing"
+  ],
   "dependencies": [],
   "order": 23
 }

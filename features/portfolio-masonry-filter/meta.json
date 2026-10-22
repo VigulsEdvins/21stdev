@@ -5,8 +5,21 @@
   "source": "mom",
   "type": "component",
   "description": "Filterable multi-column photography portfolio masonry with category pills, live count badges, hover metadata overlays, and click-to-expand project modal.",
-  "tags": ["masonry", "filter", "portfolio", "photography", "lightbox", "mom"],
-  "tech": ["Vanilla JS", "CSS Grid/Columns", "Responsive"],
-  "dependencies": ["vanilla-js"],
+  "tags": [
+    "masonry",
+    "filter",
+    "portfolio",
+    "photography",
+    "lightbox",
+    "mom"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS Grid/Columns",
+    "Responsive"
+  ],
+  "dependencies": [
+    "vanilla-js"
+  ],
   "order": 31
 }

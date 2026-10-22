@@ -1,0 +1,28 @@
+{
+  "name": "Engraved Ticket",
+  "title": "Engraved Ticket",
+  "slug": "engraved-ticket",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A die-cut poster ticket with a heavy condensed headline that breathes. Two prints of the same stub:",
+  "tags": [
+    "engraved",
+    "ticket",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 143
+}

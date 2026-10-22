@@ -1,0 +1,29 @@
+{
+  "name": "Phosphor CRT 404",
+  "title": "Phosphor CRT 404",
+  "slug": "phosphor-crt-404",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-screen \"page not found\" on a pink-phosphor tube. The whole component is the glass: an eyebrow between double rules, a chunky extruded error code ringed by bobbing music notes, a message between two beating hearts, and a pyramid between palm trees and drifting clouds, lit as round phosphor dot",
+  "tags": [
+    "phosphor",
+    "crt",
+    "404",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 205
+}

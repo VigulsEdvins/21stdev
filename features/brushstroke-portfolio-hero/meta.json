@@ -1,0 +1,29 @@
+{
+  "name": "Brushstroke Portfolio Hero",
+  "title": "Brushstroke Portfolio Hero",
+  "slug": "brushstroke-portfolio-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed portfolio poster: an editorial rule at the top and bottom, a letterspaced credit line, and `Portfolio` painted across the middle in dry brush over a ghosted `PORT` / `FOLIO` watermark, on torn, sprayed, grainy paper.",
+  "tags": [
+    "brushstroke",
+    "portfolio",
+    "hero",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 115
+}

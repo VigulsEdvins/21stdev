@@ -5,7 +5,16 @@
   "source": "betteroff",
   "type": "component",
   "description": "Horizontal inertia-draggable archive timeline grouped by months with velocity-driven 3D Y-axis card tilt, synchronized mechanical tick ruler, month jump buttons, and subtle Web Audio tick feedback.",
-  "tags": ["timeline", "inertia", "drag", "ruler", "horizontal-scroll", "archive"],
-  "dependencies": ["Vanilla HTML/CSS/JS"],
+  "tags": [
+    "timeline",
+    "inertia",
+    "drag",
+    "ruler",
+    "horizontal-scroll",
+    "archive"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
   "order": 10
 }

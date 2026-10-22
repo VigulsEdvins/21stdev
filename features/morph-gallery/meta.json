@@ -1,0 +1,28 @@
+{
+  "name": "Morph Gallery",
+  "title": "Morph Gallery",
+  "slug": "morph-gallery",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A photo gallery whose slides dissolve into each other through noise instead of cutting or cross-fading. Arrows, thumbnails, keyboard, swipe and autoplay.",
+  "tags": [
+    "morph",
+    "gallery",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 194
+}

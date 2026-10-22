@@ -1,0 +1,29 @@
+{
+  "name": "Zero Melt Preloader",
+  "title": "Zero Melt Preloader",
+  "slug": "zero-melt-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A page gate with no enter button. A sheet of ice wipes down over the surface while a counter runs to zero, then you **melt your way in by tracing a circle**. Get the shape right and the screen blows out to white, pays you, and lifts.",
+  "tags": [
+    "zero",
+    "melt",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 252
+}

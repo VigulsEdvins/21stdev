@@ -1,0 +1,28 @@
+{
+  "name": "Anodized Ink",
+  "title": "Anodized Ink",
+  "slug": "anodized-ink",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed shader background: crimson ink suspended in black, lit like anodized metal. Move the pointer to stir it, click to drop ink that rings outward. Left alone, the light drifts on its own so it is never a still.",
+  "tags": [
+    "anodized",
+    "ink",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 105
+}

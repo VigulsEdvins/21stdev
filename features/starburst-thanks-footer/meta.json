@@ -1,0 +1,29 @@
+{
+  "name": "Starburst Thanks Footer",
+  "title": "Starburst Thanks Footer",
+  "slug": "starburst-thanks-footer",
+  "category": "Footers & Endings",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A \"thank you for your time\" sign-off for the end of a portfolio, case study or deck. It has heavy extended caps, a hand-lettered line underneath, a loose pen loop around both, and a hot-pink starburst. Contact pills sit at the bottom, with little pointing hands under the links. The background is dar",
+  "tags": [
+    "starburst",
+    "thanks",
+    "footer",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 230
+}

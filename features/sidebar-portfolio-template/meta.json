@@ -1,0 +1,29 @@
+{
+  "name": "Sidebar Portfolio Template",
+  "title": "Sidebar Portfolio Template",
+  "slug": "sidebar-portfolio-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete one-page portfolio in a single file. It's quiet and minimal: warm paper, serif headings, one accent colour. A profile sidebar sticks on the left, and the reading column holds everything else:",
+  "tags": [
+    "sidebar",
+    "portfolio",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 223
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Halftone Wordmark Footer",
+  "title": "Halftone Wordmark Footer",
+  "slug": "halftone-wordmark-footer",
+  "category": "Footers & Endings",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A site footer whose wordmark is set enormous and cropped by the bottom edge, printed as a field of halftone dots. Each dot is sized by how much of the letter covers its cell, so the type keeps its edges at any width. Above it sit your studio line, tracked link columns and a back-to-top link, over a ",
+  "tags": [
+    "halftone",
+    "wordmark",
+    "footer",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 160
+}

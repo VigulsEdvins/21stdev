@@ -1,0 +1,29 @@
+{
+  "name": "Title Sequence Preloader",
+  "title": "Title Sequence Preloader",
+  "slug": "title-sequence-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A page gate cut like the opening titles of a design conference. While your page loads, a monochrome reel plays shot after shot, and every shot credits your people on leader lines, each in its own typographic voice. When the load hits 100, a rocket lifts off through the clouds. The clouds rise over t",
+  "tags": [
+    "title",
+    "sequence",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 240
+}

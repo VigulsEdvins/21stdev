@@ -5,8 +5,21 @@
   "source": "mom",
   "type": "component",
   "description": "Minimal studio language switcher supporting instant reactive translation, cross-fade text transitions, persistent locale caching, and data-i18n bindings.",
-  "tags": ["i18n", "multilingual", "language-switcher", "mom", "ui", "reactive"],
-  "tech": ["Vanilla JS", "Data Attributes", "Transitions"],
-  "dependencies": ["vanilla-js"],
+  "tags": [
+    "i18n",
+    "multilingual",
+    "language-switcher",
+    "mom",
+    "ui",
+    "reactive"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "Data Attributes",
+    "Transitions"
+  ],
+  "dependencies": [
+    "vanilla-js"
+  ],
   "order": 30
 }

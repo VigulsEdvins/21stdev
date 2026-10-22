@@ -1,0 +1,28 @@
+{
+  "name": "Rangoli Preloader",
+  "title": "Rangoli Preloader",
+  "slug": "rangoli-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A loading screen drawn in coloured powder on a red-oxide floor. As your page loads, a rangoli pours itself from the centre outward, every fold at once: a turmeric core, two rings of lotus petals, rice-flour kolam dots, marigold petals with green leaves between them, an indigo band with a zigzag, sca",
+  "tags": [
+    "rangoli",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 217
+}

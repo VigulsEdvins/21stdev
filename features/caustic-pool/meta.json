@@ -1,0 +1,28 @@
+{
+  "name": "Caustic Pool",
+  "title": "Caustic Pool",
+  "slug": "caustic-pool",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Shallow water you can stir, lit from above. Drag across it and the wake spreads, reflects off the walls and interferes with itself; leave it alone and it keeps moving without you.",
+  "tags": [
+    "caustic",
+    "pool",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 119
+}

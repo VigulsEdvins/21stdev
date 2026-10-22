@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perspective Tunnel Hero — 3D Spatial Fly-Through</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="tunnel-stage" id="tunnelStage">
+    <!-- Immersive Background Radial Grid & Glow -->
+    <div class="tunnel-grid" aria-hidden="true"></div>
+    <div class="tunnel-glow" aria-hidden="true"></div>
+
+    <!-- Depth Ring Guides -->
+    <div class="depth-ring ring-inner" aria-hidden="true"></div>
+    <div class="depth-ring ring-outer" aria-hidden="true"></div>
+
+    <!-- Central Anchor Typography -->
+    <div class="tunnel-anchor" id="tunnelAnchor">
+      <p class="warp-label">Warp Drive Sequence</p>
+      <h1 class="warp-title">
+        INTO THE<br />ETHER.
+      </h1>
+      <p class="warp-sub">
+        Scroll your trackpad, drag, or turn wheel to fly through the spatial 3D corridor.
+      </p>
+    </div>
+
+    <!-- Scroll / Drag Prompt -->
+    <div class="scroll-prompt" id="scrollPrompt">
+      <span>Scroll / Drag to Explore</span>
+      <div class="scroll-line"></div>
+    </div>
+
+    <!-- 3D Z-Space Plane with Tunnel Cards -->
+    <div class="tunnel-plane" id="tunnelPlane" aria-label="3D card corridor"></div>
+
+    <!-- Interactive Navigation Bar -->
+    <div class="tunnel-controls">
+      <button type="button" class="ctrl-btn" id="btnReset" title="Reset Camera">Reset</button>
+      <div class="progress-bar-wrap">
+        <input type="range" id="progressRange" min="0" max="100" value="0" step="0.1" aria-label="Warp Progress" />
+      </div>
+      <button type="button" class="ctrl-btn" id="btnAutoPlay" title="Auto Fly-Through">Auto Fly</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

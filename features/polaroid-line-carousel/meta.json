@@ -1,0 +1,29 @@
+{
+  "name": "Polaroid Line Carousel",
+  "title": "Polaroid Line Carousel",
+  "slug": "polaroid-line-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Instant photos pegged to a sagging string. Drag the line and the prints slide along it, swinging on their pegs with the speed you give them and settling back; at rest they sway in a light breeze. Click a print to bring it to the middle. Page colours follow the theme tokens.",
+  "tags": [
+    "polaroid",
+    "line",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 211
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Glass Fan Testimonials",
+  "title": "Glass Fan Testimonials",
+  "slug": "glass-fan-testimonials",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A featured-reviews section. Each quote is a white card set in a square pane of frosted glass. The panes overlap in a fan, and each one leans a little more than the one in front of it. The front pane is on the right, flat and on top, and you can see the panes behind it, softened, through its glass.",
+  "tags": [
+    "glass",
+    "fan",
+    "testimonials",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 154
+}

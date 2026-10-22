@@ -1,0 +1,29 @@
+{
+  "name": "Waving Portfolio Landing",
+  "title": "Waving Portfolio Landing",
+  "slug": "waving-portfolio-landing",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A red-on-paper poster landing page with a cinematic intro. The poster reads as two rows of tall condensed capitals sharing one giant letter: **P [O] RT / F [O] LIO**, with an ink-drawn character leaning out of the gap.",
+  "tags": [
+    "waving",
+    "portfolio",
+    "landing",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 248
+}

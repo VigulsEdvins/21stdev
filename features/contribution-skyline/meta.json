@@ -1,0 +1,28 @@
+{
+  "name": "Contribution Skyline",
+  "title": "Contribution Skyline",
+  "slug": "contribution-skyline",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A year of activity as a GitHub-style heat map that folds up into an isometric skyline and back down again.",
+  "tags": [
+    "contribution",
+    "skyline",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 130
+}

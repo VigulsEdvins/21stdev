@@ -1,0 +1,29 @@
+{
+  "name": "Card Deck Carousel",
+  "title": "Card Deck Carousel",
+  "slug": "card-deck-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Photos stacked like a loose deck of prints. Throw the top card in any direction (drag and let go, or flick) and it flies off, then slides back in at the bottom of the pile while the next one waits on top. The buttons, ←/→ and autoplay throw it for you; \"previous\" pulls the last card back on top.",
+  "tags": [
+    "card",
+    "deck",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 117
+}

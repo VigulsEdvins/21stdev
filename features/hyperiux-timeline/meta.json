@@ -1,0 +1,32 @@
+{
+  "name": "Hyperiux Product Storyline Timeline",
+  "title": "Hyperiux Product Storyline Timeline",
+  "slug": "hyperiux-timeline",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Horizontal scroll timeline with Lenis-style inertia smoothing, GSAP milestone reveals, dynamic connecting active rail, alternating top/bottom dates, and dual light/dark themes.",
+  "tags": [
+    "timeline",
+    "horizontal-scroll",
+    "gsap",
+    "lenis",
+    "milestones",
+    "roadmap",
+    "21st.dev",
+    "interactive"
+  ],
+  "tech": [
+    "GSAP ScrollTrigger",
+    "Lenis",
+    "Vanilla JS",
+    "CSS Flexbox",
+    "React (.tsx included)"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS",
+    "React (.tsx included)"
+  ],
+  "author": "hyperiux",
+  "order": 3
+}

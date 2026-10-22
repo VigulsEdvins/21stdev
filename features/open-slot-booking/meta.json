@@ -1,0 +1,29 @@
+{
+  "name": "Open Slot Booking",
+  "title": "Open Slot Booking",
+  "slug": "open-slot-booking",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A \"book a call\" section that does the booking itself. A heavy two-tone headline sits over a quiet scheduler window on a tilted colour slab. Inside the window are the host's stamp, a choice of call lengths, and a timezone-aware week of open slots. Picking a slot grows it into a confirm card (name, em",
+  "tags": [
+    "open",
+    "slot",
+    "booking",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 201
+}

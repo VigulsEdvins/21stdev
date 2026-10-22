@@ -1,0 +1,29 @@
+{
+  "name": "Holo Chrome Flow",
+  "title": "Holo Chrome Flow",
+  "slug": "holo-chrome-flow",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed shader of liquid chrome folding over itself, with a holographic oil-slick film riding the highlights, dark veins opening between the folds and a few sparkles caught in them. Move the pointer and the foil tilts under it — the light swings, the rainbow slides across the folds. Drag to sme",
+  "tags": [
+    "holo",
+    "chrome",
+    "flow",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 164
+}

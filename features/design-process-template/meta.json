@@ -1,0 +1,29 @@
+{
+  "name": "Design Process Template",
+  "title": "Design Process Template",
+  "slug": "design-process-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A case-study page that walks through how a product was made, one phase at a time. A small eyebrow sits above a large indented headline with a round accent badge in the middle of the sentence. Below that, a short intro sits beside the team's role chips. Then each phase gets a ruled row: its share of ",
+  "tags": [
+    "design",
+    "process",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 134
+}

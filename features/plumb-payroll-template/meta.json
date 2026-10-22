@@ -1,0 +1,29 @@
+{
+  "name": "Plumb Payroll Template",
+  "title": "Plumb Payroll Template",
+  "slug": "plumb-payroll-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete construction-payroll landing page in one component, laid out on a drafting grid: hairline rails run down the page, dashed guides run out past them, and every block is boxed in by its own rules.",
+  "tags": [
+    "plumb",
+    "payroll",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 209
+}

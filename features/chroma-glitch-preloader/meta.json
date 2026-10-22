@@ -1,0 +1,29 @@
+{
+  "name": "Chroma Glitch Preloader",
+  "title": "Chroma Glitch Preloader",
+  "slug": "chroma-glitch-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Heavy chromatic aberration (3.5x the cinema grade) pulling the RGB channels apart toward the edges, over colour-rich footage where the fringing reads loudest.",
+  "tags": [
+    "chroma",
+    "glitch",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 121
+}

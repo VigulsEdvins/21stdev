@@ -1,0 +1,28 @@
+{
+  "name": "Tile Scrollbar",
+  "title": "Tile Scrollbar",
+  "slug": "tile-scrollbar",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A scrollbar built out of tiles on a tilted tray. The page is cut into equal slices, one tile each; tiles behind you press flat and darken, the one you are in stands proud and fills left to right, and a dot marks the tile where each section begins. Click a tile to jump, drag across the tray to scrub,",
+  "tags": [
+    "tile",
+    "scrollbar",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 238
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Lilac Meadow Landing",
+  "title": "Lilac Meadow Landing",
+  "slug": "lilac-meadow-landing",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A complete landing-page template for a yield-bearing stablecoin, in a soft \"money grows\" art direction: chrome coins half buried in a meadow of tiny lilac flowers under a pale lavender sky. The page continues in the same hand: a \"what is it\" statement, three feature cards (a coneflower growing besid",
+  "tags": [
+    "lilac",
+    "meadow",
+    "landing",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 183
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Lunar Boarding Pass",
+  "title": "Lunar Boarding Pass",
+  "slug": "lunar-boarding-pass",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A two-sided ticket to the Moon: a black **VIP pass** on the front, a silver **boarding pass** with a perforated stub on the back.",
+  "tags": [
+    "lunar",
+    "boarding",
+    "pass",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 187
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Waitlist Hero Animation",
+  "title": "Waitlist Hero Animation",
+  "slug": "waitlist-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Sleek modern waitlist hero with ambient background particles, glowing input, and smooth interaction states.",
+  "tags": [
+    "hero",
+    "waitlist",
+    "animation",
+    "particles",
+    "21st.dev"
+  ],
+  "tech": [
+    "React",
+    "Tailwind CSS",
+    "Framer Motion"
+  ],
+  "dependencies": [
+    "React",
+    "Tailwind CSS"
+  ],
+  "order": 41
+}

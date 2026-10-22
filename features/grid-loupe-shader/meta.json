@@ -1,0 +1,29 @@
+{
+  "name": "Grid Loupe Shader",
+  "title": "Grid Loupe Shader",
+  "slug": "grid-loupe-shader",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A WebGL image that turns into a magnifying mosaic under the pointer. The picture is cut into a grid, and every cell near the pointer shows its own patch blown up: the closest cells flatten into single colours, the outer ones read as a ring of tiny lenses, and dots swell on the grid nodes. Move faste",
+  "tags": [
+    "grid",
+    "loupe",
+    "shader",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 157
+}

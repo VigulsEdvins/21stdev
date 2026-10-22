@@ -1,0 +1,29 @@
+{
+  "name": "Blueprint Ink Reveal",
+  "title": "Blueprint Ink Reveal",
+  "slug": "blueprint-ink-reveal",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A drafting plate: a word drawn as a hairline outline with registration ticks, ruled on all four edges. Moving the pointer across it reveals the solid letters underneath through an organic ink blot.",
+  "tags": [
+    "blueprint",
+    "ink",
+    "reveal",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 113
+}

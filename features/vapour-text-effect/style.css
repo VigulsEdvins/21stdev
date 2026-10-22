@@ -1,0 +1,10 @@
+/* Scoped styles for Vapour Text Effect */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #050508;
+  color: #f3f4f6;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}

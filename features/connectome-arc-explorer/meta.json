@@ -1,0 +1,29 @@
+{
+  "name": "Connectome Arc Explorer",
+  "title": "Connectome Arc Explorer",
+  "slug": "connectome-arc-explorer",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A mirrored radial wiring diagram. Pick a cell type in the middle column and two arcs light up around it. The left arc shows where that type **receives** synapses and the right arc shows where it **sends** them, with bundled curves running out to the neuron classes upstream and downstream.",
+  "tags": [
+    "connectome",
+    "arc",
+    "explorer",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 128
+}

@@ -5,8 +5,21 @@
   "source": "cvmaker",
   "type": "component",
   "description": "Pixel-perfect A4 document previewer modeled after Signature Teal CV layout with zoom scaling, visual page-break boundary guide, print stylesheet, and structured dual-column cards.",
-  "tags": ["resume", "a4-preview", "pdf-print", "signature-teal", "cvmaker", "cv"],
-  "tech": ["Vanilla JS", "CSS Print Media", "CSS Zoom/Transform"],
-  "dependencies": ["vanilla-js"],
+  "tags": [
+    "resume",
+    "a4-preview",
+    "pdf-print",
+    "signature-teal",
+    "cvmaker",
+    "cv"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS Print Media",
+    "CSS Zoom/Transform"
+  ],
+  "dependencies": [
+    "vanilla-js"
+  ],
   "order": 33
 }

@@ -5,9 +5,28 @@
   "source": "cvmaker",
   "type": "template",
   "description": "Full-stack client-side resume architect built with React & Vite. Features 8 professional templates, real-time A4 document preview, job description ATS keyword matcher, STAR accomplishment enhancer, and matching cover letter suite.",
-  "tags": ["full-template", "resume-builder", "react", "ats-matcher", "cover-letter", "cvmaker", "a4-preview"],
-  "tech": ["React", "Vite", "Tailwind/Modern CSS", "HTML2PDF", "Keyword Heuristics"],
-  "dependencies": ["react", "vite", "html2pdf.js", "lucide-react"],
+  "tags": [
+    "full-template",
+    "resume-builder",
+    "react",
+    "ats-matcher",
+    "cover-letter",
+    "cvmaker",
+    "a4-preview"
+  ],
+  "tech": [
+    "React",
+    "Vite",
+    "Tailwind/Modern CSS",
+    "HTML2PDF",
+    "Keyword Heuristics"
+  ],
+  "dependencies": [
+    "react",
+    "vite",
+    "html2pdf.js",
+    "lucide-react"
+  ],
   "liveSiteUrl": "/cvmaker/index.html",
   "adminUrl": "/cvmaker/index.html",
   "sourceFolder": "/home/edvins/features-for-web/cvmaker",

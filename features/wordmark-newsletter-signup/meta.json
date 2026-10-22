@@ -1,0 +1,29 @@
+{
+  "name": "Wordmark Newsletter Signup",
+  "title": "Wordmark Newsletter Signup",
+  "slug": "wordmark-newsletter-signup",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A newsletter signup for a brand that is loud about its name. Your wordmark fills the field edge to edge in heavy condensed capitals, cropped by the section like a shop sign, and a hard-bordered card sits on top with the form. When someone signs up, the wordmark letters drop out one by one and your c",
+  "tags": [
+    "wordmark",
+    "newsletter",
+    "signup",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 251
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Stagger Testimonials",
+  "title": "Stagger Testimonials",
+  "slug": "stagger-testimonials",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Testimonial review cards layout layered with alternating column offset, glowing active state, star ratings, category filtering, and zero heavy motion library overhead.",
+  "tags": [
+    "testimonials",
+    "stagger",
+    "reviews",
+    "social-proof",
+    "cards",
+    "21st.dev"
+  ],
+  "tech": [
+    "CSS Grid Stagger",
+    "Vanilla JS",
+    "React (.tsx included)"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS",
+    "React (.tsx included)"
+  ],
+  "author": "vaib215",
+  "order": 5
+}

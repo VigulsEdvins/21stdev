@@ -1,0 +1,29 @@
+{
+  "name": "Bento Portfolio Template",
+  "title": "Bento Portfolio Template",
+  "slug": "bento-portfolio-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete personal site in one component: a soft, warm-gray bento where every card does something small when you reach for it.",
+  "tags": [
+    "bento",
+    "portfolio",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 111
+}

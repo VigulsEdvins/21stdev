@@ -1,0 +1,28 @@
+{
+  "name": "Lycoris Specimen",
+  "title": "Lycoris Specimen",
+  "slug": "lycoris-specimen",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A scroll-scrubbed type specimen built around one object: a red chrome spider lily, modelled procedurally and lit in raw WebGL. Six frames, one continuous camera move:",
+  "tags": [
+    "lycoris",
+    "specimen",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 188
+}

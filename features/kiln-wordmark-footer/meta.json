@@ -1,0 +1,28 @@
+{
+  "name": "Kiln Wordmark Footer",
+  "title": "Kiln Wordmark Footer",
+  "slug": "kiln-wordmark-footer",
+  "category": "Footers & Endings",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A brick-red closing panel for a manufacturer with a sense of its own history. A two-line uppercase motto sits top left, a dark back-to-top key top right, then three columns (address, navigation, follow), a giant lowercase wordmark, and a legal bar in an outlined pill.",
+  "tags": [
+    "kiln",
+    "wordmark",
+    "footer",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 179
+}

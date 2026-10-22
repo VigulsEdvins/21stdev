@@ -1,0 +1,29 @@
+{
+  "name": "Dither Sweep Navbar",
+  "title": "Dither Sweep Navbar",
+  "slug": "dither-sweep-navbar",
+  "category": "Navigation & Headers",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An editorial, blueprint-styled header. Hairline-ruled cells, monospace caps, a wordmark that retracts behind its mark once the page scrolls, and a nav hover that fills each cell with a chunky left-to-right pixel dissolve.",
+  "tags": [
+    "dither",
+    "sweep",
+    "navbar",
+    "21st.dev",
+    "navigation",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 138
+}

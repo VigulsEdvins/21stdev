@@ -1,0 +1,28 @@
+{
+  "name": "Code Curtain",
+  "title": "Code Curtain",
+  "slug": "code-curtain",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A sheet of source code hanging from a rod, behaving like cloth. Every character is a point in a verlet mesh and turns with the thread it hangs from, so the text bends, folds and drapes as the curtain moves.",
+  "tags": [
+    "code",
+    "curtain",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 125
+}

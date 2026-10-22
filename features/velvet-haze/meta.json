@@ -1,0 +1,28 @@
+{
+  "name": "Velvet Haze",
+  "title": "Velvet Haze",
+  "slug": "velvet-haze",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An out-of-focus light leak on grainy black film: a silver haze high on the left, violet bleeding in at the top right, a warm ember between them, and two shadows cutting it — a silk fold that sweeps the light off the bottom of the frame and a dark mass curling in from the right. Film grain re-rolls a",
+  "tags": [
+    "velvet",
+    "haze",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 244
+}

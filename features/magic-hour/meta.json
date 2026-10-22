@@ -1,0 +1,28 @@
+{
+  "name": "Magic Hour",
+  "title": "Magic Hour",
+  "slug": "magic-hour",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A scroll-scrubbed video. Scroll owns the timeline — nothing autoplays. Scroll progress maps to a target frame, a critically-damped chase with a speed cap follows it, and the integer frame is written to `video.currentTime` with seeks serialized so fast flicks skim instead of queueing a backlog of dec",
+  "tags": [
+    "magic",
+    "hour",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 189
+}

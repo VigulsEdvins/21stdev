@@ -1,0 +1,29 @@
+{
+  "name": "Pinboard Portfolio Hero",
+  "title": "Pinboard Portfolio Hero",
+  "slug": "pinboard-portfolio-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed portfolio hero drawn as a lit studio wall: a stamped `PORT` / `FOLIO` lockup with the lower line mirrored on its baseline, two cut-out portraits breaking out of the letters, hand-lettered service labels, and pinned paper joined by red floss.",
+  "tags": [
+    "pinboard",
+    "portfolio",
+    "hero",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 207
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vertical Tabs — Service Showcase</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="tabs-stage">
+    <div class="tabs-container">
+      <!-- Left Column: Vertical Tab List -->
+      <div class="tabs-sidebar">
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">How I can help you</h2>
+          <span class="sidebar-tag">(SERVICES)</span>
+        </div>
+
+        <div class="tab-list" id="tabList" role="tablist">
+          <!-- Dynamically populated tab items -->
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Gallery & Controls -->
+      <div class="gallery-wrapper">
+        <div class="gallery-card" id="galleryCard">
+          <div class="gallery-slide" id="gallerySlide">
+            <img id="galleryImg" src="" alt="Active Service" />
+            <div class="gallery-gradient" aria-hidden="true"></div>
+          </div>
+
+          <!-- Bottom Navigation Arrows -->
+          <div class="gallery-nav">
+            <button type="button" class="nav-btn" id="btnPrev" aria-label="Previous service">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <button type="button" class="nav-btn" id="btnNext" aria-label="Next service">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

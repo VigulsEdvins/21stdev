@@ -1,0 +1,28 @@
+{
+  "name": "Longhand Notes Landing",
+  "title": "Longhand Notes Landing",
+  "slug": "longhand-notes-landing",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A complete landing page for a handwritten-notes service, where robots write your cards with real pens. It is drawn in one line-art language: ribbed tubes, coral motor housings, teal joints and coral dashed flight paths, on grey paper and white card.",
+  "tags": [
+    "longhand",
+    "notes",
+    "landing",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 185
+}

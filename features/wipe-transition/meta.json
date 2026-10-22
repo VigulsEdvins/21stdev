@@ -1,0 +1,29 @@
+{
+  "name": "Wipe Transition Content Switcher",
+  "title": "Wipe Transition Content Switcher",
+  "slug": "wipe-transition",
+  "category": "Buttons & UI",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Content switcher that sweeps a colored band across the panel, swaps the content underneath while it is covered, and crossfades on phones or reduced motion.",
+  "tags": [
+    "transition",
+    "wipe",
+    "switcher",
+    "tabs",
+    "animation",
+    "21st.dev"
+  ],
+  "tech": [
+    "Web Animations API",
+    "Vanilla JS",
+    "CSS 3D",
+    "React (.tsx included)"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS",
+    "React (.tsx included)"
+  ],
+  "author": "kevingirelli",
+  "order": 8
+}

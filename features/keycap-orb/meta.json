@@ -1,0 +1,28 @@
+{
+  "name": "Keycap Orb",
+  "title": "Keycap Orb",
+  "slug": "keycap-orb",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A ball of mechanical keycaps floating over a cobalt floor glow. Ink, ash, cobalt and lime caps in plastic, clear glass caps with the stem showing through, engraved legends, and the whole thing mirrored in the floor.",
+  "tags": [
+    "keycap",
+    "orb",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 178
+}

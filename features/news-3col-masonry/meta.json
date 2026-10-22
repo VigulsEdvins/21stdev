@@ -5,8 +5,18 @@
   "source": "vivmgmt",
   "type": "component",
   "description": "3-column Packery-style editorial masonry grid with category filtering and IntersectionObserver staggered card reveal.",
-  "tags": ["masonry", "editorial", "grid", "intersection-observer", "vivmgmt"],
-  "tech": ["Vanilla JS", "IntersectionObserver", "CSS Columns"],
+  "tags": [
+    "masonry",
+    "editorial",
+    "grid",
+    "intersection-observer",
+    "vivmgmt"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "IntersectionObserver",
+    "CSS Columns"
+  ],
   "dependencies": [],
   "order": 17
 }

@@ -1,12 +1,22 @@
 {
   "name": "OKLCH Ambient Aurora Hero",
   "slug": "oklch-ambient-glow-hero",
-  "category": "Audio & Shaders",
+  "category": "Heroes",
   "source": "21st-crafted",
   "type": "component",
   "description": "21st.dev signature dark hero with wide-gamut oklch() radial pulsing aurora shaders, blur-to-sharp entrance choreography, and interactive category chip river.",
-  "tags": ["oklch", "aurora", "hero", "21st-dev", "glow"],
-  "tech": ["OKLCH Color", "CSS Keyframes", "Vanilla JS"],
+  "tags": [
+    "oklch",
+    "aurora",
+    "hero",
+    "21st-dev",
+    "glow"
+  ],
+  "tech": [
+    "OKLCH Color",
+    "CSS Keyframes",
+    "Vanilla JS"
+  ],
   "dependencies": [],
   "order": 20
 }

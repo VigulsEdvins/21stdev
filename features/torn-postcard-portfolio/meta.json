@@ -1,0 +1,29 @@
+{
+  "name": "Torn Postcard Portfolio",
+  "title": "Torn Postcard Portfolio",
+  "slug": "torn-postcard-portfolio",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A whole personal site told as a winter travel journal. Five full-screen chapters sit in one pinned stage, and scrolling **tears the page open**: the chapter you're on rips along a ragged paper seam, the top half lifts away, the bottom half drops, and the next chapter pops up out of the gap with its ",
+  "tags": [
+    "torn",
+    "postcard",
+    "portfolio",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 241
+}

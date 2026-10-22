@@ -1,0 +1,28 @@
+{
+  "name": "Velocity Reel",
+  "title": "Velocity Reel",
+  "slug": "velocity-reel",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A scroll-scrubbed cinematic title sequence. Ten shots on one canvas: a rim-lit face, an archer drawing, an arrow through glass, a blade through what is left of it, a fly-through of the shards, then a jet, a supercar and a formula car tearing out of the debris on red light, a burst, and an emblem.",
+  "tags": [
+    "velocity",
+    "reel",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 243
+}

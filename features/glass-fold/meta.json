@@ -1,0 +1,25 @@
+{
+  "name": "Glass Fold Translucent Mesh",
+  "title": "Glass Fold Translucent Mesh",
+  "slug": "glass-fold",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Animated WebGL background of translucent glass panes folded over each other with lit creases.",
+  "tags": [
+    "webgl",
+    "glass",
+    "glassmorphism",
+    "background",
+    "21st.dev"
+  ],
+  "tech": [
+    "WebGL",
+    "GLSL Shader",
+    "Canvas"
+  ],
+  "dependencies": [
+    "WebGL"
+  ],
+  "order": 48
+}

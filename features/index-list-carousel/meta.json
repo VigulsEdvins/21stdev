@@ -1,0 +1,29 @@
+{
+  "name": "Index List Carousel",
+  "title": "Index List Carousel",
+  "slug": "index-list-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A typographic index: big numbered titles on one side, one picture on the other. Hover or tap a title and its picture wipes in over the last one — from the right going down the list, from the left going up — and the active row opens to show its caption. Stacks on small screens. Page colours follow th",
+  "tags": [
+    "index",
+    "list",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 166
+}

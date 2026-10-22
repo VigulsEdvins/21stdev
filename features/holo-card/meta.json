@@ -1,0 +1,28 @@
+{
+  "name": "Holo Card",
+  "title": "Holo Card",
+  "slug": "holo-card",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A holographic foil trading card you tilt with the pointer. Four finishes, a flip, and layered parallax if you give it art.",
+  "tags": [
+    "holo",
+    "card",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 163
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Weight Sweep Preloader",
+  "title": "Weight Sweep Preloader",
+  "slug": "weight-sweep-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A type-specimen loading gate. The whole page is one giant counter set in a variable grotesk, and as the load climbs from `000` to `100` the numerals thicken from hairline to black. The weight axis is the progress bar. A specimen HUD reads out the live weight, a tick rail fills under the top rule, an",
+  "tags": [
+    "weight",
+    "sweep",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 249
+}

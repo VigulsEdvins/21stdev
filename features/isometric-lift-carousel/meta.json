@@ -1,0 +1,29 @@
+{
+  "name": "Isometric Lift Carousel",
+  "title": "Isometric Lift Carousel",
+  "slug": "isometric-lift-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A minimal 3D photo carousel. Portrait photos stand on edge in a tilted row, seen from above and to the side like cards in a file box. The chosen photo widens and lifts out of the row on a spring. A small glass pill underneath holds prev, the dots and next.",
+  "tags": [
+    "isometric",
+    "lift",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 176
+}

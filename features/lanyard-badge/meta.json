@@ -1,0 +1,28 @@
+{
+  "name": "Lanyard Badge",
+  "title": "Lanyard Badge",
+  "slug": "lanyard-badge",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An event badge hanging from a patterned lanyard. Two strands come down from above the frame, meet at a side-release buckle, and a short strap and ring hold the card. Drag the card and the strap pulls taut; flick it sideways and it spins on the ring; tap it, press Enter, or use the **Show back** butt",
+  "tags": [
+    "lanyard",
+    "badge",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 180
+}

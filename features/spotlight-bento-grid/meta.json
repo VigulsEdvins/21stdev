@@ -5,8 +5,18 @@
   "source": "21st-crafted",
   "type": "component",
   "description": "Multi-card bento grid with shared mouse-tracking radial border illumination and inner surface spotlight.",
-  "tags": ["bento", "spotlight", "21st-dev", "cursor-glow", "grid"],
-  "tech": ["Vanilla JS", "CSS Custom Properties", "CSS Grid"],
+  "tags": [
+    "bento",
+    "spotlight",
+    "21st-dev",
+    "cursor-glow",
+    "grid"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS Custom Properties",
+    "CSS Grid"
+  ],
   "dependencies": [],
   "order": 21
 }

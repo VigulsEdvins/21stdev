@@ -1,0 +1,28 @@
+{
+  "name": "Tilted Grid Hero",
+  "title": "Tilted Grid Hero",
+  "slug": "tilted-grid-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Every frame, brought into focus. Images curve in from one edge, flatten out at the centre, then fade away round the other with 3D perspective distortion.",
+  "tags": [
+    "hero",
+    "3d",
+    "curved",
+    "perspective",
+    "carousel",
+    "21st.dev",
+    "top-today"
+  ],
+  "tech": [
+    "React",
+    "Three.js / CSS 3D",
+    "Tailwind CSS"
+  ],
+  "dependencies": [
+    "React",
+    "Tailwind CSS"
+  ],
+  "order": 3
+}

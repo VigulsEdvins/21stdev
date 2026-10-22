@@ -1,0 +1,29 @@
+{
+  "name": "Disc Cascade Carousel",
+  "title": "Disc Cascade Carousel",
+  "slug": "disc-cascade-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A film catalogue told in printed discs. The discs sit on a slanted line that climbs out of the page toward you. The chosen film is in the middle. The ones before it shrink away down to the left, and the next one looms large, half off the top right. When you move, the line slides, every disc rolls li",
+  "tags": [
+    "disc",
+    "cascade",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 135
+}

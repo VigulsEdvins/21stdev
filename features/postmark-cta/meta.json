@@ -1,0 +1,27 @@
+{
+  "name": "Postmark CTA",
+  "title": "Postmark CTA",
+  "slug": "postmark-cta",
+  "category": "Buttons & UI",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "The closing call to action of a landing page: the last block before the footer. A heavy two-line headline, one primary button and a quiet secondary link sit on a halftone field, with a loose collection of postage stamps scattered around them.",
+  "tags": [
+    "postmark",
+    "cta",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 213
+}

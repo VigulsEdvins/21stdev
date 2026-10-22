@@ -1,0 +1,29 @@
+{
+  "name": "Sunlit Cutting Mat",
+  "title": "Sunlit Cutting Mat",
+  "slug": "sunlit-cutting-mat",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An animated WebGL background: a green self-healing cutting mat on a desk by a window. Sunlight falls across it through a slatted blind and past foliage outside: soft, straight diagonal bands broken up by blurred leaf shadows, drifting slowly. The light is blocked, not refracted, so nothing ripples.",
+  "tags": [
+    "sunlit",
+    "cutting",
+    "mat",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 235
+}

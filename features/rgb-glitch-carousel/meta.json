@@ -1,0 +1,29 @@
+{
+  "name": "RGB Glitch Carousel",
+  "title": "RGB Glitch Carousel",
+  "slug": "rgb-glitch-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed image carousel that cuts between pictures with a signal glitch: for a split second the picture tears into horizontal bands and its red, green and blue channels slide apart, then it snaps back as the next picture. Canvas 2D, no WebGL.",
+  "tags": [
+    "rgb",
+    "glitch",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 218
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Ink Flow Carousel",
+  "title": "Ink Flow Carousel",
+  "slug": "ink-flow-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An image carousel where every slide is wet paint. Move over it and the picture stirs like ink in water, then settles back. Change slides and the next one pours in as ink: a jet from the edge, or a drop where you clicked, curling into vortices as it spreads.",
+  "tags": [
+    "ink",
+    "flow",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 168
+}

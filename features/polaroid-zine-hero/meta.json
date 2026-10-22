@@ -1,0 +1,29 @@
+{
+  "name": "Polaroid Zine Hero",
+  "title": "Polaroid Zine Hero",
+  "slug": "polaroid-zine-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An editorial zine page as a hero: a cream sheet with a taped typewritten slip, a centre print whose subject is cut out of its own frame, five pinned snapshots, a handwritten line running over the print, and a justified typewriter column. The page dots and the edge arrow are real carousel controls, n",
+  "tags": [
+    "polaroid",
+    "zine",
+    "hero",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 212
+}

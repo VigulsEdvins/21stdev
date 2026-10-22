@@ -1,0 +1,31 @@
+{
+  "name": "Into The Ether",
+  "title": "Into The Ether",
+  "slug": "into-the-ether",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Atmospheric typographic hero section with hypnotic concentric ether ripple rings, kinetic mouse harmonics, Web Audio synthesizer pulse, and luminous dual theme.",
+  "tags": [
+    "typography",
+    "ether",
+    "ripple",
+    "pulse",
+    "canvas",
+    "hero",
+    "ambient",
+    "21st.dev",
+    "top-today"
+  ],
+  "tech": [
+    "HTML5 Canvas",
+    "Web Audio API",
+    "Vanilla JS",
+    "CSS Keyframes"
+  ],
+  "dependencies": [
+    "HTML5 Canvas",
+    "Web Audio API"
+  ],
+  "order": 2
+}

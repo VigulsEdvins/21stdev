@@ -1,0 +1,32 @@
+{
+  "name": "Image Stream Hero",
+  "title": "Image Stream Hero",
+  "slug": "image-stream-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Two continuous rails of 3D cards ride out of a central vanishing point and sweep outward to both edges, growing and turning with perspective projection math.",
+  "tags": [
+    "3d",
+    "corridor",
+    "hero",
+    "perspective",
+    "stream",
+    "cards",
+    "continuous-loop",
+    "21st.dev"
+  ],
+  "tech": [
+    "CSS 3D",
+    "Perspective Math",
+    "Container Queries",
+    "Vanilla JS",
+    "React (.tsx included)"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS",
+    "React (.tsx included)"
+  ],
+  "author": "ruixen.ui",
+  "order": 4
+}

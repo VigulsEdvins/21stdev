@@ -1,0 +1,29 @@
+{
+  "name": "Animator Title Preloader",
+  "title": "Animator Title Preloader",
+  "slug": "animator-title-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A loading screen for an animator's portfolio, staged as the title card of a short film. The load bar is the production pipeline: **rough → ink → paint → final**, and you watch your title go through it.",
+  "tags": [
+    "animator",
+    "title",
+    "preloader",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 104
+}

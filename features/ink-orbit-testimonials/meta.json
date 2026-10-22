@@ -1,0 +1,29 @@
+{
+  "name": "Ink Orbit Testimonials",
+  "title": "Ink Orbit Testimonials",
+  "slug": "ink-orbit-testimonials",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "The testimonials section from `ink-orbit-saas-template`, standalone and unchanged: a hatched page background, a bracketed frame holding a snap-scrolling row of quote cards (star rating, drawn quote marks, greyscale portrait), an arrows-and-dots pager, and a marquee of customer names, each with a gen",
+  "tags": [
+    "ink",
+    "orbit",
+    "testimonials",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 173
+}

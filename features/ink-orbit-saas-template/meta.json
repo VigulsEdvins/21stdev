@@ -1,0 +1,30 @@
+{
+  "name": "Ink Orbit SaaS Template",
+  "title": "Ink Orbit SaaS Template",
+  "slug": "ink-orbit-saas-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete monochrome landing page for an AI product. White panels sit on a hatched page, held together by thin corner brackets. In the hero is a generative ink sculpture: stippled loops caged around a glass sphere.",
+  "tags": [
+    "ink",
+    "orbit",
+    "saas",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 172
+}

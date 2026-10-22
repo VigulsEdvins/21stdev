@@ -1,0 +1,28 @@
+{
+  "name": "Beam Wordmark Footer",
+  "title": "Beam Wordmark Footer",
+  "slug": "beam-wordmark-footer",
+  "category": "Footers & Endings",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A midnight-navy closing section with a slow diagonal shaft of light running across it, and the brand set as a giant wordmark cropped by the bottom edge.",
+  "tags": [
+    "beam",
+    "wordmark",
+    "footer",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 110
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Alter Ego Mask Reveal",
+  "title": "Alter Ego Mask Reveal",
+  "slug": "alter-ego-mask-reveal",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A portrait landing page with a secret. A quiet civilian portrait sits on a charcoal backdrop. Move the pointer over it and a gooey blob follows you, uncovering the masked hero underneath, but only where you have been. The trail melts back within a second, so the mask closes behind you and is gone on",
+  "tags": [
+    "alter",
+    "ego",
+    "mask",
+    "reveal",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 102
+}

@@ -1,11 +1,20 @@
 {
   "slug": "article-slide-drawer",
   "title": "Slide-Over Editorial Article Reader Drawer",
-  "category": "Navigation & UI",
+  "category": "Buttons & UI",
   "source": "betteroff",
   "type": "component",
   "description": "Backdrop-blurred slide-over editorial reading drawer with rich typography, tag/month metadata badges, gallery blocks, next/prev article navigation, and Esc/backdrop dismissal.",
-  "tags": ["drawer", "slide-over", "modal", "editorial", "article", "reader"],
-  "dependencies": ["Vanilla HTML/CSS/JS"],
+  "tags": [
+    "drawer",
+    "slide-over",
+    "modal",
+    "editorial",
+    "article",
+    "reader"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
   "order": 13
 }

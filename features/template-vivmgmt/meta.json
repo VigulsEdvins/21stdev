@@ -5,8 +5,19 @@
   "source": "vivmgmt",
   "type": "template",
   "description": "High-fashion artist representation & syndication website featuring a 5-column parallax roster, split-curtain entrance, masonry newsroom, and visual Admin CMS.",
-  "tags": ["full-template", "cms", "admin", "editorial", "vivmgmt", "parallax"],
-  "tech": ["Vanilla JS", "Packery Masonry", "LocalStorage CMS"],
+  "tags": [
+    "full-template",
+    "cms",
+    "admin",
+    "editorial",
+    "vivmgmt",
+    "parallax"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "Packery Masonry",
+    "LocalStorage CMS"
+  ],
   "dependencies": [],
   "liveSiteUrl": "/vivmgmt/index.html",
   "adminUrl": "/vivmgmt/admin.html",

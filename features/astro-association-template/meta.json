@@ -1,0 +1,29 @@
+{
+  "name": "Astro Association Template",
+  "title": "Astro Association Template",
+  "slug": "astro-association-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete landing page for an astronomy club, set like a Swiss space poster. A giant wordmark is filled with confetti bubbles, and a compass-ring logo's needle follows your pointer. A bubble band has the mark knocked out of it, ribbons cross over oversized type, and the whole page sits inside a per",
+  "tags": [
+    "astro",
+    "association",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 107
+}

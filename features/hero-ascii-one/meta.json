@@ -1,0 +1,26 @@
+{
+  "name": "Hero ASCII Wireframe Globe",
+  "title": "Hero ASCII Wireframe Globe",
+  "slug": "hero-ascii-one",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Retro-futuristic terminal ASCII wireframe 3D globe animation with responsive canvas rendering.",
+  "tags": [
+    "ascii",
+    "3d",
+    "globe",
+    "retro",
+    "terminal",
+    "21st.dev"
+  ],
+  "tech": [
+    "HTML5 Canvas",
+    "ASCII Art Engine",
+    "Vanilla JS"
+  ],
+  "dependencies": [
+    "HTML5 Canvas"
+  ],
+  "order": 42
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Halftone Nebula",
+  "title": "Halftone Nebula",
+  "slug": "halftone-nebula",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A pixel-art night sky printed in halftone dots — crimson gas, needle-spiked sparkle stars and a dotted planet. Built as a **background**: drop content in as children and it sits on top.",
+  "tags": [
+    "halftone",
+    "nebula",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 159
+}

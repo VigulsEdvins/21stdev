@@ -1,0 +1,26 @@
+{
+  "name": "Cursor Hover Link Preview",
+  "title": "Cursor Hover Link Preview",
+  "slug": "hover-preview",
+  "category": "Cursors & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Smooth cursor-following floating image card preview component that displays previews above text links.",
+  "tags": [
+    "cursor",
+    "hover",
+    "preview",
+    "floating",
+    "21st.dev"
+  ],
+  "tech": [
+    "React",
+    "Tailwind CSS",
+    "Framer Motion"
+  ],
+  "dependencies": [
+    "React",
+    "Tailwind CSS"
+  ],
+  "order": 47
+}

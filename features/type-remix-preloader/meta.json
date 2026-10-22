@@ -1,0 +1,29 @@
+{
+  "name": "Type Remix Preloader",
+  "title": "Type Remix Preloader",
+  "slug": "type-remix-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A loading gate for a designer's portfolio. While the page loads, one word (`PORTFOLIO` by default) is re-typeset through seven cover treatments, each wiping over the last as the count climbs:",
+  "tags": [
+    "type",
+    "remix",
+    "preloader",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 242
+}

@@ -5,7 +5,16 @@
   "source": "carousel-gallery-play",
   "type": "component",
   "description": "Seamless hardware-accelerated infinite dual-track partner logo marquee with soft gradient edge masks, hover speed modulation, and direction reversal toggle.",
-  "tags": ["marquee", "logos", "clients", "infinite", "ticker", "marketing"],
-  "dependencies": ["Vanilla HTML/CSS/JS"],
-  "order": 5
+  "tags": [
+    "marquee",
+    "logos",
+    "clients",
+    "infinite",
+    "ticker",
+    "marketing"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 15
 }

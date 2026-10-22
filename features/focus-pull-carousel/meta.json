@@ -1,0 +1,29 @@
+{
+  "name": "Focus Pull Carousel",
+  "title": "Focus Pull Carousel",
+  "slug": "focus-pull-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A horizontal image strip that racks focus like a camera lens. The centre picture is sharp and full size; its neighbours soften, shrink and fade by how far they sit from the middle, updating continuously as you scroll, swipe or drag.",
+  "tags": [
+    "focus",
+    "pull",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 149
+}

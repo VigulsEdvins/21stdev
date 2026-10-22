@@ -1,0 +1,29 @@
+{
+  "name": "Lilac Dusk Canopy",
+  "title": "Lilac Dusk Canopy",
+  "slug": "lilac-dusk-canopy",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "[Dappled Canopy](../dappled-canopy/README.md) set to its `lilac-dusk` preset by default: dusk light on a violet wall: coral sun, plum shadows. Same shader, props and interaction. Move across it to push the leaves, click for a gust. Every other preset still works through `preset`.",
+  "tags": [
+    "lilac",
+    "dusk",
+    "canopy",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 182
+}

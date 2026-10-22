@@ -1,0 +1,29 @@
+{
+  "name": "Stepped Morph Slider",
+  "title": "Stepped Morph Slider",
+  "slug": "stepped-morph-slider",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An image slider whose window is a stepped, skyline-like mask. Each slide has its own blocky shape; moving to the next one morphs the mask column by column — a left-to-right stagger — while the picture cross-fades and drifts. Hover lifts the column under the pointer.",
+  "tags": [
+    "stepped",
+    "morph",
+    "slider",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 233
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Cold Flame Drift",
+  "title": "Cold Flame Drift",
+  "slug": "cold-flame-drift",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A field of grainy, hand-printed flames sliding along a diagonal. Every tongue has a blunt base and a pointed tip. Some split into two prongs, and some throw a lick off one side. A slow noise current bends the rows into S-curves as they travel. Two inks stipple into each other like a risograph pull, ",
+  "tags": [
+    "cold",
+    "flame",
+    "drift",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 126
+}

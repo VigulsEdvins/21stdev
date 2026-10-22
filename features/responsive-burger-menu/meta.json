@@ -5,8 +5,18 @@
   "source": "vivmgmt",
   "type": "component",
   "description": "Morphing two-line architectural burger button and full-screen staggered navigation curtain with office directory.",
-  "tags": ["navigation", "burger-menu", "overlay", "stagger", "vivmgmt"],
-  "tech": ["Vanilla JS", "CSS Cubic-Bezier", "ARIA"],
+  "tags": [
+    "navigation",
+    "burger-menu",
+    "overlay",
+    "stagger",
+    "vivmgmt"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS Cubic-Bezier",
+    "ARIA"
+  ],
   "dependencies": [],
   "order": 19
 }

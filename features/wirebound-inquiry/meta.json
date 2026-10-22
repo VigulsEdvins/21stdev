@@ -1,0 +1,28 @@
+{
+  "name": "Wirebound Inquiry",
+  "title": "Wirebound Inquiry",
+  "slug": "wirebound-inquiry",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A contact section for a studio, agency or freelancer, built as a wire-bound notebook. Closed, the kraft cover is already a contact card: your name printed big, a highlighter band that opens the brief, your email and socials written on the cover lines. Open it and the project inquiry is one question ",
+  "tags": [
+    "wirebound",
+    "inquiry",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 250
+}

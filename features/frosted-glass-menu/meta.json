@@ -1,0 +1,29 @@
+{
+  "name": "Frosted Glass Menu",
+  "title": "Frosted Glass Menu",
+  "slug": "frosted-glass-menu",
+  "category": "Navigation & Headers",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A quiet, membership-club navigation. A frosted glass bar unfolds in place into a full index: muted column heads, monospace caps links, a pill call-to-action, a ruled footer, and a small hand-drawn traveller who pulls a suitcase along the footer rule. He strolls while the menu is open and breaks into",
+  "tags": [
+    "frosted",
+    "glass",
+    "menu",
+    "21st.dev",
+    "navigation",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 152
+}

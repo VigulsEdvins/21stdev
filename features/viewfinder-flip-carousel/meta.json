@@ -1,0 +1,29 @@
+{
+  "name": "Viewfinder Flip Carousel",
+  "title": "Viewfinder Flip Carousel",
+  "slug": "viewfinder-flip-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A minimal photo carousel built around a viewfinder frame. Only the photo in the frame lies flat. Every other photo is folded away on its side, turned a quarter round and tipped back in perspective, so the strip reads as a thin stack of edges on either side. Moving opens the next photo out of the sta",
+  "tags": [
+    "viewfinder",
+    "flip",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 245
+}

@@ -5,7 +5,16 @@
   "source": "betteroff",
   "type": "component",
   "description": "Endless wrapping vertical virtual scroll engine using modulo wrap(-(totalHeight - item.end), item.end, scroll) math, paired with a central 3D orbital sculpture that travels along a multi-stage sine trajectory.",
-  "tags": ["infinite-scroll", "conveyor", "virtual-scroll", "wrap", "editorial", "trajectory"],
-  "dependencies": ["Vanilla HTML/CSS/JS"],
+  "tags": [
+    "infinite-scroll",
+    "conveyor",
+    "virtual-scroll",
+    "wrap",
+    "editorial",
+    "trajectory"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
   "order": 11
 }

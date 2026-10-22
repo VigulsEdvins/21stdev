@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wipe Transition — Content Switcher</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wipe-stage">
+    <!-- Direction & Style Controls Toolbar -->
+    <div class="wipe-toolbar">
+      <div class="tool-group">
+        <span class="tool-label">Direction:</span>
+        <button type="button" class="tool-btn active" data-dir="right">Right &rarr;</button>
+        <button type="button" class="tool-btn" data-dir="left">&larr; Left</button>
+        <button type="button" class="tool-btn" data-dir="down">Down &darr;</button>
+        <button type="button" class="tool-btn" data-dir="up">Up &uarr;</button>
+      </div>
+
+      <div class="tool-group">
+        <span class="tool-label">Color:</span>
+        <button type="button" class="color-btn active" data-color="#6366f1" style="--c: #6366f1;" title="Indigo"></button>
+        <button type="button" class="color-btn" data-color="#10b981" style="--c: #10b981;" title="Emerald"></button>
+        <button type="button" class="color-btn" data-color="#f59e0b" style="--c: #f59e0b;" title="Amber"></button>
+        <button type="button" class="color-btn" data-color="#ec4899" style="--c: #ec4899;" title="Rose"></button>
+      </div>
+    </div>
+
+    <!-- Main Wipe Panel Card -->
+    <div class="wipe-card-wrapper">
+      <!-- Nav Tabs -->
+      <nav class="wipe-nav" id="wipeNav">
+        <button type="button" class="nav-tab active" data-key="overview">Overview</button>
+        <button type="button" class="nav-tab" data-key="performance">Performance</button>
+        <button type="button" class="nav-tab" data-key="security">Security</button>
+        <button type="button" class="nav-tab" data-key="settings">Deployments</button>
+      </nav>
+
+      <!-- Content View Container -->
+      <div class="wipe-container" id="wipeContainer">
+        <!-- Wipe Shutter Curtain -->
+        <div class="wipe-shutter" id="wipeShutter" aria-hidden="true"></div>
+
+        <!-- Dynamic Content Panel -->
+        <div class="wipe-content" id="wipeContent">
+          <!-- Populated dynamically via script.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

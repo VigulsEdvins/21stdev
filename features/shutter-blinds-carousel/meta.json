@@ -1,0 +1,29 @@
+{
+  "name": "Shutter Blinds Carousel",
+  "title": "Shutter Blinds Carousel",
+  "slug": "shutter-blinds-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed image carousel where the next picture swings in on horizontal slats, like blinds tilting open one after another, while the old picture dims behind them. Forward runs the slats top to bottom, back runs them bottom to top.",
+  "tags": [
+    "shutter",
+    "blinds",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 221
+}

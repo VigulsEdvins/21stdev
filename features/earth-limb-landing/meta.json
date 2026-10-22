@@ -1,0 +1,28 @@
+{
+  "name": "Earth Limb Landing",
+  "title": "Earth Limb Landing",
+  "slug": "earth-limb-landing",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A complete home page for an Earth-imaging satellite company, shown the way its own fleet sees the planet.",
+  "tags": [
+    "earth",
+    "limb",
+    "landing",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 141
+}

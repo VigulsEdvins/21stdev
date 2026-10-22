@@ -1,0 +1,29 @@
+{
+  "name": "Flashlight Text Reveal",
+  "title": "Flashlight Text Reveal",
+  "slug": "flashlight-text-reveal",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Words written on a dark wall that you can only read where your light falls. The wall is a drifting, grainy WebGL shader. The cursor is a flashlight, and the lit patch of wall and the writing under it come up together. Take the pointer away and the light keeps searching the wall on its own.",
+  "tags": [
+    "flashlight",
+    "text",
+    "reveal",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 146
+}

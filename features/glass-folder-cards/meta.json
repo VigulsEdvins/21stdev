@@ -1,0 +1,28 @@
+{
+  "name": "Glass Folder Cards",
+  "title": "Glass Folder Cards",
+  "slug": "glass-folder-cards",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A folder you can use, drawn as a physical object. It has three layers: a back panel holding a piece of artwork, the files inside, and a frosted-glass front panel that blurs whatever sits behind it. The files are real elements between real panels, so the glass frosts them as they move.",
+  "tags": [
+    "glass",
+    "folder",
+    "cards",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 155
+}

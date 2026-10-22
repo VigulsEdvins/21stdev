@@ -1,0 +1,28 @@
+{
+  "name": "Constellation Turntable",
+  "title": "Constellation Turntable",
+  "slug": "constellation-turntable",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A star-chart record on a flat, illustrated deck. The vinyl is a night sky: a starfield and a Milky Way lane pressed between the grooves, the planets on a spiral, and one constellation per track with its name set along its groove band. A white tonearm with a perforated headshell rests on it.",
+  "tags": [
+    "constellation",
+    "turntable",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 129
+}

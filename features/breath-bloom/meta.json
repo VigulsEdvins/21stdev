@@ -1,0 +1,28 @@
+{
+  "name": "Breath Bloom",
+  "title": "Breath Bloom",
+  "slug": "breath-bloom",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Six luminous petals orbiting one centre, breathing on a slow eased loop — **in, hold, out** — with a quiet cue in the middle. Built as a **background**: drop content in as children and it sits on top.",
+  "tags": [
+    "breath",
+    "bloom",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 114
+}

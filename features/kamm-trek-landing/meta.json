@@ -1,0 +1,28 @@
+{
+  "name": "Kamm Trek Landing",
+  "title": "Kamm Trek Landing",
+  "slug": "kamm-trek-landing",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A complete landing page for a company that runs guided hut-to-hut treks, drawn as a Swiss topographic map that has come to life.",
+  "tags": [
+    "kamm",
+    "trek",
+    "landing",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 177
+}

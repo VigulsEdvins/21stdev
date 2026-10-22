@@ -1,0 +1,28 @@
+{
+  "name": "Exploded Assembly Scroll",
+  "title": "Exploded Assembly Scroll",
+  "slug": "exploded-assembly-scroll",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An engineering-services page whose drawing builds itself as you scroll.",
+  "tags": [
+    "exploded",
+    "assembly",
+    "scroll",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 145
+}

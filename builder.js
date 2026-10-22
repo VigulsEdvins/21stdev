@@ -64,25 +64,40 @@
     const title = (feature.title || feature.name || '').toLowerCase();
     const tags = Array.isArray(feature.tags) ? feature.tags.map(t => String(t).toLowerCase()) : [];
 
+    const isFooter = slug.includes('footer') || title.includes('footer') || cat.includes('footer') || tags.includes('footer');
+    const isPreloader = slug.includes('preloader') || title.includes('preloader') || cat.includes('preloader');
+    const isLanding = slug.includes('landing') || title.includes('landing');
+
+    if (targetCategory === 'Footers') {
+      return isFooter;
+    }
+
+    // Footers and Preloaders must never contaminate other categories
+    if (isFooter) return false;
+
     if (targetCategory === 'Headers & Nav') {
+      if (isPreloader || isLanding) return false;
       return (
-        cat.includes('nav') ||
-        cat.includes('header') ||
         slug.includes('nav') ||
+        slug.includes('menu') ||
+        slug.includes('burger') ||
         slug.includes('header') ||
         title.includes('nav') ||
+        title.includes('menu') ||
+        title.includes('burger') ||
         title.includes('header') ||
-        tags.some(t => ['header', 'nav', 'navbar', 'navigation', 'menu'].includes(t))
+        slug.includes('lang-switcher') ||
+        tags.some(t => ['header', 'nav', 'navbar', 'menu', 'burger'].includes(t))
       );
     }
 
     if (targetCategory === 'Heroes') {
+      if (isPreloader) return false;
       return (
         slug.includes('hero') ||
         title.includes('hero') ||
-        cat.includes('hero') ||
-        tags.some(t => ['hero', 'landing', 'banner', 'intro'].includes(t)) ||
-        (cat === 'full templates' && (slug.includes('landing') || title.includes('landing')))
+        cat === 'heroes' ||
+        tags.some(t => ['hero', 'banner', 'intro'].includes(t))
       );
     }
 
@@ -92,6 +107,8 @@
         cat.includes('carousel') ||
         slug.includes('3d') ||
         slug.includes('carousel') ||
+        slug.includes('wheel') ||
+        slug.includes('turntable') ||
         tags.some(t => ['3d', 'carousel', 'slider', 'threejs', 'canvas', 'webgl'].includes(t))
       );
     }
@@ -100,6 +117,9 @@
       return (
         cat.includes('scroll') ||
         cat.includes('parallax') ||
+        slug.includes('scroll') ||
+        slug.includes('parallax') ||
+        slug.includes('timeline') ||
         tags.some(t => ['scroll', 'parallax', 'sticky', 'gsap', 'scrolltrigger'].includes(t))
       );
     }
@@ -109,18 +129,28 @@
         cat.includes('galleries') ||
         cat.includes('grids') ||
         cat.includes('cards & tiles') ||
-        tags.some(t => ['gallery', 'grid', 'card', 'cards', 'portfolio', 'masonry'].includes(t))
+        slug.includes('gallery') ||
+        slug.includes('grid') ||
+        slug.includes('bento') ||
+        slug.includes('masonry') ||
+        slug.includes('portfolio') ||
+        tags.some(t => ['gallery', 'grid', 'card', 'cards', 'portfolio', 'masonry', 'bento'].includes(t))
       );
     }
 
     if (targetCategory === 'Buttons & UI') {
       return (
         cat.includes('button') ||
-        cat.includes('form') ||
-        cat.includes('modal') ||
-        cat.includes('cursor') ||
-        cat.includes('interaction') ||
         cat.includes('ui') ||
+        slug.includes('btn') ||
+        slug.includes('button') ||
+        slug.includes('cta') ||
+        slug.includes('tab') ||
+        slug.includes('accordion') ||
+        slug.includes('drawer') ||
+        slug.includes('modal') ||
+        slug.includes('cursor') ||
+        slug.includes('player') ||
         tags.some(t => ['button', 'buttons', 'ui', 'input', 'modal', 'form', 'toggle', 'switch', 'cursor'].includes(t))
       );
     }

@@ -1,0 +1,29 @@
+{
+  "name": "Cloth Peel Reveal",
+  "title": "Cloth Peel Reveal",
+  "slug": "cloth-peel-reveal",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A sheet of cloth covering your page, dragged away to reveal what's underneath. It slides as one piece and crumples as it goes: parallel folds travel along the drag direction, each crease lit from its own slope, and the sheet's trailing edge is torn rather than straight.",
+  "tags": [
+    "cloth",
+    "peel",
+    "reveal",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 123
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Meridian Mist",
+  "title": "Meridian Mist",
+  "slug": "meridian-mist",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A grainy cobalt mesh gradient under a drafting overlay: sky blue catching the top-left corner, a royal bloom in the middle, navy pooling into the bottom-left and slate grey everywhere the light doesn't reach. On top sit hairline guides (two columns, a few rows, and a pair of large overlapping circle",
+  "tags": [
+    "meridian",
+    "mist",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 192
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Gradient Bar Hero Section",
+  "title": "Gradient Bar Hero Section",
+  "slug": "gradient-bar-hero-section",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "High-contrast gradient bar waitlist hero section with animated illuminated light bars and badge counter.",
+  "tags": [
+    "hero",
+    "gradient",
+    "bars",
+    "waitlist",
+    "21st.dev"
+  ],
+  "tech": [
+    "React",
+    "Tailwind CSS",
+    "CSS Keyframes"
+  ],
+  "dependencies": [
+    "React",
+    "Tailwind CSS"
+  ],
+  "order": 45
+}

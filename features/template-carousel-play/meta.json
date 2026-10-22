@@ -5,9 +5,25 @@
   "source": "carousel-gallery-play",
   "type": "template",
   "description": "Complete creative sports agency website featuring a 3D cylindrical WebGL hero carousel, cursor image trail, athlete roster filter, and live Admin CMS.",
-  "tags": ["full-template", "cms", "admin", "threejs", "sports-agency", "carousel-gallery-play"],
-  "tech": ["Three.js", "GSAP", "Lenis", "LocalStorage CMS"],
-  "dependencies": ["three", "gsap", "lenis"],
+  "tags": [
+    "full-template",
+    "cms",
+    "admin",
+    "threejs",
+    "sports-agency",
+    "carousel-gallery-play"
+  ],
+  "tech": [
+    "Three.js",
+    "GSAP",
+    "Lenis",
+    "LocalStorage CMS"
+  ],
+  "dependencies": [
+    "three",
+    "gsap",
+    "lenis"
+  ],
   "liveSiteUrl": "/carousel-gallery-play/index.html",
   "adminUrl": "/carousel-gallery-play/admin.html",
   "sourceFolder": "/home/edvins/features-for-web/carousel-gallery-play",

@@ -1,0 +1,28 @@
+{
+  "name": "Maroon Fintech Landing",
+  "title": "Maroon Fintech Landing",
+  "slug": "maroon-fintech-landing",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A complete finance-SaaS landing page in one component. A maroon frame holds a cream hero where a sage-green device sits at the centre of a circuit board, with live expense and income cards at its feet. Below, a dark section reads like a statement of intent, then a satin-lit feature panel shows the p",
+  "tags": [
+    "maroon",
+    "fintech",
+    "landing",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 190
+}

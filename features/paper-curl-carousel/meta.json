@@ -1,0 +1,29 @@
+{
+  "name": "Paper Curl Carousel",
+  "title": "Paper Curl Carousel",
+  "slug": "paper-curl-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An image carousel where every slide is a printed sheet. Drag its edge, click, or press an arrow and the sheet rolls over a cylinder, shows the paper stock on its back, and lays a shadow across the sheet underneath.",
+  "tags": [
+    "paper",
+    "curl",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 202
+}

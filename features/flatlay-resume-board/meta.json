@@ -1,0 +1,29 @@
+{
+  "name": "Flatlay Resume Board",
+  "title": "Flatlay Resume Board",
+  "slug": "flatlay-resume-board",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A CV as a desk flat-lay, photographed from above: a creased perforated sheet, a pinned photo card, a smart-watch \"about me\", a crumpled receipt of experience with dotted leaders and a coffee ring, torn-paper education on a ruled page, a lolly-stick label over grid paper, a handwritten list, layered ",
+  "tags": [
+    "flatlay",
+    "resume",
+    "board",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 147
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Mono Contrast Preloader",
+  "title": "Mono Contrast Preloader",
+  "slug": "mono-contrast-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A crushed black-and-white luminance grade at 2.2x contrast, over soft archival footage whose 480p grain the treatment reads as film rather than as a defect.",
+  "tags": [
+    "mono",
+    "contrast",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 193
+}

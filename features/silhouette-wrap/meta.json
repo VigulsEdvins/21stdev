@@ -1,0 +1,28 @@
+{
+  "name": "Silhouette Wrap",
+  "title": "Silhouette Wrap",
+  "slug": "silhouette-wrap",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A paragraph that parts around a falling silhouette, follows its **actual outline** — a keyhole's waist, a bottle's neck — and closes back up underneath. Scroll and the shape drops through the column; every line is set again.",
+  "tags": [
+    "silhouette",
+    "wrap",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 224
+}

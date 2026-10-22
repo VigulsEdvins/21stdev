@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Into The Ether — Ambient Pulse Hero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800;900&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-light">
+  <div class="ether-viewport">
+    <canvas id="etherCanvas" class="ether-canvas"></canvas>
+
+    <div class="ether-card">
+      <div class="ether-card-inner">
+        <div class="ether-badge">
+          <span class="badge-dot"></span>
+          <span>SPATIAL RESONANCE 2.0</span>
+        </div>
+
+        <div class="ether-title-wrap">
+          <h1 class="ether-title">
+            <span class="word">INTO THE</span>
+            <span class="word ether-glow-text">ETHER</span>
+          </h1>
+        </div>
+
+        <p class="ether-subtitle">
+          Enter a new realm of ambient sound and kinetic light waves.<br>
+          Where digital interface becomes visceral sensation.
+        </p>
+
+        <div class="ether-actions">
+          <button class="ether-btn primary" id="btnPulse">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Trigger Pulse</span>
+          </button>
+          <button class="ether-btn secondary" id="btnTheme">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+            </svg>
+            <span id="themeLabel">Dark Theme</span>
+          </button>
+        </div>
+
+        <div class="ether-stats">
+          <div class="stat-col">
+            <span class="stat-num" id="statRipples">14</span>
+            <span class="stat-lbl">Wave Harmonic</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat-col">
+            <span class="stat-num" id="statFps">60 FPS</span>
+            <span class="stat-lbl">Fluid Canvas</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat-col">
+            <span class="stat-num">0.04 ms</span>
+            <span class="stat-lbl">Audio Latency</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

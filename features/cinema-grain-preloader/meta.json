@@ -1,0 +1,29 @@
+{
+  "name": "Cinema Grain Preloader",
+  "title": "Cinema Grain Preloader",
+  "slug": "cinema-grain-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Film grain, soft CRT scanlines and a gentle 1.4x contrast lift over a cinematic reel.",
+  "tags": [
+    "cinema",
+    "grain",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 122
+}

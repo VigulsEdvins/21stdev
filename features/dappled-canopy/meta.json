@@ -1,0 +1,28 @@
+{
+  "name": "Dappled Canopy",
+  "title": "Dappled Canopy",
+  "slug": "dappled-canopy",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Late sun through a tree, thrown soft and warm across a plaster wall. Two layers of out-of-focus leaves sway on a slow breeze, flutter on their own and swing when a gust comes through, while the light pools in one corner and fades out across the wall. Film grain over everything. There's no text on it",
+  "tags": [
+    "dappled",
+    "canopy",
+    "21st.dev",
+    "audio",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 133
+}

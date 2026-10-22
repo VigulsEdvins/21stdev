@@ -1,0 +1,29 @@
+{
+  "name": "Lens Zoom Carousel",
+  "title": "Lens Zoom Carousel",
+  "slug": "lens-zoom-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed image carousel where the next picture lands like a fast zoom pull: out of a soft, magnified blur with two fading ghost copies trailing it, while the old picture falls back. Going back zooms out instead of in.",
+  "tags": [
+    "lens",
+    "zoom",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 181
+}

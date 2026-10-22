@@ -1,0 +1,29 @@
+{
+  "name": "Onyx Glyph Preloader",
+  "title": "Onyx Glyph Preloader",
+  "slug": "onyx-glyph-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A cinematic loading gate in sandblasted black metal.",
+  "tags": [
+    "onyx",
+    "glyph",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 200
+}

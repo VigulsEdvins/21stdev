@@ -1,0 +1,29 @@
+{
+  "name": "Hover Expand Gallery",
+  "title": "Hover Expand Gallery",
+  "slug": "hover-expand-gallery",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A row of hairline-separated panels with vertical labels. Hover (or tap) one and it absorbs the free space, revealing its image; the rest stay rail-width. Below 1024px the same list becomes a vertical accordion — tapping a row opens its image above the label.",
+  "tags": [
+    "hover",
+    "expand",
+    "gallery",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 165
+}

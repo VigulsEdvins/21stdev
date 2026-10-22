@@ -1,0 +1,29 @@
+{
+  "name": "Astro Bubble Hero",
+  "title": "Astro Bubble Hero",
+  "slug": "astro-bubble-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
+  "tags": [
+    "astro",
+    "bubble",
+    "hero",
+    "21st.dev",
+    "navigation",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 108
+}

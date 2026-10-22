@@ -1,0 +1,29 @@
+{
+  "name": "Perforated Stripe Curtain",
+  "title": "Perforated Stripe Curtain",
+  "slug": "perforated-stripe-curtain",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A curtain of punched-tape strips hung in front of a picture. Idle, the strips hang grey and ragged over a dimmed image, with a play button. Move over it and the strips part around the pointer like a bead curtain, hinged at the top. Press play: the music starts, the strips turn to your colour, the pi",
+  "tags": [
+    "perforated",
+    "stripe",
+    "curtain",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 204
+}

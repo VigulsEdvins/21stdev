@@ -1,0 +1,29 @@
+{
+  "name": "Stardust Stage Preloader",
+  "title": "Stardust Stage Preloader",
+  "slug": "stardust-stage-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A cinematic loading gate in black-and-white stipple. A lone star in a pixel-art cosmos turns into a moonlit theatre stage, and every dot on screen moves in that change.",
+  "tags": [
+    "stardust",
+    "stage",
+    "preloader",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 231
+}

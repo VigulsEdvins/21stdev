@@ -1,0 +1,29 @@
+{
+  "name": "Slit Type FAQ",
+  "title": "Slit Type FAQ",
+  "slug": "slit-type-faq",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A frequently-asked-questions section set in one ink on one paper. The display headline is cut by a hard horizontal slit: its capitals rise into the slit as the section scrolls in and rest there, cut through, like a stencil pulled before the print is finished. Hovering the headline lifts the letters ",
+  "tags": [
+    "slit",
+    "type",
+    "faq",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 227
+}

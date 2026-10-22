@@ -1,0 +1,28 @@
+{
+  "name": "Callsign Radio Landing",
+  "title": "Callsign Radio Landing",
+  "slug": "callsign-radio-landing",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A complete homepage for an independent radio station, laid out like a live front page. The station's call sign runs up the left edge as a giant masthead, and that masthead is the level meter: press play and the letters drain, then fill segment by segment with the signal (two channels, a peak tick, a",
+  "tags": [
+    "callsign",
+    "radio",
+    "landing",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 116
+}

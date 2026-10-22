@@ -1,0 +1,29 @@
+{
+  "name": "Vinyl Halftone Preloader",
+  "title": "Vinyl Halftone Preloader",
+  "slug": "vinyl-halftone-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A loading gate for a portfolio, printed like a record sleeve in two inks. A giant record sits on the left with your name on its label, and a halftone starburst throbs on the right in time with the tempo. While the page loads:",
+  "tags": [
+    "vinyl",
+    "halftone",
+    "preloader",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 246
+}

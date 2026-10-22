@@ -21,6 +21,7 @@ assert(builderHtml.includes('data-viewport="mobile"'), 'Must contain mobile view
 assert(builderHtml.includes('id="loadStarterBtn"'), 'Must contain load starter template button');
 assert(builderHtml.includes('id="viewVisualBtn"'), 'Must contain visual view mode toggle button');
 assert(builderHtml.includes('id="viewCompactBtn"'), 'Must contain compact view mode toggle button');
+assert(builderHtml.includes('data-category="Footers"'), 'Must contain Footers category button');
 
 const builderCss = fs.readFileSync('builder.css', 'utf8');
 assert(builderCss.includes('.clear-search-btn'), 'builder.css must style .clear-search-btn');

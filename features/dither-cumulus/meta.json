@@ -1,0 +1,28 @@
+{
+  "name": "Dither Cumulus",
+  "title": "Dither Cumulus",
+  "slug": "dither-cumulus",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A sky of pixel-art cumulus clouds, printed with an ordered (Bayer) dither in six colours: cream billows over a deep navy night, with a dithered moon that is also the light. Built as a **background**: drop content in as children and it sits on top.",
+  "tags": [
+    "dither",
+    "cumulus",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 137
+}

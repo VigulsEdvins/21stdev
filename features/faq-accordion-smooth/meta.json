@@ -1,11 +1,20 @@
 {
   "slug": "faq-accordion-smooth",
   "title": "Editorial Smooth-Height FAQ Accordion",
-  "category": "Navigation & UI",
+  "category": "Buttons & UI",
   "source": "carousel-gallery-play",
   "type": "component",
   "description": "Accessible ARIA-compliant editorial FAQ accordion using CSS grid-template-rows 0fr->1fr smooth height interpolation and rotating plus/cross indicators.",
-  "tags": ["faq", "accordion", "ui", "editorial", "accessible", "collapsible"],
-  "dependencies": ["Vanilla HTML/CSS/JS"],
-  "order": 8
+  "tags": [
+    "faq",
+    "accordion",
+    "ui",
+    "editorial",
+    "accessible",
+    "collapsible"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 18
 }

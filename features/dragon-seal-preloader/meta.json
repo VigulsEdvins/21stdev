@@ -1,0 +1,28 @@
+{
+  "name": "Dragon Seal Preloader",
+  "title": "Dragon Seal Preloader",
+  "slug": "dragon-seal-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A film title card that loads, then stays on as the landing screen. Sepia paper, a lace of cloud scrolls, a bronze astrolabe, a dragon coiled round it and two hands rising out from behind the seal.",
+  "tags": [
+    "dragon",
+    "seal",
+    "preloader",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 139
+}

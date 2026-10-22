@@ -1,0 +1,29 @@
+{
+  "name": "Card Fan Preloader",
+  "title": "Card Fan Preloader",
+  "slug": "card-fan-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A pixel-perfect, zero-dependency loading sequence. Six playing cards fan continuously through an arched deal in a seamless 0.5s cycle, floating upward and fading away to reveal your page content.",
+  "tags": [
+    "card",
+    "fan",
+    "preloader",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 118
+}

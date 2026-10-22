@@ -5,8 +5,21 @@
   "source": "mom",
   "type": "component",
   "description": "Signature 3x3 photography grid with dynamic center headline transformation and scattered multi-image hover stage with staggered entry and real photography.",
-  "tags": ["3x3-grid", "hover-stage", "photography", "editorial", "mom", "stagger"],
-  "tech": ["Vanilla JS", "CSS Grid", "Transforms"],
-  "dependencies": ["vanilla-js"],
+  "tags": [
+    "3x3-grid",
+    "hover-stage",
+    "photography",
+    "editorial",
+    "mom",
+    "stagger"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS Grid",
+    "Transforms"
+  ],
+  "dependencies": [
+    "vanilla-js"
+  ],
   "order": 29
 }

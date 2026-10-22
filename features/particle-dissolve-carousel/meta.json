@@ -1,0 +1,29 @@
+{
+  "name": "Particle Dissolve Carousel",
+  "title": "Particle Dissolve Carousel",
+  "slug": "particle-dissolve-carousel",
+  "category": "3D & Carousels",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An image carousel made of dust. Change slides and the picture comes apart: a wave crosses it, every grain lifts off carrying its own colour, rides a drifting flow field, then turns and settles back into place as a grain of the next picture. At rest the picture keeps shedding a little dust, and a fli",
+  "tags": [
+    "particle",
+    "dissolve",
+    "carousel",
+    "21st.dev",
+    "3d",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 203
+}

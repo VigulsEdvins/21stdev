@@ -1,0 +1,29 @@
+{
+  "name": "Mascot Portfolio Hero",
+  "title": "Mascot Portfolio Hero",
+  "slug": "mascot-portfolio-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed portfolio poster: a one-point-perspective grid room, a stacked display headline (`2026 ↘ UI / PORTFOLIO / DESIGN / WORK(S)*`) with a looping swash, a vertical tag and bracket arcs, a split \"Seeking / UI · Graphic\" pill, a doodled flower and arrow, a services row — and a 3D-style mascot ",
+  "tags": [
+    "mascot",
+    "portfolio",
+    "hero",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 191
+}

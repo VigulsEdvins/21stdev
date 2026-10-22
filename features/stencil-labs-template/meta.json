@@ -1,0 +1,29 @@
+{
+  "name": "Stencil Labs Template",
+  "title": "Stencil Labs Template",
+  "slug": "stencil-labs-template",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "template",
+  "description": "A complete studio / incubator site on one hairline grid. The page is cool grey paper with monospace text, orange chamfered buttons, and display type in a stencil face that is drawn in the file. Empty spacer rows between sections let the column rules run through the page.",
+  "tags": [
+    "stencil",
+    "labs",
+    "template",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 232
+}

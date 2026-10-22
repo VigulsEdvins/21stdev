@@ -1,0 +1,29 @@
+{
+  "name": "Odometer Stage Stats",
+  "title": "Odometer Stage Stats",
+  "slug": "odometer-stage-stats",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A \"by the numbers\" section that puts one figure on stage at a time: a committed colour field, one enormous condensed numeral in the middle, the line that explains it underneath, a short story pinned to alternating corners, and the stat's key word set huge and faint along the bottom edge.",
+  "tags": [
+    "odometer",
+    "stage",
+    "stats",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 198
+}

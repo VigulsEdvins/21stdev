@@ -1,0 +1,27 @@
+{
+  "name": "Etched Accretion",
+  "title": "Etched Accretion",
+  "slug": "etched-accretion",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A black hole drawn like an engraving. A tilted accretion disk made of hair-thin orbital streaks banded in crimson, a photon crown flaring off the horizon, dark nebula banks cut from contour lines, and heavy film grain over all of it. It animates, and it's meant to sit behind a hero.",
+  "tags": [
+    "etched",
+    "accretion",
+    "21st.dev",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 144
+}

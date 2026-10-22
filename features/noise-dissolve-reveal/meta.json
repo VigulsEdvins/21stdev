@@ -1,0 +1,29 @@
+{
+  "name": "Noise Dissolve Reveal",
+  "title": "Noise Dissolve Reveal",
+  "slug": "noise-dissolve-reveal",
+  "category": "Scroll & Parallax",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A sheet of colour covering your content, which dissolves along a fractal-noise threshold. Holes nucleate, spread into ragged islands, and merge until the page underneath is bare. The edges are fibrous rather than clean, so it reads as paper tearing or ink bleeding, not as a wipe or a fade.",
+  "tags": [
+    "noise",
+    "dissolve",
+    "reveal",
+    "21st.dev",
+    "scroll",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 197
+}

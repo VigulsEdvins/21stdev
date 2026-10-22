@@ -1,0 +1,27 @@
+{
+  "name": "File Card Collections",
+  "title": "File Card Collections",
+  "slug": "file-card-collections",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Interactive frosted glass folder and card collection stacks with vibrant abstract liquid art tabs, active tab states, and smooth spring physics.",
+  "tags": [
+    "cards",
+    "folders",
+    "glassmorphism",
+    "file-card",
+    "21st.dev",
+    "top-today"
+  ],
+  "tech": [
+    "React",
+    "Tailwind CSS",
+    "Framer Motion"
+  ],
+  "dependencies": [
+    "React",
+    "Tailwind CSS"
+  ],
+  "order": 1
+}

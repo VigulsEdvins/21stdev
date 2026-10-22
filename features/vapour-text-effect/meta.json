@@ -1,0 +1,27 @@
+{
+  "name": "Vapour Text Effect",
+  "title": "Vapour Text Effect",
+  "slug": "vapour-text-effect",
+  "category": "Audio & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Interactive text vaporization animation using Canvas with customizable text cycling and particle dissolving effects.",
+  "tags": [
+    "text-effect",
+    "vapour",
+    "particles",
+    "canvas",
+    "animation",
+    "21st.dev"
+  ],
+  "tech": [
+    "React",
+    "HTML5 Canvas",
+    "Tailwind CSS"
+  ],
+  "dependencies": [
+    "React",
+    "Tailwind CSS"
+  ],
+  "order": 40
+}

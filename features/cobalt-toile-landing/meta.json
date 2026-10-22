@@ -1,0 +1,29 @@
+{
+  "name": "Cobalt Toile Landing",
+  "title": "Cobalt Toile Landing",
+  "slug": "cobalt-toile-landing",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A complete landing-page template drawn as a copperplate engraving: cobalt ink on cream paper. Under a night sky with two moons, a carved arch frames the headline, statues stand on pedestals either side and a garden of hatched foliage fills the plate. The page continues in the same hand: a client mar",
+  "tags": [
+    "cobalt",
+    "toile",
+    "landing",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 124
+}

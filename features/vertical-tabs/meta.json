@@ -1,0 +1,30 @@
+{
+  "name": "Vertical Tabs Service Showcase",
+  "title": "Vertical Tabs Service Showcase",
+  "slug": "vertical-tabs",
+  "category": "Buttons & UI",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Vertical tabbed service navigation with automated timer progress indicators, slide transition gallery on the right, and responsive layout.",
+  "tags": [
+    "tabs",
+    "vertical-tabs",
+    "navigation",
+    "gallery",
+    "services",
+    "autoplay",
+    "21st.dev"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS Grid",
+    "Timer Progress Bar",
+    "React (.tsx included)"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS",
+    "React (.tsx included)"
+  ],
+  "author": "0xUrvish",
+  "order": 6
+}

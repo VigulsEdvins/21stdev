@@ -1,0 +1,29 @@
+{
+  "name": "Raked Sand Garden",
+  "title": "Raked Sand Garden",
+  "slug": "raked-sand-garden",
+  "category": "Interactions & Physics",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A full-bleed karesansui gravel bed seen from above under a low sun. The gravel is a real heightfield. Parallel furrows run across the bed, concentric rings go round each group of stones, and moss sits at the stones' feet. Every furrow is lit per pixel and casts its own shadow, so the pattern shows u",
+  "tags": [
+    "raked",
+    "sand",
+    "garden",
+    "21st.dev",
+    "interactions",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 216
+}

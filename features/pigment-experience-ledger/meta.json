@@ -1,0 +1,29 @@
+{
+  "name": "Pigment Experience Ledger",
+  "title": "Pigment Experience Ledger",
+  "slug": "pigment-experience-ledger",
+  "category": "Galleries & Portfolios",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "An \"Experience\" section for a portfolio, résumé or about page. Each employer is a huge right-aligned wordmark with its years in italics on the left. A row opens in place to show the position, location, industry, a link, a short story and skill tags. Point at a row and a wash of pigment blooms behind",
+  "tags": [
+    "pigment",
+    "experience",
+    "ledger",
+    "21st.dev",
+    "galleries",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 206
+}

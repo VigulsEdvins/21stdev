@@ -1,0 +1,29 @@
+{
+  "name": "Neon Katakana Preloader",
+  "title": "Neon Katakana Preloader",
+  "slug": "neon-katakana-preloader",
+  "category": "Preloaders & Shaders",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A cyberpunk title-card loading gate. The word is **ウィンドウ** (\"window\"), and the gate opens like one.",
+  "tags": [
+    "neon",
+    "katakana",
+    "preloader",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 196
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Seam History Timeline",
+  "title": "Seam History Timeline",
+  "slug": "seam-history-timeline",
+  "category": "Cards & Tiles",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "The \"Our story\" section of an about page: a company's milestones as wide photo cards running off the right edge of the section. Each card is a photo over a title and a sentence or two. Neighbouring cards meet on a **slanted seam**: real `clip-path` parallelograms that share one angle, with rounded c",
+  "tags": [
+    "seam",
+    "history",
+    "timeline",
+    "21st.dev",
+    "cards",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 220
+}

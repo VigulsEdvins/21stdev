@@ -1,0 +1,26 @@
+{
+  "name": "Liquid Metal Fluid Hero",
+  "title": "Liquid Metal Fluid Hero",
+  "slug": "liquid-metal-hero",
+  "category": "Heroes",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "Fluid iridescent liquid metal hero section with real-time shader dynamics and responsive layout.",
+  "tags": [
+    "shader",
+    "liquid-metal",
+    "fluid",
+    "hero",
+    "21st.dev"
+  ],
+  "tech": [
+    "WebGL",
+    "GLSL Shaders",
+    "React"
+  ],
+  "dependencies": [
+    "WebGL",
+    "GLSL"
+  ],
+  "order": 43
+}

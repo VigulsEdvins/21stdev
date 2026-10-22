@@ -1,0 +1,29 @@
+{
+  "name": "Sticker Hello Portfolio",
+  "title": "Sticker Hello Portfolio",
+  "slug": "sticker-hello-portfolio",
+  "category": "Full Templates",
+  "source": "21st.dev",
+  "type": "component",
+  "description": "A whole designer portfolio template with a sense of humour. A huge condensed serif says *\"Hi, I'm Juniper.\"*, and two sticker puns are slapped on it. The rest is a stack of case studies, a sticker sheet to play with, an about page and a footer that wants to hear from you.",
+  "tags": [
+    "sticker",
+    "hello",
+    "portfolio",
+    "21st.dev",
+    "full",
+    "react"
+  ],
+  "tech": [
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "CSS Physics"
+  ],
+  "dependencies": [
+    "React (.tsx included)",
+    "Vanilla HTML/CSS/JS"
+  ],
+  "author": "kedhareswer",
+  "order": 234
+}
