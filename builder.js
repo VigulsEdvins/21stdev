@@ -145,18 +145,81 @@
     // Cache features from window.FEATURE_REGISTRY
     const featuresMap = new Map();
     const featuresData = {};
+    const featureCache = new Map();
     const registry = Array.isArray(window.FEATURE_REGISTRY) ? window.FEATURE_REGISTRY : [];
 
     registry.forEach(feature => {
       featuresMap.set(feature.slug, feature);
-      if (feature.files) {
+      if (feature.files && (feature.files.html || feature.files.css || feature.files.js)) {
         featuresData[feature.slug] = {
           html: feature.files.html || '',
           css: feature.files.css || '',
           js: feature.files.js || ''
         };
+        featureCache.set(feature.slug, featuresData[feature.slug]);
       }
     });
+
+    /**
+     * Client-side memory cache for feature source files.
+     * Fetches features/<slug>/index.html, style.css, script.js if not yet cached.
+     */
+    async function fetchFeatureFiles(slug) {
+      if (!slug) return { html: '', css: '', js: '' };
+
+      if (featureCache.has(slug)) {
+        return featureCache.get(slug);
+      }
+
+      if (featuresData[slug] && (featuresData[slug].html || featuresData[slug].css || featuresData[slug].js)) {
+        featureCache.set(slug, featuresData[slug]);
+        return featuresData[slug];
+      }
+
+      let html = '';
+      let css = '';
+      let js = '';
+
+      // Node.js fallback (for tests and headless environments)
+      if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+        try {
+          const fs = require('fs');
+          const path = require('path');
+          const dir = path.resolve(process.cwd(), 'features', slug);
+          if (fs.existsSync(path.join(dir, 'index.html'))) {
+            html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
+          }
+          if (fs.existsSync(path.join(dir, 'style.css'))) {
+            css = fs.readFileSync(path.join(dir, 'style.css'), 'utf8');
+          }
+          if (fs.existsSync(path.join(dir, 'script.js'))) {
+            js = fs.readFileSync(path.join(dir, 'script.js'), 'utf8');
+          }
+        } catch (_) {}
+      }
+
+      // Browser HTTP fetch
+      if (!html && !css && !js && typeof fetch === 'function') {
+        try {
+          const [htmlRes, cssRes, jsRes] = await Promise.all([
+            fetch(`features/${slug}/index.html`).catch(() => null),
+            fetch(`features/${slug}/style.css`).catch(() => null),
+            fetch(`features/${slug}/script.js`).catch(() => null)
+          ]);
+
+          if (htmlRes && htmlRes.ok) html = await htmlRes.text();
+          if (cssRes && cssRes.ok) css = await cssRes.text();
+          if (jsRes && jsRes.ok) js = await jsRes.text();
+        } catch (err) {
+          console.warn(`Could not fetch sources for feature "${slug}":`, err);
+        }
+      }
+
+      const files = { html, css, js };
+      featureCache.set(slug, files);
+      featuresData[slug] = files;
+      return files;
+    }
 
     // 2. DOM Elements
     const pageStackList = document.getElementById('pageStackList');
@@ -343,16 +406,85 @@
       });
     }
 
+    /**
+     * Propagates theme variables to the live preview iframe.
+     * Uses postMessage and direct DOM property injection for instantaneous 60fps color updates without reload flicker.
+     */
+    function applyDynamicTheme(themeConfig) {
+      const theme = (window.Assembler && typeof window.Assembler.resolveTheme === 'function')
+        ? window.Assembler.resolveTheme(themeConfig)
+        : themeConfig;
+
+      if (!theme) return;
+
+      // 1. PostMessage to iframe for dynamic zero-flicker update
+      if (previewFrame && previewFrame.contentWindow) {
+        try {
+          previewFrame.contentWindow.postMessage({
+            type: 'UPDATE_THEME',
+            theme: theme
+          }, '*');
+        } catch (_) {}
+      }
+
+      // 2. Direct style property update on iframe documentElement if same-origin accessible
+      try {
+        const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
+        if (doc && doc.documentElement) {
+          if (theme.bg) doc.documentElement.style.setProperty('--preview-bg', theme.bg);
+          if (theme.text) doc.documentElement.style.setProperty('--preview-text', theme.text);
+          if (theme.accent) doc.documentElement.style.setProperty('--preview-accent', theme.accent);
+          if (theme.cardBg) doc.documentElement.style.setProperty('--preview-card-bg', theme.cardBg);
+          if (theme.border) doc.documentElement.style.setProperty('--preview-border', theme.border);
+        }
+      } catch (_) {}
+    }
+
     // 4. Update Live Preview Iframe
-    function updatePreview() {
+    let isUpdatingPreview = false;
+    let pendingPreviewUpdate = false;
+
+    async function updatePreview() {
       if (!previewFrame) return;
 
-      if (window.Assembler && typeof window.Assembler.assemblePreviewDocument === 'function') {
-        const state = stackManager.getState();
-        const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
-        const htmlDoc = window.Assembler.assemblePreviewDocument(state.stack, themeConfig, featuresData);
-        previewFrame.srcdoc = htmlDoc;
+      if (!window.Assembler || typeof window.Assembler.assemblePreviewDocument !== 'function') {
+        return;
       }
+
+      const state = stackManager.getState();
+      const currentStack = state.stack;
+
+      // Identify any sections whose source files need fetching
+      const missingSlugs = currentStack
+        .map(item => item.slug)
+        .filter(slug => slug && !featureCache.has(slug));
+
+      if (missingSlugs.length > 0) {
+        if (isUpdatingPreview) {
+          pendingPreviewUpdate = true;
+          return;
+        }
+        isUpdatingPreview = true;
+        try {
+          await Promise.all(missingSlugs.map(slug => fetchFeatureFiles(slug)));
+        } catch (err) {
+          console.error('Error fetching feature files for preview:', err);
+        } finally {
+          isUpdatingPreview = false;
+          if (pendingPreviewUpdate) {
+            pendingPreviewUpdate = false;
+            updatePreview();
+            return;
+          }
+        }
+      }
+
+      // Re-read latest state and assemble preview document
+      const latestState = stackManager.getState();
+      const themeConfig = latestState.theme === 'custom' ? latestState.customColors : latestState.theme;
+      const assembledHtml = window.Assembler.assemblePreviewDocument(latestState.stack, themeConfig, featuresData);
+
+      previewFrame.srcdoc = assembledHtml;
     }
 
     // Subscribe to stack changes
@@ -544,6 +676,12 @@
         viewportStage.setAttribute('data-active-viewport', mode);
       }
 
+      const frameWrapper = document.getElementById('viewportFrameWrapper');
+      if (frameWrapper) {
+        frameWrapper.classList.remove('is-desktop', 'is-tablet', 'is-mobile');
+        frameWrapper.classList.add(`is-${mode}`);
+      }
+
       const buttons = [
         { el: viewportDesktopBtn, mode: 'desktop', label: 'Desktop (100%)' },
         { el: viewportTabletBtn, mode: 'tablet', label: 'Tablet (768px)' },
@@ -554,9 +692,11 @@
         if (b.el) {
           if (b.mode === mode) {
             b.el.classList.add('is-active');
+            b.el.setAttribute('aria-pressed', 'true');
             if (viewportDimensionLabel) viewportDimensionLabel.textContent = b.label;
           } else {
             b.el.classList.remove('is-active');
+            b.el.setAttribute('aria-pressed', 'false');
           }
         }
       });
@@ -575,8 +715,8 @@
     // 7. Theme Controls
     if (themePresetSelect) {
       themePresetSelect.addEventListener('change', (e) => {
-        const theme = e.target.value;
-        if (theme === 'custom') {
+        const themeKey = e.target.value;
+        if (themeKey === 'custom') {
           if (customColorsControls) customColorsControls.style.display = 'inline-flex';
           if (customThemeToggle) customThemeToggle.classList.add('is-active');
           const customColors = {
@@ -586,8 +726,17 @@
           };
           stackManager.setCustomColors(customColors);
           stackManager.setTheme('custom');
+          applyDynamicTheme(customColors);
         } else {
-          stackManager.setTheme(theme);
+          stackManager.setTheme(themeKey);
+          const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
+          const preset = presets[themeKey];
+          if (preset) {
+            if (bgColorInput) bgColorInput.value = preset.bg;
+            if (textColorInput) textColorInput.value = preset.text;
+            if (accentColorInput) accentColorInput.value = preset.accent;
+            applyDynamicTheme(preset);
+          }
         }
       });
     }
@@ -602,27 +751,138 @@
       });
     }
 
-    function updateCustomColorsFromInputs() {
+    let themeDebounceTimer = null;
+
+    function handleCustomColorInput() {
       const colors = {
         bg: bgColorInput ? bgColorInput.value : '#0b0f19',
         text: textColorInput ? textColorInput.value : '#f3f4f6',
         accent: accentColorInput ? accentColorInput.value : '#6366f1'
       };
-      stackManager.setCustomColors(colors);
+
       if (themePresetSelect && themePresetSelect.value !== 'custom') {
         themePresetSelect.value = 'custom';
       }
-      stackManager.setTheme('custom');
+
+      // Immediately propagate theme variables to iframe in real time
+      applyDynamicTheme(colors);
+
+      // Debounce updating state and srcdoc to prevent lag during rapid slider dragging
+      clearTimeout(themeDebounceTimer);
+      themeDebounceTimer = setTimeout(() => {
+        stackManager.setCustomColors(colors);
+        stackManager.setTheme('custom');
+      }, 120);
     }
 
-    if (bgColorInput) bgColorInput.addEventListener('input', updateCustomColorsFromInputs);
-    if (textColorInput) textColorInput.addEventListener('input', updateCustomColorsFromInputs);
-    if (accentColorInput) accentColorInput.addEventListener('input', updateCustomColorsFromInputs);
+    function handleCustomColorChange() {
+      clearTimeout(themeDebounceTimer);
+      const colors = {
+        bg: bgColorInput ? bgColorInput.value : '#0b0f19',
+        text: textColorInput ? textColorInput.value : '#f3f4f6',
+        accent: accentColorInput ? accentColorInput.value : '#6366f1'
+      };
 
-    // Initial renders
+      if (themePresetSelect && themePresetSelect.value !== 'custom') {
+        themePresetSelect.value = 'custom';
+      }
+
+      stackManager.setCustomColors(colors);
+      stackManager.setTheme('custom');
+      applyDynamicTheme(colors);
+      updatePreview();
+    }
+
+    if (bgColorInput) {
+      bgColorInput.addEventListener('input', handleCustomColorInput);
+      bgColorInput.addEventListener('change', handleCustomColorChange);
+    }
+    if (textColorInput) {
+      textColorInput.addEventListener('input', handleCustomColorInput);
+      textColorInput.addEventListener('change', handleCustomColorChange);
+    }
+    if (accentColorInput) {
+      accentColorInput.addEventListener('input', handleCustomColorInput);
+      accentColorInput.addEventListener('change', handleCustomColorChange);
+    }
+
+    // 8. Open in New Tab Action
+    const openNewTabBtn = document.getElementById('openNewTabBtn') || document.getElementById('openInTabBtn');
+    if (openNewTabBtn) {
+      if (openNewTabBtn.id !== 'openNewTabBtn') {
+        openNewTabBtn.setAttribute('data-orig-id', openNewTabBtn.id);
+        openNewTabBtn.id = 'openNewTabBtn';
+      }
+
+      openNewTabBtn.addEventListener('click', async () => {
+        if (!window.Assembler || typeof window.Assembler.assemblePreviewDocument !== 'function') {
+          showToast('Assembler engine not available');
+          return;
+        }
+
+        const state = stackManager.getState();
+        const missingSlugs = state.stack
+          .map(s => s.slug)
+          .filter(slug => slug && !featureCache.has(slug));
+
+        if (missingSlugs.length > 0) {
+          await Promise.all(missingSlugs.map(slug => fetchFeatureFiles(slug)));
+        }
+
+        const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
+        const fullDoc = window.Assembler.assemblePreviewDocument(state.stack, themeConfig, featuresData);
+
+        try {
+          const blob = new Blob([fullDoc], { type: 'text/html;charset=utf-8' });
+          const blobUrl = URL.createObjectURL(blob);
+          const newTab = window.open(blobUrl, '_blank');
+          if (newTab) {
+            showToast('Opened live assembled preview in new tab');
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+          } else {
+            showToast('Pop-up was blocked. Please allow pop-ups for this page.');
+          }
+        } catch (err) {
+          console.error('Error opening preview in new tab:', err);
+          showToast('Failed to open preview tab');
+        }
+      });
+    }
+
+    // Initial sync
+    const initialState = stackManager.getState();
+    setViewportMode(initialState.viewport || 'desktop');
+    if (themePresetSelect) {
+      themePresetSelect.value = initialState.theme || 'midnight-dark';
+    }
+    const currentTheme = initialState.theme === 'custom'
+      ? initialState.customColors
+      : ((window.Assembler && window.Assembler.THEME_PRESETS && window.Assembler.THEME_PRESETS[initialState.theme]) || null);
+    if (currentTheme) {
+      if (bgColorInput && currentTheme.bg) bgColorInput.value = currentTheme.bg;
+      if (textColorInput && currentTheme.text) textColorInput.value = currentTheme.text;
+      if (accentColorInput && currentTheme.accent) accentColorInput.value = currentTheme.accent;
+    }
+
     renderStackList();
     renderDrawerFeatures();
     updatePreview();
+
+    const controller = {
+      stackManager,
+      featureCache,
+      featuresData,
+      fetchFeatureFiles,
+      updatePreview,
+      setViewportMode,
+      applyDynamicTheme
+    };
+
+    if (typeof window !== 'undefined') {
+      window.builderPreview = controller;
+    }
+
+    return controller;
   }
 
   // Auto-run when DOM is ready

@@ -539,29 +539,35 @@
 }
 
 /* Viewport device modes */
-.viewport-stage[data-active-viewport="desktop"] .viewport-frame-wrapper {
+.viewport-stage[data-active-viewport="desktop"] .viewport-frame-wrapper,
+.viewport-frame-wrapper.is-desktop {
   width: 100%;
   max-width: 100%;
   height: 100%;
   border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
 }
 
-.viewport-stage[data-active-viewport="tablet"] .viewport-frame-wrapper {
+.viewport-stage[data-active-viewport="tablet"] .viewport-frame-wrapper,
+.viewport-frame-wrapper.is-tablet {
   width: 768px;
   max-width: 95%;
   height: 94%;
   border-radius: 14px;
   border-color: rgba(255, 255, 255, 0.16);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  margin: 0 auto;
 }
 
-.viewport-stage[data-active-viewport="mobile"] .viewport-frame-wrapper {
+.viewport-stage[data-active-viewport="mobile"] .viewport-frame-wrapper,
+.viewport-frame-wrapper.is-mobile {
   width: 375px;
   max-width: 95%;
   height: 94%;
   border-radius: 20px;
   border-color: rgba(255, 255, 255, 0.18);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  margin: 0 auto;
 }
 
 /* Browser Address Bar Mockup */
