@@ -74,6 +74,30 @@ function resolveTheme(themeConfig) {
 }
 
 /**
+ * Checks whether a hex color string represents a dark color (luminance < 70).
+ */
+function isDarkHex(hex) {
+  if (!hex || typeof hex !== 'string') return false;
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  if (hex.length >= 6) {
+    const r = parseInt(hex.slice(0, 2), 16) || 0;
+    const g = parseInt(hex.slice(2, 4), 16) || 0;
+    const b = parseInt(hex.slice(4, 6), 16) || 0;
+    return (r * 0.299 + g * 0.587 + b * 0.114) < 70;
+  }
+  return false;
+}
+
+/**
+ * Checks whether a theme represents a dark theme.
+ */
+function isDarkTheme(theme) {
+  if (!theme || !theme.bg) return true;
+  return isDarkHex(theme.bg);
+}
+
+/**
  * Scopes section styles:
  * - Transforms html, body selectors into .page-section#${sectionId}
  * - Replaces viewport locking 100vh with min-height: auto
@@ -102,10 +126,16 @@ function scopeSectionStyles(css, sectionId) {
   scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*100%(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
   scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*100vh(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
 
-  // 6. Universal color normalizer: replace hardcoded dark/black backgrounds with var(--preview-bg)
+  // 6. Universal color normalizer: replace hardcoded dark backgrounds with var(--preview-bg)
   scoped = scoped.replace(
-    /(background(?:-color)?\s*:\s*)(?:#000000|#000|#09090b|#0a0a0c|#0b0f19|#121218|#18181b|#111111|#111)\b/gi,
-    '$1var(--preview-bg)'
+    /(background(?:-color)?\s*:\s*)(#[0-9a-fA-F]{3,8})\b/gi,
+    (match, prop, hex) => isDarkHex(hex) ? `${prop}var(--preview-bg)` : match
+  );
+
+  // Replace CSS variable dark backgrounds (e.g. --pl-bg: #161514 or --bg: #09090b)
+  scoped = scoped.replace(
+    /(--[a-zA-Z0-9_-]*(?:bg|background)\s*:\s*)(#[0-9a-fA-F]{3,8})\b/gi,
+    (match, prop, hex) => isDarkHex(hex) ? `${prop}var(--preview-bg)` : match
   );
 
   // Replace hardcoded dark text colors in light-designed components with var(--preview-text)
@@ -116,7 +146,7 @@ function scopeSectionStyles(css, sectionId) {
 
   // Replace hardcoded light text colors on section container with var(--preview-text)
   scoped = scoped.replace(
-    new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\bcolor\\s*:\\s*)(?:#ffffff|#fff|#fafafa|#f3f4f6|#e4e4e7|#eeeeee|#eee)\\b`, 'gi'),
+    new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\bcolor\\s*:\\s*)(?:#ffffff|#fff|#fafafa|#f3f4f6|#e4e4e7|#eeeeee|#eee|#f4f1ea)\\b`, 'gi'),
     '$1var(--preview-text)'
   );
 
@@ -1206,6 +1236,140 @@ function computeSectionSizingStyles(sizing) {
 }
 
 /**
+ * Generates universal CSS rules ensuring the active theme propagates
+ * to all sections, component containers, and utilities on the page.
+ */
+function generateUniversalThemeStyles(theme) {
+  const isDark = isDarkTheme(theme);
+  return `    :root {
+      --preview-bg: ${theme.bg};
+      --preview-text: ${theme.text};
+      --preview-accent: ${theme.accent};
+      --preview-card-bg: ${theme.cardBg};
+      --preview-border: ${theme.border};
+
+      /* Universal design system tokens (Tailwind, 21st.dev, shadcn) */
+      --background: ${theme.bg};
+      --foreground: ${theme.text};
+      --color-background: ${theme.bg};
+      --color-foreground: ${theme.text};
+      --bg: ${theme.bg};
+      --text: ${theme.text};
+      --accent: ${theme.accent};
+      --card: ${theme.cardBg};
+      --card-foreground: ${theme.text};
+      --border: ${theme.border};
+      --pl-bg: ${theme.bg};
+      --pl-ink: ${theme.text};
+      --bwf-bg: ${theme.bg};
+      --bwf-ink: ${theme.text};
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--preview-bg);
+      color: var(--preview-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .page-section {
+      position: relative;
+      width: 100%;
+      clear: both;
+      background-color: var(--preview-bg) !important;
+      color: var(--preview-text) !important;
+      transition: background-color 0.2s ease, color 0.2s ease;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Seamless section height filling: child root containers expand to fill the section */
+    .page-section > div[id^="root-"],
+    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
+      flex: 1 1 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      background-color: transparent;
+      color: inherit;
+    }
+
+    .page-section > div[id^="root-"] > *,
+    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Universal component container background and text color propagation */
+    .page-section .pl-root,
+    .page-section [class*="-root"],
+    .page-section .bwf {
+      --pl-bg: var(--preview-bg) !important;
+      --pl-ink: var(--preview-text) !important;
+      --pl-muted: color-mix(in srgb, var(--preview-text) 55%, transparent) !important;
+      --pl-line: color-mix(in srgb, var(--preview-text) 18%, transparent) !important;
+      --bwf-bg: var(--preview-bg) !important;
+      --bwf-ink: var(--preview-text) !important;
+      --bwf-muted: color-mix(in srgb, var(--preview-text) 60%, transparent) !important;
+      background-color: var(--preview-bg) !important;
+      color: var(--preview-text) !important;
+    }
+
+    .page-section .pl-title,
+    .page-section .pl-note,
+    .page-section .pl-count,
+    .page-section .pl-count b {
+      color: var(--preview-text) !important;
+    }
+
+    .page-section .bwf-foot {
+      background: linear-gradient(180deg, transparent, var(--preview-bg)) !important;
+    }
+
+    /* Tailwind / utility dark backgrounds adapt to active theme */
+    .page-section .bg-black,
+    .page-section .bg-zinc-950,
+    .page-section .bg-zinc-900,
+    .page-section .bg-neutral-950,
+    .page-section .bg-neutral-900,
+    .page-section .bg-slate-950,
+    .page-section .bg-slate-900,
+    .page-section .bg-gray-950,
+    .page-section .bg-gray-900,
+    .page-section .bg-background {
+      background-color: var(--preview-bg) !important;
+    }
+${!isDark ? `
+    /* Light Theme Text Adjustments for dark-first components */
+    .page-section .text-white,
+    .page-section .text-zinc-100,
+    .page-section .text-neutral-100,
+    .page-section .text-slate-100,
+    .page-section .text-gray-100 {
+      color: var(--preview-text) !important;
+    }
+    .page-section .text-zinc-400,
+    .page-section .text-neutral-400,
+    .page-section .text-slate-400,
+    .page-section .text-gray-400 {
+      color: color-mix(in srgb, var(--preview-text) 65%, transparent) !important;
+    }` : ''}`;
+}
+
+/**
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
 function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
@@ -1262,59 +1426,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page Preview</title>
   ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style>
-    :root {
-      --preview-bg: ${theme.bg};
-      --preview-text: ${theme.text};
-      --preview-accent: ${theme.accent};
-      --preview-card-bg: ${theme.cardBg};
-      --preview-border: ${theme.border};
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--preview-bg);
-      color: var(--preview-text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .page-section {
-      position: relative;
-      width: 100%;
-      clear: both;
-      background-color: var(--preview-bg);
-      color: var(--preview-text);
-      transition: background-color 0.2s ease, color 0.2s ease;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Seamless section height filling: child root containers expand to fill the section */
-    .page-section > div[id^="root-"],
-    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
-      flex: 1 1 auto;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-    }
-
-    .page-section > div[id^="root-"] > *,
-    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
-      width: 100%;
-      box-sizing: border-box;
-    }
+${generateUniversalThemeStyles(theme)}
 
 ${allScopedStyles}
 
@@ -1438,63 +1550,7 @@ ${allHtml}
  * Theme: ${theme.name}
  */
 
-:root {
-  --preview-bg: ${theme.bg};
-  --preview-text: ${theme.text};
-  --preview-accent: ${theme.accent};
-  --preview-card-bg: ${theme.cardBg};
-  --preview-border: ${theme.border};
-}
-
-/* Base Resets */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--preview-bg);
-  color: var(--preview-text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-.page-section {
-  position: relative;
-  width: 100%;
-  clear: both;
-  background-color: var(--preview-bg);
-  color: var(--preview-text);
-  transition: background-color 0.2s ease, color 0.2s ease;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Seamless section height filling: child root containers expand to fill the section */
-.page-section > div[id^="root-"],
-.page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
-  flex: 1 1 auto;
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-.page-section > div[id^="root-"] > *,
-.page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
-  flex: 1 1 auto;
-  width: 100%;
-  min-height: 100%;
-  box-sizing: border-box;
-}
+${generateUniversalThemeStyles(theme)}
 
 /* ==========================================================================
    Section Styles
