@@ -300,10 +300,18 @@
     const elementsCategoryPills = document.getElementById('elementsCategoryPills');
     const elementsCardsGrid = document.getElementById('elementsCardsGrid');
     const elementsTotalCount = document.getElementById('elementsTotalCount');
+    const elementsViewVisualBtn = document.getElementById('elementsViewVisualBtn');
+    const elementsViewCompactBtn = document.getElementById('elementsViewCompactBtn');
+    const elementsTargetBanner = document.getElementById('elementsTargetBanner');
+    const elementsTargetSectionName = document.getElementById('elementsTargetSectionName');
+    const elementsScopeToggle = document.querySelector('.elements-scope-toggle');
 
     // Elements Sidebar State
     let elementsCategory = 'all';
     let elementsSearch = '';
+    let elementsScope = 'all'; // 'all' | 'widgets' | 'sections'
+    let elementsVisualMode = true; // true = visual with live previews
+    let activeTargetSectionId = null;
 
     // Styling Tab Elements
     const themePresetCards = document.getElementById('themePresetCards');
@@ -589,9 +597,23 @@
           }
         });
 
+        // Click card to select as target section for widgets
+        card.addEventListener('click', () => {
+          setActiveSection(item.id);
+        });
+
         pageStackList.appendChild(card);
       });
+
+      updateActiveSectionUI();
     }
+
+    // Listen for section clicks inside live preview frame
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'SECTION_CLICKED' && event.data.sectionId) {
+        setActiveSection(event.data.sectionId);
+      }
+    });
 
     /**
      * Propagates theme variables to the live preview iframe.
@@ -1367,22 +1389,351 @@
     if (tabStylingBtn) tabStylingBtn.addEventListener('click', () => switchSidebarTab('styling'));
 
     // -------------------------------------------------------------
-    // Creative Elements Sidebar: Real 209 Components Catalog Engine
+    // Active Target Section Management (for in-section widgets)
+    // -------------------------------------------------------------
+    function getActiveSection() {
+      const stack = stackManager.getStack();
+      if (!Array.isArray(stack) || stack.length === 0) return null;
+      if (activeTargetSectionId) {
+        const found = stack.find(s => s.id === activeTargetSectionId);
+        if (found) return found;
+      }
+      return stack[stack.length - 1]; // Fallback to last section
+    }
+
+    function setActiveSection(id) {
+      activeTargetSectionId = id;
+      updateActiveSectionUI();
+    }
+
+    function updateActiveSectionUI() {
+      const sec = getActiveSection();
+      if (elementsTargetSectionName) {
+        if (sec) {
+          elementsTargetSectionName.textContent = `${sec.title || sec.slug} (${sec.id})`;
+        } else {
+          elementsTargetSectionName.textContent = 'None (auto-creates section)';
+        }
+      }
+      if (pageStackList) {
+        pageStackList.querySelectorAll('.stack-item-card').forEach(card => {
+          const isTarget = sec && card.dataset.sectionId === sec.id;
+          card.classList.toggle('is-selected-target', isTarget);
+        });
+      }
+    }
+
+    if (elementsTargetBanner) {
+      elementsTargetBanner.addEventListener('click', () => {
+        const stack = stackManager.getStack();
+        if (stack.length <= 1) return;
+        const cur = getActiveSection();
+        const curIdx = cur ? stack.findIndex(s => s.id === cur.id) : -1;
+        const nextIdx = (curIdx + 1) % stack.length;
+        setActiveSection(stack[nextIdx].id);
+        showToast(`Target section switched to: ${stack[nextIdx].title || stack[nextIdx].slug}`);
+      });
+    }
+
+    // -------------------------------------------------------------
+    // View Switcher (Visual Cards with live previews vs Compact list)
+    // -------------------------------------------------------------
+    if (elementsViewVisualBtn && elementsViewCompactBtn) {
+      elementsViewVisualBtn.addEventListener('click', () => {
+        elementsVisualMode = true;
+        elementsViewVisualBtn.classList.add('is-active');
+        elementsViewCompactBtn.classList.remove('is-active');
+        if (elementsCardsGrid) elementsCardsGrid.classList.remove('is-compact');
+        renderElementsCatalog();
+      });
+
+      elementsViewCompactBtn.addEventListener('click', () => {
+        elementsVisualMode = false;
+        elementsViewCompactBtn.classList.add('is-active');
+        elementsViewVisualBtn.classList.remove('is-active');
+        if (elementsCardsGrid) elementsCardsGrid.classList.add('is-compact');
+        renderElementsCatalog();
+      });
+    }
+
+    // -------------------------------------------------------------
+    // Scope Switcher (All vs In-Section Widgets vs Full-Row Sections)
+    // -------------------------------------------------------------
+    if (elementsScopeToggle) {
+      const scopePills = elementsScopeToggle.querySelectorAll('.scope-pill');
+      scopePills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          scopePills.forEach(p => p.classList.remove('is-active'));
+          pill.classList.add('is-active');
+          elementsScope = pill.dataset.scope || 'all';
+          renderElementsCatalog();
+        });
+      });
+    }
+
+    // -------------------------------------------------------------
+    // 12 Insertable In-Section Widgets with Real Rendered HTML Previews
+    // -------------------------------------------------------------
+    const WIDGET_CATALOG_ITEMS = [
+      {
+        id: 'btn-neon',
+        slug: 'btn-neon',
+        type: 'button',
+        isWidget: true,
+        title: 'Neon Glow Button',
+        desc: 'Cyberpunk animated neon glow button with glowing aura',
+        category: 'Buttons & UI',
+        tags: ['button', 'neon', 'glow', 'cyberpunk', 'cta'],
+        previewHtml: '<button class="btn-style-neon mini-preview-btn" style="margin:0;pointer-events:none;"><span>Launch Terminal ⚡</span></button>',
+        elData: { type: 'button', text: 'Launch Terminal ⚡', style: 'neon', link: '#' }
+      },
+      {
+        id: 'btn-glass',
+        slug: 'btn-glass',
+        type: 'button',
+        isWidget: true,
+        title: 'Frosted Glass Button',
+        desc: 'Backdrop blur with glass reflection and sleek border',
+        category: 'Buttons & UI',
+        tags: ['button', 'glass', 'frosted', 'minimal', 'blur'],
+        previewHtml: '<button class="btn-style-glass mini-preview-btn" style="margin:0;pointer-events:none;"><span>Glass Action 💎</span></button>',
+        elData: { type: 'button', text: 'Explore Platform →', style: 'glass', link: '#' }
+      },
+      {
+        id: 'btn-shine',
+        slug: 'btn-shine',
+        type: 'button',
+        isWidget: true,
+        title: 'Gradient Shine Button',
+        desc: 'Animated gradient light sheen across vibrant background',
+        category: 'Buttons & UI',
+        tags: ['button', 'shine', 'gradient', 'animated', 'cta'],
+        previewHtml: '<button class="btn-style-shine mini-preview-btn" style="margin:0;pointer-events:none;"><span>Upgrade to Pro ✨</span></button>',
+        elData: { type: 'button', text: 'Upgrade to Pro ✨', style: 'shine', link: '#' }
+      },
+      {
+        id: 'btn-solid',
+        slug: 'btn-solid',
+        type: 'button',
+        isWidget: true,
+        title: 'Pill Accent Button',
+        desc: 'High-contrast solid primary CTA with rounded pill shape',
+        category: 'Buttons & UI',
+        tags: ['button', 'pill', 'solid', 'primary', 'cta'],
+        previewHtml: '<button class="btn-style-solid mini-preview-btn" style="margin:0;pointer-events:none;"><span>Get Started 🟣</span></button>',
+        elData: { type: 'button', text: 'Get Started', style: 'solid', link: '#' }
+      },
+      {
+        id: 'btn-outline',
+        slug: 'btn-outline',
+        type: 'button',
+        isWidget: true,
+        title: 'Minimal Outline Button',
+        desc: 'Clean subtle border with smooth hover background fill',
+        category: 'Buttons & UI',
+        tags: ['button', 'outline', 'minimal', 'border', 'cta'],
+        previewHtml: '<button class="btn-style-outline mini-preview-btn" style="margin:0;pointer-events:none;"><span>Documentation ⭕</span></button>',
+        elData: { type: 'button', text: 'Documentation →', style: 'outline', link: '#' }
+      },
+      {
+        id: 'table-pricing',
+        slug: 'table-pricing',
+        type: 'table',
+        isWidget: true,
+        title: 'Pricing Tier Card',
+        desc: 'Floating card with price, feature checkmarks & CTA',
+        category: 'Pricing & Tables',
+        tags: ['table', 'pricing', 'card', 'tier', 'saas'],
+        previewHtml: '<div class="element-table-pricing" style="pointer-events:none;transform:scale(0.68);transform-origin:center;margin:0;width:240px;box-shadow:none;"><div class="pricing-card-header"><span class="pricing-plan-badge">Pro Plan</span><div class="pricing-card-price">$29<span class="price-period">/mo</span></div></div></div>',
+        elData: {
+          type: 'table',
+          tableType: 'pricing',
+          title: 'Pro Plan',
+          price: '$29/mo',
+          features: ['Unlimited Projects', 'Custom Domains', '24/7 Priority Support'],
+          ctaText: 'Get Started',
+          ctaLink: '#pricing'
+        }
+      },
+      {
+        id: 'table-comparison',
+        slug: 'table-comparison',
+        type: 'table',
+        isWidget: true,
+        title: 'Comparison Matrix',
+        desc: 'Clean feature comparison matrix table with checkmarks',
+        category: 'Pricing & Tables',
+        tags: ['table', 'comparison', 'matrix', 'features'],
+        previewHtml: '<div class="element-table-comparison" style="pointer-events:none;transform:scale(0.68);transform-origin:center;margin:0;width:250px;box-shadow:none;"><div class="comparison-matrix-title">Feature Comparison</div></div>',
+        elData: {
+          type: 'table',
+          tableType: 'comparison',
+          headers: ['Feature', 'Free', 'Pro'],
+          rows: [
+            ['Storage', '5 GB', '500 GB'],
+            ['Bandwidth', '10 GB/mo', 'Unlimited'],
+            ['Support', 'Community', '24/7 Priority']
+          ]
+        }
+      },
+      {
+        id: 'card-feature',
+        slug: 'card-feature',
+        type: 'card',
+        isWidget: true,
+        title: 'Feature Card',
+        desc: 'Glassmorphic card with badge, title, desc & link',
+        category: 'Cards & Tiles',
+        tags: ['card', 'feature', 'glass', 'bento', 'badge'],
+        previewHtml: '<div class="element-card-feature" style="pointer-events:none;transform:scale(0.72);transform-origin:center;margin:0;width:230px;box-shadow:none;"><span class="feature-card-badge">HOT</span><div class="feature-card-title">Real-time Analytics</div></div>',
+        elData: {
+          type: 'card',
+          cardType: 'feature',
+          title: 'Real-time Analytics',
+          description: 'Track conversion rates and user telemetry with sub-millisecond precision.',
+          badgeText: 'HOT',
+          ctaText: 'Learn More →',
+          link: '#features'
+        }
+      },
+      {
+        id: 'card-testimonial',
+        slug: 'card-testimonial',
+        type: 'card',
+        isWidget: true,
+        title: 'Testimonial Card',
+        desc: 'Quote card with author avatar, rating stars & company',
+        category: 'Cards & Tiles',
+        tags: ['card', 'testimonial', 'review', 'quote', 'stars'],
+        previewHtml: '<div class="element-card-testimonial" style="pointer-events:none;transform:scale(0.72);transform-origin:center;margin:0;width:240px;box-shadow:none;"><div class="testimonial-stars">★★★★★</div><div class="testimonial-author-name">Sarah Jenkins</div></div>',
+        elData: {
+          type: 'card',
+          cardType: 'testimonial',
+          author: 'Sarah Jenkins',
+          role: 'VP of Product, Apex Digital',
+          avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80',
+          description: 'This platform transformed our landing page conversion rates within 48 hours.',
+          rating: 5
+        }
+      },
+      {
+        id: 'badge-pulse',
+        slug: 'badge-pulse',
+        type: 'badge',
+        isWidget: true,
+        title: 'Pulse Glow Badge',
+        desc: 'Live pulsing neon indicator dot with status text pill',
+        category: 'Cards & Tiles',
+        tags: ['badge', 'pulse', 'status', 'tag', 'live'],
+        previewHtml: '<div class="badge-style-pulse" style="pointer-events:none;margin:0;"><span class="pulse-dot"></span><span>v2.0 LIVE</span></div>',
+        elData: {
+          type: 'badge',
+          text: 'v2.0 LIVE',
+          badgeStyle: 'pulse'
+        }
+      },
+      {
+        id: 'badge-pill',
+        slug: 'badge-pill',
+        type: 'badge',
+        isWidget: true,
+        title: 'Metric Pill Tag',
+        desc: 'Glassmorphic badge for stats, versions & highlights',
+        category: 'Cards & Tiles',
+        tags: ['badge', 'pill', 'metric', 'tag', 'glass'],
+        previewHtml: '<div class="badge-style-pill" style="pointer-events:none;margin:0;">+99.8% Faster</div>',
+        elData: {
+          type: 'badge',
+          text: '+99.8% Faster',
+          badgeStyle: 'pill'
+        }
+      },
+      {
+        id: 'image-custom',
+        slug: 'image-custom',
+        type: 'image',
+        isWidget: true,
+        title: 'Custom Floating Image',
+        desc: 'Free-floating framed media with subtle rounded shadow',
+        category: 'Cards & Tiles',
+        tags: ['image', 'photo', 'media', 'custom', 'floating'],
+        previewHtml: '<div class="element-custom-image is-medium" style="pointer-events:none;margin:0;"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" style="width:110px;height:65px;object-fit:cover;border-radius:6px;display:block;" /></div>',
+        elData: {
+          type: 'image',
+          imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80',
+          imageSize: 'medium'
+        }
+      }
+    ];
+
+    // Lazy Preview Observer for Sidebar Section Cards
+    const elementsPreviewObserver = typeof IntersectionObserver !== 'undefined'
+      ? new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const box = entry.target;
+            const slug = box.getAttribute('data-slug');
+            if (!slug) return;
+            let iframe = box.querySelector('iframe');
+            if (entry.isIntersecting) {
+              if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.title = slug;
+                iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
+                iframe.setAttribute('loading', 'lazy');
+                iframe.src = `features/${slug}/index.html`;
+                const placeholder = box.querySelector('.element-card-preview-placeholder');
+                iframe.addEventListener('load', () => {
+                  if (placeholder) placeholder.style.display = 'none';
+                });
+                box.appendChild(iframe);
+              }
+            } else if (iframe) {
+              iframe.remove();
+              const placeholder = box.querySelector('.element-card-preview-placeholder');
+              if (placeholder) placeholder.style.display = '';
+            }
+          });
+        }, { rootMargin: '250px 0px' })
+      : null;
+
+    // -------------------------------------------------------------
+    // Unified Creative Elements Catalog Render Engine
     // -------------------------------------------------------------
     function renderElementsCatalog() {
       if (!elementsCardsGrid) return;
 
+      if (elementsPreviewObserver) {
+        elementsPreviewObserver.disconnect();
+      }
+
+      updateActiveSectionUI();
+
       const q = elementsSearch.toLowerCase().trim();
-      const filtered = registry.filter(feature => {
-        const matchesCat = matchesCategory(feature, elementsCategory);
+
+      // Collect items matching scope
+      let itemsToFilter = [];
+      if (elementsScope === 'widgets') {
+        itemsToFilter = WIDGET_CATALOG_ITEMS;
+      } else if (elementsScope === 'sections') {
+        itemsToFilter = registry;
+      } else {
+        itemsToFilter = [...WIDGET_CATALOG_ITEMS, ...registry];
+      }
+
+      const filtered = itemsToFilter.filter(item => {
+        // Category matching
+        const matchesCat = item.isWidget
+          ? (elementsCategory === 'all' || matchesCategory({ category: item.category }, elementsCategory))
+          : matchesCategory(item, elementsCategory);
+
         if (!matchesCat) return false;
         if (!q) return true;
 
-        const slug = (feature.slug || '').toLowerCase();
-        const title = (feature.title || feature.name || '').toLowerCase();
-        const desc = (feature.description || '').toLowerCase();
-        const normCat = getNormalizedCategory(feature).toLowerCase();
-        const tags = Array.isArray(feature.tags) ? feature.tags.map(t => String(t).toLowerCase()) : [];
+        const slug = (item.slug || '').toLowerCase();
+        const title = (item.title || item.name || '').toLowerCase();
+        const desc = (item.desc || item.description || '').toLowerCase();
+        const normCat = item.isWidget ? item.category.toLowerCase() : getNormalizedCategory(item).toLowerCase();
+        const tags = Array.isArray(item.tags) ? item.tags.map(t => String(t).toLowerCase()) : [];
 
         return (
           slug.includes(q) ||
@@ -1394,14 +1745,14 @@
       });
 
       if (elementsTotalCount) {
-        elementsTotalCount.textContent = `${filtered.length} blocks`;
+        elementsTotalCount.textContent = `${filtered.length} items`;
       }
 
       if (filtered.length === 0) {
         elementsCardsGrid.innerHTML = `
           <div style="padding: 36px 14px; text-align: center; color: var(--text-muted, #a1a1aa);">
-            <div style="font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--text-main, #fafafa);">No components found</div>
-            <div style="font-size: 11px; color: var(--text-dim, #71717a);">Try clearing your search query or picking another category</div>
+            <div style="font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--text-main, #fafafa);">No items found</div>
+            <div style="font-size: 11px; color: var(--text-dim, #71717a);">Try clearing search query or switching scope/categories</div>
           </div>
         `;
         return;
@@ -1410,16 +1761,16 @@
       elementsCardsGrid.innerHTML = '';
       const fragment = document.createDocumentFragment();
 
-      filtered.forEach(feature => {
+      filtered.forEach(item => {
         const card = document.createElement('div');
         card.className = 'element-feature-card';
         card.setAttribute('role', 'listitem');
-        card.setAttribute('data-slug', feature.slug);
+        card.setAttribute('data-slug', item.slug);
 
-        const title = feature.title || feature.name || feature.slug;
-        const desc = feature.description || 'Production-ready vault component';
-        const normCat = getNormalizedCategory(feature);
-        const tags = Array.isArray(feature.tags) ? feature.tags.slice(0, 3) : [];
+        const title = item.title || item.name || item.slug;
+        const desc = item.desc || item.description || (item.isWidget ? 'In-section interactive widget' : 'Production-ready vault component');
+        const normCat = item.isWidget ? item.category : getNormalizedCategory(item);
+        const tags = Array.isArray(item.tags) ? item.tags.slice(0, 3) : [];
 
         let badgeClass = 'badge-templates';
         const catLower = normCat.toLowerCase();
@@ -1435,33 +1786,85 @@
         else if (catLower.includes('audio') || catLower.includes('shader')) badgeClass = 'badge-shaders';
         else if (catLower.includes('physics') || catLower.includes('cursor')) badgeClass = 'badge-physics';
 
-        card.innerHTML = `
-          <div class="element-card-header">
-            <span class="element-card-badge ${badgeClass}">${escapeHtml(normCat)}</span>
-            <button type="button" class="element-add-btn" aria-label="Add ${escapeHtml(title)} to page">
-              <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              <span>+ Add</span>
-            </button>
-          </div>
-          <div class="element-card-title">${escapeHtml(title)}</div>
-          <div class="element-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
-          ${tags.length ? `
-            <div class="element-card-tags">
-              ${tags.map(t => `<span class="element-tag">#${escapeHtml(t)}</span>`).join('')}
+        const scopeBadgeHtml = item.isWidget
+          ? '<span class="element-scope-badge scope-widget">Widget</span>'
+          : '<span class="element-scope-badge scope-section">Section</span>';
+
+        const btnLabel = item.isWidget ? '+ Add to Section' : '+ Add Section';
+
+        // Preview box HTML: rendered widget preview for widgets, live iframe box for sections
+        const previewBoxHtml = item.isWidget
+          ? `<div class="element-widget-preview">${item.previewHtml || ''}</div>`
+          : `
+            <div class="element-card-preview-box" data-slug="${item.slug}">
+              <div class="element-card-preview-placeholder">
+                <div class="spinner-ring"></div>
+                <span>Live Preview</span>
+              </div>
             </div>
-          ` : ''}
+          `;
+
+        card.innerHTML = `
+          ${previewBoxHtml}
+          <div class="element-card-content">
+            <div class="element-card-header">
+              <div style="display:flex;align-items:center;gap:6px;">
+                ${scopeBadgeHtml}
+                <span class="element-card-badge ${badgeClass}">${escapeHtml(normCat)}</span>
+              </div>
+              <button type="button" class="element-add-btn" aria-label="${escapeHtml(btnLabel)}">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>${escapeHtml(btnLabel)}</span>
+              </button>
+            </div>
+            <div class="element-card-title">${escapeHtml(title)}</div>
+            <div class="element-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
+            ${tags.length ? `
+              <div class="element-card-tags">
+                ${tags.map(t => `<span class="element-tag">#${escapeHtml(t)}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
         `;
+
+        if (!item.isWidget && elementsPreviewObserver) {
+          const previewBox = card.querySelector('.element-card-preview-box');
+          if (previewBox) {
+            elementsPreviewObserver.observe(previewBox);
+          }
+        }
 
         const addBtn = card.querySelector('.element-add-btn');
 
-        const triggerAdd = () => {
-          stackManager.addSection(feature.slug, {
-            title: title,
-            category: normCat
-          });
+        const triggerAction = () => {
+          if (item.isWidget) {
+            // Add directly into active section
+            let targetSec = getActiveSection();
+            if (!targetSec) {
+              targetSec = stackManager.addSection('oklch-ambient-glow-hero', {
+                title: 'Hero Section',
+                category: 'Heroes'
+              });
+              setActiveSection(targetSec.id);
+            }
+
+            const newEl = stackManager.addElement(targetSec.id, item.elData);
+            if (newEl) {
+              pendingSelectedElement = { sectionId: targetSec.id, elementId: newEl.id };
+              showToast(`Added ${title} into ${targetSec.title || targetSec.id}`);
+            }
+          } else {
+            // Add as new page section row
+            const newSec = stackManager.addSection(item.slug, {
+              title: title,
+              category: normCat
+            });
+            setActiveSection(newSec.id);
+            showToast(`Added section "${title}" to page stack`);
+          }
 
           if (addBtn) {
             if (!addBtn.dataset.originalHtml) {
@@ -1486,19 +1889,17 @@
               addBtn._restoreTimer = null;
             }, 900);
           }
-
-          showToast(`Added "${title}" to page`);
         };
 
         if (addBtn) {
           addBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            triggerAdd();
+            triggerAction();
           });
         }
 
         card.addEventListener('click', () => {
-          triggerAdd();
+          triggerAction();
         });
 
         fragment.appendChild(card);

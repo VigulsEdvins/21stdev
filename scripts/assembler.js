@@ -947,6 +947,14 @@ ${allHtml}
         }
       });
 
+      // Notify parent builder when a section is clicked in preview
+      document.addEventListener('click', function (e) {
+        var sec = e.target.closest('.page-section');
+        if (sec && sec.id && window.parent) {
+          window.parent.postMessage({ type: 'SECTION_CLICKED', sectionId: sec.id }, '*');
+        }
+      });
+
       function initAllSections() {
 ${allScripts}
       }

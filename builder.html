@@ -196,10 +196,49 @@
       <div class="sidebar-tab-pane is-active" id="paneElements">
         <div class="elements-catalog-header">
           <div class="elements-header-top">
-            <div class="elements-header-title">Creative Elements</div>
-            <span class="elements-count-badge" id="elementsTotalCount">209 blocks</span>
+            <div class="elements-header-title-group">
+              <div class="elements-header-title">Creative Elements</div>
+              <span class="elements-count-badge" id="elementsTotalCount">221 items</span>
+            </div>
+            <!-- View Mode Switcher -->
+            <div class="elements-view-toggle">
+              <button type="button" class="elements-toggle-btn is-active" id="elementsViewVisualBtn" title="Visual Cards with Live Previews">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span>Visual</span>
+              </button>
+              <button type="button" class="elements-toggle-btn" id="elementsViewCompactBtn" title="Compact List Mode">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+                <span>List</span>
+              </button>
+            </div>
           </div>
-          <div class="elements-header-subtitle">Browse &amp; add real components from the vault</div>
+
+          <!-- Active Section Target Banner -->
+          <div class="elements-target-section-banner" id="elementsTargetBanner" title="Small widgets will be placed inside this section">
+            <div class="target-section-info">
+              <span class="target-prefix">Target Section:</span>
+              <span class="target-name" id="elementsTargetSectionName">Hero Section (sec-1)</span>
+            </div>
+            <span class="target-badge">Active</span>
+          </div>
+
+          <!-- Scope Mode Switcher (Widgets into Section vs Full Sections) -->
+          <div class="elements-scope-toggle" role="group" aria-label="Component Scope Filter">
+            <button type="button" class="scope-pill is-active" data-scope="all">All</button>
+            <button type="button" class="scope-pill" data-scope="widgets">Widgets &bull; In-Section</button>
+            <button type="button" class="scope-pill" data-scope="sections">Sections &bull; Full Row</button>
+          </div>
 
           <!-- Real-time Search Box -->
           <div class="elements-search-row">
@@ -212,7 +251,7 @@
                 type="text"
                 id="elementsSearchInput"
                 class="elements-search-input"
-                placeholder="Search real components (pricing, hero, nav, tabs)..."
+                placeholder="Search real components &amp; widgets..."
                 autocomplete="off"
               />
               <button type="button" class="clear-search-btn" id="clearElementsSearchBtn" aria-label="Clear search" style="display: none;">&times;</button>
