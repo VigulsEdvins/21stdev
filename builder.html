@@ -670,9 +670,14 @@
   <!-- Canvas Right-Click Context Menu -->
   <div class="canvas-context-menu" id="canvasContextMenu" style="display: none;">
     <div class="context-menu-header">
-      <span class="context-menu-title">Add Creative Element</span>
+      <span class="context-menu-title">Element Actions</span>
     </div>
     <div class="context-menu-items">
+      <button type="button" class="context-menu-item" data-action="resize-element">
+        <span class="ctx-icon">📐</span>
+        <span>📐 Resize Dimensions</span>
+      </button>
+      <div class="context-menu-divider" style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 3px 0;"></div>
       <button type="button" class="context-menu-item" data-action="add-table-pricing">
         <span class="ctx-icon">💰</span>
         <span>+ Add Pricing Tier Card</span>
@@ -721,6 +726,16 @@
         <span>Price Tag</span>
         <input type="text" id="toolbarTablePrice" class="toolbar-input" placeholder="e.g. $29/mo" />
       </label>
+      <div class="toolbar-row-2col">
+        <label class="toolbar-label">
+          <span>Width (px)</span>
+          <input type="number" id="toolbarTableWidth" class="toolbar-input" placeholder="Auto" min="120" max="1400" step="1" />
+        </label>
+        <label class="toolbar-label">
+          <span>Height (px)</span>
+          <input type="number" id="toolbarTableHeight" class="toolbar-input" placeholder="Auto" min="80" max="1200" step="1" />
+        </label>
+      </div>
       <label class="toolbar-label">
         <span>Features (one per line)</span>
         <textarea id="toolbarTableFeatures" class="toolbar-input toolbar-textarea" rows="3" placeholder="Unlimited Projects&#10;Custom Domains&#10;24/7 Priority Support"></textarea>
@@ -745,6 +760,16 @@
         <span>Subtitle / Author</span>
         <input type="text" id="toolbarCardSubtitle" class="toolbar-input" placeholder="e.g. Sarah Jenkins, VP Product" />
       </label>
+      <div class="toolbar-row-2col">
+        <label class="toolbar-label">
+          <span>Width (px)</span>
+          <input type="number" id="toolbarCardWidth" class="toolbar-input" placeholder="Auto" min="100" max="1200" step="1" />
+        </label>
+        <label class="toolbar-label">
+          <span>Height (px)</span>
+          <input type="number" id="toolbarCardHeight" class="toolbar-input" placeholder="Auto" min="60" max="1200" step="1" />
+        </label>
+      </div>
       <label class="toolbar-label">
         <span>Description / Quote</span>
         <textarea id="toolbarCardDesc" class="toolbar-input toolbar-textarea" rows="3" placeholder="Write description or quote..."></textarea>
@@ -769,6 +794,16 @@
         <span>Link URL</span>
         <input type="text" id="toolbarBtnLink" class="toolbar-input" placeholder="e.g. #contact or https://..." />
       </label>
+      <div class="toolbar-row-2col">
+        <label class="toolbar-label">
+          <span>Width (px)</span>
+          <input type="number" id="toolbarBtnWidth" class="toolbar-input" placeholder="Auto" min="30" max="1200" step="1" />
+        </label>
+        <label class="toolbar-label">
+          <span>Height (px)</span>
+          <input type="number" id="toolbarBtnHeight" class="toolbar-input" placeholder="Auto" min="20" max="800" step="1" />
+        </label>
+      </div>
       <div class="toolbar-label">
         <span>Style</span>
         <div class="toolbar-style-pills" id="toolbarBtnStylePills">
@@ -787,13 +822,15 @@
         <span>Image URL</span>
         <input type="text" id="toolbarImgUrl" class="toolbar-input" placeholder="https://..." />
       </label>
-      <div class="toolbar-label">
-        <span>Size</span>
-        <div class="toolbar-size-pills" id="toolbarImgSizePills">
-          <button type="button" class="size-pill" data-size="small">Small</button>
-          <button type="button" class="size-pill is-active" data-size="medium">Medium</button>
-          <button type="button" class="size-pill" data-size="large">Large</button>
-        </div>
+      <div class="toolbar-row-2col">
+        <label class="toolbar-label">
+          <span>Width (px)</span>
+          <input type="number" id="toolbarImgWidth" class="toolbar-input" placeholder="240" min="30" max="1600" step="1" />
+        </label>
+        <label class="toolbar-label">
+          <span>Height (px)</span>
+          <input type="number" id="toolbarImgHeight" class="toolbar-input" placeholder="240" min="20" max="1600" step="1" />
+        </label>
       </div>
     </div>
 

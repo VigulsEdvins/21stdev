@@ -668,6 +668,8 @@
     const toolbarGroupTable = document.getElementById('toolbarGroupTable');
     const toolbarTableTitle = document.getElementById('toolbarTableTitle');
     const toolbarTablePrice = document.getElementById('toolbarTablePrice');
+    const toolbarTableWidth = document.getElementById('toolbarTableWidth');
+    const toolbarTableHeight = document.getElementById('toolbarTableHeight');
     const toolbarTableFeatures = document.getElementById('toolbarTableFeatures');
     const toolbarTableCtaText = document.getElementById('toolbarTableCtaText');
     const toolbarTableCtaLink = document.getElementById('toolbarTableCtaLink');
@@ -676,6 +678,8 @@
     const toolbarGroupCard = document.getElementById('toolbarGroupCard');
     const toolbarCardTitle = document.getElementById('toolbarCardTitle');
     const toolbarCardSubtitle = document.getElementById('toolbarCardSubtitle');
+    const toolbarCardWidth = document.getElementById('toolbarCardWidth');
+    const toolbarCardHeight = document.getElementById('toolbarCardHeight');
     const toolbarCardDesc = document.getElementById('toolbarCardDesc');
     const toolbarCardBadge = document.getElementById('toolbarCardBadge');
     const toolbarCardLinkText = document.getElementById('toolbarCardLinkText');
@@ -684,11 +688,15 @@
     const toolbarGroupButton = document.getElementById('toolbarGroupButton');
     const toolbarBtnText = document.getElementById('toolbarBtnText');
     const toolbarBtnLink = document.getElementById('toolbarBtnLink');
+    const toolbarBtnWidth = document.getElementById('toolbarBtnWidth');
+    const toolbarBtnHeight = document.getElementById('toolbarBtnHeight');
     const toolbarBtnStylePills = document.getElementById('toolbarBtnStylePills');
 
     // Toolbar Image Fields
     const toolbarGroupImage = document.getElementById('toolbarGroupImage');
     const toolbarImgUrl = document.getElementById('toolbarImgUrl');
+    const toolbarImgWidth = document.getElementById('toolbarImgWidth');
+    const toolbarImgHeight = document.getElementById('toolbarImgHeight');
     const toolbarImgSizePills = document.getElementById('toolbarImgSizePills');
 
     // Toolbar Badge Fields
@@ -1108,6 +1116,17 @@
       } catch (_) {}
     }
 
+    function ensureResizeHandles(elementEl) {
+      if (!elementEl || elementEl.querySelector('.el-resize-handle')) return;
+      const positions = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
+      positions.forEach(pos => {
+        const handle = elementEl.ownerDocument.createElement('div');
+        handle.className = `el-resize-handle handle-${pos}`;
+        handle.dataset.handle = pos;
+        elementEl.appendChild(handle);
+      });
+    }
+
     function openEditToolbar(sectionId, elementId) {
       const elements = stackManager.getSectionElements(sectionId);
       const elData = elements.find(e => e.id === elementId);
@@ -1123,6 +1142,31 @@
       if (toolbarGroupButton) toolbarGroupButton.style.display = elData.type === 'button' ? 'flex' : 'none';
       if (toolbarGroupImage) toolbarGroupImage.style.display = elData.type === 'image' ? 'flex' : 'none';
       if (toolbarGroupBadge) toolbarGroupBadge.style.display = elData.type === 'badge' ? 'flex' : 'none';
+
+      // Measure current rendered element dimensions if not explicitly set
+      let curWidth = (elData.width !== undefined && elData.width !== null) ? parseInt(elData.width, 10) : '';
+      let curHeight = (elData.height !== undefined && elData.height !== null) ? parseInt(elData.height, 10) : '';
+      try {
+        const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
+        if (doc) {
+          const el = doc.getElementById(elementId);
+          if (el) {
+            ensureResizeHandles(el);
+            const r = el.getBoundingClientRect();
+            if (!curWidth) curWidth = Math.round(r.width);
+            if (!curHeight) curHeight = Math.round(r.height);
+          }
+        }
+      } catch (_) {}
+
+      if (toolbarTableWidth) toolbarTableWidth.value = curWidth || '';
+      if (toolbarTableHeight) toolbarTableHeight.value = curHeight || '';
+      if (toolbarCardWidth) toolbarCardWidth.value = curWidth || '';
+      if (toolbarCardHeight) toolbarCardHeight.value = curHeight || '';
+      if (toolbarBtnWidth) toolbarBtnWidth.value = curWidth || '';
+      if (toolbarBtnHeight) toolbarBtnHeight.value = curHeight || '';
+      if (toolbarImgWidth) toolbarImgWidth.value = curWidth || '';
+      if (toolbarImgHeight) toolbarImgHeight.value = curHeight || '';
 
       if (elData.type === 'table') {
         if (toolbarTableTitle) toolbarTableTitle.value = elData.title || '';
@@ -1435,6 +1479,44 @@
       });
     }
 
+    // Wire Width and Height dimension input listeners
+    function wireDimensionInput(inputEl, property) {
+      if (!inputEl) return;
+      inputEl.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = parseInt(e.target.value, 10);
+        const minVal = property === 'width' ? 30 : 20;
+        const updates = {};
+        if (!isNaN(val) && val > 0) {
+          updates[property] = Math.max(minVal, val);
+        } else {
+          updates[property] = undefined;
+        }
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, updates, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            if (updates[property]) {
+              el.style[property] = `${updates[property]}px`;
+            } else {
+              el.style[property] = '';
+            }
+          }
+        } catch (_) {}
+        updateToolbarPosition();
+      });
+    }
+
+    wireDimensionInput(toolbarTableWidth, 'width');
+    wireDimensionInput(toolbarTableHeight, 'height');
+    wireDimensionInput(toolbarCardWidth, 'width');
+    wireDimensionInput(toolbarCardHeight, 'height');
+    wireDimensionInput(toolbarBtnWidth, 'width');
+    wireDimensionInput(toolbarBtnHeight, 'height');
+    wireDimensionInput(toolbarImgWidth, 'width');
+    wireDimensionInput(toolbarImgHeight, 'height');
+
     if (toolbarDeleteBtn) {
       toolbarDeleteBtn.addEventListener('click', () => {
         if (!selectedElementState) return;
@@ -1449,8 +1531,32 @@
     if (canvasContextMenu) {
       canvasContextMenu.addEventListener('click', (e) => {
         const itemBtn = e.target.closest('.context-menu-item');
-        if (!itemBtn || !activeCanvasContext) return;
+        if (!itemBtn) return;
         const action = itemBtn.dataset.action;
+
+        if (action === 'resize-element') {
+          hideContextMenu();
+          const targetSectionId = (activeCanvasContext && activeCanvasContext.sectionId) || (selectedElementState && selectedElementState.sectionId);
+          let targetElementId = selectedElementState ? selectedElementState.elementId : null;
+          if (!targetElementId && targetSectionId) {
+            const elements = stackManager.getSectionElements(targetSectionId);
+            if (elements.length > 0) targetElementId = elements[elements.length - 1].id;
+          }
+          if (targetSectionId && targetElementId) {
+            openEditToolbar(targetSectionId, targetElementId);
+            setTimeout(() => {
+              const elType = selectedElementState ? selectedElementState.type : null;
+              if (elType === 'button' && toolbarBtnWidth) toolbarBtnWidth.focus();
+              else if (elType === 'image' && toolbarImgWidth) toolbarImgWidth.focus();
+              else if (elType === 'card' && toolbarCardWidth) toolbarCardWidth.focus();
+              else if (elType === 'table' && toolbarTableWidth) toolbarTableWidth.focus();
+              else if (toolbarBtnWidth) toolbarBtnWidth.focus();
+            }, 60);
+          }
+          return;
+        }
+
+        if (!activeCanvasContext) return;
         let elData = { x: activeCanvasContext.xPct, y: activeCanvasContext.yPct };
 
         if (action === 'add-table-pricing') {
@@ -1560,6 +1666,7 @@
             el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             doc.querySelectorAll('.canvas-element.is-selected').forEach(e => e.classList.remove('is-selected'));
             el.classList.add('is-selected');
+            ensureResizeHandles(el);
             openEditToolbar(pendingSelectedElement.sectionId, pendingSelectedElement.elementId);
           }
           pendingSelectedElement = null;
@@ -1576,6 +1683,7 @@
           const el = doc.getElementById(selectedElementState.elementId);
           if (el) {
             el.classList.add('is-selected');
+            ensureResizeHandles(el);
             updateToolbarPosition();
           } else {
             hideEditToolbar();
@@ -1590,6 +1698,17 @@
           if (!sectionEl) return;
 
           e.preventDefault();
+          const targetEl = e.target.closest('.canvas-element');
+          if (targetEl) {
+            doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
+            targetEl.classList.add('is-selected');
+            ensureResizeHandles(targetEl);
+            const elId = targetEl.dataset.elementId;
+            const elements = stackManager.getSectionElements(sectionEl.id);
+            const elData = elements.find(el => el.id === elId);
+            selectedElementState = { sectionId: sectionEl.id, elementId: elId, type: elData ? elData.type : 'button' };
+          }
+
           const secRect = sectionEl.getBoundingClientRect();
           const xPct = Math.max(2, Math.min(98, ((e.clientX - secRect.left) / secRect.width) * 100));
           const yPct = Math.max(2, Math.min(98, ((e.clientY - secRect.top) / secRect.height) * 100));
@@ -1622,9 +1741,129 @@
           }
         });
 
-        // Draggable Elements Mousedown Handler
+        // Canvas Element Mousedown Handler: Resize Handles & Dragging
         doc.addEventListener('mousedown', (e) => {
           if (e.button !== 0) return;
+
+          // 1. Live Interactive Resize Handles for Canvas Elements
+          const resizeHandleEl = e.target.closest('.el-resize-handle');
+          if (resizeHandleEl) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const elementEl = resizeHandleEl.closest('.canvas-element');
+            if (!elementEl) return;
+            const elementId = elementEl.dataset.elementId;
+            const sectionEl = elementEl.closest('.page-section');
+            if (!sectionEl) return;
+            const sectionId = sectionEl.id;
+
+            doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
+            elementEl.classList.add('is-selected');
+            ensureResizeHandles(elementEl);
+            openEditToolbar(sectionId, elementId);
+
+            const handleType = resizeHandleEl.dataset.handle;
+            const elRect = elementEl.getBoundingClientRect();
+            const secRect = sectionEl.getBoundingClientRect();
+
+            const initialBox = {
+              left: elRect.left - secRect.left,
+              top: elRect.top - secRect.top,
+              right: elRect.right - secRect.left,
+              bottom: elRect.bottom - secRect.top,
+              width: elRect.width,
+              height: elRect.height
+            };
+            const startMouseX = e.clientX;
+            const startMouseY = e.clientY;
+
+            let finalWidth = initialBox.width;
+            let finalHeight = initialBox.height;
+            let finalXPct = parseFloat(elementEl.style.left) || 50;
+            let finalYPct = parseFloat(elementEl.style.top) || 50;
+
+            function onResizeMove(moveEvent) {
+              const frameRect = previewFrame.getBoundingClientRect();
+              const mouseX = (moveEvent.view === window) ? (moveEvent.clientX - frameRect.left) : moveEvent.clientX;
+              const mouseY = (moveEvent.view === window) ? (moveEvent.clientY - frameRect.top) : moveEvent.clientY;
+
+              const deltaX = mouseX - startMouseX;
+              const deltaY = mouseY - startMouseY;
+
+              let newWidth = initialBox.width;
+              let newHeight = initialBox.height;
+              let newCenterX = initialBox.left + initialBox.width / 2;
+              let newCenterY = initialBox.top + initialBox.height / 2;
+
+              if (handleType.includes('e')) {
+                newWidth = Math.max(30, initialBox.width + deltaX);
+                newCenterX = initialBox.left + (newWidth / 2);
+              } else if (handleType.includes('w')) {
+                newWidth = Math.max(30, initialBox.width - deltaX);
+                newCenterX = initialBox.right - (newWidth / 2);
+              }
+
+              if (handleType.includes('s')) {
+                newHeight = Math.max(20, initialBox.height + deltaY);
+                newCenterY = initialBox.top + (newHeight / 2);
+              } else if (handleType.includes('n')) {
+                newHeight = Math.max(20, initialBox.height - deltaY);
+                newCenterY = initialBox.bottom - (newHeight / 2);
+              }
+
+              finalWidth = Math.round(newWidth);
+              finalHeight = Math.round(newHeight);
+              finalXPct = Math.max(2, Math.min(98, Math.round(((newCenterX / secRect.width) * 100) * 10) / 10));
+              finalYPct = Math.max(2, Math.min(98, Math.round(((newCenterY / secRect.height) * 100) * 10) / 10));
+
+              elementEl.style.width = `${finalWidth}px`;
+              elementEl.style.height = `${finalHeight}px`;
+              elementEl.style.left = `${finalXPct}%`;
+              elementEl.style.top = `${finalYPct}%`;
+
+              if (toolbarBtnWidth) toolbarBtnWidth.value = finalWidth;
+              if (toolbarBtnHeight) toolbarBtnHeight.value = finalHeight;
+              if (toolbarImgWidth) toolbarImgWidth.value = finalWidth;
+              if (toolbarImgHeight) toolbarImgHeight.value = finalHeight;
+              if (toolbarCardWidth) toolbarCardWidth.value = finalWidth;
+              if (toolbarCardHeight) toolbarCardHeight.value = finalHeight;
+              if (toolbarTableWidth) toolbarTableWidth.value = finalWidth;
+              if (toolbarTableHeight) toolbarTableHeight.value = finalHeight;
+
+              stackManager.updateElement(sectionId, elementId, {
+                width: finalWidth,
+                height: finalHeight,
+                x: finalXPct,
+                y: finalYPct
+              }, true);
+
+              updateToolbarPosition();
+            }
+
+            function onResizeUp() {
+              doc.removeEventListener('mousemove', onResizeMove);
+              doc.removeEventListener('mouseup', onResizeUp);
+              window.removeEventListener('mousemove', onResizeMove);
+              window.removeEventListener('mouseup', onResizeUp);
+
+              stackManager.updateElement(sectionId, elementId, {
+                width: finalWidth,
+                height: finalHeight,
+                x: finalXPct,
+                y: finalYPct
+              }, false);
+              updateToolbarPosition();
+            }
+
+            doc.addEventListener('mousemove', onResizeMove);
+            doc.addEventListener('mouseup', onResizeUp);
+            window.addEventListener('mousemove', onResizeMove);
+            window.addEventListener('mouseup', onResizeUp);
+            return;
+          }
+
+          // 2. Element Dragging
           const elementEl = e.target.closest('.canvas-element');
           if (!elementEl) return;
 
@@ -1636,6 +1875,7 @@
 
           doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
           elementEl.classList.add('is-selected');
+          ensureResizeHandles(elementEl);
           openEditToolbar(sectionId, elementId);
 
           let isDragging = false;

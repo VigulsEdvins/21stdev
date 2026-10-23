@@ -2697,3 +2697,20 @@
   color: #ffffff;
 }
 
+.toolbar-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.toolbar-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.toolbar-input[type="number"]::-webkit-outer-spin-button,
+.toolbar-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+

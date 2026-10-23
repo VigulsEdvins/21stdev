@@ -173,6 +173,18 @@ function createStackManager(initialConfig = {}) {
     return state.viewport;
   }
 
+  function clampDimension(val, min) {
+    if (typeof val === 'number') return Math.max(min, Math.round(val));
+    if (typeof val === 'string') {
+      const num = parseFloat(val);
+      if (!isNaN(num)) {
+        const clamped = Math.max(min, Math.round(num));
+        return val.endsWith('px') ? `${clamped}px` : clamped;
+      }
+    }
+    return val;
+  }
+
   function addElement(sectionId, elementData = {}) {
     const section = state.stack.find(s => s.id === sectionId);
     if (!section) return null;
@@ -194,6 +206,13 @@ function createStackManager(initialConfig = {}) {
       ...elementData
     };
 
+    if (elementData.width !== undefined) {
+      element.width = clampDimension(elementData.width, 30);
+    }
+    if (elementData.height !== undefined) {
+      element.height = clampDimension(elementData.height, 20);
+    }
+
     section.elements.push(element);
     notify();
     return element;
@@ -208,6 +227,8 @@ function createStackManager(initialConfig = {}) {
 
     if (typeof updates.x === 'number') updates.x = Math.max(0, Math.min(100, updates.x));
     if (typeof updates.y === 'number') updates.y = Math.max(0, Math.min(100, updates.y));
+    if (updates.width !== undefined) updates.width = clampDimension(updates.width, 30);
+    if (updates.height !== undefined) updates.height = clampDimension(updates.height, 20);
 
     Object.assign(element, updates);
     if (!silent) {

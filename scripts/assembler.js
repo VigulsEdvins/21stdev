@@ -314,7 +314,13 @@ function renderSectionOverlayHtml(elements) {
     const id = el.id || 'el';
     const left = typeof el.x === 'number' ? `${el.x}%` : '50%';
     const top = typeof el.y === 'number' ? `${el.y}%` : '50%';
-    const styleAttr = `left: ${left}; top: ${top};`;
+    let styleAttr = `left: ${left}; top: ${top};`;
+    if (el.width !== undefined && el.width !== null && el.width !== '') {
+      styleAttr += ` width: ${typeof el.width === 'number' ? el.width + 'px' : el.width};`;
+    }
+    if (el.height !== undefined && el.height !== null && el.height !== '') {
+      styleAttr += ` height: ${typeof el.height === 'number' ? el.height + 'px' : el.height};`;
+    }
 
     if (el.type === 'table') {
       const tableType = el.tableType || 'pricing';
@@ -513,6 +519,68 @@ const OVERLAY_ELEMENT_CSS = `
       box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
     }
 
+    /* Resize Handles for Canvas Elements */
+    .el-resize-handle {
+      display: none;
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ffffff;
+      border: 1px solid var(--preview-accent, #6366f1);
+      border-radius: 2px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+      z-index: 50;
+      box-sizing: border-box;
+      pointer-events: auto;
+    }
+    .canvas-element.is-selected .el-resize-handle {
+      display: block;
+    }
+    .el-resize-handle.handle-nw, .el-resize-handle.handle-top-left {
+      top: -4px;
+      left: -4px;
+      cursor: nwse-resize;
+    }
+    .el-resize-handle.handle-ne, .el-resize-handle.handle-top-right {
+      top: -4px;
+      right: -4px;
+      cursor: nesw-resize;
+    }
+    .el-resize-handle.handle-se, .el-resize-handle.handle-bottom-right {
+      bottom: -4px;
+      right: -4px;
+      cursor: nwse-resize;
+    }
+    .el-resize-handle.handle-sw, .el-resize-handle.handle-bottom-left {
+      bottom: -4px;
+      left: -4px;
+      cursor: nesw-resize;
+    }
+    .el-resize-handle.handle-n, .el-resize-handle.handle-top {
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: ns-resize;
+    }
+    .el-resize-handle.handle-s, .el-resize-handle.handle-bottom {
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: ns-resize;
+    }
+    .el-resize-handle.handle-w, .el-resize-handle.handle-left {
+      top: 50%;
+      left: -4px;
+      transform: translateY(-50%);
+      cursor: ew-resize;
+    }
+    .el-resize-handle.handle-e, .el-resize-handle.handle-right {
+      top: 50%;
+      right: -4px;
+      transform: translateY(-50%);
+      cursor: ew-resize;
+    }
+
     /* Button Variants */
     .element-button .canvas-btn-link {
       display: inline-flex;
@@ -527,6 +595,16 @@ const OVERLAY_ELEMENT_CSS = `
       border-radius: 9999px;
       white-space: nowrap;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .element-button[style*="width"] .canvas-btn-link,
+    .element-button[style*="height"] .canvas-btn-link {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
     }
 
     .btn-style-solid .canvas-btn-link {
@@ -973,6 +1051,13 @@ const OVERLAY_ELEMENT_CSS = `
     .element-image.img-size-small { width: 140px; height: 140px; }
     .element-image.img-size-medium { width: 240px; height: 240px; }
     .element-image.img-size-large { width: 360px; height: 360px; }
+
+    .element-image[style*="width"] img,
+    .element-image[style*="height"] img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
     /* Badge */
     .element-badge {
