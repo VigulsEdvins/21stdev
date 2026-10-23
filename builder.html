@@ -693,46 +693,61 @@
   <!-- Canvas Right-Click Context Menu -->
   <div class="canvas-context-menu" id="canvasContextMenu" style="display: none;">
     <div class="context-menu-header">
-      <span class="context-menu-title">Element Actions</span>
+      <span class="context-menu-title" id="contextMenuTitle">Element Actions</span>
     </div>
     <div class="context-menu-items">
-      <button type="button" class="context-menu-item" data-action="edit-text">
-        <span class="ctx-icon">✏️</span>
-        <span>Edit Text / Content</span>
-      </button>
-      <button type="button" class="context-menu-item" data-action="resize-element">
-        <span class="ctx-icon">📐</span>
-        <span>📐 Resize Dimensions</span>
-      </button>
-      <div class="context-menu-divider" style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 3px 0;"></div>
-      <button type="button" class="context-menu-item" data-action="add-table-pricing">
-        <span class="ctx-icon">💰</span>
-        <span>+ Add Pricing Tier Card</span>
-      </button>
-      <button type="button" class="context-menu-item" data-action="add-table-comparison">
-        <span class="ctx-icon">📊</span>
-        <span>+ Add Comparison Matrix</span>
-      </button>
-      <button type="button" class="context-menu-item" data-action="add-card-feature">
-        <span class="ctx-icon">🎴</span>
-        <span>+ Add Feature Card</span>
-      </button>
-      <button type="button" class="context-menu-item" data-action="add-card-testimonial">
-        <span class="ctx-icon">💬</span>
-        <span>+ Add Testimonial Card</span>
-      </button>
-      <button type="button" class="context-menu-item" data-action="add-button">
-        <span class="ctx-icon">⚡</span>
-        <span>+ Add Button</span>
-      </button>
-      <button type="button" class="context-menu-item" data-action="add-image">
-        <span class="ctx-icon">🖼️</span>
-        <span>+ Add Image</span>
-      </button>
-      <button type="button" class="context-menu-item" data-action="add-badge">
-        <span class="ctx-icon">🟢</span>
-        <span>+ Add Badge / Tag</span>
-      </button>
+      <!-- Actions when right-clicking a chosen element -->
+      <div id="contextElementActionsGroup">
+        <button type="button" class="context-menu-item" data-action="edit-text">
+          <span class="ctx-icon">✏️</span>
+          <span>Edit Text / Content</span>
+        </button>
+        <button type="button" class="context-menu-item" data-action="resize-element">
+          <span class="ctx-icon">📐</span>
+          <span>Resize Dimensions</span>
+        </button>
+        <button type="button" class="context-menu-item" data-action="duplicate-element">
+          <span class="ctx-icon">📋</span>
+          <span>Duplicate Element</span>
+        </button>
+        <div class="context-menu-divider" style="height: 1px; background: rgba(255, 255, 255, 0.08); margin: 3px 0;"></div>
+        <button type="button" class="context-menu-item context-menu-item-danger" data-action="delete-element">
+          <span class="ctx-icon">🗑️</span>
+          <span>Delete Element</span>
+        </button>
+      </div>
+
+      <!-- Actions when right-clicking empty canvas space -->
+      <div id="contextCanvasAddGroup">
+        <button type="button" class="context-menu-item" data-action="add-table-pricing">
+          <span class="ctx-icon">💰</span>
+          <span>+ Add Pricing Tier Card</span>
+        </button>
+        <button type="button" class="context-menu-item" data-action="add-table-comparison">
+          <span class="ctx-icon">📊</span>
+          <span>+ Add Comparison Matrix</span>
+        </button>
+        <button type="button" class="context-menu-item" data-action="add-card-feature">
+          <span class="ctx-icon">🎴</span>
+          <span>+ Add Feature Card</span>
+        </button>
+        <button type="button" class="context-menu-item" data-action="add-card-testimonial">
+          <span class="ctx-icon">💬</span>
+          <span>+ Add Testimonial Card</span>
+        </button>
+        <button type="button" class="context-menu-item" data-action="add-button">
+          <span class="ctx-icon">⚡</span>
+          <span>+ Add Button</span>
+        </button>
+        <button type="button" class="context-menu-item" data-action="add-image">
+          <span class="ctx-icon">🖼️</span>
+          <span>+ Add Image</span>
+        </button>
+        <button type="button" class="context-menu-item" data-action="add-badge">
+          <span class="ctx-icon">🟢</span>
+          <span>+ Add Badge / Tag</span>
+        </button>
+      </div>
     </div>
   </div>
 

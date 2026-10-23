@@ -1847,7 +1847,7 @@
         if (action === 'resize-element') {
           hideContextMenu();
           const targetSectionId = (activeCanvasContext && activeCanvasContext.sectionId) || (selectedElementState && selectedElementState.sectionId);
-          let targetElementId = selectedElementState ? selectedElementState.elementId : null;
+          let targetElementId = (activeCanvasContext && activeCanvasContext.elementId) || (selectedElementState ? selectedElementState.elementId : null);
           if (!targetElementId && targetSectionId) {
             const elements = stackManager.getSectionElements(targetSectionId);
             if (elements.length > 0) targetElementId = elements[elements.length - 1].id;
@@ -1862,6 +1862,50 @@
               else if (elType === 'table' && toolbarTableWidth) toolbarTableWidth.focus();
               else if (toolbarBtnWidth) toolbarBtnWidth.focus();
             }, 60);
+          }
+          return;
+        }
+
+        if (action === 'duplicate-element') {
+          hideContextMenu();
+          const targetSectionId = (activeCanvasContext && activeCanvasContext.sectionId) || (selectedElementState && selectedElementState.sectionId);
+          let targetElementId = (activeCanvasContext && activeCanvasContext.elementId) || (selectedElementState ? selectedElementState.elementId : null);
+          if (!targetElementId && targetSectionId) {
+            const elements = stackManager.getSectionElements(targetSectionId);
+            if (elements.length > 0) targetElementId = elements[elements.length - 1].id;
+          }
+          if (targetSectionId && targetElementId) {
+            const elements = stackManager.getSectionElements(targetSectionId);
+            const orig = elements.find(el => el.id === targetElementId);
+            if (orig) {
+              pushHistorySnapshot();
+              const clone = JSON.parse(JSON.stringify(orig));
+              delete clone.id;
+              clone.x = Math.min(96, (clone.x || 50) + 3);
+              clone.y = Math.min(96, (clone.y || 50) + 3);
+              const newEl = stackManager.addElement(targetSectionId, clone);
+              if (newEl) {
+                pendingSelectedElement = { sectionId: targetSectionId, elementId: newEl.id };
+                showToast(`Duplicated ${newEl.type || 'element'}`);
+              }
+            }
+          }
+          return;
+        }
+
+        if (action === 'delete-element') {
+          hideContextMenu();
+          const targetSectionId = (activeCanvasContext && activeCanvasContext.sectionId) || (selectedElementState && selectedElementState.sectionId);
+          let targetElementId = (activeCanvasContext && activeCanvasContext.elementId) || (selectedElementState ? selectedElementState.elementId : null);
+          if (!targetElementId && targetSectionId) {
+            const elements = stackManager.getSectionElements(targetSectionId);
+            if (elements.length > 0) targetElementId = elements[elements.length - 1].id;
+          }
+          if (targetSectionId && targetElementId) {
+            pushHistorySnapshot();
+            stackManager.removeElement(targetSectionId, targetElementId);
+            clearElementSelection();
+            showToast('Element removed');
           }
           return;
         }
@@ -2012,9 +2056,13 @@
 
           e.preventDefault();
           const targetEl = e.target.closest('.canvas-element');
+          const isElementTarget = !!targetEl;
+
           if (targetEl) {
             const elId = targetEl.dataset.elementId;
             selectCanvasElement(sectionEl.id, elId);
+          } else {
+            clearElementSelection();
           }
 
           const secRect = sectionEl.getBoundingClientRect();
@@ -2023,13 +2071,28 @@
 
           activeCanvasContext = {
             sectionId: sectionEl.id,
+            elementId: targetEl ? targetEl.dataset.elementId : null,
             xPct: Math.round(xPct * 10) / 10,
             yPct: Math.round(yPct * 10) / 10
           };
 
+          const contextMenuTitle = document.getElementById('contextMenuTitle');
+          const contextElementActionsGroup = document.getElementById('contextElementActionsGroup');
+          const contextCanvasAddGroup = document.getElementById('contextCanvasAddGroup');
+
+          if (isElementTarget) {
+            if (contextMenuTitle) contextMenuTitle.textContent = 'Element Actions';
+            if (contextElementActionsGroup) contextElementActionsGroup.style.display = 'block';
+            if (contextCanvasAddGroup) contextCanvasAddGroup.style.display = 'none';
+          } else {
+            if (contextMenuTitle) contextMenuTitle.textContent = 'Add to Section';
+            if (contextElementActionsGroup) contextElementActionsGroup.style.display = 'none';
+            if (contextCanvasAddGroup) contextCanvasAddGroup.style.display = 'block';
+          }
+
           const frameRect = previewFrame.getBoundingClientRect();
           const menuLeft = Math.min(window.innerWidth - 220, frameRect.left + e.clientX);
-          const menuTop = Math.min(window.innerHeight - 180, frameRect.top + e.clientY);
+          const menuTop = Math.min(window.innerHeight - 240, frameRect.top + e.clientY);
 
           if (canvasContextMenu) {
             canvasContextMenu.style.left = `${menuLeft}px`;

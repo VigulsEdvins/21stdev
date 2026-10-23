@@ -2643,6 +2643,15 @@
   flex-shrink: 0;
 }
 
+.context-menu-item-danger {
+  color: #f87171 !important;
+}
+
+.context-menu-item-danger:hover {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #ff8888 !important;
+}
+
 /* Floating Element Edit Toolbar */
 .element-edit-toolbar {
   position: fixed;
