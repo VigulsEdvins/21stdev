@@ -18,5 +18,6 @@ execSync('node tests/test-element-sizing.js', execOptions);
 execSync('node tests/test-preview-generation.js', execOptions);
 execSync('node tests/test-export-generation.js', execOptions);
 execSync('node tests/test-drag-drop-canvas.js', execOptions);
+execSync('node tests/test-search-and-editing.js', execOptions);
 
 console.log('🎉 ALL INTEGRATION TESTS PASSED SUCCESSFULLY!');

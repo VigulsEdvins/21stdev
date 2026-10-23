@@ -453,6 +453,69 @@
   font-weight: 600;
 }
 
+/* Dark Frosted Search Bar in Elements Sidebar */
+.elements-search-row {
+  width: 100%;
+}
+
+.elements-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+  border-radius: 8px;
+  padding: 0 12px;
+  transition: all 0.2s ease;
+}
+
+.elements-search-box svg {
+  color: var(--text-dim, #71717a);
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.elements-search-box:focus-within {
+  border-color: #a855f7;
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.25);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.elements-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main, #fafafa);
+  font-size: 13px;
+  padding: 9px 0;
+}
+
+.elements-search-input::placeholder {
+  color: var(--text-dim, #71717a);
+}
+
+#clearElementsSearchBtn,
+.elements-search-box .clear-search-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim, #71717a);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+#clearElementsSearchBtn:hover,
+.elements-search-box .clear-search-btn:hover {
+  color: #fafafa;
+}
+
 /* Category Filter Pills Horizontal Scroll */
 .elements-category-scroll {
   display: flex;

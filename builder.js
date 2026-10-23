@@ -1139,7 +1139,7 @@
       }
 
       if (toolbarGroupTable) toolbarGroupTable.style.display = elData.type === 'table' ? 'flex' : 'none';
-      if (toolbarGroupCard) toolbarGroupCard.style.display = elData.type === 'card' ? 'flex' : 'none';
+      if (toolbarGroupCard) toolbarGroupCard.style.display = (elData.type === 'card' || elData.type === 'file-card' || elData.type === 'folder-card') ? 'flex' : 'none';
       if (toolbarGroupButton) toolbarGroupButton.style.display = elData.type === 'button' ? 'flex' : 'none';
       if (toolbarGroupImage) toolbarGroupImage.style.display = elData.type === 'image' ? 'flex' : 'none';
       if (toolbarGroupBadge) toolbarGroupBadge.style.display = elData.type === 'badge' ? 'flex' : 'none';
@@ -1175,11 +1175,11 @@
         if (toolbarTableFeatures) toolbarTableFeatures.value = Array.isArray(elData.features) ? elData.features.join('\n') : '';
         if (toolbarTableCtaText) toolbarTableCtaText.value = elData.ctaText || 'Get Started';
         if (toolbarTableCtaLink) toolbarTableCtaLink.value = elData.ctaLink || '#';
-      } else if (elData.type === 'card') {
-        if (toolbarCardTitle) toolbarCardTitle.value = elData.title || '';
-        if (toolbarCardSubtitle) toolbarCardSubtitle.value = elData.subtitle || elData.author || '';
+      } else if (elData.type === 'card' || elData.type === 'file-card' || elData.type === 'folder-card') {
+        if (toolbarCardTitle) toolbarCardTitle.value = elData.title || elData.fileName || elData.label || '';
+        if (toolbarCardSubtitle) toolbarCardSubtitle.value = elData.subtitle || elData.author || elData.fileSize || elData.itemCount || '';
         if (toolbarCardDesc) toolbarCardDesc.value = elData.description || '';
-        if (toolbarCardBadge) toolbarCardBadge.value = elData.badgeText || '';
+        if (toolbarCardBadge) toolbarCardBadge.value = elData.badgeText || elData.badge || '';
         if (toolbarCardLinkText) toolbarCardLinkText.value = elData.ctaText || 'Learn More →';
       } else if (elData.type === 'button') {
         if (toolbarBtnText) toolbarBtnText.value = elData.text || '';
@@ -1207,6 +1207,60 @@
 
       elementEditToolbar.style.display = 'flex';
       updateToolbarPosition();
+    }
+
+    function focusElementPrimaryText(sectionId, elementId) {
+      if (!sectionId || !elementId) return;
+      openEditToolbar(sectionId, elementId);
+
+      const elements = stackManager.getSectionElements(sectionId);
+      const elData = elements.find(e => e.id === elementId);
+      const elType = elData ? elData.type : (selectedElementState ? selectedElementState.type : null);
+
+      setTimeout(() => {
+        let inputToFocus = null;
+        if (elType === 'button') {
+          inputToFocus = toolbarBtnText;
+        } else if (elType === 'card' || elType === 'file-card' || elType === 'folder-card') {
+          inputToFocus = toolbarCardTitle;
+        } else if (elType === 'table') {
+          inputToFocus = toolbarTableTitle;
+        } else if (elType === 'badge') {
+          inputToFocus = toolbarBadgeText;
+        } else if (elType === 'image') {
+          inputToFocus = toolbarImgUrl;
+        } else {
+          inputToFocus = toolbarCardTitle || toolbarBtnText;
+        }
+
+        if (inputToFocus) {
+          inputToFocus.focus();
+          if (typeof inputToFocus.select === 'function') {
+            inputToFocus.select();
+          }
+        }
+      }, 50);
+
+      // Brief visual focus ring on canvas element in preview frame
+      try {
+        const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
+        if (doc) {
+          const el = doc.getElementById(elementId);
+          if (el) {
+            doc.querySelectorAll('.canvas-element.is-selected').forEach(e => e.classList.remove('is-selected'));
+            el.classList.add('is-selected');
+            ensureResizeHandles(el);
+            el.style.outline = '2px solid #a855f7';
+            el.style.outlineOffset = '2px';
+            setTimeout(() => {
+              el.style.outline = '';
+              el.style.outlineOffset = '';
+            }, 1200);
+          }
+        }
+      } catch (_) {}
+
+      showToast('Editing element text');
     }
 
     // Toolbar Input Event Listeners
@@ -1302,13 +1356,40 @@
       toolbarCardTitle.addEventListener('input', (e) => {
         if (!selectedElementState) return;
         const val = e.target.value;
-        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { title: val }, true);
+        const updates = { title: val, fileName: val, label: val };
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, updates, true);
         try {
           const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
           const el = doc.getElementById(selectedElementState.elementId);
           if (el) {
-            const titleEl = el.querySelector('.feature-card-title') || el.querySelector('.testimonial-name');
-            if (titleEl) titleEl.textContent = val;
+            const titleEl = el.querySelector('.feature-card-title') ||
+                            el.querySelector('.testimonial-name') ||
+                            el.querySelector('.file-card-name') ||
+                            el.querySelector('.folder-label');
+            if (titleEl) {
+              titleEl.textContent = val;
+              if (titleEl.hasAttribute('title')) titleEl.setAttribute('title', val);
+            }
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarCardSubtitle) {
+      toolbarCardSubtitle.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        const updates = { subtitle: val, author: val, fileSize: val, itemCount: val };
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, updates, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const subEl = el.querySelector('.feature-card-subtitle') ||
+                          el.querySelector('.testimonial-role') ||
+                          el.querySelector('.file-card-size') ||
+                          el.querySelector('.folder-item-count');
+            if (subEl) subEl.textContent = val;
           }
         } catch (_) {}
       });
@@ -1334,12 +1415,15 @@
       toolbarCardBadge.addEventListener('input', (e) => {
         if (!selectedElementState) return;
         const val = e.target.value;
-        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { badgeText: val }, true);
+        const updates = { badgeText: val, badge: val };
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, updates, true);
         try {
           const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
           const el = doc.getElementById(selectedElementState.elementId);
           if (el) {
-            let badgeEl = el.querySelector('.card-badge');
+            let badgeEl = el.querySelector('.card-badge') ||
+                          el.querySelector('.file-badge') ||
+                          el.querySelector('.folder-tab-badge');
             if (!badgeEl && val) {
               const header = el.querySelector('.feature-card-header');
               if (header) {
@@ -1350,7 +1434,7 @@
             }
             if (badgeEl) {
               badgeEl.textContent = val;
-              badgeEl.style.display = val ? 'inline-block' : 'none';
+              badgeEl.style.display = val ? '' : 'none';
             }
           }
         } catch (_) {}
@@ -1534,6 +1618,20 @@
         const itemBtn = e.target.closest('.context-menu-item');
         if (!itemBtn) return;
         const action = itemBtn.dataset.action;
+
+        if (action === 'edit-text') {
+          hideContextMenu();
+          const targetSectionId = (activeCanvasContext && activeCanvasContext.sectionId) || (selectedElementState && selectedElementState.sectionId);
+          let targetElementId = selectedElementState ? selectedElementState.elementId : null;
+          if (!targetElementId && targetSectionId) {
+            const elements = stackManager.getSectionElements(targetSectionId);
+            if (elements.length > 0) targetElementId = elements[elements.length - 1].id;
+          }
+          if (targetSectionId && targetElementId) {
+            focusElementPrimaryText(targetSectionId, targetElementId);
+          }
+          return;
+        }
 
         if (action === 'resize-element') {
           hideContextMenu();
@@ -1742,6 +1840,20 @@
           }
         });
 
+        // Double-click on canvas element for instant direct text editing
+        doc.addEventListener('dblclick', (e) => {
+          const elementEl = e.target.closest('.canvas-element');
+          if (!elementEl) return;
+          e.preventDefault();
+          e.stopPropagation();
+
+          const elementId = elementEl.dataset.elementId;
+          const sectionEl = elementEl.closest('.page-section');
+          if (!sectionEl || !elementId) return;
+
+          focusElementPrimaryText(sectionEl.id, elementId);
+        });
+
         // Canvas Element Mousedown Handler: Resize Handles & Dragging
         doc.addEventListener('mousedown', (e) => {
           if (e.button !== 0) return;
@@ -1864,7 +1976,7 @@
             return;
           }
 
-          // 2. Element Dragging
+          // 2. Element Dragging & Selection
           const elementEl = e.target.closest('.canvas-element');
           if (!elementEl) return;
 
@@ -1873,6 +1985,12 @@
           const sectionEl = elementEl.closest('.page-section');
           if (!sectionEl) return;
           const sectionId = sectionEl.id;
+
+          if (e.detail === 2) {
+            e.stopPropagation();
+            focusElementPrimaryText(sectionId, elementId);
+            return;
+          }
 
           doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
           elementEl.classList.add('is-selected');
