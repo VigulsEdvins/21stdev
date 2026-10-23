@@ -160,6 +160,12 @@ function createStackManager(initialConfig = {}) {
     return state.stack;
   }
 
+  function setStack(newStack) {
+    state.stack = Array.isArray(newStack) ? JSON.parse(JSON.stringify(newStack)) : [];
+    notify();
+    return state.stack;
+  }
+
   function setTheme(theme) {
     state.theme = theme;
     notify();
@@ -277,6 +283,7 @@ function createStackManager(initialConfig = {}) {
     duplicateSection,
     reorderStack,
     clearStack,
+    setStack,
     updateSectionSizing,
     addElement,
     updateElement,

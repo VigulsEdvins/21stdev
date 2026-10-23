@@ -593,8 +593,11 @@
     const stackCountBadge = document.getElementById('stackCountBadge');
     const clearStackBtn = document.getElementById('clearStackBtn');
     const loadStarterBtn = document.getElementById('loadStarterBtn');
+    const resetCanvasBtn = document.getElementById('resetCanvasBtn');
     const openDrawerBtn = document.getElementById('openDrawerBtn');
     const emptyBrowseBtn = document.getElementById('emptyBrowseBtn');
+    const undoBtn = document.getElementById('undoBtn');
+    const redoBtn = document.getElementById('redoBtn');
 
     // Drawer Elements
     const componentDrawer = document.getElementById('componentDrawer');
@@ -708,6 +711,186 @@
     // Drawer state
     let activeCategory = 'all';
     let searchQuery = '';
+
+    // =========================================================================
+    // History Stack Engine (Undo / Redo) & Continuous LocalStorage Persistence
+    // =========================================================================
+    const MAX_HISTORY = 50;
+    const STORAGE_KEY = 'web_builder_state_v2';
+    let historyStack = [];
+    let historyIndex = -1;
+    let isApplyingHistory = false;
+    let currentViewport = 'desktop';
+    let autoSaveTimer = null;
+
+    function updateHistoryUI() {
+      const currentUndoBtn = document.getElementById('undoBtn') || undoBtn;
+      const currentRedoBtn = document.getElementById('redoBtn') || redoBtn;
+      if (currentUndoBtn) {
+        currentUndoBtn.disabled = historyIndex <= 0;
+      }
+      if (currentRedoBtn) {
+        currentRedoBtn.disabled = historyIndex >= historyStack.length - 1;
+      }
+    }
+
+    function saveStateToStorage() {
+      if (typeof localStorage === 'undefined') return;
+      try {
+        const currentState = {
+          stack: stackManager.getStack(),
+          theme: stackManager.getState().theme || 'midnight-dark',
+          customColors: { ...(stackManager.getState().customColors || {}) },
+          viewport: currentViewport
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState));
+      } catch (err) {
+        console.warn('Failed to save builder state to localStorage:', err);
+      }
+    }
+
+    function scheduleAutoSave() {
+      if (autoSaveTimer) clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(() => {
+        saveStateToStorage();
+      }, 200);
+    }
+
+    function pushHistorySnapshot() {
+      if (isApplyingHistory) return;
+      const currentSnapshot = {
+        stack: JSON.parse(JSON.stringify(stackManager.getStack())),
+        theme: stackManager.getState().theme || 'midnight-dark',
+        customColors: { ...(stackManager.getState().customColors || {}) },
+        viewport: currentViewport
+      };
+
+      // If current state matches last snapshot, skip duplicate
+      if (historyStack.length > 0 && historyIndex >= 0 && historyIndex < historyStack.length) {
+        const lastSnapshot = historyStack[historyIndex];
+        if (JSON.stringify(lastSnapshot) === JSON.stringify(currentSnapshot)) {
+          return;
+        }
+      }
+
+      // Discards future redo states
+      historyStack = historyStack.slice(0, historyIndex + 1);
+
+      // Appends snapshot, trims to MAX_HISTORY
+      historyStack.push(currentSnapshot);
+      if (historyStack.length > MAX_HISTORY) {
+        historyStack = historyStack.slice(historyStack.length - MAX_HISTORY);
+      }
+      historyIndex = historyStack.length - 1;
+      updateHistoryUI();
+    }
+
+    function applyHistoryState(snapshot) {
+      if (!snapshot) return;
+      isApplyingHistory = true;
+
+      try {
+        // Restore stack
+        if (typeof stackManager.setStack === 'function') {
+          stackManager.setStack(snapshot.stack || []);
+        } else {
+          stackManager.clearStack();
+          (snapshot.stack || []).forEach(sec => {
+            stackManager.insertSection(stackManager.getStack().length, sec);
+          });
+        }
+
+        // Restore theme & custom colors
+        const theme = snapshot.theme || 'midnight-dark';
+        stackManager.setTheme(theme);
+        if (themePresetSelect) {
+          themePresetSelect.value = theme;
+        }
+
+        const customColors = snapshot.customColors || {};
+        stackManager.setCustomColors(customColors);
+
+        if (theme === 'custom') {
+          if (customColorsControls) customColorsControls.style.display = 'inline-flex';
+          if (customThemeToggle) customThemeToggle.classList.add('is-active');
+          if (bgColorInput && customColors.bg) bgColorInput.value = customColors.bg;
+          if (textColorInput && customColors.text) textColorInput.value = customColors.text;
+          if (accentColorInput && customColors.accent) accentColorInput.value = customColors.accent;
+          applyDynamicTheme(customColors);
+        } else {
+          if (customColorsControls) customColorsControls.style.display = 'none';
+          if (customThemeToggle) customThemeToggle.classList.remove('is-active');
+          const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
+          const preset = presets[theme];
+          if (preset) {
+            if (bgColorInput) bgColorInput.value = preset.bg;
+            if (textColorInput) textColorInput.value = preset.text;
+            if (accentColorInput) accentColorInput.value = preset.accent;
+            applyDynamicTheme(preset);
+          }
+        }
+
+        // Restore viewport
+        if (snapshot.viewport) {
+          setViewportMode(snapshot.viewport);
+        }
+
+        // Update UI and preview frame
+        renderStackList();
+        updatePreview();
+      } finally {
+        isApplyingHistory = false;
+      }
+    }
+
+    function undoAction() {
+      if (historyIndex > 0) {
+        historyIndex--;
+        applyHistoryState(historyStack[historyIndex]);
+        saveStateToStorage();
+        updateHistoryUI();
+        showToast('Undo');
+      }
+    }
+
+    function redoAction() {
+      if (historyIndex < historyStack.length - 1) {
+        historyIndex++;
+        applyHistoryState(historyStack[historyIndex]);
+        saveStateToStorage();
+        updateHistoryUI();
+        showToast('Redo');
+      }
+    }
+
+    function handleHistoryKeydown(e) {
+      const tag = (e.target && e.target.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) {
+        return;
+      }
+
+      const isCtrlOrMeta = e.ctrlKey || e.metaKey;
+      if (!isCtrlOrMeta) return;
+
+      const key = (e.key || '').toLowerCase();
+      if (key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        undoAction();
+      } else if (key === 'y' || (key === 'z' && e.shiftKey)) {
+        e.preventDefault();
+        redoAction();
+      }
+    }
+
+    if (undoBtn) {
+      undoBtn.addEventListener('click', undoAction);
+    }
+    if (redoBtn) {
+      redoBtn.addEventListener('click', redoAction);
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('keydown', handleHistoryKeydown);
+    }
 
     // 3. Render Stack List
     function renderStackList() {
@@ -1758,6 +1941,9 @@
         }
         if (!doc) return;
 
+        // Wire history keyboard shortcuts inside preview iframe document
+        doc.addEventListener('keydown', handleHistoryKeydown);
+
         // Auto-select and scroll to pending element (e.g. newly created widget)
         if (pendingSelectedElement) {
           const el = doc.getElementById(pendingSelectedElement.elementId);
@@ -1861,6 +2047,7 @@
           // 1. Live Interactive Resize Handles for Canvas Elements
           const resizeHandleEl = e.target.closest('.el-resize-handle');
           if (resizeHandleEl) {
+            pushHistorySnapshot();
             e.preventDefault();
             e.stopPropagation();
 
@@ -1997,6 +2184,7 @@
           ensureResizeHandles(elementEl);
           openEditToolbar(sectionId, elementId);
 
+          pushHistorySnapshot();
           let isDragging = false;
           const startX = e.clientX;
           const startY = e.clientY;
@@ -2039,7 +2227,7 @@
               stackManager.updateElement(sectionId, elementId, {
                 x: Math.round(currentXPct * 10) / 10,
                 y: Math.round(currentYPct * 10) / 10
-              }, true);
+              }, false);
             }
           }
 
@@ -2056,6 +2244,7 @@
           if (!handleEl) return;
 
           e.preventDefault();
+          pushHistorySnapshot();
           const sectionId = handleEl.dataset.resizeSection;
           const sectionEl = doc.getElementById(sectionId);
           if (!sectionEl) return;
@@ -2743,6 +2932,10 @@
     stackManager.subscribe(() => {
       renderStackList();
       updatePreview();
+      if (!isApplyingHistory) {
+        pushHistorySnapshot();
+        scheduleAutoSave();
+      }
     });
 
     // Clear Stack Action
@@ -2764,6 +2957,8 @@
     ];
 
     function loadStarterTemplate(silent = false) {
+      const prevApplying = isApplyingHistory;
+      isApplyingHistory = true;
       stackManager.clearStack();
       STARTER_SECTIONS.forEach(item => {
         stackManager.addSection(item.slug, {
@@ -2771,6 +2966,9 @@
           category: item.category
         });
       });
+      isApplyingHistory = prevApplying;
+      pushHistorySnapshot();
+      saveStateToStorage();
       if (!silent) {
         showToast('Loaded starter website template');
       }
@@ -2779,6 +2977,17 @@
     if (loadStarterBtn) {
       loadStarterBtn.addEventListener('click', () => {
         loadStarterTemplate();
+      });
+    }
+
+    if (resetCanvasBtn) {
+      resetCanvasBtn.addEventListener('click', () => {
+        const confirmed = typeof window.confirm === 'function'
+          ? window.confirm('Reset canvas to starter template? Any unsaved changes will be replaced.')
+          : true;
+        if (confirmed) {
+          loadStarterTemplate(false);
+        }
       });
     }
 
@@ -3046,6 +3255,7 @@
 
     // 6. Viewport Controls
     function setViewportMode(mode) {
+      currentViewport = mode;
       stackManager.setViewport(mode);
       if (viewportStage) {
         viewportStage.setAttribute('data-active-viewport', mode);
@@ -3655,6 +3865,48 @@
       downloadZipBtn.addEventListener('click', handleDownloadZip);
     }
 
+    // Check localStorage for saved builder state
+    let hasLoadedSavedState = false;
+    if (typeof localStorage !== 'undefined') {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && Array.isArray(parsed.stack) && parsed.stack.length > 0) {
+            const prevApplying = isApplyingHistory;
+            isApplyingHistory = true;
+            if (typeof stackManager.setStack === 'function') {
+              stackManager.setStack(parsed.stack);
+            } else {
+              stackManager.clearStack();
+              parsed.stack.forEach(sec => stackManager.insertSection(stackManager.getStack().length, sec));
+            }
+            if (parsed.theme) {
+              stackManager.setTheme(parsed.theme);
+            }
+            if (parsed.customColors) {
+              stackManager.setCustomColors(parsed.customColors);
+            }
+            if (parsed.viewport) {
+              setViewportMode(parsed.viewport);
+            }
+            isApplyingHistory = prevApplying;
+            hasLoadedSavedState = true;
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to parse saved builder state from localStorage:', err);
+        isApplyingHistory = false;
+      }
+    }
+
+    // Auto-seed starter website template on empty initial stack
+    if (!hasLoadedSavedState) {
+      if (!stackManager.getStack() || stackManager.getStack().length === 0) {
+        loadStarterTemplate(true);
+      }
+    }
+
     // Initial sync
     const initialState = stackManager.getState();
     setViewportMode(initialState.viewport || 'desktop');
@@ -3670,10 +3922,10 @@
       if (accentColorInput && currentTheme.accent) accentColorInput.value = currentTheme.accent;
     }
 
-    // Auto-seed starter website template on empty initial stack
-    if (!initialState.stack || initialState.stack.length === 0) {
-      loadStarterTemplate(true);
-    }
+    // Initialize history stack with baseline snapshot
+    historyStack = [];
+    historyIndex = -1;
+    pushHistorySnapshot();
 
     renderStackList();
     renderElementsCatalog();
@@ -3699,12 +3951,24 @@
       renderElementsCatalog,
       getNormalizedCategory,
       matchesCategory,
-      WIDGET_CATALOG_ITEMS
+      WIDGET_CATALOG_ITEMS,
+      // Task 5: History Stack Engine & Persistence
+      MAX_HISTORY,
+      STORAGE_KEY,
+      pushHistorySnapshot,
+      applyHistoryState,
+      undoAction,
+      redoAction,
+      updateHistoryUI,
+      saveStateToStorage,
+      getHistoryStack: () => [...historyStack],
+      getHistoryIndex: () => historyIndex
     };
 
     if (typeof window !== 'undefined') {
       window.builderPreview = controller;
       window.builderExport = controller;
+      window.builderHistory = controller;
       window.WIDGET_CATALOG_ITEMS = WIDGET_CATALOG_ITEMS;
     }
 

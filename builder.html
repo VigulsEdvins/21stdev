@@ -132,6 +132,22 @@
 
     <!-- Header Action Buttons -->
     <div class="header-right builder-actions">
+      <button type="button" class="builder-btn-subtle history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 7v6h6"></path>
+          <path d="M3 13a9 9 0 1 1 2.83 6.36L3 13"></path>
+        </svg>
+        <span>Undo</span>
+      </button>
+
+      <button type="button" class="builder-btn-subtle history-btn" id="redoBtn" title="Redo (Ctrl+Y or Ctrl+Shift+Z)" disabled>
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 7v6h-6"></path>
+          <path d="M21 13a9 9 0 1 0-2.83 6.36L21 13"></path>
+        </svg>
+        <span>Redo</span>
+      </button>
+
       <button type="button" class="builder-btn-subtle" id="openInTabBtn" title="Open live assembled preview in a standalone tab">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -304,6 +320,13 @@
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                 </svg>
                 <span>Starter</span>
+              </button>
+              <button type="button" class="reset-canvas-btn" id="resetCanvasBtn" title="Reset to Starter" aria-label="Reset to Starter">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                  <path d="M3 3v5h5"></path>
+                </svg>
+                <span>Reset</span>
               </button>
               <button type="button" class="icon-action-btn" id="clearStackBtn" title="Clear all sections from page stack" aria-label="Clear all sections">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
