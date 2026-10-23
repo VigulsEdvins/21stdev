@@ -4,6 +4,10 @@
  */
 
 /* Layout Foundation */
+:root {
+  color-scheme: dark;
+}
+
 .builder-body {
   margin: 0;
   padding: 0;
@@ -82,8 +86,8 @@
 }
 
 .builder-select {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-main, #fafafa);
+  background: #18181b;
+  color: #fafafa;
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
   border-radius: 6px;
   font-size: 12px;
@@ -92,12 +96,20 @@
   cursor: pointer;
   outline: none;
   transition: all 0.15s ease;
+  color-scheme: dark;
 }
 
 .builder-select:hover,
 .builder-select:focus {
   border-color: var(--accent-primary, #a855f7);
-  background: rgba(255, 255, 255, 0.08);
+  background: #27272a;
+}
+
+.builder-select option,
+select option {
+  background-color: #18181b;
+  color: #fafafa;
+  padding: 6px 10px;
 }
 
 .custom-theme-toggle-btn {
