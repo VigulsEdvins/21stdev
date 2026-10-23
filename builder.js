@@ -1362,6 +1362,7 @@
           const sectionEl = doc.getElementById(sectionId);
           if (!sectionEl) return;
 
+          handleEl.classList.add('is-resizing');
           const startY = e.clientY;
           const initialHeight = sectionEl.getBoundingClientRect().height;
           let newHeight = initialHeight;
@@ -1385,7 +1386,7 @@
             const frameRect = previewFrame.getBoundingClientRect();
             const mouseY = (moveEvent.view === window) ? (moveEvent.clientY - frameRect.top) : moveEvent.clientY;
             const deltaY = mouseY - startY;
-            newHeight = Math.max(120, Math.min(2600, Math.round(initialHeight + deltaY)));
+            newHeight = Math.max(48, Math.min(2600, Math.round(initialHeight + deltaY)));
             sectionEl.style.height = `${newHeight}px`;
             sectionEl.style.minHeight = `${newHeight}px`;
             sectionEl.style.overflow = 'hidden';
@@ -1405,6 +1406,7 @@
           }
 
           function onResizeUp() {
+            handleEl.classList.remove('is-resizing');
             doc.removeEventListener('mousemove', onResizeMove);
             doc.removeEventListener('mouseup', onResizeUp);
             window.removeEventListener('mousemove', onResizeMove);

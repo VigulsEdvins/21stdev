@@ -93,14 +93,25 @@ function scopeSectionStyles(css, sectionId) {
   // 3. Rewrite #root to #root-${sectionId}
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])#root(?![a-zA-Z0-9_-])/g, `#root-${sectionId}`);
 
-  // 4. Replace viewport locking 100vh on height with flexible section height
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1; min-height: 100%$1; height: 100%$1');
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*100vh(\s*!important)?/gi, 'min-height: 100%$1');
+  // 4. Replace viewport locking 100vh on height with responsive section height that never collapses
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(520px, 80vh, 900px)$1; height: 100%$1');
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*100vh(\s*!important)?/gi, 'min-height: clamp(520px, 80vh, 900px)$1');
 
-  // 5. Universal color normalizer: replace hardcoded dark/black backgrounds with var(--preview-bg)
+  // 5. Clean up viewport-locking rules on .page-section container inherited from html, body
+  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)overflow\\s*:\\s*hidden\\b`, 'gi'), '$1overflow: visible');
+  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*100%(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
+  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*100vh(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
+
+  // 6. Universal color normalizer: replace hardcoded dark/black backgrounds with var(--preview-bg)
   scoped = scoped.replace(
     /(background(?:-color)?\s*:\s*)(?:#000000|#000|#09090b|#0a0a0c|#0b0f19|#121218|#18181b|#111111|#111)\b/gi,
     '$1var(--preview-bg)'
+  );
+
+  // Replace hardcoded dark text colors in light-designed components with var(--preview-text)
+  scoped = scoped.replace(
+    /(?<![a-zA-Z0-9_-])color\s*:\s*(?:#141413|#18181b|#111111|#111|#000000|#000|#222222|#222)\b/gi,
+    'color: var(--preview-text)'
   );
 
   // Replace hardcoded light text colors on section container with var(--preview-text)
@@ -793,17 +804,19 @@ const OVERLAY_ELEMENT_CSS = `
       background: rgba(255, 255, 255, 0.35);
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
       transition: all 0.15s ease;
-      opacity: 0.45;
+      opacity: 0;
     }
     .page-section:hover .section-resize-handle::after,
-    .section-resize-handle:hover::after {
+    .section-resize-handle:hover::after,
+    .section-resize-handle.is-resizing::after {
       opacity: 1;
       background: var(--preview-accent, #a855f7);
       width: 72px;
       height: 6px;
       box-shadow: 0 0 14px var(--preview-accent, #a855f7);
     }
-    .section-resize-handle:hover {
+    .section-resize-handle:hover,
+    .section-resize-handle.is-resizing {
       background: rgba(168, 85, 247, 0.15);
     }
 `;
@@ -937,7 +950,6 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
     .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
       flex: 1 1 auto;
       width: 100%;
-      min-height: 100%;
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
@@ -945,9 +957,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
 
     .page-section > div[id^="root-"] > *,
     .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
-      flex: 1 1 auto;
       width: 100%;
-      min-height: 100%;
       box-sizing: border-box;
     }
 
