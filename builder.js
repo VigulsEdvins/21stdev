@@ -708,6 +708,7 @@
     let activeCanvasContext = null; // { sectionId, xPct, yPct }
     let selectedElementState = null; // { sectionId, elementId, type }
     let pendingSelectedElement = null; // { sectionId, elementId }
+    let pendingSelectedSection = null; // sectionId
 
     function hideContextMenu() {
       if (canvasContextMenu) {
@@ -1198,15 +1199,25 @@
         }
         if (!doc) return;
 
-        // Auto-select pending element (e.g. newly created)
+        // Auto-select and scroll to pending element (e.g. newly created widget)
         if (pendingSelectedElement) {
           const el = doc.getElementById(pendingSelectedElement.elementId);
           if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             doc.querySelectorAll('.canvas-element.is-selected').forEach(e => e.classList.remove('is-selected'));
             el.classList.add('is-selected');
             openEditToolbar(pendingSelectedElement.sectionId, pendingSelectedElement.elementId);
           }
           pendingSelectedElement = null;
+        } else if (pendingSelectedSection) {
+          const sec = doc.getElementById(pendingSelectedSection);
+          if (sec) {
+            sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            sec.style.transition = 'box-shadow 0.4s ease';
+            sec.style.boxShadow = '0 0 0 3px #a855f7, 0 0 24px rgba(168, 85, 247, 0.5)';
+            setTimeout(() => { sec.style.boxShadow = ''; }, 2000);
+          }
+          pendingSelectedSection = null;
         } else if (selectedElementState) {
           const el = doc.getElementById(selectedElementState.elementId);
           if (el) {
@@ -1484,7 +1495,7 @@
         desc: 'Cyberpunk animated neon glow button with glowing aura',
         category: 'Buttons & UI',
         tags: ['button', 'neon', 'glow', 'cyberpunk', 'cta'],
-        previewHtml: '<button class="btn-style-neon mini-preview-btn" style="margin:0;pointer-events:none;"><span>Launch Terminal ⚡</span></button>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-neon"><span>Launch Terminal ⚡</span></div></div>',
         elData: { type: 'button', text: 'Launch Terminal ⚡', style: 'neon', link: '#' }
       },
       {
@@ -1496,7 +1507,7 @@
         desc: 'Backdrop blur with glass reflection and sleek border',
         category: 'Buttons & UI',
         tags: ['button', 'glass', 'frosted', 'minimal', 'blur'],
-        previewHtml: '<button class="btn-style-glass mini-preview-btn" style="margin:0;pointer-events:none;"><span>Glass Action 💎</span></button>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-glass"><span>Glass Action 💎</span></div></div>',
         elData: { type: 'button', text: 'Explore Platform →', style: 'glass', link: '#' }
       },
       {
@@ -1508,7 +1519,7 @@
         desc: 'Animated gradient light sheen across vibrant background',
         category: 'Buttons & UI',
         tags: ['button', 'shine', 'gradient', 'animated', 'cta'],
-        previewHtml: '<button class="btn-style-shine mini-preview-btn" style="margin:0;pointer-events:none;"><span>Upgrade to Pro ✨</span></button>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-shine"><span class="mini-shine-sweep"></span><span>Upgrade to Pro ✨</span></div></div>',
         elData: { type: 'button', text: 'Upgrade to Pro ✨', style: 'shine', link: '#' }
       },
       {
@@ -1520,7 +1531,7 @@
         desc: 'High-contrast solid primary CTA with rounded pill shape',
         category: 'Buttons & UI',
         tags: ['button', 'pill', 'solid', 'primary', 'cta'],
-        previewHtml: '<button class="btn-style-solid mini-preview-btn" style="margin:0;pointer-events:none;"><span>Get Started 🟣</span></button>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-solid"><span>Get Started 🟣</span></div></div>',
         elData: { type: 'button', text: 'Get Started', style: 'solid', link: '#' }
       },
       {
@@ -1532,7 +1543,7 @@
         desc: 'Clean subtle border with smooth hover background fill',
         category: 'Buttons & UI',
         tags: ['button', 'outline', 'minimal', 'border', 'cta'],
-        previewHtml: '<button class="btn-style-outline mini-preview-btn" style="margin:0;pointer-events:none;"><span>Documentation ⭕</span></button>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-outline"><span>Documentation ⭕</span></div></div>',
         elData: { type: 'button', text: 'Documentation →', style: 'outline', link: '#' }
       },
       {
@@ -1544,7 +1555,7 @@
         desc: 'Floating card with price, feature checkmarks & CTA',
         category: 'Pricing & Tables',
         tags: ['table', 'pricing', 'card', 'tier', 'saas'],
-        previewHtml: '<div class="element-table-pricing" style="pointer-events:none;transform:scale(0.68);transform-origin:center;margin:0;width:240px;box-shadow:none;"><div class="pricing-card-header"><span class="pricing-plan-badge">Pro Plan</span><div class="pricing-card-price">$29<span class="price-period">/mo</span></div></div></div>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-pricing-card"><div class="mini-pricing-header"><span class="mini-plan-badge">PRO PLAN</span><div class="mini-pricing-val">$29<span class="mini-per">/mo</span></div></div><div class="mini-pricing-features"><div>✓ Unlimited Projects</div><div>✓ Priority Support</div></div></div></div>',
         elData: {
           type: 'table',
           tableType: 'pricing',
@@ -1564,7 +1575,7 @@
         desc: 'Clean feature comparison matrix table with checkmarks',
         category: 'Pricing & Tables',
         tags: ['table', 'comparison', 'matrix', 'features'],
-        previewHtml: '<div class="element-table-comparison" style="pointer-events:none;transform:scale(0.68);transform-origin:center;margin:0;width:250px;box-shadow:none;"><div class="comparison-matrix-title">Feature Comparison</div></div>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-matrix-box"><div class="mini-matrix-row mini-matrix-head"><span>Feature</span><span>Free</span><span>Pro</span></div><div class="mini-matrix-row"><span>Storage</span><span>5 GB</span><span class="mini-hl">500 GB</span></div><div class="mini-matrix-row"><span>Speed</span><span>1x</span><span class="mini-hl">10x</span></div></div></div>',
         elData: {
           type: 'table',
           tableType: 'comparison',
@@ -1585,7 +1596,7 @@
         desc: 'Glassmorphic card with badge, title, desc & link',
         category: 'Cards & Tiles',
         tags: ['card', 'feature', 'glass', 'bento', 'badge'],
-        previewHtml: '<div class="element-card-feature" style="pointer-events:none;transform:scale(0.72);transform-origin:center;margin:0;width:230px;box-shadow:none;"><span class="feature-card-badge">HOT</span><div class="feature-card-title">Real-time Analytics</div></div>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-feature-card"><div class="mini-card-head"><span class="mini-feature-badge">HOT</span><span class="mini-card-title">Real-time Analytics</span></div><p class="mini-card-desc">Telemetry with sub-millisecond precision.</p></div></div>',
         elData: {
           type: 'card',
           cardType: 'feature',
@@ -1605,7 +1616,7 @@
         desc: 'Quote card with author avatar, rating stars & company',
         category: 'Cards & Tiles',
         tags: ['card', 'testimonial', 'review', 'quote', 'stars'],
-        previewHtml: '<div class="element-card-testimonial" style="pointer-events:none;transform:scale(0.72);transform-origin:center;margin:0;width:240px;box-shadow:none;"><div class="testimonial-stars">★★★★★</div><div class="testimonial-author-name">Sarah Jenkins</div></div>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-testimonial-card"><div class="mini-stars">★★★★★</div><p class="mini-quote">"Boosted conversions by 48% within hours."</p><div class="mini-author">— Sarah J., VP Product</div></div></div>',
         elData: {
           type: 'card',
           cardType: 'testimonial',
@@ -1625,7 +1636,7 @@
         desc: 'Live pulsing neon indicator dot with status text pill',
         category: 'Cards & Tiles',
         tags: ['badge', 'pulse', 'status', 'tag', 'live'],
-        previewHtml: '<div class="badge-style-pulse" style="pointer-events:none;margin:0;"><span class="pulse-dot"></span><span>v2.0 LIVE</span></div>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-badge-pulse"><span class="mini-pulse-dot"></span><span>v2.0 LIVE</span></div></div>',
         elData: {
           type: 'badge',
           text: 'v2.0 LIVE',
@@ -1641,7 +1652,7 @@
         desc: 'Glassmorphic badge for stats, versions & highlights',
         category: 'Cards & Tiles',
         tags: ['badge', 'pill', 'metric', 'tag', 'glass'],
-        previewHtml: '<div class="badge-style-pill" style="pointer-events:none;margin:0;">+99.8% Faster</div>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-badge-pill"><span>+99.8% Faster</span></div></div>',
         elData: {
           type: 'badge',
           text: '+99.8% Faster',
@@ -1657,7 +1668,7 @@
         desc: 'Free-floating framed media with subtle rounded shadow',
         category: 'Cards & Tiles',
         tags: ['image', 'photo', 'media', 'custom', 'floating'],
-        previewHtml: '<div class="element-custom-image is-medium" style="pointer-events:none;margin:0;"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" style="width:110px;height:65px;object-fit:cover;border-radius:6px;display:block;" /></div>',
+        previewHtml: '<div class="mini-widget-preview-box"><div class="mini-image-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Thumbnail" /></div></div>',
         elData: {
           type: 'image',
           imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80',
@@ -1685,6 +1696,9 @@
                 iframe.addEventListener('load', () => {
                   if (placeholder) placeholder.style.display = 'none';
                 });
+                iframe.addEventListener('error', () => {
+                  if (placeholder) placeholder.innerHTML = `<span style="font-size:10px;color:#a1a1aa;">Preview unavailable</span>`;
+                });
                 box.appendChild(iframe);
               }
             } else if (iframe) {
@@ -1693,7 +1707,7 @@
               if (placeholder) placeholder.style.display = '';
             }
           });
-        }, { rootMargin: '250px 0px' })
+        }, { root: document.getElementById('elementsCatalogScroll') || null, rootMargin: '350px 0px' })
       : null;
 
     // -------------------------------------------------------------
@@ -1863,6 +1877,7 @@
               category: normCat
             });
             setActiveSection(newSec.id);
+            pendingSelectedSection = newSec.id;
             showToast(`Added section "${title}" to page stack`);
           }
 
