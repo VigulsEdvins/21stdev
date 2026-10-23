@@ -891,6 +891,117 @@
   display: block;
 }
 
+/* Mini File Card */
+.mini-file-card {
+  width: 210px;
+  background: rgba(22, 22, 30, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mini-file-badge {
+  font-size: 8px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.mini-file-badge-pdf {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+.mini-file-badge-code {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+}
+.mini-file-badge-doc {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.35);
+}
+.mini-file-badge-media {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+.mini-file-badge-zip {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+.mini-file-info {
+  flex: 1;
+  min-width: 0;
+}
+.mini-file-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fafafa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mini-file-size {
+  font-size: 9px;
+  color: #a1a1aa;
+}
+
+/* Mini Folder Card */
+.mini-folder-card {
+  width: 210px;
+  background: rgba(22, 22, 30, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.mini-folder-tab {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 1px 6px;
+  border-radius: 0 0 4px 4px;
+  font-size: 7px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  z-index: 2;
+}
+.mini-folder-header {
+  height: 28px;
+  width: 100%;
+}
+.mini-folder-aurora .mini-folder-header {
+  background: linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899);
+}
+.mini-folder-dusk .mini-folder-header {
+  background: linear-gradient(135deg, #1e1b4b, #3b82f6, #6366f1);
+}
+.mini-folder-ember .mini-folder-header {
+  background: linear-gradient(135deg, #18181b, #f97316, #ef4444);
+}
+.mini-folder-body {
+  padding: 6px 10px;
+}
+.mini-folder-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fafafa;
+}
+.mini-folder-meta {
+  font-size: 9px;
+  color: #a1a1aa;
+}
+
 /* Compact mode hides previews */
 .elements-cards-grid.is-compact .element-card-preview-box,
 .elements-cards-grid.is-compact .element-widget-preview {

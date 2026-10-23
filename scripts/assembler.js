@@ -356,6 +356,63 @@ function renderSectionOverlayHtml(elements) {
       </div>`;
     }
 
+    if (el.type === 'file-card' || el.cardType === 'file') {
+      const fileType = el.fileType || 'pdf';
+      const fileName = el.fileName || el.name || el.title || 'Document.pdf';
+      const fileSize = el.fileSize || el.size || el.meta || '240 KB';
+      const badge = el.badge || fileType.toUpperCase();
+      let iconSvg = '';
+      if (fileType === 'pdf') {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>';
+      } else if (fileType === 'code') {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>';
+      } else if (fileType === 'doc') {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>';
+      } else if (fileType === 'media' || fileType === 'img') {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>';
+      } else {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8"></path><path d="M1 3h22v5H1z"></path><path d="M10 12h4"></path></svg>';
+      }
+
+      return `      <div class="canvas-element element-card element-card-file file-type-${escapeHtml(fileType)}" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <div class="file-card-content">
+          <div class="file-card-icon-wrap">
+            ${iconSvg}
+          </div>
+          <div class="file-card-meta">
+            <div class="file-card-name" title="${escapeHtml(fileName)}">${escapeHtml(fileName)}</div>
+            <div class="file-card-sub">
+              <span class="file-card-size">${escapeHtml(fileSize)}</span>
+            </div>
+          </div>
+          <span class="file-badge file-badge-${escapeHtml(fileType)}">${escapeHtml(badge)}</span>
+        </div>
+      </div>`;
+    }
+
+    if (el.type === 'folder-card' || el.cardType === 'folder') {
+      const art = el.art || 'aurora';
+      const label = el.label || el.title || 'Project Folder';
+      const badge = el.badge || art.toUpperCase();
+      const itemCount = el.itemCount || el.meta || '12 items';
+
+      return `      <div class="canvas-element element-card element-card-folder folder-art-${escapeHtml(art)}" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <div class="folder-glass-tab">
+          <span class="folder-tab-badge">${escapeHtml(badge)}</span>
+        </div>
+        <div class="folder-art-header folder-art-${escapeHtml(art)}">
+          <div class="folder-art-glow"></div>
+        </div>
+        <div class="folder-body">
+          <div class="folder-label">${escapeHtml(label)}</div>
+          <div class="folder-meta-row">
+            <span class="folder-item-count">${escapeHtml(itemCount)}</span>
+            <span class="folder-arrow">→</span>
+          </div>
+        </div>
+      </div>`;
+    }
+
     if (el.type === 'card') {
       const cardType = el.cardType || 'feature';
       const title = el.title || 'Real-time Analytics';
@@ -719,6 +776,187 @@ const OVERLAY_ELEMENT_CSS = `
     .element-card-testimonial .testimonial-role {
       font-size: 11px;
       opacity: 0.65;
+    }
+
+    /* File Card Widget */
+    .element-card-file {
+      min-width: 260px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: var(--preview-card-bg, rgba(20, 20, 26, 0.85));
+      border: 1px solid var(--preview-border, rgba(255, 255, 255, 0.12));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      color: var(--preview-text, #fafafa);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .element-card-file:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+    .file-card-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .file-card-icon-wrap {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+      color: var(--preview-accent, #6366f1);
+    }
+    .file-card-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .file-card-name {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--preview-text, #fafafa);
+    }
+    .file-card-sub {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #a1a1aa;
+      margin-top: 2px;
+    }
+    .file-card-size {
+      font-weight: 500;
+    }
+    .file-badge {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .file-badge-pdf {
+      background: rgba(239, 68, 68, 0.18);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .file-badge-code {
+      background: rgba(59, 130, 246, 0.18);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+    .file-badge-doc {
+      background: rgba(99, 102, 241, 0.18);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+    }
+    .file-badge-media {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .file-badge-zip {
+      background: rgba(245, 158, 11, 0.18);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    /* Glass Folder Card Widget */
+    .element-card-folder {
+      position: relative;
+      min-width: 240px;
+      padding: 0;
+      border-radius: 16px;
+      background: var(--preview-card-bg, rgba(20, 20, 26, 0.85));
+      border: 1px solid var(--preview-border, rgba(255, 255, 255, 0.14));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+      color: var(--preview-text, #fafafa);
+      overflow: visible;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .element-card-folder:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.5);
+    }
+    .folder-glass-tab {
+      position: absolute;
+      top: -14px;
+      left: 16px;
+      padding: 3px 12px;
+      border-radius: 8px 8px 0 0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-bottom: none;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #fafafa;
+      z-index: 2;
+    }
+    .folder-tab-badge {
+      display: inline-block;
+      text-transform: uppercase;
+    }
+    .folder-art-header {
+      height: 90px;
+      border-radius: 15px 15px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .folder-art-aurora {
+      background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #ec4899 100%);
+    }
+    .folder-art-dusk {
+      background: linear-gradient(135deg, #1e1b4b 0%, #3b82f6 50%, #6366f1 100%);
+    }
+    .folder-art-ember {
+      background: linear-gradient(135deg, #18181b 0%, #f97316 60%, #ef4444 100%);
+    }
+    .folder-art-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.25), transparent 70%);
+      mix-blend-mode: overlay;
+    }
+    .folder-body {
+      padding: 14px 18px 16px 18px;
+    }
+    .folder-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--preview-text, #fafafa);
+      margin-bottom: 4px;
+    }
+    .folder-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #a1a1aa;
+    }
+    .folder-item-count {
+      font-weight: 500;
+    }
+    .folder-arrow {
+      color: var(--preview-accent, #6366f1);
+      font-weight: 700;
+      transition: transform 0.2s ease;
+    }
+    .element-card-folder:hover .folder-arrow {
+      transform: translateX(3px);
     }
 
     /* Image Sizes */
@@ -1409,6 +1647,8 @@ if (typeof module !== 'undefined' && module.exports) {
     isolateSectionMarkup,
     isolateSectionScript,
     extractHeadLinks,
+    renderSectionOverlayHtml,
+    OVERLAY_ELEMENT_CSS,
     assemblePreviewDocument,
     generateExportBundle,
     generateSingleFileBundle,
@@ -1424,6 +1664,8 @@ if (typeof window !== 'undefined') {
     isolateSectionMarkup,
     isolateSectionScript,
     extractHeadLinks,
+    renderSectionOverlayHtml,
+    OVERLAY_ELEMENT_CSS,
     assemblePreviewDocument,
     generateExportBundle,
     generateSingleFileBundle,
