@@ -1263,15 +1263,39 @@
       activeCanvasContext = null;
     }
 
-    function hideEditToolbar() {
+    function closeToolbarPopup() {
       if (elementEditToolbar) {
         elementEditToolbar.style.display = 'none';
       }
+    }
+
+    function clearElementSelection() {
+      closeToolbarPopup();
       selectedElementState = null;
       try {
         const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
         if (doc) {
           doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
+        }
+      } catch (_) {}
+    }
+
+    function hideEditToolbar() {
+      clearElementSelection();
+    }
+
+    function selectCanvasElement(sectionId, elementId, showHandles = true) {
+      try {
+        const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
+        if (!doc) return;
+        doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
+        const el = doc.getElementById(elementId);
+        if (el) {
+          el.classList.add('is-selected');
+          if (showHandles) ensureResizeHandles(el);
+          const elements = stackManager.getSectionElements(sectionId);
+          const elData = elements.find(e => e.id === elementId);
+          selectedElementState = { sectionId, elementId, type: elData ? elData.type : 'button' };
         }
       } catch (_) {}
     }
@@ -1283,14 +1307,18 @@
         if (!doc) return;
         const el = doc.getElementById(selectedElementState.elementId);
         if (!el) {
-          hideEditToolbar();
+          closeToolbarPopup();
           return;
         }
         const elRect = el.getBoundingClientRect();
         const frameRect = previewFrame.getBoundingClientRect();
 
         const left = frameRect.left + elRect.left + (elRect.width / 2) - 140;
-        const top = frameRect.top + elRect.top - 200;
+        let top = frameRect.top + elRect.top - 240;
+
+        if (top < 70) {
+          top = frameRect.top + elRect.bottom + 20;
+        }
 
         const clampedLeft = Math.max(10, Math.min(window.innerWidth - 300, left));
         const clampedTop = Math.max(70, Math.min(window.innerHeight - 260, top));
@@ -1316,7 +1344,7 @@
       const elData = elements.find(e => e.id === elementId);
       if (!elData) return;
 
-      selectedElementState = { sectionId, elementId, type: elData.type };
+      selectCanvasElement(sectionId, elementId, true);
       if (toolbarTypeBadge) {
         toolbarTypeBadge.textContent = elData.type.toUpperCase();
       }
@@ -1949,10 +1977,8 @@
           const el = doc.getElementById(pendingSelectedElement.elementId);
           if (el) {
             el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            doc.querySelectorAll('.canvas-element.is-selected').forEach(e => e.classList.remove('is-selected'));
-            el.classList.add('is-selected');
-            ensureResizeHandles(el);
-            openEditToolbar(pendingSelectedElement.sectionId, pendingSelectedElement.elementId);
+            selectCanvasElement(pendingSelectedElement.sectionId, pendingSelectedElement.elementId);
+            closeToolbarPopup();
           }
           pendingSelectedElement = null;
         } else if (pendingSelectedSection) {
@@ -1969,9 +1995,11 @@
           if (el) {
             el.classList.add('is-selected');
             ensureResizeHandles(el);
-            updateToolbarPosition();
+            if (elementEditToolbar && elementEditToolbar.style.display !== 'none') {
+              updateToolbarPosition();
+            }
           } else {
-            hideEditToolbar();
+            clearElementSelection();
           }
         }
 
@@ -1985,13 +2013,8 @@
           e.preventDefault();
           const targetEl = e.target.closest('.canvas-element');
           if (targetEl) {
-            doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
-            targetEl.classList.add('is-selected');
-            ensureResizeHandles(targetEl);
             const elId = targetEl.dataset.elementId;
-            const elements = stackManager.getSectionElements(sectionEl.id);
-            const elData = elements.find(el => el.id === elId);
-            selectedElementState = { sectionId: sectionEl.id, elementId: elId, type: elData ? elData.type : 'button' };
+            selectCanvasElement(sectionEl.id, elId);
           }
 
           const secRect = sectionEl.getBoundingClientRect();
@@ -2022,7 +2045,7 @@
           if (elementEl) {
             e.preventDefault();
           } else {
-            hideEditToolbar();
+            clearElementSelection();
           }
         });
 
@@ -2058,10 +2081,8 @@
             if (!sectionEl) return;
             const sectionId = sectionEl.id;
 
-            doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
-            elementEl.classList.add('is-selected');
-            ensureResizeHandles(elementEl);
-            openEditToolbar(sectionId, elementId);
+            selectCanvasElement(sectionId, elementId);
+            closeToolbarPopup();
 
             const handleType = resizeHandleEl.dataset.handle;
             const elRect = elementEl.getBoundingClientRect();
@@ -2138,7 +2159,9 @@
                 y: finalYPct
               }, true);
 
-              updateToolbarPosition();
+              if (elementEditToolbar && elementEditToolbar.style.display !== 'none') {
+                updateToolbarPosition();
+              }
             }
 
             function onResizeUp() {
@@ -2153,7 +2176,9 @@
                 x: finalXPct,
                 y: finalYPct
               }, false);
-              updateToolbarPosition();
+              if (elementEditToolbar && elementEditToolbar.style.display !== 'none') {
+                updateToolbarPosition();
+              }
             }
 
             doc.addEventListener('mousemove', onResizeMove);
@@ -2179,10 +2204,8 @@
             return;
           }
 
-          doc.querySelectorAll('.canvas-element.is-selected').forEach(el => el.classList.remove('is-selected'));
-          elementEl.classList.add('is-selected');
-          ensureResizeHandles(elementEl);
-          openEditToolbar(sectionId, elementId);
+          selectCanvasElement(sectionId, elementId);
+          closeToolbarPopup();
 
           pushHistorySnapshot();
           let isDragging = false;

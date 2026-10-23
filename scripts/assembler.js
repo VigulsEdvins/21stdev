@@ -523,60 +523,65 @@ const OVERLAY_ELEMENT_CSS = `
     .el-resize-handle {
       display: none;
       position: absolute;
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       background: #ffffff;
-      border: 1px solid var(--preview-accent, #6366f1);
-      border-radius: 2px;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
-      z-index: 50;
+      border: 2px solid var(--preview-accent, #a855f7);
+      border-radius: 3px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      z-index: 100;
       box-sizing: border-box;
       pointer-events: auto;
+    }
+    .el-resize-handle::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
     }
     .canvas-element.is-selected .el-resize-handle {
       display: block;
     }
     .el-resize-handle.handle-nw, .el-resize-handle.handle-top-left {
-      top: -4px;
-      left: -4px;
+      top: -5px;
+      left: -5px;
       cursor: nwse-resize;
     }
     .el-resize-handle.handle-ne, .el-resize-handle.handle-top-right {
-      top: -4px;
-      right: -4px;
+      top: -5px;
+      right: -5px;
       cursor: nesw-resize;
     }
     .el-resize-handle.handle-se, .el-resize-handle.handle-bottom-right {
-      bottom: -4px;
-      right: -4px;
+      bottom: -5px;
+      right: -5px;
       cursor: nwse-resize;
     }
     .el-resize-handle.handle-sw, .el-resize-handle.handle-bottom-left {
-      bottom: -4px;
-      left: -4px;
+      bottom: -5px;
+      left: -5px;
       cursor: nesw-resize;
     }
     .el-resize-handle.handle-n, .el-resize-handle.handle-top {
-      top: -4px;
+      top: -5px;
       left: 50%;
       transform: translateX(-50%);
       cursor: ns-resize;
     }
     .el-resize-handle.handle-s, .el-resize-handle.handle-bottom {
-      bottom: -4px;
+      bottom: -5px;
       left: 50%;
       transform: translateX(-50%);
       cursor: ns-resize;
     }
     .el-resize-handle.handle-w, .el-resize-handle.handle-left {
       top: 50%;
-      left: -4px;
+      left: -5px;
       transform: translateY(-50%);
       cursor: ew-resize;
     }
     .el-resize-handle.handle-e, .el-resize-handle.handle-right {
       top: 50%;
-      right: -4px;
+      right: -5px;
       transform: translateY(-50%);
       cursor: ew-resize;
     }
