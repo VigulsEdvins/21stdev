@@ -480,8 +480,14 @@
       try {
         const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
         if (doc && doc.documentElement) {
-          if (theme.bg) doc.documentElement.style.setProperty('--preview-bg', theme.bg);
-          if (theme.text) doc.documentElement.style.setProperty('--preview-text', theme.text);
+          if (theme.bg) {
+            doc.documentElement.style.setProperty('--preview-bg', theme.bg);
+            doc.querySelectorAll('.page-section').forEach(s => s.style.backgroundColor = theme.bg);
+          }
+          if (theme.text) {
+            doc.documentElement.style.setProperty('--preview-text', theme.text);
+            doc.querySelectorAll('.page-section').forEach(s => s.style.color = theme.text);
+          }
           if (theme.accent) doc.documentElement.style.setProperty('--preview-accent', theme.accent);
           if (theme.cardBg) doc.documentElement.style.setProperty('--preview-card-bg', theme.cardBg);
           if (theme.border) doc.documentElement.style.setProperty('--preview-border', theme.border);

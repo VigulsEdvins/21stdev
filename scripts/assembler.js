@@ -96,6 +96,18 @@ function scopeSectionStyles(css, sectionId) {
   // 4. Replace viewport locking 100vh on height with flexible viewport height
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1; min-height: 100vh$1; height: 100vh$1');
 
+  // 5. Universal color normalizer: replace hardcoded dark/black backgrounds with var(--preview-bg)
+  scoped = scoped.replace(
+    /(background(?:-color)?\s*:\s*)(?:#000000|#000|#09090b|#0a0a0c|#0b0f19|#121218|#18181b|#111111|#111)\b/gi,
+    '$1var(--preview-bg)'
+  );
+
+  // Replace hardcoded light text colors on section container with var(--preview-text)
+  scoped = scoped.replace(
+    new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\bcolor\\s*:\\s*)(?:#ffffff|#fff|#fafafa|#f3f4f6|#e4e4e7|#eeeeee|#eee)\\b`, 'gi'),
+    '$1var(--preview-text)'
+  );
+
   return scoped;
 }
 
@@ -529,6 +541,9 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
       position: relative;
       width: 100%;
       clear: both;
+      background-color: var(--preview-bg);
+      color: var(--preview-text);
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
 ${allScopedStyles}
@@ -544,8 +559,14 @@ ${allHtml}
       window.addEventListener('message', function (event) {
         if (event.data && event.data.type === 'UPDATE_THEME' && event.data.theme) {
           var t = event.data.theme;
-          if (t.bg) document.documentElement.style.setProperty('--preview-bg', t.bg);
-          if (t.text) document.documentElement.style.setProperty('--preview-text', t.text);
+          if (t.bg) {
+            document.documentElement.style.setProperty('--preview-bg', t.bg);
+            document.querySelectorAll('.page-section').forEach(function (s) { s.style.backgroundColor = t.bg; });
+          }
+          if (t.text) {
+            document.documentElement.style.setProperty('--preview-text', t.text);
+            document.querySelectorAll('.page-section').forEach(function (s) { s.style.color = t.text; });
+          }
           if (t.accent) document.documentElement.style.setProperty('--preview-accent', t.accent);
           if (t.cardBg) document.documentElement.style.setProperty('--preview-card-bg', t.cardBg);
           if (t.border) document.documentElement.style.setProperty('--preview-border', t.border);
@@ -668,6 +689,9 @@ body {
   position: relative;
   width: 100%;
   clear: both;
+  background-color: var(--preview-bg);
+  color: var(--preview-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ==========================================================================
