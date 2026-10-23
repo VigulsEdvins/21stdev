@@ -12,6 +12,7 @@ execSync('node tests/test-builder-elements.js', execOptions);
 execSync('node tests/test-universal-theming.js', execOptions);
 execSync('node tests/test-section-sizing.js', execOptions);
 execSync('node tests/test-creative-widgets.js', execOptions);
+execSync('node tests/test-elements-catalog.js', execOptions);
 execSync('node tests/test-preview-generation.js', execOptions);
 execSync('node tests/test-export-generation.js', execOptions);
 

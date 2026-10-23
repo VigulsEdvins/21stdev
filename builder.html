@@ -192,150 +192,55 @@
         </button>
       </div>
 
-      <!-- Tab Pane 1: Creative Elements Widget Catalog -->
+      <!-- Tab Pane 1: Creative Elements Component Catalog -->
       <div class="sidebar-tab-pane is-active" id="paneElements">
-        <div class="widgets-catalog-header">
-          <div class="widgets-header-title">Creative Elements</div>
-          <div class="widgets-header-subtitle">Click to add building blocks to active section</div>
+        <div class="elements-catalog-header">
+          <div class="elements-header-top">
+            <div class="elements-header-title">Creative Elements</div>
+            <span class="elements-count-badge" id="elementsTotalCount">209 blocks</span>
+          </div>
+          <div class="elements-header-subtitle">Browse &amp; add real components from the vault</div>
+
+          <!-- Real-time Search Box -->
+          <div class="elements-search-row">
+            <div class="elements-search-box">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input
+                type="text"
+                id="elementsSearchInput"
+                class="elements-search-input"
+                placeholder="Search real components (pricing, hero, nav, tabs)..."
+                autocomplete="off"
+              />
+              <button type="button" class="clear-search-btn" id="clearElementsSearchBtn" aria-label="Clear search" style="display: none;">&times;</button>
+            </div>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="elements-category-scroll" id="elementsCategoryPills" role="group" aria-label="Elements Categories">
+            <button type="button" class="elements-cat-pill is-active" data-category="all">All</button>
+            <button type="button" class="elements-cat-pill" data-category="Heroes">Heroes</button>
+            <button type="button" class="elements-cat-pill" data-category="Headers &amp; Nav">Headers &amp; Nav</button>
+            <button type="button" class="elements-cat-pill" data-category="Pricing &amp; Tables">Pricing &amp; Tables</button>
+            <button type="button" class="elements-cat-pill" data-category="Buttons &amp; UI">Buttons &amp; UI</button>
+            <button type="button" class="elements-cat-pill" data-category="Cards &amp; Tiles">Cards &amp; Tiles</button>
+            <button type="button" class="elements-cat-pill" data-category="Galleries &amp; Bento">Galleries &amp; Bento</button>
+            <button type="button" class="elements-cat-pill" data-category="3D &amp; Carousels">3D &amp; Carousels</button>
+            <button type="button" class="elements-cat-pill" data-category="Footers &amp; Endings">Footers</button>
+            <button type="button" class="elements-cat-pill" data-category="Scroll &amp; Parallax">Scroll &amp; Parallax</button>
+            <button type="button" class="elements-cat-pill" data-category="Audio &amp; Shaders">Audio &amp; Shaders</button>
+            <button type="button" class="elements-cat-pill" data-category="Interactions &amp; Physics">Physics &amp; Cursors</button>
+            <button type="button" class="elements-cat-pill" data-category="Preloaders &amp; Shaders">Preloaders</button>
+            <button type="button" class="elements-cat-pill" data-category="Full Templates">Full Templates</button>
+          </div>
         </div>
 
-        <div class="widgets-catalog-scroll">
-          <!-- Category: Tables & Matrices -->
-          <div class="widget-category-group">
-            <div class="widget-category-title">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                <line x1="3" y1="9" x2="21" y2="9"></line>
-                <line x1="3" y1="15" x2="21" y2="15"></line>
-                <line x1="12" y1="3" x2="12" y2="21"></line>
-              </svg>
-              <span>Tables &amp; Pricing</span>
-            </div>
-            <div class="widget-cards-grid">
-              <div class="widget-card-item" data-widget="table-pricing" role="button" tabindex="0">
-                <div class="widget-card-icon">💰</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Pricing Tier Card</div>
-                  <div class="widget-card-desc">Features, price badge &amp; CTA button</div>
-                </div>
-              </div>
-              <div class="widget-card-item" data-widget="table-comparison" role="button" tabindex="0">
-                <div class="widget-card-icon">📊</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Comparison Matrix</div>
-                  <div class="widget-card-desc">Feature comparison matrix table</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Category: 5 Distinct Modern Buttons -->
-          <div class="widget-category-group">
-            <div class="widget-category-title">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="6" width="18" height="12" rx="3"></rect>
-                <path d="M8 12h8"></path>
-              </svg>
-              <span>Modern Button Styles (5 Styles)</span>
-            </div>
-            <div class="widget-cards-grid">
-              <div class="widget-card-item" data-widget="btn-neon" role="button" tabindex="0">
-                <div class="widget-card-icon">⚡</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Neon Glow Button</div>
-                  <div class="widget-card-desc">Vibrant cyberpunk neon glow</div>
-                </div>
-              </div>
-              <div class="widget-card-item" data-widget="btn-glass" role="button" tabindex="0">
-                <div class="widget-card-icon">💎</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Frosted Glass Button</div>
-                  <div class="widget-card-desc">Backdrop blur with glass reflection</div>
-                </div>
-              </div>
-              <div class="widget-card-item" data-widget="btn-shine" role="button" tabindex="0">
-                <div class="widget-card-icon">✨</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Gradient Shine Button</div>
-                  <div class="widget-card-desc">Animated gradient light sheen</div>
-                </div>
-              </div>
-              <div class="widget-card-item" data-widget="btn-solid" role="button" tabindex="0">
-                <div class="widget-card-icon">🟣</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Pill Accent Button</div>
-                  <div class="widget-card-desc">High-contrast solid primary CTA</div>
-                </div>
-              </div>
-              <div class="widget-card-item" data-widget="btn-outline" role="button" tabindex="0">
-                <div class="widget-card-icon">⭕</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Minimal Outline Button</div>
-                  <div class="widget-card-desc">Clean border with hover fill</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Category: Media & Cards -->
-          <div class="widget-category-group">
-            <div class="widget-category-title">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg>
-              <span>Media &amp; Content Cards</span>
-            </div>
-            <div class="widget-cards-grid">
-              <div class="widget-card-item" data-widget="card-feature" role="button" tabindex="0">
-                <div class="widget-card-icon">🎴</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Feature Card</div>
-                  <div class="widget-card-desc">Title, badge, description &amp; link</div>
-                </div>
-              </div>
-              <div class="widget-card-item" data-widget="card-testimonial" role="button" tabindex="0">
-                <div class="widget-card-icon">💬</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Testimonial Card</div>
-                  <div class="widget-card-desc">Quote, rating stars &amp; author avatar</div>
-                </div>
-              </div>
-              <div class="widget-card-item" data-widget="image-custom" role="button" tabindex="0">
-                <div class="widget-card-icon">🖼️</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Custom Image</div>
-                  <div class="widget-card-desc">Floating image with rounded border</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Category: Badges & Tags -->
-          <div class="widget-category-group">
-            <div class="widget-category-title">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <span>Badges &amp; Tags</span>
-            </div>
-            <div class="widget-cards-grid">
-              <div class="widget-card-item" data-widget="badge-pulse" role="button" tabindex="0">
-                <div class="widget-card-icon">🟢</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Pulse Glow Badge</div>
-                  <div class="widget-card-desc">Animated pulsing indicator dot</div>
-                </div>
-              </div>
-              <div class="widget-card-item" data-widget="badge-pill" role="button" tabindex="0">
-                <div class="widget-card-icon">🏷️</div>
-                <div class="widget-card-info">
-                  <div class="widget-card-name">Metric Pill Tag</div>
-                  <div class="widget-card-desc">Glassmorphic tag for stats &amp; tags</div>
-                </div>
-              </div>
-            </div>
+        <div class="elements-catalog-scroll" id="elementsCatalogScroll">
+          <div class="elements-cards-grid" id="elementsCardsGrid" role="list">
+            <!-- Dynamically populated with all 209 real vault components -->
           </div>
         </div>
       </div>
@@ -545,11 +450,13 @@
             <button type="button" class="drawer-cat-pill is-active" data-category="all">All</button>
             <button type="button" class="drawer-cat-pill" data-category="Headers &amp; Nav">Headers &amp; Nav</button>
             <button type="button" class="drawer-cat-pill" data-category="Heroes">Heroes</button>
+            <button type="button" class="drawer-cat-pill" data-category="Pricing &amp; Tables">Pricing &amp; Tables</button>
+            <button type="button" class="drawer-cat-pill" data-category="Buttons &amp; UI">Buttons &amp; UI</button>
+            <button type="button" class="drawer-cat-pill" data-category="Cards &amp; Tiles">Cards &amp; Tiles</button>
             <button type="button" class="drawer-cat-pill" data-category="Footers">Footers</button>
             <button type="button" class="drawer-cat-pill" data-category="3D &amp; Carousels">3D &amp; Carousels</button>
             <button type="button" class="drawer-cat-pill" data-category="Scroll &amp; Parallax">Scroll &amp; Parallax</button>
             <button type="button" class="drawer-cat-pill" data-category="Galleries &amp; Grids">Galleries &amp; Grids</button>
-            <button type="button" class="drawer-cat-pill" data-category="Buttons &amp; UI">Buttons &amp; UI</button>
           </div>
           <div class="drawer-view-toggle">
             <button type="button" class="view-toggle-btn is-active" id="viewVisualBtn" title="Visual Cards with Live Previews">Visual</button>

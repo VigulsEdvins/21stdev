@@ -56,106 +56,103 @@
     }, duration);
   }
 
-  // Category matching rule: maps registry categories/tags to drawer categories
-  function matchesCategory(feature, targetCategory) {
-    if (!targetCategory || targetCategory === 'all') return true;
-    const cat = (feature.category || '').toLowerCase();
+  // Normalized Category Resolver
+  function getNormalizedCategory(feature) {
+    if (!feature) return 'Component';
+    const cat = (feature.category || '').trim();
     const slug = (feature.slug || '').toLowerCase();
     const title = (feature.title || feature.name || '').toLowerCase();
-    const tags = Array.isArray(feature.tags) ? feature.tags.map(t => String(t).toLowerCase()) : [];
 
-    const isFooter = slug.includes('footer') || title.includes('footer') || cat.includes('footer') || tags.includes('footer');
-    const isPreloader = slug.includes('preloader') || title.includes('preloader') || cat.includes('preloader');
-    const isLanding = slug.includes('landing') || title.includes('landing');
-
-    if (targetCategory === 'Footers') {
-      return isFooter;
+    // 1. Footers & Endings
+    if (slug.includes('footer') || title.includes('footer') || cat.toLowerCase().includes('footer')) {
+      return 'Footers & Endings';
     }
 
-    // Footers and Preloaders must never contaminate other categories
-    if (isFooter) return false;
-
-    if (targetCategory === 'Headers & Nav') {
-      if (isPreloader || isLanding) return false;
-      return (
-        slug.includes('nav') ||
-        slug.includes('menu') ||
-        slug.includes('burger') ||
-        slug.includes('header') ||
-        title.includes('nav') ||
-        title.includes('menu') ||
-        title.includes('burger') ||
-        title.includes('header') ||
-        slug.includes('lang-switcher') ||
-        tags.some(t => ['header', 'nav', 'navbar', 'menu', 'burger'].includes(t))
-      );
+    // 2. Pricing & Tables
+    if (slug.includes('pricing') || title.includes('pricing') || slug.includes('turntable') || title.includes('turntable') || slug.includes('matrix')) {
+      return 'Pricing & Tables';
     }
 
-    if (targetCategory === 'Heroes') {
-      if (isPreloader) return false;
-      return (
-        slug.includes('hero') ||
-        title.includes('hero') ||
-        cat === 'heroes' ||
-        tags.some(t => ['hero', 'banner', 'intro'].includes(t))
-      );
+    // 3. Headers & Nav
+    if (slug.includes('nav') || slug.includes('menu') || slug.includes('burger') || slug.includes('header') || slug.includes('lang-switcher') || cat.toLowerCase().includes('navigation')) {
+      return 'Headers & Nav';
     }
 
-    if (targetCategory === '3D & Carousels') {
-      return (
-        cat.includes('3d') ||
-        cat.includes('carousel') ||
-        slug.includes('3d') ||
-        slug.includes('carousel') ||
-        slug.includes('wheel') ||
-        slug.includes('turntable') ||
-        tags.some(t => ['3d', 'carousel', 'slider', 'threejs', 'canvas', 'webgl'].includes(t))
-      );
+    // 4. Heroes
+    if (slug.includes('hero') || title.includes('hero') || cat.toLowerCase() === 'heroes') {
+      return 'Heroes';
     }
 
-    if (targetCategory === 'Scroll & Parallax') {
-      return (
-        cat.includes('scroll') ||
-        cat.includes('parallax') ||
-        slug.includes('scroll') ||
-        slug.includes('parallax') ||
-        slug.includes('timeline') ||
-        tags.some(t => ['scroll', 'parallax', 'sticky', 'gsap', 'scrolltrigger'].includes(t))
-      );
+    // 5. Buttons & UI
+    if (cat.toLowerCase().includes('button') || slug.includes('btn') || slug.includes('button') || slug.includes('cta') || slug.includes('drawer') || slug.includes('accordion') || slug.includes('tabs')) {
+      return 'Buttons & UI';
     }
 
-    if (targetCategory === 'Galleries & Grids') {
-      return (
-        cat.includes('galleries') ||
-        cat.includes('grids') ||
-        cat.includes('cards & tiles') ||
-        slug.includes('gallery') ||
-        slug.includes('grid') ||
-        slug.includes('bento') ||
-        slug.includes('masonry') ||
-        slug.includes('portfolio') ||
-        tags.some(t => ['gallery', 'grid', 'card', 'cards', 'portfolio', 'masonry', 'bento'].includes(t))
-      );
+    // 6. Cards & Tiles
+    if (cat.toLowerCase().includes('cards') || slug.includes('card') || slug.includes('ticket') || slug.includes('testimonial')) {
+      return 'Cards & Tiles';
     }
 
-    if (targetCategory === 'Buttons & UI') {
-      return (
-        cat.includes('button') ||
-        cat.includes('ui') ||
-        slug.includes('btn') ||
-        slug.includes('button') ||
-        slug.includes('cta') ||
-        slug.includes('tab') ||
-        slug.includes('accordion') ||
-        slug.includes('drawer') ||
-        slug.includes('modal') ||
-        slug.includes('cursor') ||
-        slug.includes('player') ||
-        tags.some(t => ['button', 'buttons', 'ui', 'input', 'modal', 'form', 'toggle', 'switch', 'cursor'].includes(t))
-      );
+    // 7. Galleries & Bento
+    if (cat.toLowerCase().includes('galleries') || cat.toLowerCase().includes('layouts') || slug.includes('bento') || slug.includes('gallery') || slug.includes('marquee') || slug.includes('showcase')) {
+      return 'Galleries & Bento';
     }
 
-    return cat.includes(targetCategory.toLowerCase());
+    // 8. 3D & Carousels
+    if (cat.toLowerCase().includes('3d') || cat.toLowerCase().includes('carousel') || slug.includes('carousel') || slug.includes('3d') || slug.includes('wheel')) {
+      return '3D & Carousels';
+    }
+
+    // 9. Scroll & Parallax
+    if (cat.toLowerCase().includes('scroll') || cat.toLowerCase().includes('parallax') || slug.includes('parallax') || slug.includes('scroll') || slug.includes('timeline')) {
+      return 'Scroll & Parallax';
+    }
+
+    // 10. Preloaders & Shaders
+    if (cat.toLowerCase().includes('preloader') || slug.includes('preloader')) {
+      return 'Preloaders & Shaders';
+    }
+
+    // 11. Audio & Shaders
+    if (cat.toLowerCase().includes('audio') || slug.includes('audio') || slug.includes('sound') || slug.includes('shader')) {
+      return 'Audio & Shaders';
+    }
+
+    // 12. Full Templates
+    if (cat.toLowerCase().includes('full') || slug.includes('template') || slug.includes('landing')) {
+      return 'Full Templates';
+    }
+
+    // 13. Interactions & Physics / Cursors
+    if (cat.toLowerCase().includes('physics') || cat.toLowerCase().includes('cursor') || cat.toLowerCase().includes('form')) {
+      return 'Interactions & Physics';
+    }
+
+    return cat || 'Component';
+  }
+
+  // Category matching rule: maps registry categories/tags to drawer and sidebar categories
+  function matchesCategory(feature, targetCategory) {
+    if (!targetCategory || targetCategory === 'all') return true;
+    const norm = getNormalizedCategory(feature);
+    const targetNorm = targetCategory.toLowerCase().trim();
+    const currentNorm = norm.toLowerCase().trim();
+
+    if (currentNorm === targetNorm) return true;
+    if ((targetNorm === 'footers' || targetNorm === 'footers & endings') && currentNorm.includes('footer')) return true;
+    if ((targetNorm === 'headers & nav' || targetNorm === 'navigation & headers') && currentNorm.includes('nav')) return true;
+    if ((targetNorm === 'pricing & tables' || targetNorm === 'tables & pricing') && (currentNorm.includes('pricing') || currentNorm.includes('table'))) return true;
+    if (targetNorm === 'buttons & ui' && (currentNorm.includes('button') || currentNorm.includes('ui'))) return true;
+    if (targetNorm === 'cards & tiles' && currentNorm.includes('card')) return true;
+    if ((targetNorm === 'galleries & bento' || targetNorm === 'galleries & grids') && (currentNorm.includes('galleries') || currentNorm.includes('grid') || currentNorm.includes('bento'))) return true;
+    if (targetNorm === '3d & carousels' && (currentNorm.includes('3d') || currentNorm.includes('carousel'))) return true;
+    if (targetNorm === 'scroll & parallax' && (currentNorm.includes('scroll') || currentNorm.includes('parallax'))) return true;
+    if (targetNorm === 'audio & shaders' && (currentNorm.includes('audio') || currentNorm.includes('shader'))) return true;
+    if ((targetNorm === 'interactions & physics' || targetNorm === 'physics & cursors') && currentNorm.includes('physics')) return true;
+    if ((targetNorm === 'preloaders & shaders' || targetNorm === 'preloaders') && currentNorm.includes('preloader')) return true;
+    if (targetNorm === 'full templates' && currentNorm.includes('template')) return true;
+
+    return currentNorm.includes(targetNorm);
   }
 
   function initBuilder() {
@@ -296,6 +293,17 @@
     const paneSections = document.getElementById('paneSections');
     const paneStyling = document.getElementById('paneStyling');
     const tabSectionsCount = document.getElementById('tabSectionsCount');
+
+    // Creative Elements Sidebar Catalog Elements
+    const elementsSearchInput = document.getElementById('elementsSearchInput');
+    const clearElementsSearchBtn = document.getElementById('clearElementsSearchBtn');
+    const elementsCategoryPills = document.getElementById('elementsCategoryPills');
+    const elementsCardsGrid = document.getElementById('elementsCardsGrid');
+    const elementsTotalCount = document.getElementById('elementsTotalCount');
+
+    // Elements Sidebar State
+    let elementsCategory = 'all';
+    let elementsSearch = '';
 
     // Styling Tab Elements
     const themePresetCards = document.getElementById('themePresetCards');
@@ -1358,111 +1366,176 @@
     if (tabSectionsBtn) tabSectionsBtn.addEventListener('click', () => switchSidebarTab('sections'));
     if (tabStylingBtn) tabStylingBtn.addEventListener('click', () => switchSidebarTab('styling'));
 
-    // Creative Elements Catalog Widget Click Handling
-    const widgetCatalog = document.querySelector('.widgets-catalog-scroll');
-    if (widgetCatalog) {
-      widgetCatalog.addEventListener('click', (e) => {
-        const item = e.target.closest('.widget-card-item');
-        if (!item) return;
-        const widgetType = item.dataset.widget;
+    // -------------------------------------------------------------
+    // Creative Elements Sidebar: Real 209 Components Catalog Engine
+    // -------------------------------------------------------------
+    function renderElementsCatalog() {
+      if (!elementsCardsGrid) return;
 
-        let currentStack = stackManager.getStack();
-        let targetSection;
-        if (currentStack.length === 0) {
-          // Auto create a starter hero section
-          targetSection = stackManager.addSection('oklch-ambient-glow-hero', {
-            title: 'Hero Section',
-            category: 'Heroes'
+      const q = elementsSearch.toLowerCase().trim();
+      const filtered = registry.filter(feature => {
+        const matchesCat = matchesCategory(feature, elementsCategory);
+        if (!matchesCat) return false;
+        if (!q) return true;
+
+        const slug = (feature.slug || '').toLowerCase();
+        const title = (feature.title || feature.name || '').toLowerCase();
+        const desc = (feature.description || '').toLowerCase();
+        const normCat = getNormalizedCategory(feature).toLowerCase();
+        const tags = Array.isArray(feature.tags) ? feature.tags.map(t => String(t).toLowerCase()) : [];
+
+        return (
+          slug.includes(q) ||
+          title.includes(q) ||
+          desc.includes(q) ||
+          normCat.includes(q) ||
+          tags.some(t => t.includes(q))
+        );
+      });
+
+      if (elementsTotalCount) {
+        elementsTotalCount.textContent = `${filtered.length} blocks`;
+      }
+
+      if (filtered.length === 0) {
+        elementsCardsGrid.innerHTML = `
+          <div style="padding: 36px 14px; text-align: center; color: var(--text-muted, #a1a1aa);">
+            <div style="font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--text-main, #fafafa);">No components found</div>
+            <div style="font-size: 11px; color: var(--text-dim, #71717a);">Try clearing your search query or picking another category</div>
+          </div>
+        `;
+        return;
+      }
+
+      elementsCardsGrid.innerHTML = '';
+      const fragment = document.createDocumentFragment();
+
+      filtered.forEach(feature => {
+        const card = document.createElement('div');
+        card.className = 'element-feature-card';
+        card.setAttribute('role', 'listitem');
+        card.setAttribute('data-slug', feature.slug);
+
+        const title = feature.title || feature.name || feature.slug;
+        const desc = feature.description || 'Production-ready vault component';
+        const normCat = getNormalizedCategory(feature);
+        const tags = Array.isArray(feature.tags) ? feature.tags.slice(0, 3) : [];
+
+        let badgeClass = 'badge-templates';
+        const catLower = normCat.toLowerCase();
+        if (catLower.includes('hero')) badgeClass = 'badge-heroes';
+        else if (catLower.includes('nav') || catLower.includes('header')) badgeClass = 'badge-nav';
+        else if (catLower.includes('pricing') || catLower.includes('table')) badgeClass = 'badge-pricing';
+        else if (catLower.includes('button') || catLower.includes('ui')) badgeClass = 'badge-buttons';
+        else if (catLower.includes('footer')) badgeClass = 'badge-footers';
+        else if (catLower.includes('card')) badgeClass = 'badge-cards';
+        else if (catLower.includes('galleries') || catLower.includes('bento')) badgeClass = 'badge-galleries';
+        else if (catLower.includes('3d') || catLower.includes('carousel')) badgeClass = 'badge-3d';
+        else if (catLower.includes('scroll') || catLower.includes('parallax')) badgeClass = 'badge-scroll';
+        else if (catLower.includes('audio') || catLower.includes('shader')) badgeClass = 'badge-shaders';
+        else if (catLower.includes('physics') || catLower.includes('cursor')) badgeClass = 'badge-physics';
+
+        card.innerHTML = `
+          <div class="element-card-header">
+            <span class="element-card-badge ${badgeClass}">${escapeHtml(normCat)}</span>
+            <button type="button" class="element-add-btn" aria-label="Add ${escapeHtml(title)} to page">
+              <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>+ Add</span>
+            </button>
+          </div>
+          <div class="element-card-title">${escapeHtml(title)}</div>
+          <div class="element-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
+          ${tags.length ? `
+            <div class="element-card-tags">
+              ${tags.map(t => `<span class="element-tag">#${escapeHtml(t)}</span>`).join('')}
+            </div>
+          ` : ''}
+        `;
+
+        const addBtn = card.querySelector('.element-add-btn');
+
+        const triggerAdd = () => {
+          stackManager.addSection(feature.slug, {
+            title: title,
+            category: normCat
           });
-        } else {
-          targetSection = currentStack[currentStack.length - 1];
+
+          if (addBtn) {
+            if (!addBtn.dataset.originalHtml) {
+              addBtn.dataset.originalHtml = addBtn.innerHTML;
+            }
+            if (addBtn._restoreTimer) {
+              clearTimeout(addBtn._restoreTimer);
+            }
+            addBtn.innerHTML = `<span>✓ Added!</span>`;
+            addBtn.style.background = '#10b981';
+            addBtn.style.borderColor = '#10b981';
+            addBtn.style.color = '#ffffff';
+
+            addBtn._restoreTimer = setTimeout(() => {
+              if (addBtn.dataset.originalHtml) {
+                addBtn.innerHTML = addBtn.dataset.originalHtml;
+                delete addBtn.dataset.originalHtml;
+              }
+              addBtn.style.background = '';
+              addBtn.style.borderColor = '';
+              addBtn.style.color = '';
+              addBtn._restoreTimer = null;
+            }, 900);
+          }
+
+          showToast(`Added "${title}" to page`);
+        };
+
+        if (addBtn) {
+          addBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerAdd();
+          });
         }
 
-        let elData = { x: 50, y: 50 };
-        if (widgetType === 'table-pricing') {
-          elData = {
-            type: 'table',
-            tableType: 'pricing',
-            title: 'Pro Plan',
-            price: '$29/mo',
-            features: ['Unlimited Projects', 'Custom Domains', '24/7 Priority Support'],
-            ctaText: 'Get Started',
-            ctaLink: '#pricing',
-            x: 50,
-            y: 50
-          };
-        } else if (widgetType === 'table-comparison') {
-          elData = {
-            type: 'table',
-            tableType: 'comparison',
-            headers: ['Feature', 'Free', 'Pro'],
-            rows: [
-              ['Storage', '5 GB', '500 GB'],
-              ['Bandwidth', '10 GB/mo', 'Unlimited'],
-              ['Support', 'Community', '24/7 Priority']
-            ],
-            x: 50,
-            y: 50
-          };
-        } else if (widgetType === 'card-feature') {
-          elData = {
-            type: 'card',
-            cardType: 'feature',
-            title: 'Real-time Analytics',
-            description: 'Track conversion rates and user telemetry with sub-millisecond precision.',
-            badgeText: 'HOT',
-            ctaText: 'Learn More →',
-            link: '#features',
-            x: 50,
-            y: 50
-          };
-        } else if (widgetType === 'card-testimonial') {
-          elData = {
-            type: 'card',
-            cardType: 'testimonial',
-            author: 'Sarah Jenkins',
-            role: 'VP of Product, Apex Digital',
-            avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80',
-            description: 'This platform transformed our landing page conversion rates within 48 hours.',
-            rating: 5,
-            x: 50,
-            y: 50
-          };
-        } else if (widgetType && widgetType.startsWith('btn-')) {
-          const style = widgetType.replace('btn-', '');
-          elData = {
-            type: 'button',
-            text: style === 'neon' ? 'Launch Terminal ⚡' : (style === 'shine' ? 'Upgrade to Pro ✨' : 'Explore Platform →'),
-            style: style,
-            link: '#',
-            x: 50,
-            y: 50
-          };
-        } else if (widgetType && widgetType.startsWith('badge-')) {
-          const badgeStyle = widgetType.replace('badge-', '');
-          elData = {
-            type: 'badge',
-            text: badgeStyle === 'pulse' ? 'v2.0 LIVE' : '+99.8% Faster',
-            badgeStyle: badgeStyle,
-            x: 50,
-            y: 35
-          };
-        } else if (widgetType === 'image-custom') {
-          elData = {
-            type: 'image',
-            imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80',
-            imageSize: 'medium',
-            x: 50,
-            y: 50
-          };
-        }
+        card.addEventListener('click', () => {
+          triggerAdd();
+        });
 
-        const newEl = stackManager.addElement(targetSection.id, elData);
-        if (newEl) {
-          pendingSelectedElement = { sectionId: targetSection.id, elementId: newEl.id };
-          const name = item.querySelector('.widget-card-name') ? item.querySelector('.widget-card-name').textContent : widgetType;
-          showToast(`Added ${name} to section`);
+        fragment.appendChild(card);
+      });
+
+      elementsCardsGrid.appendChild(fragment);
+    }
+
+    // Elements Sidebar Search & Filters
+    if (elementsSearchInput) {
+      elementsSearchInput.addEventListener('input', () => {
+        elementsSearch = elementsSearchInput.value;
+        if (clearElementsSearchBtn) {
+          clearElementsSearchBtn.style.display = elementsSearch.length ? 'inline-flex' : 'none';
         }
+        renderElementsCatalog();
+      });
+    }
+
+    if (clearElementsSearchBtn) {
+      clearElementsSearchBtn.addEventListener('click', () => {
+        if (elementsSearchInput) elementsSearchInput.value = '';
+        elementsSearch = '';
+        clearElementsSearchBtn.style.display = 'none';
+        renderElementsCatalog();
+      });
+    }
+
+    if (elementsCategoryPills) {
+      const pills = elementsCategoryPills.querySelectorAll('.elements-cat-pill');
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          pills.forEach(p => p.classList.remove('is-active'));
+          pill.classList.add('is-active');
+          elementsCategory = pill.dataset.category || 'all';
+          renderElementsCatalog();
+        });
       });
     }
 
@@ -2434,6 +2507,7 @@
     }
 
     renderStackList();
+    renderElementsCatalog();
     renderDrawerFeatures();
     updatePreview();
 
@@ -2452,7 +2526,10 @@
       prepareExportData,
       handleDownloadZip,
       loadStarterTemplate,
-      STARTER_SECTIONS
+      STARTER_SECTIONS,
+      renderElementsCatalog,
+      getNormalizedCategory,
+      matchesCategory
     };
 
     if (typeof window !== 'undefined') {
