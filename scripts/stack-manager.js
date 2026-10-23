@@ -44,7 +44,7 @@ function createStackManager(initialConfig = {}) {
     return [...state.stack];
   }
 
-  function addSection(slugOrSection, extraProps = {}) {
+  function insertSection(index, slugOrSection, extraProps = {}) {
     const defaultSizing = {
       heightMode: 'auto',
       customHeight: 600,
@@ -68,12 +68,20 @@ function createStackManager(initialConfig = {}) {
         ...extraProps
       };
     } else {
-      throw new Error('Invalid section provided to addSection');
+      throw new Error('Invalid section provided to insertSection');
     }
 
-    state.stack.push(section);
+    const targetIndex = typeof index === 'number'
+      ? Math.max(0, Math.min(state.stack.length, index))
+      : state.stack.length;
+
+    state.stack.splice(targetIndex, 0, section);
     notify();
     return section;
+  }
+
+  function addSection(slugOrSection, extraProps = {}) {
+    return insertSection(state.stack.length, slugOrSection, extraProps);
   }
 
   function updateSectionSizing(sectionId, sizingUpdates = {}) {
@@ -263,6 +271,7 @@ function createStackManager(initialConfig = {}) {
     getState,
     getStack,
     addSection,
+    insertSection,
     removeSection,
     moveSection,
     duplicateSection,
@@ -280,8 +289,14 @@ function createStackManager(initialConfig = {}) {
   };
 }
 
+function insertSection(manager, index, slugOrSection, extraProps) {
+  if (manager && typeof manager.insertSection === 'function') {
+    return manager.insertSection(index, slugOrSection, extraProps);
+  }
+}
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { createStackManager };
+  module.exports = { createStackManager, insertSection };
 }
 
 if (typeof window !== 'undefined') {

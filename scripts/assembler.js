@@ -1142,6 +1142,33 @@ const OVERLAY_ELEMENT_CSS = `
     .section-resize-handle.is-resizing {
       background: rgba(168, 85, 247, 0.15);
     }
+
+    /* Drag and Drop Canvas Indicators */
+    .page-section.is-drop-target {
+      outline: 2px dashed rgba(168, 85, 247, 0.8) !important;
+      outline-offset: -3px;
+      background-color: rgba(168, 85, 247, 0.05) !important;
+      transition: outline 0.15s ease;
+    }
+
+    .section-drop-indicator {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #a855f7;
+      box-shadow: 0 0 12px #a855f7;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .section-drop-indicator.drop-above {
+      top: 0;
+    }
+
+    .section-drop-indicator.drop-below {
+      bottom: 0;
+    }
 `;
 
 /**

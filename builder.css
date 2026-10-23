@@ -1044,11 +1044,45 @@
   overflow: hidden;
 }
 
+.element-feature-card[draggable="true"] {
+  cursor: grab;
+}
+
+.element-feature-card.is-dragging {
+  opacity: 0.5;
+}
+
 .element-feature-card:hover {
   background: rgba(30, 30, 38, 0.95);
   border-color: rgba(168, 85, 247, 0.45);
   transform: translateY(-1.5px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.page-section.is-drop-target {
+  outline: 2px dashed rgba(168, 85, 247, 0.8) !important;
+  outline-offset: -3px;
+  background-color: rgba(168, 85, 247, 0.05) !important;
+  transition: outline 0.15s ease;
+}
+
+.section-drop-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #a855f7;
+  box-shadow: 0 0 12px #a855f7;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.section-drop-indicator.drop-above {
+  top: 0;
+}
+
+.section-drop-indicator.drop-below {
+  bottom: 0;
 }
 
 .element-card-content {

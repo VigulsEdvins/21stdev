@@ -1071,6 +1071,7 @@
     let selectedElementState = null; // { sectionId, elementId, type }
     let pendingSelectedElement = null; // { sectionId, elementId }
     let pendingSelectedSection = null; // sectionId
+    let currentDragPayload = null; // In-memory drag payload for DnD
 
     function hideContextMenu() {
       if (canvasContextMenu) {
@@ -2006,6 +2007,175 @@
           window.addEventListener('mousemove', onResizeMove);
           window.addEventListener('mouseup', onResizeUp);
         });
+
+        // =============================================================
+        // Drag-and-Drop from Sidebar onto Canvas & Positional Section Dropping
+        // =============================================================
+        let dropIndicatorEl = null;
+
+        function cleanupDropIndicators() {
+          doc.querySelectorAll('.page-section.is-drop-target').forEach(sec => sec.classList.remove('is-drop-target'));
+          if (dropIndicatorEl) {
+            dropIndicatorEl.remove();
+            dropIndicatorEl = null;
+          }
+          doc.querySelectorAll('.section-drop-indicator').forEach(el => el.remove());
+        }
+
+        doc.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          if (e.dataTransfer) {
+            e.dataTransfer.dropEffect = 'copy';
+          }
+
+          const targetSection = e.target.closest('.page-section');
+          const isWidget = currentDragPayload ? currentDragPayload.isWidget : false;
+
+          if (isWidget) {
+            if (dropIndicatorEl) {
+              dropIndicatorEl.remove();
+              dropIndicatorEl = null;
+            }
+            doc.querySelectorAll('.page-section.is-drop-target').forEach(sec => {
+              if (sec !== targetSection) sec.classList.remove('is-drop-target');
+            });
+            if (targetSection) {
+              targetSection.classList.add('is-drop-target');
+            }
+          } else {
+            doc.querySelectorAll('.page-section.is-drop-target').forEach(sec => sec.classList.remove('is-drop-target'));
+
+            if (targetSection) {
+              const secRect = targetSection.getBoundingClientRect();
+              const isUpper = (e.clientY - secRect.top) < (secRect.height / 2);
+
+              if (!dropIndicatorEl || dropIndicatorEl.parentElement !== targetSection) {
+                if (dropIndicatorEl) dropIndicatorEl.remove();
+                dropIndicatorEl = doc.createElement('div');
+                dropIndicatorEl.className = 'section-drop-indicator';
+                targetSection.appendChild(dropIndicatorEl);
+              }
+
+              if (isUpper) {
+                dropIndicatorEl.classList.remove('drop-below');
+                dropIndicatorEl.classList.add('drop-above');
+              } else {
+                dropIndicatorEl.classList.remove('drop-above');
+                dropIndicatorEl.classList.add('drop-below');
+              }
+            } else {
+              if (dropIndicatorEl) {
+                dropIndicatorEl.remove();
+                dropIndicatorEl = null;
+              }
+            }
+          }
+        });
+
+        doc.addEventListener('dragleave', (e) => {
+          if (!e.relatedTarget || e.relatedTarget === doc.documentElement || e.relatedTarget === doc.body || !doc.contains(e.relatedTarget)) {
+            cleanupDropIndicators();
+          }
+        });
+
+        doc.addEventListener('drop', (e) => {
+          e.preventDefault();
+
+          let payload = null;
+          try {
+            const rawData = e.dataTransfer && e.dataTransfer.getData('application/json');
+            if (rawData) {
+              payload = JSON.parse(rawData);
+            }
+          } catch (_) {}
+
+          if (!payload && e.dataTransfer) {
+            try {
+              const rawText = e.dataTransfer.getData('text/plain');
+              if (rawText) {
+                payload = JSON.parse(rawText);
+              }
+            } catch (_) {}
+          }
+
+          if (!payload && currentDragPayload) {
+            payload = currentDragPayload;
+          }
+
+          cleanupDropIndicators();
+
+          if (!payload) return;
+
+          const targetSection = e.target.closest('.page-section');
+
+          if (payload.isWidget) {
+            let sec = targetSection;
+            if (!sec) {
+              const active = getActiveSection();
+              if (active) {
+                sec = doc.getElementById(active.id);
+              }
+            }
+
+            if (!sec) {
+              const newSec = stackManager.addSection('oklch-ambient-glow-hero', {
+                title: 'Hero Section',
+                category: 'Heroes'
+              });
+              setActiveSection(newSec.id);
+              const newEl = stackManager.addElement(newSec.id, {
+                ...(payload.elData || {}),
+                x: 50,
+                y: 50
+              });
+              if (newEl) {
+                pendingSelectedElement = { sectionId: newSec.id, elementId: newEl.id };
+                showToast(`Added ${payload.title || 'widget'} to ${newSec.title || newSec.id}`);
+              }
+              return;
+            }
+
+            const secRect = sec.getBoundingClientRect();
+            const rawX = ((e.clientX - secRect.left) / secRect.width) * 100;
+            const rawY = ((e.clientY - secRect.top) / secRect.height) * 100;
+            const x = Math.round(Math.max(5, Math.min(95, rawX)) * 10) / 10;
+            const y = Math.round(Math.max(5, Math.min(95, rawY)) * 10) / 10;
+
+            const newEl = stackManager.addElement(sec.id, {
+              ...(payload.elData || {}),
+              x,
+              y
+            });
+
+            if (newEl) {
+              pendingSelectedElement = { sectionId: sec.id, elementId: newEl.id };
+              showToast(`Added ${payload.title || 'widget'} at (${x}%, ${y}%)`);
+            }
+          } else {
+            const currentStack = stackManager.getStack();
+            let targetIndex = currentStack.length;
+
+            if (targetSection) {
+              const secRect = targetSection.getBoundingClientRect();
+              const isUpper = (e.clientY - secRect.top) < (secRect.height / 2);
+              const secIndex = currentStack.findIndex(s => s.id === targetSection.id);
+              if (secIndex !== -1) {
+                targetIndex = isUpper ? secIndex : secIndex + 1;
+              }
+            }
+
+            const newSec = stackManager.insertSection(targetIndex, payload.slug, {
+              title: payload.title,
+              category: payload.normCat
+            });
+
+            if (newSec) {
+              setActiveSection(newSec.id);
+              pendingSelectedSection = newSec.id;
+              showToast(`Inserted section "${payload.title}" at position ${targetIndex + 1}`);
+            }
+          }
+        });
       });
     }
 
@@ -2213,6 +2383,7 @@
         card.className = 'element-feature-card';
         card.setAttribute('role', 'listitem');
         card.setAttribute('data-slug', item.slug);
+        card.setAttribute('draggable', 'true');
 
         const title = item.title || item.name || item.slug;
         const desc = item.desc || item.description || (item.isWidget ? 'In-section interactive widget' : 'Production-ready vault component');
@@ -2348,6 +2519,37 @@
 
         card.addEventListener('click', () => {
           triggerAction();
+        });
+
+        card.addEventListener('dragstart', (e) => {
+          const payload = {
+            isWidget: !!item.isWidget,
+            slug: item.slug,
+            title: item.title || item.name || item.slug,
+            normCat: normCat,
+            elData: item.elData || null
+          };
+          currentDragPayload = payload;
+          if (e.dataTransfer) {
+            try {
+              e.dataTransfer.setData('application/json', JSON.stringify(payload));
+              e.dataTransfer.setData('text/plain', JSON.stringify(payload));
+            } catch (_) {}
+            e.dataTransfer.effectAllowed = 'copy';
+          }
+          card.classList.add('is-dragging');
+        });
+
+        card.addEventListener('dragend', () => {
+          card.classList.remove('is-dragging');
+          currentDragPayload = null;
+          try {
+            const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
+            if (doc) {
+              doc.querySelectorAll('.page-section.is-drop-target').forEach(sec => sec.classList.remove('is-drop-target'));
+              doc.querySelectorAll('.section-drop-indicator').forEach(el => el.remove());
+            }
+          } catch (_) {}
         });
 
         fragment.appendChild(card);
