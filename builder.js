@@ -1992,7 +1992,26 @@
       });
     }
 
-    // Global click and window resize listeners
+    function handleCanvasElementKeydown(e) {
+      const tag = (e.target && e.target.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) {
+        return;
+      }
+
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedElementState) {
+        const { sectionId, elementId } = selectedElementState;
+        const elements = stackManager.getSectionElements(sectionId);
+        if (elements && elements.some(el => el.id === elementId)) {
+          e.preventDefault();
+          pushHistorySnapshot();
+          stackManager.removeElement(sectionId, elementId);
+          clearElementSelection();
+          showToast('Element deleted');
+        }
+      }
+    }
+
+    // Global click, window resize, and keydown listeners
     window.addEventListener('click', (e) => {
       if (canvasContextMenu && !canvasContextMenu.contains(e.target)) {
         hideContextMenu();
@@ -2001,6 +2020,7 @@
 
     window.addEventListener('resize', updateToolbarPosition);
     window.addEventListener('scroll', updateToolbarPosition, true);
+    window.addEventListener('keydown', handleCanvasElementKeydown);
 
     // Preview Frame load handler: wire dragging & context menu inside iframe
     if (previewFrame) {
@@ -2013,8 +2033,9 @@
         }
         if (!doc) return;
 
-        // Wire history keyboard shortcuts inside preview iframe document
+        // Wire history keyboard shortcuts and canvas element deletion inside preview iframe document
         doc.addEventListener('keydown', handleHistoryKeydown);
+        doc.addEventListener('keydown', handleCanvasElementKeydown);
 
         // Auto-select and scroll to pending element (e.g. newly created widget)
         if (pendingSelectedElement) {

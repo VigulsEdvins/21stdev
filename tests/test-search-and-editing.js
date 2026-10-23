@@ -66,7 +66,10 @@ assert(jsContent.includes('toolbarCardTitle'), 'builder.js must reference toolba
 assert(jsContent.includes('toolbarTableTitle'), 'builder.js must reference toolbarTableTitle');
 assert(jsContent.includes('toolbarBadgeText'), 'builder.js must reference toolbarBadgeText');
 
-console.log('  ✓ Double-click and right-click event handling verified');
+assert(jsContent.includes("'Delete'") || jsContent.includes('"Delete"'), 'builder.js must handle Delete key for canvas elements');
+assert(jsContent.includes("'Backspace'") || jsContent.includes('"Backspace"'), 'builder.js must handle Backspace key for canvas elements');
+
+console.log('  ✓ Double-click, right-click, and Delete/Backspace key handling verified');
 
 // -------------------------------------------------------------
 // 4. Test Text Editing & Model Propagation in stackManager
