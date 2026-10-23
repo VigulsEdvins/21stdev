@@ -45,17 +45,25 @@ function createStackManager(initialConfig = {}) {
   }
 
   function addSection(slugOrSection, extraProps = {}) {
+    const defaultSizing = {
+      heightMode: 'auto',
+      customHeight: 600,
+      paddingY: 'none'
+    };
+
     let section;
     if (typeof slugOrSection === 'string') {
       section = {
         id: generateId(),
         slug: slugOrSection,
+        sizing: { ...defaultSizing, ...(extraProps.sizing || {}) },
         ...extraProps
       };
     } else if (slugOrSection && typeof slugOrSection === 'object') {
       section = {
         id: slugOrSection.id || generateId(),
         slug: slugOrSection.slug || '',
+        sizing: { ...defaultSizing, ...(slugOrSection.sizing || extraProps.sizing || {}) },
         ...slugOrSection,
         ...extraProps
       };
@@ -66,6 +74,21 @@ function createStackManager(initialConfig = {}) {
     state.stack.push(section);
     notify();
     return section;
+  }
+
+  function updateSectionSizing(sectionId, sizingUpdates = {}) {
+    const section = state.stack.find(s => s.id === sectionId);
+    if (!section) return null;
+    if (!section.sizing) {
+      section.sizing = {
+        heightMode: 'auto',
+        customHeight: 600,
+        paddingY: 'none'
+      };
+    }
+    Object.assign(section.sizing, sizingUpdates);
+    notify();
+    return section.sizing;
   }
 
   function removeSection(id) {
@@ -224,6 +247,7 @@ function createStackManager(initialConfig = {}) {
     duplicateSection,
     reorderStack,
     clearStack,
+    updateSectionSizing,
     addElement,
     updateElement,
     removeElement,

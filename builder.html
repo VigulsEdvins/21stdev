@@ -154,62 +154,318 @@
 
   <!-- Main Workspace: Split Screen Layout -->
   <main class="builder-workspace">
-    <!-- Left Sidebar: Active Stack Manager -->
-    <aside class="builder-sidebar" aria-label="Page Section Stack Manager">
-      <div class="sidebar-header">
-        <div class="sidebar-title-row">
-          <div class="sidebar-title-group">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-              <polyline points="2 17 12 22 22 17"></polyline>
-              <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-            <h2 class="sidebar-heading">Active Sections</h2>
-            <span class="stack-count-badge" id="stackCountBadge">0</span>
-          </div>
-
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <button type="button" class="starter-template-btn" id="loadStarterBtn" title="Load Starter Page Template">
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <span>Starter</span>
-            </button>
-            <button type="button" class="icon-action-btn" id="clearStackBtn" title="Clear all sections from page stack" aria-label="Clear all sections">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <button type="button" class="add-section-btn" id="openDrawerBtn">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
+    <!-- Left Sidebar: Creative Elements & Stack Manager -->
+    <aside class="builder-sidebar" aria-label="Creative Elements & Stack Manager">
+      <!-- 3-Tab Header Switcher -->
+      <div class="sidebar-tab-switcher" role="tablist" aria-label="Builder Sidebar Navigation">
+        <button type="button" class="sidebar-tab-btn is-active" id="tabElementsBtn" role="tab" aria-selected="true" data-tab="elements">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
           </svg>
-          <span>+ Add Section</span>
+          <span>Elements</span>
+        </button>
+        <button type="button" class="sidebar-tab-btn" id="tabSectionsBtn" role="tab" aria-selected="false" data-tab="sections">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>Sections</span>
+          <span class="tab-badge" id="tabSectionsCount">0</span>
+        </button>
+        <button type="button" class="sidebar-tab-btn" id="tabStylingBtn" role="tab" aria-selected="false" data-tab="styling">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <span>Styling</span>
         </button>
       </div>
 
-      <!-- Section Stack List Container -->
-      <div class="sidebar-stack-content">
-        <div class="page-stack-list" id="pageStackList" role="list" aria-label="Active Page Stack Sections">
-          <!-- Populated dynamically by builder.js -->
-          <div class="stack-empty-placeholder" id="stackEmptyPlaceholder">
-            <div class="empty-icon-ring">
-              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+      <!-- Tab Pane 1: Creative Elements Widget Catalog -->
+      <div class="sidebar-tab-pane is-active" id="paneElements">
+        <div class="widgets-catalog-header">
+          <div class="widgets-header-title">Creative Elements</div>
+          <div class="widgets-header-subtitle">Click to add building blocks to active section</div>
+        </div>
+
+        <div class="widgets-catalog-scroll">
+          <!-- Category: Tables & Matrices -->
+          <div class="widget-category-group">
+            <div class="widget-category-title">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="3" y1="15" x2="21" y2="15"></line>
+                <line x1="12" y1="3" x2="12" y2="21"></line>
+              </svg>
+              <span>Tables &amp; Pricing</span>
+            </div>
+            <div class="widget-cards-grid">
+              <div class="widget-card-item" data-widget="table-pricing" role="button" tabindex="0">
+                <div class="widget-card-icon">💰</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Pricing Tier Card</div>
+                  <div class="widget-card-desc">Features, price badge &amp; CTA button</div>
+                </div>
+              </div>
+              <div class="widget-card-item" data-widget="table-comparison" role="button" tabindex="0">
+                <div class="widget-card-icon">📊</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Comparison Matrix</div>
+                  <div class="widget-card-desc">Feature comparison matrix table</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category: 5 Distinct Modern Buttons -->
+          <div class="widget-category-group">
+            <div class="widget-category-title">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="6" width="18" height="12" rx="3"></rect>
+                <path d="M8 12h8"></path>
+              </svg>
+              <span>Modern Button Styles (5 Styles)</span>
+            </div>
+            <div class="widget-cards-grid">
+              <div class="widget-card-item" data-widget="btn-neon" role="button" tabindex="0">
+                <div class="widget-card-icon">⚡</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Neon Glow Button</div>
+                  <div class="widget-card-desc">Vibrant cyberpunk neon glow</div>
+                </div>
+              </div>
+              <div class="widget-card-item" data-widget="btn-glass" role="button" tabindex="0">
+                <div class="widget-card-icon">💎</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Frosted Glass Button</div>
+                  <div class="widget-card-desc">Backdrop blur with glass reflection</div>
+                </div>
+              </div>
+              <div class="widget-card-item" data-widget="btn-shine" role="button" tabindex="0">
+                <div class="widget-card-icon">✨</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Gradient Shine Button</div>
+                  <div class="widget-card-desc">Animated gradient light sheen</div>
+                </div>
+              </div>
+              <div class="widget-card-item" data-widget="btn-solid" role="button" tabindex="0">
+                <div class="widget-card-icon">🟣</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Pill Accent Button</div>
+                  <div class="widget-card-desc">High-contrast solid primary CTA</div>
+                </div>
+              </div>
+              <div class="widget-card-item" data-widget="btn-outline" role="button" tabindex="0">
+                <div class="widget-card-icon">⭕</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Minimal Outline Button</div>
+                  <div class="widget-card-desc">Clean border with hover fill</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category: Media & Cards -->
+          <div class="widget-category-group">
+            <div class="widget-category-title">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <span>Media &amp; Content Cards</span>
+            </div>
+            <div class="widget-cards-grid">
+              <div class="widget-card-item" data-widget="card-feature" role="button" tabindex="0">
+                <div class="widget-card-icon">🎴</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Feature Card</div>
+                  <div class="widget-card-desc">Title, badge, description &amp; link</div>
+                </div>
+              </div>
+              <div class="widget-card-item" data-widget="card-testimonial" role="button" tabindex="0">
+                <div class="widget-card-icon">💬</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Testimonial Card</div>
+                  <div class="widget-card-desc">Quote, rating stars &amp; author avatar</div>
+                </div>
+              </div>
+              <div class="widget-card-item" data-widget="image-custom" role="button" tabindex="0">
+                <div class="widget-card-icon">🖼️</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Custom Image</div>
+                  <div class="widget-card-desc">Floating image with rounded border</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category: Badges & Tags -->
+          <div class="widget-category-group">
+            <div class="widget-category-title">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>Badges &amp; Tags</span>
+            </div>
+            <div class="widget-cards-grid">
+              <div class="widget-card-item" data-widget="badge-pulse" role="button" tabindex="0">
+                <div class="widget-card-icon">🟢</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Pulse Glow Badge</div>
+                  <div class="widget-card-desc">Animated pulsing indicator dot</div>
+                </div>
+              </div>
+              <div class="widget-card-item" data-widget="badge-pill" role="button" tabindex="0">
+                <div class="widget-card-icon">🏷️</div>
+                <div class="widget-card-info">
+                  <div class="widget-card-name">Metric Pill Tag</div>
+                  <div class="widget-card-desc">Glassmorphic tag for stats &amp; tags</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Pane 2: Active Sections Stack -->
+      <div class="sidebar-tab-pane" id="paneSections">
+        <div class="sidebar-header">
+          <div class="sidebar-title-row">
+            <div class="sidebar-title-group">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                 <polyline points="2 17 12 22 22 17"></polyline>
                 <polyline points="2 12 12 17 22 12"></polyline>
               </svg>
+              <h2 class="sidebar-heading">Active Sections</h2>
+              <span class="stack-count-badge" id="stackCountBadge">0</span>
             </div>
-            <h3 class="empty-title">Your page is empty</h3>
-            <p class="empty-desc">Assemble a custom web page by adding components from your 200+ vault blocks.</p>
-            <button type="button" class="empty-browse-btn" id="emptyBrowseBtn">
-              <span>Browse Component Catalog</span>
-            </button>
+
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <button type="button" class="starter-template-btn" id="loadStarterBtn" title="Load Starter Page Template">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                <span>Starter</span>
+              </button>
+              <button type="button" class="icon-action-btn" id="clearStackBtn" title="Clear all sections from page stack" aria-label="Clear all sections">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="button" class="add-section-btn" id="openDrawerBtn">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>+ Add Section</span>
+          </button>
+        </div>
+
+        <!-- Section Stack List Container -->
+        <div class="sidebar-stack-content">
+          <div class="page-stack-list" id="pageStackList" role="list" aria-label="Active Page Stack Sections">
+            <!-- Populated dynamically by builder.js -->
+            <div class="stack-empty-placeholder" id="stackEmptyPlaceholder">
+              <div class="empty-icon-ring">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <h3 class="empty-title">Your page is empty</h3>
+              <p class="empty-desc">Assemble a custom web page by adding components from your 200+ vault blocks.</p>
+              <button type="button" class="empty-browse-btn" id="emptyBrowseBtn">
+                <span>Browse Component Catalog</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Pane 3: Global Styling & Color Theming -->
+      <div class="sidebar-tab-pane" id="paneStyling">
+        <div class="widgets-catalog-header">
+          <div class="widgets-header-title">Page Styling &amp; Colors</div>
+          <div class="widgets-header-subtitle">Changes instantly cascade across all page sections</div>
+        </div>
+        <div class="styling-pane-content">
+          <div class="styling-group">
+            <label class="styling-group-label">Theme Presets</label>
+            <div class="theme-preset-cards" id="themePresetCards">
+              <button type="button" class="theme-card-btn is-active" data-theme="midnight-dark">
+                <span class="theme-swatch" style="background: #0b0f19; border: 1px solid #6366f1;"></span>
+                <span class="theme-name">Midnight Dark</span>
+              </button>
+              <button type="button" class="theme-card-btn" data-theme="cyber-glow">
+                <span class="theme-swatch" style="background: #09090b; border: 1px solid #a855f7;"></span>
+                <span class="theme-name">Cyber Glow</span>
+              </button>
+              <button type="button" class="theme-card-btn" data-theme="clean-minimal">
+                <span class="theme-swatch" style="background: #ffffff; border: 1px solid #e2e8f0;"></span>
+                <span class="theme-name">Clean Minimal</span>
+              </button>
+              <button type="button" class="theme-card-btn" data-theme="warm-editorial">
+                <span class="theme-swatch" style="background: #fdfbf7; border: 1px solid #d97706;"></span>
+                <span class="theme-name">Warm Editorial</span>
+              </button>
+              <button type="button" class="theme-card-btn" data-theme="modern-slate">
+                <span class="theme-swatch" style="background: #0f172a; border: 1px solid #38bdf8;"></span>
+                <span class="theme-name">Modern Slate</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="styling-group">
+            <label class="styling-group-label">Global Color Palette</label>
+            <div class="styling-color-rows">
+              <div class="styling-color-row">
+                <div class="color-text-group">
+                  <div class="color-title">Background</div>
+                  <div class="color-subtitle">Base canvas background</div>
+                </div>
+                <input type="color" id="sidebarBgColor" value="#0b0f19" class="color-picker-input" />
+              </div>
+              <div class="styling-color-row">
+                <div class="color-text-group">
+                  <div class="color-title">Text &amp; Headlines</div>
+                  <div class="color-subtitle">Default typography color</div>
+                </div>
+                <input type="color" id="sidebarTextColor" value="#f3f4f6" class="color-picker-input" />
+              </div>
+              <div class="styling-color-row">
+                <div class="color-text-group">
+                  <div class="color-title">Brand Accent</div>
+                  <div class="color-subtitle">Buttons, links &amp; highlights</div>
+                </div>
+                <input type="color" id="sidebarAccentColor" value="#6366f1" class="color-picker-input" />
+              </div>
+            </div>
+          </div>
+
+          <div class="universal-theming-callout">
+            <div class="callout-icon">✨</div>
+            <div class="callout-text">
+              <strong>Universal Theme Cascade Active:</strong> All hardcoded component colors are normalized to dynamic CSS variables.
+            </div>
           </div>
         </div>
       </div>
@@ -468,29 +724,36 @@
   <!-- Canvas Right-Click Context Menu -->
   <div class="canvas-context-menu" id="canvasContextMenu" style="display: none;">
     <div class="context-menu-header">
-      <span class="context-menu-title">Add to Section</span>
+      <span class="context-menu-title">Add Creative Element</span>
     </div>
     <div class="context-menu-items">
+      <button type="button" class="context-menu-item" data-action="add-table-pricing">
+        <span class="ctx-icon">💰</span>
+        <span>+ Add Pricing Tier Card</span>
+      </button>
+      <button type="button" class="context-menu-item" data-action="add-table-comparison">
+        <span class="ctx-icon">📊</span>
+        <span>+ Add Comparison Matrix</span>
+      </button>
+      <button type="button" class="context-menu-item" data-action="add-card-feature">
+        <span class="ctx-icon">🎴</span>
+        <span>+ Add Feature Card</span>
+      </button>
+      <button type="button" class="context-menu-item" data-action="add-card-testimonial">
+        <span class="ctx-icon">💬</span>
+        <span>+ Add Testimonial Card</span>
+      </button>
       <button type="button" class="context-menu-item" data-action="add-button">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="6" width="18" height="12" rx="3"></rect>
-          <path d="M8 12h8"></path>
-        </svg>
+        <span class="ctx-icon">⚡</span>
         <span>+ Add Button</span>
       </button>
       <button type="button" class="context-menu-item" data-action="add-image">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-          <circle cx="8.5" cy="8.5" r="1.5"></circle>
-          <polyline points="21 15 16 10 5 21"></polyline>
-        </svg>
+        <span class="ctx-icon">🖼️</span>
         <span>+ Add Image</span>
       </button>
       <button type="button" class="context-menu-item" data-action="add-badge">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-        </svg>
-        <span>+ Add Badge / Text</span>
+        <span class="ctx-icon">🟢</span>
+        <span>+ Add Badge / Tag</span>
       </button>
     </div>
   </div>
@@ -500,6 +763,54 @@
     <div class="toolbar-drag-handle">
       <span class="toolbar-type-badge" id="toolbarTypeBadge">Button</span>
       <button type="button" class="toolbar-close-btn" id="toolbarCloseBtn" title="Close Toolbar">&times;</button>
+    </div>
+
+    <!-- Fields for Table (Pricing & Comparison) -->
+    <div class="toolbar-field-group" id="toolbarGroupTable" style="display: none;">
+      <label class="toolbar-label">
+        <span>Card Title</span>
+        <input type="text" id="toolbarTableTitle" class="toolbar-input" placeholder="e.g. Pro Plan" />
+      </label>
+      <label class="toolbar-label">
+        <span>Price Tag</span>
+        <input type="text" id="toolbarTablePrice" class="toolbar-input" placeholder="e.g. $29/mo" />
+      </label>
+      <label class="toolbar-label">
+        <span>Features (one per line)</span>
+        <textarea id="toolbarTableFeatures" class="toolbar-input toolbar-textarea" rows="3" placeholder="Unlimited Projects&#10;Custom Domains&#10;24/7 Priority Support"></textarea>
+      </label>
+      <label class="toolbar-label">
+        <span>CTA Button Text</span>
+        <input type="text" id="toolbarTableCtaText" class="toolbar-input" placeholder="e.g. Get Started" />
+      </label>
+      <label class="toolbar-label">
+        <span>CTA Link</span>
+        <input type="text" id="toolbarTableCtaLink" class="toolbar-input" placeholder="e.g. #pricing" />
+      </label>
+    </div>
+
+    <!-- Fields for Card (Feature & Testimonial) -->
+    <div class="toolbar-field-group" id="toolbarGroupCard" style="display: none;">
+      <label class="toolbar-label">
+        <span>Headline / Title</span>
+        <input type="text" id="toolbarCardTitle" class="toolbar-input" placeholder="e.g. Real-time Analytics" />
+      </label>
+      <label class="toolbar-label">
+        <span>Subtitle / Author</span>
+        <input type="text" id="toolbarCardSubtitle" class="toolbar-input" placeholder="e.g. Sarah Jenkins, VP Product" />
+      </label>
+      <label class="toolbar-label">
+        <span>Description / Quote</span>
+        <textarea id="toolbarCardDesc" class="toolbar-input toolbar-textarea" rows="3" placeholder="Write description or quote..."></textarea>
+      </label>
+      <label class="toolbar-label">
+        <span>Badge Tag</span>
+        <input type="text" id="toolbarCardBadge" class="toolbar-input" placeholder="e.g. HOT, NEW" />
+      </label>
+      <label class="toolbar-label">
+        <span>Link / CTA Text</span>
+        <input type="text" id="toolbarCardLinkText" class="toolbar-input" placeholder="e.g. Learn More →" />
+      </label>
     </div>
 
     <!-- Fields for Button -->
@@ -518,6 +829,7 @@
           <button type="button" class="style-pill is-active" data-style="solid">Solid</button>
           <button type="button" class="style-pill" data-style="glass">Glass</button>
           <button type="button" class="style-pill" data-style="neon">Neon</button>
+          <button type="button" class="style-pill" data-style="shine">Shine</button>
           <button type="button" class="style-pill" data-style="outline">Outline</button>
         </div>
       </div>
@@ -545,6 +857,14 @@
         <span>Badge Text</span>
         <input type="text" id="toolbarBadgeText" class="toolbar-input" placeholder="e.g. NEW FEATURE" />
       </label>
+      <div class="toolbar-label">
+        <span>Style</span>
+        <div class="toolbar-style-pills" id="toolbarBadgeStylePills">
+          <button type="button" class="style-pill is-active" data-style="pulse">Pulse</button>
+          <button type="button" class="style-pill" data-style="pill">Pill</button>
+          <button type="button" class="style-pill" data-style="accent">Accent</button>
+        </div>
+      </div>
     </div>
 
     <div class="toolbar-footer">

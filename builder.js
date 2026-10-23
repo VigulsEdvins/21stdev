@@ -288,20 +288,58 @@
     const textColorInput = document.getElementById('textColor');
     const accentColorInput = document.getElementById('accentColor');
 
+    // Sidebar 3-Tab Elements
+    const tabElementsBtn = document.getElementById('tabElementsBtn');
+    const tabSectionsBtn = document.getElementById('tabSectionsBtn');
+    const tabStylingBtn = document.getElementById('tabStylingBtn');
+    const paneElements = document.getElementById('paneElements');
+    const paneSections = document.getElementById('paneSections');
+    const paneStyling = document.getElementById('paneStyling');
+    const tabSectionsCount = document.getElementById('tabSectionsCount');
+
+    // Styling Tab Elements
+    const themePresetCards = document.getElementById('themePresetCards');
+    const sidebarBgColor = document.getElementById('sidebarBgColor');
+    const sidebarTextColor = document.getElementById('sidebarTextColor');
+    const sidebarAccentColor = document.getElementById('sidebarAccentColor');
+
     // Canvas Context Menu & Freeform Element Edit Toolbar Elements
     const canvasContextMenu = document.getElementById('canvasContextMenu');
     const elementEditToolbar = document.getElementById('elementEditToolbar');
     const toolbarTypeBadge = document.getElementById('toolbarTypeBadge');
     const toolbarCloseBtn = document.getElementById('toolbarCloseBtn');
+
+    // Toolbar Table Fields
+    const toolbarGroupTable = document.getElementById('toolbarGroupTable');
+    const toolbarTableTitle = document.getElementById('toolbarTableTitle');
+    const toolbarTablePrice = document.getElementById('toolbarTablePrice');
+    const toolbarTableFeatures = document.getElementById('toolbarTableFeatures');
+    const toolbarTableCtaText = document.getElementById('toolbarTableCtaText');
+    const toolbarTableCtaLink = document.getElementById('toolbarTableCtaLink');
+
+    // Toolbar Card Fields
+    const toolbarGroupCard = document.getElementById('toolbarGroupCard');
+    const toolbarCardTitle = document.getElementById('toolbarCardTitle');
+    const toolbarCardSubtitle = document.getElementById('toolbarCardSubtitle');
+    const toolbarCardDesc = document.getElementById('toolbarCardDesc');
+    const toolbarCardBadge = document.getElementById('toolbarCardBadge');
+    const toolbarCardLinkText = document.getElementById('toolbarCardLinkText');
+
+    // Toolbar Button Fields
     const toolbarGroupButton = document.getElementById('toolbarGroupButton');
     const toolbarBtnText = document.getElementById('toolbarBtnText');
     const toolbarBtnLink = document.getElementById('toolbarBtnLink');
     const toolbarBtnStylePills = document.getElementById('toolbarBtnStylePills');
+
+    // Toolbar Image Fields
     const toolbarGroupImage = document.getElementById('toolbarGroupImage');
     const toolbarImgUrl = document.getElementById('toolbarImgUrl');
     const toolbarImgSizePills = document.getElementById('toolbarImgSizePills');
+
+    // Toolbar Badge Fields
     const toolbarGroupBadge = document.getElementById('toolbarGroupBadge');
     const toolbarBadgeText = document.getElementById('toolbarBadgeText');
+    const toolbarBadgeStylePills = document.getElementById('toolbarBadgeStylePills');
     const toolbarDeleteBtn = document.getElementById('toolbarDeleteBtn');
 
     // Drawer state
@@ -315,6 +353,9 @@
       const stack = stackManager.getStack();
       if (stackCountBadge) {
         stackCountBadge.textContent = String(stack.length);
+      }
+      if (tabSectionsCount) {
+        tabSectionsCount.textContent = String(stack.length);
       }
 
       // Remove existing item cards
@@ -337,6 +378,7 @@
         const feature = featuresMap.get(item.slug);
         const title = item.title || (feature ? (feature.title || feature.name) : item.slug);
         const category = item.category || (feature ? feature.category : 'Component');
+        const sizing = item.sizing || { heightMode: 'auto', customHeight: 600, paddingY: 'none' };
 
         const card = document.createElement('div');
         card.className = 'stack-item-card';
@@ -345,40 +387,128 @@
         card.setAttribute('draggable', 'true');
 
         card.innerHTML = `
-          <div class="stack-item-main">
-            <span class="stack-item-order">${index + 1}</span>
-            <div class="stack-item-info">
-              <div class="stack-item-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
-              <div class="stack-item-category">${escapeHtml(category)}</div>
+          <div class="stack-item-top-row">
+            <div class="stack-item-main">
+              <span class="stack-item-order">${index + 1}</span>
+              <div class="stack-item-info">
+                <div class="stack-item-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
+                <div class="stack-item-category">${escapeHtml(category)}</div>
+              </div>
+            </div>
+            <div class="stack-item-tools">
+              <button type="button" class="stack-tool-btn btn-sizing" title="Adjust Sizing" aria-label="Adjust section sizing">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 3L3 21"></path>
+                  <path d="M14 3h7v7"></path>
+                  <path d="M10 21H3v-7"></path>
+                </svg>
+              </button>
+              <button type="button" class="stack-tool-btn btn-move-up" title="Move Up" aria-label="Move section up" ${index === 0 ? 'disabled' : ''}>
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="18 15 12 9 6 15"></polyline>
+                </svg>
+              </button>
+              <button type="button" class="stack-tool-btn btn-move-down" title="Move Down" aria-label="Move section down" ${index === stack.length - 1 ? 'disabled' : ''}>
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <button type="button" class="stack-tool-btn btn-duplicate" title="Duplicate Section" aria-label="Duplicate section">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+              <button type="button" class="stack-tool-btn btn-remove" title="Remove Section" aria-label="Remove section">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
             </div>
           </div>
-          <div class="stack-item-tools">
-            <button type="button" class="stack-tool-btn btn-move-up" title="Move Up" aria-label="Move section up" ${index === 0 ? 'disabled' : ''}>
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="18 15 12 9 6 15"></polyline>
-              </svg>
-            </button>
-            <button type="button" class="stack-tool-btn btn-move-down" title="Move Down" aria-label="Move section down" ${index === stack.length - 1 ? 'disabled' : ''}>
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </button>
-            <button type="button" class="stack-tool-btn btn-duplicate" title="Duplicate Section" aria-label="Duplicate section">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-            </button>
-            <button type="button" class="stack-tool-btn btn-remove" title="Remove Section" aria-label="Remove section">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              </svg>
-            </button>
+          <div class="stack-item-sizing-drawer" style="display: none;">
+            <div class="sizing-row">
+              <span class="sizing-label">Height:</span>
+              <div class="sizing-pills height-mode-pills">
+                <button type="button" class="sizing-pill ${sizing.heightMode === 'auto' ? 'is-active' : ''}" data-mode="auto">Auto</button>
+                <button type="button" class="sizing-pill ${sizing.heightMode === 'screen' ? 'is-active' : ''}" data-mode="screen">100vh</button>
+                <button type="button" class="sizing-pill ${sizing.heightMode === 'custom' ? 'is-active' : ''}" data-mode="custom">Custom</button>
+              </div>
+            </div>
+            <div class="sizing-row custom-height-row" style="${sizing.heightMode === 'custom' ? 'display:flex;' : 'display:none;'}">
+              <span class="sizing-label">Height (px):</span>
+              <input type="range" class="custom-height-slider" min="200" max="1400" step="20" value="${sizing.customHeight || 600}" />
+              <span class="custom-height-val">${sizing.customHeight || 600}px</span>
+            </div>
+            <div class="sizing-row">
+              <span class="sizing-label">Padding:</span>
+              <div class="sizing-pills padding-pills">
+                <button type="button" class="sizing-pill ${sizing.paddingY === 'none' ? 'is-active' : ''}" data-pad="none">0px</button>
+                <button type="button" class="sizing-pill ${sizing.paddingY === 'compact' ? 'is-active' : ''}" data-pad="compact">32px</button>
+                <button type="button" class="sizing-pill ${sizing.paddingY === 'medium' ? 'is-active' : ''}" data-pad="medium">64px</button>
+                <button type="button" class="sizing-pill ${sizing.paddingY === 'large' ? 'is-active' : ''}" data-pad="large">120px</button>
+              </div>
+            </div>
           </div>
         `;
 
         // Wire Action Buttons
+        const sizingBtn = card.querySelector('.btn-sizing');
+        const sizingDrawer = card.querySelector('.stack-item-sizing-drawer');
+        if (sizingBtn && sizingDrawer) {
+          sizingBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isHidden = sizingDrawer.style.display === 'none';
+            sizingDrawer.style.display = isHidden ? 'flex' : 'none';
+            sizingBtn.classList.toggle('is-active', isHidden);
+          });
+        }
+
+        // Height Mode Pills
+        const heightPills = card.querySelectorAll('.height-mode-pills .sizing-pill');
+        const customHeightRow = card.querySelector('.custom-height-row');
+        heightPills.forEach(pill => {
+          pill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const mode = pill.dataset.mode;
+            heightPills.forEach(p => p.classList.remove('is-active'));
+            pill.classList.add('is-active');
+            if (customHeightRow) customHeightRow.style.display = (mode === 'custom') ? 'flex' : 'none';
+            stackManager.updateSectionSizing(item.id, { heightMode: mode });
+          });
+        });
+
+        // Custom Height Slider
+        const slider = card.querySelector('.custom-height-slider');
+        const valLabel = card.querySelector('.custom-height-val');
+        if (slider && valLabel) {
+          slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            valLabel.textContent = `${val}px`;
+            try {
+              const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+              const secEl = doc.getElementById(item.id);
+              if (secEl) secEl.style.minHeight = `${val}px`;
+            } catch (_) {}
+          });
+          slider.addEventListener('change', (e) => {
+            stackManager.updateSectionSizing(item.id, { heightMode: 'custom', customHeight: Number(e.target.value) });
+          });
+        }
+
+        // Padding Pills
+        const paddingPills = card.querySelectorAll('.padding-pills .sizing-pill');
+        paddingPills.forEach(pill => {
+          pill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const pad = pill.dataset.pad;
+            paddingPills.forEach(p => p.classList.remove('is-active'));
+            pill.classList.add('is-active');
+            stackManager.updateSectionSizing(item.id, { paddingY: pad });
+          });
+        });
+
         const moveUpBtn = card.querySelector('.btn-move-up');
         if (moveUpBtn) {
           moveUpBtn.addEventListener('click', (e) => {
@@ -603,11 +733,25 @@
         toolbarTypeBadge.textContent = elData.type.toUpperCase();
       }
 
+      if (toolbarGroupTable) toolbarGroupTable.style.display = elData.type === 'table' ? 'flex' : 'none';
+      if (toolbarGroupCard) toolbarGroupCard.style.display = elData.type === 'card' ? 'flex' : 'none';
       if (toolbarGroupButton) toolbarGroupButton.style.display = elData.type === 'button' ? 'flex' : 'none';
       if (toolbarGroupImage) toolbarGroupImage.style.display = elData.type === 'image' ? 'flex' : 'none';
       if (toolbarGroupBadge) toolbarGroupBadge.style.display = elData.type === 'badge' ? 'flex' : 'none';
 
-      if (elData.type === 'button') {
+      if (elData.type === 'table') {
+        if (toolbarTableTitle) toolbarTableTitle.value = elData.title || '';
+        if (toolbarTablePrice) toolbarTablePrice.value = elData.price || '';
+        if (toolbarTableFeatures) toolbarTableFeatures.value = Array.isArray(elData.features) ? elData.features.join('\n') : '';
+        if (toolbarTableCtaText) toolbarTableCtaText.value = elData.ctaText || 'Get Started';
+        if (toolbarTableCtaLink) toolbarTableCtaLink.value = elData.ctaLink || '#';
+      } else if (elData.type === 'card') {
+        if (toolbarCardTitle) toolbarCardTitle.value = elData.title || '';
+        if (toolbarCardSubtitle) toolbarCardSubtitle.value = elData.subtitle || elData.author || '';
+        if (toolbarCardDesc) toolbarCardDesc.value = elData.description || '';
+        if (toolbarCardBadge) toolbarCardBadge.value = elData.badgeText || '';
+        if (toolbarCardLinkText) toolbarCardLinkText.value = elData.ctaText || 'Learn More →';
+      } else if (elData.type === 'button') {
         if (toolbarBtnText) toolbarBtnText.value = elData.text || '';
         if (toolbarBtnLink) toolbarBtnLink.value = elData.link || '#';
         if (toolbarBtnStylePills) {
@@ -624,6 +768,11 @@
         }
       } else if (elData.type === 'badge') {
         if (toolbarBadgeText) toolbarBadgeText.value = elData.text || '';
+        if (toolbarBadgeStylePills) {
+          toolbarBadgeStylePills.querySelectorAll('.style-pill').forEach(pill => {
+            pill.classList.toggle('is-active', pill.dataset.style === (elData.badgeStyle || elData.style || 'pulse'));
+          });
+        }
       }
 
       elementEditToolbar.style.display = 'flex';
@@ -635,6 +784,150 @@
       toolbarCloseBtn.addEventListener('click', hideEditToolbar);
     }
 
+    // Table Toolbar Inputs
+    if (toolbarTableTitle) {
+      toolbarTableTitle.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { title: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const titleEl = el.querySelector('.pricing-card-title');
+            if (titleEl) titleEl.textContent = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarTablePrice) {
+      toolbarTablePrice.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { price: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const priceEl = el.querySelector('.pricing-card-price');
+            if (priceEl) priceEl.textContent = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarTableFeatures) {
+      toolbarTableFeatures.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const features = e.target.value.split('\n').map(s => s.trim()).filter(Boolean);
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { features }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const listEl = el.querySelector('.pricing-card-features');
+            if (listEl) {
+              listEl.innerHTML = features.map(f => `<li><span class="feature-check">✓</span> ${escapeHtml(f)}</li>`).join('');
+            }
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarTableCtaText) {
+      toolbarTableCtaText.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { ctaText: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const ctaEl = el.querySelector('.pricing-card-cta');
+            if (ctaEl) ctaEl.textContent = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarTableCtaLink) {
+      toolbarTableCtaLink.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { ctaLink: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const ctaEl = el.querySelector('.pricing-card-cta');
+            if (ctaEl) ctaEl.href = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    // Card Toolbar Inputs
+    if (toolbarCardTitle) {
+      toolbarCardTitle.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { title: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const titleEl = el.querySelector('.feature-card-title') || el.querySelector('.testimonial-name');
+            if (titleEl) titleEl.textContent = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarCardDesc) {
+      toolbarCardDesc.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { description: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            const descEl = el.querySelector('.feature-card-desc') || el.querySelector('.testimonial-quote');
+            if (descEl) descEl.textContent = val;
+          }
+        } catch (_) {}
+      });
+    }
+
+    if (toolbarCardBadge) {
+      toolbarCardBadge.addEventListener('input', (e) => {
+        if (!selectedElementState) return;
+        const val = e.target.value;
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { badgeText: val }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            let badgeEl = el.querySelector('.card-badge');
+            if (!badgeEl && val) {
+              const header = el.querySelector('.feature-card-header');
+              if (header) {
+                badgeEl = document.createElement('span');
+                badgeEl.className = 'card-badge';
+                header.appendChild(badgeEl);
+              }
+            }
+            if (badgeEl) {
+              badgeEl.textContent = val;
+              badgeEl.style.display = val ? 'inline-block' : 'none';
+            }
+          }
+        } catch (_) {}
+      });
+    }
+
+    // Button Toolbar Inputs
     if (toolbarBtnText) {
       toolbarBtnText.addEventListener('input', (e) => {
         if (!selectedElementState) return;
@@ -644,7 +937,7 @@
           const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
           const el = doc.getElementById(selectedElementState.elementId);
           if (el) {
-            const link = el.querySelector('.canvas-btn-link');
+            const link = el.querySelector('.canvas-btn-link .btn-label') || el.querySelector('.canvas-btn-link');
             if (link) link.textContent = val;
           }
         } catch (_) {}
@@ -738,6 +1031,25 @@
       });
     }
 
+    if (toolbarBadgeStylePills) {
+      toolbarBadgeStylePills.addEventListener('click', (e) => {
+        const pill = e.target.closest('.style-pill');
+        if (!pill || !selectedElementState) return;
+        const style = pill.dataset.style;
+        toolbarBadgeStylePills.querySelectorAll('.style-pill').forEach(p => p.classList.remove('is-active'));
+        pill.classList.add('is-active');
+
+        stackManager.updateElement(selectedElementState.sectionId, selectedElementState.elementId, { badgeStyle: style }, true);
+        try {
+          const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+          const el = doc.getElementById(selectedElementState.elementId);
+          if (el) {
+            el.className = el.className.replace(/badge-style-[a-z]+/g, '').trim() + ` badge-style-${style}`;
+          }
+        } catch (_) {}
+      });
+    }
+
     if (toolbarDeleteBtn) {
       toolbarDeleteBtn.addEventListener('click', () => {
         if (!selectedElementState) return;
@@ -754,21 +1066,83 @@
         const itemBtn = e.target.closest('.context-menu-item');
         if (!itemBtn || !activeCanvasContext) return;
         const action = itemBtn.dataset.action;
-        let type = 'button';
-        if (action === 'add-image') type = 'image';
-        if (action === 'add-badge') type = 'badge';
+        let elData = { x: activeCanvasContext.xPct, y: activeCanvasContext.yPct };
+
+        if (action === 'add-table-pricing') {
+          elData = {
+            ...elData,
+            type: 'table',
+            tableType: 'pricing',
+            title: 'Pro Plan',
+            price: '$29/mo',
+            features: ['Unlimited Projects', 'Custom Domains', '24/7 Priority Support'],
+            ctaText: 'Get Started',
+            ctaLink: '#pricing'
+          };
+        } else if (action === 'add-table-comparison') {
+          elData = {
+            ...elData,
+            type: 'table',
+            tableType: 'comparison',
+            headers: ['Feature', 'Free', 'Pro'],
+            rows: [
+              ['Storage', '5 GB', '500 GB'],
+              ['Bandwidth', '10 GB/mo', 'Unlimited'],
+              ['Support', 'Community', '24/7 Priority']
+            ]
+          };
+        } else if (action === 'add-card-feature') {
+          elData = {
+            ...elData,
+            type: 'card',
+            cardType: 'feature',
+            title: 'Real-time Analytics',
+            description: 'Track conversion rates and user telemetry with sub-millisecond precision.',
+            badgeText: 'HOT',
+            ctaText: 'Learn More →',
+            link: '#features'
+          };
+        } else if (action === 'add-card-testimonial') {
+          elData = {
+            ...elData,
+            type: 'card',
+            cardType: 'testimonial',
+            author: 'Sarah Jenkins',
+            role: 'VP of Product, Apex Digital',
+            avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80',
+            description: 'This platform transformed our landing page conversion rates within 48 hours.',
+            rating: 5
+          };
+        } else if (action === 'add-image') {
+          elData = {
+            ...elData,
+            type: 'image',
+            imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80',
+            imageSize: 'medium'
+          };
+        } else if (action === 'add-badge') {
+          elData = {
+            ...elData,
+            type: 'badge',
+            text: 'v2.0 LIVE',
+            badgeStyle: 'pulse'
+          };
+        } else {
+          elData = {
+            ...elData,
+            type: 'button',
+            text: 'Click Me →',
+            style: 'solid'
+          };
+        }
 
         const targetSectionId = activeCanvasContext.sectionId;
-        const newEl = stackManager.addElement(targetSectionId, {
-          type,
-          x: activeCanvasContext.xPct,
-          y: activeCanvasContext.yPct
-        });
+        const newEl = stackManager.addElement(targetSectionId, elData);
 
         hideContextMenu();
         if (newEl) {
           pendingSelectedElement = { sectionId: targetSectionId, elementId: newEl.id };
-          showToast(`Added ${type} to section`);
+          showToast(`Added ${newEl.type} to section`);
         }
       });
     }
@@ -920,8 +1294,208 @@
           window.addEventListener('mousemove', onMouseMove);
           window.addEventListener('mouseup', onMouseUp);
         });
+
+        // Section Bottom Resize Handle Drag Handler
+        doc.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return;
+          const handleEl = e.target.closest('.section-resize-handle');
+          if (!handleEl) return;
+
+          e.preventDefault();
+          const sectionId = handleEl.dataset.resizeSection;
+          const sectionEl = doc.getElementById(sectionId);
+          if (!sectionEl) return;
+
+          const startY = e.clientY;
+          const initialHeight = sectionEl.getBoundingClientRect().height;
+          let newHeight = initialHeight;
+
+          function onResizeMove(moveEvent) {
+            const frameRect = previewFrame.getBoundingClientRect();
+            const mouseY = (moveEvent.view === window) ? (moveEvent.clientY - frameRect.top) : moveEvent.clientY;
+            const deltaY = mouseY - startY;
+            newHeight = Math.max(140, Math.min(2400, Math.round(initialHeight + deltaY)));
+            sectionEl.style.minHeight = `${newHeight}px`;
+            updateToolbarPosition();
+          }
+
+          function onResizeUp() {
+            doc.removeEventListener('mousemove', onResizeMove);
+            doc.removeEventListener('mouseup', onResizeUp);
+            window.removeEventListener('mousemove', onResizeMove);
+            window.removeEventListener('mouseup', onResizeUp);
+
+            stackManager.updateSectionSizing(sectionId, {
+              heightMode: 'custom',
+              customHeight: newHeight
+            });
+            showToast(`Section height updated: ${newHeight}px`);
+          }
+
+          doc.addEventListener('mousemove', onResizeMove);
+          doc.addEventListener('mouseup', onResizeUp);
+          window.addEventListener('mousemove', onResizeMove);
+          window.addEventListener('mouseup', onResizeUp);
+        });
       });
     }
+
+    // Sidebar 3-Tab Controller
+    function switchSidebarTab(tabName) {
+      [tabElementsBtn, tabSectionsBtn, tabStylingBtn].forEach(btn => {
+        if (btn) {
+          const isActive = btn.dataset.tab === tabName;
+          btn.classList.toggle('is-active', isActive);
+          btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        }
+      });
+      if (paneElements) paneElements.classList.toggle('is-active', tabName === 'elements');
+      if (paneSections) paneSections.classList.toggle('is-active', tabName === 'sections');
+      if (paneStyling) paneStyling.classList.toggle('is-active', tabName === 'styling');
+    }
+
+    if (tabElementsBtn) tabElementsBtn.addEventListener('click', () => switchSidebarTab('elements'));
+    if (tabSectionsBtn) tabSectionsBtn.addEventListener('click', () => switchSidebarTab('sections'));
+    if (tabStylingBtn) tabStylingBtn.addEventListener('click', () => switchSidebarTab('styling'));
+
+    // Creative Elements Catalog Widget Click Handling
+    const widgetCatalog = document.querySelector('.widgets-catalog-scroll');
+    if (widgetCatalog) {
+      widgetCatalog.addEventListener('click', (e) => {
+        const item = e.target.closest('.widget-card-item');
+        if (!item) return;
+        const widgetType = item.dataset.widget;
+
+        let currentStack = stackManager.getStack();
+        let targetSection;
+        if (currentStack.length === 0) {
+          // Auto create a starter hero section
+          targetSection = stackManager.addSection('oklch-ambient-glow-hero', {
+            title: 'Hero Section',
+            category: 'Heroes'
+          });
+        } else {
+          targetSection = currentStack[currentStack.length - 1];
+        }
+
+        let elData = { x: 50, y: 50 };
+        if (widgetType === 'table-pricing') {
+          elData = {
+            type: 'table',
+            tableType: 'pricing',
+            title: 'Pro Plan',
+            price: '$29/mo',
+            features: ['Unlimited Projects', 'Custom Domains', '24/7 Priority Support'],
+            ctaText: 'Get Started',
+            ctaLink: '#pricing',
+            x: 50,
+            y: 50
+          };
+        } else if (widgetType === 'table-comparison') {
+          elData = {
+            type: 'table',
+            tableType: 'comparison',
+            headers: ['Feature', 'Free', 'Pro'],
+            rows: [
+              ['Storage', '5 GB', '500 GB'],
+              ['Bandwidth', '10 GB/mo', 'Unlimited'],
+              ['Support', 'Community', '24/7 Priority']
+            ],
+            x: 50,
+            y: 50
+          };
+        } else if (widgetType === 'card-feature') {
+          elData = {
+            type: 'card',
+            cardType: 'feature',
+            title: 'Real-time Analytics',
+            description: 'Track conversion rates and user telemetry with sub-millisecond precision.',
+            badgeText: 'HOT',
+            ctaText: 'Learn More →',
+            link: '#features',
+            x: 50,
+            y: 50
+          };
+        } else if (widgetType === 'card-testimonial') {
+          elData = {
+            type: 'card',
+            cardType: 'testimonial',
+            author: 'Sarah Jenkins',
+            role: 'VP of Product, Apex Digital',
+            avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80',
+            description: 'This platform transformed our landing page conversion rates within 48 hours.',
+            rating: 5,
+            x: 50,
+            y: 50
+          };
+        } else if (widgetType && widgetType.startsWith('btn-')) {
+          const style = widgetType.replace('btn-', '');
+          elData = {
+            type: 'button',
+            text: style === 'neon' ? 'Launch Terminal ⚡' : (style === 'shine' ? 'Upgrade to Pro ✨' : 'Explore Platform →'),
+            style: style,
+            link: '#',
+            x: 50,
+            y: 50
+          };
+        } else if (widgetType && widgetType.startsWith('badge-')) {
+          const badgeStyle = widgetType.replace('badge-', '');
+          elData = {
+            type: 'badge',
+            text: badgeStyle === 'pulse' ? 'v2.0 LIVE' : '+99.8% Faster',
+            badgeStyle: badgeStyle,
+            x: 50,
+            y: 35
+          };
+        } else if (widgetType === 'image-custom') {
+          elData = {
+            type: 'image',
+            imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80',
+            imageSize: 'medium',
+            x: 50,
+            y: 50
+          };
+        }
+
+        const newEl = stackManager.addElement(targetSection.id, elData);
+        if (newEl) {
+          pendingSelectedElement = { sectionId: targetSection.id, elementId: newEl.id };
+          const name = item.querySelector('.widget-card-name') ? item.querySelector('.widget-card-name').textContent : widgetType;
+          showToast(`Added ${name} to section`);
+        }
+      });
+    }
+
+    // Styling Tab Theme Preset & Color Handling
+    if (themePresetCards) {
+      themePresetCards.addEventListener('click', (e) => {
+        const btn = e.target.closest('.theme-card-btn');
+        if (!btn) return;
+        const theme = btn.dataset.theme;
+        themePresetCards.querySelectorAll('.theme-card-btn').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        if (themePresetSelect) themePresetSelect.value = theme;
+        stackManager.setTheme(theme);
+        const name = btn.querySelector('.theme-name') ? btn.querySelector('.theme-name').textContent : theme;
+        showToast(`Theme changed to ${name}`);
+      });
+    }
+
+    function syncColorsFromSidebar(colors) {
+      if (colors.bg && bgColorInput) bgColorInput.value = colors.bg;
+      if (colors.text && textColorInput) textColorInput.value = colors.text;
+      if (colors.accent && accentColorInput) accentColorInput.value = colors.accent;
+      stackManager.setCustomColors(colors);
+      if (stackManager.getState().theme !== 'custom') {
+        stackManager.setTheme('custom');
+        if (themePresetSelect) themePresetSelect.value = 'custom';
+        if (themePresetCards) themePresetCards.querySelectorAll('.theme-card-btn').forEach(b => b.classList.remove('is-active'));
+      }
+    }
+
+    if (sidebarBgColor) sidebarBgColor.addEventListener('input', (e) => syncColorsFromSidebar({ bg: e.target.value }));
+    if (sidebarTextColor) sidebarTextColor.addEventListener('input', (e) => syncColorsFromSidebar({ text: e.target.value }));
+    if (sidebarAccentColor) sidebarAccentColor.addEventListener('input', (e) => syncColorsFromSidebar({ accent: e.target.value }));
 
     // Subscribe to stack changes
     stackManager.subscribe(() => {

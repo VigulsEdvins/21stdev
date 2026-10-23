@@ -304,6 +304,86 @@ function renderSectionOverlayHtml(elements) {
     const top = typeof el.y === 'number' ? `${el.y}%` : '50%';
     const styleAttr = `left: ${left}; top: ${top};`;
 
+    if (el.type === 'table') {
+      const tableType = el.tableType || 'pricing';
+      const title = el.title || 'Pro Plan';
+      const price = el.price || '$29/mo';
+      const features = Array.isArray(el.features) ? el.features : ['Unlimited Projects', 'Custom Domains', '24/7 Priority Support'];
+      const ctaText = el.ctaText || 'Get Started';
+      const ctaLink = el.ctaLink || '#';
+
+      if (tableType === 'comparison') {
+        const headers = Array.isArray(el.headers) ? el.headers : ['Feature', 'Free', 'Pro'];
+        const rows = Array.isArray(el.rows) ? el.rows : [
+          ['Storage', '5 GB', '500 GB'],
+          ['Bandwidth', '10 GB/mo', 'Unlimited'],
+          ['Support', 'Community', '24/7 Priority']
+        ];
+        return `      <div class="canvas-element element-table element-table-comparison" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <table class="canvas-matrix-table">
+          <thead>
+            <tr>${headers.map(h => `<th>${escapeHtml(h)}</th>`).join('')}</tr>
+          </thead>
+          <tbody>
+            ${rows.map(row => `<tr>${row.map((cell, idx) => `<td>${idx === 0 ? `<strong>${escapeHtml(cell)}</strong>` : escapeHtml(cell)}</td>`).join('')}</tr>`).join('\n            ')}
+          </tbody>
+        </table>
+      </div>`;
+      }
+
+      // Default: pricing table card
+      return `      <div class="canvas-element element-table element-table-pricing" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <div class="pricing-card-header">
+          <div class="pricing-card-title">${escapeHtml(title)}</div>
+          <div class="pricing-card-price">${escapeHtml(price)}</div>
+        </div>
+        <ul class="pricing-card-features">
+          ${features.map(f => `<li><span class="feature-check">✓</span> ${escapeHtml(f)}</li>`).join('\n          ')}
+        </ul>
+        <a href="${escapeHtml(ctaLink)}" class="pricing-card-cta">${escapeHtml(ctaText)}</a>
+      </div>`;
+    }
+
+    if (el.type === 'card') {
+      const cardType = el.cardType || 'feature';
+      const title = el.title || 'Real-time Analytics';
+      const subtitle = el.subtitle || '';
+      const description = el.description || 'Track conversion rates and user telemetry with sub-millisecond precision.';
+      const badgeText = el.badgeText || (cardType === 'feature' ? 'HOT' : '');
+      const link = el.link || '#';
+      const ctaText = el.ctaText || 'Learn More →';
+
+      if (cardType === 'testimonial') {
+        const author = el.author || 'Sarah Jenkins';
+        const role = el.role || 'VP of Product, Apex Digital';
+        const avatar = el.avatarUrl || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80';
+        const rating = el.rating || 5;
+        const stars = '★'.repeat(rating);
+        return `      <div class="canvas-element element-card element-card-testimonial" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <div class="testimonial-stars">${stars}</div>
+        <p class="testimonial-quote">"${escapeHtml(description)}"${badgeText ? ` <span class="card-badge">${escapeHtml(badgeText)}</span>` : ''}</p>
+        <div class="testimonial-author-row">
+          <img src="${escapeHtml(avatar)}" alt="${escapeHtml(author)}" class="testimonial-avatar" loading="lazy" />
+          <div class="testimonial-meta">
+            <div class="testimonial-name">${escapeHtml(author)}</div>
+            <div class="testimonial-role">${escapeHtml(role)}</div>
+          </div>
+        </div>
+      </div>`;
+      }
+
+      // Default: feature card
+      return `      <div class="canvas-element element-card element-card-feature" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <div class="feature-card-header">
+          <div class="feature-card-title">${escapeHtml(title)}</div>
+          ${badgeText ? `<span class="card-badge">${escapeHtml(badgeText)}</span>` : ''}
+        </div>
+        ${subtitle ? `<div class="feature-card-subtitle">${escapeHtml(subtitle)}</div>` : ''}
+        <p class="feature-card-desc">${escapeHtml(description)}</p>
+        <a href="${escapeHtml(link)}" class="feature-card-link">${escapeHtml(ctaText)}</a>
+      </div>`;
+    }
+
     if (el.type === 'image') {
       const url = el.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80';
       const sizeClass = el.imageSize ? `img-size-${el.imageSize}` : 'img-size-medium';
@@ -314,7 +394,9 @@ function renderSectionOverlayHtml(elements) {
 
     if (el.type === 'badge') {
       const text = el.text || 'FEATURED';
-      return `      <div class="canvas-element element-badge" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+      const badgeStyle = el.badgeStyle || el.style || 'pulse';
+      return `      <div class="canvas-element element-badge badge-style-${badgeStyle}" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <span class="badge-dot"></span>
         <span class="badge-text">${escapeHtml(text)}</span>
       </div>`;
     }
@@ -324,7 +406,7 @@ function renderSectionOverlayHtml(elements) {
     const link = el.link || '#';
     const btnStyle = el.style || 'solid';
     return `      <div class="canvas-element element-button btn-style-${btnStyle}" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
-        <a href="${escapeHtml(link)}" class="canvas-btn-link">${escapeHtml(text)}</a>
+        <a href="${escapeHtml(link)}" class="canvas-btn-link"><span class="btn-shine-effect"></span><span class="btn-label">${escapeHtml(text)}</span></a>
       </div>`;
   });
 
@@ -424,6 +506,209 @@ const OVERLAY_ELEMENT_CSS = `
       transform: translateY(-2px);
     }
 
+    .btn-style-shine .canvas-btn-link {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 18px rgba(168, 85, 247, 0.4);
+    }
+    .btn-style-shine .btn-shine-effect {
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: rotate(25deg);
+      transition: all 0.75s ease;
+      pointer-events: none;
+    }
+    .btn-style-shine:hover .btn-shine-effect {
+      left: 120%;
+    }
+    .btn-style-shine .canvas-btn-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(168, 85, 247, 0.6);
+    }
+
+    /* Table Widgets */
+    .element-table {
+      min-width: 280px;
+      max-width: 420px;
+      border-radius: 16px;
+      padding: 24px;
+      background: var(--preview-card-bg, rgba(24, 24, 27, 0.9));
+      border: 1px solid var(--preview-border, rgba(255, 255, 255, 0.12));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      color: var(--preview-text, #fafafa);
+    }
+
+    .element-table-pricing .pricing-card-header {
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--preview-border, rgba(255, 255, 255, 0.1));
+      padding-bottom: 16px;
+    }
+    .element-table-pricing .pricing-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .element-table-pricing .pricing-card-price {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--preview-accent, #6366f1);
+    }
+    .element-table-pricing .pricing-card-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .element-table-pricing .pricing-card-features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .element-table-pricing .feature-check {
+      color: #10b981;
+      font-weight: 700;
+    }
+    .element-table-pricing .pricing-card-cta {
+      display: block;
+      text-align: center;
+      padding: 12px 20px;
+      border-radius: 10px;
+      background: var(--preview-accent, #6366f1);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 13px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    }
+    .element-table-pricing .pricing-card-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    }
+
+    .element-table-comparison .canvas-matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .element-table-comparison th {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--preview-border, rgba(255, 255, 255, 0.15));
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--preview-accent, #6366f1);
+    }
+    .element-table-comparison td {
+      padding: 10px;
+      border-bottom: 1px solid var(--preview-border, rgba(255, 255, 255, 0.08));
+    }
+
+    /* Card Widgets */
+    .element-card {
+      min-width: 260px;
+      max-width: 360px;
+      padding: 22px;
+      border-radius: 16px;
+      background: var(--preview-card-bg, rgba(24, 24, 27, 0.85));
+      border: 1px solid var(--preview-border, rgba(255, 255, 255, 0.12));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      color: var(--preview-text, #fafafa);
+    }
+    .element-card-feature .feature-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .element-card-feature .feature-card-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .element-card-feature .card-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .element-card-feature .feature-card-subtitle {
+      font-size: 12px;
+      color: var(--preview-accent, #6366f1);
+      margin-bottom: 6px;
+    }
+    .element-card-feature .feature-card-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      opacity: 0.85;
+      margin: 0 0 16px 0;
+    }
+    .element-card-feature .feature-card-link {
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--preview-accent, #6366f1);
+      text-decoration: none;
+      transition: gap 0.2s ease;
+    }
+    .element-card-feature .feature-card-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Testimonial Card */
+    .element-card-testimonial .testimonial-stars {
+      color: #fbbf24;
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .element-card-testimonial .testimonial-quote {
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+      margin: 0 0 14px 0;
+      opacity: 0.9;
+    }
+    .element-card-testimonial .testimonial-author-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .element-card-testimonial .testimonial-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--preview-accent, #6366f1);
+    }
+    .element-card-testimonial .testimonial-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .element-card-testimonial .testimonial-role {
+      font-size: 11px;
+      opacity: 0.65;
+    }
+
     /* Image Sizes */
     .element-image img {
       display: block;
@@ -443,19 +728,105 @@ const OVERLAY_ELEMENT_CSS = `
     .element-badge {
       display: inline-flex;
       align-items: center;
+      gap: 6px;
       padding: 6px 14px;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       border-radius: 9999px;
-      background: rgba(99, 102, 241, 0.15);
-      color: var(--preview-accent, #6366f1);
-      border: 1px solid var(--preview-accent, #6366f1);
       backdrop-filter: blur(8px);
       white-space: nowrap;
     }
+    .badge-style-pulse {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--preview-accent, #6366f1);
+      border: 1px solid var(--preview-accent, #6366f1);
+    }
+    .badge-style-pulse .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--preview-accent, #6366f1);
+      box-shadow: 0 0 8px var(--preview-accent, #6366f1);
+      animation: badgePulse 1.8s infinite;
+    }
+    @keyframes badgePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    .badge-style-pill {
+      background: var(--preview-card-bg, rgba(255, 255, 255, 0.1));
+      color: var(--preview-text, #fafafa);
+      border: 1px solid var(--preview-border, rgba(255, 255, 255, 0.2));
+    }
+    .badge-style-accent {
+      background: var(--preview-accent, #6366f1);
+      color: #ffffff;
+      border: 1px solid transparent;
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
+    }
+
+    /* Section Resize Handle */
+    .section-resize-handle {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 10px;
+      cursor: ns-resize;
+      background: transparent;
+      z-index: 40;
+      transition: background-color 0.15s ease;
+    }
+    .section-resize-handle::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.25);
+      transition: background 0.15s ease, opacity 0.15s ease;
+      opacity: 0;
+    }
+    .page-section:hover .section-resize-handle::after,
+    .section-resize-handle:hover::after {
+      opacity: 1;
+      background: var(--preview-accent, #6366f1);
+    }
+    .section-resize-handle:hover {
+      background: rgba(99, 102, 241, 0.12);
+    }
 `;
+
+/**
+ * Computes inline CSS styles for section height and vertical padding.
+ */
+function computeSectionSizingStyles(sizing) {
+  if (!sizing) return '';
+  const styles = [];
+  if (sizing.heightMode === 'screen') {
+    styles.push('min-height: 100vh');
+  } else if (sizing.heightMode === 'custom' && sizing.customHeight) {
+    styles.push(`min-height: ${sizing.customHeight}px`);
+  }
+
+  if (sizing.paddingY === 'compact') {
+    styles.push('padding-top: 32px');
+    styles.push('padding-bottom: 32px');
+  } else if (sizing.paddingY === 'medium') {
+    styles.push('padding-top: 64px');
+    styles.push('padding-bottom: 64px');
+  } else if (sizing.paddingY === 'large') {
+    styles.push('padding-top: 120px');
+    styles.push('padding-bottom: 120px');
+  }
+
+  return styles.length > 0 ? styles.join('; ') + ';' : '';
+}
 
 /**
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
@@ -490,7 +861,10 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
     // Isolated HTML
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}">\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    const sizingStyle = computeSectionSizingStyles(section.sizing);
+    const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
+    const resizeHandleHtml = `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
     // Isolated JS wrapped safely
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -622,7 +996,9 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
     // Isolated HTML
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}">\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    const sizingStyle = computeSectionSizingStyles(section.sizing);
+    const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -788,7 +1164,9 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}) {
   const doc = assemblePreviewDocument(sections, themeConfig, featuresData);
-  return doc.replace('<title>Page Preview</title>', '<title>Assembled Web Page</title>');
+  return doc
+    .replace('<title>Page Preview</title>', '<title>Assembled Web Page</title>')
+    .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }
 
 /**
