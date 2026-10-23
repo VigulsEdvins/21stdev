@@ -93,8 +93,9 @@ function scopeSectionStyles(css, sectionId) {
   // 3. Rewrite #root to #root-${sectionId}
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])#root(?![a-zA-Z0-9_-])/g, `#root-${sectionId}`);
 
-  // 4. Replace viewport locking 100vh on height with flexible viewport height
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1; min-height: 100vh$1; height: 100vh$1');
+  // 4. Replace viewport locking 100vh on height with flexible section height
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1; min-height: 100%$1; height: 100%$1');
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*100vh(\s*!important)?/gi, 'min-height: 100%$1');
 
   // 5. Universal color normalizer: replace hardcoded dark/black backgrounds with var(--preview-bg)
   scoped = scoped.replace(
@@ -773,11 +774,12 @@ const OVERLAY_ELEMENT_CSS = `
       left: 0;
       right: 0;
       bottom: 0;
-      height: 10px;
+      height: 14px;
       cursor: ns-resize;
       background: transparent;
       z-index: 40;
       transition: background-color 0.15s ease;
+      touch-action: none;
     }
     .section-resize-handle::after {
       content: '';
@@ -785,20 +787,24 @@ const OVERLAY_ELEMENT_CSS = `
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 48px;
-      height: 4px;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.25);
-      transition: background 0.15s ease, opacity 0.15s ease;
-      opacity: 0;
+      width: 56px;
+      height: 5px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      transition: all 0.15s ease;
+      opacity: 0.45;
     }
     .page-section:hover .section-resize-handle::after,
     .section-resize-handle:hover::after {
       opacity: 1;
-      background: var(--preview-accent, #6366f1);
+      background: var(--preview-accent, #a855f7);
+      width: 72px;
+      height: 6px;
+      box-shadow: 0 0 14px var(--preview-accent, #a855f7);
     }
     .section-resize-handle:hover {
-      background: rgba(99, 102, 241, 0.12);
+      background: rgba(168, 85, 247, 0.15);
     }
 `;
 
@@ -810,8 +816,11 @@ function computeSectionSizingStyles(sizing) {
   const styles = [];
   if (sizing.heightMode === 'screen') {
     styles.push('min-height: 100vh');
+    styles.push('height: 100vh');
   } else if (sizing.heightMode === 'custom' && sizing.customHeight) {
     styles.push(`min-height: ${sizing.customHeight}px`);
+    styles.push(`height: ${sizing.customHeight}px`);
+    styles.push('overflow: hidden');
   }
 
   if (sizing.paddingY === 'compact') {
@@ -918,6 +927,28 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
       background-color: var(--preview-bg);
       color: var(--preview-text);
       transition: background-color 0.2s ease, color 0.2s ease;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Seamless section height filling: child root containers expand to fill the section */
+    .page-section > div[id^="root-"],
+    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .page-section > div[id^="root-"] > *,
+    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 100%;
+      box-sizing: border-box;
     }
 
 ${allScopedStyles}
@@ -1076,6 +1107,28 @@ body {
   background-color: var(--preview-bg);
   color: var(--preview-text);
   transition: background-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Seamless section height filling: child root containers expand to fill the section */
+.page-section > div[id^="root-"],
+.page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.page-section > div[id^="root-"] > *,
+.page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================

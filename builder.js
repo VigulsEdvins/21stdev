@@ -505,7 +505,22 @@
             try {
               const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
               const secEl = doc.getElementById(item.id);
-              if (secEl) secEl.style.minHeight = `${val}px`;
+              if (secEl) {
+                secEl.style.height = `${val}px`;
+                secEl.style.minHeight = `${val}px`;
+                secEl.style.overflow = 'hidden';
+                const contentEl = secEl.querySelector(':scope > div[id^="root-"], :scope > :first-child:not(.section-overlay-layer):not(.section-resize-handle)');
+                if (contentEl) {
+                  contentEl.style.flex = '1 1 auto';
+                  contentEl.style.height = '100%';
+                  contentEl.style.minHeight = '100%';
+                  if (contentEl.firstElementChild) {
+                    contentEl.firstElementChild.style.flex = '1 1 auto';
+                    contentEl.firstElementChild.style.height = '100%';
+                    contentEl.firstElementChild.style.minHeight = '100%';
+                  }
+                }
+              }
             } catch (_) {}
           });
           slider.addEventListener('change', (e) => {
@@ -1351,12 +1366,41 @@
           const initialHeight = sectionEl.getBoundingClientRect().height;
           let newHeight = initialHeight;
 
+          // Prepare section & children for live stretching without blank gaps
+          sectionEl.style.display = 'flex';
+          sectionEl.style.flexDirection = 'column';
+          const contentEl = sectionEl.querySelector(':scope > div[id^="root-"], :scope > :first-child:not(.section-overlay-layer):not(.section-resize-handle)');
+          if (contentEl) {
+            contentEl.style.flex = '1 1 auto';
+            contentEl.style.height = '100%';
+            contentEl.style.minHeight = '100%';
+            if (contentEl.firstElementChild) {
+              contentEl.firstElementChild.style.flex = '1 1 auto';
+              contentEl.firstElementChild.style.height = '100%';
+              contentEl.firstElementChild.style.minHeight = '100%';
+            }
+          }
+
           function onResizeMove(moveEvent) {
             const frameRect = previewFrame.getBoundingClientRect();
             const mouseY = (moveEvent.view === window) ? (moveEvent.clientY - frameRect.top) : moveEvent.clientY;
             const deltaY = mouseY - startY;
-            newHeight = Math.max(140, Math.min(2400, Math.round(initialHeight + deltaY)));
+            newHeight = Math.max(120, Math.min(2600, Math.round(initialHeight + deltaY)));
+            sectionEl.style.height = `${newHeight}px`;
             sectionEl.style.minHeight = `${newHeight}px`;
+            sectionEl.style.overflow = 'hidden';
+
+            // Show live height floating tooltip inside the iframe
+            let sizeTooltip = doc.getElementById('sectionResizeTooltip');
+            if (!sizeTooltip) {
+              sizeTooltip = doc.createElement('div');
+              sizeTooltip.id = 'sectionResizeTooltip';
+              sizeTooltip.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(15,15,22,0.92);color:#fafafa;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:monospace;border:1px solid rgba(168,85,247,0.5);box-shadow:0 8px 24px rgba(0,0,0,0.6);z-index:99999;pointer-events:none;';
+              doc.body.appendChild(sizeTooltip);
+            }
+            sizeTooltip.textContent = `Section Height: ${newHeight}px`;
+            sizeTooltip.style.display = 'block';
+
             updateToolbarPosition();
           }
 
@@ -1365,6 +1409,9 @@
             doc.removeEventListener('mouseup', onResizeUp);
             window.removeEventListener('mousemove', onResizeMove);
             window.removeEventListener('mouseup', onResizeUp);
+
+            const sizeTooltip = doc.getElementById('sectionResizeTooltip');
+            if (sizeTooltip) sizeTooltip.style.display = 'none';
 
             stackManager.updateSectionSizing(sectionId, {
               heightMode: 'custom',
