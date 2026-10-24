@@ -31,6 +31,7 @@
     "check-responsive": "node scripts/check-responsive.js",
     "check-starters": "node scripts/check-starters.js",
     "ci": "node scripts/ci.js",
+    "check-cross-browser": "node scripts/check-cross-browser.js",
     "size-report": "node scripts/size-report.js",
     "find-unused-assets": "node scripts/find-unused-assets.js",
     "check-code-safety": "node scripts/check-code-safety.js",

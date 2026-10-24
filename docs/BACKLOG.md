@@ -1,5 +1,7 @@
 # Backlog — epics and tasks
 
+> **Closed archive (2026-10-24).** Everything here was finished or dropped by decision. Current work: [ROADMAP.md](ROADMAP.md).
+
 State on 2026-10-24 (branch `fix/theme-issues-and-builder-split`): 209 components (173 from 21st.dev with `unverified` licence, 36 own), all `stable`, 0 headless-check failures, 164 with named Content fields, 64 restyled with Tailwind, `builder.js` split down to 585 lines, unit + e2e tests pass.
 
 Size: S ≤ 0.5 day, M ≈ 1–2 days, L ≈ 3+ days. Priority: P0 blocks real client use, P1 next, P2 later.

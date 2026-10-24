@@ -27,6 +27,9 @@ function findCachedChromium() {
 }
 
 async function launchBrowser() {
+  // BROWSER=firefox or BROWSER=webkit runs the same scripts and tests in another engine (see scripts/check-cross-browser.js)
+  const engine = process.env.BROWSER;
+  if (engine === 'firefox' || engine === 'webkit') return require('playwright-core')[engine].launch({ headless: true });
   const { chromium } = require('playwright-core');
   const executablePath = process.env.CHROMIUM_PATH || undefined;
   try {

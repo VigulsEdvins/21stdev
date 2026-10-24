@@ -74,6 +74,12 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 | `npm run thumbs` | Render `thumbs/<slug>.jpg` previews |
 | `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx`. Always run it after editing `component.tsx` or `demo.tsx`: the builder and exports use `script.js`, and `verify` fails when a stamped bundle is older than its sources |
 | `npm run lint-tokens` | Design-token adoption report |
+| `npm run ci` | Everything CI runs, in order, with a pass/fail table (`-- --fast` = verify + unit + e2e, `-- --keep-going` = do not stop at the first failure) |
+| `npm run check-starters` | Builds every starter project and records the export page checks (alt text, headings, links, labels) in `reports/starter-checks.json`; fails on errors |
+| `npm run check-code-safety` | Scans `features/` for `eval`, `new Function`, `document.write`, remote scripts outside an allow-list and `message` listeners without an origin check (also part of `npm test`) |
+| `npm run check-cross-browser` | Builder flow and 10 components in Firefox and WebKit from the Playwright cache (an engine that cannot start is reported as skipped) |
+| `npm run find-unused-assets` | Lists files in `assets/library` that nothing mentions (`-- --delete` removes them) |
+| `npm run size-report` | Largest tracked files; fails if one is over 5 MB |
 
 ## 4. Builder Workflow for Client Sites
 
@@ -81,14 +87,15 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 2. **Arrange** them in *Sections*, then set colours and **page settings** (title, description, favicon, Google fonts, language) in *Styling*.
 3. **Edit client content** in the *Content* tab: text, images (upload or URL) and links. Edits are stored per section and re-applied in the preview and the export.
 4. **Save the work** under *Projects*: one project per client with notes, up to 20 snapshots, and JSON export/import to move a project between machines.
-5. **Export**: the ZIP contains `index.html`, `style.css`, `script.js`, a handoff `README.md` and an `assets/` folder; the single-file HTML inlines the images. A **Review copy** download adds a comment overlay for clients (they send the comments back as a file; load it in the Export modal). A separate **React project** download (Vite + TypeScript) holds every section that has a `component.tsx` + `demo.tsx`; the others are left out and listed in its README.
+5. **Export**: before downloading, the modal lists page checks (missing alt text, headings, empty links, unlabelled fields, default title). The ZIP contains `index.html`, `style.css`, `script.js`, a handoff `README.md` (with page weight and third-party requests), `robots.txt`, `sitemap.xml` (when a live address is set), `_headers`, `DEPLOY.md`, self-hosted page fonts under `assets/fonts/` and an `assets/` folder; an optional strict CSP can be switched on; the single-file HTML inlines the images. A **Review copy** download adds a comment overlay for clients (they send the comments back as a file; load it in the Export modal). A separate **React project** download (Vite + TypeScript) holds every section that has a `component.tsx` + `demo.tsx`; the others are left out and listed in its README.
 
 ## 5. Where Things Live
 
 - `builder.html`, `builder.js`, `builder.css` — the builder shell. Extracted modules are in `scripts/builder/` (categories, widget catalog, UI helpers, export asset bundling, in-place preview patching).
 - `scripts/builder-extras.js` — projects modal, page settings, Content tab. `scripts/projects.js` — project store. `scripts/catalog-search.js` — search, filters, favourites.
 - `index.html` + `app.js` — the catalogue; its inspector, workbench and Add Feature Studio are in `scripts/catalog/`.
-- `registry.js` is **metadata only** (about 0.3 MB). Source files are fetched on demand by `scripts/feature-files.js` (catalogue) and `fetchFeatureFiles` (builder). Full-site templates keep their extra files in `features/<slug>/site/`.
+- `scripts/builder/page-checks.js` (pre-export checks), `font-host.js` (self-hosting fonts), `canvas-*.js` (canvas, split from the old 1,400-line canvas.js), `scripts/project-sanitize.js` (cleans imported project files).
+- `registry.js` is **metadata only** (about 0.27 MB; the named-field lists load from each `meta.json` when needed; `registry.json` keeps everything for tools). Source files are fetched on demand by `scripts/feature-files.js` (catalogue) and `fetchFeatureFiles` (builder). Full-site templates keep their extra files in `features/<slug>/site/`.
 - `scripts/assembler.js` — builds the preview document and the export bundle. `scripts/stack-manager.js` — page state.
 - `assets/library/` — shared, content-hash-named images used by features. `thumbs/` — grid thumbnails. `reports/` — generated, git-ignored.
 
@@ -103,4 +110,4 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 
 ## 7. Backlog
 
-Open work, with priorities and what is already done, is in [`docs/BACKLOG.md`](docs/BACKLOG.md). Licence evidence is in `docs/licence-audit/`. CI (`.github/workflows/ci.yml`) runs `verify`, the unit and e2e tests, `check-blank` and `check-exports`.
+The first backlog is closed ([`docs/BACKLOG.md`](docs/BACKLOG.md), kept as an archive). Current work is in [`docs/ROADMAP.md`](docs/ROADMAP.md); data flow is in [`docs/architecture.md`](docs/architecture.md); how the vault was first filled is in [`docs/vault-origin.md`](docs/vault-origin.md). Licence evidence is in `docs/licence-audit/`. CI (`.github/workflows/ci.yml`) runs `verify`, the unit and e2e tests, `check-blank` and `check-exports`.
