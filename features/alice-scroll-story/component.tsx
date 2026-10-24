@@ -396,31 +396,31 @@ export default function AliceScrollStory() {
             <div className="hero-reveal__content-inner">
               <div className="hero-reveal__parallax">
                 <img
-                  src="https://cdn.21st.dev/assets/mirror/9b/9bc8918f9a205f2b72edf3d4e9d7e2b0c3fcfba2ab80962eba6ad1fb4b89cb33.png"
+                  src="/assets/library/9bc8918f9a205f2b72edf3d4e9d7e2b0c3fcfba2-70d9d69d.png"
                   alt="Alice"
                   className="hero-reveal__parallax-alice"
                 />
                 <img
                   width="150"
-                  src="https://cdn.21st.dev/assets/mirror/d9/d910502e2c6fa3f6f5e9c63cd498a005d1ec7a974f2286850859589b597a8aa1.png"
+                  src="/assets/library/d910502e2c6fa3f6f5e9c63cd498a005d1ec7a97-47558f00.png"
                   alt="Clock"
                   className="hero-reveal__parallax-clock"
                 />
                 <img
                   width="100"
-                  src="https://cdn.21st.dev/assets/mirror/9e/9eb45f5186ffc7f60c3c085907211d5157bced180e6b1d0a15c0aab0150b7636.png"
+                  src="/assets/library/9eb45f5186ffc7f60c3c085907211d5157bced18-549f9b8e.png"
                   alt="Book"
                   className="hero-reveal__parallax-book"
                 />
                 <img
                   width="50"
-                  src="https://cdn.21st.dev/assets/mirror/d3/d3f44d54a86e918c2050ef8fa67d6bbc66cb272f42a4da04b1fd002faf5e915a.png"
+                  src="/assets/library/d3f44d54a86e918c2050ef8fa67d6bbc66cb272f-3690817b.png"
                   alt="Kettle"
                   className="hero-reveal__parallax-kattle"
                 />
                 <img
                   width="330"
-                  src="https://cdn.21st.dev/assets/mirror/4d/4da8755595b497e15b45fcebdcd9d7c83b1700535e0bb4a3305fbdbb8e9324a2.png"
+                  src="/assets/library/4da8755595b497e15b45fcebdcd9d7c83b170053-caebc5e3.png"
                   alt="Card"
                   className="hero-reveal__parallax-card"
                 />

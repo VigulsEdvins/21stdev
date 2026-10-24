@@ -110,7 +110,7 @@ const FOOT_NOTE =
   "This poster is for the ones you announce, and the ones you only make to yourself."
 
 const FONT_HREF =
-  "https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..700&family=Pinyon+Script&family=Syncopate:wght@400;700&display=swap"
+  "/assets/library/fonts-Bodoni-Moda-c4db24a6.css"
 
 const DISPLAY = '"Bodoni Moda", "Bodoni 72", Didot, "Playfair Display", Georgia, serif'
 const SCRIPT = '"Pinyon Script", "Snell Roundhand", "Apple Chancery", "Edwardian Script ITC", cursive'

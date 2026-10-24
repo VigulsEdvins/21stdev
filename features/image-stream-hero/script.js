@@ -4,14 +4,14 @@
  */
 (function () {
   const IMAGES = [
-    { src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80", color: "#6366f1", title: "Chroma Seascape" },
-    { src: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=800&auto=format&fit=crop&q=80", color: "#ec4899", title: "Prism Aurora" },
-    { src: "https://images.unsplash.com/photo-1618172193622-ae2d025f4032?w=800&auto=format&fit=crop&q=80", color: "#8b5cf6", title: "Ether Flow" },
-    { src: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&auto=format&fit=crop&q=80", color: "#06b6d4", title: "Quantum Grade" },
-    { src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=800&auto=format&fit=crop&q=80", color: "#3b82f6", title: "Nebula Stream" },
-    { src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop&q=80", color: "#10b981", title: "Cyber Mesh" },
-    { src: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&auto=format&fit=crop&q=80", color: "#f59e0b", title: "Liquid Flux" },
-    { src: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=800&auto=format&fit=crop&q=80", color: "#f43f5e", title: "Solar Wind" }
+    { src: "/assets/library/photo-1618005182384-a83a8bd57fbe-077a01fd.jpg", color: "#6366f1", title: "Chroma Seascape" },
+    { src: "/assets/library/photo-1634017839464-5c339ebe3cb4-647c947c.jpg", color: "#ec4899", title: "Prism Aurora" },
+    { src: "/assets/library/photo-1618172193622-ae2d025f4032-656fdbec.jpg", color: "#8b5cf6", title: "Ether Flow" },
+    { src: "/assets/library/photo-1635070041078-e363dbe005cb-bf117738.jpg", color: "#06b6d4", title: "Quantum Grade" },
+    { src: "/assets/library/photo-1614728263952-84ea256f9679-af306b6f.jpg", color: "#3b82f6", title: "Nebula Stream" },
+    { src: "/assets/library/photo-1550751827-4bd374c3f58b-eed9f788.jpg", color: "#10b981", title: "Cyber Mesh" },
+    { src: "/assets/library/photo-1541701494587-cb58502866ab-3ddeb83b.jpg", color: "#f59e0b", title: "Liquid Flux" },
+    { src: "/assets/library/photo-1508739773434-c26b3d09e071-8451f283.jpg", color: "#f43f5e", title: "Solar Wind" }
   ];
 
   const PATH = {

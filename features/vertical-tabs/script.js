@@ -8,19 +8,19 @@
       id: "01",
       title: "Design",
       description: "Crafting intuitive and engaging user interfaces that captivate and convert.",
-      image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200"
+      image: "/assets/library/photo-1507238691740-187a5b1d37b8-72990609.jpg"
     },
     {
       id: "02",
       title: "Development",
       description: "Building robust and scalable solutions tailored to your unique requirements.",
-      image: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=1200"
+      image: "/assets/library/photo-1581291518857-4e27b48ff24e-3ad8d0f9.jpg"
     },
     {
       id: "03",
       title: "Branding",
       description: "Defining your brand's visual identity and voice for a lasting impression.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200"
+      image: "/assets/library/photo-1555066931-4365d14bab8c-c55b9bbf.jpg"
     }
   ];
 

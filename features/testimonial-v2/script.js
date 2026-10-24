@@ -8,7 +8,7 @@
       id: "1",
       name: "Sarah Jenkins",
       title: "Chief Design Officer &bull; Stratos Systems",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80",
+      avatar: "/assets/library/photo-1494790108377-be9c29b29330-910f42a6.jpg",
       quote: "Integrating these micro-interactions into our design system eliminated months of back-and-forth between design and engineering teams.",
       metric: "4.8x",
       metricLabel: "Faster Dev Velocity"
@@ -17,7 +17,7 @@
       id: "2",
       name: "Alexandre Moreau",
       title: "Lead Frontend Engineer &bull; Luminary AI",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&auto=format&fit=crop&q=80",
+      avatar: "/assets/library/photo-1472099645785-5658abf4ff4e-06fc600d.jpg",
       quote: "Clean code structure, zero dependency bloat, and instant copy-paste usability. Exactly how modern web blocks should be packaged.",
       metric: "99.4%",
       metricLabel: "Satisfaction Rate"
@@ -26,7 +26,7 @@
       id: "3",
       name: "Chloe Zhao",
       title: "Product Growth Lead &bull; Apex Scale",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+      avatar: "/assets/library/photo-1544005313-94ddf0286df2-995556a6.jpg",
       quote: "The visual polish and tactile spring curves boosted user engagement across all key onboarding steps.",
       metric: "+38%",
       metricLabel: "Conversion Lift"

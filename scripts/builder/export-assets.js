@@ -11,7 +11,7 @@
     png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif',
     svg: 'image/svg+xml', avif: 'image/avif', ico: 'image/x-icon', mp4: 'video/mp4', webm: 'video/webm',
     mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg', woff: 'font/woff', woff2: 'font/woff2',
-    ttf: 'font/ttf', otf: 'font/otf'
+    ttf: 'font/ttf', otf: 'font/otf', css: 'text/css'
   };
   const TEXT_FILES = ['index.html', 'style.css', 'script.js'];
 
@@ -62,6 +62,30 @@
       const zipMap = {};
       const inlineMap = {};
       const missing = [];
+      const zipPathOf = (url) => {
+        let decoded = url;
+        try { decoded = decodeURIComponent(url); } catch (_) { /* keep raw */ }
+        return decoded.startsWith('/assets/') ? decoded.slice(1) : 'assets' + decoded;
+      };
+      // A stylesheet pulls in its own fonts/images through relative url(...): ship those too, and for the
+      // single-file page turn them into data URIs, since a relative path inside a data: URI resolves to nothing.
+      const cssInline = {};
+      await Promise.all(list.map(async (url, i) => {
+        const asset = fetched[i];
+        if (!asset || asset.mime !== 'text/css') return;
+        const dir = url.slice(0, url.lastIndexOf('/') + 1);
+        const css = new TextDecoder().decode(asset.bytes);
+        const refs = new Set();
+        css.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/g, (m, q, ref) => { if (!/^(data:|https?:|\/|#)/.test(ref)) refs.add(ref); return m; });
+        const inner = await Promise.all(Array.from(refs).map(async ref => ({ ref, asset: await fetchLocalAsset(dir + ref) })));
+        let inlined = css;
+        inner.forEach(({ ref, asset: a }) => {
+          if (!a) { missing.push(dir + ref); return; }
+          assets[zipPathOf(dir + ref)] = a.bytes;
+          inlined = inlined.split(ref).join(bytesToDataUri(a.bytes, a.mime));
+        });
+        cssInline[url] = bytesToDataUri(new TextEncoder().encode(inlined), 'text/css');
+      }));
       list.forEach((url, i) => {
         const asset = fetched[i];
         if (!asset) { missing.push(url); return; }
@@ -71,7 +95,7 @@
         const zipPath = decoded.startsWith('/assets/') ? decoded.slice(1) : 'assets' + decoded;
         assets[zipPath] = asset.bytes;
         zipMap[url] = zipPath;
-        inlineMap[url] = bytesToDataUri(asset.bytes, asset.mime);
+        inlineMap[url] = cssInline[url] || bytesToDataUri(asset.bytes, asset.mime);
       });
 
       if (files) {
