@@ -177,6 +177,15 @@
       const extraAssets = Array.from(new Set(stackManager.getStack().flatMap(s => exportAssets[s.slug] || [])));
       const result = await assetBundler.bundle({ files: currentExportBundle, singleHtml: currentSingleHtml, extraAssets });
       currentExportAssets = result.assets;
+      if (currentExportBundle && window.FontHost && window.FontHost.cssUrl(stackManager.getState().page)) {
+        const fonts = await window.FontHost.hostFonts({ files: currentExportBundle, page: stackManager.getState().page, fetchFn: (u) => fetch(u) });
+        if (fonts.hosted) {
+          Object.assign(currentExportAssets, fonts.assets);
+          currentExportBundle['README.md'] = currentExportBundle['README.md'].replace(/Fonts load from Google Fonts via the `<link>` tag there and are applied/, 'Fonts are self-hosted in `assets/fonts/` (declared at the end of `style.css`) and are applied');
+        } else {
+          showToast('Page fonts could not be downloaded; the ZIP still loads them from Google Fonts', 4000);
+        }
+      }
       if (currentExportBundle && typeof currentExportBundle['README.md'] === 'string' && ExportAssetsApi.renderWeightReport) {
         const sections = stackManager.getStack().map(s => ({ slug: s.slug, title: (featuresData[s.slug] && featuresData[s.slug].title) || s.slug }));
         currentExportBundle['README.md'] += '\n' + ExportAssetsApi.renderWeightReport({ files: currentExportBundle, assets: result.assets, sections, weightMap });
