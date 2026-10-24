@@ -381,7 +381,11 @@
       lang: doc.getElementById('pageLangInput'),
       shareImage: doc.getElementById('pageShareImageInput'),
       canonical: doc.getElementById('pageCanonicalInput'),
-      robots: doc.getElementById('pageRobotsInput')
+      robots: doc.getElementById('pageRobotsInput'),
+      bizType: doc.getElementById('pageBizTypeInput'),
+      bizName: doc.getElementById('pageBizNameInput'),
+      bizPhone: doc.getElementById('pageBizPhoneInput'),
+      bizAddress: doc.getElementById('pageBizAddressInput')
     };
     let pageTimer = null;
     let pendingPage = {};

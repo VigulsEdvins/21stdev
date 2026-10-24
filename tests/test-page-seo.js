@@ -28,3 +28,25 @@ assert.strictEqual(page.shareImage, 'https://x.example/a.png');
 assert.strictEqual(page.robots, 'noindex');
 assert.strictEqual(page.bogus, undefined);
 console.log('✅ Page SEO tests passed!');
+
+// JSON-LD, robots.txt and sitemap.xml
+const ld = A.renderPageHead({ title: 'Zephyr', bizType: 'LocalBusiness', bizName: 'Zephyr </script> Dental', canonical: 'https://zephyr.example/', bizPhone: '+371 2000 0000' });
+assert(ld.headTags.includes('<script type="application/ld+json">'), 'JSON-LD written');
+const ldBody = ld.headTags.split('<script type="application/ld+json">')[1].split('</script>')[0];
+const parsed = JSON.parse(ldBody);
+assert.strictEqual(parsed['@type'], 'LocalBusiness');
+assert.strictEqual(parsed.name, 'Zephyr </script> Dental', 'value is kept but cannot close the tag');
+assert(!ldBody.includes('<'), 'no raw < inside JSON-LD');
+assert(!A.renderPageHead({ title: 'x', bizType: 'LocalBusiness' }).headTags.includes('ld+json'), 'no name, no JSON-LD');
+assert(!A.renderPageHead({ title: 'x', bizName: 'N' }).headTags.includes('ld+json'), 'no type, no JSON-LD');
+
+assert.strictEqual(A.renderSiteFiles({ robots: 'noindex', canonical: 'https://a.example/' })['robots.txt'], 'User-agent: *\nDisallow: /\n');
+assert.strictEqual(A.renderSiteFiles({ robots: 'noindex' })['sitemap.xml'], undefined);
+const sf = A.renderSiteFiles({ canonical: 'https://a.example/home?x=1' });
+assert(sf['robots.txt'].includes('Sitemap: https://a.example/sitemap.xml'));
+assert(sf['sitemap.xml'].includes('<loc>https://a.example/home?x=1</loc>'));
+assert.strictEqual(A.renderSiteFiles({})['sitemap.xml'], undefined, 'no address, no sitemap');
+const bundle = A.generateExportBundle([], 'midnight-dark', {}, { page: { canonical: 'https://a.example/' } });
+assert(bundle['robots.txt'] && bundle['sitemap.xml'], 'bundle carries the site files');
+assert(!A.generateExportBundle([], 'midnight-dark', {}, { page: {} })['sitemap.xml']);
+console.log('✅ JSON-LD and site files tests passed!');

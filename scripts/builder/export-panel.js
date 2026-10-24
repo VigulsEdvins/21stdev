@@ -479,6 +479,7 @@
           zip.file('style.css', currentExportBundle['style.css']);
           zip.file('script.js', currentExportBundle['script.js']);
           zip.file('README.md', currentExportBundle['README.md']);
+          ['robots.txt', 'sitemap.xml'].forEach(n => { if (currentExportBundle[n]) zip.file(n, currentExportBundle[n]); });
           Object.entries(currentExportAssets).forEach(([name, bytes]) => zip.file(name, bytes));
           const blob = await zip.generateAsync({ type: 'blob' });
           triggerDownload(blob, zipFilename, 'application/zip');

@@ -14,7 +14,11 @@ const DEFAULT_PAGE = {
   lang: 'en',
   shareImage: '', // full https:// URL of the picture shown when the page is shared (og:image)
   canonical: '', // full https:// URL of the live page
-  robots: '' // '' = let search engines index the page, 'noindex' = ask them not to
+  robots: '', // '' = let search engines index the page, 'noindex' = ask them not to
+  bizType: '', // '' | 'Organization' | 'LocalBusiness': writes JSON-LD for search engines
+  bizName: '',
+  bizPhone: '',
+  bizAddress: ''
 };
 
 function createStackManager(initialConfig = {}) {

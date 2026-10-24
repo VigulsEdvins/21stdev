@@ -8,15 +8,17 @@
   const FORMAT = 'web-builder-project';
   const MAX_SNAPSHOTS = 20;
   // Version of the project file format. Bump it when the shape of a saved page changes and add a step to MIGRATIONS.
-  const CURRENT_VERSION = 2;
-  const PAGE_DEFAULTS = { title: 'Assembled Web Page', description: '', favicon: '', fontDisplay: '', fontBody: '', lang: 'en', shareImage: '', canonical: '', robots: '' };
+  const CURRENT_VERSION = 3;
+  const PAGE_DEFAULTS = { title: 'Assembled Web Page', description: '', favicon: '', fontDisplay: '', fontBody: '', lang: 'en', shareImage: '', canonical: '', robots: '', bizType: '', bizName: '', bizPhone: '', bizAddress: '' };
 
   /**
    * Steps that bring a page state saved by an older version up to the next one, keyed by the version they start from.
    * 1 -> 2: page settings gained share image, canonical address and robots; every key is now always present.
+   * 2 -> 3: page settings gained the business fields used for JSON-LD.
    */
   const MIGRATIONS = {
-    1: (state) => ({ ...state, page: { ...PAGE_DEFAULTS, ...(state.page || {}) } })
+    1: (state) => ({ ...state, page: { ...PAGE_DEFAULTS, ...(state.page || {}) } }),
+    2: (state) => ({ ...state, page: { ...PAGE_DEFAULTS, ...(state.page || {}) } })
   };
 
   /** Brings a page state from `fromVersion` to the current format (a copy; the input is not changed). */

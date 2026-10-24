@@ -2365,6 +2365,39 @@ function renderNativePaletteCss(sections, nativeMap) {
  * @param {object} [page]
  * @param {string} [fallbackTitle]
  */
+/** Organization / LocalBusiness data for search engines; '' when the page has no business type or name. */
+function renderJsonLd(page = {}, title = '') {
+  if (page.bizType !== 'Organization' && page.bizType !== 'LocalBusiness') return '';
+  const name = String(page.bizName || '').trim();
+  if (!name) return '';
+  const absolute = (v) => { const s = String(v || '').trim(); return /^https?:\/\/[^\s"'<>]+$/i.test(s) ? s : ''; };
+  const data = { '@context': 'https://schema.org', '@type': page.bizType, name };
+  if (absolute(page.canonical)) data.url = absolute(page.canonical);
+  if (absolute(page.shareImage)) data.image = absolute(page.shareImage);
+  if (String(page.description || '').trim()) data.description = String(page.description).trim();
+  if (String(page.bizPhone || '').trim()) data.telephone = String(page.bizPhone).trim();
+  if (String(page.bizAddress || '').trim()) data.address = String(page.bizAddress).trim();
+  // '<' is escaped so no value can close the script tag
+  return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
+}
+
+/** robots.txt and sitemap.xml for a single-page export. The sitemap needs the live address, so it is skipped without one. */
+function renderSiteFiles(page = {}) {
+  const canonical = String(page.canonical || '').trim();
+  const url = /^https?:\/\/[^\s"'<>]+$/i.test(canonical) ? canonical : '';
+  const files = {};
+  if (page.robots === 'noindex') {
+    files['robots.txt'] = 'User-agent: *\nDisallow: /\n';
+    return files;
+  }
+  const origin = url ? url.replace(/^(https?:\/\/[^/]+).*$/i, '$1') : '';
+  files['robots.txt'] = 'User-agent: *\nAllow: /\n' + (origin ? `\nSitemap: ${origin}/sitemap.xml\n` : '');
+  if (url) {
+    files['sitemap.xml'] = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${escapeHtml(url)}</loc></url>\n</urlset>\n`;
+  }
+  return files;
+}
+
 function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
   const title = (page.title || '').trim() || fallbackTitle;
   const tags = [`<title>${escapeHtml(title)}</title>`];
@@ -2383,6 +2416,8 @@ function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
   const canonical = absolute(page.canonical);
   if (canonical) tags.push(`<link rel="canonical" href="${escapeHtml(canonical)}">`, `<meta property="og:url" content="${escapeHtml(canonical)}">`);
   if (page.robots === 'noindex') tags.push('<meta name="robots" content="noindex, nofollow">');
+  const jsonLd = renderJsonLd(page, title);
+  if (jsonLd) tags.push(jsonLd);
 
   const fav = (page.favicon || '').trim();
   if (fav) {
@@ -3050,12 +3085,12 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
 \`\`\`
 `;
 
-  return {
+  return Object.assign({
     'index.html': indexHtml,
     'style.css': styleCss,
     'script.js': scriptJs,
     'README.md': readmeMd
-  };
+  }, renderSiteFiles(pageOpts));
 }
 
 /**
@@ -3264,6 +3299,8 @@ if (typeof module !== 'undefined' && module.exports) {
     generateExportBundle,
     generateSingleFileBundle,
     renderPageHead,
+    renderJsonLd,
+    renderSiteFiles,
     renderNativePaletteCss,
     collectOverrides,
     REVIEW_RUNTIME,
@@ -3291,6 +3328,8 @@ if (typeof window !== 'undefined') {
     generateExportBundle,
     generateSingleFileBundle,
     renderPageHead,
+    renderJsonLd,
+    renderSiteFiles,
     renderNativePaletteCss,
     collectOverrides,
     computeSectionSizingStyles,
