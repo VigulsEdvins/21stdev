@@ -138,6 +138,41 @@ function createStackManager(initialConfig = {}) {
     return duplicate;
   }
 
+  function replaceSection(id, slugOrSection, extraProps = {}) {
+    const index = state.stack.findIndex(s => s.id === id);
+    if (index === -1) return null;
+
+    const defaultSizing = {
+      heightMode: 'auto',
+      customHeight: 600,
+      paddingY: 'none'
+    };
+
+    let newSection;
+    if (typeof slugOrSection === 'string') {
+      newSection = {
+        id: generateId(),
+        slug: slugOrSection,
+        sizing: { ...defaultSizing, ...(extraProps.sizing || {}) },
+        ...extraProps
+      };
+    } else if (slugOrSection && typeof slugOrSection === 'object') {
+      newSection = {
+        id: slugOrSection.id || generateId(),
+        slug: slugOrSection.slug || '',
+        sizing: { ...defaultSizing, ...(slugOrSection.sizing || extraProps.sizing || {}) },
+        ...slugOrSection,
+        ...extraProps
+      };
+    } else {
+      throw new Error('Invalid section provided to replaceSection');
+    }
+
+    state.stack[index] = newSection;
+    notify();
+    return newSection;
+  }
+
   function reorderStack(startIndex, endIndex) {
     if (
       startIndex < 0 ||
@@ -281,6 +316,7 @@ function createStackManager(initialConfig = {}) {
     removeSection,
     moveSection,
     duplicateSection,
+    replaceSection,
     reorderStack,
     clearStack,
     setStack,

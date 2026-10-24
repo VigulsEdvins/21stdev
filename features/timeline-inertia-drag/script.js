@@ -175,14 +175,15 @@
     }
   });
 
-  window.addEventListener(
+  viewport.addEventListener(
     'wheel',
     (e) => {
-      e.preventDefault();
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      targetX += delta * 1.4;
-      clampTarget();
-      startAnimation();
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        targetX += e.deltaX * 1.4;
+        clampTarget();
+        startAnimation();
+      }
     },
     { passive: false }
   );

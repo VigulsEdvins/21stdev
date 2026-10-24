@@ -130,7 +130,8 @@
   window.addEventListener('pointerup', onPointerUp);
   window.addEventListener('pointercancel', onPointerUp);
 
-  window.addEventListener(
+  const wheelTarget = wrapEl.closest('.cyl-section') || wrapEl;
+  wheelTarget.addEventListener(
     'wheel',
     (e) => {
       if (isPointerDown || isManuallyPaused) return;

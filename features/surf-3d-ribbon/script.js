@@ -153,9 +153,10 @@
   container.addEventListener(
     'wheel',
     (e) => {
-      e.preventDefault();
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      surfTargetScroll += delta * 1.5;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        surfTargetScroll += e.deltaX * 1.5;
+      }
     },
     { passive: false }
   );

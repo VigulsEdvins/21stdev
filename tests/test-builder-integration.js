@@ -1,24 +1,26 @@
 const { execSync } = require('child_process');
+const fs = require('fs');
 const path = require('path');
 
-const execOptions = { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' };
+const ROOT = path.resolve(__dirname, '..');
+const execOptions = { cwd: ROOT, stdio: 'inherit' };
 
 console.log('Running test suite...');
-execSync('node tests/verify-registry.js', execOptions);
-execSync('node tests/test-assembler.js', execOptions);
-execSync('node tests/test-builder-dom.js', execOptions);
-execSync('node tests/test-builder-state.js', execOptions);
-execSync('node tests/test-builder-elements.js', execOptions);
-execSync('node tests/test-universal-theming.js', execOptions);
-execSync('node tests/test-section-sizing.js', execOptions);
-execSync('node tests/test-creative-widgets.js', execOptions);
-execSync('node tests/test-elements-catalog.js', execOptions);
-execSync('node tests/test-individual-cards.js', execOptions);
-execSync('node tests/test-element-sizing.js', execOptions);
-execSync('node tests/test-preview-generation.js', execOptions);
-execSync('node tests/test-export-generation.js', execOptions);
-execSync('node tests/test-drag-drop-canvas.js', execOptions);
-execSync('node tests/test-search-and-editing.js', execOptions);
-execSync('node tests/test-undo-persistence.js', execOptions);
 
-console.log('🎉 ALL INTEGRATION TESTS PASSED SUCCESSFULLY!');
+// Always run verify-registry.js first, then all test-*.js files in deterministic order
+const testDir = __dirname;
+const allFiles = fs.readdirSync(testDir)
+  .filter(f => f.endsWith('.js') && f !== 'test-builder-integration.js')
+  .sort((a, b) => {
+    if (a === 'verify-registry.js') return -1;
+    if (b === 'verify-registry.js') return 1;
+    return a.localeCompare(b);
+  });
+
+for (const testFile of allFiles) {
+  console.log(`\n▶ Running tests/${testFile}...`);
+  execSync(`node tests/${testFile}`, execOptions);
+}
+
+console.log('\n🎉 ALL INTEGRATION TESTS PASSED SUCCESSFULLY!');
+

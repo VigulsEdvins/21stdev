@@ -213,12 +213,11 @@
     'wheel',
     (event) => {
       const next = target + event.deltaY / WHEEL_UNITS;
-      if (next > 0 && next < last + 1) event.preventDefault();
       to(next);
       clearTimeout(settlingTimer);
       settlingTimer = setTimeout(() => to(Math.round(target)), SETTLE);
     },
-    { passive: false }
+    { passive: true }
   );
 
   stageEl.addEventListener('pointerdown', (event) => {

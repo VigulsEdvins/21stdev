@@ -105,12 +105,11 @@
 
   // Wheel interaction on stage
   stageEl.addEventListener("wheel", (e) => {
-    e.preventDefault();
     isAutoPlaying = false;
     updateAutoPlayBtn();
     const delta = e.deltaY * 0.00085;
     targetProgress = clamp(targetProgress + delta, 0, 1);
-  }, { passive: false });
+  }, { passive: true });
 
   // Pointer move parallax
   window.addEventListener("pointermove", (e) => {

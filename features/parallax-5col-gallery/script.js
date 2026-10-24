@@ -120,12 +120,14 @@
   let targetScrollY = 0;
   let currentScrollY = 0;
 
-  window.addEventListener('mousemove', (e) => {
-    const normX = (e.clientX / window.innerWidth) - 0.5;
+  const vivGallery = panStage.closest('.viv-gallery') || panStage;
+  vivGallery.addEventListener('mousemove', (e) => {
+    const rect = vivGallery.getBoundingClientRect();
+    const normX = ((e.clientX - rect.left) / (rect.width || window.innerWidth)) - 0.5;
     targetPanX = -normX * 140;
   });
 
-  window.addEventListener('wheel', (e) => {
+  vivGallery.addEventListener('wheel', (e) => {
     targetScrollY = Math.max(-360, Math.min(360, targetScrollY + e.deltaY * 0.45));
   }, { passive: true });
 

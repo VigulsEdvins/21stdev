@@ -39,17 +39,17 @@
   measureBlocks();
   window.addEventListener('resize', measureBlocks);
 
-  window.addEventListener(
+  const stage = content.closest('.conv-stage') || content;
+  stage.addEventListener(
     'wheel',
     (e) => {
-      e.preventDefault();
       targetY += e.deltaY * 1.1;
     },
-    { passive: false }
+    { passive: true }
   );
 
   let dragY = null;
-  window.addEventListener('pointerdown', (e) => {
+  stage.addEventListener('pointerdown', (e) => {
     dragY = e.clientY;
   });
   window.addEventListener('pointermove', (e) => {

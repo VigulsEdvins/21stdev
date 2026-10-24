@@ -8,6 +8,7 @@
     "test": "tests"
   },
   "scripts": {
+    "start": "node scripts/serve.js",
     "test": "node tests/test-builder-integration.js"
   },
   "keywords": [],
