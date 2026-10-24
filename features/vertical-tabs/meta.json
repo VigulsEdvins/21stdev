@@ -28,7 +28,7 @@
   "author": "0xUrvish",
   "order": 6,
   "legacyCategory": "Buttons & UI",
-  "status": "draft",
+  "status": "stable",
   "weight": "medium",
   "mood": [
     "minimal"

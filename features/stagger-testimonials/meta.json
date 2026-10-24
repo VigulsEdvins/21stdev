@@ -26,7 +26,7 @@
   "author": "vaib215",
   "order": 5,
   "legacyCategory": "Cards & Tiles",
-  "status": "draft",
+  "status": "stable",
   "weight": "light",
   "mood": [
     "minimal"

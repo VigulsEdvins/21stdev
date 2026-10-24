@@ -26,7 +26,7 @@
   ],
   "order": 3,
   "legacyCategory": "Heroes",
-  "status": "draft",
+  "status": "stable",
   "weight": "medium",
   "mood": [
     "futuristic"

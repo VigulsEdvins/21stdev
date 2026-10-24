@@ -27,7 +27,7 @@
   "author": "kedhareswer",
   "order": 108,
   "legacyCategory": "Heroes",
-  "status": "draft",
+  "status": "stable",
   "weight": "medium",
   "mood": [
     "minimal"

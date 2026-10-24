@@ -14,7 +14,9 @@
     "new-feature": "node scripts/new-feature.js",
     "check-features": "node scripts/check-features.js",
     "thumbs": "node scripts/make-thumbs.js",
-    "test": "node tests/test-builder-integration.js"
+    "test": "node tests/test-builder-integration.js",
+    "bundle-demo": "node scripts/bundle-demo.js",
+    "clean-features": "node scripts/clean-features.js"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +31,7 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "esbuild": "^0.28.2"
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.64.1"
   }
 }

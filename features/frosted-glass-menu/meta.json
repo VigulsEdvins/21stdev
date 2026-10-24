@@ -27,7 +27,7 @@
   "author": "kedhareswer",
   "order": 152,
   "legacyCategory": "Navigation & Headers",
-  "status": "draft",
+  "status": "stable",
   "weight": "medium",
   "mood": [
     "minimal"

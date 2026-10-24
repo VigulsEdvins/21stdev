@@ -26,7 +26,7 @@
   "author": "kedhareswer",
   "order": 180,
   "legacyCategory": "Cards & Tiles",
-  "status": "draft",
+  "status": "stable",
   "weight": "medium",
   "mood": [
     "minimal"

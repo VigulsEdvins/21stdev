@@ -27,7 +27,7 @@
   "author": "kedhareswer",
   "order": 196,
   "legacyCategory": "Preloaders & Shaders",
-  "status": "draft",
+  "status": "stable",
   "weight": "medium",
   "mood": [
     "dark"

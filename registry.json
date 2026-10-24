@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T07:04:55.302Z",
+  "generatedAt": "2026-10-24T07:11:17.925Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 209,
   "categories": [
@@ -32,7 +32,7 @@
       "title": "File Card Collections",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -80,7 +80,7 @@
       "title": "Perspective Tunnel Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "luxury"
@@ -134,7 +134,7 @@
       "title": "Into The Ether",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -185,7 +185,7 @@
       "title": "Hyperiux Product Storyline Timeline",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark",
         "light"
@@ -237,7 +237,7 @@
       "title": "Tilted Grid Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -339,7 +339,7 @@
       "title": "Image Stream Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -390,7 +390,7 @@
       "title": "Stagger Testimonials",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -439,7 +439,7 @@
       "title": "Vertical Tabs Service Showcase",
       "category": "Buttons & UI",
       "legacyCategory": "Buttons & UI",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -489,7 +489,7 @@
       "title": "Testimonial Block v2",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -539,7 +539,7 @@
       "title": "Wipe Transition Content Switcher",
       "category": "Buttons & UI",
       "legacyCategory": "Buttons & UI",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -2340,7 +2340,7 @@
       "title": "Vapour Text Effect",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -2388,7 +2388,7 @@
       "title": "Waitlist Hero Animation",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -2436,7 +2436,7 @@
       "title": "Hero ASCII Wireframe Globe",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "retro"
@@ -2484,7 +2484,7 @@
       "title": "Liquid Metal Fluid Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -2531,7 +2531,7 @@
       "title": "Hover Magnetic Footer",
       "category": "Footers & Endings",
       "legacyCategory": "Footers & Endings",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -2578,7 +2578,7 @@
       "title": "Gradient Bar Hero Section",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -2625,7 +2625,7 @@
       "title": "WebGL Chromatic Wave Distortion",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -2672,7 +2672,7 @@
       "title": "Cursor Hover Link Preview",
       "category": "Interactions & Physics",
       "legacyCategory": "Cursors & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -2719,7 +2719,7 @@
       "title": "Glass Fold Translucent Mesh",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -2765,7 +2765,7 @@
       "title": "Agent Console Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -2815,7 +2815,7 @@
       "title": "Alice Scroll Story",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -2863,7 +2863,7 @@
       "title": "Alter Ego Mask Reveal",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -2912,7 +2912,7 @@
       "title": "Amour Sunrise Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -2961,7 +2961,7 @@
       "title": "Animator Title Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "retro"
@@ -3012,7 +3012,7 @@
       "title": "Anodized Ink",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "futuristic"
@@ -3061,7 +3061,7 @@
       "title": "Aperture Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "minimal"
@@ -3110,7 +3110,7 @@
       "title": "Astro Association Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -3159,7 +3159,7 @@
       "title": "Astro Bubble Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3208,7 +3208,7 @@
       "title": "Astro Mission Band",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3257,7 +3257,7 @@
       "title": "Beam Wordmark Footer",
       "category": "Footers & Endings",
       "legacyCategory": "Footers & Endings",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark",
         "light"
@@ -3306,7 +3306,7 @@
       "title": "Bento Portfolio Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -3355,7 +3355,7 @@
       "title": "Blossom Dusk Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3405,7 +3405,7 @@
       "title": "Blueprint Ink Reveal",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3454,7 +3454,7 @@
       "title": "Breath Bloom",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3502,7 +3502,7 @@
       "title": "Brushstroke Portfolio Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "light"
@@ -3552,7 +3552,7 @@
       "title": "Callsign Radio Landing",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3600,7 +3600,7 @@
       "title": "Card Deck Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -3649,7 +3649,7 @@
       "title": "Card Fan Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3698,7 +3698,7 @@
       "title": "Caustic Pool",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3746,7 +3746,7 @@
       "title": "Checker Quilt Testimonials",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3795,7 +3795,7 @@
       "title": "Chroma Glitch Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -3844,7 +3844,7 @@
       "title": "Cinema Grain Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -3893,7 +3893,7 @@
       "title": "Cloth Peel Reveal",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -3942,7 +3942,7 @@
       "title": "Cobalt Toile Landing",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -3991,7 +3991,7 @@
       "title": "Code Curtain",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -4040,7 +4040,7 @@
       "title": "Cold Flame Drift",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -4089,7 +4089,7 @@
       "title": "Comeback Poster",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "editorial"
@@ -4138,7 +4138,7 @@
       "title": "Connectome Arc Explorer",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -4187,7 +4187,7 @@
       "title": "Constellation Turntable",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -4235,7 +4235,7 @@
       "title": "Contribution Skyline",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -4283,7 +4283,7 @@
       "title": "Coquette Desktop Portfolio",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "playful"
@@ -4334,7 +4334,7 @@
       "title": "Crimson Confessional",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark",
         "retro"
@@ -4383,7 +4383,7 @@
       "title": "Dappled Canopy",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro",
         "light"
@@ -4433,7 +4433,7 @@
       "title": "Design Process Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -4482,7 +4482,7 @@
       "title": "Disc Cascade Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "retro"
@@ -4532,7 +4532,7 @@
       "title": "Distressed Denim",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -4580,7 +4580,7 @@
       "title": "Dither Cumulus",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -4628,7 +4628,7 @@
       "title": "Dither Sweep Navbar",
       "category": "Headers & Nav",
       "legacyCategory": "Navigation & Headers",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "minimal"
@@ -4678,7 +4678,7 @@
       "title": "Dragon Seal Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "retro"
@@ -4727,7 +4727,7 @@
       "title": "Duotone Team Roster",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -4776,7 +4776,7 @@
       "title": "Earth Limb Landing",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -4824,7 +4824,7 @@
       "title": "Editorial Folio Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "light"
@@ -4874,7 +4874,7 @@
       "title": "Engraved Ticket",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "luxury"
@@ -4923,7 +4923,7 @@
       "title": "Etched Accretion",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro",
         "dark"
@@ -4972,7 +4972,7 @@
       "title": "Exploded Assembly Scroll",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -5020,7 +5020,7 @@
       "title": "Flashlight Text Reveal",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "dark"
@@ -5070,7 +5070,7 @@
       "title": "Flatlay Resume Board",
       "category": "Interactions & Physics",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -5120,7 +5120,7 @@
       "title": "Florilegium Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -5168,7 +5168,7 @@
       "title": "Focus Pull Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -5217,7 +5217,7 @@
       "title": "Folder Tab Portfolio Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -5267,7 +5267,7 @@
       "title": "Foundation Primitives",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -5315,7 +5315,7 @@
       "title": "Frosted Glass Menu",
       "category": "Headers & Nav",
       "legacyCategory": "Navigation & Headers",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -5364,7 +5364,7 @@
       "title": "Galaxy Starfield",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -5411,7 +5411,7 @@
       "title": "Glass Fan Testimonials",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -5460,7 +5460,7 @@
       "title": "Glass Folder Cards",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -5508,7 +5508,7 @@
       "title": "Glass Headline Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -5557,7 +5557,7 @@
       "title": "Grid Loupe Shader",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -5606,7 +5606,7 @@
       "title": "Hairline Bento Portfolio",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal",
         "light"
@@ -5656,7 +5656,7 @@
       "title": "Halftone Nebula",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -5704,7 +5704,7 @@
       "title": "Halftone Wordmark Footer",
       "category": "Footers & Endings",
       "legacyCategory": "Footers & Endings",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -5752,7 +5752,7 @@
       "title": "Hitch Cargo Landing",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -5800,7 +5800,7 @@
       "title": "Hoarfrost Pane",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -5848,7 +5848,7 @@
       "title": "Holo Card",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -5896,7 +5896,7 @@
       "title": "Holo Chrome Flow",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "dark"
@@ -5946,7 +5946,7 @@
       "title": "Hover Expand Gallery",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -5996,7 +5996,7 @@
       "title": "Index List Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "futuristic"
@@ -6046,7 +6046,7 @@
       "title": "Ink Blot Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "light"
@@ -6096,7 +6096,7 @@
       "title": "Ink Flow Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -6145,7 +6145,7 @@
       "title": "Ink Orbit Features",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -6194,7 +6194,7 @@
       "title": "Ink Orbit Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -6243,7 +6243,7 @@
       "title": "Ink Orbit Pricing",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -6292,7 +6292,7 @@
       "title": "Ink Orbit SaaS Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "luxury",
         "minimal"
@@ -6344,7 +6344,7 @@
       "title": "Ink Orbit Testimonials",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -6393,7 +6393,7 @@
       "title": "Iris Folio Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -6442,7 +6442,7 @@
       "title": "Isoline Bloom",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark",
         "minimal"
@@ -6492,7 +6492,7 @@
       "title": "Isometric Lift Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "minimal"
@@ -6542,7 +6542,7 @@
       "title": "Kamm Trek Landing",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -6590,7 +6590,7 @@
       "title": "Keycap Orb",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "luxury"
       ],
@@ -6638,7 +6638,7 @@
       "title": "Kiln Wordmark Footer",
       "category": "Footers & Endings",
       "legacyCategory": "Footers & Endings",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark"
       ],
@@ -6686,7 +6686,7 @@
       "title": "Lanyard Badge",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -6734,7 +6734,7 @@
       "title": "Lens Zoom Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -6783,7 +6783,7 @@
       "title": "Lilac Dusk Canopy",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "futuristic"
@@ -6834,7 +6834,7 @@
       "title": "Lilac Meadow Landing",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "luxury"
       ],
@@ -6883,7 +6883,7 @@
       "title": "Long Exposure Agency Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "futuristic"
@@ -6935,7 +6935,7 @@
       "title": "Longhand Notes Landing",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -6983,7 +6983,7 @@
       "title": "Löyly Sauna Landing",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -7032,7 +7032,7 @@
       "title": "Lunar Boarding Pass",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -7081,7 +7081,7 @@
       "title": "Lycoris Specimen",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "luxury",
         "futuristic"
@@ -7130,7 +7130,7 @@
       "title": "Magic Hour",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -7178,7 +7178,7 @@
       "title": "Maroon Fintech Landing",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark",
         "light"
@@ -7228,7 +7228,7 @@
       "title": "Mascot Portfolio Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "playful"
@@ -7278,7 +7278,7 @@
       "title": "Meridian Mist",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "retro"
@@ -7328,7 +7328,7 @@
       "title": "Mono Contrast Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -7377,7 +7377,7 @@
       "title": "Morph Gallery",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -7425,7 +7425,7 @@
       "title": "Murmuration Wordmark",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark"
       ],
@@ -7473,7 +7473,7 @@
       "title": "Neon Katakana Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark"
       ],
@@ -7522,7 +7522,7 @@
       "title": "Noise Dissolve Reveal",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -7571,7 +7571,7 @@
       "title": "Odometer Stage Stats",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -7620,7 +7620,7 @@
       "title": "Onward Summit Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -7669,7 +7669,7 @@
       "title": "Onyx Glyph Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark"
       ],
@@ -7718,7 +7718,7 @@
       "title": "Open Slot Booking",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -7767,7 +7767,7 @@
       "title": "Paper Curl Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "futuristic"
@@ -7817,7 +7817,7 @@
       "title": "Particle Dissolve Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "retro"
@@ -7867,7 +7867,7 @@
       "title": "Perforated Stripe Curtain",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -7916,7 +7916,7 @@
       "title": "Phosphor CRT 404",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro"
       ],
@@ -7966,7 +7966,7 @@
       "title": "Pigment Experience Ledger",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -8015,7 +8015,7 @@
       "title": "Pinboard Portfolio Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "editorial"
@@ -8066,7 +8066,7 @@
       "title": "Pixel Park Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -8115,7 +8115,7 @@
       "title": "Plumb Payroll Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -8164,7 +8164,7 @@
       "title": "Pocket Portfolio",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "minimal"
@@ -8213,7 +8213,7 @@
       "title": "Polaroid Line Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "futuristic"
@@ -8263,7 +8263,7 @@
       "title": "Polaroid Zine Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "playful"
@@ -8313,7 +8313,7 @@
       "title": "Postmark CTA",
       "category": "Buttons & UI",
       "legacyCategory": "Buttons & UI",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro",
         "minimal"
@@ -8361,7 +8361,7 @@
       "title": "Prism Comet Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "light"
@@ -8411,7 +8411,7 @@
       "title": "Quiet Portfolio Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal",
         "editorial"
@@ -8461,7 +8461,7 @@
       "title": "Raked Sand Garden",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -8510,7 +8510,7 @@
       "title": "Rangoli Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "luxury"
       ],
@@ -8558,7 +8558,7 @@
       "title": "RGB Glitch Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -8607,7 +8607,7 @@
       "title": "Scanline Bloom",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "retro"
@@ -8656,7 +8656,7 @@
       "title": "Seam History Timeline",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -8705,7 +8705,7 @@
       "title": "Shutter Blinds Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -8754,7 +8754,7 @@
       "title": "Shutter Glyph Footer",
       "category": "Footers & Endings",
       "legacyCategory": "Footers & Endings",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -8803,7 +8803,7 @@
       "title": "Sidebar Portfolio Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "minimal"
@@ -8853,7 +8853,7 @@
       "title": "Silhouette Wrap",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -8901,7 +8901,7 @@
       "title": "Singularity Horizon",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -8949,7 +8949,7 @@
       "title": "Slat Count Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -8998,7 +8998,7 @@
       "title": "Slit Type FAQ",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -9047,7 +9047,7 @@
       "title": "Spotlight Offer Quiz",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -9096,7 +9096,7 @@
       "title": "Staircase Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "minimal"
@@ -9145,7 +9145,7 @@
       "title": "Starburst Thanks Footer",
       "category": "Footers & Endings",
       "legacyCategory": "Footers & Endings",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -9194,7 +9194,7 @@
       "title": "Stardust Stage Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -9243,7 +9243,7 @@
       "title": "Stencil Labs Template",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "minimal"
@@ -9293,7 +9293,7 @@
       "title": "Stepped Morph Slider",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -9342,7 +9342,7 @@
       "title": "Sticker Hello Portfolio",
       "category": "Full Templates",
       "legacyCategory": "Full Templates",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "playful"
@@ -9393,7 +9393,7 @@
       "title": "Sunlit Cutting Mat",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "futuristic"
@@ -9443,7 +9443,7 @@
       "title": "Ticket Stub Footer",
       "category": "Footers & Endings",
       "legacyCategory": "Footers & Endings",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark",
         "retro"
@@ -9493,7 +9493,7 @@
       "title": "Tiger Tear Reveal",
       "category": "Interactions & Physics",
       "legacyCategory": "Interactions & Physics",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light",
         "editorial"
@@ -9542,7 +9542,7 @@
       "title": "Tile Scrollbar",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "dark"
       ],
@@ -9590,7 +9590,7 @@
       "title": "Tilt Cascade Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "minimal"
@@ -9640,7 +9640,7 @@
       "title": "Title Sequence Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "luxury"
@@ -9690,7 +9690,7 @@
       "title": "Torn Postcard Portfolio",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "light"
@@ -9741,7 +9741,7 @@
       "title": "Type Remix Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial"
       ],
@@ -9790,7 +9790,7 @@
       "title": "Velocity Reel",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -9838,7 +9838,7 @@
       "title": "Velvet Haze",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro",
         "dark"
@@ -9887,7 +9887,7 @@
       "title": "Viewfinder Flip Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "minimal"
@@ -9937,7 +9937,7 @@
       "title": "Vinyl Halftone Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "retro",
         "editorial"
@@ -9987,7 +9987,7 @@
       "title": "Water Ripple Carousel",
       "category": "3D & Carousels",
       "legacyCategory": "3D & Carousels",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic"
       ],
@@ -10036,7 +10036,7 @@
       "title": "Waving Portfolio Landing",
       "category": "Galleries & Bento",
       "legacyCategory": "Galleries & Portfolios",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "editorial",
         "light"
@@ -10087,7 +10087,7 @@
       "title": "Weight Sweep Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "minimal"
@@ -10137,7 +10137,7 @@
       "title": "Wirebound Inquiry",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "light"
       ],
@@ -10185,7 +10185,7 @@
       "title": "Wordmark Newsletter Signup",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],
@@ -10235,7 +10235,7 @@
       "title": "Zero Melt Preloader",
       "category": "Preloaders & Shaders",
       "legacyCategory": "Preloaders & Shaders",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "minimal"
       ],

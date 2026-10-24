@@ -24,7 +24,7 @@
   ],
   "order": 45,
   "legacyCategory": "Heroes",
-  "status": "draft",
+  "status": "stable",
   "weight": "medium",
   "mood": [
     "light"

@@ -30,7 +30,7 @@
   "author": "ruixen.ui",
   "order": 4,
   "legacyCategory": "Heroes",
-  "status": "draft",
+  "status": "stable",
   "weight": "light",
   "mood": [
     "futuristic"

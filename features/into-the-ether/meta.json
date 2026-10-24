@@ -29,7 +29,7 @@
   ],
   "order": 2,
   "legacyCategory": "Audio & Shaders",
-  "status": "draft",
+  "status": "stable",
   "weight": "medium",
   "mood": [
     "editorial"

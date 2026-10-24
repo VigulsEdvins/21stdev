@@ -27,7 +27,7 @@
   "author": "kevingirelli",
   "order": 8,
   "legacyCategory": "Buttons & UI",
-  "status": "draft",
+  "status": "stable",
   "weight": "light",
   "mood": [
     "minimal"
