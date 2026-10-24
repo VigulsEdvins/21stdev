@@ -24,7 +24,8 @@
     "audit-themes": "node scripts/audit-themes.js",
     "set-license": "node scripts/set-license.js",
     "build-tailwind": "node scripts/build-tailwind.js",
-    "check-blank": "node scripts/check-blank.js"
+    "check-blank": "node scripts/check-blank.js",
+    "check-exports": "node scripts/check-exports.js"
   },
   "keywords": [],
   "author": "",

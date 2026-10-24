@@ -48,11 +48,14 @@ Goal: the builder is dependable for a full client session.
 ## Epic 5 — Export and handoff (P1)
 Goal: the exported site works with nothing from the vault.
 
-- [ ] **5.1 Exported-site e2e matrix (M)** — open every export in a clean Chromium, no vault server, check console errors and 404s; cover React-demo components and Full Templates (`site/` files).
+- [x] **5.1 Exported-site e2e matrix (M)** — done 2026-10-24: `npm run check-exports` (also a CI job). 207 of 209 pass in both themes; 2 are known broken, see 5.6 and 5.7.
 - [ ] **5.2 Export weight report (S)** — total KB and heavy-section warning in the README.
 - [ ] **5.3 Optional React/Vite project export (L)** — emit `component.tsx` + `package.json` for components that have them.
 - [ ] **5.4 Font and asset self-hosting option (M)** — avoid runtime Google Fonts requests.
 - [ ] **5.5 SEO/meta basics in page settings (S)** — OG tags, canonical, robots.
+- [ ] **5.6 Fix `forma-liquid-particle-studio` export (M)** — it builds `/features/.../img/${name}.webp` paths at runtime so the asset bundler never sees them, and reads images into a canvas with crossOrigin, which file:// blocks. Needs the bundler to accept a declared asset list and the images loaded without crossOrigin.
+- [ ] **5.7 Fix `magic-hour` media (S)** — its video and poster are hot-linked from kedhar.vercel.app, which now serves an HTML page for every media URL, so the component has no video anywhere. Replace with a bundled video or retire it.
+- [ ] **5.8 Self-contain exports (M)** — exports still contact 9 other hosts (images.unsplash.com for 17 components, fonts.googleapis/gstatic, cdn.21st.dev, mdn.github.io, kedhar.vercel.app, r2.dev, jsdelivr, storage.googleapis). Bundle or replace them so a client site keeps working if any of them goes away. Subsumes 5.4.
 
 ## Epic 6 — Tooling, tests and CI (P2)
 Goal: regressions get caught without manual runs.

@@ -66,6 +66,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 | `npm run sync` | Regenerate `registry.json` / `registry.js` from `features/*/meta.json` |
 | `npm run new-feature -- <slug>` | Scaffold a new feature |
 | `npm run check-blank` | Adds every feature alone in the builder and fails if a section renders nothing (4 known-empty features are listed in the script). `verify` also fails when `script.js` is a stub and the real code is inline in `index.html` |
+| `npm run check-exports` | Exports every feature as a ZIP through the real Download button, unpacks it and opens `index.html` from disk (file://); fails on errors, failed local requests, broken images or an empty section. `-- --themes both` also checks the light theme (about 6 min per theme). Two known-broken exports are listed in the script |
 | `npm run check-features` | Load every feature in headless Chromium; writes `reports/features.json` |
 | `npm run thumbs` | Render `thumbs/<slug>.jpg` previews |
 | `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx` |
