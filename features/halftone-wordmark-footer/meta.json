@@ -37,10 +37,79 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "footer-text-1",
+      "label": "Footer text 1",
+      "type": "text",
+      "selector": ":scope span.hwf-sr"
+    },
+    {
+      "id": "footer-heading-1",
+      "label": "Footer heading 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "footer-heading-2",
+      "label": "Footer heading 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "footer-heading-3",
+      "label": "Footer heading 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(3) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "footer-text-2",
+      "label": "Footer text 2",
+      "type": "text",
+      "selector": ":scope div.hwf-brand"
+    },
+    {
+      "id": "footer-link-text-1",
+      "label": "Footer link text 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-text-2",
+      "label": "Footer link text 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-1",
+      "label": "Footer link 1",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-2",
+      "label": "Footer link 2",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-3",
+      "label": "Footer link 3",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope button.hwf-up"
+    }
+  ],
   "measured": {
     "luma": 0.42,
     "webgl": false,

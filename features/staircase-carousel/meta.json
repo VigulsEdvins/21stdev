@@ -39,10 +39,43 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "hero-photo-1",
+      "label": "Hero photo 1",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "hero-photo-2",
+      "label": "Hero photo 2",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2) > img:nth-of-type(1)"
+    },
+    {
+      "id": "hero-photo-3",
+      "label": "Hero photo 3",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3) > img:nth-of-type(1)"
+    },
+    {
+      "id": "text",
+      "label": "Text",
+      "type": "text",
+      "selector": ":scope div.stc-sr"
+    },
+    {
+      "id": "hero-photo-4",
+      "label": "Hero photo 4",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4) > img:nth-of-type(1)"
+    }
+  ],
   "measured": {
     "luma": 0.82,
     "webgl": false,

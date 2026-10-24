@@ -5,7 +5,7 @@
   "category": "Preloaders & Shaders",
   "source": "21st.dev",
   "type": "component",
-  "description": "A cyberpunk title-card loading gate. The word is **ウィンドウ** (\"window\"), and the gate opens like one.",
+  "description": "A cyberpunk title-card loading gate. The word is **\u30a6\u30a3\u30f3\u30c9\u30a6** (\"window\"), and the gate opens like one.",
   "tags": [
     "neon",
     "katakana",
@@ -38,7 +38,9 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
   "customizable": [],

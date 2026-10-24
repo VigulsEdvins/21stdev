@@ -38,10 +38,25 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope p.pcc-sr"
+    },
+    {
+      "id": "text",
+      "label": "Text",
+      "type": "text",
+      "selector": ":scope div.pcc-caption"
+    }
+  ],
   "measured": {
     "luma": 0.6,
     "webgl": true,

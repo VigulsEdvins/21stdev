@@ -5,7 +5,7 @@
   "category": "Scroll & Parallax",
   "source": "21st.dev",
   "type": "component",
-  "description": "A paragraph that parts around a falling silhouette, follows its **actual outline** — a keyhole's waist, a bottle's neck — and closes back up underneath. Scroll and the shape drops through the column; every line is set again.",
+  "description": "A paragraph that parts around a falling silhouette, follows its **actual outline** \u2014 a keyhole's waist, a bottle's neck \u2014 and closes back up underneath. Scroll and the shape drops through the column; every line is set again.",
   "tags": [
     "silhouette",
     "wrap",
@@ -38,7 +38,9 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
   "customizable": [],

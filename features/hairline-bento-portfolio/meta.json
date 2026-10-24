@@ -39,13 +39,83 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "paragraph",
+      "label": "Paragraph",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h1.hb-name"
+    },
+    {
+      "id": "section-heading-1",
+      "label": "Section heading 1",
+      "type": "text",
+      "selector": ":scope h2.hb-offer-title"
+    },
+    {
+      "id": "section-heading-2",
+      "label": "Section heading 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "section-heading-3",
+      "label": "Section heading 3",
+      "type": "text",
+      "selector": ":scope h2.hb-head"
+    },
+    {
+      "id": "section-heading-4",
+      "label": "Section heading 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(5) > h2:nth-of-type(1)"
+    },
+    {
+      "id": "section-heading-5",
+      "label": "Section heading 5",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(6) > h2:nth-of-type(1)"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(5) > a:nth-of-type(1)"
+    },
+    {
+      "id": "button-link-3",
+      "label": "Button link 3",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(6) > a:nth-of-type(1)"
+    },
+    {
+      "id": "section-heading-6",
+      "label": "Section heading 6",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(8) > div:nth-of-type(1) > h2:nth-of-type(1)"
+    }
+  ],
   "measured": {
     "luma": 0.72,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
 }

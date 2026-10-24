@@ -38,10 +38,79 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "button-text-1",
+      "label": "Button text 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(1)"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(2)"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Button text 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(3)"
+    },
+    {
+      "id": "button-text-4",
+      "label": "Button text 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(4)"
+    },
+    {
+      "id": "link-1",
+      "label": "Link 1",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(6) > a:nth-of-type(1)"
+    },
+    {
+      "id": "link-2",
+      "label": "Link 2",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(6) > a:nth-of-type(2)"
+    },
+    {
+      "id": "link-3",
+      "label": "Link 3",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(6) > a:nth-of-type(3)"
+    },
+    {
+      "id": "section-heading-1",
+      "label": "Section heading 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(11) > h2:nth-of-type(1)"
+    },
+    {
+      "id": "section-heading-2",
+      "label": "Section heading 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(13) > h2:nth-of-type(1)"
+    },
+    {
+      "id": "section-heading-3",
+      "label": "Section heading 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(15) > h2:nth-of-type(1)"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h1.flg-h1"
+    }
+  ],
   "measured": {
     "luma": 0.92,
     "webgl": true,

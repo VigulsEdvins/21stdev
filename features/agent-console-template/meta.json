@@ -40,10 +40,61 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "button-text-1",
+      "label": "Button text 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > button:nth-of-type(1)"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h3.act-pstate"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "paragraph",
+      "label": "Paragraph",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > aside:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Button text 3",
+      "type": "text",
+      "selector": ":scope button.act-mono-b"
+    },
+    {
+      "id": "button-text-4",
+      "label": "Button text 4",
+      "type": "text",
+      "selector": ":scope button.act-warnbtn"
+    },
+    {
+      "id": "section-heading",
+      "label": "Section heading",
+      "type": "text",
+      "selector": ":scope h2.act-state-name"
+    }
+  ],
   "measured": {
     "luma": 0.79,
     "webgl": false,

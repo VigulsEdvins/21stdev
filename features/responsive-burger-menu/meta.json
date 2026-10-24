@@ -39,64 +39,64 @@
   "updatedAt": "2026-10-22",
   "customizable": [
     {
-      "id": "text-vivmgmt",
-      "label": "Text: VIVMGMT",
-      "type": "text",
-      "selector": ":scope span.brand"
-    },
-    {
-      "id": "text-menu",
-      "label": "Button: MENU",
-      "type": "text",
-      "selector": ":scope button.burger-btn"
-    },
-    {
-      "id": "text-click-the-top-right-trig",
-      "label": "Paragraph: Click the top-right trigger to to…",
+      "id": "intro-text",
+      "label": "Intro text",
       "type": "text",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
     },
     {
-      "id": "text-01artists-roster",
-      "label": "List item: 01Artists Roster",
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope button.burger-btn"
+    },
+    {
+      "id": "menu-item-1",
+      "label": "Menu item 1",
+      "type": "text",
+      "selector": ":scope span.brand"
+    },
+    {
+      "id": "menu-item-2",
+      "label": "Menu item 2",
       "type": "text",
       "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
     },
     {
-      "id": "text-02editorial-chronicle",
-      "label": "List item: 02Editorial Chronicle",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)"
-    },
-    {
-      "id": "text-03global-syndication",
-      "label": "List item: 03Global Syndication",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)"
-    },
-    {
-      "id": "text-04paris-ny-offices",
-      "label": "List item: 04Paris & NY Offices",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)"
-    },
-    {
-      "id": "link-01artists-roster",
-      "label": "Link to: 01Artists Roster",
+      "id": "menu-link-1",
+      "label": "Menu link 1",
       "type": "link",
       "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
     },
     {
-      "id": "link-02editorial-chronicle",
-      "label": "Link to: 02Editorial Chronicle",
+      "id": "menu-item-3",
+      "label": "Menu item 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)"
+    },
+    {
+      "id": "menu-link-2",
+      "label": "Menu link 2",
       "type": "link",
       "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
     },
     {
-      "id": "link-03global-syndication",
-      "label": "Link to: 03Global Syndication",
+      "id": "menu-item-4",
+      "label": "Menu item 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)"
+    },
+    {
+      "id": "menu-link-3",
+      "label": "Menu link 3",
       "type": "link",
       "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)"
+    },
+    {
+      "id": "menu-item-5",
+      "label": "Menu item 5",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)"
     }
   ],
   "measured": {

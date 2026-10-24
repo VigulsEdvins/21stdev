@@ -39,13 +39,65 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "hero-photo-1",
+      "label": "Hero photo 1",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "hero-photo-2",
+      "label": "Hero photo 2",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(4) > span:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope div.dcc-sr"
+    },
+    {
+      "id": "hero-photo-3",
+      "label": "Hero photo 3",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "menu-item-1",
+      "label": "Menu item 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > span:nth-of-type(2)"
+    },
+    {
+      "id": "menu-item-2",
+      "label": "Menu item 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > span:nth-of-type(3)"
+    },
+    {
+      "id": "menu-item-3",
+      "label": "Menu item 3",
+      "type": "text",
+      "selector": ":scope span.dcc-brand"
+    },
+    {
+      "id": "hero-photo-4",
+      "label": "Hero photo 4",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2) > span:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
+    }
+  ],
   "measured": {
     "luma": 0.31,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
 }

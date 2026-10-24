@@ -46,7 +46,92 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope a.primary"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope a.secondary"
+    },
+    {
+      "id": "button-link-3",
+      "label": "Button link 3",
+      "type": "link",
+      "selector": ":scope a.accent"
+    },
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope span.live-pill"
+    },
+    {
+      "id": "text-1",
+      "label": "Text 1",
+      "type": "text",
+      "selector": ":scope div.template-actions"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h2.template-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope p.template-subtitle"
+    },
+    {
+      "id": "hero-photo-1",
+      "label": "Hero photo 1",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > img:nth-of-type(1)"
+    },
+    {
+      "id": "hero-photo-2",
+      "label": "Hero photo 2",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "hero-photo-3",
+      "label": "Hero photo 3",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > img:nth-of-type(1)"
+    },
+    {
+      "id": "text-2",
+      "label": "Text 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
+    },
+    {
+      "id": "text-3",
+      "label": "Text 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1)"
+    },
+    {
+      "id": "text-4",
+      "label": "Text 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1)"
+    },
+    {
+      "id": "text-5",
+      "label": "Text 5",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1)"
+    }
+  ],
   "measured": {
     "luma": 0.08,
     "webgl": false,

@@ -40,10 +40,79 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope button.dsn-burger"
+    },
+    {
+      "id": "menu-item-1",
+      "label": "Menu item 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
+    },
+    {
+      "id": "menu-item-2",
+      "label": "Menu item 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4)"
+    },
+    {
+      "id": "menu-link-1",
+      "label": "Menu link 1",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > a:nth-of-type(1)"
+    },
+    {
+      "id": "menu-link-2",
+      "label": "Menu link 2",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > a:nth-of-type(1)"
+    },
+    {
+      "id": "menu-link-3",
+      "label": "Menu link 3",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > a:nth-of-type(1)"
+    },
+    {
+      "id": "menu-item-3",
+      "label": "Menu item 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(2)"
+    },
+    {
+      "id": "menu-item-4",
+      "label": "Menu item 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1) > span:nth-of-type(2)"
+    },
+    {
+      "id": "menu-item-5",
+      "label": "Menu item 5",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > a:nth-of-type(1) > span:nth-of-type(2)"
+    },
+    {
+      "id": "menu-item-6",
+      "label": "Menu item 6",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
+    },
+    {
+      "id": "menu-item-7",
+      "label": "Menu item 7",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1)"
+    }
+  ],
   "measured": {
     "luma": 1,
     "webgl": false,

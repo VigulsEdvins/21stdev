@@ -38,13 +38,53 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "small-label-1",
+      "label": "Small label 1",
+      "type": "text",
+      "selector": ":scope div.scp-tl"
+    },
+    {
+      "id": "small-label-2",
+      "label": "Small label 2",
+      "type": "text",
+      "selector": ":scope div.scp-hint"
+    },
+    {
+      "id": "small-label-3",
+      "label": "Small label 3",
+      "type": "text",
+      "selector": ":scope span.scp-status"
+    },
+    {
+      "id": "small-label-4",
+      "label": "Small label 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1)"
+    },
+    {
+      "id": "text",
+      "label": "Text",
+      "type": "text",
+      "selector": ":scope div.scp-bl"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope button.scp-skip"
+    }
+  ],
   "measured": {
     "luma": 0.33,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
 }

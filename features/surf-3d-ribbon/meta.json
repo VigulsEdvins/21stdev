@@ -34,7 +34,56 @@
     "license": "own"
   },
   "updatedAt": "2026-10-24",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(13) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "subheading-1",
+      "label": "Subheading 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(12) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "subheading-2",
+      "label": "Subheading 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(11) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "subheading-3",
+      "label": "Subheading 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(10) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "subheading-4",
+      "label": "Subheading 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(9) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "subheading-5",
+      "label": "Subheading 5",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(8) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "subheading-6",
+      "label": "Subheading 6",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(7) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "subheading-7",
+      "label": "Subheading 7",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    }
+  ],
   "measured": {
     "luma": 0.11,
     "webgl": false,

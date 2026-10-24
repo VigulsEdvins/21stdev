@@ -2694,7 +2694,7 @@ ${sectionInfoList.map((s, idx) => `${idx + 1}. **${s.title}** (\`${s.slug}\`) â€
 
 ${unverifiedLicences.length ? `## Licences to check before delivery
 
-These components come from sources whose licence has not been verified in the vault. Confirm you may ship them to a paying client, or replace them:
+These components come from 21st.dev, whose Terms (https://21st.dev/terms) say community components stay the property of their authors, may be used only through the 21st.dev platform, and may not be redistributed. Unless a component's own page shows an open licence such as MIT, get the author's written permission before shipping it to a client, or replace it:
 
 ${unverifiedLicences.map(s => `- ${s.title} (\`${s.slug}\`)`).join('\n')}
 

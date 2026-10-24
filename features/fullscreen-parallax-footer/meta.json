@@ -37,7 +37,68 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "footer-text-1",
+      "label": "Footer text 1",
+      "type": "text",
+      "selector": ":scope div.footer-top-meta"
+    },
+    {
+      "id": "footer-link-text-1",
+      "label": "Footer link text 1",
+      "type": "text",
+      "selector": ":scope > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-1",
+      "label": "Footer link 1",
+      "type": "link",
+      "selector": ":scope > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-text-2",
+      "label": "Footer link text 2",
+      "type": "text",
+      "selector": ":scope > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(2)"
+    },
+    {
+      "id": "footer-link-2",
+      "label": "Footer link 2",
+      "type": "link",
+      "selector": ":scope > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(2)"
+    },
+    {
+      "id": "footer-link-text-3",
+      "label": "Footer link text 3",
+      "type": "text",
+      "selector": ":scope > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(3)"
+    },
+    {
+      "id": "footer-link-3",
+      "label": "Footer link 3",
+      "type": "link",
+      "selector": ":scope > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(3)"
+    },
+    {
+      "id": "footer-link-text-4",
+      "label": "Footer link text 4",
+      "type": "text",
+      "selector": ":scope > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(4)"
+    },
+    {
+      "id": "footer-text-2",
+      "label": "Footer text 2",
+      "type": "text",
+      "selector": ":scope div.floating-caption"
+    },
+    {
+      "id": "footer-text-3",
+      "label": "Footer text 3",
+      "type": "text",
+      "selector": ":scope div.footer-bottom-meta"
+    }
+  ],
   "measured": {
     "luma": 0.11,
     "webgl": false,

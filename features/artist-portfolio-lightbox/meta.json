@@ -37,7 +37,56 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope button.lightbox-close"
+    },
+    {
+      "id": "menu-item-1",
+      "label": "Menu item 1",
+      "type": "text",
+      "selector": ":scope span.artist-kicker"
+    },
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope span.lightbox-counter"
+    },
+    {
+      "id": "text-1",
+      "label": "Text 1",
+      "type": "text",
+      "selector": ":scope span.lightbox-caption"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h1.artist-title"
+    },
+    {
+      "id": "menu-item-2",
+      "label": "Menu item 2",
+      "type": "text",
+      "selector": ":scope span.key-hint"
+    },
+    {
+      "id": "text-2",
+      "label": "Text 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
+    },
+    {
+      "id": "text-3",
+      "label": "Text 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
+    }
+  ],
   "measured": {
     "luma": 0.14,
     "webgl": false,
