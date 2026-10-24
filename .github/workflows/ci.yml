@@ -42,6 +42,7 @@ jobs:
       - run: npm install --no-audit --no-fund
       - run: npx playwright-core install --with-deps chromium
       - run: npm run check-blank
+      - run: npm run check-fields
 
   exports:
     name: every export opens from disk

@@ -29,9 +29,9 @@ Goal: every component is usable by a non-developer.
 
 - [x] **3.1 Named Content fields for the 45 components without `customizable` (M)** — done 2026-10-24. 34 of the 45 are shader/canvas backgrounds with no editable text, so none is correct. Found that 11 imported 21st.dev components (waitlist-hero, hover-footer, web-gl-shader, …) rendered blank in the builder and exports because script.js was a stub; moved their inlined bundle into script.js/style.css, then named fields for 10 of them. Skipped on purpose: SVG-text artwork (brushstroke-portfolio-hero, alter-ego-mask-reveal, tiger-tear-reveal, silhouette-wrap, type-remix-preloader) and loading-screen preloaders, whose text is tied to the layout.
 - [ ] **3.2 Thin categories (M)** — Headers & Nav has 4, Buttons & UI 6, Footers & Endings 8. Add or import until each has ~12 usable options.
-- [ ] **3.3 Content-field validation (S)** — a test that every `customizable` selector resolves in the rendered component.
+- [x] **3.3 Content-field validation (S)** — done 2026-10-24: `npm run check-fields` (also in CI). It found 6 features with fields that matched nothing (counters, carousel slides, readouts); those 11 fields were removed.
 - [ ] **3.4 Colour and font fields in the Content tab (S)** — surface the `color` type already in the schema.
-- [ ] **3.5 Re-check `mood`/`industry`/`weight` tags (S)** — measured values vs. declared; fix drift so filters can be trusted.
+- [x] **3.5 Re-check `mood`/`industry`/`weight` tags (S)** — done 2026-10-24: re-measured all 209; 4 weights corrected (alice-scroll-story, amour-sunrise-preloader, sidebar-portfolio-template, vertical-tabs). Mood flips on animated shader components were ignored because their brightness depends on when the frame is taken.
 
 ## Epic 4 — Builder UX and robustness (P1)
 Goal: the builder is dependable for a full client session.

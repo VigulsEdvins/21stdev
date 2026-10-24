@@ -29,7 +29,7 @@
   "order": 6,
   "legacyCategory": "Buttons & UI",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "minimal",
     "dark"

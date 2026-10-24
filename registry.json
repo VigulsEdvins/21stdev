@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T13:32:45.392Z",
+  "generatedAt": "2026-10-24T13:47:43.780Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 209,
   "categories": [
@@ -924,7 +924,7 @@
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6040,7 +6040,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6206,7 +6206,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -17179,7 +17179,7 @@
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",

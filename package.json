@@ -26,6 +26,7 @@
     "build-tailwind": "node scripts/build-tailwind.js",
     "check-blank": "node scripts/check-blank.js",
     "check-exports": "node scripts/check-exports.js",
+    "check-fields": "node scripts/check-fields.js",
     "localize-remote": "node scripts/localize-remote.js"
   },
   "keywords": [],
