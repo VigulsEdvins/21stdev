@@ -25,3 +25,10 @@ assert(out.includes('//cdn.example.com/x.png'), 'untouched');
 assert(out.includes('/mom/work.html'), 'untouched');
 
 console.log('✅ Export asset helper tests passed!');
+
+const { renderExternalHostsReport } = require('../scripts/builder/export-assets.js');
+const none = renderExternalHostsReport({ 'index.html': '<html xmlns="http://www.w3.org/1999/xhtml"><a href="https://twitter.com/x">t</a><link href="style.css"></html>', 'style.css': '', 'script.js': '' });
+assert(none.includes('loads nothing from other websites'), 'namespaces and anchors are not requests: ' + none);
+const some = renderExternalHostsReport({ 'index.html': '<img src="https://images.unsplash.com/a.jpg"><script src="//cdn.example.com/x.js"></script>', 'style.css': "@import url('https://fonts.googleapis.com/css');", 'script.js': 'fetch("https://api.example.org/v1")' });
+['images.unsplash.com', 'cdn.example.com', 'fonts.googleapis.com', 'api.example.org'].forEach(h => assert(some.includes('- ' + h), h));
+console.log('✅ External host report tests passed!');

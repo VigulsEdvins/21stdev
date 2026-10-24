@@ -50,3 +50,7 @@ const bundle = A.generateExportBundle([], 'midnight-dark', {}, { page: { canonic
 assert(bundle['robots.txt'] && bundle['sitemap.xml'], 'bundle carries the site files');
 assert(!A.generateExportBundle([], 'midnight-dark', {}, { page: {} })['sitemap.xml']);
 console.log('✅ JSON-LD and site files tests passed!');
+
+const deploy = A.generateExportBundle([], 'midnight-dark', {}, { page: {} });
+assert(deploy['_headers'].includes('Cache-Control') && deploy['DEPLOY.md'].includes('`_headers`'), 'deploy files in the bundle');
+console.log('✅ Deploy files tests passed!');

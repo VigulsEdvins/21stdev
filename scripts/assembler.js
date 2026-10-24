@@ -2381,6 +2381,43 @@ function renderJsonLd(page = {}, title = '') {
   return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
 }
 
+/** Host helper files: cache and security headers for Netlify / Cloudflare Pages, and plain deploy steps. */
+function renderDeployFiles() {
+  const headers = `/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+`;
+  const deploy = `# Putting the site online
+
+These files are ready to upload as they are. Nothing needs to be built.
+
+## Netlify
+1. Open https://app.netlify.com/drop
+2. Drag the unzipped folder onto the page. You get a web address in a few seconds.
+3. \`_headers\` is picked up automatically (caching and basic security headers).
+
+## Cloudflare Pages
+1. Workers & Pages > Create > Pages > Upload assets.
+2. Upload the unzipped folder. \`_headers\` works here too.
+
+## Any ordinary web host
+Upload everything (keep the \`assets\` folder next to \`index.html\`) to the folder your host serves, usually \`public_html\`.
+\`_headers\` is ignored by hosts that do not know it; that is harmless.
+
+## After it is online
+- Set "Live page address" in the builder's Page Settings and export again so \`sitemap.xml\` and the canonical link carry the real address.
+- Submit \`https://your-address/sitemap.xml\` in Google Search Console.
+`;
+  return { '_headers': headers, 'DEPLOY.md': deploy };
+}
+
 /** robots.txt and sitemap.xml for a single-page export. The sitemap needs the live address, so it is skipped without one. */
 function renderSiteFiles(page = {}) {
   const canonical = String(page.canonical || '').trim();
@@ -3090,7 +3127,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
     'style.css': styleCss,
     'script.js': scriptJs,
     'README.md': readmeMd
-  }, renderSiteFiles(pageOpts));
+  }, renderSiteFiles(pageOpts), renderDeployFiles());
 }
 
 /**
@@ -3301,6 +3338,7 @@ if (typeof module !== 'undefined' && module.exports) {
     renderPageHead,
     renderJsonLd,
     renderSiteFiles,
+    renderDeployFiles,
     renderNativePaletteCss,
     collectOverrides,
     REVIEW_RUNTIME,

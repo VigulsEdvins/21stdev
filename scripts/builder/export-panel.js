@@ -190,6 +190,9 @@
         const sections = stackManager.getStack().map(s => ({ slug: s.slug, title: (featuresData[s.slug] && featuresData[s.slug].title) || s.slug }));
         currentExportBundle['README.md'] += '\n' + ExportAssetsApi.renderWeightReport({ files: currentExportBundle, assets: result.assets, sections, weightMap });
       }
+      if (currentExportBundle && typeof currentExportBundle['README.md'] === 'string' && ExportAssetsApi.renderExternalHostsReport) {
+        currentExportBundle['README.md'] += '\n' + ExportAssetsApi.renderExternalHostsReport(currentExportBundle);
+      }
       currentSingleHtml = result.singleHtml;
       if (result.missing.length) {
         console.warn('Export: assets not found and left as-is:', result.missing);
@@ -488,7 +491,7 @@
           zip.file('style.css', currentExportBundle['style.css']);
           zip.file('script.js', currentExportBundle['script.js']);
           zip.file('README.md', currentExportBundle['README.md']);
-          ['robots.txt', 'sitemap.xml'].forEach(n => { if (currentExportBundle[n]) zip.file(n, currentExportBundle[n]); });
+          ['robots.txt', 'sitemap.xml', '_headers', 'DEPLOY.md'].forEach(n => { if (currentExportBundle[n]) zip.file(n, currentExportBundle[n]); });
           Object.entries(currentExportAssets).forEach(([name, bytes]) => zip.file(name, bytes));
           const blob = await zip.generateAsync({ type: 'blob' });
           triggerDownload(blob, zipFilename, 'application/zip');

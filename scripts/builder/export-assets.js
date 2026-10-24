@@ -150,7 +150,24 @@
     return lines.join('\n') + '\n';
   }
 
-  const api = { createAssetBundler, bytesToDataUri, renderWeightReport, ASSET_MIME_TYPES };
+  /**
+   * Markdown "Third-party requests" section: which other websites the exported page loads things from, so the owner
+   * can decide whether a cookie/consent notice or a privacy-policy line is needed. XML namespaces and links the visitor
+   * has to click (anchors) are ignored.
+   */
+  function renderExternalHostsReport(files) {
+    const ignore = /^(www\.w3\.org|schema\.org|www\.sitemaps\.org|purl\.org|localhost)$/;
+    const hosts = new Set();
+    ['index.html', 'style.css', 'script.js'].forEach(k => {
+      const text = String(files[k] || '').replace(/<a\b[^>]*>/gi, '');
+      text.replace(/(?:https?:)?\/\/([a-z0-9.-]+\.[a-z]{2,})(?=[\/'"`)\s?#:])/gi, (m, h) => { if (/^(https?:)?\/\//i.test(m) && !ignore.test(h.toLowerCase())) hosts.add(h.toLowerCase()); return m; });
+    });
+    const list = Array.from(hosts).sort();
+    if (!list.length) return '## Third-party requests\n\nThis page loads nothing from other websites.\n';
+    return ['## Third-party requests', '', 'These websites may be contacted when a visitor opens the page (this can matter for privacy notices):', '', ...list.map(h => `- ${h}`), ''].join('\n');
+  }
+
+  const api = { createAssetBundler, bytesToDataUri, renderWeightReport, renderExternalHostsReport, ASSET_MIME_TYPES };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.ExportAssets = api;
 })();
