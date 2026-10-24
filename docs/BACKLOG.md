@@ -6,8 +6,8 @@ Size: S ≤ 0.5 day, M ≈ 1–2 days, L ≈ 3+ days. Priority: P0 blocks real c
 
 ---
 
-## Epic 1 — Licence compliance (P0)
-Goal: nothing unverified ships to a client by accident.
+## Epic 1 — Licence compliance (P0) — SKIPPED
+Done for now: all 209 components have a recorded licence (own, MIT or author permission), see docs/licence-audit/. Tasks 1.3–1.5 and the credits section are dropped by decision.
 
 - [ ] **1.1 Audit the 173 `unverified` components (M)** — for each, check the 21st.dev page for an open licence or author contact; record with `npm run set-license`. Output: a table of component → licence → evidence URL.
 - [ ] **1.2 Replace or remove components with no usable licence (M)** — rebuild a similar one as `own`, or drop it from `features/`.
@@ -70,7 +70,7 @@ Goal: regressions get caught without manual runs.
 ---
 
 ## Suggested order
-1. Epic 1 (1.1 → 1.4): legal risk comes first.
+1. ~~Epic 1~~ skipped.
 2. 2.1, 3.1, 5.1: close known quality gaps.
 3. 6.1: lock the gains in.
 4. 4.x and 2.2 in parallel; 3.2, 5.3, 7.x as demand shows.
