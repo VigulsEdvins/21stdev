@@ -36,7 +36,7 @@ Goal: every component is usable by a non-developer.
 ## Epic 4 — Builder UX and robustness (P1)
 Goal: the builder is dependable for a full client session.
 
-- [ ] **4.1 Split `app.js` (895 lines) like `builder.js` was (M)** — same module pattern in `scripts/`.
+- [x] **4.1 Split `app.js` (M)** — done 2026-10-24: app.js 895 -> 486 lines; the inspector, workbench, Add Feature Studio and pure helpers moved to `scripts/catalog/`; new unit test and a catalogue-page e2e.
 - [ ] **4.2 Autosave and recovery (S)** — check the flush on tab close, corrupted localStorage, and quota errors with a visible message.
 - [ ] **4.3 Undo/redo across content edits and page settings (M)** — confirm history covers them, not just layout.
 - [ ] **4.4 Keyboard and a11y pass on the builder shell (M)** — focus order, labels, contrast; use the a11y-debugging skill.

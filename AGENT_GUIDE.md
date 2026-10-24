@@ -87,6 +87,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 
 - `builder.html`, `builder.js`, `builder.css` — the builder shell. Extracted modules are in `scripts/builder/` (categories, widget catalog, UI helpers, export asset bundling, in-place preview patching).
 - `scripts/builder-extras.js` — projects modal, page settings, Content tab. `scripts/projects.js` — project store. `scripts/catalog-search.js` — search, filters, favourites.
+- `index.html` + `app.js` — the catalogue; its inspector, workbench and Add Feature Studio are in `scripts/catalog/`.
 - `registry.js` is **metadata only** (about 0.3 MB). Source files are fetched on demand by `scripts/feature-files.js` (catalogue) and `fetchFeatureFiles` (builder). Full-site templates keep their extra files in `features/<slug>/site/`.
 - `scripts/assembler.js` — builds the preview document and the export bundle. `scripts/stack-manager.js` — page state.
 - `assets/library/` — shared, content-hash-named images used by features. `thumbs/` — grid thumbnails. `reports/` — generated, git-ignored.

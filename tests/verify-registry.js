@@ -124,7 +124,9 @@ for (const appFile of ['index.html', 'styles.css', 'app.js']) {
 }
 
 const mainHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-const mainJs = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
+// app.js plus the catalogue modules it is split into
+const mainJs = ['app.js', ...fs.readdirSync(path.join(ROOT, 'scripts', 'catalog')).map(f => 'scripts/catalog/' + f)]
+  .map(f => fs.readFileSync(path.join(ROOT, f), 'utf8')).join('\n');
 assert(mainHtml.includes('registry.js'), 'index.html must load registry.js');
 assert(mainHtml.includes('catalogView') && mainHtml.includes('workbenchView'), 'index.html must include both Catalog Grid and IDE Workbench views');
 assert(mainHtml.includes('inspectorModal') && mainHtml.includes('addFeatureModal'), 'index.html must include Inspector Modal and Add Feature Studio Modal');
