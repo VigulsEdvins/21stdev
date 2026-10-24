@@ -23,6 +23,35 @@
     // State shared with builder.js (read and written through `state`)
     const state = { stack: [], index: -1, applying: false, viewport: 'desktop', extras: null };
     let autoSaveTimer = null;
+    // label and time of each snapshot, kept beside the snapshot (not inside it, so duplicate detection is unchanged)
+    const entryInfo = new WeakMap();
+    const Labels = (typeof window !== 'undefined' && window.HistoryLabels) || require('./history-labels.js');
+
+    /** Entries for the History panel, oldest first: { index, label, at, current }. */
+    function listHistory() {
+      return state.stack.map((snap, index) => {
+        const info = entryInfo.get(snap) || { label: index === 0 ? 'Start' : 'Change', at: null };
+        return { index, label: info.label, at: info.at, current: index === state.index };
+      });
+    }
+
+    function jumpToHistory(index) {
+      if (index < 0 || index >= state.stack.length || index === state.index) return;
+      state.index = index;
+      applyHistoryState(state.stack[state.index]);
+      saveStateToStorage();
+      updateHistoryUI();
+    }
+
+    /** Forgets every earlier state; the page as it is now stays (Undo has nothing left to go back to). */
+    function clearHistory() {
+      const keep = state.stack[state.index];
+      if (!keep) return;
+      entryInfo.set(keep, { label: 'Start', at: Date.now() });
+      state.stack = [keep];
+      state.index = 0;
+      updateHistoryUI();
+    }
 
     function updateHistoryUI() {
       const currentUndoBtn = document.getElementById('undoBtn') || undoBtn;
@@ -141,6 +170,9 @@
           return;
         }
       }
+
+      const previous = state.index >= 0 ? state.stack[state.index] : null;
+      entryInfo.set(currentSnapshot, { label: Labels.describeChange(previous, currentSnapshot), at: Date.now() });
 
       // Discards future redo states
       state.stack = state.stack.slice(0, state.index + 1);
@@ -268,6 +300,9 @@
       MAX_HISTORY,
       STORAGE_KEY, autosave,
       updateHistoryUI,
+      listHistory,
+      jumpToHistory,
+      clearHistory,
       serializeState,
       applyState,
       saveStateToStorage,

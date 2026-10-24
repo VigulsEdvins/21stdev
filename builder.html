@@ -133,8 +133,9 @@
 
     <!-- Header Action Buttons -->
     <div class="header-right builder-actions">
-      <button type="button" class="builder-btn-subtle" id="uiThemeBtn" aria-pressed="false" title="Switch the builder between dark and light">
-        <span id="uiThemeLabel">Light UI</span>
+      <button type="button" class="builder-btn-subtle builder-icon-btn" id="uiThemeBtn" aria-pressed="false" title="Switch the builder between dark and light">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+        <span id="uiThemeLabel" class="sr-only-live">Light UI</span>
       </button>
       <button type="button" class="builder-btn-subtle" id="projectsBtn" title="Client projects: save, switch, snapshot, import and export" aria-haspopup="dialog">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -143,6 +144,14 @@
         <span id="projectNameLabel">Project</span>
       </button>
 
+      <button type="button" class="builder-btn-subtle builder-icon-btn" id="historyBtn" aria-haspopup="true" aria-expanded="false" aria-controls="historyPanel" title="Every change in this session: jump to any of them">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>
+        <span class="sr-only-live">History</span>
+      </button>
+      <div class="history-panel" id="historyPanel" hidden role="region" aria-label="History">
+        <ol class="history-list" id="historyList"></ol>
+        <button type="button" class="builder-btn-subtle" id="historyClearBtn">Clear history (keep current page)</button>
+      </div>
       <button type="button" class="builder-btn-subtle history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M3 7v6h6"></path>
@@ -1074,7 +1083,9 @@
   <script src="scripts/builder/stack-list.js"></script>
   <script src="scripts/builder/autosave.js"></script>
   <script src="scripts/builder/starters.js"></script>
+  <script src="scripts/builder/history-labels.js"></script>
   <script src="scripts/builder/history.js"></script>
+  <script src="scripts/builder/history-panel.js"></script>
   <script src="scripts/builder/page-controls.js"></script>
   <script src="scripts/builder/landing.js"></script>
   <script src="scripts/builder/tour.js"></script>

@@ -565,6 +565,7 @@
       getHistoryIndex: () => historyCtl.state.index
     };
 
+    if (window.BuilderHistoryPanel) window.BuilderHistoryPanel.init({ history: historyCtl });
     const emptyStarterBtn = document.getElementById('emptyStarterBtn');
     if (emptyStarterBtn && loadStarterBtn) emptyStarterBtn.addEventListener('click', () => loadStarterBtn.click());
     if (typeof window !== 'undefined' && window.BuilderTour) window.BuilderTour.start(document); // first visit only

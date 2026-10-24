@@ -3226,3 +3226,13 @@ html[data-ui-theme="light"] .builder-body video,
 html[data-ui-theme="light"] .builder-body canvas,
 html[data-ui-theme="light"] .builder-body .tour-highlight-keep { filter: invert(1) hue-rotate(180deg); }
 html[data-ui-theme="light"] .builder-body { background-color: #09090b; }
+
+/* History panel */
+.history-panel { position: absolute; top: 56px; right: 160px; z-index: 60; width: 300px; max-height: 60vh; overflow: auto; padding: 10px; border-radius: 12px; background: var(--bg-2, #18181d); border: 1px solid var(--border-hover, rgba(255,255,255,.2)); box-shadow: 0 16px 48px rgba(0,0,0,.5); }
+.history-panel[hidden] { display: none; }
+.history-list { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 2px; }
+.history-item { display: flex; justify-content: space-between; gap: 8px; width: 100%; padding: 6px 8px; border: 0; border-radius: 6px; background: transparent; color: var(--text-main, #fafafa); font-size: 12.5px; text-align: left; cursor: pointer; }
+.history-item:hover { background: rgba(255,255,255,.07); }
+.history-item[aria-current="true"] { background: rgba(168,85,247,.22); font-weight: 600; }
+.history-item time { opacity: .55; font-size: 11px; white-space: nowrap; }
+.builder-icon-btn { padding: 6px 9px; }
