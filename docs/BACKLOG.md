@@ -27,7 +27,7 @@ Goal: every component looks right under every page theme.
 ## Epic 3 — Catalogue coverage and content editing (P1)
 Goal: every component is usable by a non-developer.
 
-- [ ] **3.1 Named Content fields for the 45 components without `customizable` (M)** — `suggest-customizable --write`, then trim by hand.
+- [x] **3.1 Named Content fields for the 45 components without `customizable` (M)** — done 2026-10-24. 34 of the 45 are shader/canvas backgrounds with no editable text, so none is correct. Found that 11 imported 21st.dev components (waitlist-hero, hover-footer, web-gl-shader, …) rendered blank in the builder and exports because script.js was a stub; moved their inlined bundle into script.js/style.css, then named fields for 10 of them. Skipped on purpose: SVG-text artwork (brushstroke-portfolio-hero, alter-ego-mask-reveal, tiger-tear-reveal, silhouette-wrap, type-remix-preloader) and loading-screen preloaders, whose text is tied to the layout.
 - [ ] **3.2 Thin categories (M)** — Headers & Nav has 4, Buttons & UI 6, Footers & Endings 8. Add or import until each has ~12 usable options.
 - [ ] **3.3 Content-field validation (S)** — a test that every `customizable` selector resolves in the rendered component.
 - [ ] **3.4 Colour and font fields in the Content tab (S)** — surface the `color` type already in the schema.
@@ -42,6 +42,8 @@ Goal: the builder is dependable for a full client session.
 - [ ] **4.4 Keyboard and a11y pass on the builder shell (M)** — focus order, labels, contrast; use the a11y-debugging skill.
 - [ ] **4.5 Preview performance with 10+ heavy sections (M)** — lazy-mount, pause off-screen WebGL/shader components.
 - [ ] **4.6 Mobile/tablet preview toggle (S)** — viewport switcher in the preview frame.
+- [ ] **4.7 Check 7 components that render empty in headless Chromium (S)** — chroma-glitch-preloader, cinema-grain-preloader, mono-contrast-preloader, cloth-peel-reveal, noise-dissolve-reveal, spotlight-offer-quiz, tile-scrollbar. May be WebGL/interaction-gated and fine in a real browser; confirm, fix if not.
+- [ ] **4.8 Blank-component guard (S)** — make `check-features` or `verify` load every feature through the builder and fail on an empty section, so stub script.js files can't ship again.
 
 ## Epic 5 — Export and handoff (P1)
 Goal: the exported site works with nothing from the vault.

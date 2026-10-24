@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T11:50:17.008Z",
+  "generatedAt": "2026-10-24T12:08:00.622Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 209,
   "categories": [
@@ -467,7 +467,20 @@
         "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope h1.text-balance"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope p.max-w-md"
+        }
+      ],
       "nativeWhen": [],
       "ownPalette": false,
       "source": "21st.dev",
@@ -5052,7 +5065,14 @@
         "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)"
+        }
+      ],
       "nativeWhen": [],
       "ownPalette": false,
       "source": "21st.dev",
@@ -5109,8 +5129,59 @@
         "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
-      "nativeWhen": [],
+      "customizable": [
+        {
+          "id": "hero-photo-1",
+          "label": "Hero photo 1",
+          "type": "image",
+          "selector": ":scope img.opacity-50"
+        },
+        {
+          "id": "hero-photo-2",
+          "label": "Hero photo 2",
+          "type": "image",
+          "selector": ":scope img.opacity-60"
+        },
+        {
+          "id": "hero-photo-3",
+          "label": "Hero photo 3",
+          "type": "image",
+          "selector": ":scope img.opacity-80"
+        },
+        {
+          "id": "hero-photo-4",
+          "label": "Hero photo 4",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > img:nth-of-type(1)"
+        },
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope h1.text-5xl"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope p.text-lg"
+        },
+        {
+          "id": "button-text",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope button.h-full"
+        },
+        {
+          "id": "text",
+          "label": "Text",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
+        }
+      ],
+      "nativeWhen": [
+        "light"
+      ],
       "ownPalette": false,
       "source": "21st.dev",
       "type": "component",
@@ -5165,7 +5236,56 @@
         "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "small-label-1",
+          "label": "Small label 1",
+          "type": "text",
+          "selector": ":scope span.lg\\:hidden"
+        },
+        {
+          "id": "small-label-2",
+          "label": "Small label 2",
+          "type": "text",
+          "selector": ":scope div.text-white"
+        },
+        {
+          "id": "small-label-3",
+          "label": "Small label 3",
+          "type": "text",
+          "selector": ":scope span.text-white\\/60"
+        },
+        {
+          "id": "small-label-4",
+          "label": "Small label 4",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)"
+        },
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope h1.text-2xl"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope p.text-xs"
+        },
+        {
+          "id": "button-text-1",
+          "label": "Button text 1",
+          "type": "text",
+          "selector": ":scope button.group"
+        },
+        {
+          "id": "button-text-2",
+          "label": "Button text 2",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(8) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > button:nth-of-type(2)"
+        }
+      ],
       "nativeWhen": [],
       "ownPalette": false,
       "source": "21st.dev",
@@ -5220,7 +5340,56 @@
         "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "small-label",
+          "label": "Small label",
+          "type": "text",
+          "selector": ":scope div.inline-flex"
+        },
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope h1.text-5xl"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope p.max-w-3xl"
+        },
+        {
+          "id": "button-text-1",
+          "label": "Button text 1",
+          "type": "text",
+          "selector": ":scope button.border"
+        },
+        {
+          "id": "button-text-2",
+          "label": "Button text 2",
+          "type": "text",
+          "selector": ":scope button.bg-foreground"
+        },
+        {
+          "id": "paragraph-1",
+          "label": "Paragraph 1",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "paragraph-2",
+          "label": "Paragraph 2",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
+        },
+        {
+          "id": "paragraph-3",
+          "label": "Paragraph 3",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > p:nth-of-type(1)"
+        }
+      ],
       "nativeWhen": [],
       "ownPalette": false,
       "source": "21st.dev",
@@ -5275,7 +5444,74 @@
         "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "footer-heading-1",
+          "label": "Footer heading 1",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h4:nth-of-type(1)"
+        },
+        {
+          "id": "footer-heading-2",
+          "label": "Footer heading 2",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > h4:nth-of-type(1)"
+        },
+        {
+          "id": "footer-heading-3",
+          "label": "Footer heading 3",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > h4:nth-of-type(1)"
+        },
+        {
+          "id": "footer-text-1",
+          "label": "Footer text 1",
+          "type": "text",
+          "selector": ":scope div.space-x-2"
+        },
+        {
+          "id": "footer-link-1",
+          "label": "Footer link 1",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+        },
+        {
+          "id": "footer-text-2",
+          "label": "Footer text 2",
+          "type": "text",
+          "selector": ":scope p.text-sm"
+        },
+        {
+          "id": "footer-link-text-1",
+          "label": "Footer link text 1",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)"
+        },
+        {
+          "id": "footer-link-text-2",
+          "label": "Footer link text 2",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1)"
+        },
+        {
+          "id": "footer-link-2",
+          "label": "Footer link 2",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+        },
+        {
+          "id": "footer-link-3",
+          "label": "Footer link 3",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+        },
+        {
+          "id": "footer-text-3",
+          "label": "Footer text 3",
+          "type": "text",
+          "selector": ":scope span.hover\\:text-\\[\\#3ca2fa\\]"
+        }
+      ],
       "nativeWhen": [],
       "ownPalette": false,
       "source": "21st.dev",
@@ -5329,8 +5565,101 @@
         "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
-      "nativeWhen": [],
+      "customizable": [
+        {
+          "id": "button-text-1",
+          "label": "Button text 1",
+          "type": "text",
+          "selector": ":scope button.px-5"
+        },
+        {
+          "id": "menu-item-1",
+          "label": "Menu item 1",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
+        },
+        {
+          "id": "menu-item-2",
+          "label": "Menu item 2",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > a:nth-of-type(1)"
+        },
+        {
+          "id": "hero-photo-1",
+          "label": "Hero photo 1",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+        },
+        {
+          "id": "hero-photo-2",
+          "label": "Hero photo 2",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > img:nth-of-type(1)"
+        },
+        {
+          "id": "hero-photo-3",
+          "label": "Hero photo 3",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > img:nth-of-type(1)"
+        },
+        {
+          "id": "hero-photo-4",
+          "label": "Hero photo 4",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > img:nth-of-type(1)"
+        },
+        {
+          "id": "paragraph-1",
+          "label": "Paragraph 1",
+          "type": "text",
+          "selector": ":scope p.text-white"
+        },
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope h1.w-full"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope p.animation-delay-200"
+        },
+        {
+          "id": "paragraph-2",
+          "label": "Paragraph 2",
+          "type": "text",
+          "selector": ":scope p.animation-delay-300"
+        },
+        {
+          "id": "button-text-2",
+          "label": "Button text 2",
+          "type": "text",
+          "selector": ":scope button.px-6"
+        },
+        {
+          "id": "link-1",
+          "label": "Link 1",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > a:nth-of-type(1)"
+        },
+        {
+          "id": "link-2",
+          "label": "Link 2",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > a:nth-of-type(2)"
+        },
+        {
+          "id": "link-3",
+          "label": "Link 3",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > a:nth-of-type(3)"
+        }
+      ],
+      "nativeWhen": [
+        "dark"
+      ],
       "ownPalette": false,
       "source": "21st.dev",
       "type": "component",
@@ -5384,7 +5713,32 @@
         "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope h1.mb-3"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope p.text-white\\/60"
+        },
+        {
+          "id": "paragraph",
+          "label": "Paragraph",
+          "type": "text",
+          "selector": ":scope p.text-green-500"
+        },
+        {
+          "id": "text",
+          "label": "Text",
+          "type": "text",
+          "selector": ":scope div.pointer-events-none"
+        }
+      ],
       "nativeWhen": [],
       "ownPalette": false,
       "source": "21st.dev",
@@ -5439,8 +5793,23 @@
         "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
-      "nativeWhen": [],
+      "customizable": [
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "paragraph",
+          "label": "Paragraph",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)"
+        }
+      ],
+      "nativeWhen": [
+        "light"
+      ],
       "ownPalette": false,
       "source": "21st.dev",
       "type": "component",
@@ -5495,7 +5864,32 @@
         "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope h1.text-4xl"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope p.mt-2"
+        },
+        {
+          "id": "link",
+          "label": "Link",
+          "type": "link",
+          "selector": ":scope a.rounded-full"
+        },
+        {
+          "id": "link-text",
+          "label": "Link text",
+          "type": "text",
+          "selector": ":scope a.rounded-full"
+        }
+      ],
       "nativeWhen": [],
       "ownPalette": false,
       "source": "21st.dev",

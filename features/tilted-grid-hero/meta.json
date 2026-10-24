@@ -45,7 +45,20 @@
     "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h1.text-balance"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope p.max-w-md"
+    }
+  ],
   "measured": {
     "luma": 0.53,
     "webgl": false,

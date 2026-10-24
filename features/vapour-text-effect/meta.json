@@ -44,7 +44,14 @@
     "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)"
+    }
+  ],
   "measured": {
     "luma": 0,
     "webgl": false,
