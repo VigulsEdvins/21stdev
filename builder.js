@@ -608,6 +608,7 @@
     let preloaderForceReplay = false;
 
     function addOrReplaceLandingSection(slug, extraProps = {}, preferredIndex = null) {
+      catalogLib.addRecent(slug);
       const title = extraProps.title || slug;
       const category = extraProps.category || '';
       const singletonType = getSingletonType(slug, title, category);
@@ -835,11 +836,20 @@
     const elementsTargetBanner = document.getElementById('elementsTargetBanner');
     const elementsTargetSectionName = document.getElementById('elementsTargetSectionName');
     const elementsScopeToggle = document.querySelector('.elements-scope-toggle');
+    const similarChip = document.getElementById('similarChip');
+    const similarChipText = document.getElementById('similarChipText');
 
     // Elements Sidebar State
     let elementsCategory = 'all';
     let elementsSearch = '';
     let elementsScope = 'all'; // 'all' | 'widgets' | 'sections'
+    const catalogSearch = window.CatalogSearch || require('./scripts/catalog-search.js');
+    const catalogLib = catalogSearch.createLibraryStore((() => {
+      try { return window.localStorage; } catch (_) { return { getItem: () => null, setItem: () => {} }; }
+    })());
+    const elementsFilters = { mood: '', industry: '', weight: '', showDrafts: false };
+    let elementsQuick = null; // null | 'favourites' | 'recents'
+    let elementsSimilarTo = null; // slug of the component results should resemble
     let elementsVisualMode = true; // true = visual with live previews
     let activeTargetSectionId = null;
 
@@ -3038,6 +3048,29 @@
       });
     }
 
+    // -------------------------------------------------------------
+    // Library quick filters, attribute filters, similar-to chip
+    // -------------------------------------------------------------
+    const quickFavBtn = document.getElementById('quickFavouritesBtn');
+    const quickRecentBtn = document.getElementById('quickRecentsBtn');
+    function setQuick(mode) {
+      elementsQuick = elementsQuick === mode ? null : mode;
+      if (quickFavBtn) { quickFavBtn.classList.toggle('is-active', elementsQuick === 'favourites'); quickFavBtn.setAttribute('aria-pressed', String(elementsQuick === 'favourites')); }
+      if (quickRecentBtn) { quickRecentBtn.classList.toggle('is-active', elementsQuick === 'recents'); quickRecentBtn.setAttribute('aria-pressed', String(elementsQuick === 'recents')); }
+      renderElementsCatalog();
+    }
+    if (quickFavBtn) quickFavBtn.addEventListener('click', () => setQuick('favourites'));
+    if (quickRecentBtn) quickRecentBtn.addEventListener('click', () => setQuick('recents'));
+
+    [['filterMood', 'mood'], ['filterIndustry', 'industry'], ['filterWeight', 'weight']].forEach(([id, key]) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('change', () => { elementsFilters[key] = el.value; renderElementsCatalog(); });
+    });
+    const showDraftsCheck = document.getElementById('showDraftsCheck');
+    if (showDraftsCheck) showDraftsCheck.addEventListener('change', () => { elementsFilters.showDrafts = showDraftsCheck.checked; renderElementsCatalog(); });
+    const similarChipClear = document.getElementById('similarChipClear');
+    if (similarChipClear) similarChipClear.addEventListener('click', () => { elementsSimilarTo = null; renderElementsCatalog(); });
+
     // Lazy Preview Observer for Sidebar Section Cards
     const elementsPreviewObserver = typeof IntersectionObserver !== 'undefined'
       ? new IntersectionObserver((entries) => {
@@ -3045,6 +3078,7 @@
             const box = entry.target;
             const slug = box.getAttribute('data-slug');
             if (!slug) return;
+            if (box.hasAttribute('data-thumb')) return; // thumbnail cards mount a live preview on hover instead
             let iframe = box.querySelector('iframe');
             if (entry.isIntersecting) {
               if (!iframe) {
@@ -3095,29 +3129,31 @@
         itemsToFilter = [...WIDGET_CATALOG_ITEMS, ...registry];
       }
 
-      const filtered = itemsToFilter.filter(item => {
-        // Category matching
+      const quickSlugs = elementsQuick === 'favourites' ? catalogLib.favourites()
+        : elementsQuick === 'recents' ? catalogLib.recents() : null;
+      const attrFilters = Object.assign({}, elementsFilters, quickSlugs ? { onlySlugs: quickSlugs } : {});
+
+      let filtered = itemsToFilter.filter(item => {
         const matchesCat = item.isWidget
           ? (elementsCategory === 'all' || matchesCategory({ category: item.category }, elementsCategory))
           : matchesCategory(item, elementsCategory);
-
-        if (!matchesCat) return false;
-        if (!q) return true;
-
-        const slug = (item.slug || '').toLowerCase();
-        const title = (item.title || item.name || '').toLowerCase();
-        const desc = (item.desc || item.description || '').toLowerCase();
-        const normCat = item.isWidget ? item.category.toLowerCase() : getNormalizedCategory(item).toLowerCase();
-        const tags = Array.isArray(item.tags) ? item.tags.map(t => String(t).toLowerCase()) : [];
-
-        return (
-          slug.includes(q) ||
-          title.includes(q) ||
-          desc.includes(q) ||
-          normCat.includes(q) ||
-          tags.some(t => t.includes(q))
-        );
+        return matchesCat && catalogSearch.matchesFilters(item, attrFilters);
       });
+
+      const similarBase = elementsSimilarTo ? registry.find(f => f.slug === elementsSimilarTo) : null;
+      if (similarBase) {
+        filtered = catalogSearch.similarItems(filtered, similarBase, 24);
+      } else if (q) {
+        filtered = catalogSearch.searchItems(filtered, q);
+      }
+      if (elementsQuick === 'recents') {
+        filtered.sort((x, y) => quickSlugs.indexOf(x.slug) - quickSlugs.indexOf(y.slug));
+      }
+
+      if (similarChip && similarChipText) {
+        similarChip.hidden = !similarBase;
+        if (similarBase) similarChipText.textContent = `Similar to ${similarBase.title || similarBase.slug}`;
+      }
 
       if (elementsTotalCount) {
         elementsTotalCount.textContent = `${filtered.length} items`;
@@ -3127,7 +3163,7 @@
         elementsCardsGrid.innerHTML = `
           <div style="padding: 36px 14px; text-align: center; color: var(--text-muted, #a1a1aa);">
             <div style="font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--text-main, #fafafa);">No items found</div>
-            <div style="font-size: 11px; color: var(--text-dim, #71717a);">Try clearing search query or switching scope/categories</div>
+            <div style="font-size: 11px; color: var(--text-dim, #71717a);">Try clearing the search, filters or switching scope/categories</div>
           </div>
         `;
         return;
@@ -3172,11 +3208,10 @@
         const previewBoxHtml = item.isWidget
           ? `<div class="element-widget-preview">${item.previewHtml || ''}</div>`
           : `
-            <div class="element-card-preview-box" data-slug="${item.slug}">
-              <div class="element-card-preview-placeholder">
-                <div class="spinner-ring"></div>
-                <span>Live Preview</span>
-              </div>
+            <div class="element-card-preview-box" data-slug="${item.slug}"${item.thumb ? ` data-thumb="${escapeHtml(item.thumb)}"` : ''}>
+              ${item.thumb
+                ? `<img class="element-card-thumb" src="${escapeHtml(item.thumb)}" alt="" loading="lazy" decoding="async" /><span class="element-card-live-hint">Hover for live preview</span>`
+                : `<div class="element-card-preview-placeholder"><div class="spinner-ring"></div><span>Live Preview</span></div>`}
             </div>
           `;
 
@@ -3187,6 +3222,10 @@
               <div style="display:flex;align-items:center;gap:6px;">
                 ${scopeBadgeHtml}
                 <span class="element-card-badge ${badgeClass}">${escapeHtml(normCat)}</span>
+              </div>
+              <div class="element-card-actions">
+                <button type="button" class="element-icon-btn element-fav-btn${catalogLib.isFavourite(item.slug) ? ' is-on' : ''}" aria-pressed="${catalogLib.isFavourite(item.slug)}" aria-label="Favourite ${escapeHtml(title)}" title="Add to favourites">&#9733;</button>
+                ${item.isWidget ? '' : `<button type="button" class="element-icon-btn element-similar-btn" aria-label="Find components similar to ${escapeHtml(title)}" title="Find similar">&#8776;</button>`}
               </div>
               <button type="button" class="element-add-btn" aria-label="${escapeHtml(btnLabel)}">
                 <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -3206,16 +3245,57 @@
           </div>
         `;
 
-        if (!item.isWidget && elementsPreviewObserver) {
+        if (!item.isWidget) {
           const previewBox = card.querySelector('.element-card-preview-box');
-          if (previewBox) {
+          if (previewBox && previewBox.hasAttribute('data-thumb')) {
+            let hoverTimer = null;
+            previewBox.addEventListener('mouseenter', () => {
+              hoverTimer = setTimeout(() => {
+                if (previewBox.querySelector('iframe')) return;
+                const iframe = document.createElement('iframe');
+                iframe.title = item.slug;
+                iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
+                iframe.src = `features/${item.slug}/index.html`;
+                previewBox.appendChild(iframe);
+              }, 250);
+            });
+            previewBox.addEventListener('mouseleave', () => {
+              clearTimeout(hoverTimer);
+              const iframe = previewBox.querySelector('iframe');
+              if (iframe) iframe.remove();
+            });
+          } else if (previewBox && elementsPreviewObserver) {
             elementsPreviewObserver.observe(previewBox);
           }
         }
 
         const addBtn = card.querySelector('.element-add-btn');
 
+        const favBtn = card.querySelector('.element-fav-btn');
+        if (favBtn) {
+          favBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const on = catalogLib.toggleFavourite(item.slug);
+            favBtn.classList.toggle('is-on', on);
+            favBtn.setAttribute('aria-pressed', String(on));
+            if (elementsQuick === 'favourites') renderElementsCatalog();
+          });
+        }
+        const similarBtn = card.querySelector('.element-similar-btn');
+        if (similarBtn) {
+          similarBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            elementsSimilarTo = item.slug;
+            elementsScope = 'sections';
+            elementsScopeToggle && elementsScopeToggle.querySelectorAll('.scope-pill').forEach(p => p.classList.toggle('is-active', p.dataset.scope === 'sections'));
+            renderElementsCatalog();
+            const scroller = document.getElementById('elementsCatalogScroll');
+            if (scroller) scroller.scrollTop = 0;
+          });
+        }
+
         const triggerAction = () => {
+          catalogLib.addRecent(item.slug);
           if (item.isWidget) {
             // Add directly into active section
             let targetSec = getActiveSection();
@@ -3481,26 +3561,9 @@
 
     // Drawer Filtering Logic
     function getFilteredFeatures() {
-      const query = searchQuery.trim().toLowerCase();
-
-      return registry.filter(feature => {
-        const matchedCategory = matchesCategory(feature, activeCategory);
-        if (!matchedCategory) return false;
-
-        if (!query) return true;
-
-        const title = (feature.title || feature.name || '').toLowerCase();
-        const slug = (feature.slug || '').toLowerCase();
-        const desc = (feature.description || '').toLowerCase();
-        const tags = Array.isArray(feature.tags) ? feature.tags.map(t => String(t).toLowerCase()) : [];
-
-        return (
-          title.includes(query) ||
-          slug.includes(query) ||
-          desc.includes(query) ||
-          tags.some(t => t.includes(query))
-        );
-      });
+      const byCategory = registry.filter(feature =>
+        matchesCategory(feature, activeCategory) && catalogSearch.matchesFilters(feature, { showDrafts: elementsFilters.showDrafts }));
+      return catalogSearch.searchItems(byCategory, searchQuery);
     }
 
     // Drawer live preview observer (lazy mounts iframes into visible cards)

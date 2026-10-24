@@ -274,6 +274,35 @@
             </div>
           </div>
 
+          <!-- Library quick filters & attribute filters -->
+          <div class="elements-quick-row" role="group" aria-label="Library filters">
+            <button type="button" class="quick-pill" id="quickFavouritesBtn" aria-pressed="false" title="Show only starred components">&#9733; Favourites</button>
+            <button type="button" class="quick-pill" id="quickRecentsBtn" aria-pressed="false" title="Show the last 10 components you used">&#128339; Recent</button>
+            <label class="quick-check" title="Show components that have not been checked yet">
+              <input type="checkbox" id="showDraftsCheck" /> <span>Drafts</span>
+            </label>
+          </div>
+          <div class="elements-attr-row">
+            <select id="filterMood" class="attr-select" aria-label="Filter by mood">
+              <option value="">Any mood</option>
+              <option>dark</option><option>light</option><option>playful</option><option>editorial</option>
+              <option>luxury</option><option>futuristic</option><option>retro</option><option>minimal</option>
+            </select>
+            <select id="filterIndustry" class="attr-select" aria-label="Filter by industry">
+              <option value="">Any industry</option>
+              <option>general</option><option>portfolio</option><option>agency</option><option>saas</option>
+              <option>ecommerce</option><option>hospitality</option><option>fintech</option><option>education</option><option>media</option>
+            </select>
+            <select id="filterWeight" class="attr-select" aria-label="Filter by performance weight">
+              <option value="">Any weight</option>
+              <option value="light">Light</option><option value="medium">Medium</option><option value="heavy">Heavy (WebGL)</option>
+            </select>
+          </div>
+          <div class="similar-chip" id="similarChip" hidden>
+            <span id="similarChipText"></span>
+            <button type="button" id="similarChipClear" aria-label="Clear similar filter">&times;</button>
+          </div>
+
           <!-- Category Filter Pills -->
           <div class="elements-category-scroll" id="elementsCategoryPills" role="group" aria-label="Elements Categories">
             <button type="button" class="elements-cat-pill is-active" data-category="all">All</button>
@@ -909,6 +938,7 @@
   <!-- Script Modules -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="registry.js"></script>
+  <script src="scripts/catalog-search.js"></script>
   <script src="scripts/assembler.js"></script>
   <script src="scripts/stack-manager.js" defer></script>
   <script src="builder.js" defer></script>
