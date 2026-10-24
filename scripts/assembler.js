@@ -1932,6 +1932,7 @@ function applyThemeToDocument(doc, themeConfig) {
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
 function assemblePreviewDocument(sections, themeConfig, featuresData = {}, options = {}) {
+  const pageHead = renderPageHead(options.page, 'Page Preview');
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);
   if (!Array.isArray(sections) || sections.length === 0) {
@@ -2046,11 +2047,11 @@ ${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
   const allScripts = scriptBlocks.join('\n\n');
 
   return `<!DOCTYPE html>
-<html lang="en" data-theme="${isDark ? 'dark' : 'light'}">
+<html lang="${pageHead.lang}" data-theme="${isDark ? 'dark' : 'light'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Preview</title>
+  ${pageHead.headTags}
   ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style id="universal-theme-styles">
 ${generateUniversalThemeStyles(theme)}
   </style>
@@ -2058,6 +2059,7 @@ ${generateUniversalThemeStyles(theme)}
 ${allScopedStyles}
 
 ${OVERLAY_ELEMENT_CSS}
+${pageHead.css}
   </style>
 </head>
 <body data-theme="${isDark ? 'dark' : 'light'}">
@@ -2292,14 +2294,108 @@ ${allScripts}
       }
     })();
   </script>
+  <script>
+${OVERRIDES_RUNTIME}
+window.__setOverrides(${JSON.stringify(collectOverrides(sections)).replace(/</g, '\\u003c')});
+  </script>
 </body>
 </html>`;
 }
 
 /**
+ * Page-level settings (title, description, favicon, fonts) -> head tags and CSS.
+ * @param {object} [page]
+ * @param {string} [fallbackTitle]
+ */
+function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
+  const title = (page.title || '').trim() || fallbackTitle;
+  const tags = [`<title>${escapeHtml(title)}</title>`];
+  if ((page.description || '').trim()) {
+    tags.push(`<meta name="description" content="${escapeHtml(page.description.trim())}">`);
+  }
+
+  const fav = (page.favicon || '').trim();
+  if (fav) {
+    const isUrl = /^(https?:|data:|\/|\.\/|[\w-]+\/)/i.test(fav) && !/^\p{Extended_Pictographic}/u.test(fav);
+    const href = isUrl
+      ? fav
+      : 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${escapeHtml(fav)}</text></svg>`);
+    tags.push(`<link rel="icon" href="${escapeHtml(href)}">`);
+  }
+
+  const families = [];
+  const cssFamily = name => `'${String(name).replace(/['"\\<>;{}]/g, '')}'`;
+  const cleanName = name => String(name || '').replace(/['"\\<>;{}]/g, '').trim();
+  const display = cleanName(page.fontDisplay);
+  const body = cleanName(page.fontBody);
+  [display, body].filter(Boolean).forEach(n => {
+    if (!families.includes(n)) families.push(n);
+  });
+  if (families.length) {
+    const query = families.map(n => `family=${encodeURIComponent(n).replace(/%20/g, '+')}:wght@400;500;600;700`).join('&');
+    tags.push('<link rel="preconnect" href="https://fonts.googleapis.com">');
+    tags.push('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>');
+    tags.push(`<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${query}&display=swap">`);
+  }
+
+  const css = [];
+  if (display) css.push(`:root { --font-display: ${cssFamily(display)}, system-ui, sans-serif; }`);
+  if (body) css.push(`:root { --font-body: ${cssFamily(body)}, system-ui, sans-serif; }`);
+  if (display) css.push(`.page-section :is(h1, h2, h3, h4, h5, h6) { font-family: var(--font-display) !important; }`);
+  if (body) css.push(`.page-section :is(p, li, a, span, button, label, input, textarea, blockquote, td, th, figcaption):not(code):not(pre) { font-family: var(--font-body) !important; }`);
+
+  return { title, lang: /^[a-z]{2,3}(-[A-Za-z0-9]+)*$/.test(page.lang || '') ? page.lang : 'en', headTags: tags.join('\n  '), css: css.join('\n') };
+}
+
+/**
+ * Client-content overrides: sections carry { fieldId: { selector, type, value, attr? } }.
+ * Returns a flat list the runtime below applies inside each section.
+ */
+function collectOverrides(sections) {
+  const out = [];
+  (Array.isArray(sections) ? sections : []).forEach(sec => {
+    Object.entries(sec.overrides || {}).forEach(([fieldId, o]) => {
+      if (o && typeof o === 'object' && o.selector && o.value !== undefined && o.value !== '') {
+        out.push({ section: sec.id, field: fieldId, selector: o.selector, type: o.type || 'text', attr: o.attr || '', value: String(o.value) });
+      }
+    });
+  });
+  return out;
+}
+
+/** Runtime shared by preview and export: defines window.__setOverrides(list). */
+const OVERRIDES_RUNTIME = `(function () {
+  var list = [];
+  function apply() {
+    list.forEach(function (o) {
+      var root = document.getElementById(o.section);
+      if (!root) return;
+      var el;
+      try { el = root.querySelector(o.selector); } catch (e) { return; }
+      if (!el) return;
+      if (o.type === 'image') {
+        if (el.tagName === 'IMG') { el.removeAttribute('srcset'); el.src = o.value; }
+        else el.style.backgroundImage = 'url("' + o.value.replace(/"/g, '%22') + '")';
+      } else if (o.type === 'link') {
+        el.setAttribute('href', o.value);
+      } else if (o.type === 'color') {
+        el.style.setProperty(o.attr || 'color', o.value);
+      } else {
+        el.textContent = o.value;
+      }
+    });
+  }
+  window.__setOverrides = function (next) { list = next || []; apply(); };
+  window.__applyOverrides = apply;
+  document.addEventListener('DOMContentLoaded', function () { apply(); setTimeout(apply, 400); setTimeout(apply, 1500); });
+  window.addEventListener('load', apply);
+})();`;
+
+/**
  * Generates an export bundle containing index.html, style.css, script.js, and README.md.
  */
-function generateExportBundle(sections, themeConfig, featuresData = {}) {
+function generateExportBundle(sections, themeConfig, featuresData = {}, options = {}) {
+  const pageHead = renderPageHead(options.page);
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);
   const safeSections = Array.isArray(sections) ? sections : [];
@@ -2309,6 +2405,8 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
   const sectionHtmlBlocks = [];
   const scriptBlocks = [];
   const sectionInfoList = [];
+  const contentOverrides = collectOverrides(safeSections);
+  const pageOpts = options.page || {};
 
   safeSections.forEach((section, index) => {
     const id = section.id || `sec-${index + 1}`;
@@ -2389,11 +2487,11 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
 
   // 1. index.html
   const indexHtml = `<!DOCTYPE html>
-<html lang="en" data-theme="${isDark ? 'dark' : 'light'}">
+<html lang="${pageHead.lang}" data-theme="${isDark ? 'dark' : 'light'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Assembled Web Page</title>
+  ${pageHead.headTags}
   ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<link rel="stylesheet" href="style.css">
 </head>
 <body data-theme="${isDark ? 'dark' : 'light'}">
@@ -2407,6 +2505,9 @@ ${allHtml}
  * Assembled Page Styles
  * Bundled by Page Preview Builder
  * Theme: ${theme.name}
+ *
+ * BRAND VARIABLES: to re-colour the whole site edit --preview-bg, --preview-text and
+ * --preview-accent in the :root block below. Every other colour token derives from them.
  */
 
 ${generateUniversalThemeStyles(theme)}
@@ -2418,7 +2519,7 @@ ${generateUniversalThemeStyles(theme)}
 ${allScopedStyles || '/* No custom section styles */'}
 
 ${OVERLAY_ELEMENT_CSS}
-`;
+${pageHead.css ? `\n/* Page fonts */\n${pageHead.css}\n` : ''}`;
 
   // 3. script.js
   const scriptJs = `/**
@@ -2514,6 +2615,10 @@ ${OVERLAY_ELEMENT_CSS}
 document.addEventListener("DOMContentLoaded", function () {
 ${allScripts || '  // No section scripts'}
 });
+
+// Client content edits made in the builder (headlines, images, links). Change a value here and reload.
+${OVERRIDES_RUNTIME}
+window.__setOverrides(${JSON.stringify(collectOverrides(safeSections), null, 2)});
 `;
 
   // 4. README.md
@@ -2525,6 +2630,22 @@ It bundles your selected components into a clean, editable, and ready-to-run pac
 ## Included Sections (${sectionInfoList.length})
 
 ${sectionInfoList.map((s, idx) => `${idx + 1}. **${s.title}** (\`${s.slug}\`) — Container: \`#${s.id}\``).join('\n') || '- No sections assembled yet.'}
+
+## Page Settings
+
+- **Title:** ${pageHead.title}
+- **Language:** \`${pageHead.lang}\`
+- **Fonts:** ${[pageOpts.fontDisplay && `${pageOpts.fontDisplay} (headings)`, pageOpts.fontBody && `${pageOpts.fontBody} (body)`].filter(Boolean).join(', ') || 'component defaults'}
+
+Change the title, description and favicon in the \`<head>\` of \`index.html\`. Fonts load from Google Fonts via the \`<link>\` tag there and are applied by the \`/* Page fonts */\` rules at the end of \`style.css\`.
+
+## Client Content Edits
+
+${contentOverrides.length ? contentOverrides.map(o => `- \`#${o.section}\` → \`${o.selector}\` (${o.type}): ${o.value.length > 80 ? o.value.slice(0, 77) + '...' : o.value}`).join('\n') + '\n\nThese were edited in the builder and are applied by the `window.__setOverrides([...])` list at the bottom of `script.js`. Edit the values there, or change the markup in `index.html` and delete the matching entry.' : 'No content was overridden in the builder; edit text directly in `index.html`.'}
+
+## Assets
+
+Images, video and fonts used by the components are in \`assets/\`. Keep that folder next to \`index.html\` when you upload the site.
 
 ## How to Run
 
@@ -2588,10 +2709,9 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
 /**
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
-function generateSingleFileBundle(sections, themeConfig, featuresData = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData);
+function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page) });
   return doc
-    .replace('<title>Page Preview</title>', '<title>Assembled Web Page</title>')
     .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }
 
@@ -2791,6 +2911,8 @@ if (typeof module !== 'undefined' && module.exports) {
     assemblePreviewDocument,
     generateExportBundle,
     generateSingleFileBundle,
+    renderPageHead,
+    collectOverrides,
     computeSectionSizingStyles,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,
@@ -2814,6 +2936,8 @@ if (typeof window !== 'undefined') {
     assemblePreviewDocument,
     generateExportBundle,
     generateSingleFileBundle,
+    renderPageHead,
+    collectOverrides,
     computeSectionSizingStyles,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,

@@ -132,6 +132,13 @@
 
     <!-- Header Action Buttons -->
     <div class="header-right builder-actions">
+      <button type="button" class="builder-btn-subtle" id="projectsBtn" title="Client projects: save, switch, snapshot, import and export" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        </svg>
+        <span id="projectNameLabel">Project</span>
+      </button>
+
       <button type="button" class="builder-btn-subtle history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M3 7v6h6"></path>
@@ -167,6 +174,23 @@
       </button>
     </div>
   </header>
+
+  <!-- Client projects modal (content is rendered by scripts/builder-extras.js) -->
+  <div class="export-modal" id="projectsModal" aria-hidden="true">
+    <div class="modal-backdrop" id="projectsModalBackdrop"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="projectsModalTitle">
+      <header class="modal-header">
+        <div class="modal-title-group">
+          <div>
+            <h2 class="modal-title" id="projectsModalTitle">Client Projects</h2>
+            <p class="modal-subtitle">Each client gets a saved page you can reopen, snapshot and send as a file</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn" id="closeProjectsModalBtn" aria-label="Close projects">&times;</button>
+      </header>
+      <div class="modal-body" id="projectsModalBody"></div>
+    </div>
+  </div>
 
   <!-- Main Workspace: Split Screen Layout -->
   <main class="builder-workspace">
@@ -205,6 +229,13 @@
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
           <span>Styling</span>
+        </button>
+        <button type="button" class="sidebar-tab-btn" id="tabContentBtn" role="tab" aria-selected="false" data-tab="content">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          <span>Content</span>
         </button>
       </div>
 
@@ -457,12 +488,48 @@
             </div>
           </div>
 
+          <div class="styling-group" id="pageSettingsGroup">
+            <label class="styling-group-label">Page Settings</label>
+            <div class="page-settings-form">
+              <label class="ps-field"><span>Page title</span><input type="text" id="pageTitleInput" maxlength="120" autocomplete="off" /></label>
+              <label class="ps-field"><span>Meta description</span><textarea id="pageDescInput" rows="2" maxlength="300"></textarea></label>
+              <label class="ps-field"><span>Favicon (emoji or image URL)</span><input type="text" id="pageFaviconInput" maxlength="300" placeholder="e.g. 🚀 or /logo.png" autocomplete="off" /></label>
+              <label class="ps-field"><span>Heading font (Google Fonts)</span><input type="text" id="pageFontDisplayInput" list="googleFontList" maxlength="60" placeholder="Component default" autocomplete="off" /></label>
+              <label class="ps-field"><span>Body font (Google Fonts)</span><input type="text" id="pageFontBodyInput" list="googleFontList" maxlength="60" placeholder="Component default" autocomplete="off" /></label>
+              <label class="ps-field"><span>Language code</span><input type="text" id="pageLangInput" maxlength="10" placeholder="en" autocomplete="off" /></label>
+              <datalist id="googleFontList">
+                <option value="Inter"></option><option value="DM Sans"></option><option value="Manrope"></option>
+                <option value="Space Grotesk"></option><option value="Plus Jakarta Sans"></option><option value="Outfit"></option>
+                <option value="Playfair Display"></option><option value="Instrument Serif"></option><option value="Fraunces"></option>
+                <option value="Cormorant Garamond"></option><option value="Syne"></option><option value="Bricolage Grotesque"></option>
+                <option value="Poppins"></option><option value="Montserrat"></option><option value="Lora"></option>
+                <option value="IBM Plex Sans"></option><option value="JetBrains Mono"></option><option value="Oswald"></option>
+              </datalist>
+            </div>
+          </div>
+
           <div class="universal-theming-callout">
             <div class="callout-icon">✨</div>
             <div class="callout-text">
               <strong>Universal Theme Cascade Active:</strong> All hardcoded component colors are normalized to dynamic CSS variables.
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Tab Pane 4: Client content editor -->
+      <div class="sidebar-tab-pane" id="paneContent">
+        <div class="widgets-catalog-header">
+          <div class="widgets-header-title">Client Content</div>
+          <div class="widgets-header-subtitle">Swap text, images and links without touching code</div>
+        </div>
+        <div class="content-pane-body">
+          <label class="ps-field">
+            <span>Section</span>
+            <select id="contentSectionSelect" class="attr-select"></select>
+          </label>
+          <div class="content-fields" id="contentFields"></div>
+          <p class="content-empty" id="contentEmpty" hidden>Add a section first, then edit its text, images and links here.</p>
         </div>
       </div>
     </aside>
@@ -939,6 +1006,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="registry.js"></script>
   <script src="scripts/catalog-search.js"></script>
+  <script src="scripts/projects.js"></script>
+  <script src="scripts/builder-extras.js"></script>
   <script src="scripts/assembler.js"></script>
   <script src="scripts/stack-manager.js" defer></script>
   <script src="builder.js" defer></script>

@@ -148,7 +148,7 @@ assert(exportBundle['index.html'].includes('Preloader Auto-Dismiss Handler') || 
 // Test D: Verify builder.js wiring for play-once state
 assert(builderJs.includes('playedPreloaderId'), 'builder.js must track playedPreloaderId');
 assert(builderJs.includes('preloaderForceReplay'), 'builder.js must support preloaderForceReplay');
-assert(builderJs.includes('{ suppressPreloader }'), 'builder.js must pass suppressPreloader to assemblePreviewDocument');
+assert(/\{\s*suppressPreloader\b/.test(builderJs), 'builder.js must pass suppressPreloader to assemblePreviewDocument');
 
 console.log('  ✓ Preloader Play-Once and Suppression logic verified');
 

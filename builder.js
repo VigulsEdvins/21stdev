@@ -823,6 +823,8 @@
     const paneElements = document.getElementById('paneElements');
     const paneSections = document.getElementById('paneSections');
     const paneStyling = document.getElementById('paneStyling');
+    const tabContentBtn = document.getElementById('tabContentBtn');
+    const paneContent = document.getElementById('paneContent');
     const tabSectionsCount = document.getElementById('tabSectionsCount');
 
     // Creative Elements Sidebar Catalog Elements
@@ -920,6 +922,7 @@
     let isApplyingHistory = false;
     let currentViewport = 'desktop';
     let autoSaveTimer = null;
+    let builderExtras = null; // client projects, page settings, content editor (scripts/builder-extras.js)
 
     function updateHistoryUI() {
       const currentUndoBtn = document.getElementById('undoBtn') || undoBtn;
@@ -932,16 +935,31 @@
       }
     }
 
+    /** The persisted shape of the page: what autosave, history snapshots and client projects store. */
+    function serializeState() {
+      const st = stackManager.getState();
+      return {
+        stack: stackManager.getStack(),
+        theme: st.theme || 'midnight-dark',
+        customColors: { ...(st.customColors || {}) },
+        page: { ...st.page },
+        viewport: currentViewport
+      };
+    }
+
+    /** Replaces the whole page (used when switching client projects) and records it in history. */
+    function applyState(snapshot) {
+      applyHistoryState(snapshot);
+      pushHistorySnapshot();
+      saveStateToStorage();
+    }
+
     function saveStateToStorage() {
       if (typeof localStorage === 'undefined') return;
       try {
-        const currentState = {
-          stack: stackManager.getStack(),
-          theme: stackManager.getState().theme || 'midnight-dark',
-          customColors: { ...(stackManager.getState().customColors || {}) },
-          viewport: currentViewport
-        };
+        const currentState = serializeState();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState));
+        if (builderExtras) builderExtras.onStateSaved(currentState);
       } catch (err) {
         console.warn('Failed to save builder state to localStorage:', err);
       }
@@ -960,6 +978,7 @@
         stack: JSON.parse(JSON.stringify(stackManager.getStack())),
         theme: stackManager.getState().theme || 'midnight-dark',
         customColors: { ...(stackManager.getState().customColors || {}) },
+        page: { ...stackManager.getState().page },
         viewport: currentViewport
       };
 
@@ -997,6 +1016,8 @@
             stackManager.insertSection(stackManager.getStack().length, sec);
           });
         }
+
+        if (snapshot.page && typeof stackManager.setPage === 'function') stackManager.setPage(snapshot.page);
 
         // Restore theme & custom colors
         const theme = snapshot.theme || 'midnight-dark';
@@ -1514,7 +1535,8 @@
       const structureKey = JSON.stringify({
         theme: themeConfig,
         suppressPreloader,
-        stack: latestState.stack.map(({ elements, sizing, ...rest }) => rest)
+        page: latestState.page,
+        stack: latestState.stack.map(({ elements, sizing, overrides, ...rest }) => rest)
       });
       const canPatch = !forceFullPreviewReload && structureKey === lastPreviewStructureKey;
       forceFullPreviewReload = false;
@@ -1526,7 +1548,7 @@
         latestState.stack,
         themeConfig,
         featuresData,
-        { suppressPreloader }
+        { suppressPreloader, page: latestState.page }
       );
 
       lastPreviewStructureKey = structureKey;
@@ -1579,6 +1601,12 @@
           }
         }
       });
+
+      // Client-content overrides are applied by the runtime inside the preview document
+      const previewWin = previewFrame.contentWindow;
+      if (previewWin && typeof previewWin.__setOverrides === 'function') {
+        previewWin.__setOverrides(window.Assembler.collectOverrides(stack));
+      }
 
       // Restore selection on the rebuilt overlay (mirrors the iframe load handler)
       if (pendingSelectedElement) {
@@ -2949,7 +2977,7 @@
 
     // Sidebar 3-Tab Controller
     function switchSidebarTab(tabName) {
-      [tabElementsBtn, tabSectionsBtn, tabStylingBtn].forEach(btn => {
+      [tabElementsBtn, tabSectionsBtn, tabStylingBtn, tabContentBtn].forEach(btn => {
         if (btn) {
           const isActive = btn.dataset.tab === tabName;
           btn.classList.toggle('is-active', isActive);
@@ -2959,11 +2987,14 @@
       if (paneElements) paneElements.classList.toggle('is-active', tabName === 'elements');
       if (paneSections) paneSections.classList.toggle('is-active', tabName === 'sections');
       if (paneStyling) paneStyling.classList.toggle('is-active', tabName === 'styling');
+      if (paneContent) paneContent.classList.toggle('is-active', tabName === 'content');
+      if (builderExtras && tabName === 'content') builderExtras.onContentTabShown();
     }
 
     if (tabElementsBtn) tabElementsBtn.addEventListener('click', () => switchSidebarTab('elements'));
     if (tabSectionsBtn) tabSectionsBtn.addEventListener('click', () => switchSidebarTab('sections'));
     if (tabStylingBtn) tabStylingBtn.addEventListener('click', () => switchSidebarTab('styling'));
+    if (tabContentBtn) tabContentBtn.addEventListener('click', () => switchSidebarTab('content'));
 
     // -------------------------------------------------------------
     // Active Target Section Management (for in-section widgets)
@@ -4106,11 +4137,11 @@
       const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
 
       if (window.Assembler && typeof window.Assembler.generateExportBundle === 'function') {
-        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData);
+        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page });
       }
 
       if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
-        currentSingleHtml = window.Assembler.generateSingleFileBundle(currentStack, themeConfig, featuresData);
+        currentSingleHtml = window.Assembler.generateSingleFileBundle(currentStack, themeConfig, featuresData, { page: state.page });
       } else if (window.Assembler && typeof window.Assembler.assemblePreviewDocument === 'function') {
         currentSingleHtml = window.Assembler.assemblePreviewDocument(currentStack, themeConfig, featuresData);
       }
@@ -4502,6 +4533,9 @@
             if (parsed.customColors) {
               stackManager.setCustomColors(parsed.customColors);
             }
+            if (parsed.page && typeof stackManager.setPage === 'function') {
+              stackManager.setPage(parsed.page);
+            }
             if (parsed.viewport) {
               setViewportMode(parsed.viewport);
             }
@@ -4552,6 +4586,22 @@
     historyIndex = -1;
     pushHistorySnapshot();
 
+    if (typeof window !== 'undefined' && window.BuilderExtras) {
+      builderExtras = window.BuilderExtras.create({
+        stackManager,
+        showToast,
+        getRegistry: () => registry,
+        serializeState,
+        applyState,
+        getPreviewDoc: () => {
+          try { return previewFrame && (previewFrame.contentDocument || previewFrame.contentWindow.document); } catch (_) { return null; }
+        },
+        getActiveSection,
+        setActiveSection,
+        switchSidebarTab
+      });
+    }
+
     renderStackList();
     renderElementsCatalog();
     renderDrawerFeatures();
@@ -4586,6 +4636,8 @@
       redoAction,
       updateHistoryUI,
       saveStateToStorage,
+      serializeState,
+      applyState,
       getHistoryStack: () => [...historyStack],
       getHistoryIndex: () => historyIndex
     };

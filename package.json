@@ -16,7 +16,8 @@
     "thumbs": "node scripts/make-thumbs.js",
     "test": "node tests/test-builder-integration.js",
     "bundle-demo": "node scripts/bundle-demo.js",
-    "clean-features": "node scripts/clean-features.js"
+    "clean-features": "node scripts/clean-features.js",
+    "test:e2e": "node tests/e2e/builder-flow.e2e.js"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
+    "jszip": "^3.10.2",
     "playwright-core": "^1.64.1"
   }
 }

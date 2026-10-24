@@ -4,6 +4,16 @@
  * Compatible with Node.js (CommonJS) and browser (window.createStackManager).
  */
 
+/** Page-level settings exported with every build. */
+const DEFAULT_PAGE = {
+  title: 'Assembled Web Page',
+  description: '',
+  favicon: '', // emoji, image URL or data URI
+  fontDisplay: '', // Google Fonts family name, empty = leave section fonts alone
+  fontBody: '',
+  lang: 'en'
+};
+
 function createStackManager(initialConfig = {}) {
   let counter = 0;
 
@@ -16,7 +26,8 @@ function createStackManager(initialConfig = {}) {
     stack: Array.isArray(initialConfig.stack) ? [...initialConfig.stack] : [],
     theme: initialConfig.theme || 'midnight-dark',
     customColors: initialConfig.customColors ? { ...initialConfig.customColors } : {},
-    viewport: initialConfig.viewport || 'desktop'
+    viewport: initialConfig.viewport || 'desktop',
+    page: { ...DEFAULT_PAGE, ...(initialConfig.page || {}) }
   };
 
   const listeners = new Set();
@@ -36,7 +47,8 @@ function createStackManager(initialConfig = {}) {
     return {
       ...state,
       stack: [...state.stack],
-      customColors: { ...state.customColors }
+      customColors: { ...state.customColors },
+      page: { ...state.page }
     };
   }
 
@@ -222,6 +234,41 @@ function createStackManager(initialConfig = {}) {
     return state.viewport;
   }
 
+  function setPage(updates = {}) {
+    state.page = { ...state.page };
+    Object.keys(DEFAULT_PAGE).forEach(k => {
+      if (typeof updates[k] === 'string') state.page[k] = updates[k];
+    });
+    notify();
+    return { ...state.page };
+  }
+
+  /**
+   * Sets (or, with an empty value, clears) a client-content override on one section.
+   * `def` ({ selector, type, attr? }) is required the first time a field is set and is kept afterwards.
+   */
+  function setSectionOverride(sectionId, fieldId, value, def = null) {
+    const section = state.stack.find(s => s.id === sectionId);
+    if (!section || !fieldId) return false;
+    const overrides = { ...(section.overrides || {}) };
+    if (value === '' || value === null || value === undefined) {
+      delete overrides[fieldId];
+    } else {
+      const existing = overrides[fieldId] || {};
+      const selector = (def && def.selector) || existing.selector;
+      if (!selector) return false;
+      overrides[fieldId] = {
+        selector,
+        type: (def && def.type) || existing.type || 'text',
+        ...(((def && def.attr) || existing.attr) ? { attr: (def && def.attr) || existing.attr } : {}),
+        value: String(value)
+      };
+    }
+    section.overrides = overrides;
+    notify();
+    return true;
+  }
+
   function clampDimension(val, min) {
     if (typeof val === 'number') return Math.max(min, Math.round(val));
     if (typeof val === 'string') {
@@ -328,6 +375,8 @@ function createStackManager(initialConfig = {}) {
     setTheme,
     setCustomColors,
     setViewport,
+    setPage,
+    setSectionOverride,
     subscribe
   };
 }
@@ -339,10 +388,10 @@ function insertSection(manager, index, slugOrSection, extraProps) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { createStackManager, insertSection };
+  module.exports = { createStackManager, insertSection, DEFAULT_PAGE };
 }
 
 if (typeof window !== 'undefined') {
   window.createStackManager = createStackManager;
-  window.StackManager = { createStackManager };
+  window.StackManager = { createStackManager, DEFAULT_PAGE };
 }
