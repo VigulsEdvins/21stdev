@@ -14,7 +14,8 @@ import * as React from "react"
  * (GOP 1) MP4 to scrub something else.
  */
 
-const DEFAULT_BASE = "https://kedhar.vercel.app/motion/magic-hour"
+const DEFAULT_VIDEO = "/assets/library/magic-hour-scrub-882598d5.webm"
+const DEFAULT_POSTER = "/assets/library/magic-hour-poster-1106c16d.jpg"
 
 export type MagicHourProps = {
   /** All-keyframe (GOP 1) MP4. Anything else seeks in lurches. */
@@ -250,9 +251,9 @@ function Readout({ children }: { children: React.ReactNode }) {
 }
 
 export default function MagicHour({
-  desktopSrc = `${DEFAULT_BASE}/scrub-desktop.mp4`,
+  desktopSrc = DEFAULT_VIDEO,
   mobileSrc,
-  poster = `${DEFAULT_BASE}/poster.jpg`,
+  poster = DEFAULT_POSTER,
   fps = 48,
   pages = 5,
   height = "100svh",

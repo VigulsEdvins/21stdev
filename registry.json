@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T13:24:55.389Z",
+  "generatedAt": "2026-10-24T13:32:45.392Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 209,
   "categories": [
@@ -14195,7 +14195,7 @@
         "general"
       ],
       "weight": "light",
-      "needsAssets": false,
+      "needsAssets": true,
       "origin": {
         "source": "21st.dev",
         "license": "MIT",

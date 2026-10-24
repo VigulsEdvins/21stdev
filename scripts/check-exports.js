@@ -24,14 +24,12 @@ const KNOWN_EXTERNAL = {
   'tilted-grid-hero': ['pub-940ccf6255b54fa799a9b01050e6c227.r2.dev'], // image URLs built at run time
   'hero-ascii-one': ['cdn.jsdelivr.net', 'storage.googleapis.com', 'assets.unicorn.studio'], // live Unicorn Studio embed
   'chroma-glitch-preloader': ['mdn.github.io'], 'cinema-grain-preloader': ['mdn.github.io'], 'mono-contrast-preloader': ['mdn.github.io'], // 5 MB demo videos
-  'magic-hour': ['kedhar.vercel.app'], // dead upstream, see KNOWN_BROKEN
   ...Object.fromEntries(['checker-quilt-testimonials', 'disc-cascade-carousel', 'duotone-team-roster', 'glass-fan-testimonials', 'isometric-lift-carousel',
     'spotlight-offer-quiz', 'staircase-carousel', 'tilt-cascade-carousel', 'viewfinder-flip-carousel'].map(s => [s, ['images.unsplash.com']])) // URLs built at run time
 };
 
 const KNOWN_BROKEN = {
-  'forma-liquid-particle-studio': 'builds its image paths at run time (/features/.../img/${name}.webp), so the exporter never copies those images into the ZIP',
-  'magic-hour': 'its video and poster are hot-linked from kedhar.vercel.app, which now answers every media URL with an HTML page'
+  'forma-liquid-particle-studio': 'builds its image paths at run time (/features/.../img/${name}.webp), so the exporter never copies those images into the ZIP'
 };
 
 async function exportOne(builder, srvUrl, slug, theme) {
