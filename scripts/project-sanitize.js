@@ -107,6 +107,24 @@
     return out;
   }
 
+  function cleanPages(pages, counter) {
+    if (!Array.isArray(pages)) return [];
+    const seen = new Set();
+    const out = [];
+    pages.slice(0, 30).forEach(p => {
+      if (!p || typeof p !== 'object' || typeof p.id !== 'string' || !ID_RE.test(p.id) || seen.has(p.id)) { counter.n++; return; }
+      seen.add(p.id);
+      const title = text(typeof p.title === 'string' ? p.title : 'Page', 60, counter) || 'Page';
+      let slug = typeof p.slug === 'string' && /^[a-z0-9][a-z0-9-]{0,39}$/.test(p.slug) ? p.slug : 'page-' + (out.length + 1);
+      if (out.length === 0) slug = 'index';
+      out.push({
+        id: p.id, title, slug, description: text(typeof p.description === 'string' ? p.description : '', 300, counter),
+        stack: (Array.isArray(p.stack) ? p.stack.slice(0, MAX_SECTIONS) : []).map(s => cleanSection(s, counter)).filter(Boolean)
+      });
+    });
+    return out.length > 1 ? out : [];
+  }
+
   function sanitizeState(state) {
     const counter = newCounter();
     const src = state && typeof state === 'object' ? state : {};
@@ -123,6 +141,9 @@
       });
     }
     if (typeof src.viewport === 'string' && /^[\w-]{1,20}$/.test(src.viewport)) out.viewport = src.viewport;
+    out.pages = cleanPages(src.pages, counter);
+    out.activePageId = out.pages.length && out.pages.some(p => p.id === src.activePageId) ? src.activePageId : (out.pages.length ? out.pages[0].id : null);
+    if (out.pages.length) { const active = out.pages.find(p => p.id === out.activePageId); out.stack = active.stack; }
     out.page = {};
     const page = src.page && typeof src.page === 'object' ? src.page : {};
     PAGE_KEYS.forEach(k => { if (typeof page[k] === 'string') out.page[k] = text(page[k], 1000, counter); });

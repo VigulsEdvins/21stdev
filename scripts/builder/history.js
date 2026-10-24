@@ -72,7 +72,9 @@
         theme: st.theme || 'midnight-dark',
         customColors: { ...(st.customColors || {}) },
         page: { ...st.page },
-        viewport: state.viewport
+        viewport: state.viewport,
+        pages: st.pages || [],
+        activePageId: st.activePageId || null
       };
     }
 
@@ -160,7 +162,9 @@
         theme: stackManager.getState().theme || 'midnight-dark',
         customColors: { ...(stackManager.getState().customColors || {}) },
         page: { ...stackManager.getState().page },
-        viewport: state.viewport
+        viewport: state.viewport,
+        pages: JSON.parse(JSON.stringify(stackManager.getState().pages || [])),
+        activePageId: stackManager.getState().activePageId || null
       };
 
       // If current state matches last snapshot, skip duplicate
@@ -191,8 +195,11 @@
       state.applying = true;
 
       try {
-        // Restore stack
-        if (typeof stackManager.setStack === 'function') {
+        // Restore pages (multi-page sites), or the single stack
+        if (snapshot.pages && snapshot.pages.length && typeof stackManager.setPages === 'function') {
+          stackManager.setPages(snapshot.pages, snapshot.activePageId);
+        } else if (typeof stackManager.setStack === 'function') {
+          if (typeof stackManager.setPages === 'function') stackManager.setPages([], null);
           stackManager.setStack(snapshot.stack || []);
         } else {
           stackManager.clearStack();

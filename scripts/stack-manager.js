@@ -34,7 +34,11 @@ function createStackManager(initialConfig = {}) {
     theme: initialConfig.theme || 'midnight-dark',
     customColors: initialConfig.customColors ? { ...initialConfig.customColors } : {},
     viewport: initialConfig.viewport || 'desktop',
-    page: { ...DEFAULT_PAGE, ...(initialConfig.page || {}) }
+    page: { ...DEFAULT_PAGE, ...(initialConfig.page || {}) },
+    // Multi-page sites: empty = a single page (the stack above). Otherwise every page is listed here; the active
+    // page's own stack is `state.stack` (kept live) and is copied back into its entry when you switch or save.
+    pages: [],
+    activePageId: null
   };
 
   const listeners = new Set();
@@ -55,8 +59,132 @@ function createStackManager(initialConfig = {}) {
       ...state,
       stack: [...state.stack],
       customColors: { ...state.customColors },
-      page: { ...state.page }
+      page: { ...state.page },
+      pages: getPages(),
+      activePageId: state.activePageId
     };
+  }
+
+  // ---- pages ---------------------------------------------------------------------------------------------
+  const cloneJson = (v) => JSON.parse(JSON.stringify(v));
+
+  /** All pages with the active one's live stack filled in; [] for a single-page project. */
+  function getPages() {
+    return state.pages.map(p => ({ ...p, stack: cloneJson(p.id === state.activePageId ? state.stack : p.stack) }));
+  }
+
+  function getActivePageId() {
+    return state.activePageId;
+  }
+
+  function slugify(text) {
+    return String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'page';
+  }
+
+  function uniqueSlug(base, exceptId) {
+    const taken = new Set(state.pages.filter(p => p.id !== exceptId).map(p => p.slug));
+    let slug = base === 'index' ? 'page' : base; // "index" belongs to the home page
+    let n = 2;
+    while (taken.has(slug)) slug = `${base}-${n++}`;
+    return slug;
+  }
+
+  function syncActivePage() {
+    const active = state.pages.find(p => p.id === state.activePageId);
+    if (active) active.stack = cloneJson(state.stack);
+  }
+
+  /** Turns a single-page project into a multi-page one: the current stack becomes the Home page. */
+  function ensurePages() {
+    if (state.pages.length) return;
+    state.pages = [{ id: generateId('page'), title: 'Home', slug: 'index', description: '', stack: cloneJson(state.stack) }];
+    state.activePageId = state.pages[0].id;
+  }
+
+  function addPage(title = 'New page') {
+    ensurePages();
+    syncActivePage();
+    const clean = String(title || '').trim().slice(0, 60) || 'New page';
+    const page = { id: generateId('page'), title: clean, slug: uniqueSlug(slugify(clean)), description: '', stack: [] };
+    state.pages.push(page);
+    state.activePageId = page.id;
+    state.stack = [];
+    notify();
+    return { ...page };
+  }
+
+  function switchPage(id) {
+    const target = state.pages.find(p => p.id === id);
+    if (!target || id === state.activePageId) return null;
+    syncActivePage();
+    state.activePageId = id;
+    state.stack = cloneJson(target.stack);
+    notify();
+    return { ...target };
+  }
+
+  function renamePage(id, title) {
+    const page = state.pages.find(p => p.id === id);
+    const clean = String(title || '').trim().slice(0, 60);
+    if (!page || !clean) return null;
+    page.title = clean;
+    if (page.slug !== 'index') page.slug = uniqueSlug(slugify(clean), id);
+    notify();
+    return { ...page, stack: [] };
+  }
+
+  function setPageMeta(id, updates = {}) {
+    const page = state.pages.find(p => p.id === id);
+    if (!page) return null;
+    if (typeof updates.description === 'string') page.description = updates.description.slice(0, 300);
+    notify();
+    return { ...page, stack: [] };
+  }
+
+  function duplicatePage(id) {
+    const source = state.pages.find(p => p.id === id);
+    if (!source) return null;
+    syncActivePage();
+    const stack = cloneJson(source.stack).map(s => ({ ...s, id: generateId() }));
+    const title = `${source.title} copy`.slice(0, 60);
+    const page = { id: generateId('page'), title, slug: uniqueSlug(slugify(title)), description: source.description, stack };
+    state.pages.splice(state.pages.indexOf(source) + 1, 0, page);
+    state.activePageId = page.id;
+    state.stack = cloneJson(stack);
+    notify();
+    return { ...page, stack: [] };
+  }
+
+  function removePage(id) {
+    if (state.pages.length <= 1) return false;
+    const index = state.pages.findIndex(p => p.id === id);
+    if (index === -1) return false;
+    syncActivePage();
+    const wasActive = id === state.activePageId;
+    state.pages.splice(index, 1);
+    if (state.pages.length === 1) {
+      // back to a single page: its stack is the project's stack
+      state.stack = cloneJson(state.pages[0].stack);
+      state.pages = [];
+      state.activePageId = null;
+    } else if (wasActive) {
+      const next = state.pages[Math.max(0, index - 1)];
+      state.activePageId = next.id;
+      state.stack = cloneJson(next.stack);
+    }
+    notify();
+    return true;
+  }
+
+  /** Restores pages from a saved project or a history step. `pages` of [] means a single-page project. */
+  function setPages(pages, activeId) {
+    const list = Array.isArray(pages) ? cloneJson(pages) : [];
+    state.pages = list;
+    if (!list.length) { state.activePageId = null; return; }
+    const active = list.find(p => p.id === activeId) || list[0];
+    state.activePageId = active.id;
+    state.stack = cloneJson(active.stack || []);
+    notify();
   }
 
   function getStack() {
@@ -419,6 +547,15 @@ function createStackManager(initialConfig = {}) {
     setCustomColors,
     setViewport,
     setPage,
+    getPages,
+    getActivePageId,
+    addPage,
+    switchPage,
+    renamePage,
+    setPageMeta,
+    duplicatePage,
+    removePage,
+    setPages,
     setSectionOverride,
     subscribe
   };

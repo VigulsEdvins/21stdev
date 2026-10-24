@@ -1973,7 +1973,7 @@ function applyThemeToDocument(doc, themeConfig) {
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
 function assemblePreviewDocument(sections, themeConfig, featuresData = {}, options = {}) {
-  if (Array.isArray(sections)) sections = sections.filter(s => !s.hidden);
+  if (Array.isArray(sections)) sections = mapPageLinks(sections.filter(s => !s.hidden), options.pageLinks);
   const pageHead = renderPageHead(options.page, 'Page Preview');
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);
@@ -2451,6 +2451,39 @@ function renderCsp(indexHtml = '', scriptJs = '') {
   return { policy, strict: reasons.length === 0, reasons };
 }
 
+/**
+ * Links to other pages of a multi-page site are stored as "page:<id>". `links` maps a page id to its file name
+ * ("about.html"); without a match (the preview, or a deleted page) the link becomes "#".
+ */
+function resolvePageLink(value, links = {}) {
+  const m = /^page:([A-Za-z0-9_-]+)$/.exec(String(value || '').trim());
+  return m ? (links[m[1]] || '#') : value;
+}
+
+/** A copy of the sections with every "page:<id>" link (Content-tab links and widget buttons) resolved. */
+function mapPageLinks(sections, links = {}) {
+  const LINK_KEYS = ['link', 'ctaLink'];
+  return (Array.isArray(sections) ? sections : []).map(sec => {
+    let changed = false;
+    const out = { ...sec };
+    if (sec.overrides) {
+      out.overrides = {};
+      Object.entries(sec.overrides).forEach(([k, o]) => {
+        if (o && o.type === 'link' && /^page:/.test(String(o.value || ''))) { out.overrides[k] = { ...o, value: resolvePageLink(o.value, links) }; changed = true; }
+        else out.overrides[k] = o;
+      });
+    }
+    if (Array.isArray(sec.elements)) {
+      out.elements = sec.elements.map(el => {
+        const fix = {};
+        LINK_KEYS.forEach(k => { if (typeof el[k] === 'string' && /^page:/.test(el[k])) { fix[k] = resolvePageLink(el[k], links); changed = true; } });
+        return Object.keys(fix).length ? { ...el, ...fix } : el;
+      });
+    }
+    return changed ? out : sec;
+  });
+}
+
 /** Host helper files: cache and security headers for Netlify / Cloudflare Pages, and plain deploy steps. */
 function renderDeployFiles() {
   const headers = `/*
@@ -2489,7 +2522,7 @@ Upload everything (keep the \`assets\` folder next to \`index.html\`) to the fol
 }
 
 /** robots.txt and sitemap.xml for a single-page export. The sitemap needs the live address, so it is skipped without one. */
-function renderSiteFiles(page = {}) {
+function renderSiteFiles(page = {}, pageFiles = null) {
   const canonical = String(page.canonical || '').trim();
   const url = /^https?:\/\/[^\s"'<>]+$/i.test(canonical) ? canonical : '';
   const files = {};
@@ -2500,7 +2533,12 @@ function renderSiteFiles(page = {}) {
   const origin = url ? url.replace(/^(https?:\/\/[^/]+).*$/i, '$1') : '';
   files['robots.txt'] = 'User-agent: *\nAllow: /\n' + (origin ? `\nSitemap: ${origin}/sitemap.xml\n` : '');
   if (url) {
-    files['sitemap.xml'] = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>${escapeHtml(url)}</loc></url>\n</urlset>\n`;
+    // one address per page: the home page is the live address itself, the others sit next to it
+    const dir = url.replace(/[^/]*$/, '');
+    const locs = Array.isArray(pageFiles) && pageFiles.length > 1
+      ? pageFiles.map(f => (f === 'index.html' ? (/\.html?$/i.test(url) ? url : dir) : dir + f))
+      : [url];
+    files['sitemap.xml'] = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${locs.map(l => `  <url><loc>${escapeHtml(l)}</loc></url>`).join('\n')}\n</urlset>\n`;
   }
   return files;
 }
@@ -2890,7 +2928,7 @@ const OVERRIDES_RUNTIME = `(function () {
  * Generates an export bundle containing index.html, style.css, script.js, and README.md.
  */
 function generateExportBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  if (Array.isArray(sections)) sections = sections.filter(s => !s.hidden);
+  if (Array.isArray(sections)) sections = mapPageLinks(sections.filter(s => !s.hidden), options.pageLinks);
   const pageHead = renderPageHead(options.page);
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);
@@ -3225,7 +3263,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
     'style.css': styleCss,
     'script.js': scriptJs,
     'README.md': readmeMd + cspNote
-  }, renderSiteFiles(pageOpts), renderDeployFiles());
+  }, renderSiteFiles(pageOpts, options.pageFiles), renderDeployFiles());
 }
 
 /**
@@ -3437,6 +3475,8 @@ if (typeof module !== 'undefined' && module.exports) {
     renderJsonLd,
     renderSiteFiles,
     renderDeployFiles,
+    resolvePageLink,
+    mapPageLinks,
     renderCsp,
     renderNativePaletteCss,
     collectOverrides,

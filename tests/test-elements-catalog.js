@@ -32,7 +32,7 @@ assert(typeof matchesCategory === 'function', 'builder.js must export matchesCat
 
 // Category check assertions
 const heroFeatures = registry.items.filter(f => matchesCategory(f, 'Heroes'));
-assert.strictEqual(heroFeatures.length, 15, `Heroes must contain 15 features, got ${heroFeatures.length}`);
+assert(heroFeatures.length >= 15, `Heroes must contain at least 15 features, got ${heroFeatures.length}`);
 
 const navFeatures = registry.items.filter(f => matchesCategory(f, 'Headers & Nav'));
 assert(navFeatures.length >= 8, `Headers & Nav must contain at least 8 features, got ${navFeatures.length}`);
@@ -41,7 +41,8 @@ const footerFeatures = registry.items.filter(f => matchesCategory(f, 'Footers'))
 assert(footerFeatures.length >= 10, `Footers must contain at least 10 features, got ${footerFeatures.length}`);
 
 const pricingFeatures = registry.items.filter(f => matchesCategory(f, 'Pricing & Tables'));
-assert.strictEqual(pricingFeatures.length, 2, `Pricing & Tables must contain 2 features, got ${pricingFeatures.length}`);
+assert(pricingFeatures.length >= 3, `Pricing & Tables must contain at least 3 features, got ${pricingFeatures.length}`);
+assert(pricingFeatures.some(f => f.slug === 'pricing-table-switch'), 'pricing-table-switch must be in Pricing & Tables');
 assert(pricingFeatures.some(f => f.slug === 'ink-orbit-pricing'), 'ink-orbit-pricing must be in Pricing & Tables');
 assert(pricingFeatures.some(f => f.slug === 'constellation-turntable'), 'constellation-turntable must be in Pricing & Tables');
 

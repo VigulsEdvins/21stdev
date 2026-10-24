@@ -56,3 +56,21 @@ assert(!JSON.stringify(imported.state).includes('alert(1)') || !JSON.stringify(i
 assert(imported.sanitizedCount >= 8);
 assert.throws(() => store.importProject('x'.repeat(21 * 1024 * 1024)), /too large/);
 console.log('✅ Project sanitize tests passed!');
+
+// multi-page projects
+{
+  const multi = sanitizeState({ theme: 'midnight-dark', stack: [], activePageId: 'p2', pages: [
+    { id: 'p1', title: 'Home', slug: 'whatever', stack: [{ id: 's1', slug: 'hero-a', html: '<script>x</script>' }] },
+    { id: 'p2', title: 'About <b>', slug: 'About Us!', description: 'd', stack: [{ id: 's2', slug: 'hero-b' }] },
+    { id: 'p2', title: 'Dup', slug: 'dup', stack: [] },
+    { id: 'bad id', title: 'x', stack: [] }
+  ] });
+  assert.strictEqual(multi.state.pages.length, 2, 'duplicate and invalid page ids dropped');
+  assert.strictEqual(multi.state.pages[0].slug, 'index', 'the first page is always index');
+  assert.strictEqual(multi.state.pages[1].slug, 'page-2', 'an invalid slug is replaced');
+  assert(!('html' in multi.state.pages[0].stack[0]), 'pages are cleaned like the main stack');
+  assert.deepStrictEqual(multi.state.stack.map(s => s.slug), ['hero-b'], 'the active page is the live stack');
+  assert.strictEqual(multi.state.activePageId, 'p2');
+  assert.deepStrictEqual(sanitizeState({ stack: [{ id: 'a', slug: 'x' }], pages: [{ id: 'only', title: 'One', stack: [] }] }).state.pages, [], 'a single "page" is not multi-page');
+  console.log('✅ Multi-page sanitize tests passed!');
+}

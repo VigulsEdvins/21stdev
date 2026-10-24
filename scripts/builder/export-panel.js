@@ -449,6 +449,44 @@
     }
 
     /**
+     * Multi-page sites: one HTML page (with its own CSS and JS) per page, shared assets and fonts once, and a sitemap that lists
+     * every page. The home page keeps the standard names (index.html, style.css, script.js); the others use their slug.
+     * Returns { files: {name: text}, assets: {name: bytes} }.
+     */
+    async function buildMultiPageFiles(exportOptions = {}) {
+      const state = stackManager.getState();
+      const pages = state.pages;
+      const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
+      const fileOf = (p) => (p.slug === 'index' ? 'index.html' : `${p.slug}.html`);
+      const pageLinks = Object.fromEntries(pages.map(p => [p.id, fileOf(p)]));
+      const pageFiles = pages.map(fileOf);
+      const out = { files: {}, assets: {} };
+      for (const p of pages) {
+        const home = p.slug === 'index';
+        const missing = p.stack.map(s => s.slug).filter(slug => slug && !featureCache.has(slug));
+        if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
+        const settings = { ...state.page, title: home ? state.page.title : `${p.title} | ${state.page.title}`, description: p.description || state.page.description };
+        const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles });
+        const extraAssets = Array.from(new Set(p.stack.flatMap(s => exportAssets[s.slug] || [])));
+        const bundled = await assetBundler.bundle({ files: bundle, singleHtml: '', extraAssets });
+        Object.assign(out.assets, bundled.assets);
+        if (window.FontHost && window.FontHost.cssUrl(settings)) {
+          const fonts = await window.FontHost.hostFonts({ files: bundle, page: settings, fetchFn: (u) => fetch(u) });
+          if (fonts.hosted) Object.assign(out.assets, fonts.assets);
+        }
+        if (home) {
+          ['index.html', 'style.css', 'script.js', 'README.md', 'robots.txt', 'sitemap.xml', '_headers', 'DEPLOY.md'].forEach(n => { if (bundle[n] !== undefined) out.files[n] = bundle[n]; });
+          out.files['README.md'] += `\n## Pages\n\n${pages.map(p2 => `- **${p2.title}**: \`${fileOf(p2)}\``).join('\n')}\n\nEach page has its own stylesheet and script (\`<page>.css\`, \`<page>.js\`); shared images and fonts are in \`assets/\`.\n`;
+        } else {
+          out.files[`${p.slug}.html`] = bundle['index.html'].replace('href="style.css"', `href="${p.slug}.css"`).replace('src="script.js"', `src="${p.slug}.js"`);
+          out.files[`${p.slug}.css`] = bundle['style.css'];
+          out.files[`${p.slug}.js`] = bundle['script.js'];
+        }
+      }
+      return out;
+    }
+
+    /**
      * Download Project ZIP generator.
      * Generates a clean archive with index.html, style.css, script.js, and README.md.
      * Uses window.JSZip if available, otherwise uses native pure-JS zip creator.
@@ -489,7 +527,19 @@
           currentExportBundle['README.md'] += '\n## Review copy\n\nThis copy has a Review button (bottom left). Open `index.html`, press **Comment mode**, click anything on the page and write what should change. Press **Review** to see the list and **Download comments** to send the file back. Comments stay in the browser until downloaded. Remove the review code before the final launch by exporting a normal copy.\n';
         }
 
-        if (typeof window.JSZip !== 'undefined') {
+        const multi = stackManager.getState().pages.length > 1;
+        if (multi) {
+          const site = await buildMultiPageFiles(exportOptions);
+          if (exportOptions.review) site.files['README.md'] += '\n## Review copy\n\nOpen `index.html`, press **Comment mode**, click anything and write what should change; **Download comments** sends the file back. Remove the review code before launch by exporting a normal copy.\n';
+          if (typeof window.JSZip !== 'undefined') {
+            const zip = new window.JSZip();
+            Object.entries(site.files).forEach(([name, text]) => zip.file(name, text));
+            Object.entries(site.assets).forEach(([name, bytes]) => zip.file(name, bytes));
+            triggerDownload(await zip.generateAsync({ type: 'blob' }), zipFilename, 'application/zip');
+          } else {
+            triggerDownload(new Blob([window.Assembler.createZipArchive(Object.assign({}, site.files, site.assets))], { type: 'application/zip' }), zipFilename, 'application/zip');
+          }
+        } else if (typeof window.JSZip !== 'undefined') {
           // 1. Client-side JSZip
           const zip = new window.JSZip();
           zip.file('index.html', currentExportBundle['index.html']);

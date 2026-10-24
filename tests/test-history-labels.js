@@ -21,3 +21,12 @@ assert.strictEqual(describeChange(base, { ...base, page: { title: 'New' } }), 'C
 assert.strictEqual(describeChange(base, { ...base, viewport: 'mobile' }), 'Switched to mobile view');
 assert.strictEqual(describeChange(base, snap([{ ...sec('a'), slug: 'other' }, sec('b')])), 'Replaced "hero-a" with "other"');
 console.log('✅ History label tests passed!');
+
+{
+  const pages = (ids) => ids.map(id => ({ id, title: 'T-' + id, description: '', slug: id, stack: [] }));
+  const one = { stack: [], theme: 't', customColors: {}, page: {}, viewport: 'desktop', pages: pages(['a', 'b']), activePageId: 'a' };
+  assert.strictEqual(describeChange(one, { ...one, activePageId: 'b' }), 'Switched to page "T-b"');
+  assert.strictEqual(describeChange(one, { ...one, pages: pages(['a', 'b', 'c']), activePageId: 'c' }), 'Added page "T-c"');
+  assert.strictEqual(describeChange(one, { ...one, pages: pages(['a']), activePageId: 'a' }), 'Removed a page');
+  console.log('✅ Page history label tests passed!');
+}

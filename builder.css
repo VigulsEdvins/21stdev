@@ -3238,3 +3238,11 @@ html[data-ui-theme="light"] .builder-body { background-color: #09090b; }
 .builder-icon-btn { padding: 6px 9px; }
 .stack-heavy-note { margin: 8px 0 0; padding: 8px 10px; border-radius: 8px; font-size: 12px; line-height: 1.45; color: #fcd34d; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); }
 .stack-heavy-note[hidden] { display: none; }
+
+/* Page tabs */
+.page-tabs { margin: 8px 0; display: flex; flex-direction: column; gap: 6px; }
+.page-tab-list { display: flex; flex-wrap: wrap; gap: 4px; }
+.page-tab { border: 1px solid var(--border-subtle, rgba(255,255,255,.12)); background: transparent; color: var(--text-muted, #a1a1aa); font: inherit; font-size: 12.5px; padding: 5px 12px; border-radius: 999px; cursor: pointer; }
+.page-tab.is-active { background: rgba(168, 85, 247, .22); color: var(--text-main, #fafafa); border-color: var(--accent-primary, #a855f7); }
+.page-actions { display: flex; flex-wrap: wrap; gap: 4px; }
+.page-actions .builder-btn-subtle { font-size: 11.5px; padding: 4px 8px; }

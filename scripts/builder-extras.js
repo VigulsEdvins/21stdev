@@ -541,6 +541,25 @@
           ${ov ? '<button type="button" class="content-reset">Reset to original</button>' : ''}`;
         const input = wrap.querySelector('textarea, input:not([type=file])');
         input.value = isData ? '(uploaded image)' : value;
+        // links can point at another page of a multi-page site (stored as "page:<id>", resolved to a file name on export)
+        const sitePages = f.type === 'link' ? sm.getPages() : [];
+        if (sitePages.length > 1) {
+          const linked = /^page:(.+)$/.exec(value);
+          const sel = doc.createElement('select');
+          sel.className = 'builder-select content-page-link';
+          sel.setAttribute('aria-label', `${f.label}: link to a page of this site`);
+          sel.innerHTML = '<option value="">Or link to a page…</option>' + sitePages.map(p => `<option value="page:${escapeHtml(p.id)}">${escapeHtml(p.title)}</option>`).join('');
+          if (linked) { sel.value = value; input.value = ''; input.placeholder = 'Linked to a page'; }
+          sel.addEventListener('change', () => {
+            if (!sel.value) return;
+            input.value = '';
+            input.placeholder = 'Linked to a page';
+            sm.setSectionOverride(section.id, f.id, sel.value, { selector: f.selector, type: 'link' });
+            addReset();
+          });
+          input.addEventListener('input', () => { sel.value = ''; input.placeholder = ''; });
+          wrap.querySelector('label.ps-field').after(sel);
+        }
         if (isData) input.readOnly = true;
         let timer = null;
         const addReset = () => {

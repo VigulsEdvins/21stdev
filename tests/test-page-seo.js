@@ -75,3 +75,24 @@ assert.deepStrictEqual(altList.map(o => o.type), ['alt']);
 const altBundle = A.generateExportBundle([{ id: 's1', slug: 'x', overrides: { h: { selector: 'img', type: 'alt', value: 'A dog' } } }], 'midnight-dark', { x: { html: '<img src="a.jpg">', css: '', js: '' } }, { page: {} });
 assert(altBundle['script.js'].includes("o.type === 'alt'") && altBundle['script.js'].includes('"type": "alt"'), 'alt override is in the export script');
 console.log('✅ Alt override tests passed!');
+
+// links between pages
+{
+  assert.strictEqual(A.resolvePageLink('page:about', { about: 'about.html' }), 'about.html');
+  assert.strictEqual(A.resolvePageLink('page:gone', { about: 'about.html' }), '#', 'a deleted page becomes #');
+  assert.strictEqual(A.resolvePageLink('https://x.example/', {}), 'https://x.example/', 'other links untouched');
+  const secs = [{ id: 's', slug: 'x', overrides: { l: { selector: 'a', type: 'link', value: 'page:p2' }, t: { selector: 'h1', type: 'text', value: 'page:p2' } }, elements: [{ id: 'e', type: 'button', link: 'page:p2' }, { id: 'f', type: 'button', link: '/keep' }] }];
+  const mapped = A.mapPageLinks(secs, { p2: 'contact.html' });
+  assert.strictEqual(mapped[0].overrides.l.value, 'contact.html');
+  assert.strictEqual(mapped[0].overrides.t.value, 'page:p2', 'text is never rewritten');
+  assert.strictEqual(mapped[0].elements[0].link, 'contact.html');
+  assert.strictEqual(mapped[0].elements[1].link, '/keep');
+  assert.strictEqual(secs[0].overrides.l.value, 'page:p2', 'the input is not changed');
+  const preview = A.assemblePreviewDocument(secs, 'midnight-dark', { x: { html: '<a class="l" href="/old">x</a>', css: '', js: '' } });
+  assert(!preview.includes('page:p2') || preview.includes('"text"'), 'preview never carries page: links as hrefs');
+  const exp = A.generateExportBundle(secs, 'midnight-dark', { x: { html: '<a href="/old">x</a>', css: '', js: '' } }, { page: {}, pageLinks: { p2: 'contact.html' } });
+  assert(exp['script.js'].includes('contact.html'), 'export carries the resolved file name');
+  const sm2 = A.renderSiteFiles({ canonical: 'https://a.example/site/' }, ['index.html', 'about.html', 'contact.html'])['sitemap.xml'];
+  assert(sm2.includes('<loc>https://a.example/site/</loc>') && sm2.includes('<loc>https://a.example/site/about.html</loc>') && sm2.includes('contact.html'), 'sitemap lists every page');
+  console.log('✅ Page link tests passed!');
+}

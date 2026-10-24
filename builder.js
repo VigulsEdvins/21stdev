@@ -435,7 +435,7 @@
         if (loaded.status === 'corrupt') showToast('Your saved work could not be read. A copy was kept in this browser; starting a new page.', 7000);
         const parsed = loaded.state;
         {
-          if (parsed && Array.isArray(parsed.stack) && parsed.stack.length > 0) {
+          if (parsed && Array.isArray(parsed.stack) && (parsed.stack.length > 0 || (Array.isArray(parsed.pages) && parsed.pages.length > 1))) {
             const prevApplying = historyCtl.state.applying;
             historyCtl.state.applying = true;
             if (typeof stackManager.setStack === 'function') {
@@ -443,6 +443,9 @@
             } else {
               stackManager.clearStack();
               parsed.stack.forEach(sec => stackManager.insertSection(stackManager.getStack().length, sec));
+            }
+            if (Array.isArray(parsed.pages) && parsed.pages.length > 1 && typeof stackManager.setPages === 'function') {
+              stackManager.setPages(parsed.pages, parsed.activePageId);
             }
             if (parsed.theme) {
               stackManager.setTheme(parsed.theme);
@@ -565,6 +568,7 @@
       getHistoryIndex: () => historyCtl.state.index
     };
 
+    if (window.BuilderPageTabs) window.BuilderPageTabs.init({ stackManager, featuresMap, showToast });
     if (window.BuilderHistoryPanel) window.BuilderHistoryPanel.init({ history: historyCtl });
     const emptyStarterBtn = document.getElementById('emptyStarterBtn');
     if (emptyStarterBtn && loadStarterBtn) emptyStarterBtn.addEventListener('click', () => loadStarterBtn.click());

@@ -77,7 +77,7 @@ console.log('✅ Project store tests passed!');
 
 // ---- file format versions
 const { migrateState, CURRENT_VERSION } = require('../scripts/projects.js');
-assert.strictEqual(CURRENT_VERSION, 3);
+assert.strictEqual(CURRENT_VERSION, 4);
 assert.strictEqual(migrateState({ stack: [], page: { title: "V2" } }, 2).page.bizType, "", "a version 2 page gains the business fields");
 const migrated = migrateState({ stack: [], theme: 'x', page: { title: 'Old', lang: 'lv' } }, 1);
 assert.strictEqual(migrated.page.title, 'Old');

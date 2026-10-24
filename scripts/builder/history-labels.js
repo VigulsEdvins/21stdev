@@ -11,6 +11,12 @@
 
   function describeChange(prev, next) {
     if (!prev) return 'Start';
+    const pa = prev.pages || [];
+    const pb = next.pages || [];
+    if (pb.length > pa.length && pb.length > 1) { const added = pb.find(p => !pa.some(q => q.id === p.id)); return `Added page "${added ? added.title : 'new page'}"`; }
+    if (pb.length < pa.length) return 'Removed a page';
+    if ((prev.activePageId || null) !== (next.activePageId || null)) { const now = pb.find(p => p.id === next.activePageId); return `Switched to page "${now ? now.title : 'page'}"`; }
+    if (pb.length && JSON.stringify(pb.map(p => [p.id, p.title, p.description])) !== JSON.stringify(pa.map(p => [p.id, p.title, p.description]))) return 'Edited page details';
     const a = prev.stack || [];
     const b = next.stack || [];
     if (b.length > a.length) {
