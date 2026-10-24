@@ -219,3 +219,8 @@ Not yet recorded in `meta.json`.
 **Other authors (18 checked)**: 6 show MIT and are recorded: glass-fold, image-stream-hero, perspective-tunnel-hero, tilted-grid-hero, vertical-tabs, wipe-transition.
 12 pages show no License field, so no licence is declared: file-card-collections, gradient-bar-hero-section, hero-ascii-one, hover-footer, hover-preview, liquid-metal-hero, stagger-testimonials, testimonial-v2, vapour-text-effect, waitlist-hero, web-gl-shader (the page for hyperiux-timeline returns 404).
 Not checked: into-the-ether, forma-liquid-particle-studio, alice-scroll-story (origin unknown).
+
+## Update (2026-10-24, later)
+
+The project owner reports written permission from all contacted authors. 12 components were recorded with licence `permission` (exact terms not recorded; keep the replies): file-card-collections, gradient-bar-hero-section, hero-ascii-one, hover-footer, hover-preview, liquid-metal-hero, stagger-testimonials, testimonial-v2, vapour-text-effect, waitlist-hero, web-gl-shader, hyperiux-timeline.
+Still unverified: into-the-ether, forma-liquid-particle-studio, alice-scroll-story (origin unknown).
