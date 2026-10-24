@@ -42,8 +42,8 @@ Goal: the builder is dependable for a full client session.
 - [ ] **4.4 Keyboard and a11y pass on the builder shell (M)** — focus order, labels, contrast; use the a11y-debugging skill.
 - [ ] **4.5 Preview performance with 10+ heavy sections (M)** — lazy-mount, pause off-screen WebGL/shader components.
 - [ ] **4.6 Mobile/tablet preview toggle (S)** — viewport switcher in the preview frame.
-- [ ] **4.7 Check 7 components that render empty in headless Chromium (S)** — chroma-glitch-preloader, cinema-grain-preloader, mono-contrast-preloader, cloth-peel-reveal, noise-dissolve-reveal, spotlight-offer-quiz, tile-scrollbar. May be WebGL/interaction-gated and fine in a real browser; confirm, fix if not.
-- [ ] **4.8 Blank-component guard (S)** — make `check-features` or `verify` load every feature through the builder and fail on an empty section, so stub script.js files can't ship again.
+- [ ] **4.7 Check 4 components that render empty in headless Chromium (S)** — (chroma-glitch, cinema-grain and mono-contrast preloaders render once given 8 s) cloth-peel-reveal, noise-dissolve-reveal, spotlight-offer-quiz, tile-scrollbar. May be WebGL/interaction-gated and fine in a real browser; confirm, fix if not.
+- [x] **4.8 Blank-component guard (S)** — done 2026-10-24: `npm run verify` rejects stub script.js, `npm run check-blank` renders every feature in the builder. — make `check-features` or `verify` load every feature through the builder and fail on an empty section, so stub script.js files can't ship again.
 
 ## Epic 5 — Export and handoff (P1)
 Goal: the exported site works with nothing from the vault.

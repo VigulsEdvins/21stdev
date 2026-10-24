@@ -160,3 +160,19 @@ assert.strictEqual(schemaProblems.length, 0, `meta.json schema violations:\n${sc
 assert(synced.items.every(i => CATEGORIES.includes(i.category)), 'every registry item must use a category from the fixed list');
 
 console.log('Task 7 meta.json schema validation passed.');
+
+// Test 8: the builder and exports use script.js/style.css, never index.html. A feature whose real code only
+// lives in an inline bundle in index.html (script.js left as a stub) shows up blank once it is added to a page.
+const stubbed = [];
+for (const slug of fs.readdirSync(path.join(ROOT, 'features'))) {
+  const dir = path.join(ROOT, 'features', slug);
+  if (!fs.existsSync(path.join(dir, 'index.html')) || !fs.existsSync(path.join(dir, 'script.js'))) continue;
+  const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
+  const inline = html.match(/<script type="module"[^>]*>([\s\S]*?)<\/script>/);
+  if (!inline || inline[1].length < 5000) continue;
+  const scriptSize = fs.statSync(path.join(dir, 'script.js')).size;
+  if (scriptSize < inline[1].length * 0.1) stubbed.push(`${slug} (script.js ${scriptSize} B, inline bundle ${inline[1].length} B)`);
+}
+assert.strictEqual(stubbed.length, 0, `script.js is a stub while the real code is inline in index.html (the builder would render these blank):\n${stubbed.join('\n')}\nMove the inline module script into script.js and its <style> into style.css.`);
+
+console.log('Task 8 no feature depends on an inline bundle in index.html.');

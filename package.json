@@ -23,7 +23,8 @@
     "refine-meta": "node scripts/refine-meta.js",
     "audit-themes": "node scripts/audit-themes.js",
     "set-license": "node scripts/set-license.js",
-    "build-tailwind": "node scripts/build-tailwind.js"
+    "build-tailwind": "node scripts/build-tailwind.js",
+    "check-blank": "node scripts/check-blank.js"
   },
   "keywords": [],
   "author": "",
