@@ -4,7 +4,7 @@
   "category": "3D & Carousels",
   "source": "betteroff",
   "type": "component",
-  "description": "Infinite wrapping 3D perspective card stream moving along a diagonal sine-wave ribbon trajectory. Velocity amplifies wave amplitude while cards rotate on the Y-axis (-70° to -85°) and elevate on hover.",
+  "description": "Infinite wrapping 3D perspective card stream moving along a diagonal sine-wave ribbon trajectory. Velocity amplifies wave amplitude while cards rotate on the Y-axis (-70\u00b0 to -85\u00b0) and elevate on hover.",
   "tags": [
     "3d",
     "ribbon",
@@ -88,5 +88,6 @@
     "luma": 0.11,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "ownPalette": true
 }

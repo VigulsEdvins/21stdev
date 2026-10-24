@@ -7,8 +7,8 @@
 html, body {
   width: 100%;
   height: 100%;
-  background: #09090b;
-  color: #fafafa;
+  background: var(--bg, #09090b);
+  color: var(--text, #fafafa);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
   display: flex;
   align-items: center;
@@ -37,14 +37,14 @@ html, body {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(250, 250, 250, 0.5);
+  color: color-mix(in srgb, var(--text, #fafafa) 50%, transparent);
 }
 
 .marquee-btn {
   appearance: none;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #fafafa;
+  background: color-mix(in srgb, var(--text, #fafafa) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text, #fafafa) 12%, transparent);
+  color: var(--text, #fafafa);
   padding: 6px 14px;
   border-radius: 999px;
   font-size: 12px;
@@ -85,9 +85,9 @@ html, body {
   gap: 10px;
   padding: 14px 26px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(250, 250, 250, 0.72);
+  background: color-mix(in srgb, var(--text, #fafafa) 3%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text, #fafafa) 8%, transparent);
+  color: color-mix(in srgb, var(--text, #fafafa) 72%, transparent);
   font-size: 15px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -96,9 +96,9 @@ html, body {
 }
 
 .clients-marquee__item:hover {
-  border-color: rgba(167, 139, 250, 0.5);
-  background: rgba(167, 139, 250, 0.08);
-  color: #ffffff;
+  border-color: color-mix(in srgb, var(--accent, #a78bfa) 50%, transparent);
+  background: color-mix(in srgb, var(--accent, #a78bfa) 8%, transparent);
+  color: var(--text, #ffffff);
   transform: translateY(-2px);
 }
 

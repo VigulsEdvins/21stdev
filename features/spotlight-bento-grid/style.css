@@ -7,8 +7,8 @@
 body, html {
   width: 100%;
   height: 100%;
-  background: #09090b;
-  color: #fafafa;
+  background: var(--bg, #09090b);
+  color: var(--text, #fafafa);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -37,7 +37,7 @@ body, html {
   --y: -200px;
   position: relative;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--text, #fafafa) 6%, transparent);
   padding: 26px;
   overflow: hidden;
   display: flex;
@@ -59,7 +59,7 @@ body, html {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(380px circle at var(--x) var(--y), rgba(168, 85, 247, 0.55), rgba(56, 189, 248, 0.25) 40%, transparent 70%);
+  background: radial-gradient(380px circle at var(--x) var(--y), color-mix(in srgb, var(--accent, #a855f7) 55%, transparent), rgba(56, 189, 248, 0.25) 40%, transparent 70%);
   z-index: 0;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -75,8 +75,8 @@ body, html {
   inset: 1px;
   border-radius: 13px;
   background:
-    radial-gradient(320px circle at var(--x) var(--y), rgba(168, 85, 247, 0.12), transparent 65%),
-    #111114;
+    radial-gradient(320px circle at var(--x) var(--y), color-mix(in srgb, var(--accent, #a855f7) 12%, transparent), transparent 65%),
+    color-mix(in srgb, var(--text, #fafafa) 5%, var(--bg, #09090b));
   z-index: 1;
 }
 
@@ -89,7 +89,7 @@ body, html {
   font-size: 10px;
   font-family: monospace;
   letter-spacing: 0.16em;
-  color: #a855f7;
+  color: var(--accent, #a855f7);
   margin-bottom: 18px;
 }
 
@@ -103,5 +103,5 @@ body, html {
 .bento-card p {
   font-size: 13px;
   line-height: 1.55;
-  color: #a1a1aa;
+  color: color-mix(in srgb, var(--text, #fafafa) 62%, transparent);
 }

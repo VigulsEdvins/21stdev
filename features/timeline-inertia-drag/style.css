@@ -7,8 +7,8 @@
 html, body {
   width: 100%;
   height: 100%;
-  background: #f4f3ef;
-  color: #111111;
+  background: var(--bg, #f4f3ef);
+  color: var(--text, #111);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", monospace;
   overflow: hidden;
   user-select: none;
@@ -30,7 +30,7 @@ html, body {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--text, #111) 8%, transparent);
 }
 
 .tl-viewport {
@@ -69,8 +69,8 @@ html, body {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
-  background: #111;
-  color: #fff;
+  background: var(--text, #111);
+  color: var(--bg, #fff);
   padding: 3px 8px;
   border-radius: 4px;
 }
@@ -78,7 +78,7 @@ html, body {
 .timeline-card__badge-top {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(0, 0, 0, 0.45);
+  color: color-mix(in srgb, var(--text, #111) 45%, transparent);
 }
 
 .timeline-card__media {
@@ -91,7 +91,7 @@ html, body {
   flex-direction: column;
   justify-content: flex-end;
   padding: 16px;
-  color: #fff;
+  color: #fefefe; /* text on a photo stays light in every theme (#fefefe, not #fff: the theme engine turns #fff into the page text colour) */
 }
 
 .timeline-card__title {
@@ -103,12 +103,12 @@ html, body {
 .timeline-card__badge-bottom {
   font-size: 11px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.55);
+  color: color-mix(in srgb, var(--text, #111) 55%, transparent);
 }
 
 .tl-ruler-wrap {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  background: #eae8e1;
+  border-top: 1px solid color-mix(in srgb, var(--text, #111) 10%, transparent);
+  background: color-mix(in srgb, var(--text, #111) 6%, var(--bg, #f4f3ef));
   padding: 14px 0 18px;
   overflow: hidden;
 }
@@ -124,13 +124,13 @@ html, body {
 .ruler-tick {
   width: 1px;
   height: 8px;
-  background: rgba(0, 0, 0, 0.25);
+  background: color-mix(in srgb, var(--text, #111) 25%, transparent);
   flex-shrink: 0;
 }
 
 .ruler-tick--major {
   height: 16px;
-  background: rgba(0, 0, 0, 0.65);
+  background: color-mix(in srgb, var(--text, #111) 65%, transparent);
 }
 
 .ruler-months {
@@ -142,9 +142,9 @@ html, body {
 
 .ruler-month-btn {
   appearance: none;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid color-mix(in srgb, var(--text, #111) 15%, transparent);
   background: transparent;
-  color: #111;
+  color: var(--text, #111);
   padding: 5px 12px;
   border-radius: 999px;
   font-size: 11px;
@@ -154,6 +154,6 @@ html, body {
 }
 
 .ruler-month-btn.is-active {
-  background: #111111;
-  color: #ffffff;
+  background: var(--text, #111);
+  color: var(--bg, #fff);
 }

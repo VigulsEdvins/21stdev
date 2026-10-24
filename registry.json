@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T21:16:59.913Z",
+  "generatedAt": "2026-10-24T21:52:58.661Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -1356,7 +1356,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "betteroff",
       "type": "component",
@@ -3282,7 +3282,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "betteroff",
       "type": "component",
@@ -3548,7 +3548,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "21st-crafted",
       "type": "component",
