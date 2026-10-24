@@ -37,11 +37,11 @@ Goal: every component is usable by a non-developer.
 Goal: the builder is dependable for a full client session.
 
 - [x] **4.1 Split `app.js` (M)** — done 2026-10-24: app.js 895 -> 486 lines; the inspector, workbench, Add Feature Studio and pure helpers moved to `scripts/catalog/`; new unit test and a catalogue-page e2e.
-- [ ] **4.2 Autosave and recovery (S)** — check the flush on tab close, corrupted localStorage, and quota errors with a visible message.
-- [ ] **4.3 Undo/redo across content edits and page settings (M)** — confirm history covers them, not just layout.
+- [x] **4.2 Autosave and recovery (S)** — done 2026-10-24: `scripts/builder/autosave.js` keeps the previous good copy, retries once when storage is full, falls back to that copy when the saved one is unreadable (keeping the bad one aside) and shows a red banner with a "Download backup" button while saving fails. Unit test + e2e. The flush on tab close already existed.
+- [x] **4.3 Undo/redo across content edits and page settings (M)** — done 2026-10-24: history already covered them, but the preview never put text back when an override was removed (undo, Reset), so undo of a Content edit left the new text on screen. The overrides runtime now remembers what each element held and restores it. e2e covers content, page title and theme.
 - [ ] **4.4 Keyboard and a11y pass on the builder shell (M)** — focus order, labels, contrast; use the a11y-debugging skill.
 - [ ] **4.5 Preview performance with 10+ heavy sections (M)** — lazy-mount, pause off-screen WebGL/shader components.
-- [ ] **4.6 Mobile/tablet preview toggle (S)** — viewport switcher in the preview frame.
+- [x] **4.6 Mobile/tablet preview toggle (S)** — already existed (Desktop/Tablet 768/Mobile 375 buttons); added an e2e that checks the widths and that the page sees a phone-sized window.
 - [ ] **4.7 Check 4 components that render empty in headless Chromium (S)** — (chroma-glitch, cinema-grain and mono-contrast preloaders render once given 8 s) cloth-peel-reveal, noise-dissolve-reveal, spotlight-offer-quiz, tile-scrollbar. May be WebGL/interaction-gated and fine in a real browser; confirm, fix if not.
 - [x] **4.8 Blank-component guard (S)** — done 2026-10-24: `npm run verify` rejects stub script.js, `npm run check-blank` renders every feature in the builder. — make `check-features` or `verify` load every feature through the builder and fail on an empty section, so stub script.js files can't ship again.
 

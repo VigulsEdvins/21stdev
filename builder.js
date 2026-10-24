@@ -428,11 +428,13 @@
 
     // Check localStorage for saved builder state
     let hasLoadedSavedState = false;
-    if (typeof localStorage !== 'undefined') {
+    {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
+        const loaded = historyCtl.autosave.load();
+        if (loaded.status === 'recovered') showToast('Your last save could not be read, so the one before it was restored.', 6000);
+        if (loaded.status === 'corrupt') showToast('Your saved work could not be read. A copy was kept in this browser; starting a new page.', 7000);
+        const parsed = loaded.state;
+        {
           if (parsed && Array.isArray(parsed.stack) && parsed.stack.length > 0) {
             const prevApplying = historyCtl.state.applying;
             historyCtl.state.applying = true;

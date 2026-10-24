@@ -2435,23 +2435,67 @@ function collectOverrides(sections) {
 /** Runtime shared by preview and export: defines window.__setOverrides(list). */
 const OVERRIDES_RUNTIME = `(function () {
   var list = [];
+  // What each element held before an override touched it, so removing the override (Reset, undo) puts it back.
+  var originals = [];
+  function original(el) {
+    for (var i = 0; i < originals.length; i++) if (originals[i].el === el) return originals[i];
+    var rec = { el: el, saved: {} };
+    originals.push(rec);
+    return rec;
+  }
+  function remember(el, key, read) {
+    var rec = original(el);
+    if (!(key in rec.saved)) rec.saved[key] = read();
+    return key;
+  }
+  function restore(el, key, value) {
+    if (key === 'html') el.innerHTML = value;
+    else if (key === 'src') { if (value === null) el.removeAttribute('src'); else el.setAttribute('src', value); }
+    else if (key === 'srcset') { if (value === null) el.removeAttribute('srcset'); else el.setAttribute('srcset', value); }
+    else if (key === 'href') { if (value === null) el.removeAttribute('href'); else el.setAttribute('href', value); }
+    else if (key.indexOf('style:') === 0) { if (value) el.style.setProperty(key.slice(6), value); else el.style.removeProperty(key.slice(6)); }
+  }
   function apply() {
+    var active = [];
     list.forEach(function (o) {
       var root = document.getElementById(o.section);
       if (!root) return;
       var el;
       try { el = root.querySelector(o.selector); } catch (e) { return; }
       if (!el) return;
+      var key;
       if (o.type === 'image') {
-        if (el.tagName === 'IMG') { el.removeAttribute('srcset'); el.src = o.value; }
-        else el.style.backgroundImage = 'url("' + o.value.replace(/"/g, '%22') + '")';
+        if (el.tagName === 'IMG') {
+          remember(el, 'srcset', function () { return el.getAttribute('srcset'); });
+          remember(el, 'src', function () { return el.getAttribute('src'); });
+          active.push([el, 'srcset'], [el, 'src']);
+          el.removeAttribute('srcset'); el.src = o.value;
+        } else {
+          key = remember(el, 'style:background-image', function () { return el.style.getPropertyValue('background-image'); });
+          active.push([el, key]);
+          el.style.backgroundImage = 'url("' + o.value.replace(/"/g, '%22') + '")';
+        }
       } else if (o.type === 'link') {
+        key = remember(el, 'href', function () { return el.getAttribute('href'); });
+        active.push([el, key]);
         el.setAttribute('href', o.value);
       } else if (o.type === 'color') {
+        key = remember(el, 'style:' + (o.attr || 'color'), function () { return el.style.getPropertyValue(o.attr || 'color'); });
+        active.push([el, key]);
         el.style.setProperty(o.attr || 'color', o.value);
       } else {
+        key = remember(el, 'html', function () { return el.innerHTML; });
+        active.push([el, key]);
         el.textContent = o.value;
       }
+    });
+    // anything an override changed earlier but no longer asks for goes back to what it was
+    originals = originals.filter(function (rec) {
+      Object.keys(rec.saved).forEach(function (key) {
+        var still = active.some(function (a) { return a[0] === rec.el && a[1] === key; });
+        if (!still) { restore(rec.el, key, rec.saved[key]); delete rec.saved[key]; }
+      });
+      return Object.keys(rec.saved).length > 0;
     });
   }
   window.__setOverrides = function (next) { list = next || []; apply(); };
