@@ -1319,6 +1319,11 @@ function generateUniversalThemeStyles(theme) {
       --popover: ${cardBg};
       --popover-foreground: ${theme.text};
 
+      /* Standard design tokens for new components (see AGENT_GUIDE.md) */
+      --radius: 12px;
+      --font-display: inherit;
+      --font-body: inherit;
+
       /* Component-specific variables mapped universally */
       --bg-color: ${theme.bg};
       --text-color: ${theme.text};
