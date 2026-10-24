@@ -2065,6 +2065,7 @@ ${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>${OFFSCREEN_RUNTIME}</script>
   ${pageHead.headTags}
   ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style id="universal-theme-styles">
 ${generateUniversalThemeStyles(theme)}
@@ -2432,6 +2433,39 @@ function collectOverrides(sections) {
   return out;
 }
 
+
+/**
+ * Runtime shared by preview and export: WebGL canvases that are on the page but scrolled out of view skip their
+ * draw calls. A page with many WebGL sections otherwise paints all of them every frame (3 fps with six on a
+ * software renderer). Canvases that are hidden or have no size keep drawing, because they may be used as a texture.
+ */
+const OFFSCREEN_RUNTIME = `(function () {
+  if (typeof IntersectionObserver === 'undefined') return;
+  var visible = new WeakMap();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { visible.set(e.target, e.isIntersecting); });
+  }, { rootMargin: '300px 0px' });
+  // A section's canvas is judged by its section: a full-screen position:fixed background belongs to the section
+  // it came from, so it pauses while that section is out of view.
+  function skip(canvas) {
+    if (!canvas || !canvas.isConnected) return false;
+    var target = (canvas.closest && canvas.closest('.page-section')) || canvas;
+    if (!visible.has(target)) { visible.set(target, true); io.observe(target); return false; }
+    if (visible.get(target) !== false) return false;
+    var r = target.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+  }
+  ['WebGLRenderingContext', 'WebGL2RenderingContext'].forEach(function (name) {
+    var proto = window[name] && window[name].prototype;
+    if (!proto) return;
+    ['drawArrays', 'drawElements', 'drawArraysInstanced', 'drawElementsInstanced', 'drawRangeElements'].forEach(function (fn) {
+      var orig = proto[fn];
+      if (typeof orig !== 'function') return;
+      proto[fn] = function () { if (skip(this.canvas)) return; return orig.apply(this, arguments); };
+    });
+  });
+})();`;
+
 /** Runtime shared by preview and export: defines window.__setOverrides(list). */
 const OVERRIDES_RUNTIME = `(function () {
   var list = [];
@@ -2687,6 +2721,9 @@ ${renderNativePaletteCss(safeSections, options.nativeMap)}`;
     return origMatchMedia ? origMatchMedia.call(window, query) : { matches: false };
   };
 })();
+
+// Skip WebGL drawing for canvases scrolled out of view
+${OFFSCREEN_RUNTIME}
 
 // Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
 (function () {
