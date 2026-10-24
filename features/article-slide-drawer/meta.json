@@ -16,5 +16,22 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 13
+  "order": 13,
+  "legacyCategory": "Buttons & UI",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "editorial"
+  ],
+  "industry": [
+    "portfolio",
+    "media"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "betteroff",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

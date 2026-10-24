@@ -28,5 +28,22 @@
     "React (.tsx included)"
   ],
   "author": "hyperiux",
-  "order": 3
+  "order": 3,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "dark",
+    "light"
+  ],
+  "industry": [
+    "ecommerce"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": []
 }

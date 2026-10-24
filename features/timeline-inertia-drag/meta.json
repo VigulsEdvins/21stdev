@@ -16,5 +16,21 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 10
+  "order": 10,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "futuristic"
+  ],
+  "industry": [
+    "media"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "betteroff",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": []
 }

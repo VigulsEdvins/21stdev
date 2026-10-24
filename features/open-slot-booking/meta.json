@@ -25,5 +25,21 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 201
+  "order": 201,
+  "legacyCategory": "Cards & Tiles",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

@@ -22,5 +22,22 @@
   "dependencies": [
     "HTML5 Canvas"
   ],
-  "order": 42
+  "order": 42,
+  "legacyCategory": "Heroes",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "futuristic",
+    "retro"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

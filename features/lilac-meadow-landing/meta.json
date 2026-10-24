@@ -25,5 +25,21 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 183
+  "order": 183,
+  "legacyCategory": "Full Templates",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "luxury"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

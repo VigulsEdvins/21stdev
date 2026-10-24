@@ -2,7 +2,7 @@
   "name": "Waving Portfolio Landing",
   "title": "Waving Portfolio Landing",
   "slug": "waving-portfolio-landing",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "21st.dev",
   "type": "component",
   "description": "A red-on-paper poster landing page with a cinematic intro. The poster reads as two rows of tall condensed capitals sharing one giant letter: **P [O] RT / F [O] LIO**, with an ink-drawn character leaning out of the gap.",
@@ -25,5 +25,23 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 248
+  "order": 248,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "light"
+  ],
+  "industry": [
+    "portfolio",
+    "media"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

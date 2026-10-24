@@ -17,6 +17,24 @@
     "CSS Keyframes",
     "SVG"
   ],
-  "dependencies": [],
-  "order": 15
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 15,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "vivmgmt",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

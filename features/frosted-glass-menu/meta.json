@@ -2,7 +2,7 @@
   "name": "Frosted Glass Menu",
   "title": "Frosted Glass Menu",
   "slug": "frosted-glass-menu",
-  "category": "Navigation & Headers",
+  "category": "Headers & Nav",
   "source": "21st.dev",
   "type": "component",
   "description": "A quiet, membership-club navigation. A frosted glass bar unfolds in place into a full index: muted column heads, monospace caps links, a pill call-to-action, a ruled footer, and a small hand-drawn traveller who pulls a suitcase along the footer rule. He strolls while the menu is open and breaks into",
@@ -25,5 +25,21 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 152
+  "order": 152,
+  "legacyCategory": "Navigation & Headers",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

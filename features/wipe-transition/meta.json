@@ -25,5 +25,21 @@
     "React (.tsx included)"
   ],
   "author": "kevingirelli",
-  "order": 8
+  "order": 8,
+  "legacyCategory": "Buttons & UI",
+  "status": "draft",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

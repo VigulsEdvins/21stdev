@@ -25,5 +25,22 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 167
+  "order": 167,
+  "legacyCategory": "3D & Carousels",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "futuristic",
+    "light"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

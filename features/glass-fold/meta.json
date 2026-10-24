@@ -21,5 +21,21 @@
   "dependencies": [
     "WebGL"
   ],
-  "order": 48
+  "order": 48,
+  "legacyCategory": "Audio & Shaders",
+  "status": "draft",
+  "weight": "heavy",
+  "mood": [
+    "futuristic"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

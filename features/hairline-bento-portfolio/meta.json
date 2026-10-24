@@ -2,7 +2,7 @@
   "name": "Hairline Bento Portfolio",
   "title": "Hairline Bento Portfolio",
   "slug": "hairline-bento-portfolio",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "21st.dev",
   "type": "component",
   "description": "A whole link-in-bio portfolio on one sheet. Cells sit on warm paper, divided by one-pixel rules, with a stretched black display name and one inverted panel for the thing you're launching. It's minimal, but every cell does something.",
@@ -25,5 +25,22 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 158
+  "order": 158,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

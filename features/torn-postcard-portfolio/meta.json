@@ -2,7 +2,7 @@
   "name": "Torn Postcard Portfolio",
   "title": "Torn Postcard Portfolio",
   "slug": "torn-postcard-portfolio",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "21st.dev",
   "type": "component",
   "description": "A whole personal site told as a winter travel journal. Five full-screen chapters sit in one pinned stage, and scrolling **tears the page open**: the chapter you're on rips along a ragged paper seam, the top half lifts away, the bottom half drops, and the next chapter pops up out of the gap with its ",
@@ -25,5 +25,23 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 241
+  "order": 241,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "light"
+  ],
+  "industry": [
+    "portfolio",
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

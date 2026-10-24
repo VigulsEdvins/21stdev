@@ -2,7 +2,7 @@
   "name": "Comeback Poster",
   "title": "Comeback Poster",
   "slug": "comeback-poster",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "21st.dev",
   "type": "component",
   "description": "A full-bleed hero laid out like a printed gig poster. A paper masthead carries a swash title and a grid of theme words, over an oil-painted field of red poppies. A hooded figure in a white robe stands in the field, and its empty face turns toward you.",
@@ -24,5 +24,22 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 127
+  "order": 127,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "light",
+    "editorial"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

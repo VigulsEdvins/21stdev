@@ -27,5 +27,21 @@
     "HTML5 Canvas",
     "Web Audio API"
   ],
-  "order": 2
+  "order": 2,
+  "legacyCategory": "Audio & Shaders",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "editorial"
+  ],
+  "industry": [
+    "media"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

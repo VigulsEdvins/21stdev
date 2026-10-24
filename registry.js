@@ -5,6 +5,22 @@ window.FEATURE_REGISTRY = [
     "name": "File Card Collections",
     "title": "File Card Collections",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Interactive frosted glass folder and card collection stacks with vibrant abstract liquid art tabs, active tab states, and smooth spring physics.",
@@ -45,6 +61,23 @@ window.FEATURE_REGISTRY = [
     "name": "Perspective Tunnel Hero",
     "title": "Perspective Tunnel Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "luxury"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A 3D Z-axis spatial fly-through hero component where cards burst out of a golden-angle tunnel toward the camera as you scroll. Features smooth spring physics, pointer parallax, depth rings, and reactive typography.",
@@ -94,6 +127,22 @@ window.FEATURE_REGISTRY = [
     "name": "Into The Ether",
     "title": "Into The Ether",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Atmospheric typographic hero section with hypnotic concentric ether ripple rings, kinetic mouse harmonics, Web Audio synthesizer pulse, and luminous dual theme.",
@@ -138,6 +187,23 @@ window.FEATURE_REGISTRY = [
     "name": "Hyperiux Product Storyline Timeline",
     "title": "Hyperiux Product Storyline Timeline",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "dark",
+      "light"
+    ],
+    "industry": [
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Horizontal scroll timeline with Lenis-style inertia smoothing, GSAP milestone reveals, dynamic connecting active rail, alternating top/bottom dates, and dual light/dark themes.",
@@ -183,6 +249,22 @@ window.FEATURE_REGISTRY = [
     "name": "Tilted Grid Hero",
     "title": "Tilted Grid Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Every frame, brought into focus. Images curve in from one edge, flatten out at the centre, then fade away round the other with 3D perspective distortion.",
@@ -223,7 +305,25 @@ window.FEATURE_REGISTRY = [
     "slug": "forma-liquid-particle-studio",
     "name": "Forma - Liquid Particle Studio",
     "title": "Forma - Liquid Particle Studio",
-    "category": "Full Websites",
+    "category": "Full Templates",
+    "legacyCategory": "Full Websites",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "editorial"
+    ],
+    "industry": [
+      "agency",
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": true,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "Form that answers back. High-end independent studio template featuring real-time WebGL liquid particle simulations, responsive layout, and smooth typography.",
@@ -268,6 +368,22 @@ window.FEATURE_REGISTRY = [
     "name": "Image Stream Hero",
     "title": "Image Stream Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Two continuous rails of 3D cards ride out of a central vanishing point and sweep outward to both edges, growing and turning with perspective projection math.",
@@ -313,6 +429,22 @@ window.FEATURE_REGISTRY = [
     "name": "Stagger Testimonials",
     "title": "Stagger Testimonials",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Testimonial review cards layout layered with alternating column offset, glowing active state, star ratings, category filtering, and zero heavy motion library overhead.",
@@ -354,6 +486,22 @@ window.FEATURE_REGISTRY = [
     "name": "Vertical Tabs Service Showcase",
     "title": "Vertical Tabs Service Showcase",
     "category": "Buttons & UI",
+    "legacyCategory": "Buttons & UI",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Vertical tabbed service navigation with automated timer progress indicators, slide transition gallery on the right, and responsive layout.",
@@ -397,6 +545,22 @@ window.FEATURE_REGISTRY = [
     "name": "Testimonial Block v2",
     "title": "Testimonial Block v2",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Modern reusable testimonial showcase block with social proof metrics, user avatars, verified client pill, quote typography, and interactive carousel navigation.",
@@ -440,6 +604,22 @@ window.FEATURE_REGISTRY = [
     "name": "Wipe Transition Content Switcher",
     "title": "Wipe Transition Content Switcher",
     "category": "Buttons & UI",
+    "legacyCategory": "Buttons & UI",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Content switcher that sweeps a colored band across the panel, swaps the content underneath while it is covered, and crossfades on phones or reduced motion.",
@@ -482,6 +662,22 @@ window.FEATURE_REGISTRY = [
     "name": "Horizontal Inertia Drag Timeline & Mechanical Tick Ruler",
     "title": "Horizontal Inertia Drag Timeline & Mechanical Tick Ruler",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "stable",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": true,
+    "origin": {
+      "source": "betteroff",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "betteroff",
     "type": "component",
     "description": "Horizontal inertia-draggable archive timeline grouped by months with velocity-driven 3D Y-axis card tilt, synchronized mechanical tick ruler, month jump buttons, and subtle Web Audio tick feedback.",
@@ -519,6 +715,24 @@ window.FEATURE_REGISTRY = [
     "name": "Infinite Vertical Conveyor Scroll & 3D Trajectory Loop",
     "title": "Infinite Vertical Conveyor Scroll & 3D Trajectory Loop",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "stable",
+    "mood": [
+      "editorial",
+      "futuristic"
+    ],
+    "industry": [
+      "saas",
+      "hospitality"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "betteroff",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "betteroff",
     "type": "component",
     "description": "Endless wrapping vertical virtual scroll engine using modulo wrap(-(totalHeight - item.end), item.end, scroll) math, paired with a central 3D orbital sculpture that travels along a multi-stage sine trajectory.",
@@ -556,6 +770,23 @@ window.FEATURE_REGISTRY = [
     "name": "Works Wheel 3D Ring-to-Drum Index",
     "title": "Works Wheel 3D Ring-to-Drum Index",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "stable",
+    "mood": [
+      "editorial",
+      "futuristic"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "heavy",
+    "needsAssets": true,
+    "origin": {
+      "source": "photo-caroulsel",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "photo-caroulsel",
     "type": "component",
     "description": "At rest, work cards sit tangent to a circular ring around a central title. Scrolling or dragging unfolds the ring into a 3D vertical perspective drum curved along a horizontal bow arc, with right-hand index navigation.",
@@ -599,6 +830,22 @@ window.FEATURE_REGISTRY = [
     "name": "Polaroid Sagging String & Breeze Physics Carousel",
     "title": "Polaroid Sagging String & Breeze Physics Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": true,
+    "origin": {
+      "source": "photo-caroulsel",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "photo-caroulsel",
     "type": "component",
     "description": "Instant photo prints pegged to a sagging catenary string. Drag the line or use arrows/clicks to slide prints with critically damped spring physics, velocity-driven pendulum swing, ambient breeze sway, and procedural painted landscapes.",
@@ -642,6 +889,22 @@ window.FEATURE_REGISTRY = [
     "name": "WebAudio Synth Jukebox Pill & Sound Gate Modal",
     "title": "WebAudio Synth Jukebox Pill & Sound Gate Modal",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "betteroff",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "betteroff",
     "type": "component",
     "description": "Floating pill audio jukebox with scrolling marquee track ticker, expandable playlist drawer, animated equalizer bars, Sound Gate intro modal, and built-in Web Audio API ambient synth + UI click SFX (needs zero external MP3 files).",
@@ -679,6 +942,22 @@ window.FEATURE_REGISTRY = [
     "name": "3D Cylindrical Drag & Velocity Carousel",
     "title": "3D Cylindrical Drag & Velocity Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "stable",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": true,
+    "origin": {
+      "source": "carousel-gallery-play",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "carousel-gallery-play",
     "type": "component",
     "description": "12-panel 3D cylinder with alternating dual/single project slots, tilted 5° on the Z-axis. Supports 1:1 pointer drag-to-spin with throw inertia, scroll-wheel velocity acceleration, pause on card hover, and prev/pause/next controls.",
@@ -717,6 +996,23 @@ window.FEATURE_REGISTRY = [
     "name": "Slide-Over Editorial Article Reader Drawer",
     "title": "Slide-Over Editorial Article Reader Drawer",
     "category": "Buttons & UI",
+    "legacyCategory": "Buttons & UI",
+    "status": "stable",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio",
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": true,
+    "origin": {
+      "source": "betteroff",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "betteroff",
     "type": "component",
     "description": "Backdrop-blurred slide-over editorial reading drawer with rich typography, tag/month metadata badges, gallery blocks, next/prev article navigation, and Esc/backdrop dismissal.",
@@ -754,6 +1050,22 @@ window.FEATURE_REGISTRY = [
     "name": "5-Column Staggered Parallax Gallery",
     "title": "5-Column Staggered Parallax Gallery",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "stable",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": true,
+    "origin": {
+      "source": "vivmgmt",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "vivmgmt",
     "type": "component",
     "description": "5-column editorial artist gallery with horizontal cursor pan, opposing vertical wheel parallax per column, and automatic top-card media cycling on idle.",
@@ -770,7 +1082,9 @@ window.FEATURE_REGISTRY = [
       "requestAnimationFrame",
       "CSS Grid"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 14,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/parallax-5col-gallery",
     "relativePath": "features/parallax-5col-gallery",
@@ -790,7 +1104,23 @@ window.FEATURE_REGISTRY = [
     "slug": "cursor-image-trail",
     "name": "Interactive Velocity Cursor Image Trail",
     "title": "Interactive Velocity Cursor Image Trail",
-    "category": "Cursors & Physics",
+    "category": "Interactions & Physics",
+    "legacyCategory": "Cursors & Physics",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "hospitality"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "carousel-gallery-play",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "carousel-gallery-play",
     "type": "component",
     "description": "Spawns momentum-thrown visual cards along the cursor path whenever pointer travel exceeds 90px. Cards drift along the movement vector with random rotation, scale up, and smoothly decay out.",
@@ -827,7 +1157,23 @@ window.FEATURE_REGISTRY = [
     "slug": "client-logo-marquee",
     "name": "Infinite Dual-Direction Partner Logo Marquee",
     "title": "Infinite Dual-Direction Partner Logo Marquee",
-    "category": "Galleries & Grids",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Grids",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "carousel-gallery-play",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "carousel-gallery-play",
     "type": "component",
     "description": "Seamless hardware-accelerated infinite dual-track partner logo marquee with soft gradient edge masks, hover speed modulation, and direction reversal toggle.",
@@ -865,6 +1211,22 @@ window.FEATURE_REGISTRY = [
     "name": "Split-Screen Curtain Entrance",
     "title": "Split-Screen Curtain Entrance",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "vivmgmt",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "vivmgmt",
     "type": "component",
     "description": "Hero SVG split-clip reveal and scale-down curtain choreography with replay trigger and scroll-linked split separation.",
@@ -880,7 +1242,9 @@ window.FEATURE_REGISTRY = [
       "CSS Keyframes",
       "SVG"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 15,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/split-screen-entrance",
     "relativePath": "features/split-screen-entrance",
@@ -900,7 +1264,23 @@ window.FEATURE_REGISTRY = [
     "slug": "athletes-filter-showcase",
     "name": "Filterable Roster & Portrait Hover Showcase",
     "title": "Filterable Roster & Portrait Hover Showcase",
-    "category": "Galleries & Grids",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Grids",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "carousel-gallery-play",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "carousel-gallery-play",
     "type": "component",
     "description": "Category-filtered portrait showcase with animated pill tabs, horizontal snap rail, synced pagination dots, and directional hover CTA overlays.",
@@ -938,6 +1318,22 @@ window.FEATURE_REGISTRY = [
     "name": "Full-Screen Parallax Footer Reveal",
     "title": "Full-Screen Parallax Footer Reveal",
     "category": "Footers & Endings",
+    "legacyCategory": "Footers & Endings",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": true,
+    "origin": {
+      "source": "vivmgmt",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "vivmgmt",
     "type": "component",
     "description": "Uncovering full-screen parallax footer with cursor-tracking hover image previews and dynamic ambient background color transitions.",
@@ -953,7 +1349,9 @@ window.FEATURE_REGISTRY = [
       "CSS Transitions",
       "Cursor Tracking"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 16,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/fullscreen-parallax-footer",
     "relativePath": "features/fullscreen-parallax-footer",
@@ -973,7 +1371,23 @@ window.FEATURE_REGISTRY = [
     "slug": "news-3col-masonry",
     "name": "3-Column Editorial Masonry Grid",
     "title": "3-Column Editorial Masonry Grid",
-    "category": "Galleries & Grids",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Grids",
+    "status": "stable",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "vivmgmt",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "vivmgmt",
     "type": "component",
     "description": "3-column Packery-style editorial masonry grid with category filtering and IntersectionObserver staggered card reveal.",
@@ -989,7 +1403,9 @@ window.FEATURE_REGISTRY = [
       "IntersectionObserver",
       "CSS Columns"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 17,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/news-3col-masonry",
     "relativePath": "features/news-3col-masonry",
@@ -1009,7 +1425,23 @@ window.FEATURE_REGISTRY = [
     "slug": "custom-magnetic-cursor",
     "name": "Custom Glassmorphic & Magnetic Target Cursor",
     "title": "Custom Glassmorphic & Magnetic Target Cursor",
-    "category": "Cursors & Physics",
+    "category": "Interactions & Physics",
+    "legacyCategory": "Cursors & Physics",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "carousel-gallery-play",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "carousel-gallery-play",
     "type": "component",
     "description": "Smooth lerp-driven dual-ring glassmorphic cursor follower that expands with contextual action labels (PLAY, VIEW, EXPLORE) and magnetically pulls buttons toward the pointer.",
@@ -1045,7 +1477,24 @@ window.FEATURE_REGISTRY = [
     "slug": "artist-portfolio-lightbox",
     "name": "Artist Portfolio Modal Lightbox",
     "title": "Artist Portfolio Modal Lightbox",
-    "category": "Galleries & Grids",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Grids",
+    "status": "stable",
+    "mood": [
+      "light",
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "vivmgmt",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "vivmgmt",
     "type": "component",
     "description": "High-fashion portfolio lightbox with keyboard arrow navigation, plate counter, metadata drawer, and interactive thumbnail strip.",
@@ -1061,7 +1510,9 @@ window.FEATURE_REGISTRY = [
       "CSS Grid",
       "Keyboard Events"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 18,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/artist-portfolio-lightbox",
     "relativePath": "features/artist-portfolio-lightbox",
@@ -1082,6 +1533,22 @@ window.FEATURE_REGISTRY = [
     "name": "Editorial Smooth-Height FAQ Accordion",
     "title": "Editorial Smooth-Height FAQ Accordion",
     "category": "Buttons & UI",
+    "legacyCategory": "Buttons & UI",
+    "status": "stable",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "carousel-gallery-play",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "carousel-gallery-play",
     "type": "component",
     "description": "Accessible ARIA-compliant editorial FAQ accordion using CSS grid-template-rows 0fr->1fr smooth height interpolation and rotating plus/cross indicators.",
@@ -1118,7 +1585,23 @@ window.FEATURE_REGISTRY = [
     "slug": "responsive-burger-menu",
     "name": "Morphing Burger & Staggered Overlay Menu",
     "title": "Morphing Burger & Staggered Overlay Menu",
-    "category": "Navigation & UI",
+    "category": "Headers & Nav",
+    "legacyCategory": "Navigation & UI",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "hospitality"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "vivmgmt",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "vivmgmt",
     "type": "component",
     "description": "Morphing two-line architectural burger button and full-screen staggered navigation curtain with office directory.",
@@ -1134,7 +1617,9 @@ window.FEATURE_REGISTRY = [
       "CSS Cubic-Bezier",
       "ARIA"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 19,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/responsive-burger-menu",
     "relativePath": "features/responsive-burger-menu",
@@ -1155,6 +1640,22 @@ window.FEATURE_REGISTRY = [
     "name": "Surf 3D Sine-Wave Ribbon & Physics Stream",
     "title": "Surf 3D Sine-Wave Ribbon & Physics Stream",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "stable",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "saas"
+    ],
+    "weight": "medium",
+    "needsAssets": true,
+    "origin": {
+      "source": "betteroff",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "betteroff",
     "type": "component",
     "description": "Infinite wrapping 3D perspective card stream moving along a diagonal sine-wave ribbon trajectory. Velocity amplifies wave amplitude while cards rotate on the Y-axis (-70° to -85°) and elevate on hover.",
@@ -1193,6 +1694,23 @@ window.FEATURE_REGISTRY = [
     "name": "OKLCH Ambient Aurora Hero",
     "title": "OKLCH Ambient Aurora Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "stable",
+    "mood": [
+      "dark",
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st-crafted",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st-crafted",
     "type": "component",
     "description": "21st.dev signature dark hero with wide-gamut oklch() radial pulsing aurora shaders, blur-to-sharp entrance choreography, and interactive category chip river.",
@@ -1208,7 +1726,9 @@ window.FEATURE_REGISTRY = [
       "CSS Keyframes",
       "Vanilla JS"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 20,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/oklch-ambient-glow-hero",
     "relativePath": "features/oklch-ambient-glow-hero",
@@ -1228,7 +1748,23 @@ window.FEATURE_REGISTRY = [
     "slug": "spotlight-bento-grid",
     "name": "Cursor-Tracked Spotlight Bento Grid",
     "title": "Cursor-Tracked Spotlight Bento Grid",
-    "category": "Galleries & Grids",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Grids",
+    "status": "stable",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st-crafted",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st-crafted",
     "type": "component",
     "description": "Multi-card bento grid with shared mouse-tracking radial border illumination and inner surface spotlight.",
@@ -1244,7 +1780,9 @@ window.FEATURE_REGISTRY = [
       "CSS Custom Properties",
       "CSS Grid"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 21,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/spotlight-bento-grid",
     "relativePath": "features/spotlight-bento-grid",
@@ -1265,6 +1803,23 @@ window.FEATURE_REGISTRY = [
     "name": "Iridescent Liquid-Metal Shader Card",
     "title": "Iridescent Liquid-Metal Shader Card",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "stable",
+    "mood": [
+      "futuristic",
+      "luxury"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st-crafted",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st-crafted",
     "type": "component",
     "description": "Interactive HTML5 Canvas iridescent liquid-chrome shader card with pointer ripple waves and 3D perspective tilt.",
@@ -1280,7 +1835,9 @@ window.FEATURE_REGISTRY = [
       "3D Tilt",
       "Vanilla JS"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 22,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/liquid-metal-shader-card",
     "relativePath": "features/liquid-metal-shader-card",
@@ -1301,6 +1858,22 @@ window.FEATURE_REGISTRY = [
     "name": "Kinetic Editorial Strapline Scrub",
     "title": "Kinetic Editorial Strapline Scrub",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "stable",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st-crafted",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-24",
+    "customizable": [],
     "source": "21st-crafted",
     "type": "component",
     "description": "Wheel- and scrubber-driven word-by-word illumination mixing upright neo-grotesk sans and italic editorial serif typography.",
@@ -1316,7 +1889,9 @@ window.FEATURE_REGISTRY = [
       "CSS Transforms",
       "Wheel Scrubbing"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 23,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/kinetic-typography-strapline",
     "relativePath": "features/kinetic-typography-strapline",
@@ -1337,6 +1912,23 @@ window.FEATURE_REGISTRY = [
     "name": "BetterOff Studio — Lookback Annual & CMS Template",
     "title": "BetterOff Studio — Lookback Annual & CMS Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "stable",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "agency",
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": true,
+    "origin": {
+      "source": "betteroff",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "betteroff",
     "type": "template",
     "description": "Complete multi-chapter interactive annual review website with 3D WebGL Surf ribbon, inertia timeline, jukebox audio player, and live visual Admin CMS studio.",
@@ -1384,6 +1976,23 @@ window.FEATURE_REGISTRY = [
     "name": "PLAY Sports Agency — 3D Cylinder & CMS Template",
     "title": "PLAY Sports Agency — 3D Cylinder & CMS Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "stable",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "agency",
+      "portfolio"
+    ],
+    "weight": "heavy",
+    "needsAssets": true,
+    "origin": {
+      "source": "carousel-gallery-play",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "carousel-gallery-play",
     "type": "template",
     "description": "Complete creative sports agency website featuring a 3D cylindrical WebGL hero carousel, cursor image trail, athlete roster filter, and live Admin CMS.",
@@ -1431,6 +2040,23 @@ window.FEATURE_REGISTRY = [
     "name": "Vivienne Mgmt — 5-Column Editorial & CMS Template",
     "title": "Vivienne Mgmt — 5-Column Editorial & CMS Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "stable",
+    "mood": [
+      "editorial",
+      "luxury"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "vivmgmt",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "vivmgmt",
     "type": "template",
     "description": "High-fashion artist representation & syndication website featuring a 5-column parallax roster, split-curtain entrance, masonry newsroom, and visual Admin CMS.",
@@ -1447,7 +2073,9 @@ window.FEATURE_REGISTRY = [
       "Packery Masonry",
       "LocalStorage CMS"
     ],
-    "dependencies": [],
+    "dependencies": [
+      "Vanilla HTML/CSS/JS"
+    ],
     "order": 26,
     "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-vivmgmt",
     "relativePath": "features/template-vivmgmt",
@@ -1473,6 +2101,23 @@ window.FEATURE_REGISTRY = [
     "name": "Margarita Vigule — Editorial Photography & Grid CMS Template",
     "title": "Margarita Vigule — Editorial Photography & Grid CMS Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "stable",
+    "mood": [
+      "editorial",
+      "luxury"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "mom",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "mom",
     "type": "template",
     "description": "High-fashion & sports photography portfolio featuring an interactive 3x3 multi-image hover grid, Lenis smooth scrolling, multilingual support (LV/EN/RU), filterable work masonry, and CMS visual grid manager.",
@@ -1522,6 +2167,22 @@ window.FEATURE_REGISTRY = [
     "name": "CV Craft Pro — Intelligent Resume Builder & Career Suite Template",
     "title": "CV Craft Pro — Intelligent Resume Builder & Career Suite Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "cvmaker",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "cvmaker",
     "type": "template",
     "description": "Full-stack client-side resume architect built with React & Vite. Features 8 professional templates, real-time A4 document preview, job description ATS keyword matcher, STAR accomplishment enhancer, and matching cover letter suite.",
@@ -1570,7 +2231,23 @@ window.FEATURE_REGISTRY = [
     "slug": "editorial-3x3-hover-grid",
     "name": "Editorial 3x3 Interactive Hover Grid",
     "title": "Editorial 3x3 Interactive Hover Grid",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "stable",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "mom",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "mom",
     "type": "component",
     "description": "Signature 3x3 photography grid with dynamic center headline transformation and scattered multi-image hover stage with staggered entry and real photography.",
@@ -1610,7 +2287,23 @@ window.FEATURE_REGISTRY = [
     "slug": "multilingual-lang-switcher",
     "name": "Multilingual Language Switcher & Reactive Translator",
     "title": "Multilingual Language Switcher & Reactive Translator",
-    "category": "Navigation & Headers",
+    "category": "Headers & Nav",
+    "legacyCategory": "Navigation & Headers",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "agency"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "mom",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "mom",
     "type": "component",
     "description": "Minimal studio language switcher supporting instant reactive translation, cross-fade text transitions, persistent locale caching, and data-i18n bindings.",
@@ -1650,7 +2343,24 @@ window.FEATURE_REGISTRY = [
     "slug": "portfolio-masonry-filter",
     "name": "Portfolio Masonry Filter & Project Lightbox",
     "title": "Portfolio Masonry Filter & Project Lightbox",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "stable",
+    "mood": [
+      "light",
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "mom",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "mom",
     "type": "component",
     "description": "Filterable multi-column photography portfolio masonry with category pills, live count badges, hover metadata overlays, and click-to-expand project modal.",
@@ -1691,6 +2401,23 @@ window.FEATURE_REGISTRY = [
     "name": "Studio Info Slide-Over Drawer with Tabbed Panes",
     "title": "Studio Info Slide-Over Drawer with Tabbed Panes",
     "category": "Buttons & UI",
+    "legacyCategory": "Buttons & UI",
+    "status": "stable",
+    "mood": [
+      "dark"
+    ],
+    "industry": [
+      "portfolio",
+      "agency"
+    ],
+    "weight": "light",
+    "needsAssets": true,
+    "origin": {
+      "source": "mom",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "mom",
     "type": "component",
     "description": "High-end dark studio slide-over drawer featuring blur backdrop, tabbed sub-panes (About, Gear, Inquiries, Terms), keyboard ESC handler, and portrait vignette.",
@@ -1730,7 +2457,23 @@ window.FEATURE_REGISTRY = [
     "slug": "a4-resume-previewer",
     "name": "A4 Resume Document Previewer & Print Engine",
     "title": "A4 Resume Document Previewer & Print Engine",
-    "category": "Layouts & Grids",
+    "category": "Interactions & Physics",
+    "legacyCategory": "Layouts & Grids",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "cvmaker",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "cvmaker",
     "type": "component",
     "description": "Pixel-perfect A4 document previewer modeled after Signature Teal CV layout with zoom scaling, visual page-break boundary guide, print stylesheet, and structured dual-column cards.",
@@ -1770,7 +2513,24 @@ window.FEATURE_REGISTRY = [
     "slug": "job-keyword-matcher",
     "name": "Job Description Keyword Matcher & Gap Analyzer",
     "title": "Job Description Keyword Matcher & Gap Analyzer",
-    "category": "Forms & Inputs",
+    "category": "Interactions & Physics",
+    "legacyCategory": "Forms & Inputs",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio",
+      "saas"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "cvmaker",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "cvmaker",
     "type": "component",
     "description": "ATS job description parser that calculates live match score %, detects matched vs missing keyword tags, and provides 1-click insertion into the applicant profile.",
@@ -1810,7 +2570,23 @@ window.FEATURE_REGISTRY = [
     "slug": "star-verb-enhancer",
     "name": "STAR Accomplishment Builder & Passive Verb Linter",
     "title": "STAR Accomplishment Builder & Passive Verb Linter",
-    "category": "Forms & Inputs",
+    "category": "Interactions & Physics",
+    "legacyCategory": "Forms & Inputs",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "light",
+    "needsAssets": false,
+    "origin": {
+      "source": "cvmaker",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "cvmaker",
     "type": "component",
     "description": "Guided career accomplishment writer based on the STAR methodology with real-time passive verb linting, 1-click power action verb replacements, and metric injection chips.",
@@ -1851,6 +2627,22 @@ window.FEATURE_REGISTRY = [
     "name": "Before / After Resume Transformation Slider",
     "title": "Before / After Resume Transformation Slider",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "stable",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "cvmaker",
+      "license": "own"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "cvmaker",
     "type": "component",
     "description": "Interactive split comparison slider with draggable divider and touch support, comparing an unformatted plain text CV with a sleek modern ATS layout.",
@@ -1891,6 +2683,22 @@ window.FEATURE_REGISTRY = [
     "name": "Vapour Text Effect",
     "title": "Vapour Text Effect",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Interactive text vaporization animation using Canvas with customizable text cycling and particle dissolving effects.",
@@ -1931,6 +2739,23 @@ window.FEATURE_REGISTRY = [
     "name": "Waitlist Hero Animation",
     "title": "Waitlist Hero Animation",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "saas",
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Sleek modern waitlist hero with ambient background particles, glowing input, and smooth interaction states.",
@@ -1970,6 +2795,23 @@ window.FEATURE_REGISTRY = [
     "name": "Hero ASCII Wireframe Globe",
     "title": "Hero ASCII Wireframe Globe",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "retro"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Retro-futuristic terminal ASCII wireframe 3D globe animation with responsive canvas rendering.",
@@ -2009,6 +2851,22 @@ window.FEATURE_REGISTRY = [
     "name": "Liquid Metal Fluid Hero",
     "title": "Liquid Metal Fluid Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Fluid iridescent liquid metal hero section with real-time shader dynamics and responsive layout.",
@@ -2048,6 +2906,22 @@ window.FEATURE_REGISTRY = [
     "name": "Hover Magnetic Footer",
     "title": "Hover Magnetic Footer",
     "category": "Footers & Endings",
+    "legacyCategory": "Footers & Endings",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Interactive magnetic hover footer animation with glowing cursor dynamics and social docks.",
@@ -2087,6 +2961,22 @@ window.FEATURE_REGISTRY = [
     "name": "Gradient Bar Hero Section",
     "title": "Gradient Bar Hero Section",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "saas"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "High-contrast gradient bar waitlist hero section with animated illuminated light bars and badge counter.",
@@ -2126,6 +3016,22 @@ window.FEATURE_REGISTRY = [
     "name": "WebGL Chromatic Wave Distortion",
     "title": "WebGL Chromatic Wave Distortion",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Fullscreen interactive WebGL fluid chromatic wave distortion shader with mouse movement tracking.",
@@ -2164,7 +3070,23 @@ window.FEATURE_REGISTRY = [
     "slug": "hover-preview",
     "name": "Cursor Hover Link Preview",
     "title": "Cursor Hover Link Preview",
-    "category": "Cursors & Physics",
+    "category": "Interactions & Physics",
+    "legacyCategory": "Cursors & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Smooth cursor-following floating image card preview component that displays previews above text links.",
@@ -2204,6 +3126,22 @@ window.FEATURE_REGISTRY = [
     "name": "Glass Fold Translucent Mesh",
     "title": "Glass Fold Translucent Mesh",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Animated WebGL background of translucent glass panes folded over each other with lit creases.",
@@ -2242,6 +3180,23 @@ window.FEATURE_REGISTRY = [
     "name": "Agent Console Template",
     "title": "Agent Console Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "saas",
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete, working front end for an agent that plans its work as a small state machine. You ask for something, the agent writes a machine for it, and nothing runs until you approve. Then it runs state by state while you watch the transcript, a live state graph, and the store it writes to.",
@@ -2284,6 +3239,22 @@ window.FEATURE_REGISTRY = [
     "name": "Alice Scroll Story",
     "title": "Alice Scroll Story",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A scroll-driven story page: an intro heading, then Alice illustrations and text panels that pin, scale and slide in as you scroll, choreographed with GSAP ScrollTrigger. Published on 21st.dev as [Alice Scroll Story](https://21st.dev/@kedhareswer/components/alice-scroll-story).",
@@ -2325,6 +3296,22 @@ window.FEATURE_REGISTRY = [
     "name": "Alter Ego Mask Reveal",
     "title": "Alter Ego Mask Reveal",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A portrait landing page with a secret. A quiet civilian portrait sits on a charcoal backdrop. Move the pointer over it and a gooey blob follows you, uncovering the masked hero underneath, but only where you have been. The trail melts back within a second, so the mask closes behind you and is gone on",
@@ -2367,6 +3354,22 @@ window.FEATURE_REGISTRY = [
     "name": "Amour Sunrise Preloader",
     "title": "Amour Sunrise Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A loading gate styled like a mid-century poster. Fat, wobbly marker letters arch over a cobalt sun rising from the bottom edge. The outer letters run long, as they do on a hand-lettered print.",
@@ -2409,6 +3412,24 @@ window.FEATURE_REGISTRY = [
     "name": "Animator Title Preloader",
     "title": "Animator Title Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "retro"
+    ],
+    "industry": [
+      "portfolio",
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A loading screen for an animator's portfolio, staged as the title card of a short film. The load bar is the production pipeline: **rough → ink → paint → final**, and you watch your title go through it.",
@@ -2451,6 +3472,23 @@ window.FEATURE_REGISTRY = [
     "name": "Anodized Ink",
     "title": "Anodized Ink",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "light",
+      "futuristic"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed shader background: crimson ink suspended in black, lit like anodized metal. Move the pointer to stir it, click to drop ink that rings outward. Left alone, the light drifts on its own so it is never a still.",
@@ -2492,6 +3530,23 @@ window.FEATURE_REGISTRY = [
     "name": "Aperture Carousel",
     "title": "Aperture Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed image carousel where the next picture opens through a circular iris that grows from wherever you click, with a hairline ring riding its edge. Titles rise out of a mask, a hairline fills toward the next slide, and the cursor becomes a small \"Next / Prev\" lens.",
@@ -2533,6 +3588,22 @@ window.FEATURE_REGISTRY = [
     "name": "Astro Association Template",
     "title": "Astro Association Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete landing page for an astronomy club, set like a Swiss space poster. A giant wordmark is filled with confetti bubbles, and a compass-ring logo's needle follows your pointer. A bubble band has the mark knocked out of it, ribbons cross over oversized type, and the whole page sits inside a per",
@@ -2575,6 +3646,22 @@ window.FEATURE_REGISTRY = [
     "name": "Astro Bubble Hero",
     "title": "Astro Bubble Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
@@ -2617,6 +3704,22 @@ window.FEATURE_REGISTRY = [
     "name": "Astro Mission Band",
     "title": "Astro Mission Band",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
@@ -2659,6 +3762,23 @@ window.FEATURE_REGISTRY = [
     "name": "Beam Wordmark Footer",
     "title": "Beam Wordmark Footer",
     "category": "Footers & Endings",
+    "legacyCategory": "Footers & Endings",
+    "status": "draft",
+    "mood": [
+      "dark",
+      "light"
+    ],
+    "industry": [
+      "agency"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A midnight-navy closing section with a slow diagonal shaft of light running across it, and the brand set as a giant wordmark cropped by the bottom edge.",
@@ -2700,6 +3820,22 @@ window.FEATURE_REGISTRY = [
     "name": "Bento Portfolio Template",
     "title": "Bento Portfolio Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete personal site in one component: a soft, warm-gray bento where every card does something small when you reach for it.",
@@ -2742,6 +3878,23 @@ window.FEATURE_REGISTRY = [
     "name": "Blossom Dusk Template",
     "title": "Blossom Dusk Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "agency",
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete landing page for an integrations product, opening under cherry boughs against a periwinkle dusk sky. Big quiet type bottom-left, a glass nav with frosted dropdowns, and the brand mark — eight spokes, two of them joined through the middle — hanging faintly in the sky behind it all.",
@@ -2784,6 +3937,22 @@ window.FEATURE_REGISTRY = [
     "name": "Blueprint Ink Reveal",
     "title": "Blueprint Ink Reveal",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A drafting plate: a word drawn as a hairline outline with registration ticks, ruled on all four edges. Moving the pointer across it reveals the solid letters underneath through an organic ink blot.",
@@ -2826,6 +3995,22 @@ window.FEATURE_REGISTRY = [
     "name": "Breath Bloom",
     "title": "Breath Bloom",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Six luminous petals orbiting one centre, breathing on a slow eased loop — **in, hold, out** — with a quiet cue in the middle. Built as a **background**: drop content in as children and it sits on top.",
@@ -2867,6 +4052,23 @@ window.FEATURE_REGISTRY = [
     "name": "Brushstroke Portfolio Hero",
     "title": "Brushstroke Portfolio Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "light"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed portfolio poster: an editorial rule at the top and bottom, a letterspaced credit line, and `Portfolio` painted across the middle in dry brush over a ghosted `PORT` / `FOLIO` watermark, on torn, sprayed, grainy paper.",
@@ -2909,6 +4111,22 @@ window.FEATURE_REGISTRY = [
     "name": "Callsign Radio Landing",
     "title": "Callsign Radio Landing",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete homepage for an independent radio station, laid out like a live front page. The station's call sign runs up the left edge as a giant masthead, and that masthead is the level meter: press play and the letters drain, then fill segment by segment with the signal (two channels, a peak tick, a",
@@ -2950,6 +4168,22 @@ window.FEATURE_REGISTRY = [
     "name": "Card Deck Carousel",
     "title": "Card Deck Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Photos stacked like a loose deck of prints. Throw the top card in any direction (drag and let go, or flick) and it flies off, then slides back in at the bottom of the pile while the next one waits on top. The buttons, ←/→ and autoplay throw it for you; \"previous\" pulls the last card back on top.",
@@ -2992,6 +4226,22 @@ window.FEATURE_REGISTRY = [
     "name": "Card Fan Preloader",
     "title": "Card Fan Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A pixel-perfect, zero-dependency loading sequence. Six playing cards fan continuously through an arched deal in a seamless 0.5s cycle, floating upward and fading away to reveal your page content.",
@@ -3034,6 +4284,22 @@ window.FEATURE_REGISTRY = [
     "name": "Caustic Pool",
     "title": "Caustic Pool",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Shallow water you can stir, lit from above. Drag across it and the wake spreads, reflects off the walls and interferes with itself; leave it alone and it keeps moving without you.",
@@ -3075,6 +4341,22 @@ window.FEATURE_REGISTRY = [
     "name": "Checker Quilt Testimonials",
     "title": "Checker Quilt Testimonials",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A testimonials section laid out as a full-bleed checkerboard. Each row pairs a quote, set large on a solid colour field, with a portrait of the person who said it. Two rows sit diagonally, so the fields and faces alternate like a quilt.",
@@ -3117,6 +4399,22 @@ window.FEATURE_REGISTRY = [
     "name": "Chroma Glitch Preloader",
     "title": "Chroma Glitch Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Heavy chromatic aberration (3.5x the cinema grade) pulling the RGB channels apart toward the edges, over colour-rich footage where the fringing reads loudest.",
@@ -3159,6 +4457,22 @@ window.FEATURE_REGISTRY = [
     "name": "Cinema Grain Preloader",
     "title": "Cinema Grain Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Film grain, soft CRT scanlines and a gentle 1.4x contrast lift over a cinematic reel.",
@@ -3201,6 +4515,22 @@ window.FEATURE_REGISTRY = [
     "name": "Cloth Peel Reveal",
     "title": "Cloth Peel Reveal",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "hospitality"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A sheet of cloth covering your page, dragged away to reveal what's underneath. It slides as one piece and crumples as it goes: parallel folds travel along the drag direction, each crease lit from its own slope, and the sheet's trailing edge is torn rather than straight.",
@@ -3243,6 +4573,22 @@ window.FEATURE_REGISTRY = [
     "name": "Cobalt Toile Landing",
     "title": "Cobalt Toile Landing",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete landing-page template drawn as a copperplate engraving: cobalt ink on cream paper. Under a night sky with two moons, a carved arch frames the headline, statues stand on pedestals either side and a garden of hatched foliage fills the plate. The page continues in the same hand: a client mar",
@@ -3285,6 +4631,23 @@ window.FEATURE_REGISTRY = [
     "name": "Code Curtain",
     "title": "Code Curtain",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "saas",
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A sheet of source code hanging from a rod, behaving like cloth. Every character is a point in a verlet mesh and turns with the thread it hangs from, so the text bends, folds and drapes as the curtain moves.",
@@ -3326,6 +4689,22 @@ window.FEATURE_REGISTRY = [
     "name": "Cold Flame Drift",
     "title": "Cold Flame Drift",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "hospitality"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A field of grainy, hand-printed flames sliding along a diagonal. Every tongue has a blunt base and a pointed tip. Some split into two prongs, and some throw a lick off one side. A slow noise current bends the rows into S-curves as they travel. Two inks stipple into each other like a risograph pull, ",
@@ -3367,7 +4746,24 @@ window.FEATURE_REGISTRY = [
     "slug": "comeback-poster",
     "name": "Comeback Poster",
     "title": "Comeback Poster",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "light",
+      "editorial"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed hero laid out like a printed gig poster. A paper masthead carries a swash title and a grid of theme words, over an oil-painted field of red poppies. A hooded figure in a white robe stands in the field, and its empty face turns toward you.",
@@ -3409,6 +4805,22 @@ window.FEATURE_REGISTRY = [
     "name": "Connectome Arc Explorer",
     "title": "Connectome Arc Explorer",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A mirrored radial wiring diagram. Pick a cell type in the middle column and two arcs light up around it. The left arc shows where that type **receives** synapses and the right arc shows where it **sends** them, with bundled curves running out to the neuron classes upstream and downstream.",
@@ -3451,6 +4863,22 @@ window.FEATURE_REGISTRY = [
     "name": "Constellation Turntable",
     "title": "Constellation Turntable",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A star-chart record on a flat, illustrated deck. The vinyl is a night sky: a starfield and a Milky Way lane pressed between the grooves, the planets on a spiral, and one constellation per track with its name set along its groove band. A white tonearm with a perforated headshell rests on it.",
@@ -3492,6 +4920,22 @@ window.FEATURE_REGISTRY = [
     "name": "Contribution Skyline",
     "title": "Contribution Skyline",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A year of activity as a GitHub-style heat map that folds up into an isometric skyline and back down again.",
@@ -3533,6 +4977,24 @@ window.FEATURE_REGISTRY = [
     "name": "Coquette Desktop Portfolio",
     "title": "Coquette Desktop Portfolio",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "light",
+      "playful"
+    ],
+    "industry": [
+      "portfolio",
+      "saas"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete portfolio template styled as a quiet, pale-grey desktop. The page centres on *welcome to my* **portfolio**, with ribbon-tied folders and two paper documents scattered around it and a dock of pastel and maroon apps below. Each folder is a category of work, and each project inside it gets i",
@@ -3575,6 +5037,23 @@ window.FEATURE_REGISTRY = [
     "name": "Crimson Confessional",
     "title": "Crimson Confessional",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "dark",
+      "retro"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A scroll-scrubbed noir sequence. Each chapter is one word, one cryptic line, and a procedural motif drawn from scroll position. Red, black, bone, and a lot of grain.",
@@ -3616,6 +5095,24 @@ window.FEATURE_REGISTRY = [
     "name": "Dappled Canopy",
     "title": "Dappled Canopy",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "retro",
+      "light"
+    ],
+    "industry": [
+      "media",
+      "saas"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Late sun through a tree, thrown soft and warm across a plaster wall. Two layers of out-of-focus leaves sway on a slow breeze, flutter on their own and swing when a gust comes through, while the light pools in one corner and fades out across the wall. Film grain over everything. There's no text on it",
@@ -3657,6 +5154,22 @@ window.FEATURE_REGISTRY = [
     "name": "Design Process Template",
     "title": "Design Process Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A case-study page that walks through how a product was made, one phase at a time. A small eyebrow sits above a large indented headline with a round accent badge in the middle of the sentence. Below that, a short intro sits beside the team's role chips. Then each phase gets a ruled row: its share of ",
@@ -3699,6 +5212,23 @@ window.FEATURE_REGISTRY = [
     "name": "Disc Cascade Carousel",
     "title": "Disc Cascade Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "retro"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A film catalogue told in printed discs. The discs sit on a slanted line that climbs out of the page toward you. The chosen film is in the middle. The ones before it shrink away down to the left, and the next one looms large, half off the top right. When you move, the line slides, every disc rolls li",
@@ -3741,6 +5271,22 @@ window.FEATURE_REGISTRY = [
     "name": "Distressed Denim",
     "title": "Distressed Denim",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed background of hanging denim you can rip. The cloth is a real mesh of a few thousand points, gathered so it falls in soft vertical folds. Rest the pointer on it to press it in. Drag across it to tear it: the indigo warp under the stroke snaps, the cut opens under its own weight, and the ",
@@ -3782,6 +5328,22 @@ window.FEATURE_REGISTRY = [
     "name": "Dither Cumulus",
     "title": "Dither Cumulus",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A sky of pixel-art cumulus clouds, printed with an ordered (Bayer) dither in six colours: cream billows over a deep navy night, with a dithered moon that is also the light. Built as a **background**: drop content in as children and it sits on top.",
@@ -3822,7 +5384,24 @@ window.FEATURE_REGISTRY = [
     "slug": "dither-sweep-navbar",
     "name": "Dither Sweep Navbar",
     "title": "Dither Sweep Navbar",
-    "category": "Navigation & Headers",
+    "category": "Headers & Nav",
+    "legacyCategory": "Navigation & Headers",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An editorial, blueprint-styled header. Hairline-ruled cells, monospace caps, a wordmark that retracts behind its mark once the page scrolls, and a nav hover that fills each cell with a chunky left-to-right pixel dissolve.",
@@ -3865,6 +5444,23 @@ window.FEATURE_REGISTRY = [
     "name": "Dragon Seal Preloader",
     "title": "Dragon Seal Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "light",
+      "retro"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A film title card that loads, then stays on as the landing screen. Sepia paper, a lace of cloud scrolls, a bronze astrolabe, a dragon coiled round it and two hands rising out from behind the seal.",
@@ -3906,6 +5502,22 @@ window.FEATURE_REGISTRY = [
     "name": "Duotone Team Roster",
     "title": "Duotone Team Roster",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "agency"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A \"meet the people\" section for an about page, a studio site or a careers page. A heavy display headline sits bottom-left on a burning colour field. Beside it, the team hangs in tall columns of portraits that drift slowly in opposite directions. Every photo goes through one tritone (shadow, midtone,",
@@ -3948,6 +5560,22 @@ window.FEATURE_REGISTRY = [
     "name": "Earth Limb Landing",
     "title": "Earth Limb Landing",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete home page for an Earth-imaging satellite company, shown the way its own fleet sees the planet.",
@@ -3989,6 +5617,23 @@ window.FEATURE_REGISTRY = [
     "name": "Editorial Folio Template",
     "title": "Editorial Folio Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "light"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A whole portfolio laid out as a printed folio. Grey paper sheets with a fine grain sit on a soft wash of your accent colour, like prints on a desk. The display face is a high-contrast Didone, set big enough to fall off the page. Everything else is typewriter mono, with thin rules, `fig.` captions, h",
@@ -4031,6 +5676,23 @@ window.FEATURE_REGISTRY = [
     "name": "Engraved Ticket",
     "title": "Engraved Ticket",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "luxury"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A die-cut poster ticket with a heavy condensed headline that breathes. Two prints of the same stub:",
@@ -4072,6 +5734,24 @@ window.FEATURE_REGISTRY = [
     "name": "Etched Accretion",
     "title": "Etched Accretion",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "retro",
+      "dark"
+    ],
+    "industry": [
+      "fintech",
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A black hole drawn like an engraving. A tilted accretion disk made of hair-thin orbital streaks banded in crimson, a photon crown flaring off the horizon, dark nebula banks cut from contour lines, and heavy film grain over all of it. It animates, and it's meant to sit behind a hero.",
@@ -4112,6 +5792,22 @@ window.FEATURE_REGISTRY = [
     "name": "Exploded Assembly Scroll",
     "title": "Exploded Assembly Scroll",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An engineering-services page whose drawing builds itself as you scroll.",
@@ -4153,6 +5849,23 @@ window.FEATURE_REGISTRY = [
     "name": "Flashlight Text Reveal",
     "title": "Flashlight Text Reveal",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "dark"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Words written on a dark wall that you can only read where your light falls. The wall is a drifting, grainy WebGL shader. The cursor is a flashlight, and the lit patch of wall and the writing under it come up together. Take the pointer away and the light keeps searching the wall on its own.",
@@ -4194,7 +5907,24 @@ window.FEATURE_REGISTRY = [
     "slug": "flatlay-resume-board",
     "name": "Flatlay Resume Board",
     "title": "Flatlay Resume Board",
-    "category": "Galleries & Portfolios",
+    "category": "Interactions & Physics",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "portfolio",
+      "education"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A CV as a desk flat-lay, photographed from above: a creased perforated sheet, a pinned photo card, a smart-watch \"about me\", a crumpled receipt of experience with dotted leaders and a coffee ring, torn-paper education on a ruled page, a lolly-stick label over grid paper, a handwritten list, layered ",
@@ -4237,6 +5967,22 @@ window.FEATURE_REGISTRY = [
     "name": "Florilegium Template",
     "title": "Florilegium Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "saas"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A full landing page for a botanical journal and atelier, built around **one flower that never cuts**. It blooms out of the preloader, settles into the editorial hero, and every scroll step after that morphs the same mesh into the next species. Nothing is swapped or cross-faded, so the flower stays u",
@@ -4278,6 +6024,22 @@ window.FEATURE_REGISTRY = [
     "name": "Focus Pull Carousel",
     "title": "Focus Pull Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A horizontal image strip that racks focus like a camera lens. The centre picture is sharp and full size; its neighbours soften, shrink and fade by how far they sit from the middle, updating continuously as you scroll, swipe or drag.",
@@ -4320,6 +6082,22 @@ window.FEATURE_REGISTRY = [
     "name": "Folder Tab Portfolio Template",
     "title": "Folder Tab Portfolio Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete designer portfolio built from file folders: saturated blue, green, orange and pale-yellow tabs, frosted glass bodies, a wide monoline wordmark with a pill-shaped `OO`, crosshair marks and a handwritten signature. It reads like the pages of a printed portfolio deck, one rounded \"sheet\" per",
@@ -4363,6 +6141,22 @@ window.FEATURE_REGISTRY = [
     "name": "Foundation Primitives",
     "title": "Foundation Primitives",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A card of soft 3D primitives: an asterisk, a sphere, a stack of half-domes, an hourglass and an orb. They are shaded as frosted gradient gel and sit on pale plates, with a glass lens floating over them. The card holds only the shapes, with no text.",
@@ -4403,7 +6197,23 @@ window.FEATURE_REGISTRY = [
     "slug": "frosted-glass-menu",
     "name": "Frosted Glass Menu",
     "title": "Frosted Glass Menu",
-    "category": "Navigation & Headers",
+    "category": "Headers & Nav",
+    "legacyCategory": "Navigation & Headers",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "hospitality"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A quiet, membership-club navigation. A frosted glass bar unfolds in place into a full index: muted column heads, monospace caps links, a pill call-to-action, a ruled footer, and a small hand-drawn traveller who pulls a suitcase along the footer rule. He strolls while the menu is open and breaks into",
@@ -4446,6 +6256,22 @@ window.FEATURE_REGISTRY = [
     "name": "Galaxy Starfield",
     "title": "Galaxy Starfield",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed hero background: you sit inside a sphere of tens of thousands of stars, each twinkling on its own clock and flaring into a four-point diffraction cross at its peak, against a slow violet-and-teal nebula with a dusty band across the equator. The sky leans toward the pointer, turns by its",
@@ -4486,6 +6312,22 @@ window.FEATURE_REGISTRY = [
     "name": "Glass Fan Testimonials",
     "title": "Glass Fan Testimonials",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A featured-reviews section. Each quote is a white card set in a square pane of frosted glass. The panes overlap in a fan, and each one leans a little more than the one in front of it. The front pane is on the right, flat and on top, and you can see the panes behind it, softened, through its glass.",
@@ -4528,6 +6370,22 @@ window.FEATURE_REGISTRY = [
     "name": "Glass Folder Cards",
     "title": "Glass Folder Cards",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A folder you can use, drawn as a physical object. It has three layers: a back panel holding a piece of artwork, the files inside, and a frosted-glass front panel that blurs whatever sits behind it. The files are real elements between real panels, so the glass frosts them as they move.",
@@ -4569,6 +6427,22 @@ window.FEATURE_REGISTRY = [
     "name": "Glass Headline Hero",
     "title": "Glass Headline Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A hero section whose headline is thick refractive glass. A slow colour field flows behind it and bends through the letters, with prism fringes at the edges. The light follows the pointer, so the bevels catch sliding highlights and cast a short contact shadow. When nobody is pointing, the light drift",
@@ -4610,7 +6484,23 @@ window.FEATURE_REGISTRY = [
     "slug": "grid-loupe-shader",
     "name": "Grid Loupe Shader",
     "title": "Grid Loupe Shader",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A WebGL image that turns into a magnifying mosaic under the pointer. The picture is cut into a grid, and every cell near the pointer shows its own patch blown up: the closest cells flatten into single colours, the outer ones read as a ring of tiny lenses, and dots swell on the grid nodes. Move faste",
@@ -4652,7 +6542,24 @@ window.FEATURE_REGISTRY = [
     "slug": "hairline-bento-portfolio",
     "name": "Hairline Bento Portfolio",
     "title": "Hairline Bento Portfolio",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "minimal",
+      "light"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A whole link-in-bio portfolio on one sheet. Cells sit on warm paper, divided by one-pixel rules, with a stretched black display name and one inverted panel for the thing you're launching. It's minimal, but every cell does something.",
@@ -4695,6 +6602,22 @@ window.FEATURE_REGISTRY = [
     "name": "Halftone Nebula",
     "title": "Halftone Nebula",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A pixel-art night sky printed in halftone dots — crimson gas, needle-spiked sparkle stars and a dotted planet. Built as a **background**: drop content in as children and it sits on top.",
@@ -4736,6 +6659,22 @@ window.FEATURE_REGISTRY = [
     "name": "Halftone Wordmark Footer",
     "title": "Halftone Wordmark Footer",
     "category": "Footers & Endings",
+    "legacyCategory": "Footers & Endings",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "agency"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A site footer whose wordmark is set enormous and cropped by the bottom edge, printed as a field of halftone dots. Each dot is sized by how much of the letter covers its cell, so the type keeps its edges at any width. Above it sit your studio line, tracked link columns and a back-to-top link, over a ",
@@ -4777,6 +6716,22 @@ window.FEATURE_REGISTRY = [
     "name": "Hitch Cargo Landing",
     "title": "Hitch Cargo Landing",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete landing page for a modular electric cargo bike, laid out like a parts catalogue on charcoal sheets. One bare longtail frame has four mounts (rear deck, sides, front rack, power). Heavy grotesk caps, one signal colour and part-number callouts carry from the hero to the footer.",
@@ -4818,6 +6773,22 @@ window.FEATURE_REGISTRY = [
     "name": "Hoarfrost Pane",
     "title": "Hoarfrost Pane",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed background: a winter window at blue hour that frosts over as the page loads. The ice is a real phase-field crystal growth model (Kobayashi) on the GPU: six-fold dendrites nucleate on specks along the cold frame, branch, and stall where the glass is warmer, so the middle stays clear for ",
@@ -4859,6 +6830,22 @@ window.FEATURE_REGISTRY = [
     "name": "Holo Card",
     "title": "Holo Card",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A holographic foil trading card you tilt with the pointer. Four finishes, a flip, and layered parallax if you give it art.",
@@ -4900,6 +6887,23 @@ window.FEATURE_REGISTRY = [
     "name": "Holo Chrome Flow",
     "title": "Holo Chrome Flow",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "dark"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed shader of liquid chrome folding over itself, with a holographic oil-slick film riding the highlights, dark veins opening between the folds and a few sparkles caught in them. Move the pointer and the foil tilts under it — the light swings, the rainbow slides across the folds. Drag to sme",
@@ -4941,7 +6945,24 @@ window.FEATURE_REGISTRY = [
     "slug": "hover-expand-gallery",
     "name": "Hover Expand Gallery",
     "title": "Hover Expand Gallery",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio",
+      "saas"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A row of hairline-separated panels with vertical labels. Hover (or tap) one and it absorbs the free space, revealing its image; the rest stay rail-width. Below 1024px the same list becomes a vertical accordion — tapping a row opens its image above the label.",
@@ -4984,6 +7005,23 @@ window.FEATURE_REGISTRY = [
     "name": "Index List Carousel",
     "title": "Index List Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A typographic index: big numbered titles on one side, one picture on the other. Hover or tap a title and its picture wipes in over the last one — from the right going down the list, from the left going up — and the active row opens to show its caption. Stacks on small screens. Page colours follow th",
@@ -5026,6 +7064,23 @@ window.FEATURE_REGISTRY = [
     "name": "Ink Blot Carousel",
     "title": "Ink Blot Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed image carousel where the next picture spreads in like ink soaking into paper: a ragged blot blooms from where you tap, throws satellite drops and runs together until it fills the frame. An SVG mask with a turbulence filter, no WebGL.",
@@ -5068,6 +7123,22 @@ window.FEATURE_REGISTRY = [
     "name": "Ink Flow Carousel",
     "title": "Ink Flow Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An image carousel where every slide is wet paint. Move over it and the picture stirs like ink in water, then settles back. Change slides and the next one pours in as ink: a jet from the edge, or a drop where you clicked, curling into vortices as it spreads.",
@@ -5110,6 +7181,22 @@ window.FEATURE_REGISTRY = [
     "name": "Ink Orbit Features",
     "title": "Ink Orbit Features",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
@@ -5152,6 +7239,22 @@ window.FEATURE_REGISTRY = [
     "name": "Ink Orbit Hero",
     "title": "Ink Orbit Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
@@ -5194,6 +7297,22 @@ window.FEATURE_REGISTRY = [
     "name": "Ink Orbit Pricing",
     "title": "Ink Orbit Pricing",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
@@ -5236,6 +7355,24 @@ window.FEATURE_REGISTRY = [
     "name": "Ink Orbit SaaS Template",
     "title": "Ink Orbit SaaS Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "luxury",
+      "minimal"
+    ],
+    "industry": [
+      "saas",
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete monochrome landing page for an AI product. White panels sit on a hatched page, held together by thin corner brackets. In the hero is a generative ink sculpture: stippled loops caged around a glass sphere.",
@@ -5279,6 +7416,22 @@ window.FEATURE_REGISTRY = [
     "name": "Ink Orbit Testimonials",
     "title": "Ink Orbit Testimonials",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "saas"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "The testimonials section from `ink-orbit-saas-template`, standalone and unchanged: a hatched page background, a bracketed frame holding a snap-scrolling row of quote cards (star rating, drawn quote marks, greyscale portrait), an arrows-and-dots pager, and a marquee of customer names, each with a gen",
@@ -5321,6 +7474,22 @@ window.FEATURE_REGISTRY = [
     "name": "Iris Folio Template",
     "title": "Iris Folio Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete graphic-design portfolio drawn like a gouache cover. A swash **PORTFOLIO** wordmark in sky blue sits over a band of sunrise sky. Heart-shaped leaves spill past its edges, an art-nouveau vine frames a white iris, petals drift and sparkles glint. The cover carries your name in your own scri",
@@ -5363,6 +7532,24 @@ window.FEATURE_REGISTRY = [
     "name": "Isoline Bloom",
     "title": "Isoline Bloom",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "dark",
+      "minimal"
+    ],
+    "industry": [
+      "saas",
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A living, lobed shape drawn only by its contour lines — neon hairlines flowing outward from an indigo core, violet on one side, magenta through the middle, ember red on the other. Move over it and the lines bulge around your pointer and the whole figure leans toward you; move fast and the rings pump",
@@ -5404,6 +7591,23 @@ window.FEATURE_REGISTRY = [
     "name": "Isometric Lift Carousel",
     "title": "Isometric Lift Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A minimal 3D photo carousel. Portrait photos stand on edge in a tilted row, seen from above and to the side like cards in a file box. The chosen photo widens and lifts out of the row on a spring. A small glass pill underneath holds prev, the dots and next.",
@@ -5446,6 +7650,22 @@ window.FEATURE_REGISTRY = [
     "name": "Kamm Trek Landing",
     "title": "Kamm Trek Landing",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "hospitality"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete landing page for a company that runs guided hut-to-hut treks, drawn as a Swiss topographic map that has come to life.",
@@ -5487,6 +7707,22 @@ window.FEATURE_REGISTRY = [
     "name": "Keycap Orb",
     "title": "Keycap Orb",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "luxury"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A ball of mechanical keycaps floating over a cobalt floor glow. Ink, ash, cobalt and lime caps in plastic, clear glass caps with the stem showing through, engraved legends, and the whole thing mirrored in the floor.",
@@ -5528,6 +7764,22 @@ window.FEATURE_REGISTRY = [
     "name": "Kiln Wordmark Footer",
     "title": "Kiln Wordmark Footer",
     "category": "Footers & Endings",
+    "legacyCategory": "Footers & Endings",
+    "status": "draft",
+    "mood": [
+      "dark"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A brick-red closing panel for a manufacturer with a sense of its own history. A two-line uppercase motto sits top left, a dark back-to-top key top right, then three columns (address, navigation, follow), a giant lowercase wordmark, and a legal bar in an outlined pill.",
@@ -5569,6 +7821,22 @@ window.FEATURE_REGISTRY = [
     "name": "Lanyard Badge",
     "title": "Lanyard Badge",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An event badge hanging from a patterned lanyard. Two strands come down from above the frame, meet at a side-release buckle, and a short strap and ring hold the card. Drag the card and the strap pulls taut; flick it sideways and it spins on the ring; tap it, press Enter, or use the **Show back** butt",
@@ -5610,6 +7878,22 @@ window.FEATURE_REGISTRY = [
     "name": "Lens Zoom Carousel",
     "title": "Lens Zoom Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed image carousel where the next picture lands like a fast zoom pull: out of a soft, magnified blur with two fading ghost copies trailing it, while the old picture falls back. Going back zooms out instead of in.",
@@ -5652,6 +7936,24 @@ window.FEATURE_REGISTRY = [
     "name": "Lilac Dusk Canopy",
     "title": "Lilac Dusk Canopy",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "light",
+      "futuristic"
+    ],
+    "industry": [
+      "saas",
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "[Dappled Canopy](../dappled-canopy/README.md) set to its `lilac-dusk` preset by default: dusk light on a violet wall: coral sun, plum shadows. Same shader, props and interaction. Move across it to push the leaves, click for a gust. Every other preset still works through `preset`.",
@@ -5694,6 +7996,22 @@ window.FEATURE_REGISTRY = [
     "name": "Lilac Meadow Landing",
     "title": "Lilac Meadow Landing",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "luxury"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete landing-page template for a yield-bearing stablecoin, in a soft \"money grows\" art direction: chrome coins half buried in a meadow of tiny lilac flowers under a pale lavender sky. The page continues in the same hand: a \"what is it\" statement, three feature cards (a coneflower growing besid",
@@ -5736,6 +8054,24 @@ window.FEATURE_REGISTRY = [
     "name": "Long Exposure Agency Template",
     "title": "Long Exposure Agency Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "futuristic"
+    ],
+    "industry": [
+      "portfolio",
+      "agency"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete automation-agency site in one component, full screen and edge to edge: a pale page with a quiet serif, ink buttons and soft grey cards. Every picture is a long-exposure blur of a landscape that was never photographed, drawn live in WebGL.",
@@ -5779,6 +8115,22 @@ window.FEATURE_REGISTRY = [
     "name": "Longhand Notes Landing",
     "title": "Longhand Notes Landing",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete landing page for a handwritten-notes service, where robots write your cards with real pens. It is drawn in one line-art language: ribbed tubes, coral motor housings, teal joints and coral dashed flight paths, on grey paper and white card.",
@@ -5819,7 +8171,23 @@ window.FEATURE_REGISTRY = [
     "slug": "loyly-sauna-landing",
     "name": "Löyly Sauna Landing",
     "title": "Löyly Sauna Landing",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "hospitality"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete landing page for a public sauna and cold plunge, printed in two inks. A cool white grid sheet, one Swiss grotesk and a halftone screen in safety orange and black: **orange is heat, black is cold**. *Löyly* is the Finnish word for the steam that rises when water hits hot stones.",
@@ -5862,6 +8230,22 @@ window.FEATURE_REGISTRY = [
     "name": "Lunar Boarding Pass",
     "title": "Lunar Boarding Pass",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A two-sided ticket to the Moon: a black **VIP pass** on the front, a silver **boarding pass** with a perforated stub on the back.",
@@ -5904,6 +8288,23 @@ window.FEATURE_REGISTRY = [
     "name": "Lycoris Specimen",
     "title": "Lycoris Specimen",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "luxury",
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A scroll-scrubbed type specimen built around one object: a red chrome spider lily, modelled procedurally and lit in raw WebGL. Six frames, one continuous camera move:",
@@ -5945,6 +8346,22 @@ window.FEATURE_REGISTRY = [
     "name": "Magic Hour",
     "title": "Magic Hour",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A scroll-scrubbed video. Scroll owns the timeline — nothing autoplays. Scroll progress maps to a target frame, a critically-damped chase with a speed cap follows it, and the integer frame is written to `video.currentTime` with seeks serialized so fast flicks skim instead of queueing a backlog of dec",
@@ -5986,6 +8403,24 @@ window.FEATURE_REGISTRY = [
     "name": "Maroon Fintech Landing",
     "title": "Maroon Fintech Landing",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "dark",
+      "light"
+    ],
+    "industry": [
+      "fintech",
+      "saas"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A complete finance-SaaS landing page in one component. A maroon frame holds a cream hero where a sage-green device sits at the centre of a circuit board, with live expense and income cards at its feet. Below, a dark section reads like a statement of intent, then a satin-lit feature panel shows the p",
@@ -6027,6 +8462,23 @@ window.FEATURE_REGISTRY = [
     "name": "Mascot Portfolio Hero",
     "title": "Mascot Portfolio Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "playful"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed portfolio poster: a one-point-perspective grid room, a stacked display headline (`2026 ↘ UI / PORTFOLIO / DESIGN / WORK(S)*`) with a looping swash, a vertical tag and bracket arcs, a split \"Seeking / UI · Graphic\" pill, a doodled flower and arrow, a services row — and a 3D-style mascot ",
@@ -6069,6 +8521,24 @@ window.FEATURE_REGISTRY = [
     "name": "Meridian Mist",
     "title": "Meridian Mist",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "light",
+      "retro"
+    ],
+    "industry": [
+      "saas",
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A grainy cobalt mesh gradient under a drafting overlay: sky blue catching the top-left corner, a royal bloom in the middle, navy pooling into the bottom-left and slate grey everywhere the light doesn't reach. On top sit hairline guides (two columns, a few rows, and a pair of large overlapping circle",
@@ -6110,6 +8580,22 @@ window.FEATURE_REGISTRY = [
     "name": "Mono Contrast Preloader",
     "title": "Mono Contrast Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A crushed black-and-white luminance grade at 2.2x contrast, over soft archival footage whose 480p grain the treatment reads as film rather than as a defect.",
@@ -6151,7 +8637,23 @@ window.FEATURE_REGISTRY = [
     "slug": "morph-gallery",
     "name": "Morph Gallery",
     "title": "Morph Gallery",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A photo gallery whose slides dissolve into each other through noise instead of cutting or cross-fading. Arrows, thumbnails, keyboard, swipe and autoplay.",
@@ -6193,6 +8695,22 @@ window.FEATURE_REGISTRY = [
     "name": "Murmuration Wordmark",
     "title": "Murmuration Wordmark",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "dark"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Thousands of starlings over a dusk sky. The flock rolls and folds the way a real murmuration does, in thin ribbons and dense dark knots, driven by a slow curl-noise current and a wandering centre of gravity. Every few seconds it converges, bird by bird, into your word, holds it, and scatters again.",
@@ -6234,6 +8752,22 @@ window.FEATURE_REGISTRY = [
     "name": "Neon Katakana Preloader",
     "title": "Neon Katakana Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "dark"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A cyberpunk title-card loading gate. The word is **ウィンドウ** (\"window\"), and the gate opens like one.",
@@ -6276,6 +8810,22 @@ window.FEATURE_REGISTRY = [
     "name": "Noise Dissolve Reveal",
     "title": "Noise Dissolve Reveal",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A sheet of colour covering your content, which dissolves along a fractal-noise threshold. Holes nucleate, spread into ragged islands, and merge until the page underneath is bare. The edges are fibrous rather than clean, so it reads as paper tearing or ink bleeding, not as a wipe or a fade.",
@@ -6318,6 +8868,22 @@ window.FEATURE_REGISTRY = [
     "name": "Odometer Stage Stats",
     "title": "Odometer Stage Stats",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A \"by the numbers\" section that puts one figure on stage at a time: a committed colour field, one enormous condensed numeral in the middle, the line that explains it underneath, a short story pinned to alternating corners, and the stat's key word set huge and faint along the bottom edge.",
@@ -6360,6 +8926,22 @@ window.FEATURE_REGISTRY = [
     "name": "Onward Summit Template",
     "title": "Onward Summit Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete one-day event page in one component. The hero runs from navy down to white and is filled with tiny arrows that lean away from the pointer, ripple out from a click and shimmer on their own, clearing a space around the event's name. Below it, on white, come seven sections: what to expect, a",
@@ -6402,6 +8984,22 @@ window.FEATURE_REGISTRY = [
     "name": "Onyx Glyph Preloader",
     "title": "Onyx Glyph Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "dark"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A cinematic loading gate in sandblasted black metal.",
@@ -6444,6 +9042,22 @@ window.FEATURE_REGISTRY = [
     "name": "Open Slot Booking",
     "title": "Open Slot Booking",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "hospitality"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A \"book a call\" section that does the booking itself. A heavy two-tone headline sits over a quiet scheduler window on a tilted colour slab. Inside the window are the host's stamp, a choice of call lengths, and a timezone-aware week of open slots. Picking a slot grows it into a confirm card (name, em",
@@ -6486,6 +9100,23 @@ window.FEATURE_REGISTRY = [
     "name": "Paper Curl Carousel",
     "title": "Paper Curl Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "light",
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An image carousel where every slide is a printed sheet. Drag its edge, click, or press an arrow and the sheet rolls over a cylinder, shows the paper stock on its back, and lays a shadow across the sheet underneath.",
@@ -6528,6 +9159,23 @@ window.FEATURE_REGISTRY = [
     "name": "Particle Dissolve Carousel",
     "title": "Particle Dissolve Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "retro"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An image carousel made of dust. Change slides and the picture comes apart: a wave crosses it, every grain lifts off carrying its own colour, rides a drifting flow field, then turns and settles back into place as a grain of the next picture. At rest the picture keeps shedding a little dust, and a fli",
@@ -6570,6 +9218,22 @@ window.FEATURE_REGISTRY = [
     "name": "Perforated Stripe Curtain",
     "title": "Perforated Stripe Curtain",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A curtain of punched-tape strips hung in front of a picture. Idle, the strips hang grey and ragged over a dimmed image, with a play button. Move over it and the strips part around the pointer like a bead curtain, hinged at the top. Press play: the music starts, the strips turn to your colour, the pi",
@@ -6612,6 +9276,23 @@ window.FEATURE_REGISTRY = [
     "name": "Phosphor CRT 404",
     "title": "Phosphor CRT 404",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "retro"
+    ],
+    "industry": [
+      "media",
+      "saas"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-screen \"page not found\" on a pink-phosphor tube. The whole component is the glass: an eyebrow between double rules, a chunky extruded error code ringed by bobbing music notes, a message between two beating hearts, and a pyramid between palm trees and drifting clouds, lit as round phosphor dot",
@@ -6653,7 +9334,23 @@ window.FEATURE_REGISTRY = [
     "slug": "pigment-experience-ledger",
     "name": "Pigment Experience Ledger",
     "title": "Pigment Experience Ledger",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An \"Experience\" section for a portfolio, résumé or about page. Each employer is a huge right-aligned wordmark with its years in italics on the left. A row opens in place to show the position, location, industry, a link, a short story and skill tags. Point at a row and a wash of pigment blooms behind",
@@ -6696,6 +9393,24 @@ window.FEATURE_REGISTRY = [
     "name": "Pinboard Portfolio Hero",
     "title": "Pinboard Portfolio Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "light",
+      "editorial"
+    ],
+    "industry": [
+      "portfolio",
+      "agency"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed portfolio hero drawn as a lit studio wall: a stamped `PORT` / `FOLIO` lockup with the lower line mirrored on its baseline, two cut-out portraits breaking out of the letters, hand-lettered service labels, and pinned paper joined by red floss.",
@@ -6738,6 +9453,22 @@ window.FEATURE_REGISTRY = [
     "name": "Pixel Park Template",
     "title": "Pixel Park Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete one-page site for a small New York company, told in pixel art. A moonlit park meadow sits under a floating glass nav, with the company name and a frosted mission card over it. Below that come a manifesto, a signed letter with a postage stamp, a careers card over a skyline and lake, contac",
@@ -6780,6 +9511,22 @@ window.FEATURE_REGISTRY = [
     "name": "Plumb Payroll Template",
     "title": "Plumb Payroll Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "fintech"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete construction-payroll landing page in one component, laid out on a drafting grid: hairline rails run down the page, dashed guides run out past them, and every block is boxed in by its own rules.",
@@ -6822,6 +9569,23 @@ window.FEATURE_REGISTRY = [
     "name": "Pocket Portfolio",
     "title": "Pocket Portfolio",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A minimal, card-stacked one-page portfolio template. White rounded cards on a soft grey page, a pill nav, one hot accent colour.",
@@ -6863,6 +9627,23 @@ window.FEATURE_REGISTRY = [
     "name": "Polaroid Line Carousel",
     "title": "Polaroid Line Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "light",
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "Instant photos pegged to a sagging string. Drag the line and the prints slide along it, swinging on their pegs with the speed you give them and settling back; at rest they sway in a light breeze. Click a print to bring it to the middle. Page colours follow the theme tokens.",
@@ -6905,6 +9686,23 @@ window.FEATURE_REGISTRY = [
     "name": "Polaroid Zine Hero",
     "title": "Polaroid Zine Hero",
     "category": "Heroes",
+    "legacyCategory": "Heroes",
+    "status": "draft",
+    "mood": [
+      "light",
+      "playful"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An editorial zine page as a hero: a cream sheet with a taped typewritten slip, a centre print whose subject is cut out of its own frame, five pinned snapshots, a handwritten line running over the print, and a justified typewriter column. The page dots and the edge arrow are real carousel controls, n",
@@ -6947,6 +9745,23 @@ window.FEATURE_REGISTRY = [
     "name": "Postmark CTA",
     "title": "Postmark CTA",
     "category": "Buttons & UI",
+    "legacyCategory": "Buttons & UI",
+    "status": "draft",
+    "mood": [
+      "retro",
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "The closing call to action of a landing page: the last block before the footer. A heavy two-line headline, one primary button and a quiet secondary link sit on a halftone field, with a loose collection of postage stamps scattered around them.",
@@ -6987,6 +9802,23 @@ window.FEATURE_REGISTRY = [
     "name": "Prism Comet Preloader",
     "title": "Prism Comet Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "light"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A cinematic loading gate built like a motion designer's effects stack, with the load progress as the interpolation slider. Every frame is one WebGL shader, and each stage is the same light bent into a new shape. Nothing cross-fades between pictures.",
@@ -7029,6 +9861,23 @@ window.FEATURE_REGISTRY = [
     "name": "Quiet Portfolio Template",
     "title": "Quiet Portfolio Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "minimal",
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete, minimal personal site in one component: calm type, generous whitespace, one accent colour, and a lot of small interactions that only show up when you reach for them.",
@@ -7071,6 +9920,22 @@ window.FEATURE_REGISTRY = [
     "name": "Raked Sand Garden",
     "title": "Raked Sand Garden",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed karesansui gravel bed seen from above under a low sun. The gravel is a real heightfield. Parallel furrows run across the bed, concentric rings go round each group of stones, and moss sits at the stones' feet. Every furrow is lit per pixel and casts its own shadow, so the pattern shows u",
@@ -7113,6 +9978,22 @@ window.FEATURE_REGISTRY = [
     "name": "Rangoli Preloader",
     "title": "Rangoli Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "luxury"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A loading screen drawn in coloured powder on a red-oxide floor. As your page loads, a rangoli pours itself from the centre outward, every fold at once: a turmeric core, two rings of lotus petals, rice-flour kolam dots, marigold petals with green leaves between them, an indigo band with a zigzag, sca",
@@ -7154,6 +10035,22 @@ window.FEATURE_REGISTRY = [
     "name": "RGB Glitch Carousel",
     "title": "RGB Glitch Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed image carousel that cuts between pictures with a signal glitch: for a split second the picture tears into horizontal bands and its red, green and blue channels slide apart, then it snaps back as the next picture. Canvas 2D, no WebGL.",
@@ -7196,6 +10093,23 @@ window.FEATURE_REGISTRY = [
     "name": "Scanline Bloom",
     "title": "Scanline Bloom",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "light",
+      "retro"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A bouquet of lilies and roses printed in red on black paper, the way a cheap risograph or a dying CRT would do it: ragged horizontal scanlines that thicken with the light, a stipple dither that takes over toward the bottom, paper grain, and a thin frame behind it all.",
@@ -7237,6 +10151,22 @@ window.FEATURE_REGISTRY = [
     "name": "Seam History Timeline",
     "title": "Seam History Timeline",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "The \"Our story\" section of an about page: a company's milestones as wide photo cards running off the right edge of the section. Each card is a photo over a title and a sentence or two. Neighbouring cards meet on a **slanted seam**: real `clip-path` parallelograms that share one angle, with rounded c",
@@ -7279,6 +10209,22 @@ window.FEATURE_REGISTRY = [
     "name": "Shutter Blinds Carousel",
     "title": "Shutter Blinds Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed image carousel where the next picture swings in on horizontal slats, like blinds tilting open one after another, while the old picture dims behind them. Forward runs the slats top to bottom, back runs them bottom to top.",
@@ -7321,6 +10267,23 @@ window.FEATURE_REGISTRY = [
     "name": "Shutter Glyph Footer",
     "title": "Shutter Glyph Footer",
     "category": "Footers & Endings",
+    "legacyCategory": "Footers & Endings",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "agency",
+      "saas"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A signal-orange closing section set in monospace caps, with the brand drawn across the full width in a geometric display alphabet. One letter is swapped for a **shutter**: three black blades that meet at a pivot, and the pivot turns to follow the pointer.",
@@ -7362,6 +10325,23 @@ window.FEATURE_REGISTRY = [
     "name": "Sidebar Portfolio Template",
     "title": "Sidebar Portfolio Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "minimal"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete one-page portfolio in a single file. It's quiet and minimal: warm paper, serif headings, one accent colour. A profile sidebar sticks on the left, and the reading column holds everything else:",
@@ -7404,6 +10384,22 @@ window.FEATURE_REGISTRY = [
     "name": "Silhouette Wrap",
     "title": "Silhouette Wrap",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A paragraph that parts around a falling silhouette, follows its **actual outline** — a keyhole's waist, a bottle's neck — and closes back up underneath. Scroll and the shape drops through the column; every line is set again.",
@@ -7445,6 +10441,22 @@ window.FEATURE_REGISTRY = [
     "name": "Singularity Horizon",
     "title": "Singularity Horizon",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A black hole with a live accretion disk, cycling through named states — nominal, turbulent, collapsing — with a relativistic HUD over it. Drag to orbit.",
@@ -7486,6 +10498,22 @@ window.FEATURE_REGISTRY = [
     "name": "Slat Count Preloader",
     "title": "Slat Count Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A Swiss-poster loading gate built out of black slats on vermilion.",
@@ -7528,6 +10556,22 @@ window.FEATURE_REGISTRY = [
     "name": "Slit Type FAQ",
     "title": "Slit Type FAQ",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A frequently-asked-questions section set in one ink on one paper. The display headline is cut by a hard horizontal slit: its capitals rise into the slit as the section scrolls in and rest there, cut through, like a stencil pulled before the print is finished. Hovering the headline lifts the letters ",
@@ -7570,6 +10614,22 @@ window.FEATURE_REGISTRY = [
     "name": "Spotlight Offer Quiz",
     "title": "Spotlight Offer Quiz",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "agency"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "The discount popup that asks one good question first. A spotlit studio stage on the right, a huge offer, one personal question and a stack of answer pills. At rest the stage shows the line-up: every answer that has a photo stands side by side in a tall column under one beam. Pointing at an answer pu",
@@ -7612,6 +10672,23 @@ window.FEATURE_REGISTRY = [
     "name": "Staircase Carousel",
     "title": "Staircase Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "minimal"
+    ],
+    "industry": [
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A minimal photo carousel laid out as a staircase. The chosen photo sits level at full size, with its title beside it. Every photo before it steps up a whole storey and every photo after it steps down one, each shrunk to 80%. When you move, the strip slides along on a spring, the photos ease up or do",
@@ -7653,6 +10730,22 @@ window.FEATURE_REGISTRY = [
     "name": "Starburst Thanks Footer",
     "title": "Starburst Thanks Footer",
     "category": "Footers & Endings",
+    "legacyCategory": "Footers & Endings",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A \"thank you for your time\" sign-off for the end of a portfolio, case study or deck. It has heavy extended caps, a hand-lettered line underneath, a loose pen loop around both, and a hot-pink starburst. Contact pills sit at the bottom, with little pointing hands under the links. The background is dar",
@@ -7695,6 +10788,22 @@ window.FEATURE_REGISTRY = [
     "name": "Stardust Stage Preloader",
     "title": "Stardust Stage Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A cinematic loading gate in black-and-white stipple. A lone star in a pixel-art cosmos turns into a moonlit theatre stage, and every dot on screen moves in that change.",
@@ -7737,6 +10846,23 @@ window.FEATURE_REGISTRY = [
     "name": "Stencil Labs Template",
     "title": "Stencil Labs Template",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "light",
+      "minimal"
+    ],
+    "industry": [
+      "agency"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "template",
     "description": "A complete studio / incubator site on one hairline grid. The page is cool grey paper with monospace text, orange chamfered buttons, and display type in a stencil face that is drawn in the file. Empty spacer rows between sections let the column rules run through the page.",
@@ -7779,6 +10905,22 @@ window.FEATURE_REGISTRY = [
     "name": "Stepped Morph Slider",
     "title": "Stepped Morph Slider",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An image slider whose window is a stepped, skyline-like mask. Each slide has its own blocky shape; moving to the next one morphs the mask column by column — a left-to-right stagger — while the picture cross-fades and drifts. Hover lifts the column under the pointer.",
@@ -7821,6 +10963,24 @@ window.FEATURE_REGISTRY = [
     "name": "Sticker Hello Portfolio",
     "title": "Sticker Hello Portfolio",
     "category": "Full Templates",
+    "legacyCategory": "Full Templates",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "playful"
+    ],
+    "industry": [
+      "portfolio",
+      "saas"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A whole designer portfolio template with a sense of humour. A huge condensed serif says *\"Hi, I'm Juniper.\"*, and two sticker puns are slapped on it. The rest is a stack of case studies, a sticker sheet to play with, an about page and a footer that wants to hear from you.",
@@ -7863,6 +11023,23 @@ window.FEATURE_REGISTRY = [
     "name": "Sunlit Cutting Mat",
     "title": "Sunlit Cutting Mat",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "light",
+      "futuristic"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An animated WebGL background: a green self-healing cutting mat on a desk by a window. Sunlight falls across it through a slatted blind and past foliage outside: soft, straight diagonal bands broken up by blurred leaf shadows, drifting slowly. The light is blocked, not refracted, so nothing ripples.",
@@ -7905,6 +11082,24 @@ window.FEATURE_REGISTRY = [
     "name": "Ticket Stub Footer",
     "title": "Ticket Stub Footer",
     "category": "Footers & Endings",
+    "legacyCategory": "Footers & Endings",
+    "status": "draft",
+    "mood": [
+      "dark",
+      "retro"
+    ],
+    "industry": [
+      "agency",
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A dark, hairline-ruled closing section for an ops product, with the brand printed on an orange ticket.",
@@ -7946,6 +11141,23 @@ window.FEATURE_REGISTRY = [
     "name": "Tiger Tear Reveal",
     "title": "Tiger Tear Reveal",
     "category": "Interactions & Physics",
+    "legacyCategory": "Interactions & Physics",
+    "status": "draft",
+    "mood": [
+      "light",
+      "editorial"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A scroll-driven poster hero. The page starts as a plain slogan: a small tagline over one huge red word. Scroll, and a crack runs out from the middle of the word, the sheet rips in two along it, and the halves pull apart: the top lifts, the bottom drops, each tipping like real paper, with white torn ",
@@ -7987,6 +11199,22 @@ window.FEATURE_REGISTRY = [
     "name": "Tile Scrollbar",
     "title": "Tile Scrollbar",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "dark"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A scrollbar built out of tiles on a tilted tray. The page is cut into equal slices, one tile each; tiles behind you press flat and darken, the one you are in stands proud and fills left to right, and a dot marks the tile where each section begins. Click a tile to jump, drag across the tray to scrub,",
@@ -8028,6 +11256,23 @@ window.FEATURE_REGISTRY = [
     "name": "Tilt Cascade Carousel",
     "title": "Tilt Cascade Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A minimal photo carousel. Square photos sit on a slanted line. The one in front is upright at full size. Each photo after it drops down and to the right, turns clockwise and shrinks, and each photo before it climbs up and to the left the other way. When you move through them, the line slides along a",
@@ -8070,6 +11315,23 @@ window.FEATURE_REGISTRY = [
     "name": "Title Sequence Preloader",
     "title": "Title Sequence Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "luxury"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A page gate cut like the opening titles of a design conference. While your page loads, a monochrome reel plays shot after shot, and every shot credits your people on leader lines, each in its own typographic voice. When the load hits 100, a rocket lifts off through the clouds. The clouds rise over t",
@@ -8111,7 +11373,25 @@ window.FEATURE_REGISTRY = [
     "slug": "torn-postcard-portfolio",
     "name": "Torn Postcard Portfolio",
     "title": "Torn Postcard Portfolio",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "light"
+    ],
+    "industry": [
+      "portfolio",
+      "hospitality"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A whole personal site told as a winter travel journal. Five full-screen chapters sit in one pinned stage, and scrolling **tears the page open**: the chapter you're on rips along a ragged paper seam, the top half lifts away, the bottom half drops, and the next chapter pops up out of the gap with its ",
@@ -8154,6 +11434,22 @@ window.FEATURE_REGISTRY = [
     "name": "Type Remix Preloader",
     "title": "Type Remix Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A loading gate for a designer's portfolio. While the page loads, one word (`PORTFOLIO` by default) is re-typeset through seven cover treatments, each wiping over the last as the count climbs:",
@@ -8196,6 +11492,22 @@ window.FEATURE_REGISTRY = [
     "name": "Velocity Reel",
     "title": "Velocity Reel",
     "category": "Scroll & Parallax",
+    "legacyCategory": "Scroll & Parallax",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A scroll-scrubbed cinematic title sequence. Ten shots on one canvas: a rim-lit face, an archer drawing, an arrow through glass, a blade through what is left of it, a fly-through of the shards, then a jet, a supercar and a formula car tearing out of the debris on red light, a burst, and an emblem.",
@@ -8237,6 +11549,23 @@ window.FEATURE_REGISTRY = [
     "name": "Velvet Haze",
     "title": "Velvet Haze",
     "category": "Audio & Shaders",
+    "legacyCategory": "Audio & Shaders",
+    "status": "draft",
+    "mood": [
+      "retro",
+      "dark"
+    ],
+    "industry": [
+      "media"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "An out-of-focus light leak on grainy black film: a silver haze high on the left, violet bleeding in at the top right, a warm ember between them, and two shadows cutting it — a silk fold that sweeps the light off the bottom of the frame and a dark mass curling in from the right. Film grain re-rolls a",
@@ -8278,6 +11607,23 @@ window.FEATURE_REGISTRY = [
     "name": "Viewfinder Flip Carousel",
     "title": "Viewfinder Flip Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A minimal photo carousel built around a viewfinder frame. Only the photo in the frame lies flat. Every other photo is folded away on its side, turned a quarter round and tipped back in perspective, so the strip reads as a thin stack of edges on either side. Moving opens the next photo out of the sta",
@@ -8320,6 +11666,23 @@ window.FEATURE_REGISTRY = [
     "name": "Vinyl Halftone Preloader",
     "title": "Vinyl Halftone Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "retro",
+      "editorial"
+    ],
+    "industry": [
+      "portfolio"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A loading gate for a portfolio, printed like a record sleeve in two inks. A giant record sits on the left with your name on its label, and a halftone starburst throbs on the right in time with the tempo. While the page loads:",
@@ -8362,6 +11725,22 @@ window.FEATURE_REGISTRY = [
     "name": "Water Ripple Carousel",
     "title": "Water Ripple Carousel",
     "category": "3D & Carousels",
+    "legacyCategory": "3D & Carousels",
+    "status": "draft",
+    "mood": [
+      "futuristic"
+    ],
+    "industry": [
+      "saas"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A full-bleed image carousel where tapping drops a ripple: a ring of bending water spreads from the tap, refracting the old picture at its edge, with the next picture inside it. One WebGL fragment shader. Off-origin images need CORS; without WebGL (or CORS) it simply cuts.",
@@ -8403,7 +11782,25 @@ window.FEATURE_REGISTRY = [
     "slug": "waving-portfolio-landing",
     "name": "Waving Portfolio Landing",
     "title": "Waving Portfolio Landing",
-    "category": "Galleries & Portfolios",
+    "category": "Galleries & Bento",
+    "legacyCategory": "Galleries & Portfolios",
+    "status": "draft",
+    "mood": [
+      "editorial",
+      "light"
+    ],
+    "industry": [
+      "portfolio",
+      "media"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A red-on-paper poster landing page with a cinematic intro. The poster reads as two rows of tall condensed capitals sharing one giant letter: **P [O] RT / F [O] LIO**, with an ink-drawn character leaning out of the gap.",
@@ -8446,6 +11843,23 @@ window.FEATURE_REGISTRY = [
     "name": "Weight Sweep Preloader",
     "title": "Weight Sweep Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "futuristic",
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A type-specimen loading gate. The whole page is one giant counter set in a variable grotesk, and as the load climbs from `000` to `100` the numerals thicken from hairline to black. The weight axis is the progress bar. A specimen HUD reads out the live weight, a tick rail fills under the top rule, an",
@@ -8488,6 +11902,22 @@ window.FEATURE_REGISTRY = [
     "name": "Wirebound Inquiry",
     "title": "Wirebound Inquiry",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "light"
+    ],
+    "industry": [
+      "agency"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A contact section for a studio, agency or freelancer, built as a wire-bound notebook. Closed, the kraft cover is already a contact card: your name printed big, a highlighter band that opens the brief, your email and socials written on the cover lines. Open it and the project inquiry is one question ",
@@ -8529,6 +11959,23 @@ window.FEATURE_REGISTRY = [
     "name": "Wordmark Newsletter Signup",
     "title": "Wordmark Newsletter Signup",
     "category": "Cards & Tiles",
+    "legacyCategory": "Cards & Tiles",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "agency",
+      "ecommerce"
+    ],
+    "weight": "medium",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A newsletter signup for a brand that is loud about its name. Your wordmark fills the field edge to edge in heavy condensed capitals, cropped by the section like a shop sign, and a hard-bordered card sits on top with the form. When someone signs up, the wordmark letters drop out one by one and your c",
@@ -8571,6 +12018,22 @@ window.FEATURE_REGISTRY = [
     "name": "Zero Melt Preloader",
     "title": "Zero Melt Preloader",
     "category": "Preloaders & Shaders",
+    "legacyCategory": "Preloaders & Shaders",
+    "status": "draft",
+    "mood": [
+      "minimal"
+    ],
+    "industry": [
+      "general"
+    ],
+    "weight": "heavy",
+    "needsAssets": false,
+    "origin": {
+      "source": "21st.dev",
+      "license": "unverified"
+    },
+    "updatedAt": "2026-10-22",
+    "customizable": [],
     "source": "21st.dev",
     "type": "component",
     "description": "A page gate with no enter button. A sheet of ice wipes down over the surface while a counter runs to zero, then you **melt your way in by tracing a circle**. Get the shape right and the screen blows out to white, pays you, and lifts.",

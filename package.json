@@ -9,6 +9,11 @@
   },
   "scripts": {
     "start": "node scripts/serve.js",
+    "sync": "node scripts/sync-registry.js",
+    "verify": "node tests/verify-registry.js",
+    "new-feature": "node scripts/new-feature.js",
+    "check-features": "node scripts/check-features.js",
+    "thumbs": "node scripts/make-thumbs.js",
     "test": "node tests/test-builder-integration.js"
   },
   "keywords": [],

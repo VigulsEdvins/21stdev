@@ -1,7 +1,7 @@
 {
   "name": "Portfolio Masonry Filter & Project Lightbox",
   "slug": "portfolio-masonry-filter",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "mom",
   "type": "component",
   "description": "Filterable multi-column photography portfolio masonry with category pills, live count badges, hover metadata overlays, and click-to-expand project modal.",
@@ -21,5 +21,22 @@
   "dependencies": [
     "vanilla-js"
   ],
-  "order": 31
+  "order": 31,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "light",
+    "editorial"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "mom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

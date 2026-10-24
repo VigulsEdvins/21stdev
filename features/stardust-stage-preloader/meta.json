@@ -25,5 +25,21 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 231
+  "order": 231,
+  "legacyCategory": "Preloaders & Shaders",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "media"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

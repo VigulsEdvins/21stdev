@@ -8,6 +8,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { CATEGORIES, validateMeta } = require('./schema');
 
 /**
  * Safely combines standalone HTML, CSS, and JS into a single self-contained HTML string.
@@ -63,6 +64,11 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
     if (!fs.existsSync(metaPath)) continue;
 
     const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+    meta.slug = meta.slug || slug;
+    const problems = validateMeta(meta);
+    if (problems.length) {
+      console.warn(`⚠ features/${slug}/meta.json: ${problems.join('; ')}`);
+    }
     const htmlPath = path.join(dirPath, 'index.html');
     const cssPath = path.join(dirPath, 'style.css');
     const jsPath = path.join(dirPath, 'script.js');
@@ -105,6 +111,15 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       name: displayName,
       title: displayName,
       category: meta.category || 'Components',
+      legacyCategory: meta.legacyCategory || null,
+      status: meta.status || 'stable',
+      mood: Array.isArray(meta.mood) ? meta.mood : [],
+      industry: Array.isArray(meta.industry) ? meta.industry : [],
+      weight: meta.weight || 'light',
+      needsAssets: !!meta.needsAssets,
+      origin: meta.origin || null,
+      updatedAt: meta.updatedAt || null,
+      customizable: Array.isArray(meta.customizable) ? meta.customizable : [],
       source: meta.source || 'custom',
       type: meta.type || 'component', // 'component' | 'template'
       description: meta.description || '',
@@ -139,12 +154,21 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
     generatedAt: new Date().toISOString(),
     vaultRoot: '/home/edvins/features-for-web/web-for-options',
     totalFeatures: items.length,
-    categories: [...new Set(items.map((i) => i.category))],
+    categories: CATEGORIES.filter((c) => items.some((i) => i.category === c)),
     sources: [...new Set(items.map((i) => i.source))],
     items: items.map((item) => ({
       slug: item.slug,
       title: item.title,
       category: item.category,
+      legacyCategory: item.legacyCategory,
+      status: item.status,
+      mood: item.mood,
+      industry: item.industry,
+      weight: item.weight,
+      needsAssets: item.needsAssets,
+      origin: item.origin,
+      updatedAt: item.updatedAt,
+      customizable: item.customizable,
       source: item.source,
       type: item.type,
       description: item.description,

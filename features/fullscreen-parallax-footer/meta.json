@@ -17,6 +17,24 @@
     "CSS Transitions",
     "Cursor Tracking"
   ],
-  "dependencies": [],
-  "order": 16
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 16,
+  "legacyCategory": "Footers & Endings",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "vivmgmt",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

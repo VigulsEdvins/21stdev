@@ -1,7 +1,7 @@
 {
   "name": "Morphing Burger & Staggered Overlay Menu",
   "slug": "responsive-burger-menu",
-  "category": "Navigation & UI",
+  "category": "Headers & Nav",
   "source": "vivmgmt",
   "type": "component",
   "description": "Morphing two-line architectural burger button and full-screen staggered navigation curtain with office directory.",
@@ -17,6 +17,24 @@
     "CSS Cubic-Bezier",
     "ARIA"
   ],
-  "dependencies": [],
-  "order": 19
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 19,
+  "legacyCategory": "Navigation & UI",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "vivmgmt",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

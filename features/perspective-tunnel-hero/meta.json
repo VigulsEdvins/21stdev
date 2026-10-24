@@ -32,5 +32,22 @@
     "React (.tsx included)"
   ],
   "author": "daiwiikharihar",
-  "order": 1
+  "order": 1,
+  "legacyCategory": "Heroes",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "luxury"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": []
 }

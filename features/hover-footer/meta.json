@@ -22,5 +22,21 @@
     "React",
     "Tailwind CSS"
   ],
-  "order": 44
+  "order": 44,
+  "legacyCategory": "Footers & Endings",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

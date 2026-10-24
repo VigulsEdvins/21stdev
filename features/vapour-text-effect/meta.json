@@ -23,5 +23,21 @@
     "React",
     "Tailwind CSS"
   ],
-  "order": 40
+  "order": 40,
+  "legacyCategory": "Audio & Shaders",
+  "status": "draft",
+  "weight": "medium",
+  "mood": [
+    "futuristic"
+  ],
+  "industry": [
+    "media"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

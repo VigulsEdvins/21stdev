@@ -21,5 +21,21 @@
   "dependencies": [
     "vanilla-js"
   ],
-  "order": 36
+  "order": 36,
+  "legacyCategory": "Interactions & Physics",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "cvmaker",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

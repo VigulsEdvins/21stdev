@@ -27,5 +27,22 @@
   "liveSiteUrl": "/betteroff/index.html",
   "adminUrl": "/betteroff/admin.html",
   "sourceFolder": "/home/edvins/features-for-web/betteroff",
-  "order": 24
+  "order": 24,
+  "legacyCategory": "Full Templates",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "futuristic"
+  ],
+  "industry": [
+    "agency",
+    "media"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "betteroff",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

@@ -25,5 +25,21 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 126
+  "order": 126,
+  "legacyCategory": "Interactions & Physics",
+  "status": "draft",
+  "weight": "heavy",
+  "mood": [
+    "retro"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

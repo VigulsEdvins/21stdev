@@ -1,7 +1,7 @@
 {
   "name": "STAR Accomplishment Builder & Passive Verb Linter",
   "slug": "star-verb-enhancer",
-  "category": "Forms & Inputs",
+  "category": "Interactions & Physics",
   "source": "cvmaker",
   "type": "component",
   "description": "Guided career accomplishment writer based on the STAR methodology with real-time passive verb linting, 1-click power action verb replacements, and metric injection chips.",
@@ -21,5 +21,21 @@
   "dependencies": [
     "vanilla-js"
   ],
-  "order": 35
+  "order": 35,
+  "legacyCategory": "Forms & Inputs",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "cvmaker",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

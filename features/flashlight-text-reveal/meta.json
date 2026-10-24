@@ -25,5 +25,22 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 146
+  "order": 146,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "draft",
+  "weight": "heavy",
+  "mood": [
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

@@ -16,5 +16,23 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 11
+  "order": 11,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "futuristic"
+  ],
+  "industry": [
+    "saas",
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "betteroff",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": []
 }

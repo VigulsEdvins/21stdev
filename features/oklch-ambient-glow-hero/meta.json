@@ -17,6 +17,25 @@
     "CSS Keyframes",
     "Vanilla JS"
   ],
-  "dependencies": [],
-  "order": 20
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 20,
+  "legacyCategory": "Heroes",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "dark",
+    "futuristic"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st-crafted",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

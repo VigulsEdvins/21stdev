@@ -16,5 +16,21 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 18
+  "order": 18,
+  "legacyCategory": "Buttons & UI",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "carousel-gallery-play",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

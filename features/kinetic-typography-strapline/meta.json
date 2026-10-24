@@ -17,6 +17,24 @@
     "CSS Transforms",
     "Wheel Scrubbing"
   ],
-  "dependencies": [],
-  "order": 23
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 23,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "editorial"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st-crafted",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": []
 }

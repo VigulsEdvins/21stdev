@@ -145,3 +145,18 @@ for (const it of loadedItems) {
 }
 
 console.log('Task 6 main 21st.local web application verified.');
+
+// Test 7: every meta.json conforms to the schema (fixed categories, required filter attributes)
+const { validateMeta, CATEGORIES } = require('../scripts/schema.js');
+let schemaProblems = [];
+for (const slug of fs.readdirSync(path.join(ROOT, 'features'))) {
+  const metaPath = path.join(ROOT, 'features', slug, 'meta.json');
+  if (!fs.existsSync(metaPath)) continue;
+  const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+  meta.slug = meta.slug || slug;
+  validateMeta(meta).forEach(p => schemaProblems.push(`features/${slug}: ${p}`));
+}
+assert.strictEqual(schemaProblems.length, 0, `meta.json schema violations:\n${schemaProblems.slice(0, 20).join('\n')}`);
+assert(synced.items.every(i => CATEGORIES.includes(i.category)), 'every registry item must use a category from the fixed list');
+
+console.log('Task 7 meta.json schema validation passed.');

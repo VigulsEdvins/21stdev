@@ -2,7 +2,7 @@
   "name": "Löyly Sauna Landing",
   "title": "Löyly Sauna Landing",
   "slug": "loyly-sauna-landing",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "21st.dev",
   "type": "component",
   "description": "A complete landing page for a public sauna and cold plunge, printed in two inks. A cool white grid sheet, one Swiss grotesk and a halftone screen in safety orange and black: **orange is heat, black is cold**. *Löyly* is the Finnish word for the steam that rises when water hits hot stones.",
@@ -25,5 +25,21 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 186
+  "order": 186,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "draft",
+  "weight": "heavy",
+  "mood": [
+    "retro"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }

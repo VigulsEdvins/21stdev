@@ -24,5 +24,21 @@
     "React (.tsx included)"
   ],
   "author": "vaib215",
-  "order": 5
+  "order": 5,
+  "legacyCategory": "Cards & Tiles",
+  "status": "draft",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": []
 }
