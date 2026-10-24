@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Margarita Vigule — Photography</title>
+  <meta name="description" content="Portfolio of Margarita Vigule (@vigule_photographer), photographer based in Daugavpils, Latvia. Capturing genuine moments, sports action, cultural events, and expressive portraits." />
+  <link rel="canonical" href="https://margaritavigule.com/" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#0e0e10" />
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Margarita Vigule Photography" />
+  <meta property="og:title" content="Margarita Vigule — Photography" />
+  <meta property="og:description" content="Portfolio of Margarita Vigule (@vigule_photographer), photographer based in Daugavpils, Latvia. Capturing genuine moments, sports action, cultural events, and expressive portraits." />
+  <meta property="og:url" content="https://margaritavigule.com/" />
+  <meta property="og:image" content="https://margaritavigule.com/images/margarita-vigule.png" />
+  <meta property="og:locale" content="lv_LV" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Margarita Vigule — Photography" />
+  <meta name="twitter:description" content="Portfolio of Margarita Vigule (@vigule_photographer), photographer based in Daugavpils, Latvia." />
+  <meta name="twitter:image" content="https://margaritavigule.com/images/margarita-vigule.png" />
+
+  <!-- Structured Data for Google Search (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://margaritavigule.com/#person",
+        "name": "Margarita Vigule",
+        "jobTitle": "Professional Photographer",
+        "description": "Photographer based in Daugavpils, Latvia specializing in sports action, cultural events, and expressive portraits.",
+        "url": "https://margaritavigule.com/",
+        "image": "https://margaritavigule.com/images/margarita-vigule.png",
+        "sameAs": [
+          "https://www.instagram.com/vigule_photographer/"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Daugavpils",
+          "addressCountry": "LV"
+        },
+        "email": "margaritavigule@inbox.lv"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://margaritavigule.com/#website",
+        "url": "https://margaritavigule.com/",
+        "name": "Margarita Vigule — Photography",
+        "publisher": {
+          "@id": "https://margaritavigule.com/#person"
+        },
+        "inLanguage": ["lv", "en", "ru"]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Font Preloads -->
+  <link rel="preload" href="/fonts/jjannon-regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/publico-text-mono-roman.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/publico-text-mono-semibold.woff2" as="font" type="font/woff2" crossorigin />
+
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- Page Content Shell -->
+  <div id="page-wrapper" class="page-wrapper">
+
+    <!-- Top Fixed Header -->
+    <header class="site-header" role="banner">
+    <div class="header-left">
+      <a href="/" class="mark-link" aria-label="Margarita Vigule Photography Home">
+        <img src="/mark.svg" alt="Margarita Vigule" class="logo-mark" draggable="false" />
+      </a>
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span>Portfolio</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <nav class="nav-links" aria-label="Site Navigation">
+        <span class="nav-item"><a href="/work.html" class="nav-btn" data-i18n="nav.allWork">Visi darbi</a></span>
+        <span class="nav-item"><button type="button" class="nav-btn" data-drawer-pane="info-about" data-i18n="nav.about">Par mani</button></span>
+        <span class="nav-item nav-item-extra"><a href="https://www.instagram.com/vigule_photographer/" target="_blank" rel="noopener noreferrer" class="nav-btn" data-i18n="nav.instagram">Instagram ↗</a></span>
+      </nav>
+
+      <div class="lang-switcher" role="group" aria-label="Valodas izvēle / Language selection">
+        <button type="button" class="lang-btn active" data-lang="lv" title="Latviešu">LV</button>
+        <span class="lang-sep">/</span>
+        <button type="button" class="lang-btn" data-lang="en" title="English">EN</button>
+        <span class="lang-sep">/</span>
+        <button type="button" class="lang-btn" data-lang="ru" title="Русский">RU</button>
+      </div>
+
+      <div class="contact-link">
+        <button type="button" class="nav-btn contact-btn" data-drawer-pane="info-contact" data-i18n="nav.contact">Kontakti</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Center Stage Title (Overlays hover media with difference blending) -->
+  <div class="center-title-container" aria-live="polite">
+    <h1 id="center-title" class="center-title">Margarita Vigule</h1>
+  </div>
+
+  <!-- Interactive Gallery Canvas -->
+  <main class="gallery-stage" role="main">
+
+    <!-- Default State: Framing Matrix (Rendered dynamically from Grid Manager) -->
+    <div id="default-grid" class="grid-matrix"></div>
+
+    <!-- Hover State Stage: Dynamic 1-10 Slots with Custom Coordinates & Sizes -->
+    <div id="project-hover-stage" class="project-hover-stage" aria-hidden="true"></div>
+
+  </main>
+
+  <!-- Bottom URL Tooltip Preview -->
+  <div id="hover-url-badge" class="hover-url-badge">https://instagram.com/vigule_photographer</div>
+
+  <!-- Bottom Fixed Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-left">
+      <a href="https://www.instagram.com/vigule_photographer/" target="_blank" rel="noopener noreferrer">IG @vigule_photographer</a>
+      <span>/</span>
+      <a href="tel:+37126197898">+371 26197898</a>
+      <span>/</span>
+      <a href="mailto:margaritavigule@inbox.lv">margaritavigule@inbox.lv</a>
+    </div>
+
+    <div class="footer-center">
+      <span>Margarita Vigule</span>
+    </div>
+
+    <div class="footer-right">
+      <span>©2026</span>
+      <span>/</span>
+      <button type="button" class="footer-text-btn" data-drawer-pane="info-terms" data-i18n="footer.terms">Noteikumi</button>
+    </div>
+  </footer>
+  </div><!-- /#page-wrapper -->
+
+  <!-- Studio Info & Contact Slide-Over Overlay -->
+  <aside id="site-info-drawer" class="site-info-drawer" aria-label="Studio Information" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="info-drawer-nav">
+        <button type="button" class="info-nav-btn active" data-pane="info-about" data-i18n="drawer.tab.about">Par mani</button>
+        <button type="button" class="info-nav-btn" data-pane="info-contact" data-i18n="drawer.tab.contact">Kontakti</button>
+        <button type="button" class="info-nav-btn" data-pane="info-terms" data-i18n="drawer.tab.terms">Noteikumi</button>
+      </div>
+      <button type="button" class="btn-drawer-close" id="btn-close-info-drawer" aria-label="Close information">✕</button>
+    </div>
+    <div class="drawer-body">
+      <!-- About Pane -->
+      <div class="info-pane active" id="pane-info-about">
+        <div class="about-hero-block">
+          <div class="about-photo-wrapper">
+            <picture class="about-photo-picture">
+              <source srcset="/images/margarita-vigule.webp" type="image/webp" />
+              <img src="/images/margarita-vigule.png" alt="Margarita Vigule — fotogrāfe" class="about-author-photo" width="180" height="180" loading="eager" data-i18n-alt="about.photoAlt" />
+            </picture>
+          </div>
+          <div class="about-intro-text">
+            <h3 class="info-hero-text" data-i18n="about.hero">Fotogrāfe Daugavpilī. Patiesi mirkļi, sporta dinamika un neviltotas emocijas starp sekundēm.</h3>
+            <p class="about-desc-paragraph" data-i18n="about.desc">
+              Margarita Vigule ir fotogrāfe no Daugavpils, kura iemūžina īstas emocijas, cilvēku stāstus, sporta dinamiku un pilsētas dzīves ritmu bez uzspēlētām pozām.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-divider" aria-hidden="true"></div>
+
+        <div class="info-columns">
+          <div class="info-col">
+            <h4 data-i18n="about.focusTitle">Žanri & Virzieni</h4>
+            <ul id="about-focus-list">
+              <li data-i18n="about.focus1">Sports & dinamika (Hokejs, Spīdvejs, Futbols)</li>
+              <li data-i18n="about.focus2">Kultūras pasākumi & pilsētas svētki</li>
+              <li data-i18n="about.focus3">Izteiksmīgi portreti & stāsti</li>
+              <li data-i18n="about.focus4">Pilsētvides & ielu dokumentalitāte</li>
+              <li data-i18n="about.focus5">Ģimenes & personīgie mirkļi</li>
+            </ul>
+          </div>
+          <div class="info-col">
+            <h4 data-i18n="about.exhibitionsTitle">Izstādes & Sadarbība</h4>
+            <ul id="about-exhibitions-list">
+              <li data-i18n="about.exhibition1">Personālizstāde: “Mirklis starp sekundēm” (Daugavpils Kultūras pils)</li>
+              <li data-i18n="about.exhibition2">Daugavpils valstspilsētas pašvaldība (Pasākumu atspoguļošana)</li>
+              <li data-i18n="about.exhibition3">Sporta klubu reportāžas (HK Dinaburga, Spīdvejs Lokomotīve)</li>
+              <li data-i18n="about.exhibition4">Jauniešu festivāls “Artišoks” & M. Rotko mākslas centra pasākumi</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- In-drawer Language Switcher -->
+        <div class="drawer-lang-wrap">
+          <span class="drawer-lang-label">Valoda / Language:</span>
+          <div class="lang-switcher" role="group">
+            <button type="button" class="lang-btn active" data-lang="lv">LV</button>
+            <span class="lang-sep">/</span>
+            <button type="button" class="lang-btn" data-lang="en">EN</button>
+            <span class="lang-sep">/</span>
+            <button type="button" class="lang-btn" data-lang="ru">RU</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Pane -->
+      <div class="info-pane" id="pane-info-contact">
+        <h3 class="info-hero-text" data-i18n="contact.hero">Pieejama fotosesijām, sacensībām un pasākumiem.</h3>
+        <div class="contact-details-grid">
+          <div>
+            <h4 data-i18n="contact.emailTitle">E-pasts</h4>
+            <a href="mailto:margaritavigule@inbox.lv" class="contact-email">margaritavigule@inbox.lv</a>
+          </div>
+          <div>
+            <h4 data-i18n="contact.phoneTitle">Tālrunis & WhatsApp</h4>
+            <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+              <a href="tel:+37126197898" class="contact-email">+371 26197898</a>
+              <a href="https://wa.me/37126197898" target="_blank" rel="noopener noreferrer" style="font-family: var(--font-mono); font-size: 11px; text-decoration: underline; opacity: 0.8;">WhatsApp ↗</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="contact.igTitle">Instagram Direct Message</h4>
+            <a href="https://www.instagram.com/vigule_photographer/" target="_blank" rel="noopener noreferrer" class="contact-email">@vigule_photographer ↗</a>
+          </div>
+          <div>
+            <h4 data-i18n="contact.locationTitle">Lokācija</h4>
+            <span style="font-family: var(--font-mono); font-size: 13px; color: var(--fg); display: block; margin-top: 4px;" data-i18n="contact.locationDesc">Daugavpils, Latgale & visa Latvija</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terms Pane -->
+      <div class="info-pane" id="pane-info-terms">
+        <h3 class="info-hero-text" data-i18n="terms.title">Autortiesības & Noteikumi</h3>
+        <p class="terms-paragraph" data-i18n="terms.body">© 2026 Margarita Vigule (@vigule_photographer). Visas tiesības aizsargātas. Visas vietnē publicētās fotogrāfijas un radošie darbi ir autores īpašums. Jebkāda reproducēšana, komerciāla izmantošana vai izplatīšana bez iepriekšējas rakstiskas piekrišanas ir aizliegta.</p>
+      </div>
+    </div>
+  </aside>
+
+  <div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -134,8 +134,14 @@
     return `Take the "${getItemName(item)}" feature from ${absPath} (index.html, style.css, script.js) and integrate it.`;
   }
 
-  function downloadHtmlFile(item) {
-    const content = (item.files && item.files.combined) || '';
+  /** Source files are fetched on demand; registry.js only carries metadata. */
+  function ensureFiles(item) {
+    return window.FeatureFiles.load(item);
+  }
+
+  async function downloadHtmlFile(item) {
+    const files = await ensureFiles(item);
+    const content = files.combined || '';
     const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -291,9 +297,12 @@
     if (item.type === 'template' && item.liveSiteUrl) {
       frame.removeAttribute('srcdoc');
       frame.src = item.liveSiteUrl;
-    } else {
+    } else if (item.files && item.files.combined) {
       frame.removeAttribute('src');
       frame.srcdoc = item.files.combined;
+    } else {
+      frame.removeAttribute('srcdoc');
+      frame.src = item.previewUrl || `features/${item.slug}/index.html`;
     }
   }
 
@@ -311,7 +320,8 @@
           iframe = document.createElement('iframe');
           iframe.title = getItemName(item);
           iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
-          iframe.srcdoc = item.files.combined;
+          if (item.files && item.files.combined) iframe.srcdoc = item.files.combined;
+          else iframe.src = item.previewUrl || `features/${item.slug}/index.html`;
           box.appendChild(iframe);
         }
       } else if (state.pauseOffscreen && iframe) {
@@ -347,7 +357,7 @@
     filtered.forEach((item) => {
       const card = document.createElement('article');
       card.className = 'vault-card' + (item.type === 'template' ? ' is-template' : '');
-      const hasTsx = Boolean(item.files && item.files.tsx);
+      const hasTsx = (item.availableFiles || []).includes('tsx') || Boolean(item.files && item.files.tsx);
 
       const previewBox = document.createElement('div');
       previewBox.className = 'card-preview-box';
@@ -404,15 +414,17 @@
         if (!btn) return;
         const action = btn.getAttribute('data-action');
         if (action === 'copy-code') {
-          const codeToCopy = (item.type === 'template' && item.files.siteHtml) ? item.files.siteHtml : item.files.combined;
-          copyText(codeToCopy, `Copied code for ${itemName}`);
+          ensureFiles(item).then((files) => {
+            const codeToCopy = (item.type === 'template' && files.siteHtml) ? files.siteHtml : files.combined;
+            copyText(codeToCopy, `Copied code for ${itemName}`);
+          });
         } else if (action === 'copy-path') {
           copyText(getAbsoluteFolderPath(item), `Copied path: ${getAbsoluteFolderPath(item)}`);
         } else if (action === 'inspect') {
           openInspector(item.slug);
         } else if (action === 'reload') {
           const frame = previewBox.querySelector('iframe');
-          if (frame) frame.srcdoc = item.files.combined;
+          if (frame) loadPreviewIntoFrame(frame, item);
         }
       });
 
@@ -468,9 +480,10 @@
   const inspCodeContent = document.getElementById('inspCodeContent');
   let inspectedItem = null;
 
-  function openInspector(slug) {
+  async function openInspector(slug) {
     const item = allFeatures.find((f) => f.slug === slug);
     if (!item) return;
+    await ensureFiles(item);
     inspectedItem = item;
     const tabs = getAvailableTabs(item);
     state.inspActiveTab = tabs[0] ? tabs[0].id : 'combined';
@@ -624,25 +637,36 @@
       wbPreviewFrame.setAttribute('data-loaded-slug', activeItem.slug);
     }
 
-    const tabs = getAvailableTabs(activeItem);
-    if (!tabs.some((t) => t.id === state.wbActiveTab) && tabs[0]) {
-      state.wbActiveTab = tabs[0].id;
-    }
-    wbCodeTabs.innerHTML = '';
-    tabs.forEach((tab) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'code-tab' + (state.wbActiveTab === tab.id ? ' is-active' : '');
-      b.textContent = tab.label;
-      b.addEventListener('click', () => {
-        state.wbActiveTab = tab.id;
-        renderWorkbench();
+    const renderTabs = () => {
+      const tabs = getAvailableTabs(activeItem);
+      if (!tabs.some((t) => t.id === state.wbActiveTab) && tabs[0]) {
+        state.wbActiveTab = tabs[0].id;
+      }
+      wbCodeTabs.innerHTML = '';
+      tabs.forEach((tab) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'code-tab' + (state.wbActiveTab === tab.id ? ' is-active' : '');
+        b.textContent = tab.label;
+        b.addEventListener('click', () => {
+          state.wbActiveTab = tab.id;
+          renderWorkbench();
+        });
+        wbCodeTabs.appendChild(b);
       });
-      wbCodeTabs.appendChild(b);
-    });
 
-    const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
-    wbCodeDisplay.textContent = activeTabObj.content;
+      const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
+      wbCodeDisplay.textContent = activeTabObj.content;
+    };
+    if (activeItem.files) {
+      renderTabs();
+    } else {
+      wbCodeTabs.innerHTML = '';
+      wbCodeDisplay.textContent = 'Loading source…';
+      ensureFiles(activeItem).then(() => {
+        if (state.activeSlug === activeItem.slug) renderTabs();
+      });
+    }
   }
 
   document.getElementById('wbReloadBtn').addEventListener('click', () => {
@@ -658,9 +682,11 @@
   document.getElementById('wbCopyCodeBtn').addEventListener('click', () => {
     const activeItem = allFeatures.find((f) => f.slug === state.activeSlug);
     if (!activeItem) return;
-    const tabs = getAvailableTabs(activeItem);
-    const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
-    copyText(activeTabObj.content, `Copied ${activeTabObj.label}`);
+    ensureFiles(activeItem).then(() => {
+      const tabs = getAvailableTabs(activeItem);
+      const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
+      copyText(activeTabObj.content, `Copied ${activeTabObj.label}`);
+    });
   });
 
   document.getElementById('wbDownloadHtmlBtn').addEventListener('click', () => {
