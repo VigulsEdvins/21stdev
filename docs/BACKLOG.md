@@ -70,7 +70,7 @@ Goal: regressions get caught without manual runs.
 
 ## Epic 7 — Projects and collaboration (P2)
 - [x] **7.1 Project import/export schema versioning (S)** — done 2026-10-24: project files are version 2; version 1 files (and their snapshots) are migrated on import (page settings gain the new SEO keys), files from a newer version are refused with a clear message, files without a version count as version 1. Migration steps live in `MIGRATIONS` in `scripts/projects.js`.
-- [ ] **7.2 Client review link (L)** — static preview bundle with a comment overlay, no backend.
+- [x] **7.2 Client review link (L)** — done 2026-10-24 without a backend: the Export modal has "Review copy" (the normal ZIP plus a Review overlay). The client presses Comment mode, clicks anything, writes a note (name remembered); pins show where comments are, they survive a reload, and "Download comments" produces one JSON file (or copy as text) to send back. "Load review comments" in the Export modal lists them with the section each is about and a Show section button. Normal exports carry no review code. e2e covers the whole round trip. Limits: comments live in the client's browser until downloaded; there is no live sync.
 - [x] **7.3 Starter project templates (M)** — done 2026-10-24: Projects modal has "New from starter" with an industry list built from the registry's own tags (`scripts/builder/starters.js`: nav, hero, up to 3 body sections, CTA, footer; own-industry components first, no heavy or draft ones). Offered for industries with at least 8 components: agency, ecommerce, hospitality, media, portfolio, saas. Unit test + e2e.
 
 ---

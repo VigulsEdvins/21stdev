@@ -2466,6 +2466,198 @@ const OFFSCREEN_RUNTIME = `(function () {
   });
 })();`;
 
+
+/**
+ * Review overlay for "review copies": a client opens the exported page, switches on Review, clicks anything to
+ * leave a comment, and downloads the comments as a JSON file to send back. No server: comments live in the
+ * browser (localStorage) until downloaded. The builder loads that file to jump to each comment.
+ */
+const REVIEW_RUNTIME = `(function () {
+  if (window.__reviewOverlay) return;
+  window.__reviewOverlay = true;
+  var KEY = 'review-comments:' + location.pathname;
+  var NAME_KEY = 'review-author';
+  var comments = [];
+  var on = false;
+  var hovered = null;
+
+  function store(read, value) {
+    try { if (read) return localStorage.getItem(KEY); localStorage.setItem(KEY, value); } catch (e) { return null; }
+  }
+  try { comments = JSON.parse(store(true) || '[]') || []; } catch (e) { comments = []; }
+
+  var css = document.createElement('style');
+  css.textContent = '#rv-root,#rv-root *{box-sizing:border-box;font-family:system-ui,sans-serif}'
+    + '#rv-root{position:absolute;left:0;top:0;width:0;height:0;z-index:2147483000}'
+    + '.rv-fab{position:fixed;left:16px;bottom:16px;display:flex;gap:8px;align-items:center;padding:10px 16px;border:0;border-radius:999px;background:#111;color:#fff;font:600 14px system-ui;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer}'
+    + '.rv-fab[aria-pressed=true]{background:#2563eb}'
+    + '.rv-fab b{background:#fff;color:#111;border-radius:999px;padding:0 7px;font-size:12px}'
+    + '.rv-hover{outline:2px solid #2563eb!important;outline-offset:2px;cursor:crosshair!important}'
+    + '.rv-pin{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:#2563eb;color:#fff;font:700 12px system-ui;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.4);cursor:pointer;padding:0}'
+    + '.rv-pop,.rv-list{position:fixed;background:#fff;color:#111;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.45);padding:14px;font-size:14px}'
+    + '.rv-pop{width:300px}.rv-pop textarea,.rv-pop input{width:100%;margin:6px 0;padding:8px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;color:#111;background:#fff}'
+    + '.rv-pop textarea{min-height:84px;resize:vertical}'
+    + '.rv-row{display:flex;gap:8px;justify-content:flex-end}.rv-btn{padding:8px 14px;border:0;border-radius:8px;background:#2563eb;color:#fff;font:600 13px system-ui;cursor:pointer}.rv-btn.rv-ghost{background:#e2e8f0;color:#111}'
+    + '.rv-list{left:16px;bottom:68px;width:340px;max-height:60vh;overflow:auto}.rv-list h2{margin:0 0 8px;font-size:15px}.rv-list ol{margin:0;padding:0;list-style:none}'
+    + '.rv-item{border-top:1px solid #e2e8f0;padding:8px 0;display:grid;gap:4px}.rv-item small{color:#64748b}.rv-item button{justify-self:start;border:0;background:none;color:#2563eb;font:600 12px system-ui;cursor:pointer;padding:0}'
+    + '.rv-empty{color:#64748b;margin:6px 0 10px}';
+  document.head.appendChild(css);
+
+  var root = document.createElement('div');
+  root.id = 'rv-root';
+  document.body.appendChild(root);
+  var fab = document.createElement('button');
+  fab.type = 'button'; fab.className = 'rv-fab'; fab.setAttribute('aria-pressed', 'false');
+  root.appendChild(fab);
+  var pins = [];
+  var pop = null;
+  var list = null;
+
+  function inRoot(el) { return !!(el && el.closest && el.closest('#rv-root')); }
+  function sectionOf(el) { return el && el.closest ? el.closest('.page-section') : null; }
+  function pathWithin(section, el) {
+    var parts = [];
+    while (el && el !== section && parts.length < 10) {
+      var tag = el.tagName.toLowerCase();
+      var idx = 1, sib = el;
+      while ((sib = sib.previousElementSibling)) if (sib.tagName === el.tagName) idx++;
+      parts.unshift(tag + ':nth-of-type(' + idx + ')');
+      el = el.parentElement;
+    }
+    return parts.join(' > ');
+  }
+  function findEl(c) {
+    var s = document.getElementById(c.section.id);
+    if (!s) return null;
+    if (!c.path) return s;
+    try { return s.querySelector(':scope > ' + c.path) || s; } catch (e) { return s; }
+  }
+  function save() { store(false, JSON.stringify(comments)); }
+  function label() { fab.innerHTML = (on ? 'Reviewing' : 'Review') + ' <b>' + comments.length + '</b>'; fab.setAttribute('aria-pressed', String(on)); }
+
+  function placePins() {
+    pins.forEach(function (p) { p.remove(); });
+    pins = [];
+    comments.forEach(function (c, i) {
+      var el = findEl(c);
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      if (!r.width && !r.height) return;
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'rv-pin'; b.textContent = String(i + 1);
+      b.title = c.comment;
+      b.style.left = Math.round(r.right + window.pageXOffset - 6) + 'px';
+      b.style.top = Math.round(r.top + window.pageYOffset + 6) + 'px';
+      b.addEventListener('click', function (e) { e.stopPropagation(); e.preventDefault(); openList(); });
+      root.appendChild(b);
+      pins.push(b);
+    });
+  }
+  var raf = 0;
+  function schedule() { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; placePins(); }); }
+  window.addEventListener('resize', schedule);
+  window.addEventListener('scroll', schedule, { passive: true });
+  setInterval(schedule, 1500);
+
+  function closePop() { if (pop) { pop.remove(); pop = null; } }
+  function openPop(el, x, y) {
+    closePop();
+    var section = sectionOf(el);
+    if (!section) return;
+    pop = document.createElement('div');
+    pop.className = 'rv-pop';
+    pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Add a comment');
+    pop.innerHTML = '<strong>Comment</strong><textarea placeholder="What should change here?" aria-label="Comment"></textarea><input type="text" placeholder="Your name" aria-label="Your name"><div class="rv-row"><button type="button" class="rv-btn rv-ghost">Cancel</button><button type="button" class="rv-btn">Save</button></div>';
+    pop.style.left = Math.max(8, Math.min(x, window.innerWidth - 316)) + 'px';
+    pop.style.top = Math.max(8, Math.min(y, window.innerHeight - 250)) + 'px';
+    root.appendChild(pop);
+    var ta = pop.querySelector('textarea'), nm = pop.querySelector('input'), btns = pop.querySelectorAll('button');
+    try { nm.value = localStorage.getItem(NAME_KEY) || ''; } catch (e) {}
+    ta.focus();
+    btns[0].addEventListener('click', closePop);
+    btns[1].addEventListener('click', function () {
+      var text = ta.value.trim();
+      if (!text) { ta.focus(); return; }
+      try { localStorage.setItem(NAME_KEY, nm.value.trim()); } catch (e) {}
+      comments.push({
+        id: 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
+        section: { id: section.id, slug: section.getAttribute('data-section-slug') || '' },
+        path: pathWithin(section, el),
+        text: (el.innerText || el.alt || '').trim().slice(0, 80),
+        comment: text, author: nm.value.trim(), at: new Date().toISOString()
+      });
+      save(); label(); closePop(); placePins();
+    });
+    pop.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); closePop(); } });
+  }
+
+  function exportJson() {
+    return JSON.stringify({ format: 'web-builder-review', version: 1, page: document.title, url: location.href.split('#')[0], exportedAt: new Date().toISOString(), comments: comments }, null, 2);
+  }
+  function exportText() {
+    return document.title + ' - review comments\\n\\n' + comments.map(function (c, i) { return (i + 1) + '. [' + (c.section.slug || 'page') + '] ' + c.comment + (c.author ? ' (' + c.author + ')' : '') + (c.text ? '\\n   on: "' + c.text + '"' : ''); }).join('\\n');
+  }
+  function closeList() { if (list) { list.remove(); list = null; } }
+  function openList() {
+    closeList();
+    list = document.createElement('div');
+    list.className = 'rv-list';
+    list.setAttribute('role', 'dialog'); list.setAttribute('aria-label', 'Comments');
+    var html = '<h2>Comments (' + comments.length + ')</h2>' + (comments.length ? '<ol>' : '<p class="rv-empty">Switch on Review, then click anything on the page to comment on it.</p>');
+    comments.forEach(function (c, i) {
+      html += '<li class="rv-item"><span><b>' + (i + 1) + '.</b> <span data-t></span></span><small>' + (c.section.slug || 'page') + (c.author ? ' &middot; ' + c.author : '') + '</small><button type="button" data-del="' + i + '">Delete</button></li>';
+    });
+    html += comments.length ? '</ol>' : '';
+    html += '<div class="rv-row" style="margin-top:10px"><button type="button" class="rv-btn rv-ghost" data-act="copy">Copy text</button><button type="button" class="rv-btn" data-act="download">Download comments</button></div>';
+    list.innerHTML = html;
+    var spans = list.querySelectorAll('[data-t]');
+    comments.forEach(function (c, i) { spans[i].textContent = c.comment; });
+    list.addEventListener('click', function (e) {
+      var d = e.target.getAttribute && e.target.getAttribute('data-del');
+      if (d !== null && d !== undefined) { comments.splice(Number(d), 1); save(); label(); placePins(); openList(); return; }
+      var act = e.target.getAttribute && e.target.getAttribute('data-act');
+      if (act === 'download') {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([exportJson()], { type: 'application/json' }));
+        a.download = 'review-comments.json'; document.body.appendChild(a); a.click(); a.remove();
+      } else if (act === 'copy') {
+        var text = exportText();
+        if (navigator.clipboard) navigator.clipboard.writeText(text).catch(function () {});
+      }
+    });
+    list.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeList(); });
+    root.appendChild(list);
+  }
+
+  function setOn(v) {
+    on = v; label();
+    document.body.classList.toggle('rv-on', on);
+    if (!on) { if (hovered) hovered.classList.remove('rv-hover'); hovered = null; closePop(); }
+  }
+  fab.addEventListener('click', function () { if (list) { closeList(); } else { openList(); } });
+  fab.addEventListener('dblclick', function () { setOn(!on); });
+  fab.addEventListener('keydown', function (e) { if (e.key === 'r' || e.key === 'R') setOn(!on); });
+  document.addEventListener('mouseover', function (e) {
+    if (!on || inRoot(e.target) || !sectionOf(e.target)) return;
+    if (hovered) hovered.classList.remove('rv-hover');
+    hovered = e.target; hovered.classList.add('rv-hover');
+  });
+  document.addEventListener('click', function (e) {
+    if (!on || inRoot(e.target) || !sectionOf(e.target)) return;
+    e.preventDefault(); e.stopPropagation();
+    openPop(e.target, e.clientX + 12, e.clientY + 12);
+  }, true);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePop(); closeList(); if (on) setOn(false); } });
+  label();
+  // a first-time hint: the button toggles the list, and a toggle for review mode sits next to it
+  var toggle = document.createElement('button');
+  toggle.type = 'button'; toggle.className = 'rv-fab'; toggle.style.left = '130px'; toggle.textContent = 'Comment mode';
+  toggle.setAttribute('aria-pressed', 'false');
+  toggle.addEventListener('click', function () { setOn(!on); toggle.setAttribute('aria-pressed', String(on)); toggle.textContent = on ? 'Stop commenting' : 'Comment mode'; });
+  root.appendChild(toggle);
+  placePins();
+})();`;
+
 /** Runtime shared by preview and export: defines window.__setOverrides(list). */
 const OVERRIDES_RUNTIME = `(function () {
   var list = [];
@@ -2772,7 +2964,7 @@ ${allScripts || '  // No section scripts'}
 // Client content edits made in the builder (headlines, images, links). Change a value here and reload.
 ${OVERRIDES_RUNTIME}
 window.__setOverrides(${JSON.stringify(collectOverrides(safeSections), null, 2)});
-`;
+${options.review ? '\n// Review copy: lets a reviewer leave comments on the page and send them back as a file\n' + REVIEW_RUNTIME + '\n' : ''}`;
 
   // 4. README.md
   const unverifiedLicences = sectionInfoList.filter(sec => (options.licenseMap || {})[sec.slug] === 'unverified');
@@ -3074,6 +3266,7 @@ if (typeof module !== 'undefined' && module.exports) {
     renderPageHead,
     renderNativePaletteCss,
     collectOverrides,
+    REVIEW_RUNTIME,
     computeSectionSizingStyles,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,

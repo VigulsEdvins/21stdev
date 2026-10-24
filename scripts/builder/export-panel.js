@@ -123,7 +123,7 @@
     /**
      * Generates export bundle & single file bundle from current stack and theme.
      */
-    async function prepareExportData() {
+    async function prepareExportData(exportOptions = {}) {
       const state = stackManager.getState();
       const currentStack = state.stack;
 
@@ -146,7 +146,7 @@
       const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
 
       if (window.Assembler && typeof window.Assembler.generateExportBundle === 'function') {
-        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, licenseMap });
+        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, licenseMap, review: !!exportOptions.review });
       }
 
       if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
@@ -394,7 +394,7 @@
      * Generates a clean archive with index.html, style.css, script.js, and README.md.
      * Uses window.JSZip if available, otherwise uses native pure-JS zip creator.
      */
-    async function handleDownloadZip() {
+    async function handleDownloadZip(exportOptions = {}) {
       const stack = stackManager.getStack();
       if (!Array.isArray(stack) || stack.length === 0) {
         showToast('Please add at least one section before downloading ZIP.');
@@ -420,12 +420,15 @@
       }
 
       try {
-        await prepareExportData();
+        await prepareExportData(exportOptions);
         if (!currentExportBundle) {
           throw new Error('Could not generate export bundle');
         }
 
-        const zipFilename = 'my-assembled-page.zip';
+        const zipFilename = exportOptions.review ? 'my-review-copy.zip' : 'my-assembled-page.zip';
+        if (exportOptions.review) {
+          currentExportBundle['README.md'] += '\n## Review copy\n\nThis copy has a Review button (bottom left). Open `index.html`, press **Comment mode**, click anything on the page and write what should change. Press **Review** to see the list and **Download comments** to send the file back. Comments stay in the browser until downloaded. Remove the review code before the final launch by exporting a normal copy.\n';
+        }
 
         if (typeof window.JSZip !== 'undefined') {
           // 1. Client-side JSZip
@@ -470,7 +473,59 @@
     }
 
     if (downloadZipBtn) {
-      downloadZipBtn.addEventListener('click', handleDownloadZip);
+      downloadZipBtn.addEventListener('click', () => handleDownloadZip());
+    }
+    const downloadReviewBtn = document.getElementById('downloadReviewBtn');
+    if (downloadReviewBtn) downloadReviewBtn.addEventListener('click', () => handleDownloadZip({ review: true }));
+
+    // Reviewer comments come back as a JSON file: list them and jump to the section each one is about.
+    const reviewFileInput = document.getElementById('reviewFileInput');
+    const reviewList = document.getElementById('reviewCommentList');
+    function renderReviewComments(data) {
+      if (!reviewList) return;
+      reviewList.innerHTML = '';
+      const comments = Array.isArray(data.comments) ? data.comments : [];
+      if (!comments.length) { reviewList.textContent = 'That file has no comments.'; return; }
+      const stack = stackManager.getStack();
+      comments.forEach((c, i) => {
+        const li = document.createElement('li');
+        const where = (c.section && c.section.slug) || 'page';
+        const sec = stack.find(s => s.id === (c.section && c.section.id)) || stack.find(s => s.slug === where);
+        const text = document.createElement('span');
+        text.textContent = `${i + 1}. ${c.comment}${c.author ? ' (' + c.author + ')' : ''} `;
+        const small = document.createElement('small');
+        small.textContent = `on ${(sec && (sec.title || sec.slug)) || where}${c.text ? ': "' + c.text + '"' : ''}`;
+        li.append(text, small);
+        if (sec) {
+          const go = document.createElement('button');
+          go.type = 'button';
+          go.className = 'builder-btn-subtle';
+          go.textContent = 'Show section';
+          go.addEventListener('click', () => {
+            closeExportModal();
+            if (typeof ctx.setActiveSection === 'function') ctx.setActiveSection(sec.id);
+            const frame = document.querySelector('iframe');
+            const el = frame && frame.contentDocument && frame.contentDocument.getElementById(sec.id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          li.appendChild(go);
+        }
+        reviewList.appendChild(li);
+      });
+    }
+    if (reviewFileInput) {
+      reviewFileInput.addEventListener('change', async () => {
+        const file = reviewFileInput.files[0];
+        if (!file) return;
+        try {
+          const data = JSON.parse(await file.text());
+          if (!data || data.format !== 'web-builder-review') throw new Error('not a review file');
+          renderReviewComments(data);
+        } catch (err) {
+          if (reviewList) reviewList.textContent = 'That file is not a review comments file from this builder.';
+        }
+        reviewFileInput.value = '';
+      });
     }
 
     /**
@@ -535,7 +590,8 @@
       setActiveCodeSubtab,
       openExportModal,
       closeExportModal,
-      handleDownloadZip
+      handleDownloadZip,
+      renderReviewComments
     };
   }
 
