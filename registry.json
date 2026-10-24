@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T11:21:24.975Z",
+  "generatedAt": "2026-10-24T11:24:37.542Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 209,
   "categories": [
@@ -235,9 +235,11 @@
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "own",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "note": "Recorded as own by the project owner 2026-10-24"
       },
       "updatedAt": "2026-10-22",
       "customizable": [
@@ -516,9 +518,11 @@
       "needsAssets": true,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "own",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "note": "Recorded as own by the project owner 2026-10-24"
       },
       "updatedAt": "2026-10-22",
       "customizable": [
@@ -5646,9 +5650,11 @@
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "own",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "note": "Recorded as own by the project owner 2026-10-24"
       },
       "updatedAt": "2026-10-22",
       "customizable": [
