@@ -723,6 +723,18 @@
                 </svg>
                 <span>Download my-assembled-page.zip</span>
               </button>
+              <div class="zip-meta" style="margin-top: 18px;">
+                <h3>React project (Vite + TypeScript)</h3>
+                <p>Every section that has a React source becomes a component in a runnable project (<code>npm install &amp;&amp; npm run dev</code>). Plain HTML sections are left out and listed in its README. Content-tab edits are not carried over.</p>
+              </div>
+              <button type="button" class="export-action-primary-btn" id="downloadReactBtn">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span id="downloadReactBtnText">Download my-react-project.zip</span>
+              </button>
             </div>
           </div>
 
@@ -1015,6 +1027,7 @@
   <script src="scripts/builder/categories.js"></script>
   <script src="scripts/builder/widget-catalog.js"></script>
   <script src="scripts/builder/export-assets.js"></script>
+  <script src="scripts/builder/react-export.js"></script>
   <script src="scripts/builder/preview-patch.js"></script>
   <script src="scripts/builder/canvas.js"></script>
   <script src="scripts/builder/export-panel.js"></script>

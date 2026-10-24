@@ -81,7 +81,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 2. **Arrange** them in *Sections*, then set colours and **page settings** (title, description, favicon, Google fonts, language) in *Styling*.
 3. **Edit client content** in the *Content* tab: text, images (upload or URL) and links. Edits are stored per section and re-applied in the preview and the export.
 4. **Save the work** under *Projects*: one project per client with notes, up to 20 snapshots, and JSON export/import to move a project between machines.
-5. **Export**: the ZIP contains `index.html`, `style.css`, `script.js`, a handoff `README.md` and an `assets/` folder; the single-file HTML inlines the images.
+5. **Export**: the ZIP contains `index.html`, `style.css`, `script.js`, a handoff `README.md` and an `assets/` folder; the single-file HTML inlines the images. A separate **React project** download (Vite + TypeScript) holds every section that has a `component.tsx` + `demo.tsx`; the others are left out and listed in its README.
 
 ## 5. Where Things Live
 
