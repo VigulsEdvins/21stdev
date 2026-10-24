@@ -59,6 +59,17 @@ const { createAssetBundler, bytesToDataUri } = require('../scripts/builder/expor
   const inlinedCss = Buffer.from(fontOut.singleHtml.match(/data:text\/css;base64,([A-Za-z0-9+\/=]+)/)[1], 'base64').toString();
   assert(inlinedCss.includes('data:font/woff2;base64,') && !inlinedCss.includes('font-1.woff2'), 'single file inlines the font inside the stylesheet');
 
+  // files built at run time are declared; the folder in the code becomes relative and the files ship
+  const dyn = await createAssetBundler({ assembler, fetchFn: async (u) => (u === '/features/x/img/a-1.webp' || u === '/features/x/img/a-2.webp') ? { ok: true, arrayBuffer: async () => png.buffer } : { ok: false } })
+    .bundle({
+      files: { 'index.html': '', 'style.css': '', 'script.js': 'const u=`/features/x/img/${n}-${t}.webp`,v="/features/x/img/"+k+".webp",w="/features/x/other.js";' },
+      singleHtml: '', extraAssets: ['/features/x/img/a-1.webp', '/features/x/img/a-2.webp']
+    });
+  assert(dyn.files['script.js'].includes('`assets/features/x/img/${n}-${t}.webp`'), 'template path made relative');
+  assert(dyn.files['script.js'].includes('"assets/features/x/img/"+k'), 'prefix string made relative');
+  assert(dyn.files['script.js'].includes('"/features/x/other.js"'), 'unrelated paths untouched');
+  assert(Object.keys(dyn.assets).includes('assets/features/x/img/a-1.webp') && Object.keys(dyn.assets).includes('assets/features/x/img/a-2.webp'), 'declared files in the ZIP');
+
   const none = await bundler.bundle({ files: { 'index.html': '<p>hi</p>' }, singleHtml: '<p>hi</p>' });
   assert.deepStrictEqual(none.assets, {});
 

@@ -50,12 +50,12 @@
      * @param {{ files: Record<string,string>|null, singleHtml: string }} input  `files` is the ZIP text bundle (mutated)
      * @returns {Promise<{ files, singleHtml, assets: Record<string, Uint8Array>, missing: string[] }>}
      */
-    async function bundle({ files, singleHtml }) {
+    async function bundle({ files, singleHtml, extraAssets = [] }) {
       const assets = {};
       const urls = new Set();
       if (files) TEXT_FILES.forEach(k => assembler.findLocalAssetUrls(files[k]).forEach(u => urls.add(u)));
       assembler.findLocalAssetUrls(singleHtml).forEach(u => urls.add(u));
-      if (urls.size === 0) return { files, singleHtml, assets, missing: [] };
+      if (urls.size === 0 && !extraAssets.length) return { files, singleHtml, assets, missing: [] };
 
       const list = Array.from(urls);
       const fetched = await Promise.all(list.map(fetchLocalAsset));
@@ -101,6 +101,29 @@
       if (files) {
         TEXT_FILES.forEach(k => {
           if (typeof files[k] === 'string') files[k] = assembler.rewriteLocalAssetUrls(files[k], zipMap);
+        });
+      }
+
+      // Files a component loads through paths it builds at run time ("/features/x/img/" + name + ".webp") are
+      // declared in meta.json. They go into the ZIP, and the folder part of those paths in the code is made
+      // relative so it resolves wherever the site is hosted. (The single-file page cannot carry them.)
+      const dirs = new Map();
+      const extraFetched = await Promise.all(extraAssets.map(fetchLocalAsset));
+      extraAssets.forEach((url, i) => {
+        if (!extraFetched[i]) { missing.push(url); return; }
+        assets[zipPathOf(url)] = extraFetched[i].bytes;
+        const dir = url.slice(0, url.lastIndexOf('/') + 1);
+        dirs.set(dir, zipPathOf(dir));
+      });
+      if (files && dirs.size) {
+        const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        TEXT_FILES.forEach(k => {
+          if (typeof files[k] !== 'string') return;
+          dirs.forEach((zipDir, dir) => {
+            // only inside a string, and only when the rest of that string is a file name or a ${...} hole
+            const re = new RegExp('(["\'`])' + esc(dir) + '(?=[A-Za-z0-9_.\\-]*(?:["\'`]|\\$\\{))', 'g');
+            files[k] = files[k].replace(re, (m, q) => q + zipDir);
+          });
         });
       }
       return { files, singleHtml: assembler.rewriteLocalAssetUrls(singleHtml, inlineMap), assets, missing };

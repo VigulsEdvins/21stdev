@@ -69,6 +69,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 | `npm run check-exports` | Exports every feature as a ZIP through the real Download button, unpacks it and opens `index.html` from disk (file://); fails on errors, failed local requests, broken images or an empty section. `-- --themes both` also checks the light theme (about 6 min per theme). Two known-broken exports are listed in the script |
 | `npm run localize-remote` | Downloads hot-linked Google Fonts and images (Unsplash, cdn.21st.dev, r2.dev) into `assets/library/` and rewrites the references, so exports do not depend on other websites. Run it after importing a component that links to remote files |
 | `npm run check-fields` | Renders every feature with `customizable` fields in the builder and fails when a field's selector matches nothing or the wrong kind of element |
+| `npm run declare-assets` | For a component that builds file paths at run time: lists the files in `meta.json` `exportAssets` so ZIP exports carry them |
 | `npm run check-features` | Load every feature in headless Chromium; writes `reports/features.json` |
 | `npm run thumbs` | Render `thumbs/<slug>.jpg` previews |
 | `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx` |
