@@ -9,3 +9,4 @@ package-lock.json
 .swarm/
 ruvector.db
 reports/
+agentdb.rvf*

@@ -231,7 +231,7 @@
           : `
             <div class="element-card-preview-box" data-slug="${item.slug}"${item.thumb ? ` data-thumb="${escapeHtml(item.thumb)}"` : ''}>
               ${item.thumb
-                ? `<img class="element-card-thumb" src="${escapeHtml(item.thumb)}" alt="" loading="lazy" decoding="async" /><span class="element-card-live-hint">Hover for live preview</span>`
+                ? `<img class="element-card-thumb" src="${escapeHtml(item.thumb)}" alt="" width="512" height="320" loading="lazy" decoding="async" /><span class="element-card-live-hint">Hover for live preview</span>`
                 : `<div class="element-card-preview-placeholder"><div class="spinner-ring"></div><span>Live Preview</span></div>`}
             </div>
           `;
