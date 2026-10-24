@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bottom Tab Bar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="btb-demo">
+    <main class="btb-screen" id="btbScreen" aria-live="polite">
+      <h1 id="btbTitle">Home</h1>
+      <p id="btbText">Tap a tab. The highlight slides to the active tab and the page title follows.</p>
+    </main>
+    <nav class="btb-bar" aria-label="App">
+      <div class="btb-pill" id="btbPill" aria-hidden="true"></div>
+      <ul class="btb-list" role="tablist">
+        <li role="presentation"><button class="btb-tab is-active" role="tab" aria-selected="true" data-title="Home" data-text="Everything at a glance." type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Home</span></button></li>
+        <li role="presentation"><button class="btb-tab" role="tab" aria-selected="false" tabindex="-1" data-title="Search" data-text="Find anything you saved." type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Search</span></button></li>
+        <li role="presentation"><button class="btb-tab" role="tab" aria-selected="false" tabindex="-1" data-title="Saved" data-text="Your collection, in one place." type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Saved</span></button></li>
+        <li role="presentation"><button class="btb-tab" role="tab" aria-selected="false" tabindex="-1" data-title="Profile" data-text="Your details and settings." type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Profile</span></button></li>
+      </ul>
+    </nav>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

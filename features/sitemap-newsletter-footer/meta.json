@@ -1,0 +1,75 @@
+{
+  "name": "Sitemap Footer With Newsletter Signup",
+  "slug": "sitemap-newsletter-footer",
+  "title": "Sitemap Footer With Newsletter Signup",
+  "category": "Footers & Endings",
+  "source": "custom",
+  "type": "component",
+  "description": "A four-column sitemap footer with a newsletter form that validates the address, shows inline status messages and keeps the button disabled while sending.",
+  "tags": [
+    "footer",
+    "sitemap",
+    "newsletter",
+    "form",
+    "validation"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "saas",
+    "agency",
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "logo-text",
+      "label": "Logo text",
+      "type": "text",
+      "selector": ":scope .snf-logo"
+    },
+    {
+      "id": "tagline",
+      "label": "Tagline",
+      "type": "text",
+      "selector": ":scope .snf-tag"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .snf-submit"
+    },
+    {
+      "id": "copyright",
+      "label": "Copyright line",
+      "type": "text",
+      "selector": ":scope .snf-legal > span:first-child"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .snf-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

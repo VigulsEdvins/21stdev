@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle Switches And Segmented Control</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="tsw-demo">
+    <div class="tsw-card">
+      <h2 class="tsw-title">Notifications</h2>
+      <ul class="tsw-list">
+        <li><div><strong id="tswL1">Product updates</strong><span>News about new features</span></div>
+          <button class="tsw-switch" type="button" role="switch" aria-checked="true" aria-labelledby="tswL1"><span class="tsw-knob"></span></button></li>
+        <li><div><strong id="tswL2">Weekly summary</strong><span>A short email each Monday</span></div>
+          <button class="tsw-switch" type="button" role="switch" aria-checked="false" aria-labelledby="tswL2"><span class="tsw-knob"></span></button></li>
+        <li><div><strong id="tswL3">Security alerts</strong><span>Sign-ins from new devices</span></div>
+          <button class="tsw-switch" type="button" role="switch" aria-checked="true" aria-labelledby="tswL3"><span class="tsw-knob"></span></button></li>
+      </ul>
+      <p class="tsw-status" id="tswStatus" role="status">2 of 3 notifications on</p>
+      <h2 class="tsw-title">Billing period</h2>
+      <div class="tsw-seg" role="radiogroup" aria-label="Billing period">
+        <span class="tsw-thumb" aria-hidden="true"></span>
+        <button type="button" role="radio" aria-checked="true" tabindex="0">Monthly</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">Yearly <em>-20%</em></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1">Lifetime</button>
+      </div>
+    </div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>

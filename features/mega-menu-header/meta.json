@@ -1,0 +1,68 @@
+{
+  "name": "Mega Menu Header",
+  "slug": "mega-menu-header",
+  "title": "Mega Menu Header",
+  "category": "Headers & Nav",
+  "source": "custom",
+  "type": "component",
+  "description": "A header with a keyboard-accessible mega menu: hover or focus a top-level link to open a panel of grouped links with short descriptions; Escape closes it.",
+  "tags": [
+    "header",
+    "mega-menu",
+    "navigation",
+    "dropdown",
+    "accessible"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "saas",
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "logo-text",
+      "label": "Logo text",
+      "type": "text",
+      "selector": ":scope .mmh-logo"
+    },
+    {
+      "id": "cta-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .mmh-cta"
+    },
+    {
+      "id": "cta-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .mmh-cta"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .mmh-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-24T13:49:07.519Z",
+  "generatedAt": "2026-10-24T16:16:54.442Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 209,
+  "totalFeatures": 218,
   "categories": [
     "Heroes",
     "Headers & Nav",
@@ -24,7 +24,8 @@
     "vivmgmt",
     "21st-crafted",
     "mom",
-    "cvmaker"
+    "cvmaker",
+    "custom"
   ],
   "items": [
     {
@@ -6627,6 +6628,13 @@
           "label": "Footer link",
           "type": "link",
           "selector": ":scope a.aa-toggle"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .aa-root",
+          "attr": "--aa-accent"
         }
       ],
       "nativeWhen": [],
@@ -6723,6 +6731,13 @@
           "label": "Text 2",
           "type": "text",
           "selector": ":scope div.aa-credit"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .aa-root",
+          "attr": "--aa-accent"
         }
       ],
       "nativeWhen": [],
@@ -6831,6 +6846,13 @@
           "label": "Text 6",
           "type": "text",
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > dl:nth-of-type(1) > div:nth-of-type(2) > dd:nth-of-type(1)"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .aa-root",
+          "attr": "--aa-accent"
         }
       ],
       "nativeWhen": [],
@@ -9857,6 +9879,13 @@
           "label": "Link 3",
           "type": "link",
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(6) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .efo-root",
+          "attr": "--efo-accent"
         }
       ],
       "nativeWhen": [],
@@ -10987,6 +11016,13 @@
           "label": "Paragraph 2",
           "type": "text",
           "selector": ":scope p.gft-sr"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .gft",
+          "attr": "--gft-accent"
         }
       ],
       "nativeWhen": [
@@ -11375,6 +11411,13 @@
           "label": "Section heading 6",
           "type": "text",
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(8) > div:nth-of-type(1) > h2:nth-of-type(1)"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .hb-root",
+          "attr": "--hb-accent"
         }
       ],
       "nativeWhen": [],
@@ -12682,6 +12725,13 @@
           "label": "Footer link 3",
           "type": "link",
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .nf-root",
+          "attr": "--nf-accent"
         }
       ],
       "nativeWhen": [],
@@ -13192,6 +13242,13 @@
           "label": "Paragraph 2",
           "type": "text",
           "selector": ":scope p.kmm-dayno"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .kmm-root",
+          "attr": "--kmm-accent"
         }
       ],
       "nativeWhen": [],
@@ -18289,6 +18346,13 @@
           "label": "Section heading 3",
           "type": "text",
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .sl-root",
+          "attr": "--sl-accent"
         }
       ],
       "nativeWhen": [],
@@ -20025,6 +20089,693 @@
         "css",
         "js",
         "tsx"
+      ]
+    },
+    {
+      "slug": "bottom-tab-bar",
+      "title": "Bottom Tab Bar",
+      "category": "Headers & Nav",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "saas",
+        "ecommerce",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Screen title",
+          "type": "text",
+          "selector": ":scope .btb-screen h1"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .btb-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A phone-style navigation bar fixed to the bottom of the screen: icons with labels, a sliding highlight under the active tab, and arrow-key support.",
+      "tags": [
+        "navigation",
+        "tab-bar",
+        "mobile",
+        "bottom-nav",
+        "icons"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/bottom-tab-bar",
+      "relativePath": "features/bottom-tab-bar",
+      "previewUrl": "features/bottom-tab-bar/index.html",
+      "thumb": "thumbs/bottom-tab-bar.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "magnetic-cta-button",
+      "title": "Magnetic Call-To-Action Button",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "playful"
+      ],
+      "industry": [
+        "saas",
+        "agency",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "eyebrow",
+          "label": "Small label",
+          "type": "text",
+          "selector": ":scope .mcb-eyebrow"
+        },
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope .mcb-title"
+        },
+        {
+          "id": "button-text",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope .mcb-label-a"
+        },
+        {
+          "id": "button-link",
+          "label": "Button link",
+          "type": "link",
+          "selector": ":scope .mcb-button"
+        },
+        {
+          "id": "note",
+          "label": "Small print",
+          "type": "text",
+          "selector": ":scope .mcb-note"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Button colour",
+          "type": "color",
+          "selector": ":scope .mcb-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A large button that leans toward the pointer as it gets close, with a soft click ripple and a label that slides on hover. Touch and keyboard users get a plain, steady button.",
+      "tags": [
+        "button",
+        "cta",
+        "magnetic",
+        "hover",
+        "ripple"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/magnetic-cta-button",
+      "relativePath": "features/magnetic-cta-button",
+      "previewUrl": "features/magnetic-cta-button/index.html",
+      "thumb": "thumbs/magnetic-cta-button.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "mega-menu-header",
+      "title": "Mega Menu Header",
+      "category": "Headers & Nav",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "saas",
+        "ecommerce",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "logo-text",
+          "label": "Logo text",
+          "type": "text",
+          "selector": ":scope .mmh-logo"
+        },
+        {
+          "id": "cta-text",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope .mmh-cta"
+        },
+        {
+          "id": "cta-link",
+          "label": "Button link",
+          "type": "link",
+          "selector": ":scope .mmh-cta"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .mmh-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A header with a keyboard-accessible mega menu: hover or focus a top-level link to open a panel of grouped links with short descriptions; Escape closes it.",
+      "tags": [
+        "header",
+        "mega-menu",
+        "navigation",
+        "dropdown",
+        "accessible"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/mega-menu-header",
+      "relativePath": "features/mega-menu-header",
+      "previewUrl": "features/mega-menu-header/index.html",
+      "thumb": "thumbs/mega-menu-header.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "minimal-credits-footer",
+      "title": "Minimal Credits Footer",
+      "category": "Footers & Endings",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "portfolio",
+        "agency",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "line",
+          "label": "Sign-off",
+          "type": "text",
+          "selector": ":scope .mcf-line"
+        },
+        {
+          "id": "copyright",
+          "label": "Copyright",
+          "type": "text",
+          "selector": ":scope .mcf-copy"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .mcf-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A slim closing footer: a one-line sign-off, social links with icons, and a back-to-top button that appears after scrolling and respects reduced motion.",
+      "tags": [
+        "footer",
+        "minimal",
+        "social",
+        "back-to-top",
+        "credits"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/minimal-credits-footer",
+      "relativePath": "features/minimal-credits-footer",
+      "previewUrl": "features/minimal-credits-footer/index.html",
+      "thumb": "thumbs/minimal-credits-footer.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "sitemap-newsletter-footer",
+      "title": "Sitemap Footer With Newsletter Signup",
+      "category": "Footers & Endings",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "saas",
+        "agency",
+        "ecommerce",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "logo-text",
+          "label": "Logo text",
+          "type": "text",
+          "selector": ":scope .snf-logo"
+        },
+        {
+          "id": "tagline",
+          "label": "Tagline",
+          "type": "text",
+          "selector": ":scope .snf-tag"
+        },
+        {
+          "id": "button-text",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope .snf-submit"
+        },
+        {
+          "id": "copyright",
+          "label": "Copyright line",
+          "type": "text",
+          "selector": ":scope .snf-legal > span:first-child"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .snf-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A four-column sitemap footer with a newsletter form that validates the address, shows inline status messages and keeps the button disabled while sending.",
+      "tags": [
+        "footer",
+        "sitemap",
+        "newsletter",
+        "form",
+        "validation"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/sitemap-newsletter-footer",
+      "relativePath": "features/sitemap-newsletter-footer",
+      "previewUrl": "features/sitemap-newsletter-footer/index.html",
+      "thumb": "thumbs/sitemap-newsletter-footer.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "split-nav-announcement",
+      "title": "Split Navigation With Announcement Bar",
+      "category": "Headers & Nav",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "editorial",
+        "light"
+      ],
+      "industry": [
+        "portfolio",
+        "media",
+        "ecommerce",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "announcement",
+          "label": "Announcement text",
+          "type": "text",
+          "selector": ":scope .sna-announce p"
+        },
+        {
+          "id": "wordmark",
+          "label": "Wordmark",
+          "type": "text",
+          "selector": ":scope .sna-wordmark"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Bar colour",
+          "type": "color",
+          "selector": ":scope .sna-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "An editorial header: a dismissible announcement bar on top, links split left and right of a centred wordmark, and a thin rule underneath.",
+      "tags": [
+        "header",
+        "navigation",
+        "editorial",
+        "announcement",
+        "centered"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/split-nav-announcement",
+      "relativePath": "features/split-nav-announcement",
+      "previewUrl": "features/split-nav-announcement/index.html",
+      "thumb": "thumbs/split-nav-announcement.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "sticky-shrink-header",
+      "title": "Sticky Shrinking Header",
+      "category": "Headers & Nav",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "saas",
+        "agency",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "logo-text",
+          "label": "Logo text",
+          "type": "text",
+          "selector": ":scope .ssh-logo"
+        },
+        {
+          "id": "cta-text",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope .ssh-cta"
+        },
+        {
+          "id": "cta-link",
+          "label": "Button link",
+          "type": "link",
+          "selector": ":scope .ssh-cta"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .ssh-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A header that sticks to the top, then shrinks and gains a frosted background after you scroll, with a call-to-action button and a mobile menu button.",
+      "tags": [
+        "header",
+        "sticky",
+        "navigation",
+        "blur",
+        "cta"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/sticky-shrink-header",
+      "relativePath": "features/sticky-shrink-header",
+      "previewUrl": "features/sticky-shrink-header/index.html",
+      "thumb": "thumbs/sticky-shrink-header.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "toast-notification-stack",
+      "title": "Toast Notification Stack",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "saas",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope .tns-title"
+        },
+        {
+          "id": "intro",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope .tns-sub"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .tns-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Stacked toast notifications that slide in, pause their timer on hover, dismiss on click or Escape, and are announced to screen readers. Buttons trigger success, info and error examples.",
+      "tags": [
+        "toast",
+        "notification",
+        "feedback",
+        "stack",
+        "aria-live"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/toast-notification-stack",
+      "relativePath": "features/toast-notification-stack",
+      "previewUrl": "features/toast-notification-stack/index.html",
+      "thumb": "thumbs/toast-notification-stack.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "toggle-switch-set",
+      "title": "Toggle Switches And Segmented Control",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "saas",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "title-1",
+          "label": "First heading",
+          "type": "text",
+          "selector": ":scope .tsw-title"
+        },
+        {
+          "id": "accent-colour",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .tsw-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Accessible form controls: animated on/off switches with a live status line and a segmented control (radio group) with a sliding thumb, all usable by keyboard.",
+      "tags": [
+        "toggle",
+        "switch",
+        "segmented-control",
+        "form",
+        "settings"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/toggle-switch-set",
+      "relativePath": "features/toggle-switch-set",
+      "previewUrl": "features/toggle-switch-set/index.html",
+      "thumb": "thumbs/toggle-switch-set.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
       ]
     }
   ]

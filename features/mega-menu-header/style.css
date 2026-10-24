@@ -1,0 +1,35 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.mmh-demo { position: relative; min-height: 100%; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.mmh-header { position: relative; z-index: 20; border-bottom: 1px solid color-mix(in srgb, var(--text, #fff) 12%, transparent); }
+.mmh-bar { display: flex; align-items: center; gap: 32px; max-width: 1180px; margin: 0 auto; padding: 0 24px; height: 72px; position: relative; }
+.mmh-logo { font-family: var(--font-display, inherit); font-weight: 700; font-size: 1.2rem; color: inherit; text-decoration: none; }
+.mmh-nav { margin-right: auto; }
+.mmh-list { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.mmh-item { position: static; }
+.mmh-trigger, .mmh-link { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: .95rem; color: inherit; background: transparent; border: 0; padding: 10px 14px; border-radius: 10px; cursor: pointer; text-decoration: none; opacity: .8; transition: background-color .2s, opacity .2s; }
+.mmh-trigger svg { width: 12px; height: 12px; transition: transform .25s; }
+.mmh-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+.mmh-trigger:hover, .mmh-link:hover, .mmh-trigger[aria-expanded="true"] { opacity: 1; background: color-mix(in srgb, var(--text, #fff) 10%, transparent); }
+.mmh-trigger:focus-visible, .mmh-link:focus-visible, .mmh-panel a:focus-visible, .mmh-cta:focus-visible, .mmh-logo:focus-visible { outline: 2px solid var(--accent, #6366f1); outline-offset: 2px; }
+.mmh-cta { background: var(--accent, #6366f1); color: #fff; text-decoration: none; font-weight: 600; padding: 10px 18px; border-radius: 999px; font-size: .95rem; }
+.mmh-panel { position: absolute; left: 24px; right: 24px; top: calc(100% + 6px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 24px; padding: 22px; border-radius: var(--radius, 16px); background: color-mix(in srgb, var(--bg, #0b0f19) 92%, var(--text, #fff)); border: 1px solid color-mix(in srgb, var(--text, #fff) 12%, transparent); box-shadow: 0 24px 60px rgba(0,0,0,.4); animation: mmh-in .22s cubic-bezier(.2,.8,.2,1); }
+.mmh-panel[hidden] { display: none; }
+.mmh-narrow { grid-template-columns: 1fr; left: 168px; right: auto; width: 320px; }
+.mmh-col h3 { margin: 0 0 8px; font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; opacity: .55; font-weight: 600; }
+.mmh-col a { display: block; padding: 10px 12px; border-radius: 10px; color: inherit; text-decoration: none; transition: background-color .15s; }
+.mmh-col a:hover { background: color-mix(in srgb, var(--text, #fff) 9%, transparent); }
+.mmh-col strong { display: block; font-size: .98rem; }
+.mmh-col span { display: block; font-size: .85rem; opacity: .65; margin-top: 2px; }
+.mmh-feature { background: color-mix(in srgb, var(--accent, #6366f1) 16%, transparent); border-radius: 12px; padding: 12px; }
+.mmh-page { max-width: 760px; margin: 0 auto; padding: 72px 24px 120px; }
+.mmh-page h1 { font-family: var(--font-display, inherit); font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 12px; }
+.mmh-page p { opacity: .75; line-height: 1.6; }
+@keyframes mmh-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (max-width: 860px) {
+  .mmh-bar { gap: 12px; height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+  .mmh-nav { order: 3; width: 100%; margin: 0; overflow-x: auto; }
+  .mmh-panel, .mmh-narrow { position: static; width: auto; grid-template-columns: 1fr; margin-top: 6px; box-shadow: none; }
+  .mmh-item { position: static; }
+  .mmh-list { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) { .mmh-panel { animation: none; } .mmh-trigger svg { transition: none; } }

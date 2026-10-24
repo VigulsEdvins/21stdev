@@ -1,0 +1,20 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.mcf-demo { position: relative; min-height: 100%; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.mcf-page { max-width: 680px; margin: 0 auto; padding: 72px 24px 0; }
+.mcf-page h1 { font-family: var(--font-display, inherit); font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 12px; }
+.mcf-page p { opacity: .7; line-height: 1.6; }
+.mcf-spacer { height: 24vh; }
+.mcf-footer { display: grid; justify-items: center; gap: 16px; padding: 40px 24px 36px; text-align: center; border-top: 1px solid color-mix(in srgb, var(--text, #fff) 12%, transparent); }
+.mcf-line { margin: 0; max-width: 46ch; line-height: 1.5; opacity: .85; }
+.mcf-line a { color: inherit; text-underline-offset: 3px; }
+.mcf-line a:focus-visible, .mcf-social a:focus-visible, .mcf-top:focus-visible { outline: 2px solid var(--accent, #6366f1); outline-offset: 3px; border-radius: 6px; }
+.mcf-social { display: flex; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.mcf-social a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: inherit; border: 1px solid color-mix(in srgb, var(--text, #fff) 20%, transparent); transition: background-color .2s, color .2s, transform .2s; }
+.mcf-social a:hover { background: var(--accent, #6366f1); border-color: transparent; color: #fff; transform: translateY(-2px); }
+.mcf-social svg { width: 20px; height: 20px; }
+.mcf-copy { margin: 0; font-size: .8rem; opacity: .5; }
+.mcf-top { position: sticky; float: right; right: 20px; bottom: 20px; margin: -64px 20px 20px 0; width: 48px; height: 48px; border: 0; border-radius: 50%; background: var(--accent, #6366f1); color: #fff; display: grid; place-items: center; cursor: pointer; box-shadow: 0 10px 26px rgba(0,0,0,.35); animation: mcf-pop .3s cubic-bezier(.3,1.4,.5,1); }
+.mcf-top[hidden] { display: none; }
+.mcf-top svg { width: 20px; height: 20px; }
+@keyframes mcf-pop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .mcf-top { animation: none; } .mcf-social a { transition: none; } }

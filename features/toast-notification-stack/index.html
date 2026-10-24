@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast Notification Stack</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="tns-demo">
+    <h2 class="tns-title">Toast notifications</h2>
+    <p class="tns-sub">Fire a few. Hover one to pause its timer; press Escape to clear them all.</p>
+    <div class="tns-buttons">
+      <button class="tns-btn" type="button" data-kind="success" data-msg="Changes saved">Success</button>
+      <button class="tns-btn" type="button" data-kind="info" data-msg="A new version is available">Info</button>
+      <button class="tns-btn" type="button" data-kind="error" data-msg="Couldn't reach the server">Error</button>
+    </div>
+    <div class="tns-region" id="tnsRegion" role="region" aria-label="Notifications" aria-live="polite"></div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>
