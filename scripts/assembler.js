@@ -2371,6 +2371,18 @@ function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
     tags.push(`<meta name="description" content="${escapeHtml(page.description.trim())}">`);
   }
 
+  // Sharing and search tags. Only absolute https:// (or http://) addresses are written: a relative share image
+  // or canonical link is ignored by every crawler.
+  const absolute = (v) => { const s = String(v || '').trim(); return /^https?:\/\/[^\s"'<>]+$/i.test(s) ? s : ''; };
+  const description = (page.description || '').trim();
+  tags.push(`<meta property="og:type" content="website">`, `<meta property="og:title" content="${escapeHtml(title)}">`);
+  if (description) tags.push(`<meta property="og:description" content="${escapeHtml(description)}">`);
+  const shareImage = absolute(page.shareImage);
+  if (shareImage) tags.push(`<meta property="og:image" content="${escapeHtml(shareImage)}">`, '<meta name="twitter:card" content="summary_large_image">');
+  const canonical = absolute(page.canonical);
+  if (canonical) tags.push(`<link rel="canonical" href="${escapeHtml(canonical)}">`, `<meta property="og:url" content="${escapeHtml(canonical)}">`);
+  if (page.robots === 'noindex') tags.push('<meta name="robots" content="noindex, nofollow">');
+
   const fav = (page.favicon || '').trim();
   if (fav) {
     const isUrl = /^(https?:|data:|\/|\.\/|[\w-]+\/)/i.test(fav) && !/^\p{Extended_Pictographic}/u.test(fav);

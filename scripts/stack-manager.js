@@ -11,7 +11,10 @@ const DEFAULT_PAGE = {
   favicon: '', // emoji, image URL or data URI
   fontDisplay: '', // Google Fonts family name, empty = leave section fonts alone
   fontBody: '',
-  lang: 'en'
+  lang: 'en',
+  shareImage: '', // full https:// URL of the picture shown when the page is shared (og:image)
+  canonical: '', // full https:// URL of the live page
+  robots: '' // '' = let search engines index the page, 'noindex' = ask them not to
 };
 
 function createStackManager(initialConfig = {}) {

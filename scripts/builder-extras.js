@@ -338,7 +338,10 @@
       favicon: doc.getElementById('pageFaviconInput'),
       fontDisplay: doc.getElementById('pageFontDisplayInput'),
       fontBody: doc.getElementById('pageFontBodyInput'),
-      lang: doc.getElementById('pageLangInput')
+      lang: doc.getElementById('pageLangInput'),
+      shareImage: doc.getElementById('pageShareImageInput'),
+      canonical: doc.getElementById('pageCanonicalInput'),
+      robots: doc.getElementById('pageRobotsInput')
     };
     let pageTimer = null;
     let pendingPage = {};
