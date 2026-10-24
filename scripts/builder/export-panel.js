@@ -274,6 +274,47 @@
     /**
      * Opens the Export Modal with zero-section guard check.
      */
+    /** Lists page problems (alt text, headings, links, labels) above the export tabs; never blocks an export. */
+    function renderPageChecks() {
+      const box = document.getElementById('exportChecks');
+      if (!box) return;
+      box.textContent = '';
+      const checks = window.PageChecks;
+      const html = currentExportBundle && currentExportBundle['index.html'];
+      if (!checks || !html) return;
+      const issues = checks.checkPage(html, stackManager.getState().page);
+      const head = document.createElement('div');
+      head.className = 'export-checks-head';
+      head.textContent = issues.length ? `Page check: ${issues.length} thing${issues.length === 1 ? '' : 's'} to look at (you can still export)` : 'Page check: nothing to fix';
+      box.appendChild(head);
+      if (!issues.length) return;
+      const list = document.createElement('ul');
+      list.className = 'export-checks-list';
+      issues.slice(0, 40).forEach(issue => {
+        const li = document.createElement('li');
+        li.className = 'export-check is-' + issue.severity;
+        const label = document.createElement('span');
+        label.textContent = `${issue.severity}: ${issue.message}${issue.slug ? ' (' + issue.slug + ')' : ''}`;
+        li.appendChild(label);
+        if (issue.sectionId) {
+          const go = document.createElement('button');
+          go.type = 'button';
+          go.className = 'builder-btn-subtle';
+          go.textContent = 'Show section';
+          go.addEventListener('click', () => {
+            closeExportModal();
+            if (typeof ctx.setActiveSection === 'function') ctx.setActiveSection(issue.sectionId);
+            const frame = document.querySelector('iframe');
+            const el = frame && frame.contentDocument && frame.contentDocument.getElementById(issue.sectionId);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          li.appendChild(go);
+        }
+        list.appendChild(li);
+      });
+      box.appendChild(list);
+    }
+
     async function openExportModal() {
       if (!exportModal) return;
 
@@ -289,6 +330,7 @@
         if (exportPanelsWrapper) exportPanelsWrapper.style.display = 'block';
         await prepareExportData();
         updateCodeView();
+        renderPageChecks();
       }
 
       exportModal.classList.add('is-open');

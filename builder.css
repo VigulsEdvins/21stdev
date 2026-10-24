@@ -3191,3 +3191,11 @@ select option {
   border: 1px solid rgba(245, 158, 11, 0.4);
   cursor: help;
 }
+
+/* Export modal: page checks */
+.export-checks { margin: 0 0 16px; border: 1px solid var(--border, #27272a); border-radius: 10px; padding: 10px 12px; font-size: 12.5px; }
+.export-checks-head { font-weight: 600; color: var(--text-main, #fafafa); }
+.export-checks-list { list-style: none; margin: 8px 0 0; padding: 0; max-height: 150px; overflow: auto; display: grid; gap: 6px; }
+.export-check { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--text-muted, #a1a1aa); }
+.export-check.is-error { color: #fca5a5; }
+.export-check.is-warning { color: #fcd34d; }
