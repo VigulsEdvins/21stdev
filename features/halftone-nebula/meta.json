@@ -5,7 +5,7 @@
   "category": "Interactions & Physics",
   "source": "21st.dev",
   "type": "component",
-  "description": "A pixel-art night sky printed in halftone dots \u2014 crimson gas, needle-spiked sparkle stars and a dotted planet. Built as a **background**: drop content in as children and it sits on top.",
+  "description": "A pixel-art night sky printed in halftone dots — crimson gas, needle-spiked sparkle stars and a dotted planet. Built as a **background**: drop content in as children and it sits on top.",
   "tags": [
     "halftone",
     "nebula",
@@ -38,9 +38,12 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified",
+    "license": "MIT",
     "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms"
+    "termsUrl": "https://21st.dev/terms",
+    "verifiedAt": "2026-10-24",
+    "url": "https://21st.dev/@kedhareswer",
+    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
   "customizable": [],
