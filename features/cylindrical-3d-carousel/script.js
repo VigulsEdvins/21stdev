@@ -4,22 +4,22 @@
  */
 (function () {
   const PROJECTS = [
-    { title: '125 Years AFC Ajax', tag: 'Heritage Documentary', img: '/carousel-gallery-play/assets/images/20250328_Pieter-Slembrouck-AJAX-Dolberg-115.webp' },
-    { title: 'Belgian Red Devils', tag: 'National Campaign', img: '/carousel-gallery-play/assets/images/20260603_Pieter-Slembrouck_BRD-101-1.webp' },
-    { title: 'BNXT League Media', tag: 'Arena Production', img: '/carousel-gallery-play/assets/images/20240903_Pieter-Slembrouck-Donar-101.webp' },
-    { title: 'Como 1907 Lake', tag: 'Club Identity', img: '/carousel-gallery-play/assets/images/20250125_Pieter-Slembrouck-COMO1907-104.webp' },
-    { title: 'Formula 1 Spa GP', tag: 'Motorsport Visuals', img: '/carousel-gallery-play/assets/images/20240726-Pieter-Slembrouck-SPA-GP-131.webp' },
-    { title: 'PSG Champions League', tag: 'Matchday Visuals', img: '/carousel-gallery-play/assets/images/20250219_Pieter-Slembrouck-PSG-148.webp' },
-    { title: 'Hamburger Derby HSV', tag: 'Endurance Series', img: '/carousel-gallery-play/assets/images/20240421_HSV-Pieter-Slembrouck-106.webp' },
-    { title: 'Legia Warsaw', tag: 'Live Motion Kit', img: '/carousel-gallery-play/assets/images/20241103_Pieter-Slembrouck-LEGIA-131.webp' },
-    { title: 'Al Qadsiah FC', tag: 'Global Launch', img: '/carousel-gallery-play/assets/images/20240609_pieter-Slembrouck-AL-QADSIAH-118.webp' },
-    { title: 'Skechers Football', tag: 'Athlete Commercial', img: '/carousel-gallery-play/assets/images/20250728_Pieter-Slembrouck-Skechers-Steven-Berghuis-PR-Retouches-106.webp' },
-    { title: 'VfL Wolfsburg', tag: 'Tunnel Lighting', img: '/carousel-gallery-play/assets/images/20250630_Pieter-Slembrouck-Sebastiaan-Bornauw-323.webp' },
-    { title: 'LIMBXL Street', tag: 'Editorial Lookbook', img: '/carousel-gallery-play/assets/images/20251003_Pieter-Slembrouck-LIMBXL-106-scaled.jpg' },
-    { title: 'Ibiza Off-Season', tag: 'Studio Reveal', img: '/carousel-gallery-play/assets/images/20240806-Pieter-Slembrouck-IBZ-Woodwork-110.webp' },
-    { title: 'Tolu Arokodare', tag: 'Portrait Series', img: '/carousel-gallery-play/assets/images/20250226_Pieter-Slembrouck-Tolu-100.webp' },
-    { title: 'Jouer – à L’aise', tag: 'Title Sequence', img: '/carousel-gallery-play/assets/images/20250226_Pieter-Slembrouck-JOUER-135.webp' },
-    { title: 'Rosemary FC', tag: 'Editorial Archive', img: '/carousel-gallery-play/assets/images/20230318_Rosemary_Pieter.Slembrouck-56.webp' }
+    { title: '125 Years AFC Ajax', tag: 'Heritage Documentary', img: '/assets/library/20250328_Pieter-Slembrouck-AJAX-Dolberg-115-01265321.webp' },
+    { title: 'Belgian Red Devils', tag: 'National Campaign', img: '/assets/library/20260603_Pieter-Slembrouck_BRD-101-1-26f0b7ca.webp' },
+    { title: 'BNXT League Media', tag: 'Arena Production', img: '/assets/library/20240903_Pieter-Slembrouck-Donar-101-fc0c2249.webp' },
+    { title: 'Como 1907 Lake', tag: 'Club Identity', img: '/assets/library/20250125_Pieter-Slembrouck-COMO1907-104-ff37252c.webp' },
+    { title: 'Formula 1 Spa GP', tag: 'Motorsport Visuals', img: '/assets/library/20240726-Pieter-Slembrouck-SPA-GP-131-39be5b71.webp' },
+    { title: 'PSG Champions League', tag: 'Matchday Visuals', img: '/assets/library/20250219_Pieter-Slembrouck-PSG-148-1c72f705.webp' },
+    { title: 'Hamburger Derby HSV', tag: 'Endurance Series', img: '/assets/library/20240421_HSV-Pieter-Slembrouck-106-bd8cd58b.webp' },
+    { title: 'Legia Warsaw', tag: 'Live Motion Kit', img: '/assets/library/20241103_Pieter-Slembrouck-LEGIA-131-a11d1f17.webp' },
+    { title: 'Al Qadsiah FC', tag: 'Global Launch', img: '/assets/library/20240609_pieter-Slembrouck-AL-QADSIAH-118-39bee346.webp' },
+    { title: 'Skechers Football', tag: 'Athlete Commercial', img: '/assets/library/20250728_Pieter-Slembrouck-Skechers-Steven-Berghuis-PR-Retouches-106-8afed694.webp' },
+    { title: 'VfL Wolfsburg', tag: 'Tunnel Lighting', img: '/assets/library/20250630_Pieter-Slembrouck-Sebastiaan-Bornauw-323-64ad2d52.webp' },
+    { title: 'LIMBXL Street', tag: 'Editorial Lookbook', img: '/assets/library/20251003_Pieter-Slembrouck-LIMBXL-106-scaled-346c180d.jpg' },
+    { title: 'Ibiza Off-Season', tag: 'Studio Reveal', img: '/assets/library/20240806-Pieter-Slembrouck-IBZ-Woodwork-110-4d7b9cb4.webp' },
+    { title: 'Tolu Arokodare', tag: 'Portrait Series', img: '/assets/library/20250226_Pieter-Slembrouck-Tolu-100-096ae4f0.webp' },
+    { title: 'Jouer – à L’aise', tag: 'Title Sequence', img: '/assets/library/20250226_Pieter-Slembrouck-JOUER-135-8e22f110.webp' },
+    { title: 'Rosemary FC', tag: 'Editorial Archive', img: '/assets/library/20230318_Rosemary_Pieter.Slembrouck-56-ff5dbbc7.webp' }
   ];
 
   const listEl = document.getElementById('carousel-3d-list');

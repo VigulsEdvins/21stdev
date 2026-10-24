@@ -57,7 +57,7 @@ export const StudioInfoDrawer: React.FC = () => {
           {activePane === 'about' && (
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4">
-                <img src="/mom/public/images/margarita-vigule.png" alt="Margarita" className="w-20 h-20 rounded-xl object-cover border border-white/20" />
+                <img src="/assets/library/margarita-vigule-0213f7e4.png" alt="Margarita" className="w-20 h-20 rounded-xl object-cover border border-white/20" />
                 <div>
                   <span className="text-[10px] font-bold text-red-500 tracking-wider">PHOTOGRAPHER • LATVIA</span>
                   <h3 className="text-sm font-semibold italic text-white mt-1">"Capturing genuine human action and raw emotional atmosphere."</h3>

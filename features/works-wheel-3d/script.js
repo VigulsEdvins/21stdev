@@ -78,16 +78,16 @@
   }
 
   const ITEMS = [
-    { title: 'Kinetic Archive', sub: '3D WebGL & Motion Direction', img: '/betteroff/assets/images/defective-units-vol-1.webp', colors: ['#1e1b4b', '#4338ca', '#0f172a'] },
-    { title: 'Solaris Studio', sub: 'Interactive Brand Experience', img: '/betteroff/assets/images/asap-x-rayban.webp', colors: ['#3b0764', '#7e22ce', '#111827'] },
-    { title: 'Monolith OS', sub: 'Spatial Interface System', img: '/carousel-gallery-play/assets/images/20250328_Pieter-Slembrouck-AJAX-Dolberg-115.webp', colors: ['#064e3b', '#047857', '#09090b'] },
-    { title: 'Aether Shaders', sub: 'Real-time OKLCH Gradients', img: '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg', colors: ['#4c0519', '#be123c', '#18181b'] },
-    { title: 'Chronos Ribbon', sub: 'Inertia Timeline Architecture', img: '/betteroff/assets/images/ch-11-shit-waves-hawaii.webp', colors: ['#172554', '#1d4ed8', '#09090b'] },
-    { title: 'Velvet Editorial', sub: '5-Column Parallax Lookbook', img: '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg', colors: ['#451a03', '#b45309', '#0c0a09'] },
-    { title: 'Hyperion Sound', sub: 'WebAudio Synthesizer Jukebox', img: '/betteroff/assets/images/converse-shoe-drop-by-works-studio.webp', colors: ['#31102f', '#a21caf', '#09090b'] },
-    { title: 'Polaroid Line', sub: 'Catenary String & Breeze Physics', img: '/carousel-gallery-play/assets/images/20240726-Pieter-Slembrouck-SPA-GP-131.webp', colors: ['#0f2942', '#0284c7', '#09090b'] },
-    { title: 'Vertex Cylinder', sub: '360° Cylindrical Showcase', img: '/carousel-gallery-play/assets/images/20250219_Pieter-Slembrouck-PSG-148.webp', colors: ['#1e293b', '#475569', '#09090b'] },
-    { title: 'Obsidian Vault', sub: 'Design Engineer Component Hub', img: '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg', colors: ['#2e1065', '#6d28d9', '#09090b'] }
+    { title: 'Kinetic Archive', sub: '3D WebGL & Motion Direction', img: '/assets/library/defective-units-vol-1-ee41dd19.webp', colors: ['#1e1b4b', '#4338ca', '#0f172a'] },
+    { title: 'Solaris Studio', sub: 'Interactive Brand Experience', img: '/assets/library/asap-x-rayban-b0252755.webp', colors: ['#3b0764', '#7e22ce', '#111827'] },
+    { title: 'Monolith OS', sub: 'Spatial Interface System', img: '/assets/library/20250328_Pieter-Slembrouck-AJAX-Dolberg-115-01265321.webp', colors: ['#064e3b', '#047857', '#09090b'] },
+    { title: 'Aether Shaders', sub: 'Real-time OKLCH Gradients', img: '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg', colors: ['#4c0519', '#be123c', '#18181b'] },
+    { title: 'Chronos Ribbon', sub: 'Inertia Timeline Architecture', img: '/assets/library/ch-11-shit-waves-hawaii-f95e8577.webp', colors: ['#172554', '#1d4ed8', '#09090b'] },
+    { title: 'Velvet Editorial', sub: '5-Column Parallax Lookbook', img: '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg', colors: ['#451a03', '#b45309', '#0c0a09'] },
+    { title: 'Hyperion Sound', sub: 'WebAudio Synthesizer Jukebox', img: '/assets/library/converse-shoe-drop-by-works-studio-5e6ce881.webp', colors: ['#31102f', '#a21caf', '#09090b'] },
+    { title: 'Polaroid Line', sub: 'Catenary String & Breeze Physics', img: '/assets/library/20240726-Pieter-Slembrouck-SPA-GP-131-39be5b71.webp', colors: ['#0f2942', '#0284c7', '#09090b'] },
+    { title: 'Vertex Cylinder', sub: '360° Cylindrical Showcase', img: '/assets/library/20250219_Pieter-Slembrouck-PSG-148-1c72f705.webp', colors: ['#1e293b', '#475569', '#09090b'] },
+    { title: 'Obsidian Vault', sub: 'Design Engineer Component Hub', img: '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg', colors: ['#2e1065', '#6d28d9', '#09090b'] }
   ];
 
   const stageEl = document.getElementById('ww-stage');

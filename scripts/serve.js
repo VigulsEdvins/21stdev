@@ -5,6 +5,8 @@ const path = require('path');
 const PORT = Number(process.env.PORT || 4173);
 const VAULT_ROOT = path.resolve(__dirname, '..');
 const PARENT_ROOT = path.resolve(VAULT_ROOT, '..');
+// VAULT_STRICT=1 serves only files inside the vault, proving features are self-contained.
+const STRICT = process.env.VAULT_STRICT === '1';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -46,7 +48,8 @@ function resolveSafePath(urlPath, referer = '') {
     return relCheck && !relCheck.startsWith('..') && !path.isAbsolute(relCheck);
   };
 
-  // 1. Specialized routing for cvmaker and mom full sites
+  // 1. Specialized routing for cvmaker and mom full sites (sibling projects, disabled in strict mode)
+  if (!STRICT) {
   if (rel.startsWith('/cvmaker')) {
     const sub = rel.replace(/^\/cvmaker\/?/, '');
     const distTarget = path.resolve(PARENT_ROOT, 'cvmaker', 'dist', sub || 'index.html');
@@ -94,6 +97,8 @@ function resolveSafePath(urlPath, referer = '') {
     }
   }
 
+  }
+
   // 3. Try inside VAULT_ROOT (/home/edvins/features-for-web/web-for-options)
   const vaultCandidate = path.resolve(VAULT_ROOT, '.' + rel);
   if ((vaultCandidate === VAULT_ROOT || isInside(vaultCandidate, VAULT_ROOT)) && fs.existsSync(vaultCandidate)) {
@@ -108,7 +113,7 @@ function resolveSafePath(urlPath, referer = '') {
 
   // 4. Fallback to PARENT_ROOT (/home/edvins/features-for-web) for ../betteroff, ../vivmgmt, ../carousel-gallery-play, etc.
   const parentCandidate = path.resolve(PARENT_ROOT, '.' + rel);
-  if ((parentCandidate === PARENT_ROOT || isInside(parentCandidate, PARENT_ROOT)) && fs.existsSync(parentCandidate)) {
+  if (!STRICT && (parentCandidate === PARENT_ROOT || isInside(parentCandidate, PARENT_ROOT)) && fs.existsSync(parentCandidate)) {
     const stat = fs.statSync(parentCandidate);
     if (stat.isDirectory()) {
       const idx = path.join(parentCandidate, 'index.html');
@@ -119,7 +124,7 @@ function resolveSafePath(urlPath, referer = '') {
   }
 
   // 5. Check inside mom/public if requested as /images/... or /fonts/...
-  if (rel.startsWith('/images/') || rel.startsWith('/fonts/')) {
+  if (!STRICT && (rel.startsWith('/images/') || rel.startsWith('/fonts/'))) {
     const momPub = path.resolve(PARENT_ROOT, 'mom', 'public', '.' + rel);
     if (isInside(momPub, PARENT_ROOT) && fs.existsSync(momPub) && fs.statSync(momPub).isFile()) return momPub;
   }

@@ -4,18 +4,18 @@
  */
 (function () {
   const ITEMS = [
-    { title: 'Defective Units Vol. 1', group: "OCTOBER '26", tag: 'SHOWCASE', aspect: 1.15, img: '/betteroff/assets/images/defective-units-vol-1.webp' },
-    { title: 'A$AP × Ray-Ban', group: "OCTOBER '26", tag: 'INSPIRE', aspect: 1.35, img: '/betteroff/assets/images/asap-x-rayban.webp' },
-    { title: '99 Cents Exhibition', group: "OCTOBER '26", tag: 'EXPERIMENT', aspect: 1.0, img: '/betteroff/assets/images/99-cents-only-store-gallery-exhibition.webp' },
-    { title: 'Converse × Works Studio', group: "SEPTEMBER '26", tag: 'ARCHIVE', aspect: 1.25, img: '/betteroff/assets/images/converse-shoe-drop-by-works-studio.webp' },
-    { title: 'Ch. 11 Waves Hawaii', group: "SEPTEMBER '26", tag: 'SHOWCASE', aspect: 1.1, img: '/betteroff/assets/images/ch-11-shit-waves-hawaii.webp' },
-    { title: 'Broncho Jams', group: "SEPTEMBER '26", tag: 'INSPIRE', aspect: 1.3, img: '/betteroff/assets/images/broncho-jams.webp' },
-    { title: 'Helge Tscharn Capsule', group: "AUGUST '26", tag: 'PRINT', aspect: 1.2, img: '/betteroff/assets/images/helge-tscharn-capsule.webp' },
-    { title: 'Kelly Slater Retires', group: "AUGUST '26", tag: 'SHOWCASE', aspect: 1.05, img: '/betteroff/assets/images/kelly-slater-retires.webp' },
-    { title: 'New Balance 933', group: "JULY '26", tag: 'CRAFT', aspect: 1.3, img: '/betteroff/assets/images/new-balance-933-andrew-reynolds.webp' },
-    { title: 'Off-White Resistance', group: "JULY '26", tag: 'EXPERIMENT', aspect: 1.15, img: '/betteroff/assets/images/off-white-state-of-resistance.webp' },
-    { title: 'Pocket Vol. 12', group: "JUNE '26", tag: 'INSPIRE', aspect: 1.25, img: '/betteroff/assets/images/pocket-vol-12.webp' },
-    { title: 'North Face Early Days', group: "JUNE '26", tag: 'SHOWCASE', aspect: 1.1, img: '/betteroff/assets/images/north-face-in-early-days.webp' }
+    { title: 'Defective Units Vol. 1', group: "OCTOBER '26", tag: 'SHOWCASE', aspect: 1.15, img: '/assets/library/defective-units-vol-1-ee41dd19.webp' },
+    { title: 'A$AP × Ray-Ban', group: "OCTOBER '26", tag: 'INSPIRE', aspect: 1.35, img: '/assets/library/asap-x-rayban-b0252755.webp' },
+    { title: '99 Cents Exhibition', group: "OCTOBER '26", tag: 'EXPERIMENT', aspect: 1.0, img: '/assets/library/99-cents-only-store-gallery-exhibition-095f12c1.webp' },
+    { title: 'Converse × Works Studio', group: "SEPTEMBER '26", tag: 'ARCHIVE', aspect: 1.25, img: '/assets/library/converse-shoe-drop-by-works-studio-5e6ce881.webp' },
+    { title: 'Ch. 11 Waves Hawaii', group: "SEPTEMBER '26", tag: 'SHOWCASE', aspect: 1.1, img: '/assets/library/ch-11-shit-waves-hawaii-f95e8577.webp' },
+    { title: 'Broncho Jams', group: "SEPTEMBER '26", tag: 'INSPIRE', aspect: 1.3, img: '/assets/library/broncho-jams-1165a14b.webp' },
+    { title: 'Helge Tscharn Capsule', group: "AUGUST '26", tag: 'PRINT', aspect: 1.2, img: '/assets/library/helge-tscharn-capsule-69ab1fe5.webp' },
+    { title: 'Kelly Slater Retires', group: "AUGUST '26", tag: 'SHOWCASE', aspect: 1.05, img: '/assets/library/kelly-slater-retires-71a71a99.webp' },
+    { title: 'New Balance 933', group: "JULY '26", tag: 'CRAFT', aspect: 1.3, img: '/assets/library/new-balance-933-andrew-reynolds-5ef3de7f.webp' },
+    { title: 'Off-White Resistance', group: "JULY '26", tag: 'EXPERIMENT', aspect: 1.15, img: '/assets/library/off-white-state-of-resistance-d1387472.webp' },
+    { title: 'Pocket Vol. 12', group: "JUNE '26", tag: 'INSPIRE', aspect: 1.25, img: '/assets/library/pocket-vol-12-dc21015a.webp' },
+    { title: 'North Face Early Days', group: "JUNE '26", tag: 'SHOWCASE', aspect: 1.1, img: '/assets/library/north-face-in-early-days-a05563c1.webp' }
   ];
 
   const viewport = document.getElementById('timeline-viewport');

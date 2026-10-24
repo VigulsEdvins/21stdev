@@ -5,42 +5,42 @@
       tag: 'Campaign',
       date: 'Oct 2026',
       height: 220,
-      img: '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg'
+      img: '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg'
     },
     {
       title: 'Danielle Moore: Desert Couture Retrospective',
       tag: 'Exhibition',
       date: 'Oct 2026',
       height: 175,
-      img: '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg'
+      img: '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg'
     },
     {
       title: 'Zac Posen Studio Denim Portrait Series',
       tag: 'Cover',
       date: 'Sep 2026',
       height: 245,
-      img: '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg'
+      img: '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg'
     },
     {
       title: 'Quinn Gravier: Portrait Study Archive',
       tag: 'Exhibition',
       date: 'Sep 2026',
       height: 190,
-      img: '/vivmgmt/assets/images/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26.jpg'
+      img: '/assets/library/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26-2e04fbf6.jpg'
     },
     {
       title: 'Cera Hensley Sculptural Still Life Commission',
       tag: 'Campaign',
       date: 'Aug 2026',
       height: 230,
-      img: '/vivmgmt/assets/images/1777466641-cera-hensley-beauty-photography-stilllife-cosmetics-21.jpg'
+      img: '/assets/library/1777466641-cera-hensley-beauty-photography-stilllife-cosmetics-21-08778a1a.jpg'
     },
     {
       title: 'Barragan Stables Architectural Fashion Feature',
       tag: 'Cover',
       date: 'Aug 2026',
       height: 200,
-      img: '/vivmgmt/assets/images/1778184121-fashion-editorial-horse-barragan-stables-mexico.jpg'
+      img: '/assets/library/1778184121-fashion-editorial-horse-barragan-stables-mexico-d62757c7.jpg'
     }
   ];
 

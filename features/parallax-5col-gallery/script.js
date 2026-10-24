@@ -4,63 +4,63 @@
       name: 'Arturo Torres',
       role: 'Fashion & Motion',
       images: [
-        '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg',
-        '/vivmgmt/assets/images/1779142866-arturo-torres-advertising-photographer-lifestyle-fashion-sports88.jpg',
-        '/vivmgmt/assets/images/1779142866-arturo-torres-advertising-photographer-lifestyle-fashion-sports30.jpg'
+        '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg',
+        '/assets/library/1779142866-arturo-torres-advertising-photographer-lifestyle-fashion-sports88-fa38814d.jpg',
+        '/assets/library/1779142866-arturo-torres-advertising-photographer-lifestyle-fashion-sports30-3161d767.jpg'
       ]
     },
     {
       name: 'Danielle Moore',
       role: 'Editorial',
       images: [
-        '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg',
-        '/vivmgmt/assets/images/1778184121-danielle-moore-tidal-magazine-black-and-white-fashion-portrait.jpg',
-        '/vivmgmt/assets/images/1773702313-danielle-moore-arturo-torres-summer-25-quay19.jpg'
+        '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg',
+        '/assets/library/1778184121-danielle-moore-tidal-magazine-black-and-white-fashion-portrait-94accaf7.jpg',
+        '/assets/library/1773702313-danielle-moore-arturo-torres-summer-25-quay19-756bc24d.jpg'
       ]
     },
     {
       name: 'Quinn Gravier',
       role: 'Portraiture',
       images: [
-        '/vivmgmt/assets/images/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26.jpg',
-        '/vivmgmt/assets/images/1778795294-quinn-gravier-advertising-photographer-portraits-celebrity36.jpg',
-        '/vivmgmt/assets/images/1778795294-quinn-gravier-advertising-photographer-portraits-celebrity47.jpg'
+        '/assets/library/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26-2e04fbf6.jpg',
+        '/assets/library/1778795294-quinn-gravier-advertising-photographer-portraits-celebrity36-dddb4848.jpg',
+        '/assets/library/1778795294-quinn-gravier-advertising-photographer-portraits-celebrity47-dd3ca91b.jpg'
       ]
     },
     {
       name: 'Cera Hensley',
       role: 'Still Life',
       images: [
-        '/vivmgmt/assets/images/1777466641-cera-hensley-beauty-photography-stilllife-cosmetics-21.jpg',
-        '/vivmgmt/assets/images/1777465200-cera-hensley-food-photography-beverage-stilllife-16.jpg',
-        '/vivmgmt/assets/images/1778275287-kinship-makeup-sunscreen-stilllife-photoshoot-production-6.jpg'
+        '/assets/library/1777466641-cera-hensley-beauty-photography-stilllife-cosmetics-21-08778a1a.jpg',
+        '/assets/library/1777465200-cera-hensley-food-photography-beverage-stilllife-16-7e2ab988.jpg',
+        '/assets/library/1778275287-kinship-makeup-sunscreen-stilllife-photoshoot-production-6-43d4affd.jpg'
       ]
     },
     {
       name: 'Zac Posen Studio',
       role: 'Campaign',
       images: [
-        '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg',
-        '/vivmgmt/assets/images/1778184121-fashion-editorial-horse-barragan-stables-mexico.jpg',
-        '/vivmgmt/assets/images/1778772904-danielle-moore-phils-skincare-mens-beauty-portrait.jpg'
+        '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg',
+        '/assets/library/1778184121-fashion-editorial-horse-barragan-stables-mexico-d62757c7.jpg',
+        '/assets/library/1778772904-danielle-moore-phils-skincare-mens-beauty-portrait-1a449411.jpg'
       ]
     },
     {
       name: 'Byrum Archive',
       role: 'Sport & Studio',
       images: [
-        '/vivmgmt/assets/images/1774484653-byrum-20200305-nike-basketball-studio-0416.jpg',
-        '/vivmgmt/assets/images/1774484687-221112_nike-hydrostrong_5316.jpg',
-        '/vivmgmt/assets/images/1774484866-byrum-191105-adidas-victor-702.jpg'
+        '/assets/library/1774484653-byrum-20200305-nike-basketball-studio-0416-31763667.jpg',
+        '/assets/library/1774484687-221112_nike-hydrostrong_5316-e4298508.jpg',
+        '/assets/library/1774484866-byrum-191105-adidas-victor-702-21861bd2.jpg'
       ]
     },
     {
       name: 'Harper Christian',
       role: 'Monograph',
       images: [
-        '/vivmgmt/assets/images/1774485213-160609-harper-christian-1484-3.jpg',
-        '/vivmgmt/assets/images/1777465143-20180623_foam_test_585.jpg',
-        '/vivmgmt/assets/images/1778793996-arturo-torres-fashion-photography-advertising-photographer-25.jpg'
+        '/assets/library/1774485213-160609-harper-christian-1484-3-5902d9c7.jpg',
+        '/assets/library/1777465143-20180623_foam_test_585-9d2f1747.jpg',
+        '/assets/library/1778793996-arturo-torres-fashion-photography-advertising-photographer-25-d265cb3a.jpg'
       ]
     }
   ];

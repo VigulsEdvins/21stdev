@@ -6,10 +6,10 @@
   const caption = document.getElementById('floatingCaption');
 
   const STUDIO_IMAGES = [
-    '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg',
-    '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg',
-    '/vivmgmt/assets/images/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26.jpg',
-    '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg'
+    '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg',
+    '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg',
+    '/assets/library/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26-2e04fbf6.jpg',
+    '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg'
   ];
 
   // Show default studio preview card immediately so preview is visually rich

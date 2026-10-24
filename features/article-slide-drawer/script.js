@@ -9,7 +9,7 @@
       title: 'Defective Units Vol. 1 — Tactile Industrial Synthesis',
       tag: 'SHOWCASE',
       month: "OCTOBER '26",
-      img: '/betteroff/assets/images/defective-units-vol-1.webp',
+      img: '/assets/library/defective-units-vol-1-ee41dd19.webp',
       body: [
         'Designed as an exploration into imperfect hardware surfaces, Defective Units combines physical rotary encoders with real-time WebGL shaders.',
         'Every transition uses critically damped spring curves so the interface responds with mechanical weight rather than linear CSS keyframes.'
@@ -20,7 +20,7 @@
       title: 'A$AP × Ray-Ban — Optical Campaign & Grid Systems',
       tag: 'INSPIRE',
       month: "SEPTEMBER '26",
-      img: '/betteroff/assets/images/asap-x-rayban.webp',
+      img: '/assets/library/asap-x-rayban-b0252755.webp',
       body: [
         'Modern web typography bridges Swiss international grids with variable font axes driven by scroll velocity and cursor proximity.',
         'By isolating layout geometry from repaint-heavy properties, 60fps editorial motion runs effortlessly across desktop and mobile viewports.'
@@ -31,7 +31,7 @@
       title: 'Converse × Works Studio — Footwear Drop Architecture',
       tag: 'ARCHIVE',
       month: "AUGUST '26",
-      img: '/betteroff/assets/images/converse-shoe-drop-by-works-studio.webp',
+      img: '/assets/library/converse-shoe-drop-by-works-studio-5e6ce881.webp',
       body: [
         'Instead of loading megabytes of external audio samples, subtle triangle and sine oscillators synthesize tactile clicks and harmonic swells on the fly.',
         'The result is a zero-latency sonic identity that reinforces every hover, drag, and drawer transition.'

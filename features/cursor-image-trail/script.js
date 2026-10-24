@@ -7,16 +7,16 @@
   if (!container) return;
 
   const TRAIL_CARDS = [
-    { label: '01 // AJAX 125', img: '/carousel-gallery-play/assets/images/20250328_Pieter-Slembrouck-AJAX-Dolberg-115.webp' },
-    { label: '02 // RED DEVILS', img: '/carousel-gallery-play/assets/images/20260603_Pieter-Slembrouck_BRD-101-1.webp' },
-    { label: '03 // COMO 1907', img: '/carousel-gallery-play/assets/images/20250125_Pieter-Slembrouck-COMO1907-104.webp' },
-    { label: '04 // SPA GP F1', img: '/carousel-gallery-play/assets/images/20240726-Pieter-Slembrouck-SPA-GP-131.webp' },
-    { label: '05 // PSG UCL', img: '/carousel-gallery-play/assets/images/20250219_Pieter-Slembrouck-PSG-148.webp' },
-    { label: '06 // LIMBXL CAMPAIGN', img: '/carousel-gallery-play/assets/images/20251003_Pieter-Slembrouck-LIMBXL-106-scaled.jpg' },
-    { label: '07 // BNXT ARENA', img: '/carousel-gallery-play/assets/images/20240903_Pieter-Slembrouck-Donar-101.webp' },
-    { label: '08 // HSV DERBY', img: '/carousel-gallery-play/assets/images/20240421_HSV-Pieter-Slembrouck-106.webp' },
-    { label: '09 // AL QADSIAH', img: '/carousel-gallery-play/assets/images/20240609_pieter-Slembrouck-AL-QADSIAH-118.webp' },
-    { label: '10 // LEGIA WARSAW', img: '/carousel-gallery-play/assets/images/20241103_Pieter-Slembrouck-LEGIA-131.webp' }
+    { label: '01 // AJAX 125', img: '/assets/library/20250328_Pieter-Slembrouck-AJAX-Dolberg-115-01265321.webp' },
+    { label: '02 // RED DEVILS', img: '/assets/library/20260603_Pieter-Slembrouck_BRD-101-1-26f0b7ca.webp' },
+    { label: '03 // COMO 1907', img: '/assets/library/20250125_Pieter-Slembrouck-COMO1907-104-ff37252c.webp' },
+    { label: '04 // SPA GP F1', img: '/assets/library/20240726-Pieter-Slembrouck-SPA-GP-131-39be5b71.webp' },
+    { label: '05 // PSG UCL', img: '/assets/library/20250219_Pieter-Slembrouck-PSG-148-1c72f705.webp' },
+    { label: '06 // LIMBXL CAMPAIGN', img: '/assets/library/20251003_Pieter-Slembrouck-LIMBXL-106-scaled-346c180d.jpg' },
+    { label: '07 // BNXT ARENA', img: '/assets/library/20240903_Pieter-Slembrouck-Donar-101-fc0c2249.webp' },
+    { label: '08 // HSV DERBY', img: '/assets/library/20240421_HSV-Pieter-Slembrouck-106-bd8cd58b.webp' },
+    { label: '09 // AL QADSIAH', img: '/assets/library/20240609_pieter-Slembrouck-AL-QADSIAH-118-39bee346.webp' },
+    { label: '10 // LEGIA WARSAW', img: '/assets/library/20241103_Pieter-Slembrouck-LEGIA-131-a11d1f17.webp' }
   ];
 
   const images = TRAIL_CARDS.map((card) => {
