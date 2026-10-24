@@ -149,18 +149,43 @@ const server = http.createServer((req, res) => {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-  res.writeHead(200, {
+  const baseHeaders = {
     'Content-Type': contentType,
     'Cache-Control': 'no-cache',
+    'Accept-Ranges': 'bytes',
     'X-Content-Type-Options': 'nosniff'
-  });
+  };
+
+  // Browsers can only seek inside a video (scrubbing, currentTime) when the server answers Range requests
+  let size;
+  try { size = fs.statSync(filePath).size; } catch (_) { size = null; }
+  const range = size !== null && /^bytes=(\d*)-(\d*)$/.exec(req.headers.range || '');
+  let start = 0;
+  let end = size === null ? 0 : size - 1;
+  if (range) {
+    if (range[1] === '' && range[2] === '') {
+      res.writeHead(416, { 'Content-Range': `bytes */${size}` });
+      res.end();
+      return;
+    }
+    if (range[1] === '') { start = Math.max(0, size - Number(range[2])); }
+    else { start = Number(range[1]); if (range[2] !== '') end = Math.min(end, Number(range[2])); }
+    if (start > end || start >= size) {
+      res.writeHead(416, { 'Content-Range': `bytes */${size}` });
+      res.end();
+      return;
+    }
+    res.writeHead(206, { ...baseHeaders, 'Content-Range': `bytes ${start}-${end}/${size}`, 'Content-Length': end - start + 1 });
+  } else {
+    res.writeHead(200, size === null ? baseHeaders : { ...baseHeaders, 'Content-Length': size });
+  }
 
   if (req.method === 'HEAD') {
     res.end();
     return;
   }
 
-  const stream = fs.createReadStream(filePath);
+  const stream = fs.createReadStream(filePath, range ? { start, end } : undefined);
   stream.on('error', (err) => {
     if (!res.headersSent) {
       res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });

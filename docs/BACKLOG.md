@@ -54,8 +54,8 @@ Goal: the exported site works with nothing from the vault.
 - [ ] **5.4 Font and asset self-hosting option (M)** — avoid runtime Google Fonts requests.
 - [ ] **5.5 SEO/meta basics in page settings (S)** — OG tags, canonical, robots.
 - [ ] **5.6 Fix `forma-liquid-particle-studio` export (M)** — it builds `/features/.../img/${name}.webp` paths at runtime so the asset bundler never sees them, and reads images into a canvas with crossOrigin, which file:// blocks. Needs the bundler to accept a declared asset list and the images loaded without crossOrigin.
-- [ ] **5.7 Fix `magic-hour` media (S)** — its video and poster are hot-linked from kedhar.vercel.app, which now serves an HTML page for every media URL, so the component has no video anywhere. Replace with a bundled video or retire it.
-- [ ] **5.8 Self-contain exports (M)** — exports still contact 9 other hosts (images.unsplash.com for 17 components, fonts.googleapis/gstatic, cdn.21st.dev, mdn.github.io, kedhar.vercel.app, r2.dev, jsdelivr, storage.googleapis). Bundle or replace them so a client site keeps working if any of them goes away. Subsumes 5.4.
+- [x] **5.7 Fix `magic-hour` media (S)** — done 2026-10-24: the hot-linked video was gone, so `scripts/media/make-magic-hour.js` renders a new all-keyframe WebM and poster (dusk, moon and stars, dawn; 2.4 MB) into assets/library. Also found the dev server ignored HTTP Range requests, so videos could not seek; fixed in scripts/serve.js with a test. Note: WebM may not play in older Safari; an MP4 would need an H.264 encoder.
+- [ ] **5.8 Self-contain exports (M)** — exports still contact 8 other hosts (images.unsplash.com for 17 components, fonts.googleapis/gstatic, cdn.21st.dev, mdn.github.io, kedhar.vercel.app, r2.dev, jsdelivr, storage.googleapis). Bundle or replace them so a client site keeps working if any of them goes away. Subsumes 5.4.
 
 ## Epic 6 — Tooling, tests and CI (P2)
 Goal: regressions get caught without manual runs.

@@ -18,8 +18,7 @@ const THEMES = { dark: 'midnight-dark', light: 'clean-minimal' };
 const REQUIRED = ['index.html', 'style.css', 'script.js', 'README.md'];
 const KNOWN_EMPTY = new Set(['cloth-peel-reveal', 'noise-dissolve-reveal', 'spotlight-offer-quiz', 'tile-scrollbar']);
 const KNOWN_BROKEN = {
-  'forma-liquid-particle-studio': 'builds its image paths at runtime (not bundled into the ZIP) and reads them into a canvas with crossOrigin, which file:// blocks',
-  'magic-hour': 'its video and poster are hot-linked from kedhar.vercel.app, which now answers every media URL with an HTML page'
+  'forma-liquid-particle-studio': 'builds its image paths at runtime (not bundled into the ZIP) and reads them into a canvas with crossOrigin, which file:// blocks'
 };
 
 async function exportOne(builder, srvUrl, slug, theme) {
