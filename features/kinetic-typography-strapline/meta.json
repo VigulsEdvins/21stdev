@@ -37,7 +37,20 @@
     "license": "own"
   },
   "updatedAt": "2026-10-24",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "text",
+      "label": "Text",
+      "type": "text",
+      "selector": ":scope div.strapline-meta"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope p.strapline-copy"
+    }
+  ],
   "measured": {
     "luma": 0.06,
     "webgl": false,

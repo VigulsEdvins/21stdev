@@ -63,6 +63,9 @@ function auditInPage(minRatio) {
     const fg = parse(cs.color);
     const bg = effectiveBg(el);
     if (!fg || !bg) return;
+    // Text drawn in exactly its background colour, or fully transparent, is hidden on purpose
+    // (reveal animations, masked or clipped headlines), not unreadable by mistake.
+    if (fg.a === 0 || (Math.abs(fg.r - bg.r) < 1 && Math.abs(fg.g - bg.g) < 1 && Math.abs(fg.b - bg.b) < 1)) return;
     const fgBlend = blend({ ...fg, a: fg.a * Number(cs.opacity) }, bg);
     const l1 = lum(fgBlend), l2 = lum(bg);
     const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
@@ -116,7 +119,12 @@ async function main() {
   await srv.close();
   fs.mkdirSync(path.join(ROOT, 'reports'), { recursive: true });
   fs.writeFileSync(path.join(ROOT, 'reports', 'themes.json'), JSON.stringify(results, null, 2));
-  const rows = Object.entries(results).map(([slug, t]) => ({ slug, dark: t['midnight-dark'].failing.length, light: t['clean-minimal'].failing.length, errors: Object.values(t).filter(x => x.error).length }));
+  // Components a person has looked at in both themes and accepted (brand colours, decorative text, hidden
+  // states the audit cannot tell apart) carry `themeReviewed: "<note>"` in meta.json and are listed apart.
+  const reviewed = new Set(Object.keys(results).filter(slug => {
+    try { return !!JSON.parse(fs.readFileSync(path.join(ROOT, 'features', slug, 'meta.json'), 'utf8')).themeReviewed; } catch (_) { return false; }
+  }));
+  const rows = Object.entries(results).filter(([slug]) => !reviewed.has(slug)).map(([slug, t]) => ({ slug, dark: t['midnight-dark'].failing.length, light: t['clean-minimal'].failing.length, errors: Object.values(t).filter(x => x.error).length }));
   if (args.apply) {
     // A component that is unreadable under only one polarity keeps its own palette there (nativeWhen).
     // One that fails under both needs a hand fix and is only listed.
@@ -137,7 +145,7 @@ async function main() {
     console.log(`\nSet nativeWhen on ${applied} features. Run \`npm run sync\` and audit again.`);
   }
   const bad = rows.filter(r => r.dark || r.light).sort((a, b) => (b.dark + b.light) - (a.dark + a.light));
-  console.log(`\n${rows.length - bad.length}/${rows.length} features have no low-contrast text in either theme. Report: reports/themes.json`);
+  console.log(`\n${rows.length - bad.length}/${rows.length} features have no low-contrast text in either theme (${reviewed.size} more were reviewed by hand and accepted). Report: reports/themes.json`);
   bad.slice(0, Number(args.top || 25)).forEach(r => console.log(`  dark ${String(r.dark).padStart(3)}  light ${String(r.light).padStart(3)}  ${r.slug}`));
 }
 

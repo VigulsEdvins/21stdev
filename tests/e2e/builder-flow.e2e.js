@@ -59,8 +59,10 @@ async function main() {
   // --- content editor ------------------------------------------------------
   await page.click('#tabContentBtn');
   await page.waitForSelector('#contentFields .content-field');
-  const firstLabel = await page.textContent('#contentFields .content-field .ps-field span');
-  const input = page.locator('#contentFields .content-field input[type=text], #contentFields .content-field textarea').first();
+  // pick a text field: link and photo fields change an href or src, not visible text
+  const textField = page.locator('#contentFields .content-field').filter({ hasNotText: /link|photo|logo/i }).first();
+  const firstLabel = await textField.locator('.ps-field span').first().textContent();
+  const input = textField.locator('input[type=text], textarea').first();
   await page.evaluate(() => { document.querySelector('iframe').contentWindow.__marker = 'alive2'; });
   await input.fill('Hello from the builder');
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.body.innerText.includes('Hello from the builder'), null, { timeout: 8000 });

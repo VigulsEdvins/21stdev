@@ -40,10 +40,67 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope span.testi-badge"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h2.testi-heading"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope p.quote-body"
+    },
+    {
+      "id": "paragraph-1",
+      "label": "Paragraph 1",
+      "type": "text",
+      "selector": ":scope p.testi-sub"
+    },
+    {
+      "id": "text-1",
+      "label": "Text 1",
+      "type": "text",
+      "selector": ":scope div.metric-block"
+    },
+    {
+      "id": "hero-photo",
+      "label": "Hero photo",
+      "type": "image",
+      "selector": ":scope img.client-avatar"
+    },
+    {
+      "id": "text-2",
+      "label": "Text 2",
+      "type": "text",
+      "selector": ":scope div.star-row"
+    },
+    {
+      "id": "subheading",
+      "label": "Subheading",
+      "type": "text",
+      "selector": ":scope h4.client-name"
+    },
+    {
+      "id": "paragraph-2",
+      "label": "Paragraph 2",
+      "type": "text",
+      "selector": ":scope p.client-title"
+    }
+  ],
   "measured": {
     "luma": 0.09,
     "webgl": false,

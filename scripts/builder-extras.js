@@ -61,8 +61,11 @@
    * `explicit` is the feature's meta.json `customizable` list; when present it wins over discovery.
    * @returns {Array<{id,label,type,selector,attr?,current,auto}>}
    */
-  function discoverFields(sectionEl, explicit) {
+  function discoverFields(sectionEl, explicit, opts = {}) {
     if (!sectionEl) return [];
+    const maxText = opts.limit || MAX_TEXT_FIELDS;
+    const maxImages = opts.limit || MAX_IMAGE_FIELDS;
+    const maxLinks = opts.limit || MAX_LINK_FIELDS;
     const fields = [];
 
     if (Array.isArray(explicit) && explicit.length) {
@@ -80,7 +83,7 @@
     let textCount = 0;
     const collected = [];
     sectionEl.querySelectorAll(TEXT_CANDIDATES).forEach(el => {
-      if (textCount >= MAX_TEXT_FIELDS || isHidden(el, sectionEl) || !isTextLeaf(el)) return;
+      if (textCount >= maxText || isHidden(el, sectionEl) || !isTextLeaf(el)) return;
       // Parents come first in document order: an element inside one we already list is part of its text
       if (collected.some(c => c.contains(el))) return;
       const text = el.textContent.replace(/\s+/g, ' ').trim();
@@ -95,7 +98,7 @@
 
     let imgCount = 0;
     sectionEl.querySelectorAll('img').forEach(img => {
-      if (imgCount >= MAX_IMAGE_FIELDS || isHidden(img, sectionEl)) return;
+      if (imgCount >= maxImages || isHidden(img, sectionEl)) return;
       const src = img.getAttribute('src') || '';
       if (!src) return;
       const selector = selectorFor(img, sectionEl);
@@ -105,7 +108,7 @@
 
     let linkCount = 0;
     sectionEl.querySelectorAll('a[href]').forEach(a => {
-      if (linkCount >= MAX_LINK_FIELDS || isHidden(a, sectionEl)) return;
+      if (linkCount >= maxLinks || isHidden(a, sectionEl)) return;
       const selector = selectorFor(a, sectionEl);
       fields.push({ id: `auto-${shortHash(selector + 'link')}`, label: `Link to: ${snippet(a.textContent || a.getAttribute('href'), 28)}`, type: 'link', selector, current: a.getAttribute('href') || '', auto: true });
       linkCount++;

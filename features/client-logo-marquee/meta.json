@@ -35,50 +35,50 @@
   "updatedAt": "2026-10-22",
   "customizable": [
     {
-      "id": "text-trusted-by-global-clubs-",
-      "label": "Text: Trusted by Global Clubs, Federati…",
-      "type": "text",
-      "selector": ":scope span.marquee-label"
-    },
-    {
-      "id": "text-speed-normal-1x",
-      "label": "Button: Speed: Normal (1x)",
+      "id": "button-text",
+      "label": "Button text",
       "type": "text",
       "selector": ":scope button.marquee-btn"
     },
     {
-      "id": "text-afc-ajax",
-      "label": "Text: AFC AJAX",
+      "id": "text",
+      "label": "Text",
+      "type": "text",
+      "selector": ":scope span.marquee-label"
+    },
+    {
+      "id": "small-label-1",
+      "label": "Small label 1",
       "type": "text",
       "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1)"
     },
     {
-      "id": "text-club-brugge",
-      "label": "Text: CLUB BRUGGE",
+      "id": "small-label-2",
+      "label": "Small label 2",
       "type": "text",
       "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
     },
     {
-      "id": "text-como-1907",
-      "label": "Text: COMO 1907",
+      "id": "small-label-3",
+      "label": "Small label 3",
       "type": "text",
       "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3)"
     },
     {
-      "id": "text-dazn-broadcast",
-      "label": "Text: DAZN BROADCAST",
+      "id": "small-label-4",
+      "label": "Small label 4",
       "type": "text",
       "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4)"
     },
     {
-      "id": "text-hoka-performance",
-      "label": "Text: HOKA PERFORMANCE",
+      "id": "small-label-5",
+      "label": "Small label 5",
       "type": "text",
       "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5)"
     },
     {
-      "id": "text-adidas-originals",
-      "label": "Text: ADIDAS ORIGINALS",
+      "id": "small-label-6",
+      "label": "Small label 6",
       "type": "text",
       "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(6)"
     }

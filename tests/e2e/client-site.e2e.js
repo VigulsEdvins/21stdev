@@ -55,7 +55,7 @@ async function main() {
   await page.click('#tabContentBtn');
   await page.selectOption('#contentSectionSelect', { index: 1 });
   await page.waitForSelector('#contentFields .content-field');
-  const headline = page.locator('#contentFields .content-field', { hasText: 'Heading 1' }).locator('input, textarea').first();
+  const headline = page.locator('#contentFields .content-field', { hasText: 'Headline' }).locator('input, textarea').first();
   await headline.fill('Gentle dentistry, on your schedule');
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.body.innerText.includes('Gentle dentistry, on your schedule'), null, { timeout: 8000 });
   step('hero headline edited in place');

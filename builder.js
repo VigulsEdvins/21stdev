@@ -371,219 +371,18 @@
 
     // Drawer state
 
-    // =========================================================================
-    // History Stack Engine (Undo / Redo) & Continuous LocalStorage Persistence
-    // =========================================================================
-    const MAX_HISTORY = 50;
-    const STORAGE_KEY = 'web_builder_state_v2';
-    let historyStack = [];
-    let historyIndex = -1;
-    let isApplyingHistory = false;
-    let currentViewport = 'desktop';
-    let autoSaveTimer = null;
-    let builderExtras = null; // client projects, page settings, content editor (scripts/builder-extras.js)
+    // History (undo/redo) and autosave (scripts/builder/history.js)
+    const historyCtl = (window.BuilderHistory || require('./scripts/builder/history.js')).createHistory({
+      stackManager, applyDynamicTheme, setViewportMode, updatePreview,
+      renderStackList: () => renderStackList(), // defined further down, so resolved at call time
+      themePresetSelect, customColorsControls, customThemeToggle, bgColorInput, textColorInput, accentColorInput,
+      undoBtn, redoBtn
+    });
+    const {
+      MAX_HISTORY, STORAGE_KEY, updateHistoryUI, serializeState, applyState, saveStateToStorage,
+      scheduleAutoSave, pushHistorySnapshot, applyHistoryState, undoAction, redoAction, handleHistoryKeydown
+    } = historyCtl;
 
-    function updateHistoryUI() {
-      const currentUndoBtn = document.getElementById('undoBtn') || undoBtn;
-      const currentRedoBtn = document.getElementById('redoBtn') || redoBtn;
-      if (currentUndoBtn) {
-        currentUndoBtn.disabled = historyIndex <= 0;
-      }
-      if (currentRedoBtn) {
-        currentRedoBtn.disabled = historyIndex >= historyStack.length - 1;
-      }
-    }
-
-    /** The persisted shape of the page: what autosave, history snapshots and client projects store. */
-    function serializeState() {
-      const st = stackManager.getState();
-      return {
-        stack: stackManager.getStack(),
-        theme: st.theme || 'midnight-dark',
-        customColors: { ...(st.customColors || {}) },
-        page: { ...st.page },
-        viewport: currentViewport
-      };
-    }
-
-    /** Replaces the whole page (used when switching client projects) and records it in history. */
-    function applyState(snapshot) {
-      applyHistoryState(snapshot);
-      pushHistorySnapshot();
-      saveStateToStorage();
-    }
-
-    function saveStateToStorage() {
-      if (typeof localStorage === 'undefined') return;
-      try {
-        const currentState = serializeState();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState));
-        if (builderExtras) builderExtras.onStateSaved(currentState);
-      } catch (err) {
-        console.warn('Failed to save builder state to localStorage:', err);
-      }
-    }
-
-    function scheduleAutoSave() {
-      if (autoSaveTimer) clearTimeout(autoSaveTimer);
-      autoSaveTimer = setTimeout(() => {
-        autoSaveTimer = null;
-        saveStateToStorage();
-      }, 200);
-    }
-
-    // Autosave is debounced; flush it when the tab is closed or hidden so the last 200ms of edits survive.
-    function flushAutoSave() {
-      if (!autoSaveTimer) return;
-      clearTimeout(autoSaveTimer);
-      autoSaveTimer = null;
-      saveStateToStorage();
-    }
-    if (typeof window !== 'undefined' && window.addEventListener) {
-      window.addEventListener('pagehide', flushAutoSave);
-      if (typeof document !== 'undefined' && document.addEventListener) {
-        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushAutoSave(); });
-      }
-    }
-
-    function pushHistorySnapshot() {
-      if (isApplyingHistory) return;
-      const currentSnapshot = {
-        stack: JSON.parse(JSON.stringify(stackManager.getStack())),
-        theme: stackManager.getState().theme || 'midnight-dark',
-        customColors: { ...(stackManager.getState().customColors || {}) },
-        page: { ...stackManager.getState().page },
-        viewport: currentViewport
-      };
-
-      // If current state matches last snapshot, skip duplicate
-      if (historyStack.length > 0 && historyIndex >= 0 && historyIndex < historyStack.length) {
-        const lastSnapshot = historyStack[historyIndex];
-        if (JSON.stringify(lastSnapshot) === JSON.stringify(currentSnapshot)) {
-          return;
-        }
-      }
-
-      // Discards future redo states
-      historyStack = historyStack.slice(0, historyIndex + 1);
-
-      // Appends snapshot, trims to MAX_HISTORY
-      historyStack.push(currentSnapshot);
-      if (historyStack.length > MAX_HISTORY) {
-        historyStack = historyStack.slice(historyStack.length - MAX_HISTORY);
-      }
-      historyIndex = historyStack.length - 1;
-      updateHistoryUI();
-    }
-
-    function applyHistoryState(snapshot) {
-      if (!snapshot) return;
-      isApplyingHistory = true;
-
-      try {
-        // Restore stack
-        if (typeof stackManager.setStack === 'function') {
-          stackManager.setStack(snapshot.stack || []);
-        } else {
-          stackManager.clearStack();
-          (snapshot.stack || []).forEach(sec => {
-            stackManager.insertSection(stackManager.getStack().length, sec);
-          });
-        }
-
-        if (snapshot.page && typeof stackManager.setPage === 'function') stackManager.setPage(snapshot.page);
-
-        // Restore theme & custom colors
-        const theme = snapshot.theme || 'midnight-dark';
-        stackManager.setTheme(theme);
-        if (themePresetSelect) {
-          themePresetSelect.value = theme;
-        }
-
-        const customColors = snapshot.customColors || {};
-        stackManager.setCustomColors(customColors);
-
-        if (theme === 'custom') {
-          if (customColorsControls) customColorsControls.style.display = 'inline-flex';
-          if (customThemeToggle) customThemeToggle.classList.add('is-active');
-          if (bgColorInput && customColors.bg) bgColorInput.value = customColors.bg;
-          if (textColorInput && customColors.text) textColorInput.value = customColors.text;
-          if (accentColorInput && customColors.accent) accentColorInput.value = customColors.accent;
-          applyDynamicTheme(customColors);
-        } else {
-          if (customColorsControls) customColorsControls.style.display = 'none';
-          if (customThemeToggle) customThemeToggle.classList.remove('is-active');
-          const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
-          const preset = presets[theme];
-          if (preset) {
-            if (bgColorInput) bgColorInput.value = preset.bg;
-            if (textColorInput) textColorInput.value = preset.text;
-            if (accentColorInput) accentColorInput.value = preset.accent;
-            applyDynamicTheme(preset);
-          }
-        }
-
-        // Restore viewport
-        if (snapshot.viewport) {
-          setViewportMode(snapshot.viewport);
-        }
-
-        // Update UI and preview frame
-        renderStackList();
-        updatePreview();
-      } finally {
-        isApplyingHistory = false;
-      }
-    }
-
-    function undoAction() {
-      if (historyIndex > 0) {
-        historyIndex--;
-        applyHistoryState(historyStack[historyIndex]);
-        saveStateToStorage();
-        updateHistoryUI();
-        showToast('Undo');
-      }
-    }
-
-    function redoAction() {
-      if (historyIndex < historyStack.length - 1) {
-        historyIndex++;
-        applyHistoryState(historyStack[historyIndex]);
-        saveStateToStorage();
-        updateHistoryUI();
-        showToast('Redo');
-      }
-    }
-
-    function handleHistoryKeydown(e) {
-      const tag = (e.target && e.target.tagName) || '';
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) {
-        return;
-      }
-
-      const isCtrlOrMeta = e.ctrlKey || e.metaKey;
-      if (!isCtrlOrMeta) return;
-
-      const key = (e.key || '').toLowerCase();
-      if (key === 'z' && !e.shiftKey) {
-        e.preventDefault();
-        undoAction();
-      } else if (key === 'y' || (key === 'z' && e.shiftKey)) {
-        e.preventDefault();
-        redoAction();
-      }
-    }
-
-    if (undoBtn) {
-      undoBtn.addEventListener('click', undoAction);
-    }
-    if (redoBtn) {
-      redoBtn.addEventListener('click', redoAction);
-    }
-    if (typeof window !== 'undefined') {
-      window.addEventListener('keydown', handleHistoryKeydown);
-    }
 
     // 3. Active sections list (scripts/builder/stack-list.js)
     const stackListController = (window.BuilderStackList || require('./scripts/builder/stack-list.js')).createStackList({
@@ -794,7 +593,7 @@
       if (paneSections) paneSections.classList.toggle('is-active', tabName === 'sections');
       if (paneStyling) paneStyling.classList.toggle('is-active', tabName === 'styling');
       if (paneContent) paneContent.classList.toggle('is-active', tabName === 'content');
-      if (builderExtras && tabName === 'content') builderExtras.onContentTabShown();
+      if (historyCtl.state.extras && tabName === 'content') historyCtl.state.extras.onContentTabShown();
     }
 
     if (tabElementsBtn) tabElementsBtn.addEventListener('click', () => switchSidebarTab('elements'));
@@ -891,7 +690,7 @@
     stackManager.subscribe(() => {
       renderStackList();
       updatePreview();
-      if (!isApplyingHistory) {
+      if (!historyCtl.state.applying) {
         pushHistorySnapshot();
         scheduleAutoSave();
       }
@@ -923,8 +722,8 @@
     ];
 
     function loadStarterTemplate(silent = false) {
-      const prevApplying = isApplyingHistory;
-      isApplyingHistory = true;
+      const prevApplying = historyCtl.state.applying;
+      historyCtl.state.applying = true;
       stackManager.clearStack();
       STARTER_SECTIONS.forEach(item => {
         stackManager.addSection(item.slug, {
@@ -932,7 +731,7 @@
           category: item.category
         });
       });
-      isApplyingHistory = prevApplying;
+      historyCtl.state.applying = prevApplying;
       pushHistorySnapshot();
       saveStateToStorage();
       if (!silent) {
@@ -966,7 +765,7 @@
 
     // 6. Viewport Controls
     function setViewportMode(mode) {
-      currentViewport = mode;
+      historyCtl.state.viewport = mode;
       stackManager.setViewport(mode);
       if (viewportStage) {
         viewportStage.setAttribute('data-active-viewport', mode);
@@ -1161,8 +960,8 @@
         if (raw) {
           const parsed = JSON.parse(raw);
           if (parsed && Array.isArray(parsed.stack) && parsed.stack.length > 0) {
-            const prevApplying = isApplyingHistory;
-            isApplyingHistory = true;
+            const prevApplying = historyCtl.state.applying;
+            historyCtl.state.applying = true;
             if (typeof stackManager.setStack === 'function') {
               stackManager.setStack(parsed.stack);
             } else {
@@ -1181,7 +980,7 @@
             if (parsed.viewport) {
               setViewportMode(parsed.viewport);
             }
-            isApplyingHistory = prevApplying;
+            historyCtl.state.applying = prevApplying;
             hasLoadedSavedState = true;
 
             // If the restored stack already contains a preloader, mark as already played
@@ -1197,7 +996,7 @@
         }
       } catch (err) {
         console.warn('Failed to parse saved builder state from localStorage:', err);
-        isApplyingHistory = false;
+        historyCtl.state.applying = false;
       }
     }
 
@@ -1224,12 +1023,12 @@
     }
 
     // Initialize history stack with baseline snapshot
-    historyStack = [];
-    historyIndex = -1;
+    historyCtl.state.stack = [];
+    historyCtl.state.index = -1;
     pushHistorySnapshot();
 
     if (typeof window !== 'undefined' && window.BuilderExtras) {
-      builderExtras = window.BuilderExtras.create({
+      historyCtl.state.extras = window.BuilderExtras.create({
         stackManager,
         showToast,
         getRegistry: () => registry,
@@ -1286,8 +1085,8 @@
       saveStateToStorage,
       serializeState,
       applyState,
-      getHistoryStack: () => [...historyStack],
-      getHistoryIndex: () => historyIndex
+      getHistoryStack: () => [...historyCtl.state.stack],
+      getHistoryIndex: () => historyCtl.state.index
     };
 
     if (typeof window !== 'undefined') {

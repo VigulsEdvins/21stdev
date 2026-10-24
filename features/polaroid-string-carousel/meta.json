@@ -39,76 +39,76 @@
   "updatedAt": "2026-10-22",
   "customizable": [
     {
-      "id": "text-first-light",
-      "label": "Text: First Light",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
-    },
-    {
-      "id": "text-high-pass",
-      "label": "Text: High Pass",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
-    },
-    {
-      "id": "text-ember-hour",
-      "label": "Text: Ember Hour",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2)"
-    },
-    {
-      "id": "text-still-valley",
-      "label": "Text: Still Valley",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2)"
-    },
-    {
-      "id": "text-rose-ridge",
-      "label": "Text: Rose Ridge",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(2)"
-    },
-    {
-      "id": "text-blue-hour",
-      "label": "Text: Blue Hour",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(6) > div:nth-of-type(1) > div:nth-of-type(2)"
-    },
-    {
-      "id": "text-first-light-haze-lifting",
-      "label": "Text: First Light Haze lifting off the …",
-      "type": "text",
-      "selector": ":scope div.pl-cap"
-    },
-    {
-      "id": "text-01-06",
-      "label": "Text: 01 / 06",
-      "type": "text",
-      "selector": ":scope span.pl-count"
-    },
-    {
-      "id": "image-first-light",
-      "label": "Image: First Light",
+      "id": "hero-photo-1",
+      "label": "Hero photo 1",
       "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
     },
     {
-      "id": "image-high-pass",
-      "label": "Image: High Pass",
+      "id": "hero-photo-2",
+      "label": "Hero photo 2",
       "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(6) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
     },
     {
-      "id": "image-ember-hour",
-      "label": "Image: Ember Hour",
+      "id": "hero-photo-3",
+      "label": "Hero photo 3",
       "type": "image",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
     },
     {
-      "id": "image-still-valley",
-      "label": "Image: Still Valley",
+      "id": "hero-photo-4",
+      "label": "Hero photo 4",
       "type": "image",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "text-1",
+      "label": "Text 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(2)"
+    },
+    {
+      "id": "text-2",
+      "label": "Text 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(6) > div:nth-of-type(1) > div:nth-of-type(2)"
+    },
+    {
+      "id": "text-3",
+      "label": "Text 3",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2)"
+    },
+    {
+      "id": "text-4",
+      "label": "Text 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2)"
+    },
+    {
+      "id": "text-5",
+      "label": "Text 5",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
+    },
+    {
+      "id": "text-6",
+      "label": "Text 6",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
+    },
+    {
+      "id": "text-7",
+      "label": "Text 7",
+      "type": "text",
+      "selector": ":scope div.pl-cap"
+    },
+    {
+      "id": "text-8",
+      "label": "Text 8",
+      "type": "text",
+      "selector": ":scope span.pl-count"
     }
   ],
   "measured": {

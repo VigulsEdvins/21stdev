@@ -33,7 +33,74 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h2.ath-heading"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Button text 1",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Button text 3",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
+    },
+    {
+      "id": "link-1",
+      "label": "Link 1",
+      "type": "link",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > div:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "link-2",
+      "label": "Link 2",
+      "type": "link",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "link-3",
+      "label": "Link 3",
+      "type": "link",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(3) > div:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
+    },
+    {
+      "id": "paragraph-1",
+      "label": "Paragraph 1",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)"
+    },
+    {
+      "id": "paragraph-2",
+      "label": "Paragraph 2",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(3) > div:nth-of-type(2) > p:nth-of-type(1)"
+    },
+    {
+      "id": "paragraph-3",
+      "label": "Paragraph 3",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(4) > div:nth-of-type(2) > p:nth-of-type(1)"
+    }
+  ],
   "measured": {
     "luma": 0.19,
     "webgl": false,

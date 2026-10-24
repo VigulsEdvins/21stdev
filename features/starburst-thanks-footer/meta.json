@@ -39,10 +39,73 @@
   "needsAssets": false,
   "origin": {
     "source": "21st.dev",
-    "license": "unverified"
+    "license": "unverified",
+    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
+    "termsUrl": "https://21st.dev/terms"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [],
+  "customizable": [
+    {
+      "id": "footer-text-1",
+      "label": "Footer text 1",
+      "type": "text",
+      "selector": ":scope span.stf-name"
+    },
+    {
+      "id": "footer-heading",
+      "label": "Footer heading",
+      "type": "text",
+      "selector": ":scope h2.stf-h"
+    },
+    {
+      "id": "footer-text-2",
+      "label": "Footer text 2",
+      "type": "text",
+      "selector": ":scope p.stf-signoff"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope button.stf-pill"
+    },
+    {
+      "id": "footer-link-text-1",
+      "label": "Footer link text 1",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2) > a:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-text-2",
+      "label": "Footer link text 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(2) > a:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-1",
+      "label": "Footer link 1",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2) > a:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-2",
+      "label": "Footer link 2",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(2) > a:nth-of-type(1)"
+    },
+    {
+      "id": "footer-link-text-3",
+      "label": "Footer link text 3",
+      "type": "text",
+      "selector": ":scope a.stf-phone"
+    },
+    {
+      "id": "footer-link-3",
+      "label": "Footer link 3",
+      "type": "link",
+      "selector": ":scope a.stf-phone"
+    }
+  ],
   "measured": {
     "luma": 0.1,
     "webgl": false,
