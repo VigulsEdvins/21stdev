@@ -120,5 +120,6 @@
     "webgl": false,
     "canvas2d": true
   },
-  "ownPalette": true
+  "ownPalette": true,
+  "themeReviewed": "Nav links sit on a frosted panel over the pixel-art image; readable in both themes. Checked 2026-10-24."
 }

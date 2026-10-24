@@ -558,7 +558,7 @@ const SL_CSS = `
 /* news */
 .sl-blog-wrap{display:flex;align-items:center;justify-content:center}
 .sl-blog{display:inline-flex;flex-direction:column;align-items:flex-start;gap:0}
-.sl-blog span:first-child{padding:6px 10px;background:var(--sl-cell);border:1px solid var(--sl-line);font-size:10.5px}
+.sl-blog span:first-child{padding:6px 10px;background:var(--sl-cell);color:var(--sl-ink);border:1px solid var(--sl-line);font-size:10.5px}
 .sl-blog span:last-child{display:grid;place-items:center;width:22px;height:22px;background:var(--sl-ink);color:var(--sl-paper)}
 .sl-news-c{padding:0}
 .sl-vp{overflow:hidden}

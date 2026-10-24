@@ -119,5 +119,6 @@
     "webgl": false,
     "canvas2d": false
   },
-  "ownPalette": true
+  "ownPalette": true,
+  "themeReviewed": "Brand orange on cream (2.9:1, large/nav text); intentional palette, same in both themes. Checked 2026-10-24."
 }

@@ -120,5 +120,6 @@
     "webgl": false,
     "canvas2d": false
   },
-  "ownPalette": true
+  "ownPalette": true,
+  "themeReviewed": "Muted secondary labels (Previously at, years, timestamps) are intentionally soft; headline and body are fine. Checked 2026-10-24."
 }
