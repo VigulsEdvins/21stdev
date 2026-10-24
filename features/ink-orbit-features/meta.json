@@ -41,5 +41,54 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [
+    {
+      "id": "text-features",
+      "label": "Text: Features",
+      "type": "text",
+      "selector": ":scope span.ib-tag"
+    },
+    {
+      "id": "text-smart-workflow-automatio",
+      "label": "Heading 2: Smart Workflow Automation",
+      "type": "text",
+      "selector": ":scope h2.ib-h2"
+    },
+    {
+      "id": "text-real-time-collaboration",
+      "label": "Heading 3: Real-Time Collaboration",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "text-work-together-in-real-ti",
+      "label": "Paragraph: Work together in real time, share…",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "text-auto-generated-reports",
+      "label": "Heading 3: Auto-generated reports",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "text-get-clean-structured-rep",
+      "label": "Paragraph: Get clean, structured reports gen…",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
+    },
+    {
+      "id": "text-integrations-hub",
+      "label": "Heading 3: Integrations Hub",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)"
+    },
+    {
+      "id": "text-connect-all-your-tools-s",
+      "label": "Paragraph: Connect all your tools — Slack, G…",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+    }
+  ]
 }

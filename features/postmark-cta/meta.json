@@ -40,5 +40,36 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [
+    {
+      "id": "text-your-passport-isgetting-",
+      "label": "Heading 2: Your passport isgetting bored.",
+      "type": "text",
+      "selector": ":scope h2.pm-h"
+    },
+    {
+      "id": "text-flights-stays-and-trains",
+      "label": "Paragraph: Flights, stays and trains in one …",
+      "type": "text",
+      "selector": ":scope p.pm-p"
+    },
+    {
+      "id": "text-plan-a-trip",
+      "label": "Text: Plan a trip",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "text-browse-1-200-places",
+      "label": "Button: Browse 1,200 places",
+      "type": "text",
+      "selector": ":scope button.pm-link"
+    },
+    {
+      "id": "text-free-to-plan-you-only-pa",
+      "label": "Paragraph: Free to plan. You only pay when y…",
+      "type": "text",
+      "selector": ":scope p.pm-note"
+    }
+  ]
 }

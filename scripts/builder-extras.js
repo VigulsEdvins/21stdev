@@ -78,13 +78,17 @@
     }
 
     let textCount = 0;
+    const collected = [];
     sectionEl.querySelectorAll(TEXT_CANDIDATES).forEach(el => {
       if (textCount >= MAX_TEXT_FIELDS || isHidden(el, sectionEl) || !isTextLeaf(el)) return;
+      // Parents come first in document order: an element inside one we already list is part of its text
+      if (collected.some(c => c.contains(el))) return;
       const text = el.textContent.replace(/\s+/g, ' ').trim();
       if (text.length < 2 || text.length > 220) return;
       // Skip wrappers whose text is fully inside a child we will list anyway
       if (el.children.length && Array.from(el.children).some(c => c.textContent.trim() === text && !INLINE_TAGS.has(c.tagName))) return;
       const selector = selectorFor(el, sectionEl);
+      collected.push(el);
       fields.push({ id: `auto-${shortHash(selector + 'text')}`, label: `${TAG_LABELS[el.tagName.toLowerCase()] || 'Text'}: ${snippet(text)}`, type: 'text', selector, current: text, auto: true });
       textCount++;
     });

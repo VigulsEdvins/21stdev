@@ -41,5 +41,54 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [
+    {
+      "id": "text-pricing",
+      "label": "Text: Pricing",
+      "type": "text",
+      "selector": ":scope span.ip-tag"
+    },
+    {
+      "id": "text-simple-transparent-prici",
+      "label": "Heading 2: Simple, Transparent Pricing",
+      "type": "text",
+      "selector": ":scope h2.ip-h2"
+    },
+    {
+      "id": "text-start-free-for-14-days-n",
+      "label": "Paragraph: Start free for 14 days. No card r…",
+      "type": "text",
+      "selector": ":scope p.ip-sub"
+    },
+    {
+      "id": "text-monthly",
+      "label": "Button: Monthly",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
+    },
+    {
+      "id": "text-yearly-20",
+      "label": "Button: Yearly-20%",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
+    },
+    {
+      "id": "text-starter",
+      "label": "Text: Starter",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1)"
+    },
+    {
+      "id": "text-for-individuals-automati",
+      "label": "Paragraph: For individuals automating their …",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "text-19-month",
+      "label": "Text: $19/ month",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(2)"
+    }
+  ]
 }

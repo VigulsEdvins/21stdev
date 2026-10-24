@@ -41,5 +41,72 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [
+    {
+      "id": "text-2026-zephyr-llc",
+      "label": "Paragraph: © 2026 Zephyr LLC",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "text-zephyr-template-by-kedha",
+      "label": "Paragraph: Zephyr template by Kedhar",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "text-part-of-night-shift-coll",
+      "label": "Paragraph: Part of Night Shift collection",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)"
+    },
+    {
+      "id": "text-our-product",
+      "label": "Paragraph: Our Product",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "text-features",
+      "label": "Text: Features",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "text-benefits",
+      "label": "Text: Benefits",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "text-pricing",
+      "label": "Text: Pricing",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "text-testimonials",
+      "label": "Text: Testimonials",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "link-x",
+      "label": "Link to: X",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+    },
+    {
+      "id": "link-linkedin",
+      "label": "Link to: LinkedIn",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
+    },
+    {
+      "id": "link-youtube",
+      "label": "Link to: YouTube",
+      "type": "link",
+      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)"
+    }
+  ]
 }

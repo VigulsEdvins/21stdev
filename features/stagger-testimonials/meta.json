@@ -40,5 +40,78 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [
+    {
+      "id": "text-toggle-theme",
+      "label": "Button: Toggle Theme",
+      "type": "text",
+      "selector": ":scope button.theme-btn"
+    },
+    {
+      "id": "text-all-reviews",
+      "label": "Button: All Reviews",
+      "type": "text",
+      "selector": ":scope button.active"
+    },
+    {
+      "id": "text-leadership",
+      "label": "Button: Leadership",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
+    },
+    {
+      "id": "text-engineering",
+      "label": "Button: Engineering",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)"
+    },
+    {
+      "id": "text-social-proof",
+      "label": "Text: Social Proof",
+      "type": "text",
+      "selector": ":scope span.proof-pill"
+    },
+    {
+      "id": "text-loved-by-builders-worldw",
+      "label": "Heading 2: Loved by builders worldwide",
+      "type": "text",
+      "selector": ":scope h2.stagger-title"
+    },
+    {
+      "id": "text-real-feedback-from-desig",
+      "label": "Paragraph: Real feedback from designers, fou…",
+      "type": "text",
+      "selector": ":scope p.stagger-sub"
+    },
+    {
+      "id": "text-elena-rostova",
+      "label": "Heading 4: Elena Rostova",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > rect:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)"
+    },
+    {
+      "id": "image-elena-rostova",
+      "label": "Image: Elena Rostova",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "image-marcus-vance",
+      "label": "Image: Marcus Vance",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "image-aria-chen",
+      "label": "Image: Aria Chen",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > img:nth-of-type(1)"
+    },
+    {
+      "id": "image-julian-thorne",
+      "label": "Image: Julian Thorne",
+      "type": "image",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > img:nth-of-type(1)"
+    }
+  ]
 }

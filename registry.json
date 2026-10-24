@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T07:37:39.073Z",
+  "generatedAt": "2026-10-24T07:46:32.735Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 209,
   "categories": [
@@ -291,7 +291,7 @@
       "title": "Forma - Liquid Particle Studio",
       "category": "Full Templates",
       "legacyCategory": "Full Websites",
-      "status": "draft",
+      "status": "stable",
       "mood": [
         "futuristic",
         "editorial"
@@ -310,7 +310,7 @@
       "customizable": [],
       "source": "21st.dev",
       "type": "template",
-      "description": "Form that answers back. High-end independent studio template featuring real-time WebGL liquid particle simulations, responsive layout, and smooth typography.",
+      "description": "Form that answers back. (Images are generated placeholders: swap them in the Content tab.) High-end independent studio template featuring real-time WebGL liquid particle simulations, responsive layout, and smooth typography.",
       "tags": [
         "template",
         "particles",
@@ -411,7 +411,80 @@
         "license": "unverified"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-toggle-theme",
+          "label": "Button: Toggle Theme",
+          "type": "text",
+          "selector": ":scope button.theme-btn"
+        },
+        {
+          "id": "text-all-reviews",
+          "label": "Button: All Reviews",
+          "type": "text",
+          "selector": ":scope button.active"
+        },
+        {
+          "id": "text-leadership",
+          "label": "Button: Leadership",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
+        },
+        {
+          "id": "text-engineering",
+          "label": "Button: Engineering",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)"
+        },
+        {
+          "id": "text-social-proof",
+          "label": "Text: Social Proof",
+          "type": "text",
+          "selector": ":scope span.proof-pill"
+        },
+        {
+          "id": "text-loved-by-builders-worldw",
+          "label": "Heading 2: Loved by builders worldwide",
+          "type": "text",
+          "selector": ":scope h2.stagger-title"
+        },
+        {
+          "id": "text-real-feedback-from-desig",
+          "label": "Paragraph: Real feedback from designers, fou…",
+          "type": "text",
+          "selector": ":scope p.stagger-sub"
+        },
+        {
+          "id": "text-elena-rostova",
+          "label": "Heading 4: Elena Rostova",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > rect:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)"
+        },
+        {
+          "id": "image-elena-rostova",
+          "label": "Image: Elena Rostova",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+        },
+        {
+          "id": "image-marcus-vance",
+          "label": "Image: Marcus Vance",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > img:nth-of-type(1)"
+        },
+        {
+          "id": "image-aria-chen",
+          "label": "Image: Aria Chen",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > img:nth-of-type(1)"
+        },
+        {
+          "id": "image-julian-thorne",
+          "label": "Image: Julian Thorne",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > img:nth-of-type(1)"
+        }
+      ],
       "source": "21st.dev",
       "type": "component",
       "description": "Testimonial review cards layout layered with alternating column offset, glowing active state, star ratings, category filtering, and zero heavy motion library overhead.",
@@ -765,7 +838,80 @@
         "license": "own"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-first-light",
+          "label": "Text: First Light",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
+        },
+        {
+          "id": "text-high-pass",
+          "label": "Text: High Pass",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
+        },
+        {
+          "id": "text-ember-hour",
+          "label": "Text: Ember Hour",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2)"
+        },
+        {
+          "id": "text-still-valley",
+          "label": "Text: Still Valley",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2)"
+        },
+        {
+          "id": "text-rose-ridge",
+          "label": "Text: Rose Ridge",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(2)"
+        },
+        {
+          "id": "text-blue-hour",
+          "label": "Text: Blue Hour",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(6) > div:nth-of-type(1) > div:nth-of-type(2)"
+        },
+        {
+          "id": "text-first-light-haze-lifting",
+          "label": "Text: First Light Haze lifting off the …",
+          "type": "text",
+          "selector": ":scope div.pl-cap"
+        },
+        {
+          "id": "text-01-06",
+          "label": "Text: 01 / 06",
+          "type": "text",
+          "selector": ":scope span.pl-count"
+        },
+        {
+          "id": "image-first-light",
+          "label": "Image: First Light",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+        },
+        {
+          "id": "image-high-pass",
+          "label": "Image: High Pass",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+        },
+        {
+          "id": "image-ember-hour",
+          "label": "Image: Ember Hour",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+        },
+        {
+          "id": "image-still-valley",
+          "label": "Image: Still Valley",
+          "type": "image",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+        }
+      ],
       "source": "photo-caroulsel",
       "type": "component",
       "description": "Instant photo prints pegged to a sagging catenary string. Drag the line or use arrows/clicks to slide prints with critically damped spring physics, velocity-driven pendulum swing, ambient breeze sway, and procedural painted landscapes.",
@@ -1060,7 +1206,56 @@
         "license": "own"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-trusted-by-global-clubs-",
+          "label": "Text: Trusted by Global Clubs, Federati…",
+          "type": "text",
+          "selector": ":scope span.marquee-label"
+        },
+        {
+          "id": "text-speed-normal-1x",
+          "label": "Button: Speed: Normal (1x)",
+          "type": "text",
+          "selector": ":scope button.marquee-btn"
+        },
+        {
+          "id": "text-afc-ajax",
+          "label": "Text: AFC AJAX",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1)"
+        },
+        {
+          "id": "text-club-brugge",
+          "label": "Text: CLUB BRUGGE",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
+        },
+        {
+          "id": "text-como-1907",
+          "label": "Text: COMO 1907",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3)"
+        },
+        {
+          "id": "text-dazn-broadcast",
+          "label": "Text: DAZN BROADCAST",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4)"
+        },
+        {
+          "id": "text-hoka-performance",
+          "label": "Text: HOKA PERFORMANCE",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5)"
+        },
+        {
+          "id": "text-adidas-originals",
+          "label": "Text: ADIDAS ORIGINALS",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(6)"
+        }
+      ],
       "source": "carousel-gallery-play",
       "type": "component",
       "description": "Seamless hardware-accelerated infinite dual-track partner logo marquee with soft gradient edge masks, hover speed modulation, and direction reversal toggle.",
@@ -1392,7 +1587,56 @@
         "license": "own"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-questions-architecture",
+          "label": "Text: Questions & Architecture",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "text-frequently-asked",
+          "label": "Heading 2: Frequently Asked",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+        },
+        {
+          "id": "text-how-are-these-features-s",
+          "label": "Text: How are these features structured…",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "text-every-feature-is-isolate",
+          "label": "Paragraph: Every feature is isolated in its …",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-can-i-use-these-componen",
+          "label": "Text: Can I use these components in bot…",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "text-yes-every-component-incl",
+          "label": "Paragraph: Yes. Every component includes sta…",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-how-does-the-css-grid-0f",
+          "label": "Text: How does the CSS Grid 0fr to 1fr …",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "text-instead-of-animating-max",
+          "label": "Paragraph: Instead of animating max-height w…",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+        }
+      ],
       "source": "carousel-gallery-play",
       "type": "component",
       "description": "Accessible ARIA-compliant editorial FAQ accordion using CSS grid-template-rows 0fr->1fr smooth height interpolation and rotating plus/cross indicators.",
@@ -1440,7 +1684,68 @@
         "license": "own"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-vivmgmt",
+          "label": "Text: VIVMGMT",
+          "type": "text",
+          "selector": ":scope span.brand"
+        },
+        {
+          "id": "text-menu",
+          "label": "Button: MENU",
+          "type": "text",
+          "selector": ":scope button.burger-btn"
+        },
+        {
+          "id": "text-click-the-top-right-trig",
+          "label": "Paragraph: Click the top-right trigger to to…",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-01artists-roster",
+          "label": "List item: 01Artists Roster",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
+        },
+        {
+          "id": "text-02editorial-chronicle",
+          "label": "List item: 02Editorial Chronicle",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)"
+        },
+        {
+          "id": "text-03global-syndication",
+          "label": "List item: 03Global Syndication",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)"
+        },
+        {
+          "id": "text-04paris-ny-offices",
+          "label": "List item: 04Paris & NY Offices",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)"
+        },
+        {
+          "id": "link-01artists-roster",
+          "label": "Link to: 01Artists Roster",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+        },
+        {
+          "id": "link-02editorial-chronicle",
+          "label": "Link to: 02Editorial Chronicle",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
+        },
+        {
+          "id": "link-03global-syndication",
+          "label": "Link to: 03Global Syndication",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)"
+        }
+      ],
       "source": "vivmgmt",
       "type": "component",
       "description": "Morphing two-line architectural burger button and full-screen staggered navigation curtain with office directory.",
@@ -1537,7 +1842,50 @@
         "license": "own"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-21st-dev-wide-gamut-oklc",
+          "label": "Text: 21ST.DEV WIDE-GAMUT OKLCH ENGINE",
+          "type": "text",
+          "selector": ":scope div.hero-pill"
+        },
+        {
+          "id": "text-ship-interfaces-with-per",
+          "label": "Heading 1: Ship interfaces with perceptual d…",
+          "type": "text",
+          "selector": ":scope h1.hero-title"
+        },
+        {
+          "id": "text-interactive-oklch-radial",
+          "label": "Paragraph: Interactive OKLCH radial shaders …",
+          "type": "text",
+          "selector": ":scope p.hero-sub"
+        },
+        {
+          "id": "text-ultraviolet",
+          "label": "Button: Ultraviolet",
+          "type": "text",
+          "selector": ":scope button.is-active"
+        },
+        {
+          "id": "text-emerald-cyber",
+          "label": "Button: Emerald Cyber",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > button:nth-of-type(2)"
+        },
+        {
+          "id": "text-solar-flare",
+          "label": "Button: Solar Flare",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > button:nth-of-type(3)"
+        },
+        {
+          "id": "text-deep-cryo",
+          "label": "Button: Deep Cryo",
+          "type": "text",
+          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > button:nth-of-type(4)"
+        }
+      ],
       "source": "21st-crafted",
       "type": "component",
       "description": "21st.dev signature dark hero with wide-gamut oklch() radial pulsing aurora shaders, blur-to-sharp entrance choreography, and interactive category chip river.",
@@ -3338,7 +3686,74 @@
         "license": "unverified"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-2026-zephyr-llc",
+          "label": "Paragraph: © 2026 Zephyr LLC",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-zephyr-template-by-kedha",
+          "label": "Paragraph: Zephyr template by Kedhar",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-part-of-night-shift-coll",
+          "label": "Paragraph: Part of Night Shift collection",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)"
+        },
+        {
+          "id": "text-our-product",
+          "label": "Paragraph: Our Product",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-features",
+          "label": "Text: Features",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "text-benefits",
+          "label": "Text: Benefits",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "text-pricing",
+          "label": "Text: Pricing",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "text-testimonials",
+          "label": "Text: Testimonials",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "link-x",
+          "label": "Link to: X",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+        },
+        {
+          "id": "link-linkedin",
+          "label": "Link to: LinkedIn",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
+        },
+        {
+          "id": "link-youtube",
+          "label": "Link to: YouTube",
+          "type": "link",
+          "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)"
+        }
+      ],
       "source": "21st.dev",
       "type": "component",
       "description": "A midnight-navy closing section with a slow diagonal shaft of light running across it, and the brand set as a giant wordmark cropped by the bottom edge.",
@@ -6284,7 +6699,56 @@
         "license": "unverified"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-features",
+          "label": "Text: Features",
+          "type": "text",
+          "selector": ":scope span.ib-tag"
+        },
+        {
+          "id": "text-smart-workflow-automatio",
+          "label": "Heading 2: Smart Workflow Automation",
+          "type": "text",
+          "selector": ":scope h2.ib-h2"
+        },
+        {
+          "id": "text-real-time-collaboration",
+          "label": "Heading 3: Real-Time Collaboration",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)"
+        },
+        {
+          "id": "text-work-together-in-real-ti",
+          "label": "Paragraph: Work together in real time, share…",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-auto-generated-reports",
+          "label": "Heading 3: Auto-generated reports",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+        },
+        {
+          "id": "text-get-clean-structured-rep",
+          "label": "Paragraph: Get clean, structured reports gen…",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-integrations-hub",
+          "label": "Heading 3: Integrations Hub",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)"
+        },
+        {
+          "id": "text-connect-all-your-tools-s",
+          "label": "Paragraph: Connect all your tools — Slack, G…",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+        }
+      ],
       "source": "21st.dev",
       "type": "component",
       "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
@@ -6384,7 +6848,56 @@
         "license": "unverified"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-pricing",
+          "label": "Text: Pricing",
+          "type": "text",
+          "selector": ":scope span.ip-tag"
+        },
+        {
+          "id": "text-simple-transparent-prici",
+          "label": "Heading 2: Simple, Transparent Pricing",
+          "type": "text",
+          "selector": ":scope h2.ip-h2"
+        },
+        {
+          "id": "text-start-free-for-14-days-n",
+          "label": "Paragraph: Start free for 14 days. No card r…",
+          "type": "text",
+          "selector": ":scope p.ip-sub"
+        },
+        {
+          "id": "text-monthly",
+          "label": "Button: Monthly",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
+        },
+        {
+          "id": "text-yearly-20",
+          "label": "Button: Yearly-20%",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
+        },
+        {
+          "id": "text-starter",
+          "label": "Text: Starter",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1)"
+        },
+        {
+          "id": "text-for-individuals-automati",
+          "label": "Paragraph: For individuals automating their …",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > p:nth-of-type(1)"
+        },
+        {
+          "id": "text-19-month",
+          "label": "Text: $19/ month",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(2)"
+        }
+      ],
       "source": "21st.dev",
       "type": "component",
       "description": "Interactive component by Kedhareswer Naidu published on 21st.dev.",
@@ -8497,7 +9010,38 @@
         "license": "unverified"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [],
+      "customizable": [
+        {
+          "id": "text-your-passport-isgetting-",
+          "label": "Heading 2: Your passport isgetting bored.",
+          "type": "text",
+          "selector": ":scope h2.pm-h"
+        },
+        {
+          "id": "text-flights-stays-and-trains",
+          "label": "Paragraph: Flights, stays and trains in one …",
+          "type": "text",
+          "selector": ":scope p.pm-p"
+        },
+        {
+          "id": "text-plan-a-trip",
+          "label": "Text: Plan a trip",
+          "type": "text",
+          "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+        },
+        {
+          "id": "text-browse-1-200-places",
+          "label": "Button: Browse 1,200 places",
+          "type": "text",
+          "selector": ":scope button.pm-link"
+        },
+        {
+          "id": "text-free-to-plan-you-only-pa",
+          "label": "Paragraph: Free to plan. You only pay when y…",
+          "type": "text",
+          "selector": ":scope p.pm-note"
+        }
+      ],
       "source": "21st.dev",
       "type": "component",
       "description": "The closing call to action of a landing page: the last block before the footer. A heavy two-line headline, one primary button and a quiet secondary link sit on a halftone field, with a loose collection of postage stamps scattered around them.",
