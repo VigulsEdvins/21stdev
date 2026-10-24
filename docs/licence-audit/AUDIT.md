@@ -211,3 +211,11 @@ The "License" field on each page `https://21st.dev/@kedhareswer/components/<slug
 - **44 — no page under our slug** (mostly `*-template` / `*-landing` components, plus `agent-console-template`, `alter-ego-mask-reveal`, `dappled-canopy`, `dragon-seal-preloader`, `grid-loupe-shader`, `perforated-stripe-curtain`, `pocket-portfolio`, `title-sequence-preloader`, `velocity-reel`, …). They may be local compositions or renamed; origin and licence unknown.
 
 Not yet recorded in `meta.json`.
+
+## Follow-up (2026-10-24)
+
+**44 Kedhareswer components with no 21st.dev page**: all 44 exist in github.com/Kedhareswer/21stdev-my-components (so the author is confirmed), but the repo has no LICENSE file and the READMEs state no licence. The licence is set when a component is published on 21st.dev, so these appear unpublished. No licence granted: ask the author, or keep them out of client builds.
+
+**Other authors (18 checked)**: 6 show MIT and are recorded: glass-fold, image-stream-hero, perspective-tunnel-hero, tilted-grid-hero, vertical-tabs, wipe-transition.
+12 pages show no License field, so no licence is declared: file-card-collections, gradient-bar-hero-section, hero-ascii-one, hover-footer, hover-preview, liquid-metal-hero, stagger-testimonials, testimonial-v2, vapour-text-effect, waitlist-hero, web-gl-shader (the page for hyperiux-timeline returns 404).
+Not checked: into-the-ether, forma-liquid-particle-studio, alice-scroll-story (origin unknown).

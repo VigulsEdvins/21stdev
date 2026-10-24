@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T11:15:29.249Z",
+  "generatedAt": "2026-10-24T11:17:30.481Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 209,
   "categories": [
@@ -98,9 +98,12 @@
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "MIT",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "url": "https://21st.dev/community/components",
+        "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
       },
       "updatedAt": "2026-10-24",
       "customizable": [
@@ -450,9 +453,12 @@
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "MIT",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "url": "https://21st.dev/community/components",
+        "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
       },
       "updatedAt": "2026-10-22",
       "customizable": [],
@@ -654,9 +660,12 @@
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "MIT",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "url": "https://21st.dev/community/components",
+        "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
       },
       "updatedAt": "2026-10-22",
       "customizable": [
@@ -896,9 +905,12 @@
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "MIT",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "url": "https://21st.dev/community/components",
+        "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
       },
       "updatedAt": "2026-10-22",
       "customizable": [
@@ -1118,9 +1130,12 @@
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "MIT",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "url": "https://21st.dev/community/components",
+        "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
       },
       "updatedAt": "2026-10-22",
       "customizable": [
@@ -5444,9 +5459,12 @@
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
-        "license": "unverified",
+        "license": "MIT",
         "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-        "termsUrl": "https://21st.dev/terms"
+        "termsUrl": "https://21st.dev/terms",
+        "verifiedAt": "2026-10-24",
+        "url": "https://21st.dev/community/components",
+        "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
       },
       "updatedAt": "2026-10-22",
       "customizable": [],
