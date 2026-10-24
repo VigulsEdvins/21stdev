@@ -1733,40 +1733,40 @@ ${!isDark ? `
       border-color: var(--preview-border) !important;
     }
 
-    .page-section:not(.is-preloader) h1:not([class*="gradient"]),
-    .page-section:not(.is-preloader) h2:not([class*="gradient"]),
-    .page-section:not(.is-preloader) h3:not([class*="gradient"]),
-    .page-section:not(.is-preloader) h4,
-    .page-section:not(.is-preloader) h5,
-    .page-section:not(.is-preloader) h6,
-    .page-section:not(.is-preloader) p:not([class*="gradient"]),
-    .page-section:not(.is-preloader) .cyl-title,
-    .page-section:not(.is-preloader) .cyl-footer,
-    .page-section:not(.is-preloader) .strapline-copy,
-    .page-section:not(.is-preloader) .conv-h2,
-    .page-section:not(.is-preloader) .timeline-card__title,
-    .page-section:not(.is-preloader) .viv-artist-name,
-    .page-section:not(.is-preloader) .card-title,
-    .page-section:not(.is-preloader) .pricing-title,
-    .page-section:not(.is-preloader) .pricing-price {
+    .page-section:not(.is-preloader):not([data-own-palette]) h1:not([class*="gradient"]),
+    .page-section:not(.is-preloader):not([data-own-palette]) h2:not([class*="gradient"]),
+    .page-section:not(.is-preloader):not([data-own-palette]) h3:not([class*="gradient"]),
+    .page-section:not(.is-preloader):not([data-own-palette]) h4,
+    .page-section:not(.is-preloader):not([data-own-palette]) h5,
+    .page-section:not(.is-preloader):not([data-own-palette]) h6,
+    .page-section:not(.is-preloader):not([data-own-palette]) p:not([class*="gradient"]),
+    .page-section:not(.is-preloader):not([data-own-palette]) .cyl-title,
+    .page-section:not(.is-preloader):not([data-own-palette]) .cyl-footer,
+    .page-section:not(.is-preloader):not([data-own-palette]) .strapline-copy,
+    .page-section:not(.is-preloader):not([data-own-palette]) .conv-h2,
+    .page-section:not(.is-preloader):not([data-own-palette]) .timeline-card__title,
+    .page-section:not(.is-preloader):not([data-own-palette]) .viv-artist-name,
+    .page-section:not(.is-preloader):not([data-own-palette]) .card-title,
+    .page-section:not(.is-preloader):not([data-own-palette]) .pricing-title,
+    .page-section:not(.is-preloader):not([data-own-palette]) .pricing-price {
       color: var(--preview-text) !important;
     }
 
-    .page-section:not(.is-preloader) .strapline-meta,
-    .page-section:not(.is-preloader) .conv-p,
-    .page-section:not(.is-preloader) .hero-sub,
-    .page-section:not(.is-preloader) .viv-artist-role,
-    .page-section:not(.is-preloader) .card-desc,
-    .page-section:not(.is-preloader) .pricing-feature,
-    .page-section:not(.is-preloader) .testimonial-quote {
+    .page-section:not(.is-preloader):not([data-own-palette]) .strapline-meta,
+    .page-section:not(.is-preloader):not([data-own-palette]) .conv-p,
+    .page-section:not(.is-preloader):not([data-own-palette]) .hero-sub,
+    .page-section:not(.is-preloader):not([data-own-palette]) .viv-artist-role,
+    .page-section:not(.is-preloader):not([data-own-palette]) .card-desc,
+    .page-section:not(.is-preloader):not([data-own-palette]) .pricing-feature,
+    .page-section:not(.is-preloader):not([data-own-palette]) .testimonial-quote {
       color: ${textMuted} !important;
     }
 
-    .page-section:not(.is-preloader) .hero-pill,
-    .page-section:not(.is-preloader) .cyl-btn,
-    .page-section:not(.is-preloader) .ruler-month-btn,
-    .page-section:not(.is-preloader) .chip,
-    .page-section:not(.is-preloader) .btn-secondary {
+    .page-section:not(.is-preloader):not([data-own-palette]) .hero-pill,
+    .page-section:not(.is-preloader):not([data-own-palette]) .cyl-btn,
+    .page-section:not(.is-preloader):not([data-own-palette]) .ruler-month-btn,
+    .page-section:not(.is-preloader):not([data-own-palette]) .chip,
+    .page-section:not(.is-preloader):not([data-own-palette]) .btn-secondary {
       background-color: ${cardBg} !important;
       color: var(--preview-text) !important;
       border-color: var(--preview-border) !important;
@@ -1985,7 +1985,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     }
     const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
     const nativeList = nativePolarities(options.nativeMap, slug);
-    const nativeAttr = nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '';
+    const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
     sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with section registering ID
@@ -2492,7 +2492,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
     const nativeList = nativePolarities(options.nativeMap, slug);
-    const nativeAttr = nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '';
+    const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
     sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with registering section ID
@@ -2777,7 +2777,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap });
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, ownPalette: options.ownPalette });
   return doc
     .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }

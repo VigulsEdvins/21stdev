@@ -104,6 +104,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       updatedAt: meta.updatedAt || null,
       customizable: Array.isArray(meta.customizable) ? meta.customizable : [],
       nativeWhen: Array.isArray(meta.nativeWhen) ? meta.nativeWhen : [],
+      ownPalette: meta.ownPalette === true,
       source: meta.source || 'custom',
       type: meta.type || 'component', // 'component' | 'template'
       description: meta.description || '',
@@ -155,6 +156,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       updatedAt: item.updatedAt,
       customizable: item.customizable,
       nativeWhen: item.nativeWhen,
+      ownPalette: item.ownPalette,
       source: item.source,
       type: item.type,
       description: item.description,
