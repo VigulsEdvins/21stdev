@@ -3236,3 +3236,5 @@ html[data-ui-theme="light"] .builder-body { background-color: #09090b; }
 .history-item[aria-current="true"] { background: rgba(168,85,247,.22); font-weight: 600; }
 .history-item time { opacity: .55; font-size: 11px; white-space: nowrap; }
 .builder-icon-btn { padding: 6px 9px; }
+.stack-heavy-note { margin: 8px 0 0; padding: 8px 10px; border-radius: 8px; font-size: 12px; line-height: 1.45; color: #fcd34d; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); }
+.stack-heavy-note[hidden] { display: none; }

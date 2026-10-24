@@ -35,6 +35,14 @@
         tabSectionsCount.textContent = String(stack.length);
       }
 
+      // Many WebGL / long-animation sections on one page are slow on phones and older laptops
+      const heavyNote = document.getElementById('stackHeavyNote');
+      if (heavyNote) {
+        const heavy = stack.filter(s => !s.hidden && ((featuresMap.get(s.slug) || {}).weight === 'heavy')).length;
+        heavyNote.hidden = heavy <= 3;
+        if (heavy > 3) heavyNote.textContent = `${heavy} heavy sections (WebGL or long animations). The page may feel slow on phones; consider fewer, or hide some.`;
+      }
+
       // Remove existing item cards
       const existingCards = pageStackList.querySelectorAll('.stack-item-card');
       existingCards.forEach(card => card.remove());
