@@ -35,7 +35,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
    - `index.html`, `style.css`, `script.js` — standalone and runnable; no external image links that can break.
    - `component.tsx` + `demo.tsx` *(React features)* — then run `npm run bundle-demo -- --slug <slug>` so `script.js` is built from the **demo** (real props), not the bare component.
    - Images/video/fonts: copy them into `assets/library/` (or run `node scripts/localize-assets.js`) and reference them as `/assets/library/<file>`. Never reference files outside this folder.
-   - Use the standard design tokens in CSS: `var(--bg)`, `var(--text)`, `var(--accent)`, `var(--radius)`, `var(--font-display)`, `var(--font-body)` so themes and page fonts apply. `npm run lint-tokens` lists the worst offenders.
+   - Use the standard design tokens in CSS: `var(--bg)`, `var(--text)`, `var(--accent)`, `var(--radius)`, `var(--font-display)`, `var(--font-body)` so themes and page fonts apply. `npm run lint-tokens` lists the worst offenders. Migrate existing components by hand, one at a time, and check them in a dark and a light theme: an automated colour swap was tried and rejected because light-designed components turned dark with unreadable card text.
 3. **Sync, verify, check**:
    ```bash
    npm run sync              # rebuilds registry.json and registry.js

@@ -36,7 +36,7 @@ body, html {
 }
 
 .nav-demo-shell.is-open .brand {
-  color: var(--text, #f4f1ea);
+  color: #f4f1ea;
 }
 
 .burger-btn {
@@ -55,7 +55,7 @@ body, html {
 }
 
 .nav-demo-shell.is-open .burger-btn {
-  color: var(--text, #f4f1ea);
+  color: #f4f1ea;
 }
 
 .burger-lines {
@@ -93,8 +93,8 @@ body, html {
 .overlay-menu {
   position: fixed;
   inset: 0;
-  background: var(--bg, #141413);
-  color: var(--text, #f4f1ea);
+  background: #141413;
+  color: #f4f1ea;
   z-index: 20;
   display: flex;
   align-items: center;
@@ -122,7 +122,7 @@ body, html {
   align-items: baseline;
   gap: 24px;
   padding: 18px 0;
-  color: var(--text, #f4f1ea);
+  color: #f4f1ea;
   text-decoration: none;
   font-size: clamp(2rem, 4.5vw, 3.6rem);
   transform: translateY(100%);
