@@ -5,8 +5,9 @@
  * uses (from component.tsx and demo*.tsx) into features/<slug>/tailwind.css and links it from style.css
  * through @import-free concatenation: the CSS is appended to style.css between marker comments.
  *   npm run build-tailwind -- --slug a,b
- * Preflight is off (it would reset every other section on the page); only the box-sizing and border
- * defaults the utilities rely on are added, scoped under the feature's own classes by the builder.
+ * Tailwind's preflight (the CSS reset these components were designed against: buttons without chrome,
+ * zero margins, border-box) is included. In the builder, section CSS is scoped under the section's id,
+ * so the reset only touches that one section.
  */
 const fs = require('fs');
 const os = require('os');
@@ -23,15 +24,13 @@ function build(slug) {
   if (!sources.length) throw new Error('no component.tsx / demo.tsx');
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'tw-'));
   const cfg = path.join(tmp, 'tailwind.config.js');
-  fs.writeFileSync(cfg, `module.exports = { content: ${JSON.stringify(sources)}, corePlugins: { preflight: false }, theme: { extend: {} } };`);
+  fs.writeFileSync(cfg, `module.exports = { content: ${JSON.stringify(sources)}, theme: { extend: {} } };`);
   const input = path.join(tmp, 'in.css');
-  fs.writeFileSync(input, '@tailwind utilities;\n');
+  fs.writeFileSync(input, '@tailwind base;\n@tailwind utilities;\n');
   const out = path.join(tmp, 'out.css');
   execFileSync(path.join(ROOT, 'node_modules', '.bin', 'tailwindcss'), ['-c', cfg, '-i', input, '-o', out, '--minify'], { stdio: 'pipe' });
   let css = fs.readFileSync(out, 'utf8').trim();
   fs.rmSync(tmp, { recursive: true, force: true });
-  // utilities rely on preflight's border defaults and the --tw-* custom properties' initial values
-  css = `*,::before,::after{--tw-border-opacity:1}\n` + css;
   const file = path.join(dir, 'style.css');
   let existing = fs.readFileSync(file, 'utf8');
   const re = new RegExp(`\\n?${START.replace(/[()*]/g, '\\$&')}[\\s\\S]*?${END.replace(/[*/]/g, '\\$&')}\\n?`);
