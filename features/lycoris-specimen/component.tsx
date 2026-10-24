@@ -545,7 +545,7 @@ void main() {
 
 const DISPLAY = '"Federant", "Uncial Antiqua", "Cinzel Decorative", "Iowan Old Style", "Palatino Linotype", Georgia, serif'
 const SANS = '"Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui, sans-serif'
-const FONT_HREF = "https://fonts.googleapis.com/css2?family=Federant&display=swap"
+const FONT_HREF = "/assets/library/fonts-Federant-da3e2daf.css"
 
 const UPPER_L = ["ABCD", "EFGHI", "JKLM"]
 const UPPER_R = ["NOPQ", "RSTUV", "WXYZ"]

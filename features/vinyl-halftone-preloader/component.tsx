@@ -85,7 +85,7 @@ const PRESETS: VinylPresetMap = {
   newsprint: { paper: "#ebe5d8", ink: "#151311", glow: "#ffffff", edge: "#e3402a", spark: "#fff7e6" },
 }
 
-const FONT_HREF = "https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;800&display=swap"
+const FONT_HREF = "/assets/library/fonts-Anton-a5161844.css"
 const DISPLAY_STACK = 'Anton, "Bebas Neue", Oswald, Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif'
 const TEXT_STACK = 'Archivo, "Helvetica Neue", Arial, "Segoe UI", sans-serif'
 

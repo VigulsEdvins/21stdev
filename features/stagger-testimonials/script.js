@@ -10,7 +10,7 @@
       role: "Head of Product",
       company: "Veloce Labs",
       category: "leadership",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      avatar: "/assets/library/photo-1534528741775-53994a69daeb-bd154484.jpg",
       quote: "The subtle attention to physics and tactile feedback transformed our user retention. It feels like software built by craftsmen.",
       rating: 5,
       featured: true
@@ -21,7 +21,7 @@
       role: "Design Architect",
       company: "Monolith Media",
       category: "engineering",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+      avatar: "/assets/library/photo-1507003211169-0a1dd7228f2d-d65277f1.jpg",
       quote: "Stands entirely apart from boring quote grids. The staggered layout gives every testimonial its own breathing room.",
       rating: 5
     },
@@ -31,7 +31,7 @@
       role: "Founder & CEO",
       company: "Hyperion AI",
       category: "leadership",
-      avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80",
+      avatar: "/assets/library/photo-1517841905240-472988babdf9-dcba0d88.jpg",
       quote: "Integrated directly into our landing page within an hour. Zero unnecessary motion weight, just pure responsive elegance.",
       rating: 5
     },
@@ -41,7 +41,7 @@
       role: "VP Engineering",
       company: "Synthesis Cloud",
       category: "engineering",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+      avatar: "/assets/library/photo-1500648767791-00dcc994a43e-8046e619.jpg",
       quote: "Our customer conversion jumped by 24% after replacing static cards with this staggered dynamic review section.",
       rating: 5
     }

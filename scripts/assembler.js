@@ -2717,7 +2717,7 @@ Images, video and fonts used by the components are in \`assets/\`. Keep that fol
 ## How to Run
 
 ### Option 1: Direct File Access
-Simply double-click \`index.html\` or open it directly in any modern web browser.
+Double-click \`index.html\` to look at the page. Most sections work this way, but browsers block images used as canvas or WebGL textures on \`file://\` pages, so a few effects stay blank until the site is served (Option 2, or any web host).
 
 ### Option 2: Local Static Server (Recommended)
 Running through a local web server ensures all relative assets and features function smoothly:
@@ -2833,7 +2833,7 @@ function putU32(buffer, offset, val) {
  * Root-relative local asset references (e.g. "/vivmgmt/assets/images/a.jpg") only resolve on the
  * builder's dev server. These helpers find them so export can bundle or inline the files.
  */
-const LOCAL_ASSET_RE = /(["'(=,\s])(\/(?!\/)[A-Za-z0-9_\-.%~@+\/]+\.(?:png|jpe?g|webp|gif|svg|avif|ico|mp4|webm|mp3|wav|ogg|woff2?|ttf|otf))(?=[?#"')\s>,]|$)/gi;
+const LOCAL_ASSET_RE = /(["'(=,\s])(\/(?!\/)[A-Za-z0-9_\-.%~@+\/]+\.(?:png|jpe?g|webp|gif|svg|avif|ico|mp4|webm|mp3|wav|ogg|woff2?|ttf|otf|css))(?=[?#"')\s>,]|$)/gi;
 
 function findLocalAssetUrls(text) {
   const found = new Set();

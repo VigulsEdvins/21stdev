@@ -29,7 +29,7 @@ export default function Demo() {
         autoplay={3600}
         background="radial-gradient(120% 90% at 50% 40%, #1d1d21, #0b0b0d)"
         color="#ecebe7"
-        fontHref="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;600;800&family=Oswald:wght@600;700&display=swap"
+        fontHref="/assets/library/fonts-Instrument-Serif-19581294.css"
         hint="Drag · ← →"
         ariaLabel="Record catalogue"
       />

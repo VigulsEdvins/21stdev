@@ -52,10 +52,11 @@ Goal: the exported site works with nothing from the vault.
 - [ ] **5.2 Export weight report (S)** — total KB and heavy-section warning in the README.
 - [ ] **5.3 Optional React/Vite project export (L)** — emit `component.tsx` + `package.json` for components that have them.
 - [ ] **5.4 Font and asset self-hosting option (M)** — avoid runtime Google Fonts requests.
+- [ ] **5.9 Remaining external hosts (M)** — 9 features build Unsplash URLs at run time (`"…/photo-"+id+"?w=…"`), `tilted-grid-hero` does the same with r2.dev, 3 preloaders stream MDN demo videos (17 MB), `hero-ascii-one` embeds a live Unicorn Studio scene. The static localizer cannot see them: needs a declared per-feature asset list (meta.json) plus rewriting of run-time-built paths; same root cause as 5.6.
 - [ ] **5.5 SEO/meta basics in page settings (S)** — OG tags, canonical, robots.
-- [ ] **5.6 Fix `forma-liquid-particle-studio` export (M)** — it builds `/features/.../img/${name}.webp` paths at runtime so the asset bundler never sees them, and reads images into a canvas with crossOrigin, which file:// blocks. Needs the bundler to accept a declared asset list and the images loaded without crossOrigin.
+- [ ] **5.6 Fix `forma-liquid-particle-studio` export (M)** — it builds `/features/.../img/${name}.webp` paths at run time so the asset bundler never sees them. Needs the bundler to accept a declared asset list (see 5.9).
 - [x] **5.7 Fix `magic-hour` media (S)** — done 2026-10-24: the hot-linked video was gone, so `scripts/media/make-magic-hour.js` renders a new all-keyframe WebM and poster (dusk, moon and stars, dawn; 2.4 MB) into assets/library. Also found the dev server ignored HTTP Range requests, so videos could not seek; fixed in scripts/serve.js with a test. Note: WebM may not play in older Safari; an MP4 would need an H.264 encoder.
-- [ ] **5.8 Self-contain exports (M)** — exports still contact 8 other hosts (images.unsplash.com for 17 components, fonts.googleapis/gstatic, cdn.21st.dev, mdn.github.io, kedhar.vercel.app, r2.dev, jsdelivr, storage.googleapis). Bundle or replace them so a client site keeps working if any of them goes away. Subsumes 5.4.
+- [x] **5.8 Self-contain exports (M)** — done for fonts and statically referenced images, 2026-10-24: `node scripts/localize-remote.js` downloaded 64 files (7 MB: Google Fonts, Unsplash, cdn.21st.dev, r2.dev) into assets/library and rewrote 34 feature files; the exporter now ships a stylesheet's own fonts and inlines them in the single-file export. 191 of 209 exports now contact no other website; `check-exports` fails if another one starts (KNOWN_EXTERNAL). Remaining: see 5.9.
 
 ## Epic 6 — Tooling, tests and CI (P2)
 Goal: regressions get caught without manual runs.

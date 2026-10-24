@@ -116,7 +116,7 @@ const THEMES: RemixThemeMap = {
 }
 
 const FONT_HREF =
-  "https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Archivo+Black&family=Caveat:wght@700&family=DM+Serif+Display&family=Rubik:wght@900&family=Shrikhand&family=Space+Mono:wght@400;700&family=Titan+One&display=swap"
+  "/assets/library/fonts-Abril-Fatface-51a33061.css"
 
 const FONT_PROBES = [
   '400 1em "Archivo Black"',

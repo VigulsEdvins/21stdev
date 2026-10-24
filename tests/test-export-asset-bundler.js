@@ -42,6 +42,23 @@ const { createAssetBundler, bytesToDataUri } = require('../scripts/builder/expor
   assert(other.files['index.html'].includes('src="assets/vivmgmt/a.jpg"'));
   assert(Object.keys(other.assets).includes('assets/vivmgmt/a.jpg'));
 
+  // a stylesheet brings its fonts along: shipped beside it in the ZIP, inlined for the single file
+  const woff = new Uint8Array([119, 79, 70, 50]);
+  const cssText = "@font-face{font-family:X;src:url(font-1.woff2) format('woff2')}";
+  const cssFetch = async (url) => {
+    if (url === '/assets/library/fonts-x.css') return { ok: true, arrayBuffer: async () => new TextEncoder().encode(cssText).buffer };
+    if (url === '/assets/library/font-1.woff2') return { ok: true, arrayBuffer: async () => woff.buffer };
+    return { ok: false };
+  };
+  const fontOut = await createAssetBundler({ assembler, fetchFn: cssFetch })
+    .bundle({ files: { 'index.html': '', 'style.css': '', 'script.js': 'link.href="/assets/library/fonts-x.css"' }, singleHtml: '<script>link.href="/assets/library/fonts-x.css"</script>' });
+  assert.deepStrictEqual(fontOut.missing, []);
+  assert(fontOut.files['script.js'].includes('"assets/library/fonts-x.css"'), 'stylesheet path rewritten');
+  assert(Object.keys(fontOut.assets).includes('assets/library/fonts-x.css'), 'stylesheet in the ZIP');
+  assert(Object.keys(fontOut.assets).includes('assets/library/font-1.woff2'), 'its font in the ZIP');
+  const inlinedCss = Buffer.from(fontOut.singleHtml.match(/data:text\/css;base64,([A-Za-z0-9+\/=]+)/)[1], 'base64').toString();
+  assert(inlinedCss.includes('data:font/woff2;base64,') && !inlinedCss.includes('font-1.woff2'), 'single file inlines the font inside the stylesheet');
+
   const none = await bundler.bundle({ files: { 'index.html': '<p>hi</p>' }, singleHtml: '<p>hi</p>' });
   assert.deepStrictEqual(none.assets, {});
 

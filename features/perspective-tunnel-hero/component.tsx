@@ -11,15 +11,15 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 const IMAGES = [
-    { src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80", title: "Chroma I" },
-    { src: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=800&auto=format&fit=crop&q=80", title: "Prism III" },
-    { src: "https://images.unsplash.com/photo-1618172193622-ae2d025f4032?w=800&auto=format&fit=crop&q=80", title: "Ether IV" },
-    { src: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&auto=format&fit=crop&q=80", title: "Quantum V" },
-    { src: "https://images.unsplash.com/photo-1614728263952-84ea256f9679?w=800&auto=format&fit=crop&q=80", title: "Nebula VI" },
-    { src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop&q=80", title: "Cyber VII" },
-    { src: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&auto=format&fit=crop&q=80", title: "Flux VIII" },
-    { src: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=800&auto=format&fit=crop&q=80", title: "Aether IX" },
-    { src: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80", title: "Chroma X" },
+    { src: "/assets/library/photo-1618005182384-a83a8bd57fbe-077a01fd.jpg", title: "Chroma I" },
+    { src: "/assets/library/photo-1634017839464-5c339ebe3cb4-647c947c.jpg", title: "Prism III" },
+    { src: "/assets/library/photo-1618172193622-ae2d025f4032-656fdbec.jpg", title: "Ether IV" },
+    { src: "/assets/library/photo-1635070041078-e363dbe005cb-bf117738.jpg", title: "Quantum V" },
+    { src: "/assets/library/photo-1614728263952-84ea256f9679-af306b6f.jpg", title: "Nebula VI" },
+    { src: "/assets/library/photo-1550751827-4bd374c3f58b-eed9f788.jpg", title: "Cyber VII" },
+    { src: "/assets/library/photo-1541701494587-cb58502866ab-3ddeb83b.jpg", title: "Flux VIII" },
+    { src: "/assets/library/photo-1508739773434-c26b3d09e071-8451f283.jpg", title: "Aether IX" },
+    { src: "/assets/library/photo-1579783900882-c0d3dad7b119-d8b38a3d.jpg", title: "Chroma X" },
 ];
 
 
