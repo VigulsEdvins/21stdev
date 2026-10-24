@@ -104,6 +104,7 @@ function createStackManager(initialConfig = {}) {
   }
 
   function updateSectionSizing(sectionId, sizingUpdates = {}) {
+    if (isLocked(sectionId)) return null;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section) return null;
     if (!section.sizing) {
@@ -118,9 +119,24 @@ function createStackManager(initialConfig = {}) {
     return section.sizing;
   }
 
+  function isLocked(id) {
+    const section = state.stack.find(s => s.id === id);
+    return !!(section && section.locked);
+  }
+
+  /** Locks or hides a section. A locked section cannot be moved, replaced, edited or removed; a hidden one stays in the project but is left out of the preview and exports. */
+  function setSectionFlag(id, flag, value) {
+    if (flag !== 'locked' && flag !== 'hidden') return null;
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    if (value) section[flag] = true; else delete section[flag];
+    notify();
+    return section;
+  }
+
   function removeSection(id) {
     const index = state.stack.findIndex(s => s.id === id);
-    if (index === -1) return false;
+    if (index === -1 || state.stack[index].locked) return false;
 
     state.stack.splice(index, 1);
     notify();
@@ -129,7 +145,7 @@ function createStackManager(initialConfig = {}) {
 
   function moveSection(id, delta) {
     const index = state.stack.findIndex(s => s.id === id);
-    if (index === -1) return state.stack;
+    if (index === -1 || state.stack[index].locked) return state.stack;
 
     const targetIndex = index + delta;
     if (targetIndex < 0 || targetIndex >= state.stack.length) {
@@ -151,6 +167,7 @@ function createStackManager(initialConfig = {}) {
       ...original,
       id: generateId()
     };
+    delete duplicate.locked;
 
     state.stack.splice(index + 1, 0, duplicate);
     notify();
@@ -159,7 +176,7 @@ function createStackManager(initialConfig = {}) {
 
   function replaceSection(id, slugOrSection, extraProps = {}) {
     const index = state.stack.findIndex(s => s.id === id);
-    if (index === -1) return null;
+    if (index === -1 || state.stack[index].locked) return null;
 
     const defaultSizing = {
       heightMode: 'auto',
@@ -201,6 +218,7 @@ function createStackManager(initialConfig = {}) {
     ) {
       return state.stack;
     }
+    if (state.stack[startIndex].locked) return state.stack;
 
     const [item] = state.stack.splice(startIndex, 1);
     state.stack.splice(endIndex, 0, item);
@@ -255,6 +273,7 @@ function createStackManager(initialConfig = {}) {
    * `def` ({ selector, type, attr? }) is required the first time a field is set and is kept afterwards.
    */
   function setSectionOverride(sectionId, fieldId, value, def = null) {
+    if (isLocked(sectionId)) return null;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section || !fieldId) return false;
     const overrides = { ...(section.overrides || {}) };
@@ -289,6 +308,7 @@ function createStackManager(initialConfig = {}) {
   }
 
   function addElement(sectionId, elementData = {}) {
+    if (isLocked(sectionId)) return null;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section) return null;
     if (!Array.isArray(section.elements)) {
@@ -322,6 +342,7 @@ function createStackManager(initialConfig = {}) {
   }
 
   function updateElement(sectionId, elementId, updates = {}, silent = false) {
+    if (isLocked(sectionId)) return null;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section || !Array.isArray(section.elements)) return null;
 
@@ -341,6 +362,7 @@ function createStackManager(initialConfig = {}) {
   }
 
   function removeElement(sectionId, elementId) {
+    if (isLocked(sectionId)) return false;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section || !Array.isArray(section.elements)) return false;
 
@@ -368,6 +390,8 @@ function createStackManager(initialConfig = {}) {
     addSection,
     insertSection,
     removeSection,
+    isLocked,
+    setSectionFlag,
     moveSection,
     duplicateSection,
     replaceSection,

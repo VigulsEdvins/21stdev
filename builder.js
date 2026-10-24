@@ -208,7 +208,7 @@
     // 3. Active sections list (scripts/builder/stack-list.js)
     const stackListController = (window.BuilderStackList || require('./scripts/builder/stack-list.js')).createStackList({
       LANDING_PAGE_SINGLETONS, featuresMap, getSingletonType, pageStackList, previewFrame, setActiveSection,
-      stackManager, updateActiveSectionUI, updatePreview: () => updatePreview(),
+      stackManager, updateActiveSectionUI, updatePreview: () => updatePreview(), getActiveSection,
       requestPreloaderReplay: () => { rt.preloaderForceReplay = true; rt.forceFullPreviewReload = true; updatePreview(); }
     });
     const { renderStackList } = stackListController;

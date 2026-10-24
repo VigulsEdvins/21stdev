@@ -1644,9 +1644,12 @@ select option {
 .stack-item-top-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
   width: 100%;
 }
+.stack-item-tools { flex-wrap: wrap; justify-content: flex-end; }
 
 .stack-item-sizing-drawer {
   background: rgba(14, 14, 18, 0.95);
@@ -3199,3 +3202,10 @@ select option {
 .export-check { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--text-muted, #a1a1aa); }
 .export-check.is-error { color: #fca5a5; }
 .export-check.is-warning { color: #fcd34d; }
+
+/* Section tools: lock, hide, copy */
+.stack-item-card.is-locked { border-style: dashed; }
+.stack-item-card.is-hidden-section .stack-item-info { opacity: 0.45; text-decoration: line-through; }
+.stack-tool-btn.is-active { color: var(--accent, #a855f7); }
+.stack-tool-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.sr-only-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

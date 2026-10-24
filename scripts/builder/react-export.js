@@ -79,7 +79,7 @@ body { font-family: var(--font-body, system-ui, sans-serif); }
     const seen = new Set();
     const order = [];
 
-    stack.forEach((s) => {
+    stack.filter(s => !s.hidden).forEach((s) => {
       const slug = s.slug;
       if (!slug) return;
       order.push(slug);

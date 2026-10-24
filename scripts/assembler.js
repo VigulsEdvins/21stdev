@@ -1944,6 +1944,7 @@ function applyThemeToDocument(doc, themeConfig) {
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
 function assemblePreviewDocument(sections, themeConfig, featuresData = {}, options = {}) {
+  if (Array.isArray(sections)) sections = sections.filter(s => !s.hidden);
   const pageHead = renderPageHead(options.page, 'Page Preview');
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);
@@ -2806,6 +2807,7 @@ const OVERRIDES_RUNTIME = `(function () {
  * Generates an export bundle containing index.html, style.css, script.js, and README.md.
  */
 function generateExportBundle(sections, themeConfig, featuresData = {}, options = {}) {
+  if (Array.isArray(sections)) sections = sections.filter(s => !s.hidden);
   const pageHead = renderPageHead(options.page);
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);

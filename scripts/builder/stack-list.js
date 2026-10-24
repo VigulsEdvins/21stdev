@@ -10,8 +10,12 @@
   function createStackList(ctx) {
     const {
       LANDING_PAGE_SINGLETONS, featuresMap, getSingletonType, pageStackList, previewFrame, setActiveSection,
-      stackManager, updateActiveSectionUI, updatePreview, requestPreloaderReplay
+      stackManager, updateActiveSectionUI, updatePreview, requestPreloaderReplay, getActiveSection
     } = ctx;
+    const SECTION_CLIPBOARD_FORMAT = 'web-builder-section';
+    let sectionClipboard = null;
+    const stackAnnouncer = document.getElementById('stackAnnouncer');
+    function announce(text) { if (stackAnnouncer) stackAnnouncer.textContent = text; }
 
     // List elements
     const stackEmptyPlaceholder = document.getElementById('stackEmptyPlaceholder');
@@ -60,10 +64,10 @@
         const badgeText = isOptional ? 'Need: Optional · 1 Only' : 'Need: Essential · 1 Only';
 
         const card = document.createElement('div');
-        card.className = 'stack-item-card';
+        card.className = 'stack-item-card' + (item.locked ? ' is-locked' : '') + (item.hidden ? ' is-hidden-section' : '');
         card.setAttribute('role', 'listitem');
         card.setAttribute('data-section-id', item.id);
-        card.setAttribute('draggable', 'true');
+        card.setAttribute('draggable', item.locked ? 'false' : 'true');
 
         card.innerHTML = `
           <div class="stack-item-top-row">
@@ -93,12 +97,31 @@
                   </svg>
                 </button>
               `}
-              <button type="button" class="stack-tool-btn btn-move-up" title="Move Up" aria-label="Move section up" ${index === 0 ? 'disabled' : ''}>
+              <button type="button" class="stack-tool-btn btn-hide ${item.hidden ? 'is-active' : ''}" title="${item.hidden ? 'Show in preview and export' : 'Hide from preview and export'}" aria-label="${item.hidden ? 'Show section' : 'Hide section'}" aria-pressed="${item.hidden ? 'true' : 'false'}">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                  ${item.hidden ? '<line x1="3" y1="3" x2="21" y2="21"></line>' : ''}
+                </svg>
+              </button>
+              <button type="button" class="stack-tool-btn btn-lock ${item.locked ? 'is-active' : ''}" title="${item.locked ? 'Unlock section' : 'Lock section (no moving, editing or removing)'}" aria-label="${item.locked ? 'Unlock section' : 'Lock section'}" aria-pressed="${item.locked ? 'true' : 'false'}">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+                  <path d="${item.locked ? 'M8 11V7a4 4 0 0 1 8 0v4' : 'M8 11V7a4 4 0 0 1 7.5-2'}"></path>
+                </svg>
+              </button>
+              <button type="button" class="stack-tool-btn btn-copy" title="Copy section (paste it into any project)" aria-label="Copy section">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="8" y="8" width="13" height="13" rx="2"></rect>
+                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+                </svg>
+              </button>
+              <button type="button" class="stack-tool-btn btn-move-up" title="Move Up (Alt+Up)" aria-label="Move section up" ${index === 0 || item.locked ? 'disabled' : ''}>
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="18 15 12 9 6 15"></polyline>
                 </svg>
               </button>
-              <button type="button" class="stack-tool-btn btn-move-down" title="Move Down" aria-label="Move section down" ${index === stack.length - 1 ? 'disabled' : ''}>
+              <button type="button" class="stack-tool-btn btn-move-down" title="Move Down (Alt+Down)" aria-label="Move section down" ${index === stack.length - 1 || item.locked ? 'disabled' : ''}>
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
@@ -109,7 +132,7 @@
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
               </button>
-              <button type="button" class="stack-tool-btn btn-remove" title="Remove Section" aria-label="Remove section">
+              <button type="button" class="stack-tool-btn btn-remove" title="Remove Section" aria-label="Remove section" ${item.locked ? 'disabled' : ''}>
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="3 6 5 6 21 6"></polyline>
                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -230,6 +253,35 @@
           });
         }
 
+        const hideBtn = card.querySelector('.btn-hide');
+        if (hideBtn) hideBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          stackManager.setSectionFlag(item.id, 'hidden', !item.hidden);
+          showToast(item.hidden ? `Showing "${title}"` : `Hid "${title}" from preview and export`);
+        });
+        const lockBtn = card.querySelector('.btn-lock');
+        if (lockBtn) lockBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          stackManager.setSectionFlag(item.id, 'locked', !item.locked);
+          showToast(item.locked ? `Unlocked "${title}"` : `Locked "${title}"`);
+        });
+        const copyBtn = card.querySelector('.btn-copy');
+        if (copyBtn) copyBtn.addEventListener('click', (e) => { e.stopPropagation(); copySection(item, title); });
+
+        // Alt+Up / Alt+Down moves the section from the keyboard
+        card.addEventListener('keydown', (e) => {
+          if (!e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+          e.preventDefault();
+          if (item.locked) { announce(`${title} is locked`); return; }
+          const delta = e.key === 'ArrowUp' ? -1 : 1;
+          const to = index + delta;
+          if (to < 0 || to >= stack.length) return;
+          stackManager.moveSection(item.id, delta);
+          announce(`${title} moved to position ${to + 1} of ${stack.length}`);
+          const again = pageStackList.querySelector(`[data-section-id="${item.id}"] .btn-move-${delta < 0 ? 'up' : 'down'}`) || pageStackList.querySelector(`[data-section-id="${item.id}"] button`);
+          if (again) again.focus();
+        });
+
         const replayBtn = card.querySelector('.btn-replay');
         if (replayBtn) {
           replayBtn.addEventListener('click', (e) => {
@@ -310,6 +362,42 @@
       updateActiveSectionUI();
     }
 
+    // Copy / paste a section between projects: JSON on the clipboard, plus an in-page copy for browsers that block clipboard access
+    function copySection(item, title) {
+      const { id, ...rest } = item;
+      delete rest.locked;
+      sectionClipboard = { format: SECTION_CLIPBOARD_FORMAT, version: 1, section: JSON.parse(JSON.stringify(rest)) };
+      const text = JSON.stringify(sectionClipboard);
+      try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).catch(() => {}); } catch (_) { /* in-page copy still works */ }
+      showToast(`Copied "${title}"`);
+    }
+
+    /** Checks pasted text and returns a section object, or null. Only known components with plain data are accepted. */
+    function parseSectionClipboard(text) {
+      let data;
+      try { data = JSON.parse(text); } catch (_) { return null; }
+      if (!data || data.format !== SECTION_CLIPBOARD_FORMAT || !data.section || typeof data.section.slug !== 'string') return null;
+      if (!featuresMap.has(data.section.slug)) return null;
+      const section = JSON.parse(JSON.stringify(data.section));
+      delete section.id; delete section.locked; delete section.html; delete section.css; delete section.js;
+      return section;
+    }
+
+    async function pasteSection() {
+      let section = sectionClipboard ? parseSectionClipboard(JSON.stringify(sectionClipboard)) : null;
+      if (!section) {
+        try { section = parseSectionClipboard(await navigator.clipboard.readText()); } catch (_) { section = null; }
+      }
+      if (!section) { showToast('Nothing to paste. Copy a section first.'); return; }
+      const stack = stackManager.getStack();
+      const active = typeof getActiveSection === 'function' ? getActiveSection() : null;
+      const at = active ? stack.findIndex(s => s.id === active.id || s.id === active) + 1 : stack.length;
+      const added = stackManager.insertSection(at > 0 ? at : stack.length, section);
+      if (added) { setActiveSection(added.id); showToast('Pasted section'); }
+    }
+    const pasteBtn = document.getElementById('pasteSectionBtn');
+    if (pasteBtn) pasteBtn.addEventListener('click', pasteSection);
+
     // Listen for section clicks inside live preview frame
     window.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'SECTION_CLICKED' && event.data.sectionId) {
@@ -317,7 +405,7 @@
       }
     });
 
-    return { renderStackList };
+    return { renderStackList, parseSectionClipboard };
   }
 
   const api = { createStackList };

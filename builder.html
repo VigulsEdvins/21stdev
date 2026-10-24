@@ -376,6 +376,7 @@
             </div>
 
             <div style="display: flex; align-items: center; gap: 6px;">
+              <button type="button" class="starter-template-btn" id="pasteSectionBtn" title="Paste a copied section after the selected one">Paste</button>
               <button type="button" class="starter-template-btn" id="loadStarterBtn" title="Load Starter Page Template">
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
@@ -409,6 +410,7 @@
 
         <!-- Section Stack List Container -->
         <div class="sidebar-stack-content">
+          <div class="sr-only-live" id="stackAnnouncer" role="status" aria-live="polite"></div>
           <div class="page-stack-list" id="pageStackList" role="list" aria-label="Active Page Stack Sections">
             <!-- Populated dynamically by builder.js -->
             <div class="stack-empty-placeholder" id="stackEmptyPlaceholder">
