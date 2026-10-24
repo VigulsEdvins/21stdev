@@ -25,5 +25,27 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 113
+  "order": 113,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.99,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

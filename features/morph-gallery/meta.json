@@ -2,7 +2,7 @@
   "name": "Morph Gallery",
   "title": "Morph Gallery",
   "slug": "morph-gallery",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "21st.dev",
   "type": "component",
   "description": "A photo gallery whose slides dissolve into each other through noise instead of cutting or cross-fading. Arrows, thumbnails, keyboard, swipe and autoplay.",
@@ -24,5 +24,27 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 194
+  "order": 194,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.97,
+    "webgl": true,
+    "canvas2d": false
+  }
 }

@@ -28,5 +28,27 @@
     "React (.tsx included)"
   ],
   "author": "ruixen.ui",
-  "order": 4
+  "order": 4,
+  "legacyCategory": "Heroes",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.14,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

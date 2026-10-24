@@ -8,7 +8,21 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/test-builder-integration.js"
+    "start": "node scripts/serve.js",
+    "sync": "node scripts/sync-registry.js",
+    "verify": "node tests/verify-registry.js",
+    "new-feature": "node scripts/new-feature.js",
+    "check-features": "node scripts/check-features.js",
+    "thumbs": "node scripts/make-thumbs.js",
+    "test": "node tests/test-builder-integration.js",
+    "bundle-demo": "node scripts/bundle-demo.js",
+    "clean-features": "node scripts/clean-features.js",
+    "test:e2e": "node tests/e2e/run-all.js",
+    "lint-tokens": "node scripts/lint-tokens.js",
+    "suggest-customizable": "node scripts/suggest-customizable.js",
+    "refine-meta": "node scripts/refine-meta.js",
+    "audit-themes": "node scripts/audit-themes.js",
+    "set-license": "node scripts/set-license.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +37,10 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "esbuild": "^0.28.2"
+    "acorn": "^8.19.0",
+    "esbuild": "^0.28.2",
+    "eslint-scope": "^9.1.2",
+    "jszip": "^3.10.2",
+    "playwright-core": "^1.64.1"
   }
 }

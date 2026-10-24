@@ -57,6 +57,7 @@ const THEME_PRESETS = {
  */
 function resolveTheme(themeConfig) {
   if (typeof themeConfig === 'string') {
+    if (themeConfig === 'clean-light' || themeConfig === 'light') return THEME_PRESETS['clean-minimal'];
     return THEME_PRESETS[themeConfig] || THEME_PRESETS['midnight-dark'];
   }
   if (themeConfig && typeof themeConfig === 'object') {
@@ -74,6 +75,30 @@ function resolveTheme(themeConfig) {
 }
 
 /**
+ * Checks whether a hex color string represents a dark color (luminance < 70).
+ */
+function isDarkHex(hex) {
+  if (!hex || typeof hex !== 'string') return false;
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  if (hex.length >= 6) {
+    const r = parseInt(hex.slice(0, 2), 16) || 0;
+    const g = parseInt(hex.slice(2, 4), 16) || 0;
+    const b = parseInt(hex.slice(4, 6), 16) || 0;
+    return (r * 0.299 + g * 0.587 + b * 0.114) < 70;
+  }
+  return false;
+}
+
+/**
+ * Checks whether a theme represents a dark theme.
+ */
+function isDarkTheme(theme) {
+  if (!theme || !theme.bg) return true;
+  return isDarkHex(theme.bg);
+}
+
+/**
  * Scopes section styles:
  * - Transforms html, body selectors into .page-section#${sectionId}
  * - Replaces viewport locking 100vh with min-height: auto
@@ -83,40 +108,74 @@ function scopeSectionStyles(css, sectionId) {
   if (!css || typeof css !== 'string') return '';
   let scoped = css;
 
-  // 1. Replace html, body or body, html compound selectors
+  // 1. Rewrite :root selector to section container so component root variables don't pollute global document
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-]):root(?![a-zA-Z0-9_-])/g, `.page-section#${sectionId}`);
+
+  // 2. Rewrite universal * selectors so margin/padding resets do not bleed across the entire page,
+  // using :where() to preserve (0, 0, 0) specificity so component class styles (padding, margin) are never overridden!
+  scoped = scoped.replace(/(^|[\s,;{}])\*(?=[,\s{:]|::)/g, `$1:where(.page-section#${sectionId}) *`);
+
+  // 3. Replace html, body or body, html compound selectors
   scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])(html\s*,\s*body|body\s*,\s*html)(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
 
-  // 2. Replace standalone body or html selectors
+  // 4. Replace standalone body, html, or main selectors
   scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])body(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
   scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])html(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])main(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
 
-  // 3. Rewrite #root to #root-${sectionId}
+  // 5. Rewrite #root to #root-${sectionId}
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])#root(?![a-zA-Z0-9_-])/g, `#root-${sectionId}`);
 
-  // 4. Replace viewport locking 100vh on height with responsive section height that never collapses
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(520px, 80vh, 900px)$1; height: 100%$1');
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*100vh(\s*!important)?/gi, 'min-height: clamp(520px, 80vh, 900px)$1');
+  // 6. Replace viewport locking 100vh on height with responsive section height that never collapses
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(680px, 90vh, 1000px)$1; height: auto$1');
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: clamp(680px, 90vh, 1000px)$1');
 
-  // 5. Clean up viewport-locking rules on .page-section container inherited from html, body
-  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)overflow\\s*:\\s*hidden\\b`, 'gi'), '$1overflow: visible');
-  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*100%(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
-  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*100vh(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
+  // 7. Clean up viewport-locking rules on .page-section container inherited from html, body
+  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*(?:100%|100vh|100svh|100dvh)(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
 
-  // 6. Universal color normalizer: replace hardcoded dark/black backgrounds with var(--preview-bg)
+  // 8. Universal color normalizer: replace hardcoded dark backgrounds on container with var(--preview-bg)
   scoped = scoped.replace(
-    /(background(?:-color)?\s*:\s*)(?:#000000|#000|#09090b|#0a0a0c|#0b0f19|#121218|#18181b|#111111|#111)\b/gi,
-    '$1var(--preview-bg)'
+    new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\bbackground(?:-color)?\\s*:\\s*)(#[0-9a-fA-F]{3,8}|black)\\b`, 'gi'),
+    (match, prop, hex) => hex === 'black' || isDarkHex(hex) ? `${prop}var(--preview-bg)` : match
   );
 
-  // Replace hardcoded dark text colors in light-designed components with var(--preview-text)
+  // Replace background: black / #000 / #050505 etc with var(--preview-bg) on root-like selectors
   scoped = scoped.replace(
-    /(?<![a-zA-Z0-9_-])color\s*:\s*(?:#141413|#18181b|#111111|#111|#000000|#000|#222222|#222)\b/gi,
+    /(background(?:-color)?\s*:\s*)(#[0-9a-fA-F]{3,8})\b/gi,
+    (match, prop, hex) => isDarkHex(hex) ? `${prop}var(--preview-bg)` : match
+  );
+  scoped = scoped.replace(
+    /(?<![a-zA-Z0-9_-])background(?:-color)?\s*:\s*(?:black|#000|#000000|#050505|#08080a|#09090b|#0a0a0c|#0b0f19|#0d0e12|#0f172a|#141413|#18181b|#111111|#111|#121212|#1a1a1a)\b/gi,
+    'background-color: var(--preview-bg)'
+  );
+
+  // Replace CSS variable dark backgrounds (e.g. --pl-bg, --bg-color, --g, --ib-page)
+  scoped = scoped.replace(
+    /(--[a-zA-Z0-9_-]*(?:bg|background|ground|page)\s*:\s*)(#[0-9a-fA-F]{3,8})\b/gi,
+    (match, prop, hex) => isDarkHex(hex) ? `${prop}var(--preview-bg)` : match
+  );
+
+  // Replace hardcoded light text colors with var(--preview-text) so they adapt to light themes
+  scoped = scoped.replace(
+    /(?<![a-zA-Z0-9_-])color\s*:\s*(?:#ffffff|#fff|#fafafa|#f4f4f5|#f8fafc|#ececf1|#e4e4e7|#eeeeee|#eee|#f4f1ea)\b/gi,
     'color: var(--preview-text)'
+  );
+
+  // Replace translucent light text colors with dynamic color-mix so text remains legible in both themes
+  scoped = scoped.replace(
+    /(?<![a-zA-Z0-9_-])color\s*:\s*rgba\(\s*(?:255|250|244)\s*,\s*(?:255|250|241|244)\s*,\s*(?:255|250|234|245)\s*,\s*(0?\.[0-9]+)\)/gi,
+    'color: color-mix(in srgb, var(--preview-text) calc($1 * 100%), transparent)'
+  );
+
+  // Replace CSS variable text colors with var(--preview-text)
+  scoped = scoped.replace(
+    /(--[a-zA-Z0-9_-]*(?:text|ink|fg|foreground)\s*:\s*)(?:#[0-9a-fA-F]{3,8}|rgba?\([^)]+\))\b/gi,
+    '$1var(--preview-text)'
   );
 
   // Replace hardcoded light text colors on section container with var(--preview-text)
   scoped = scoped.replace(
-    new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\bcolor\\s*:\\s*)(?:#ffffff|#fff|#fafafa|#f3f4f6|#e4e4e7|#eeeeee|#eee)\\b`, 'gi'),
+    new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\bcolor\\s*:\\s*)(?:#ffffff|#fff|#fafafa|#f3f4f6|#e4e4e7|#eeeeee|#eee|#f4f1ea)\\b`, 'gi'),
     '$1var(--preview-text)'
   );
 
@@ -201,7 +260,7 @@ function renderEmptyPreview(theme) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page Preview - Empty</title>
-  <style>
+  <style id="universal-theme-styles">
     :root {
       --preview-bg: ${theme.bg};
       --preview-text: ${theme.text};
@@ -287,6 +346,17 @@ function renderEmptyPreview(theme) {
         if (t.accent) document.documentElement.style.setProperty('--preview-accent', t.accent);
         if (t.cardBg) document.documentElement.style.setProperty('--preview-card-bg', t.cardBg);
         if (t.border) document.documentElement.style.setProperty('--preview-border', t.border);
+        var isDark = t.bg ? (function(hex) {
+          hex = String(hex).replace('#', '');
+          if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+          var r = parseInt(hex.slice(0, 2), 16) || 0;
+          var g = parseInt(hex.slice(2, 4), 16) || 0;
+          var b = parseInt(hex.slice(4, 6), 16) || 0;
+          return (r * 0.299 + g * 0.587 + b * 0.114) < 70;
+        })(t.bg) : true;
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        if (document.body) document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
       }
     });
   </script>
@@ -314,7 +384,13 @@ function renderSectionOverlayHtml(elements) {
     const id = el.id || 'el';
     const left = typeof el.x === 'number' ? `${el.x}%` : '50%';
     const top = typeof el.y === 'number' ? `${el.y}%` : '50%';
-    const styleAttr = `left: ${left}; top: ${top};`;
+    let styleAttr = `left: ${left}; top: ${top};`;
+    if (el.width !== undefined && el.width !== null && el.width !== '') {
+      styleAttr += ` width: ${typeof el.width === 'number' ? el.width + 'px' : el.width};`;
+    }
+    if (el.height !== undefined && el.height !== null && el.height !== '') {
+      styleAttr += ` height: ${typeof el.height === 'number' ? el.height + 'px' : el.height};`;
+    }
 
     if (el.type === 'table') {
       const tableType = el.tableType || 'pricing';
@@ -353,6 +429,63 @@ function renderSectionOverlayHtml(elements) {
           ${features.map(f => `<li><span class="feature-check">✓</span> ${escapeHtml(f)}</li>`).join('\n          ')}
         </ul>
         <a href="${escapeHtml(ctaLink)}" class="pricing-card-cta">${escapeHtml(ctaText)}</a>
+      </div>`;
+    }
+
+    if (el.type === 'file-card' || el.cardType === 'file') {
+      const fileType = el.fileType || 'pdf';
+      const fileName = el.fileName || el.name || el.title || 'Document.pdf';
+      const fileSize = el.fileSize || el.size || el.meta || '240 KB';
+      const badge = el.badge || fileType.toUpperCase();
+      let iconSvg = '';
+      if (fileType === 'pdf') {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>';
+      } else if (fileType === 'code') {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>';
+      } else if (fileType === 'doc') {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>';
+      } else if (fileType === 'media' || fileType === 'img') {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>';
+      } else {
+        iconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8"></path><path d="M1 3h22v5H1z"></path><path d="M10 12h4"></path></svg>';
+      }
+
+      return `      <div class="canvas-element element-card element-card-file file-type-${escapeHtml(fileType)}" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <div class="file-card-content">
+          <div class="file-card-icon-wrap">
+            ${iconSvg}
+          </div>
+          <div class="file-card-meta">
+            <div class="file-card-name" title="${escapeHtml(fileName)}">${escapeHtml(fileName)}</div>
+            <div class="file-card-sub">
+              <span class="file-card-size">${escapeHtml(fileSize)}</span>
+            </div>
+          </div>
+          <span class="file-badge file-badge-${escapeHtml(fileType)}">${escapeHtml(badge)}</span>
+        </div>
+      </div>`;
+    }
+
+    if (el.type === 'folder-card' || el.cardType === 'folder') {
+      const art = el.art || 'aurora';
+      const label = el.label || el.title || 'Project Folder';
+      const badge = el.badge || art.toUpperCase();
+      const itemCount = el.itemCount || el.meta || '12 items';
+
+      return `      <div class="canvas-element element-card element-card-folder folder-art-${escapeHtml(art)}" id="${id}" data-element-id="${id}" style="${styleAttr}" tabindex="0">
+        <div class="folder-glass-tab">
+          <span class="folder-tab-badge">${escapeHtml(badge)}</span>
+        </div>
+        <div class="folder-art-header folder-art-${escapeHtml(art)}">
+          <div class="folder-art-glow"></div>
+        </div>
+        <div class="folder-body">
+          <div class="folder-label">${escapeHtml(label)}</div>
+          <div class="folder-meta-row">
+            <span class="folder-item-count">${escapeHtml(itemCount)}</span>
+            <span class="folder-arrow">→</span>
+          </div>
+        </div>
       </div>`;
     }
 
@@ -456,6 +589,73 @@ const OVERLAY_ELEMENT_CSS = `
       box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
     }
 
+    /* Resize Handles for Canvas Elements */
+    .el-resize-handle {
+      display: none;
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ffffff;
+      border: 2px solid var(--preview-accent, #a855f7);
+      border-radius: 3px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      z-index: 100;
+      box-sizing: border-box;
+      pointer-events: auto;
+    }
+    .el-resize-handle::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+    }
+    .canvas-element.is-selected .el-resize-handle {
+      display: block;
+    }
+    .el-resize-handle.handle-nw, .el-resize-handle.handle-top-left {
+      top: -5px;
+      left: -5px;
+      cursor: nwse-resize;
+    }
+    .el-resize-handle.handle-ne, .el-resize-handle.handle-top-right {
+      top: -5px;
+      right: -5px;
+      cursor: nesw-resize;
+    }
+    .el-resize-handle.handle-se, .el-resize-handle.handle-bottom-right {
+      bottom: -5px;
+      right: -5px;
+      cursor: nwse-resize;
+    }
+    .el-resize-handle.handle-sw, .el-resize-handle.handle-bottom-left {
+      bottom: -5px;
+      left: -5px;
+      cursor: nesw-resize;
+    }
+    .el-resize-handle.handle-n, .el-resize-handle.handle-top {
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: ns-resize;
+    }
+    .el-resize-handle.handle-s, .el-resize-handle.handle-bottom {
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: ns-resize;
+    }
+    .el-resize-handle.handle-w, .el-resize-handle.handle-left {
+      top: 50%;
+      left: -5px;
+      transform: translateY(-50%);
+      cursor: ew-resize;
+    }
+    .el-resize-handle.handle-e, .el-resize-handle.handle-right {
+      top: 50%;
+      right: -5px;
+      transform: translateY(-50%);
+      cursor: ew-resize;
+    }
+
     /* Button Variants */
     .element-button .canvas-btn-link {
       display: inline-flex;
@@ -470,6 +670,16 @@ const OVERLAY_ELEMENT_CSS = `
       border-radius: 9999px;
       white-space: nowrap;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .element-button[style*="width"] .canvas-btn-link,
+    .element-button[style*="height"] .canvas-btn-link {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
     }
 
     .btn-style-solid .canvas-btn-link {
@@ -721,6 +931,187 @@ const OVERLAY_ELEMENT_CSS = `
       opacity: 0.65;
     }
 
+    /* File Card Widget */
+    .element-card-file {
+      min-width: 260px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: var(--preview-card-bg, rgba(20, 20, 26, 0.85));
+      border: 1px solid var(--preview-border, rgba(255, 255, 255, 0.12));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      color: var(--preview-text, #fafafa);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .element-card-file:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+    .file-card-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .file-card-icon-wrap {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+      color: var(--preview-accent, #6366f1);
+    }
+    .file-card-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .file-card-name {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--preview-text, #fafafa);
+    }
+    .file-card-sub {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #a1a1aa;
+      margin-top: 2px;
+    }
+    .file-card-size {
+      font-weight: 500;
+    }
+    .file-badge {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .file-badge-pdf {
+      background: rgba(239, 68, 68, 0.18);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .file-badge-code {
+      background: rgba(59, 130, 246, 0.18);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+    .file-badge-doc {
+      background: rgba(99, 102, 241, 0.18);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.35);
+    }
+    .file-badge-media {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .file-badge-zip {
+      background: rgba(245, 158, 11, 0.18);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    /* Glass Folder Card Widget */
+    .element-card-folder {
+      position: relative;
+      min-width: 240px;
+      padding: 0;
+      border-radius: 16px;
+      background: var(--preview-card-bg, rgba(20, 20, 26, 0.85));
+      border: 1px solid var(--preview-border, rgba(255, 255, 255, 0.14));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+      color: var(--preview-text, #fafafa);
+      overflow: visible;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .element-card-folder:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.5);
+    }
+    .folder-glass-tab {
+      position: absolute;
+      top: -14px;
+      left: 16px;
+      padding: 3px 12px;
+      border-radius: 8px 8px 0 0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-bottom: none;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #fafafa;
+      z-index: 2;
+    }
+    .folder-tab-badge {
+      display: inline-block;
+      text-transform: uppercase;
+    }
+    .folder-art-header {
+      height: 90px;
+      border-radius: 15px 15px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .folder-art-aurora {
+      background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #ec4899 100%);
+    }
+    .folder-art-dusk {
+      background: linear-gradient(135deg, #1e1b4b 0%, #3b82f6 50%, #6366f1 100%);
+    }
+    .folder-art-ember {
+      background: linear-gradient(135deg, #18181b 0%, #f97316 60%, #ef4444 100%);
+    }
+    .folder-art-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.25), transparent 70%);
+      mix-blend-mode: overlay;
+    }
+    .folder-body {
+      padding: 14px 18px 16px 18px;
+    }
+    .folder-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--preview-text, #fafafa);
+      margin-bottom: 4px;
+    }
+    .folder-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #a1a1aa;
+    }
+    .folder-item-count {
+      font-weight: 500;
+    }
+    .folder-arrow {
+      color: var(--preview-accent, #6366f1);
+      font-weight: 700;
+      transition: transform 0.2s ease;
+    }
+    .element-card-folder:hover .folder-arrow {
+      transform: translateX(3px);
+    }
+
     /* Image Sizes */
     .element-image img {
       display: block;
@@ -735,6 +1126,13 @@ const OVERLAY_ELEMENT_CSS = `
     .element-image.img-size-small { width: 140px; height: 140px; }
     .element-image.img-size-medium { width: 240px; height: 240px; }
     .element-image.img-size-large { width: 360px; height: 360px; }
+
+    .element-image[style*="width"] img,
+    .element-image[style*="height"] img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
     /* Badge */
     .element-badge {
@@ -819,6 +1217,33 @@ const OVERLAY_ELEMENT_CSS = `
     .section-resize-handle.is-resizing {
       background: rgba(168, 85, 247, 0.15);
     }
+
+    /* Drag and Drop Canvas Indicators */
+    .page-section.is-drop-target {
+      outline: 2px dashed rgba(168, 85, 247, 0.8) !important;
+      outline-offset: -3px;
+      background-color: rgba(168, 85, 247, 0.05) !important;
+      transition: outline 0.15s ease;
+    }
+
+    .section-drop-indicator {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #a855f7;
+      box-shadow: 0 0 12px #a855f7;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .section-drop-indicator.drop-above {
+      top: 0;
+    }
+
+    .section-drop-indicator.drop-below {
+      bottom: 0;
+    }
 `;
 
 /**
@@ -851,10 +1276,677 @@ function computeSectionSizingStyles(sizing) {
 }
 
 /**
+ * Generates universal CSS rules ensuring the active theme propagates
+ * to all sections, component containers, and utilities on the page.
+ */
+function generateUniversalThemeStyles(theme) {
+  const isDark = isDarkTheme(theme);
+  const textMuted = `color-mix(in srgb, ${theme.text} 65%, transparent)`;
+  const textSubtle = `color-mix(in srgb, ${theme.text} 45%, transparent)`;
+  const bgSoft = isDark
+    ? `color-mix(in srgb, ${theme.text} 6%, ${theme.bg})`
+    : `color-mix(in srgb, ${theme.text} 3%, ${theme.bg})`;
+  const cardBg = theme.cardBg || (isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)');
+  const border = theme.border || (isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)');
+  const accent = theme.accent || '#6366f1';
+
+  return `    :root {
+      --preview-bg: ${theme.bg};
+      --preview-text: ${theme.text};
+      --preview-accent: ${accent};
+      --preview-card-bg: ${cardBg};
+      --preview-border: ${border};
+
+      /* Universal design system tokens (Tailwind, 21st.dev, shadcn) */
+      --background: ${theme.bg};
+      --foreground: ${theme.text};
+      --color-background: ${theme.bg};
+      --color-foreground: ${theme.text};
+      --bg: ${theme.bg};
+      --text: ${theme.text};
+      --accent: ${accent};
+      --card: ${cardBg};
+      --card-foreground: ${theme.text};
+      --border: ${border};
+      --input: ${border};
+      --ring: ${accent};
+      --primary: ${accent};
+      --primary-foreground: ${isDark ? '#000000' : '#ffffff'};
+      --secondary: ${cardBg};
+      --secondary-foreground: ${theme.text};
+      --muted: ${cardBg};
+      --muted-foreground: ${textMuted};
+      --popover: ${cardBg};
+      --popover-foreground: ${theme.text};
+
+      /* Standard design tokens for new components (see AGENT_GUIDE.md) */
+      --radius: 12px;
+      --font-display: inherit;
+      --font-body: inherit;
+
+      /* Component-specific variables mapped universally */
+      --bg-color: ${theme.bg};
+      --text-color: ${theme.text};
+      --text-main: ${theme.text};
+      --text-muted: ${textMuted};
+      --muted-text: ${textMuted};
+      --card-bg: ${cardBg};
+      --card-border: ${border};
+      --card-hover: ${isDark ? 'color-mix(in srgb, ' + theme.text + ' 12%, ' + theme.bg + ')' : 'color-mix(in srgb, ' + theme.text + ' 6%, ' + theme.bg + ')'};
+      --active-border: ${accent};
+      --active-color: ${accent};
+      --header-bg: color-mix(in srgb, ${theme.bg} 85%, transparent);
+      --header-border: ${border};
+      --rail-bg: color-mix(in srgb, ${theme.text} 12%, transparent);
+      --fg: ${theme.text};
+      --soft: ${bgSoft};
+      --line: ${border};
+
+      /* Polaroid & Wordmark footers */
+      --pl-bg: ${theme.bg};
+      --pl-ink: ${theme.text};
+      --pl-muted: ${textMuted};
+      --pl-line: ${border};
+      --bwf-bg: ${theme.bg};
+      --bwf-ink: ${theme.text};
+      --bwf-muted: ${textMuted};
+      --hwf-bg: ${theme.bg};
+      --hwf-ink: ${theme.text};
+
+      /* Ink-Orbit SaaS family */
+      --ib-page: ${theme.bg};
+      --ib-paper: ${cardBg};
+      --ib-card: ${cardBg};
+      --ib-raise: ${bgSoft};
+      --ib-ink: ${theme.text};
+      --ib-soft: ${textMuted};
+      --ib-muted: ${textSubtle};
+      --ib-line: ${border};
+      --ip-page: ${theme.bg};
+      --ip-paper: ${cardBg};
+      --ip-card: ${cardBg};
+      --ip-raise: ${bgSoft};
+      --ip-ink: ${theme.text};
+      --ip-soft: ${textMuted};
+      --ip-muted: ${textSubtle};
+      --ip-line: ${border};
+
+      /* Postmark CTA */
+      --pl-ground: ${theme.bg};
+      --pd-ground: ${theme.bg};
+      --pl-ink: ${theme.text};
+      --pd-ink: ${theme.text};
+      --pl-muted: ${textMuted};
+      --pd-muted: ${textMuted};
+      --pl-accent: ${accent};
+      --pd-accent: ${accent};
+      --pl-highlight: ${accent};
+      --pd-highlight: ${accent};
+      --g: ${theme.bg};
+      --k: ${theme.text};
+      --mu: ${textMuted};
+      --a: ${accent};
+      --pm-paper: ${cardBg};
+
+      /* Audio / Shaders / Into-the-ether */
+      --bg-core: ${theme.bg};
+      --bg-card: ${cardBg};
+      --bg-card-border: ${border};
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--preview-bg);
+      color: var(--preview-text);
+      color-scheme: ${isDark ? 'dark' : 'light'};
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--preview-bg);
+      color: var(--preview-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .page-section {
+      position: relative;
+      width: 100%;
+      clear: both;
+      background-color: var(--preview-bg);
+      color: var(--preview-text);
+      display: block;
+      box-sizing: border-box;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Seamless document flow: React roots match container width without forcing flex overrides */
+    .page-section > div[id^="root-"] {
+      width: 100%;
+      box-sizing: border-box;
+      background-color: transparent;
+      color: inherit;
+    }
+
+    /* Preloader Overlay Mode: floats full-screen over the page without pushing headers down */
+    .page-section.is-preloader,
+    .page-section[data-section-slug*="preloader"] {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+      z-index: 99999 !important;
+      pointer-events: auto;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+      background: transparent !important;
+      transition: opacity 0.5s ease;
+    }
+
+    .page-section[data-section-slug*="preloader"] .section-resize-handle {
+      display: none !important;
+    }
+
+    /* Auto-dismiss or suppress preloader container when completed to reveal the website underneath */
+    .page-section.is-preloader.is-suppressed,
+    .page-section[data-section-slug*="preloader"].is-suppressed,
+    .page-section[data-section-slug*="preloader"].is-dismissed,
+    .page-section[data-section-slug*="preloader"]:has([data-phase="done"]),
+    .page-section[data-section-slug*="preloader"]:has(.amr-root[data-phase="done"]),
+    .page-section[data-section-slug*="preloader"]:has(.scp-gate[data-phase="done"]),
+    .page-section[data-section-slug*="preloader"]:has([data-completed="true"]) {
+      display: none !important;
+      pointer-events: none !important;
+    }
+
+    /* Universal component container background and text color propagation (excluding preloaders) */
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .pl-root,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .bwf,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .pm,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .ib-root,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .ip-root,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .aurora-hero,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .stagger-stage,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .faq-wrap,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .marquee-section {
+      --pl-bg: var(--preview-bg) !important;
+      --pl-ink: var(--preview-text) !important;
+      --pl-muted: ${textMuted} !important;
+      --pl-line: ${border} !important;
+      --bwf-bg: var(--preview-bg) !important;
+      --bwf-ink: var(--preview-text) !important;
+      --bwf-muted: ${textMuted} !important;
+      background-color: var(--preview-bg) !important;
+      color: var(--preview-text) !important;
+    }
+
+    .page-section:not([data-section-slug*="preloader"]) .pl-title,
+    .page-section:not([data-section-slug*="preloader"]) .pl-count,
+    .page-section:not([data-section-slug*="preloader"]) .pl-count b {
+      color: var(--preview-text) !important;
+    }
+
+    .page-section .bwf-foot {
+      background: linear-gradient(180deg, transparent, var(--preview-bg)) !important;
+    }
+
+    /* FAQ accordion styles adaptation */
+    .page-section .faq-trigger {
+      color: var(--preview-text) !important;
+    }
+    .page-section .faq-panel__inner p {
+      color: ${textMuted} !important;
+    }
+    .page-section .faq-list,
+    .page-section .faq-item {
+      border-color: var(--preview-border) !important;
+    }
+
+    /* Client Logo Marquee adaptation */
+    .page-section .marquee-label {
+      color: ${textMuted} !important;
+    }
+    .page-section .marquee-btn {
+      background-color: ${cardBg} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }
+    .page-section .clients-marquee__item {
+      background-color: ${cardBg} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }
+
+    /* Hero Headline & Desc adaptation */
+    .page-section .hero-title {
+      color: var(--preview-text) !important;
+    }
+    .page-section .hero-desc {
+      color: ${textMuted} !important;
+    }
+    .page-section .hero-tag {
+      background-color: ${cardBg} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }
+
+    /* Testimonials & Cards adaptation */
+    .page-section .stagger-card {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .stagger-title,
+    .page-section .stagger-author {
+      color: var(--preview-text) !important;
+    }
+    .page-section .stagger-company {
+      color: ${textMuted} !important;
+    }
+    .page-section .theme-btn,
+    .page-section .filter-btn {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+
+    /* Ink-Orbit SaaS Pricing & Bento adaptation */
+    .page-section .ip-root,
+    .page-section .ib-root {
+      --ip-page: var(--preview-bg) !important;
+      --ip-paper: var(--preview-bg) !important;
+      --ip-card: var(--preview-card-bg) !important;
+      --ip-raise: ${bgSoft} !important;
+      --ip-ink: var(--preview-text) !important;
+      --ip-soft: ${textMuted} !important;
+      --ip-muted: ${textSubtle} !important;
+      --ip-faint: ${textSubtle} !important;
+      --ip-line: var(--preview-border) !important;
+      --ip-line-strong: var(--preview-border) !important;
+      --ip-inv: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+      --ip-inv-ink: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+      --ip-inv-muted: ${isDark ? 'rgba(15, 23, 42, 0.7)' : 'rgba(248, 250, 252, 0.7)'} !important;
+      --ib-page: var(--preview-bg) !important;
+      --ib-paper: var(--preview-bg) !important;
+      --ib-card: var(--preview-card-bg) !important;
+      --ib-raise: ${bgSoft} !important;
+      --ib-ink: var(--preview-text) !important;
+      --ib-soft: ${textMuted} !important;
+      --ib-muted: ${textSubtle} !important;
+      --ib-faint: ${textSubtle} !important;
+      --ib-line: var(--preview-border) !important;
+      --ib-line-strong: var(--preview-border) !important;
+      --ib-inv: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+      --ib-inv-ink: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+    }
+
+    .page-section .ib-sec,
+    .page-section .ip-sec {
+      background-color: transparent !important;
+      border-color: var(--preview-border) !important;
+    }
+    .page-section .ib-h2,
+    .page-section .ip-h2 {
+      color: var(--preview-text) !important;
+    }
+    .page-section .ip-plan {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .ip-plan-hot {
+      background-color: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+      color: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+      border-color: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+    }
+    .page-section .ip-plan-hot .ip-plan-desc,
+    .page-section .ip-plan-hot .ip-per,
+    .page-section .ip-plan-hot .ip-saving {
+      color: ${isDark ? 'rgba(15, 23, 42, 0.7)' : 'rgba(248, 250, 252, 0.7)'} !important;
+    }
+    .page-section .ip-toggle {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+    }
+    .page-section .ip-toggle-pill {
+      background-color: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+    }
+    .page-section .ip-toggle button[aria-pressed="true"] {
+      color: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+    }
+    .page-section .ip-toggle button[aria-pressed="false"] {
+      color: ${textMuted} !important;
+    }
+    .page-section .ip-tag {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .ip-btn-ghost {
+      background-color: ${bgSoft} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }
+    .page-section .ip-plan-hot .ip-btn-dark {
+      background-color: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+      color: ${isDark ? '#f8fafc' : '#0f172a'} !important;
+    }
+    .page-section .ib-card {
+      background: ${isDark ? 'linear-gradient(180deg, color-mix(in srgb, var(--preview-card-bg) 80%, white 5%), var(--preview-card-bg))' : 'linear-gradient(180deg, #ffffff, var(--preview-card-bg))'} !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .ib-card h3 {
+      color: var(--preview-text) !important;
+    }
+    .page-section .ib-card p {
+      color: ${textMuted} !important;
+    }
+    .page-section .ib-node {
+      fill: ${isDark ? 'var(--preview-card-bg)' : '#ffffff'} !important;
+      stroke: var(--preview-border) !important;
+    }
+    .page-section .ib-tag {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+
+    /* Navigation & Menu adaptation */
+    .page-section .nav-demo-shell,
+    .page-section .nav-demo-shell .brand,
+    .page-section .nav-demo-shell .burger-btn {
+      color: var(--preview-text) !important;
+    }
+
+    /* Postmark CTA adaptation */
+    .page-section .pm {
+      background-color: var(--preview-bg) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .pm-h {
+      color: var(--preview-text) !important;
+    }
+    .page-section .pm-p {
+      color: ${textMuted} !important;
+    }
+    .page-section .pm-paper {
+      fill: var(--preview-card-bg) !important;
+      stroke: var(--preview-border) !important;
+    }
+
+    /* Document and glass preview cards */
+    .page-section .doc-preview-card {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+    }
+
+    /* Tailwind / utility dark backgrounds adapt to active theme */
+    .page-section .bg-black,
+    .page-section .bg-zinc-950,
+    .page-section .bg-zinc-900,
+    .page-section .bg-neutral-950,
+    .page-section .bg-neutral-900,
+    .page-section .bg-slate-950,
+    .page-section .bg-slate-900,
+    .page-section .bg-gray-950,
+    .page-section .bg-gray-900,
+    .page-section .bg-background {
+      background-color: var(--preview-bg) !important;
+    }
+${!isDark ? `
+    /* Light Theme Adjustments for dark-designed elements */
+    .page-section .text-white,
+    .page-section .text-zinc-100,
+    .page-section .text-zinc-200,
+    .page-section .text-neutral-100,
+    .page-section .text-neutral-200,
+    .page-section .text-slate-100,
+    .page-section .text-slate-200,
+    .page-section .text-gray-100,
+    .page-section .text-gray-200 {
+      color: var(--preview-text) !important;
+    }
+    .page-section .text-zinc-400,
+    .page-section .text-zinc-500,
+    .page-section .text-neutral-400,
+    .page-section .text-slate-400,
+    .page-section .text-gray-400 {
+      color: ${textMuted} !important;
+    }
+    .page-section .border-zinc-800,
+    .page-section .border-zinc-900,
+    .page-section .border-neutral-800,
+    .page-section .border-slate-800 {
+      border-color: var(--preview-border) !important;
+    }
+
+    .page-section:not(.is-preloader) h1:not([class*="gradient"]),
+    .page-section:not(.is-preloader) h2:not([class*="gradient"]),
+    .page-section:not(.is-preloader) h3:not([class*="gradient"]),
+    .page-section:not(.is-preloader) h4,
+    .page-section:not(.is-preloader) h5,
+    .page-section:not(.is-preloader) h6,
+    .page-section:not(.is-preloader) p:not([class*="gradient"]),
+    .page-section:not(.is-preloader) .cyl-title,
+    .page-section:not(.is-preloader) .cyl-footer,
+    .page-section:not(.is-preloader) .strapline-copy,
+    .page-section:not(.is-preloader) .conv-h2,
+    .page-section:not(.is-preloader) .timeline-card__title,
+    .page-section:not(.is-preloader) .viv-artist-name,
+    .page-section:not(.is-preloader) .card-title,
+    .page-section:not(.is-preloader) .pricing-title,
+    .page-section:not(.is-preloader) .pricing-price {
+      color: var(--preview-text) !important;
+    }
+
+    .page-section:not(.is-preloader) .strapline-meta,
+    .page-section:not(.is-preloader) .conv-p,
+    .page-section:not(.is-preloader) .hero-sub,
+    .page-section:not(.is-preloader) .viv-artist-role,
+    .page-section:not(.is-preloader) .card-desc,
+    .page-section:not(.is-preloader) .pricing-feature,
+    .page-section:not(.is-preloader) .testimonial-quote {
+      color: ${textMuted} !important;
+    }
+
+    .page-section:not(.is-preloader) .hero-pill,
+    .page-section:not(.is-preloader) .cyl-btn,
+    .page-section:not(.is-preloader) .ruler-month-btn,
+    .page-section:not(.is-preloader) .chip,
+    .page-section:not(.is-preloader) .btn-secondary {
+      background-color: ${cardBg} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }` : `
+    /* Dark Theme Adjustments for light-designed elements */
+    .page-section .text-black,
+    .page-section .text-zinc-900,
+    .page-section .text-neutral-900,
+    .page-section .text-slate-900 {
+      color: var(--preview-text) !important;
+    }`}`;
+}
+
+/**
+ * Synchronously applies all dynamic theme variables, color-scheme, data-theme,
+ * universal styles, and section backgrounds directly to a target document (e.g. iframe).
+ */
+function applyThemeToDocument(doc, themeConfig) {
+  if (!doc) return;
+  const theme = resolveTheme(themeConfig);
+  const isDark = isDarkTheme(theme);
+  const textMuted = `color-mix(in srgb, ${theme.text} 65%, transparent)`;
+  const textSubtle = `color-mix(in srgb, ${theme.text} 45%, transparent)`;
+  const bgSoft = isDark
+    ? `color-mix(in srgb, ${theme.text} 6%, ${theme.bg})`
+    : `color-mix(in srgb, ${theme.text} 3%, ${theme.bg})`;
+  const cardBg = theme.cardBg || (isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)');
+  const border = theme.border || (isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)');
+  const accent = theme.accent || '#6366f1';
+
+  // 1. Update stylesheet in head
+  let styleEl = doc.getElementById('universal-theme-styles');
+  if (!styleEl && doc.head) {
+    styleEl = doc.createElement('style');
+    styleEl.id = 'universal-theme-styles';
+    doc.head.insertBefore(styleEl, doc.head.firstChild);
+  }
+  if (styleEl) {
+    styleEl.textContent = generateUniversalThemeStyles(theme);
+  }
+
+  // 2. Set root CSS variables
+  const root = doc.documentElement;
+  if (root && root.style) {
+    const vars = {
+      '--preview-bg': theme.bg,
+      '--preview-text': theme.text,
+      '--preview-accent': accent,
+      '--preview-card-bg': cardBg,
+      '--preview-border': border,
+      '--background': theme.bg,
+      '--foreground': theme.text,
+      '--color-background': theme.bg,
+      '--color-foreground': theme.text,
+      '--bg': theme.bg,
+      '--text': theme.text,
+      '--accent': accent,
+      '--card': cardBg,
+      '--card-foreground': theme.text,
+      '--border': border,
+      '--input': border,
+      '--ring': accent,
+      '--primary': accent,
+      '--primary-foreground': isDark ? '#000000' : '#ffffff',
+      '--secondary': cardBg,
+      '--secondary-foreground': theme.text,
+      '--muted': cardBg,
+      '--muted-foreground': textMuted,
+      '--popover': cardBg,
+      '--popover-foreground': theme.text,
+      '--bg-color': theme.bg,
+      '--text-color': theme.text,
+      '--text-main': theme.text,
+      '--text-muted': textMuted,
+      '--muted-text': textMuted,
+      '--card-bg': cardBg,
+      '--card-border': border,
+      '--card-hover': isDark ? `color-mix(in srgb, ${theme.text} 12%, ${theme.bg})` : `color-mix(in srgb, ${theme.text} 6%, ${theme.bg})`,
+      '--active-border': accent,
+      '--active-color': accent,
+      '--header-bg': `color-mix(in srgb, ${theme.bg} 85%, transparent)`,
+      '--header-border': border,
+      '--rail-bg': `color-mix(in srgb, ${theme.text} 12%, transparent)`,
+      '--fg': theme.text,
+      '--soft': bgSoft,
+      '--line': border,
+      '--pl-bg': theme.bg,
+      '--pl-ink': theme.text,
+      '--pl-muted': textMuted,
+      '--pl-line': border,
+      '--bwf-bg': theme.bg,
+      '--bwf-ink': theme.text,
+      '--bwf-muted': textMuted,
+      '--hwf-bg': theme.bg,
+      '--hwf-ink': theme.text,
+      '--ib-page': theme.bg,
+      '--ib-paper': cardBg,
+      '--ib-card': cardBg,
+      '--ib-raise': bgSoft,
+      '--ib-ink': theme.text,
+      '--ib-soft': textMuted,
+      '--ib-muted': textSubtle,
+      '--ib-line': border,
+      '--ip-page': theme.bg,
+      '--ip-paper': cardBg,
+      '--ip-card': cardBg,
+      '--ip-raise': bgSoft,
+      '--ip-ink': theme.text,
+      '--ip-soft': textMuted,
+      '--ip-muted': textSubtle,
+      '--ip-line': border,
+      '--pl-ground': theme.bg,
+      '--pd-ground': theme.bg,
+      '--pl-ink': theme.text,
+      '--pd-ink': theme.text,
+      '--pl-muted': textMuted,
+      '--pd-muted': textMuted,
+      '--pl-accent': accent,
+      '--pd-accent': accent,
+      '--pl-highlight': accent,
+      '--pd-highlight': accent,
+      '--g': theme.bg,
+      '--k': theme.text,
+      '--mu': textMuted,
+      '--a': accent,
+      '--pm-paper': cardBg,
+      '--bg-core': theme.bg,
+      '--bg-card': cardBg,
+      '--bg-card-border': border
+    };
+    for (const k in vars) {
+      root.style.setProperty(k, vars[k]);
+    }
+    root.style.colorScheme = isDark ? 'dark' : 'light';
+    root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    if (doc.body) {
+      doc.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+  }
+
+  // 3. Update normal page sections
+  const sections = doc.querySelectorAll('.page-section:not(.is-preloader)');
+  const pagePol = isDark ? 'dark' : 'light';
+  const isNativeEl = (el) => {
+    const host = el && typeof el.closest === 'function' ? el.closest('.page-section[data-native-for]') : null;
+    return !!host && (host.getAttribute('data-native-for') || '').split(' ').includes(pagePol);
+  };
+  sections.forEach(s => {
+    const native = isNativeEl(s);
+    // Native sections keep their own palette (set by the scoped CSS), so no inline theme colours
+    s.style.backgroundColor = native ? '' : theme.bg;
+    s.style.color = native ? '' : theme.text;
+    if (typeof s.setAttribute === 'function') {
+      s.setAttribute('data-theme', native ? (isDark ? 'light' : 'dark') : pagePol);
+    }
+  });
+
+  // 4. Synchronize all nested component theme attributes with active theme
+  const themeMode = isDark ? 'dark' : 'light';
+  const themedElements = doc.querySelectorAll('[data-theme]');
+  themedElements.forEach(el => {
+    if (typeof el.setAttribute === 'function') {
+      el.setAttribute('data-theme', isNativeEl(el) ? (isDark ? 'light' : 'dark') : themeMode);
+    }
+  });
+
+  try {
+    if (doc.defaultView) {
+      doc.defaultView.dispatchEvent(new CustomEvent('themechange', { detail: { isDark, theme } }));
+    }
+  } catch (e) {}
+}
+
+/**
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
-function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
+function assemblePreviewDocument(sections, themeConfig, featuresData = {}, options = {}) {
+  const pageHead = renderPageHead(options.page, 'Page Preview');
   const theme = resolveTheme(themeConfig);
+  const isDark = isDarkTheme(theme);
   if (!Array.isArray(sections) || sections.length === 0) {
     return renderEmptyPreview(theme);
   }
@@ -881,19 +1973,87 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
     }
 
     // Isolated HTML
+    const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
+    const isSuppressed = isPreloader && (options.suppressPreloader === true || section.suppressPreloader === true);
+    const preloaderClass = isPreloader ? (' is-preloader' + (isSuppressed ? ' is-dismissed is-suppressed' : '')) : '';
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    const sizingStyle = computeSectionSizingStyles(section.sizing);
-    const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
-    const resizeHandleHtml = `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
+    const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
+    let styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
+    if (isPreloader && isSuppressed) {
+      styleAttr = ' style="display: none !important; pointer-events: none !important;"';
+    }
+    const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
+    const nativeList = nativePolarities(options.nativeMap, slug);
+    const nativeAttr = nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '';
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
-    // Isolated JS wrapped safely
+    // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      scriptBlocks.push(`        // Section: ${slug} (${id})\n        try {\n          (function () {\n${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}\n          })();\n        } catch (err) {\n          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);\n        }`);
+      if (isPreloader && isSuppressed) {
+        scriptBlocks.push(`        // Section: ${slug} (${id}) [PRELOADER SUPPRESSED IN PREVIEW - WILL RUN ON REPLAY OR EXPORT]`);
+      } else {
+        scriptBlocks.push(`        // Section: ${slug} (${id})
+        try {
+          window.__activeSectionRegisteringId = ${JSON.stringify(id)};
+          (function () {
+${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
+          })();
+        } catch (err) {
+          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);
+        } finally {
+          window.__activeSectionRegisteringId = null;
+        }`);
+      }
     }
   });
+
+  // Preloader auto-dismiss script (only needed when a preloader is active and not suppressed)
+  const hasActivePreloader = sections.some(s => {
+    const slug = s.slug || '';
+    const cat = s.category || '';
+    const isP = slug.includes('preloader') || cat.toLowerCase().includes('preloader');
+    return isP && !options.suppressPreloader && !s.suppressPreloader;
+  });
+
+  if (hasActivePreloader) {
+    scriptBlocks.push(`        // Preloader Auto-Dismiss Handler
+        try {
+          (function() {
+            function initPreloaderWatch() {
+              const sec = document.querySelector('.page-section.is-preloader:not(.is-suppressed), .page-section[data-section-slug*="preloader"]:not(.is-suppressed)');
+              if (!sec) return;
+              function dismiss() {
+                sec.classList.add('is-dismissed');
+                sec.style.opacity = '0';
+                sec.style.pointerEvents = 'none';
+                setTimeout(() => { sec.style.display = 'none'; }, 500);
+              }
+              const checkDone = () => {
+                const root = sec.querySelector('[data-phase="done"], [data-completed="true"], [data-state="done"]');
+                const gate = sec.querySelector('.amr-gate, .scp-gate, [class*="-gate"]');
+                if (root || (gate && window.getComputedStyle(gate).display === 'none')) {
+                  dismiss();
+                  return true;
+                }
+                return false;
+              };
+              const obs = new MutationObserver(() => {
+                if (checkDone()) obs.disconnect();
+              });
+              obs.observe(sec, { attributes: true, subtree: true, attributeFilter: ['data-phase', 'data-completed', 'class', 'style'] });
+              sec.addEventListener('click', () => { setTimeout(dismiss, 1000); });
+              setTimeout(() => { if (sec.style.display !== 'none') dismiss(); }, 5000);
+            }
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', initPreloaderWatch);
+            } else {
+              initPreloaderWatch();
+            }
+          })();
+        } catch (e) {}`);
+  }
 
   const externalLinksHtml = Array.from(headLinks).join('\n  ');
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
@@ -901,72 +2061,23 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
   const allScripts = scriptBlocks.join('\n\n');
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${pageHead.lang}" data-theme="${isDark ? 'dark' : 'light'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Preview</title>
-  ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style>
-    :root {
-      --preview-bg: ${theme.bg};
-      --preview-text: ${theme.text};
-      --preview-accent: ${theme.accent};
-      --preview-card-bg: ${theme.cardBg};
-      --preview-border: ${theme.border};
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--preview-bg);
-      color: var(--preview-text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .page-section {
-      position: relative;
-      width: 100%;
-      clear: both;
-      background-color: var(--preview-bg);
-      color: var(--preview-text);
-      transition: background-color 0.2s ease, color 0.2s ease;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Seamless section height filling: child root containers expand to fill the section */
-    .page-section > div[id^="root-"],
-    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
-      flex: 1 1 auto;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-    }
-
-    .page-section > div[id^="root-"] > *,
-    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
-      width: 100%;
-      box-sizing: border-box;
-    }
-
+  ${pageHead.headTags}
+  ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style id="universal-theme-styles">
+${generateUniversalThemeStyles(theme)}
+  </style>
+  <style>
 ${allScopedStyles}
 
 ${OVERLAY_ELEMENT_CSS}
+${pageHead.css}
+${renderNativePaletteCss(sections, options.nativeMap)}
   </style>
 </head>
-<body>
+<body data-theme="${isDark ? 'dark' : 'light'}">
 ${allHtml}
   <script>
     (function () {
@@ -974,19 +2085,132 @@ ${allHtml}
       window.addEventListener('message', function (event) {
         if (event.data && event.data.type === 'UPDATE_THEME' && event.data.theme) {
           var t = event.data.theme;
-          if (t.bg) {
-            document.documentElement.style.setProperty('--preview-bg', t.bg);
-            document.querySelectorAll('.page-section').forEach(function (s) { s.style.backgroundColor = t.bg; });
+          var isDark = t.bg ? (function(hex) {
+            hex = String(hex).replace('#', '');
+            if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+            var r = parseInt(hex.slice(0, 2), 16) || 0;
+            var g = parseInt(hex.slice(2, 4), 16) || 0;
+            var b = parseInt(hex.slice(4, 6), 16) || 0;
+            return (r * 0.299 + g * 0.587 + b * 0.114) < 70;
+          })(t.bg) : true;
+
+          var textMuted = 'color-mix(in srgb, ' + t.text + ' 65%, transparent)';
+          var cardBg = t.cardBg || (isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)');
+          var border = t.border || (isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)');
+          var accent = t.accent || '#6366f1';
+
+          var vars = {
+            '--preview-bg': t.bg,
+            '--preview-text': t.text,
+            '--preview-accent': accent,
+            '--preview-card-bg': cardBg,
+            '--preview-border': border,
+            '--background': t.bg,
+            '--foreground': t.text,
+            '--bg': t.bg,
+            '--text': t.text,
+            '--accent': accent,
+            '--card': cardBg,
+            '--card-foreground': t.text,
+            '--border': border,
+            '--primary': accent,
+            '--muted': cardBg,
+            '--muted-foreground': textMuted,
+            '--bg-color': t.bg,
+            '--text-color': t.text,
+            '--text-main': t.text,
+            '--text-muted': textMuted,
+            '--card-bg': cardBg,
+            '--card-border': border,
+            '--pl-bg': t.bg,
+            '--pl-ink': t.text,
+            '--pl-muted': textMuted,
+            '--bwf-bg': t.bg,
+            '--bwf-ink': t.text,
+            '--bwf-muted': textMuted,
+            '--ib-page': t.bg,
+            '--ib-paper': cardBg,
+            '--ib-card': cardBg,
+            '--ib-ink': t.text,
+            '--ib-soft': textMuted,
+            '--ib-line': border,
+            '--ip-page': t.bg,
+            '--ip-paper': cardBg,
+            '--ip-card': cardBg,
+            '--ip-ink': t.text,
+            '--ip-soft': textMuted,
+            '--ip-line': border
+          };
+          for (var k in vars) {
+            if (vars[k]) document.documentElement.style.setProperty(k, vars[k]);
           }
-          if (t.text) {
-            document.documentElement.style.setProperty('--preview-text', t.text);
-            document.querySelectorAll('.page-section').forEach(function (s) { s.style.color = t.text; });
-          }
-          if (t.accent) document.documentElement.style.setProperty('--preview-accent', t.accent);
-          if (t.cardBg) document.documentElement.style.setProperty('--preview-card-bg', t.cardBg);
-          if (t.border) document.documentElement.style.setProperty('--preview-border', t.border);
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+          if (document.body) document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          var pagePol = isDark ? 'dark' : 'light';
+          var isNativeEl = function (el) {
+            var host = el.closest ? el.closest('.page-section[data-native-for]') : null;
+            return !!host && (host.getAttribute('data-native-for') || '').split(' ').indexOf(pagePol) !== -1;
+          };
+          document.querySelectorAll('.page-section:not(.is-preloader)').forEach(function (s) {
+            var native = isNativeEl(s);
+            s.style.backgroundColor = native ? '' : (t.bg || '');
+            s.style.color = native ? '' : (t.text || '');
+            s.setAttribute('data-theme', native ? (isDark ? 'light' : 'dark') : pagePol);
+          });
+          document.querySelectorAll('[data-theme]').forEach(function (el) {
+            el.setAttribute('data-theme', isNativeEl(el) ? (isDark ? 'light' : 'dark') : pagePol);
+          });
+          try {
+            window.dispatchEvent(new CustomEvent('themechange', { detail: { isDark: isDark, theme: t } }));
+          } catch (_) {}
         }
       });
+
+      // Theme-Aware MatchMedia Polyfill for prefers-color-scheme in live preview
+      (function () {
+        var origMatchMedia = window.matchMedia;
+        window.matchMedia = function (query) {
+          if (typeof query === 'string' && query.includes('prefers-color-scheme')) {
+            var checkIsDark = function () {
+              var attr = document.documentElement.getAttribute('data-theme');
+              if (attr) return attr === 'dark';
+              var cs = document.documentElement.style.colorScheme;
+              if (cs) return cs === 'dark';
+              return true;
+            };
+            var isDarkQuery = query.includes('dark');
+            var checkMatches = function () {
+              return isDarkQuery ? checkIsDark() : !checkIsDark();
+            };
+            var listeners = [];
+            var mql = {
+              get matches() { return checkMatches(); },
+              media: query,
+              onchange: null,
+              addListener: function (fn) { this.addEventListener('change', fn); },
+              removeListener: function (fn) { this.removeEventListener('change', fn); },
+              addEventListener: function (type, fn) {
+                if (type === 'change' && typeof fn === 'function') listeners.push(fn);
+              },
+              removeEventListener: function (type, fn) {
+                listeners = listeners.filter(function (l) { return l !== fn; });
+              },
+              dispatchEvent: function (e) {
+                listeners.forEach(function (fn) { fn(e); });
+                return true;
+              }
+            };
+            window.addEventListener('themechange', function () {
+              var e = { matches: checkMatches(), media: query };
+              if (typeof mql.onchange === 'function') mql.onchange(e);
+              listeners.forEach(function (fn) { fn(e); });
+            });
+            return mql;
+          }
+          return origMatchMedia ? origMatchMedia.call(window, query) : { matches: false };
+        };
+      })();
 
       // Notify parent builder when a section is clicked in preview
       document.addEventListener('click', function (e) {
@@ -995,6 +2219,91 @@ ${allHtml}
           window.parent.postMessage({ type: 'SECTION_CLICKED', sectionId: sec.id }, '*');
         }
       });
+
+      // Theme-Aware MatchMedia Polyfill for prefers-color-scheme
+(function () {
+  var origMatchMedia = window.matchMedia;
+  window.matchMedia = function (query) {
+    if (typeof query === 'string' && query.includes('prefers-color-scheme')) {
+      var checkIsDark = function () {
+        var attr = document.documentElement.getAttribute('data-theme');
+        if (attr) return attr === 'dark';
+        var cs = document.documentElement.style.colorScheme;
+        if (cs) return cs === 'dark';
+        return ${isDark ? 'true' : 'false'};
+      };
+      var isDarkQuery = query.includes('dark');
+      var checkMatches = function () {
+        return isDarkQuery ? checkIsDark() : !checkIsDark();
+      };
+      var listeners = [];
+      var mql = {
+        get matches() { return checkMatches(); },
+        media: query,
+        onchange: null,
+        addListener: function (fn) { this.addEventListener('change', fn); },
+        removeListener: function (fn) { this.removeEventListener('change', fn); },
+        addEventListener: function (type, fn) {
+          if (type === 'change' && typeof fn === 'function') listeners.push(fn);
+        },
+        removeEventListener: function (type, fn) {
+          listeners = listeners.filter(function (l) { return l !== fn; });
+        },
+        dispatchEvent: function (e) {
+          listeners.forEach(function (fn) { fn(e); });
+          return true;
+        }
+      };
+      window.addEventListener('themechange', function () {
+        var e = { matches: checkMatches(), media: query };
+        if (typeof mql.onchange === 'function') mql.onchange(e);
+        listeners.forEach(function (fn) { fn(e); });
+      });
+      return mql;
+    }
+    return origMatchMedia ? origMatchMedia.call(window, query) : { matches: false };
+  };
+})();
+
+// Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
+      (function () {
+        var origAdd = EventTarget.prototype.addEventListener;
+        EventTarget.prototype.addEventListener = function (type, listener, options) {
+          if (type === 'wheel') {
+            var target = this;
+            var isGlobal = target === window || target === document || target === document.documentElement || target === document.body;
+            var secId = window.__activeSectionRegisteringId || null;
+
+            var safeWheel = function (e) {
+              if (isGlobal && secId) {
+                var sec = document.getElementById(secId);
+                if (sec && !sec.contains(e.target) && e.target !== sec) {
+                  return;
+                }
+              }
+
+              var safeEvent = new Proxy(e, {
+                get: function (t, prop) {
+                  if (prop === 'preventDefault') {
+                    return function () {
+                      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                        e.preventDefault();
+                      }
+                    };
+                  }
+                  var val = t[prop];
+                  return typeof val === 'function' ? val.bind(t) : val;
+                }
+              });
+
+              return listener.call(this, safeEvent);
+            };
+
+            return origAdd.call(this, type, safeWheel, options);
+          }
+          return origAdd.call(this, type, listener, options);
+        };
+      })();
 
       function initAllSections() {
 ${allScripts}
@@ -1006,15 +2315,146 @@ ${allScripts}
       }
     })();
   </script>
+  <script>
+${OVERRIDES_RUNTIME}
+window.__setOverrides(${JSON.stringify(collectOverrides(sections)).replace(/</g, '\\u003c')});
+  </script>
 </body>
 </html>`;
 }
 
 /**
+ * "Native palette" sections. Some components are designed for one polarity (a dark footer, a cream
+ * editorial grid). Forcing the page theme onto them leaves unreadable text, so a component can declare
+ * `nativeWhen: ["light"]` in meta.json: when the page theme is light, that section keeps rendering with
+ * the dark preset (and vice versa) instead of following the page.
+ * `nativeMap` is { slug: ['light'] | ['dark'] | ['light','dark'] }.
+ */
+const NATIVE_PRESET_FOR_PAGE = { light: 'midnight-dark', dark: 'clean-minimal' };
+
+function nativePolarities(nativeMap, slug) {
+  const v = nativeMap && nativeMap[slug];
+  return Array.isArray(v) ? v.filter(p => p === 'light' || p === 'dark') : [];
+}
+
+/** Value for a section's data-theme attribute: the opposite polarity when it is native under the page theme. */
+function sectionThemeAttr(pageIsDark, nativeList) {
+  const pagePol = pageIsDark ? 'dark' : 'light';
+  if (nativeList.includes(pagePol)) return pageIsDark ? 'light' : 'dark';
+  return pagePol;
+}
+
+/** CSS that re-scopes the theme variables of native sections to their own palette. */
+function renderNativePaletteCss(sections, nativeMap) {
+  const blocks = [];
+  (Array.isArray(sections) ? sections : []).forEach((sec, index) => {
+    const id = sec.id || `sec-${index + 1}`;
+    nativePolarities(nativeMap, sec.slug).forEach(pol => {
+      const local = THEME_PRESETS[NATIVE_PRESET_FOR_PAGE[pol]];
+      const m = generateUniversalThemeStyles(local).match(/:root\s*\{([\s\S]*?)\n    \}/);
+      if (!m) return;
+      blocks.push(`:root[data-theme="${pol}"] .page-section#${id}[data-native-for~="${pol}"] {${m[1]}\n      background-color: ${local.bg};\n      color: ${local.text};\n      color-scheme: ${pol === 'light' ? 'dark' : 'light'};\n    }`);
+    });
+  });
+  return blocks.length ? `/* Native-palette sections */\n${blocks.join('\n')}\n` : '';
+}
+
+/**
+ * Page-level settings (title, description, favicon, fonts) -> head tags and CSS.
+ * @param {object} [page]
+ * @param {string} [fallbackTitle]
+ */
+function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
+  const title = (page.title || '').trim() || fallbackTitle;
+  const tags = [`<title>${escapeHtml(title)}</title>`];
+  if ((page.description || '').trim()) {
+    tags.push(`<meta name="description" content="${escapeHtml(page.description.trim())}">`);
+  }
+
+  const fav = (page.favicon || '').trim();
+  if (fav) {
+    const isUrl = /^(https?:|data:|\/|\.\/|[\w-]+\/)/i.test(fav) && !/^\p{Extended_Pictographic}/u.test(fav);
+    const href = isUrl
+      ? fav
+      : 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${escapeHtml(fav)}</text></svg>`);
+    tags.push(`<link rel="icon" href="${escapeHtml(href)}">`);
+  }
+
+  const families = [];
+  const cssFamily = name => `'${String(name).replace(/['"\\<>;{}]/g, '')}'`;
+  const cleanName = name => String(name || '').replace(/['"\\<>;{}]/g, '').trim();
+  const display = cleanName(page.fontDisplay);
+  const body = cleanName(page.fontBody);
+  [display, body].filter(Boolean).forEach(n => {
+    if (!families.includes(n)) families.push(n);
+  });
+  if (families.length) {
+    const query = families.map(n => `family=${encodeURIComponent(n).replace(/%20/g, '+')}:wght@400;500;600;700`).join('&');
+    tags.push('<link rel="preconnect" href="https://fonts.googleapis.com">');
+    tags.push('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>');
+    tags.push(`<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${query}&display=swap">`);
+  }
+
+  const css = [];
+  if (display) css.push(`:root { --font-display: ${cssFamily(display)}, system-ui, sans-serif; }`);
+  if (body) css.push(`:root { --font-body: ${cssFamily(body)}, system-ui, sans-serif; }`);
+  if (display) css.push(`.page-section :is(h1, h2, h3, h4, h5, h6) { font-family: var(--font-display) !important; }`);
+  if (body) css.push(`.page-section :is(p, li, a, span, button, label, input, textarea, blockquote, td, th, figcaption):not(code):not(pre) { font-family: var(--font-body) !important; }`);
+
+  return { title, lang: /^[a-z]{2,3}(-[A-Za-z0-9]+)*$/.test(page.lang || '') ? page.lang : 'en', headTags: tags.join('\n  '), css: css.join('\n') };
+}
+
+/**
+ * Client-content overrides: sections carry { fieldId: { selector, type, value, attr? } }.
+ * Returns a flat list the runtime below applies inside each section.
+ */
+function collectOverrides(sections) {
+  const out = [];
+  (Array.isArray(sections) ? sections : []).forEach(sec => {
+    Object.entries(sec.overrides || {}).forEach(([fieldId, o]) => {
+      if (o && typeof o === 'object' && o.selector && o.value !== undefined && o.value !== '') {
+        out.push({ section: sec.id, field: fieldId, selector: o.selector, type: o.type || 'text', attr: o.attr || '', value: String(o.value) });
+      }
+    });
+  });
+  return out;
+}
+
+/** Runtime shared by preview and export: defines window.__setOverrides(list). */
+const OVERRIDES_RUNTIME = `(function () {
+  var list = [];
+  function apply() {
+    list.forEach(function (o) {
+      var root = document.getElementById(o.section);
+      if (!root) return;
+      var el;
+      try { el = root.querySelector(o.selector); } catch (e) { return; }
+      if (!el) return;
+      if (o.type === 'image') {
+        if (el.tagName === 'IMG') { el.removeAttribute('srcset'); el.src = o.value; }
+        else el.style.backgroundImage = 'url("' + o.value.replace(/"/g, '%22') + '")';
+      } else if (o.type === 'link') {
+        el.setAttribute('href', o.value);
+      } else if (o.type === 'color') {
+        el.style.setProperty(o.attr || 'color', o.value);
+      } else {
+        el.textContent = o.value;
+      }
+    });
+  }
+  window.__setOverrides = function (next) { list = next || []; apply(); };
+  window.__applyOverrides = apply;
+  document.addEventListener('DOMContentLoaded', function () { apply(); setTimeout(apply, 400); setTimeout(apply, 1500); });
+  window.addEventListener('load', apply);
+})();`;
+
+/**
  * Generates an export bundle containing index.html, style.css, script.js, and README.md.
  */
-function generateExportBundle(sections, themeConfig, featuresData = {}) {
+function generateExportBundle(sections, themeConfig, featuresData = {}, options = {}) {
+  const pageHead = renderPageHead(options.page);
   const theme = resolveTheme(themeConfig);
+  const isDark = isDarkTheme(theme);
   const safeSections = Array.isArray(sections) ? sections : [];
 
   const headLinks = new Set();
@@ -1022,6 +2462,8 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
   const sectionHtmlBlocks = [];
   const scriptBlocks = [];
   const sectionInfoList = [];
+  const contentOverrides = collectOverrides(safeSections);
+  const pageOpts = options.page || {};
 
   safeSections.forEach((section, index) => {
     const id = section.id || `sec-${index + 1}`;
@@ -1043,18 +2485,59 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
     }
 
     // Isolated HTML
+    const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
+    const preloaderClass = isPreloader ? ' is-preloader' : '';
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    const sizingStyle = computeSectionSizingStyles(section.sizing);
+    const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    const nativeList = nativePolarities(options.nativeMap, slug);
+    const nativeAttr = nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '';
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
-    // Isolated JS wrapped safely
+    // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      scriptBlocks.push(`  // Section: ${slug}\n  try {\n    (function () {\n${isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n')}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  }`);
+      scriptBlocks.push(`  // Section: ${slug}\n  try {\n    window.__activeSectionRegisteringId = ${JSON.stringify(id)};\n    (function () {\n${isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n')}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  } finally {\n    window.__activeSectionRegisteringId = null;\n  }`);
     }
   });
+
+  // Preloader auto-dismiss script for exported bundle
+  scriptBlocks.push(`  // Preloader Auto-Dismiss Handler
+  try {
+    (function() {
+      function initPreloaderWatch() {
+        const sec = document.querySelector('.page-section.is-preloader, .page-section[data-section-slug*="preloader"]');
+        if (!sec) return;
+        function dismiss() {
+          sec.classList.add('is-dismissed');
+          sec.style.opacity = '0';
+          sec.style.pointerEvents = 'none';
+          setTimeout(() => { sec.style.display = 'none'; }, 500);
+        }
+        const checkDone = () => {
+          const root = sec.querySelector('[data-phase="done"], [data-completed="true"], [data-state="done"]');
+          const gate = sec.querySelector('.amr-gate, .scp-gate, [class*="-gate"]');
+          if (root || (gate && window.getComputedStyle(gate).display === 'none')) {
+            dismiss();
+            return true;
+          }
+          return false;
+        };
+        const obs = new MutationObserver(() => {
+          if (checkDone()) obs.disconnect();
+        });
+        obs.observe(sec, { attributes: true, subtree: true, attributeFilter: ['data-phase', 'data-completed', 'class', 'style'] });
+        sec.addEventListener('click', () => { setTimeout(dismiss, 1000); });
+        setTimeout(() => { if (sec.style.display !== 'none') dismiss(); }, 5000);
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPreloaderWatch);
+      } else {
+        initPreloaderWatch();
+      }
+    })();
+  } catch (e) {}`);
 
   const externalLinksHtml = Array.from(headLinks).join('\n  ');
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
@@ -1063,14 +2546,14 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
 
   // 1. index.html
   const indexHtml = `<!DOCTYPE html>
-<html lang="en">
+<html lang="${pageHead.lang}" data-theme="${isDark ? 'dark' : 'light'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Assembled Web Page</title>
+  ${pageHead.headTags}
   ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-theme="${isDark ? 'dark' : 'light'}">
 ${allHtml}
   <script src="script.js"></script>
 </body>
@@ -1081,65 +2564,12 @@ ${allHtml}
  * Assembled Page Styles
  * Bundled by Page Preview Builder
  * Theme: ${theme.name}
+ *
+ * BRAND VARIABLES: to re-colour the whole site edit --preview-bg, --preview-text and
+ * --preview-accent in the :root block below. Every other colour token derives from them.
  */
 
-:root {
-  --preview-bg: ${theme.bg};
-  --preview-text: ${theme.text};
-  --preview-accent: ${theme.accent};
-  --preview-card-bg: ${theme.cardBg};
-  --preview-border: ${theme.border};
-}
-
-/* Base Resets */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--preview-bg);
-  color: var(--preview-text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-.page-section {
-  position: relative;
-  width: 100%;
-  clear: both;
-  background-color: var(--preview-bg);
-  color: var(--preview-text);
-  transition: background-color 0.2s ease, color 0.2s ease;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Seamless section height filling: child root containers expand to fill the section */
-.page-section > div[id^="root-"],
-.page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
-  flex: 1 1 auto;
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-.page-section > div[id^="root-"] > *,
-.page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
-  flex: 1 1 auto;
-  width: 100%;
-  min-height: 100%;
-  box-sizing: border-box;
-}
+${generateUniversalThemeStyles(theme)}
 
 /* ==========================================================================
    Section Styles
@@ -1148,7 +2578,8 @@ body {
 ${allScopedStyles || '/* No custom section styles */'}
 
 ${OVERLAY_ELEMENT_CSS}
-`;
+${pageHead.css ? `\n/* Page fonts */\n${pageHead.css}\n` : ''}
+${renderNativePaletteCss(safeSections, options.nativeMap)}`;
 
   // 3. script.js
   const scriptJs = `/**
@@ -1156,12 +2587,102 @@ ${OVERLAY_ELEMENT_CSS}
  * Bundled by Page Preview Builder
  */
 
+// Theme-Aware MatchMedia Polyfill for prefers-color-scheme
+(function () {
+  var origMatchMedia = window.matchMedia;
+  window.matchMedia = function (query) {
+    if (typeof query === 'string' && query.includes('prefers-color-scheme')) {
+      var checkIsDark = function () {
+        var attr = document.documentElement.getAttribute('data-theme');
+        if (attr) return attr === 'dark';
+        var cs = document.documentElement.style.colorScheme;
+        if (cs) return cs === 'dark';
+        return ${isDark ? 'true' : 'false'};
+      };
+      var isDarkQuery = query.includes('dark');
+      var checkMatches = function () {
+        return isDarkQuery ? checkIsDark() : !checkIsDark();
+      };
+      var listeners = [];
+      var mql = {
+        get matches() { return checkMatches(); },
+        media: query,
+        onchange: null,
+        addListener: function (fn) { this.addEventListener('change', fn); },
+        removeListener: function (fn) { this.removeEventListener('change', fn); },
+        addEventListener: function (type, fn) {
+          if (type === 'change' && typeof fn === 'function') listeners.push(fn);
+        },
+        removeEventListener: function (type, fn) {
+          listeners = listeners.filter(function (l) { return l !== fn; });
+        },
+        dispatchEvent: function (e) {
+          listeners.forEach(function (fn) { fn(e); });
+          return true;
+        }
+      };
+      window.addEventListener('themechange', function () {
+        var e = { matches: checkMatches(), media: query };
+        if (typeof mql.onchange === 'function') mql.onchange(e);
+        listeners.forEach(function (fn) { fn(e); });
+      });
+      return mql;
+    }
+    return origMatchMedia ? origMatchMedia.call(window, query) : { matches: false };
+  };
+})();
+
+// Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
+(function () {
+  var origAdd = EventTarget.prototype.addEventListener;
+  EventTarget.prototype.addEventListener = function (type, listener, options) {
+    if (type === 'wheel') {
+      var target = this;
+      var isGlobal = target === window || target === document || target === document.documentElement || target === document.body;
+      var secId = window.__activeSectionRegisteringId || null;
+
+      var safeWheel = function (e) {
+        if (isGlobal && secId) {
+          var sec = document.getElementById(secId);
+          if (sec && !sec.contains(e.target) && e.target !== sec) {
+            return;
+          }
+        }
+
+        var safeEvent = new Proxy(e, {
+          get: function (t, prop) {
+            if (prop === 'preventDefault') {
+              return function () {
+                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                  e.preventDefault();
+                }
+              };
+            }
+            var val = t[prop];
+            return typeof val === 'function' ? val.bind(t) : val;
+          }
+        });
+
+        return listener.call(this, safeEvent);
+      };
+
+      return origAdd.call(this, type, safeWheel, options);
+    }
+    return origAdd.call(this, type, listener, options);
+  };
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
 ${allScripts || '  // No section scripts'}
 });
+
+// Client content edits made in the builder (headlines, images, links). Change a value here and reload.
+${OVERRIDES_RUNTIME}
+window.__setOverrides(${JSON.stringify(collectOverrides(safeSections), null, 2)});
 `;
 
   // 4. README.md
+  const unverifiedLicences = sectionInfoList.filter(sec => (options.licenseMap || {})[sec.slug] === 'unverified');
   const readmeMd = `# Assembled Web Page Project
 
 This standalone web project was created with the **Page Preview Builder**.
@@ -1170,6 +2691,28 @@ It bundles your selected components into a clean, editable, and ready-to-run pac
 ## Included Sections (${sectionInfoList.length})
 
 ${sectionInfoList.map((s, idx) => `${idx + 1}. **${s.title}** (\`${s.slug}\`) — Container: \`#${s.id}\``).join('\n') || '- No sections assembled yet.'}
+
+${unverifiedLicences.length ? `## Licences to check before delivery
+
+These components come from sources whose licence has not been verified in the vault. Confirm you may ship them to a paying client, or replace them:
+
+${unverifiedLicences.map(s => `- ${s.title} (\`${s.slug}\`)`).join('\n')}
+
+` : ''}## Page Settings
+
+- **Title:** ${pageHead.title}
+- **Language:** \`${pageHead.lang}\`
+- **Fonts:** ${[pageOpts.fontDisplay && `${pageOpts.fontDisplay} (headings)`, pageOpts.fontBody && `${pageOpts.fontBody} (body)`].filter(Boolean).join(', ') || 'component defaults'}
+
+Change the title, description and favicon in the \`<head>\` of \`index.html\`. Fonts load from Google Fonts via the \`<link>\` tag there and are applied by the \`/* Page fonts */\` rules at the end of \`style.css\`.
+
+## Client Content Edits
+
+${contentOverrides.length ? contentOverrides.map(o => `- \`#${o.section}\` → \`${o.selector}\` (${o.type}): ${o.value.length > 80 ? o.value.slice(0, 77) + '...' : o.value}`).join('\n') + '\n\nThese were edited in the builder and are applied by the `window.__setOverrides([...])` list at the bottom of `script.js`. Edit the values there, or change the markup in `index.html` and delete the matching entry.' : 'No content was overridden in the builder; edit text directly in `index.html`.'}
+
+## Assets
+
+Images, video and fonts used by the components are in \`assets/\`. Keep that folder next to \`index.html\` when you upload the site.
 
 ## How to Run
 
@@ -1233,10 +2776,9 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
 /**
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
-function generateSingleFileBundle(sections, themeConfig, featuresData = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData);
+function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap });
   return doc
-    .replace('<title>Page Preview</title>', '<title>Assembled Web Page</title>')
     .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }
 
@@ -1285,6 +2827,25 @@ function putU32(buffer, offset, val) {
   buffer[offset + 1] = (val >> 8) & 0xff;
   buffer[offset + 2] = (val >> 16) & 0xff;
   buffer[offset + 3] = (val >> 24) & 0xff;
+}
+
+/**
+ * Root-relative local asset references (e.g. "/vivmgmt/assets/images/a.jpg") only resolve on the
+ * builder's dev server. These helpers find them so export can bundle or inline the files.
+ */
+const LOCAL_ASSET_RE = /(["'(=,\s])(\/(?!\/)[A-Za-z0-9_\-.%~@+\/]+\.(?:png|jpe?g|webp|gif|svg|avif|ico|mp4|webm|mp3|wav|ogg|woff2?|ttf|otf))(?=[?#"')\s>,]|$)/gi;
+
+function findLocalAssetUrls(text) {
+  const found = new Set();
+  if (typeof text !== 'string') return [];
+  for (const m of text.matchAll(LOCAL_ASSET_RE)) found.add(m[2]);
+  return Array.from(found);
+}
+
+function rewriteLocalAssetUrls(text, urlMap) {
+  if (typeof text !== 'string' || !urlMap) return text;
+  return text.replace(LOCAL_ASSET_RE, (full, pre, url) =>
+    Object.prototype.hasOwnProperty.call(urlMap, url) ? pre + urlMap[url] : full);
 }
 
 /**
@@ -1405,13 +2966,24 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     THEME_PRESETS,
     resolveTheme,
+    isDarkTheme,
+    generateUniversalThemeStyles,
+    applyThemeToDocument,
     scopeSectionStyles,
     isolateSectionMarkup,
     isolateSectionScript,
     extractHeadLinks,
+    renderSectionOverlayHtml,
+    OVERLAY_ELEMENT_CSS,
     assemblePreviewDocument,
     generateExportBundle,
     generateSingleFileBundle,
+    renderPageHead,
+    renderNativePaletteCss,
+    collectOverrides,
+    computeSectionSizingStyles,
+    findLocalAssetUrls,
+    rewriteLocalAssetUrls,
     createZipArchive
   };
 }
@@ -1420,13 +2992,24 @@ if (typeof window !== 'undefined') {
   window.Assembler = {
     THEME_PRESETS,
     resolveTheme,
+    isDarkTheme,
+    generateUniversalThemeStyles,
+    applyThemeToDocument,
     scopeSectionStyles,
     isolateSectionMarkup,
     isolateSectionScript,
     extractHeadLinks,
+    renderSectionOverlayHtml,
+    OVERLAY_ELEMENT_CSS,
     assemblePreviewDocument,
     generateExportBundle,
     generateSingleFileBundle,
+    renderPageHead,
+    renderNativePaletteCss,
+    collectOverrides,
+    computeSectionSizingStyles,
+    findLocalAssetUrls,
+    rewriteLocalAssetUrls,
     createZipArchive
   };
 }

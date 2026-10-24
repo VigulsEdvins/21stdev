@@ -32,7 +32,7 @@ assert(builderCss.includes('.drawer-feature-grid.is-compact'), 'builder.css must
 assert(builderCss.includes('.canvas-context-menu'), 'builder.css must style .canvas-context-menu');
 assert(builderCss.includes('.element-edit-toolbar'), 'builder.css must style .element-edit-toolbar');
 
-const builderJs = fs.readFileSync('builder.js', 'utf8');
+const builderJs = require('./helpers/builder-source.js').readBuilderSource();
 assert(builderJs.includes('originalHtml'), 'builder.js must cache originalHtml on addBtn');
 assert(builderJs.includes('_restoreTimer'), 'builder.js must manage _restoreTimer on addBtn');
 assert(builderJs.includes('loadStarterTemplate'), 'builder.js must contain loadStarterTemplate');

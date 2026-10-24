@@ -21,5 +21,30 @@
   "dependencies": [
     "vanilla-js"
   ],
-  "order": 32
+  "order": 32,
+  "legacyCategory": "Buttons & UI",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "dark"
+  ],
+  "industry": [
+    "portfolio",
+    "agency"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "mom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.05,
+    "webgl": false,
+    "canvas2d": false
+  },
+  "nativeWhen": [
+    "light"
+  ]
 }

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ViV MGMT — Content &amp; Gallery Admin Panel</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/svg/favicon.svg" />
+  <link rel="preload" href="./assets/fonts/HelveticaNowDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="./assets/fonts/HelveticaNowDisplay-Medium.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="./admin.css" />
+  <script>
+    if (window.self !== window.top) {
+      window.top.location = window.self.location;
+    }
+  </script>
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Left Sidebar Navigation -->
+    <aside class="admin-sidebar" aria-label="Admin sections">
+      <div class="admin-sidebar__brand">
+        <a href="./index.html" class="admin-brand-link" title="Back to live site">
+          <img src="./assets/svg/logo-viv.svg" alt="ViV MGMT" class="admin-brand-logo" />
+        </a>
+        <span class="admin-badge">CMS Studio</span>
+      </div>
+
+      <nav class="admin-nav" role="tablist" aria-orientation="vertical">
+        <button type="button" class="admin-nav__item is-active" role="tab" aria-selected="true" data-tab="gallery">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="18" rx="2" />
+            <path d="M7 3v18M12 3v18M17 3v18" />
+          </svg>
+          <span>Artist Gallery Columns</span>
+          <span class="admin-nav__count" id="count-gallery">9</span>
+        </button>
+
+        <button type="button" class="admin-nav__item" role="tab" aria-selected="false" data-tab="hero-strapline">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 7V4h16v3M9 20h6M12 4v16" />
+          </svg>
+          <span>Hero &amp; Strapline</span>
+        </button>
+
+        <button type="button" class="admin-nav__item" role="tab" aria-selected="false" data-tab="news">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="9" rx="1" />
+            <rect x="14" y="3" width="7" height="5" rx="1" />
+            <rect x="14" y="12" width="7" height="9" rx="1" />
+            <rect x="3" y="16" width="7" height="5" rx="1" />
+          </svg>
+          <span>News Masonry Grid</span>
+          <span class="admin-nav__count" id="count-news">6</span>
+        </button>
+
+        <button type="button" class="admin-nav__item" role="tab" aria-selected="false" data-tab="navigation">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+          <span>Navbar &amp; Mobile Menu</span>
+        </button>
+
+        <button type="button" class="admin-nav__item" role="tab" aria-selected="false" data-tab="footer">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>Footer &amp; Hover Reveals</span>
+          <span class="admin-nav__count" id="count-footer-artists">9</span>
+        </button>
+
+        <button type="button" class="admin-nav__item" role="tab" aria-selected="false" data-tab="media-backup">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+          <span>Media &amp; Backup</span>
+        </button>
+      </nav>
+
+      <div class="admin-sidebar__footer">
+        <a href="./index.html" class="admin-btn admin-btn--outline admin-btn--full" target="_blank" rel="noopener noreferrer">
+          <span>Open Live Page</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+          </svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <div class="admin-main">
+      <!-- Top Action Header -->
+      <header class="admin-topbar">
+        <div class="admin-topbar__left">
+          <h1 class="admin-topbar__title" id="current-section-title">Artist Gallery Columns</h1>
+          <span class="admin-sync-pill" id="sync-status-pill">Published</span>
+        </div>
+
+        <div class="admin-topbar__actions">
+          <div class="admin-history-group" role="group" aria-label="Edit history">
+            <button type="button" class="admin-btn admin-btn--ghost admin-btn--icon" id="btn-undo" title="Undo (Ctrl+Z)" aria-label="Undo" disabled>
+              &#x21B6;<span>Undo</span>
+            </button>
+            <button type="button" class="admin-btn admin-btn--ghost admin-btn--icon" id="btn-redo" title="Redo (Ctrl+Y)" aria-label="Redo" disabled>
+              &#x21B7;<span>Redo</span>
+            </button>
+          </div>
+
+          <button type="button" class="admin-btn admin-btn--ghost" id="btn-toggle-preview" aria-pressed="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            <span>Live Preview</span>
+          </button>
+
+          <button type="button" class="admin-btn admin-btn--ghost" id="btn-export-json" title="Download site configuration as JSON">
+            Export JSON
+          </button>
+
+          <button type="button" class="admin-btn admin-btn--primary" id="btn-save-all" title="Publish draft changes to live website (Ctrl+S)" disabled>
+            Published
+          </button>
+        </div>
+      </header>
+
+      <!-- Split Editor + Live Preview Body -->
+      <div class="admin-workspace" id="admin-workspace">
+        <main class="admin-editor-pane" id="admin-editor-pane" aria-live="polite">
+          <!-- Dynamic tab content rendered by admin.js -->
+        </main>
+
+        <aside class="admin-preview-pane" id="admin-preview-pane" aria-label="Live site preview">
+          <div class="admin-preview-toolbar">
+            <span class="admin-preview-toolbar__label">Live Viewport Preview</span>
+            <div class="admin-viewport-switch" role="group" aria-label="Preview viewport size">
+              <button type="button" class="viewport-btn is-active" data-viewport="desktop" title="Desktop viewport">
+                Desktop
+              </button>
+              <button type="button" class="viewport-btn" data-viewport="tablet" title="Tablet viewport (768px)">
+                Tablet (768px)
+              </button>
+              <button type="button" class="viewport-btn" data-viewport="mobile" title="Mobile viewport (375px)">
+                Mobile (375px)
+              </button>
+            </div>
+            <button type="button" class="admin-btn admin-btn--icon" id="btn-refresh-preview" title="Reload preview iframe" aria-label="Reload preview iframe">
+              &#x21bb;
+            </button>
+          </div>
+          <div class="admin-preview-stage" id="admin-preview-stage" data-mode="desktop">
+            <iframe id="live-preview-iframe" src="./index.html?preview=1" title="ViV MGMT Live Preview"></iframe>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Media Library Picker & Uploader Modal -->
+  <div class="admin-modal-backdrop" id="media-modal" role="dialog" aria-modal="true" aria-labelledby="media-modal-title" hidden>
+    <div class="admin-modal">
+      <header class="admin-modal__header">
+        <div>
+          <h2 id="media-modal-title">Select or Upload Media</h2>
+          <p class="admin-modal__subtitle">Choose an image or video from the ViV MGMT library, upload a new image from your device, or paste a custom URL.</p>
+        </div>
+        <button type="button" class="admin-modal__close" id="media-modal-close" aria-label="Close modal">&times;</button>
+      </header>
+
+      <div class="admin-modal__controls">
+        <div class="media-filter-bar" id="media-category-tabs" role="tablist">
+          <button type="button" class="media-filter-btn is-active" data-cat="All">All</button>
+          <button type="button" class="media-filter-btn" data-cat="Gallery">Gallery Columns</button>
+          <button type="button" class="media-filter-btn" data-cat="News">News</button>
+          <button type="button" class="media-filter-btn" data-cat="Footer">Footer Portraits</button>
+          <button type="button" class="media-filter-btn" data-cat="Pool">Portrait Pool</button>
+          <button type="button" class="media-filter-btn" data-cat="Videos">Videos (.mp4)</button>
+          <button type="button" class="media-filter-btn" data-cat="Uploaded">Uploaded</button>
+        </div>
+
+        <div class="media-search-upload">
+          <input type="search" id="media-search-input" class="admin-input" placeholder="Search media by artist or title..." aria-label="Search media" />
+          <label class="admin-btn admin-btn--primary media-upload-label">
+            <span>+ Upload Image</span>
+            <input type="file" id="media-upload-input" accept="image/*" hidden />
+          </label>
+        </div>
+      </div>
+
+      <div class="media-grid" id="media-picker-grid">
+        <!-- Populated by admin.js -->
+      </div>
+
+      <footer class="admin-modal__footer">
+        <div class="media-custom-url-row">
+          <label for="media-custom-url-input" class="sr-only">Custom Media URL or Path</label>
+          <input type="text" id="media-custom-url-input" class="admin-input" placeholder="Or paste any image/video URL or path (e.g. ./assets/images/...)..." />
+          <button type="button" class="admin-btn admin-btn--outline" id="btn-use-custom-url">Use URL</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="admin-toast" id="admin-toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="./site-data.js"></script>
+  <script src="./admin.js"></script>
+</body>
+</html>

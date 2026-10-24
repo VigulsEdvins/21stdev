@@ -11,20 +11,20 @@
   if (!ribbon || !container) return;
 
   const COVERS = [
-    { title: 'A$AP × Ray-Ban', img: '/betteroff/assets/images/asap-x-rayban.webp' },
-    { title: '99 Cents Only Exhibition', img: '/betteroff/assets/images/99-cents-only-store-gallery-exhibition.webp' },
-    { title: 'Broncho Jams', img: '/betteroff/assets/images/broncho-jams.webp' },
-    { title: 'Ch. 11 Waves Hawaii', img: '/betteroff/assets/images/ch-11-shit-waves-hawaii.webp' },
-    { title: 'Converse × Works Studio', img: '/betteroff/assets/images/converse-shoe-drop-by-works-studio.webp' },
-    { title: 'Defective Units Vol. 1', img: '/betteroff/assets/images/defective-units-vol-1.webp' },
-    { title: 'Helge Tscharn Capsule', img: '/betteroff/assets/images/helge-tscharn-capsule.webp' },
-    { title: 'Kelly Slater Retires', img: '/betteroff/assets/images/kelly-slater-retires.webp' },
-    { title: 'Super Bowl Halftime', img: '/betteroff/assets/images/kendrick-lamar-taps-willy-chavarria-for-super-bowl-halftime-collection.webp' },
-    { title: 'New Balance 933', img: '/betteroff/assets/images/new-balance-933-andrew-reynolds.webp' },
-    { title: 'Nigo & Pharrell Advisors', img: '/betteroff/assets/images/nigo-and-pharrell-williams-appointed-as-creative-advisors-for-not-a-hotel.webp' },
-    { title: 'Off-White Resistance', img: '/betteroff/assets/images/off-white-state-of-resistance.webp' },
-    { title: 'Pocket Vol. 12', img: '/betteroff/assets/images/pocket-vol-12.webp' },
-    { title: 'Wild Horses Festival', img: '/betteroff/assets/images/post-malone-at-wild-horses-festival-in-san-diego.webp', fallback: '/betteroff/assets/images/mascot-book.webp' }
+    { title: 'A$AP × Ray-Ban', img: '/assets/library/asap-x-rayban-b0252755.webp' },
+    { title: '99 Cents Only Exhibition', img: '/assets/library/99-cents-only-store-gallery-exhibition-095f12c1.webp' },
+    { title: 'Broncho Jams', img: '/assets/library/broncho-jams-1165a14b.webp' },
+    { title: 'Ch. 11 Waves Hawaii', img: '/assets/library/ch-11-shit-waves-hawaii-f95e8577.webp' },
+    { title: 'Converse × Works Studio', img: '/assets/library/converse-shoe-drop-by-works-studio-5e6ce881.webp' },
+    { title: 'Defective Units Vol. 1', img: '/assets/library/defective-units-vol-1-ee41dd19.webp' },
+    { title: 'Helge Tscharn Capsule', img: '/assets/library/helge-tscharn-capsule-69ab1fe5.webp' },
+    { title: 'Kelly Slater Retires', img: '/assets/library/kelly-slater-retires-71a71a99.webp' },
+    { title: 'Super Bowl Halftime', img: '/assets/library/kendrick-lamar-taps-willy-chavarria-for-super-bowl-halftime-collection-4ea2e98f.webp' },
+    { title: 'New Balance 933', img: '/assets/library/new-balance-933-andrew-reynolds-5ef3de7f.webp' },
+    { title: 'Nigo & Pharrell Advisors', img: '/assets/library/nigo-and-pharrell-williams-appointed-as-creative-advisors-for-not-a-hotel-fd8f5a4d.webp' },
+    { title: 'Off-White Resistance', img: '/assets/library/off-white-state-of-resistance-d1387472.webp' },
+    { title: 'Pocket Vol. 12', img: '/assets/library/pocket-vol-12-dc21015a.webp' },
+    { title: 'Wild Horses Festival', img: '/assets/library/post-malone-at-wild-horses-festival-in-san-diego-0c0fefc0.webp', fallback: '/assets/library/mascot-book-fb049bad.webp' }
   ];
 
   const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -153,9 +153,10 @@
   container.addEventListener(
     'wheel',
     (e) => {
-      e.preventDefault();
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      surfTargetScroll += delta * 1.5;
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        surfTargetScroll += e.deltaX * 1.5;
+      }
     },
     { passive: false }
   );

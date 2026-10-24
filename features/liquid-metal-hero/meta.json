@@ -22,5 +22,27 @@
     "WebGL",
     "GLSL"
   ],
-  "order": 43
+  "order": 43,
+  "legacyCategory": "Heroes",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.03,
+    "webgl": true,
+    "canvas2d": false
+  }
 }

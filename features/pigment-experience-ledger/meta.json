@@ -2,7 +2,7 @@
   "name": "Pigment Experience Ledger",
   "title": "Pigment Experience Ledger",
   "slug": "pigment-experience-ledger",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "21st.dev",
   "type": "component",
   "description": "An \"Experience\" section for a portfolio, résumé or about page. Each employer is a huge right-aligned wordmark with its years in italics on the left. A row opens in place to show the position, location, industry, a link, a short story and skill tags. Point at a row and a wash of pigment blooms behind",
@@ -25,5 +25,27 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 206
+  "order": 206,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "light"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.95,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

@@ -20,5 +20,28 @@
     "Vanilla HTML/CSS/JS",
     "React (.tsx included)"
   ],
-  "order": 11
+  "order": 11,
+  "legacyCategory": "3D & Carousels",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "photo-caroulsel",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [],
+  "measured": {
+    "luma": 0.13,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

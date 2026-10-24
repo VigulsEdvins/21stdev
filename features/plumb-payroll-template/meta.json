@@ -25,5 +25,27 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 209
+  "order": 209,
+  "legacyCategory": "Full Templates",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "fintech"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.9,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

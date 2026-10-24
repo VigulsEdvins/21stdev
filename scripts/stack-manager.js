@@ -4,6 +4,16 @@
  * Compatible with Node.js (CommonJS) and browser (window.createStackManager).
  */
 
+/** Page-level settings exported with every build. */
+const DEFAULT_PAGE = {
+  title: 'Assembled Web Page',
+  description: '',
+  favicon: '', // emoji, image URL or data URI
+  fontDisplay: '', // Google Fonts family name, empty = leave section fonts alone
+  fontBody: '',
+  lang: 'en'
+};
+
 function createStackManager(initialConfig = {}) {
   let counter = 0;
 
@@ -16,7 +26,8 @@ function createStackManager(initialConfig = {}) {
     stack: Array.isArray(initialConfig.stack) ? [...initialConfig.stack] : [],
     theme: initialConfig.theme || 'midnight-dark',
     customColors: initialConfig.customColors ? { ...initialConfig.customColors } : {},
-    viewport: initialConfig.viewport || 'desktop'
+    viewport: initialConfig.viewport || 'desktop',
+    page: { ...DEFAULT_PAGE, ...(initialConfig.page || {}) }
   };
 
   const listeners = new Set();
@@ -36,7 +47,8 @@ function createStackManager(initialConfig = {}) {
     return {
       ...state,
       stack: [...state.stack],
-      customColors: { ...state.customColors }
+      customColors: { ...state.customColors },
+      page: { ...state.page }
     };
   }
 
@@ -44,7 +56,7 @@ function createStackManager(initialConfig = {}) {
     return [...state.stack];
   }
 
-  function addSection(slugOrSection, extraProps = {}) {
+  function insertSection(index, slugOrSection, extraProps = {}) {
     const defaultSizing = {
       heightMode: 'auto',
       customHeight: 600,
@@ -68,12 +80,20 @@ function createStackManager(initialConfig = {}) {
         ...extraProps
       };
     } else {
-      throw new Error('Invalid section provided to addSection');
+      throw new Error('Invalid section provided to insertSection');
     }
 
-    state.stack.push(section);
+    const targetIndex = typeof index === 'number'
+      ? Math.max(0, Math.min(state.stack.length, index))
+      : state.stack.length;
+
+    state.stack.splice(targetIndex, 0, section);
     notify();
     return section;
+  }
+
+  function addSection(slugOrSection, extraProps = {}) {
+    return insertSection(state.stack.length, slugOrSection, extraProps);
   }
 
   function updateSectionSizing(sectionId, sizingUpdates = {}) {
@@ -130,6 +150,41 @@ function createStackManager(initialConfig = {}) {
     return duplicate;
   }
 
+  function replaceSection(id, slugOrSection, extraProps = {}) {
+    const index = state.stack.findIndex(s => s.id === id);
+    if (index === -1) return null;
+
+    const defaultSizing = {
+      heightMode: 'auto',
+      customHeight: 600,
+      paddingY: 'none'
+    };
+
+    let newSection;
+    if (typeof slugOrSection === 'string') {
+      newSection = {
+        id: generateId(),
+        slug: slugOrSection,
+        sizing: { ...defaultSizing, ...(extraProps.sizing || {}) },
+        ...extraProps
+      };
+    } else if (slugOrSection && typeof slugOrSection === 'object') {
+      newSection = {
+        id: slugOrSection.id || generateId(),
+        slug: slugOrSection.slug || '',
+        sizing: { ...defaultSizing, ...(slugOrSection.sizing || extraProps.sizing || {}) },
+        ...slugOrSection,
+        ...extraProps
+      };
+    } else {
+      throw new Error('Invalid section provided to replaceSection');
+    }
+
+    state.stack[index] = newSection;
+    notify();
+    return newSection;
+  }
+
   function reorderStack(startIndex, endIndex) {
     if (
       startIndex < 0 ||
@@ -148,6 +203,12 @@ function createStackManager(initialConfig = {}) {
 
   function clearStack() {
     state.stack = [];
+    notify();
+    return state.stack;
+  }
+
+  function setStack(newStack) {
+    state.stack = Array.isArray(newStack) ? JSON.parse(JSON.stringify(newStack)) : [];
     notify();
     return state.stack;
   }
@@ -173,6 +234,53 @@ function createStackManager(initialConfig = {}) {
     return state.viewport;
   }
 
+  function setPage(updates = {}) {
+    state.page = { ...state.page };
+    Object.keys(DEFAULT_PAGE).forEach(k => {
+      if (typeof updates[k] === 'string') state.page[k] = updates[k];
+    });
+    notify();
+    return { ...state.page };
+  }
+
+  /**
+   * Sets (or, with an empty value, clears) a client-content override on one section.
+   * `def` ({ selector, type, attr? }) is required the first time a field is set and is kept afterwards.
+   */
+  function setSectionOverride(sectionId, fieldId, value, def = null) {
+    const section = state.stack.find(s => s.id === sectionId);
+    if (!section || !fieldId) return false;
+    const overrides = { ...(section.overrides || {}) };
+    if (value === '' || value === null || value === undefined) {
+      delete overrides[fieldId];
+    } else {
+      const existing = overrides[fieldId] || {};
+      const selector = (def && def.selector) || existing.selector;
+      if (!selector) return false;
+      overrides[fieldId] = {
+        selector,
+        type: (def && def.type) || existing.type || 'text',
+        ...(((def && def.attr) || existing.attr) ? { attr: (def && def.attr) || existing.attr } : {}),
+        value: String(value)
+      };
+    }
+    section.overrides = overrides;
+    notify();
+    return true;
+  }
+
+  function clampDimension(val, min) {
+    if (typeof val === 'number') return Math.max(min, Math.round(val));
+    if (typeof val === 'string') {
+      const num = parseFloat(val);
+      if (!isNaN(num)) {
+        const clamped = Math.max(min, Math.round(num));
+        return val.endsWith('px') ? `${clamped}px` : clamped;
+      }
+    }
+    return val;
+  }
+
   function addElement(sectionId, elementData = {}) {
     const section = state.stack.find(s => s.id === sectionId);
     if (!section) return null;
@@ -194,6 +302,13 @@ function createStackManager(initialConfig = {}) {
       ...elementData
     };
 
+    if (elementData.width !== undefined) {
+      element.width = clampDimension(elementData.width, 30);
+    }
+    if (elementData.height !== undefined) {
+      element.height = clampDimension(elementData.height, 20);
+    }
+
     section.elements.push(element);
     notify();
     return element;
@@ -208,6 +323,8 @@ function createStackManager(initialConfig = {}) {
 
     if (typeof updates.x === 'number') updates.x = Math.max(0, Math.min(100, updates.x));
     if (typeof updates.y === 'number') updates.y = Math.max(0, Math.min(100, updates.y));
+    if (updates.width !== undefined) updates.width = clampDimension(updates.width, 30);
+    if (updates.height !== undefined) updates.height = clampDimension(updates.height, 20);
 
     Object.assign(element, updates);
     if (!silent) {
@@ -242,11 +359,14 @@ function createStackManager(initialConfig = {}) {
     getState,
     getStack,
     addSection,
+    insertSection,
     removeSection,
     moveSection,
     duplicateSection,
+    replaceSection,
     reorderStack,
     clearStack,
+    setStack,
     updateSectionSizing,
     addElement,
     updateElement,
@@ -255,15 +375,23 @@ function createStackManager(initialConfig = {}) {
     setTheme,
     setCustomColors,
     setViewport,
+    setPage,
+    setSectionOverride,
     subscribe
   };
 }
 
+function insertSection(manager, index, slugOrSection, extraProps) {
+  if (manager && typeof manager.insertSection === 'function') {
+    return manager.insertSection(index, slugOrSection, extraProps);
+  }
+}
+
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { createStackManager };
+  module.exports = { createStackManager, insertSection, DEFAULT_PAGE };
 }
 
 if (typeof window !== 'undefined') {
   window.createStackManager = createStackManager;
-  window.StackManager = { createStackManager };
+  window.StackManager = { createStackManager, DEFAULT_PAGE };
 }

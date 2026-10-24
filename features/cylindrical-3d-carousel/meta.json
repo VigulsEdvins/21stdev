@@ -17,5 +17,27 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 13
+  "order": 13,
+  "legacyCategory": "3D & Carousels",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "carousel-gallery-play",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [],
+  "measured": {
+    "luma": 0.07,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

@@ -109,6 +109,7 @@
 
     <section class="catalog-toolbar">
       <div class="results-summary" id="resultsSummary">Showing 26 features</div>
+      <div class="toolbar-active-tags" id="toolbarActiveTags"></div>
       <div class="toolbar-actions">
         <button class="subtle-btn" id="pauseAllPreviewsBtn" type="button">Pause Offscreen Previews: ON</button>
         <button class="subtle-btn" id="resetFiltersBtn" type="button">Reset Filters</button>
@@ -125,6 +126,9 @@
       <div class="wb-pane-header">
         <span>EXPLORER // FEATURES</span>
         <span class="wb-count" id="wbTreeCount">26</span>
+      </div>
+      <div class="wb-search-box">
+        <input type="search" id="wbSearchInput" placeholder="Filter features..." autocomplete="off" aria-label="Filter features" />
       </div>
       <div class="wb-tree" id="wbTree"></div>
     </aside>
@@ -350,6 +354,7 @@
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <script src="registry.js"></script>
+  <script src="scripts/feature-files.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

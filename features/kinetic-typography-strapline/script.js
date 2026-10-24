@@ -32,10 +32,13 @@
   }
 
   scrubber.addEventListener('input', (e) => updateProgress(e.target.value));
-  window.addEventListener('wheel', (e) => {
-    const next = Number(scrubber.value) + (e.deltaY > 0 ? 6 : -6);
-    updateProgress(next);
-  }, { passive: true });
+  const kinStage = copyEl ? (copyEl.closest('.strapline-stage') || copyEl.parentElement) : null;
+  if (kinStage) {
+    kinStage.addEventListener('wheel', (e) => {
+      const next = Number(scrubber.value) + (e.deltaY > 0 ? 6 : -6);
+      updateProgress(next);
+    }, { passive: true });
+  }
 
   updateProgress(68);
 })();

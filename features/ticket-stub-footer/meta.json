@@ -24,5 +24,31 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 236
+  "order": 236,
+  "legacyCategory": "Footers & Endings",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "retro",
+    "dark"
+  ],
+  "industry": [
+    "agency",
+    "ecommerce"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.25,
+    "webgl": false,
+    "canvas2d": true
+  },
+  "nativeWhen": [
+    "light"
+  ]
 }

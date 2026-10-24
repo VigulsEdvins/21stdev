@@ -2,7 +2,7 @@
   "name": "Hover Expand Gallery",
   "title": "Hover Expand Gallery",
   "slug": "hover-expand-gallery",
-  "category": "Galleries & Portfolios",
+  "category": "Galleries & Bento",
   "source": "21st.dev",
   "type": "component",
   "description": "A row of hairline-separated panels with vertical labels. Hover (or tap) one and it absorbs the free space, revealing its image; the rest stay rail-width. Below 1024px the same list becomes a vertical accordion — tapping a row opens its image above the label.",
@@ -25,5 +25,28 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 165
+  "order": 165,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "portfolio",
+    "saas"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.99,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

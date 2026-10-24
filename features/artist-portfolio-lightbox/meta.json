@@ -1,7 +1,7 @@
 {
   "name": "Artist Portfolio Modal Lightbox",
   "slug": "artist-portfolio-lightbox",
-  "category": "Galleries & Grids",
+  "category": "Galleries & Bento",
   "source": "vivmgmt",
   "type": "component",
   "description": "High-fashion portfolio lightbox with keyboard arrow navigation, plate counter, metadata drawer, and interactive thumbnail strip.",
@@ -17,6 +17,33 @@
     "CSS Grid",
     "Keyboard Events"
   ],
-  "dependencies": [],
-  "order": 18
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 18,
+  "legacyCategory": "Galleries & Grids",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "dark"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "vivmgmt",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.14,
+    "webgl": false,
+    "canvas2d": false
+  },
+  "nativeWhen": [
+    "light"
+  ]
 }

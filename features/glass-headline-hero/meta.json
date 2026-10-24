@@ -25,5 +25,26 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 156
+  "order": 156,
+  "legacyCategory": "Heroes",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.37,
+    "webgl": true,
+    "canvas2d": true
+  }
 }

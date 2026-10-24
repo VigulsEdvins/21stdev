@@ -2,19 +2,19 @@
   const PLATES = [
     {
       title: 'Plate I — Arturo Torres Chromatic Study, Paris',
-      img: '/vivmgmt/assets/images/1778793995-arturo-torres-fashion-photography-advertising-photographer-15.jpg'
+      img: '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg'
     },
     {
       title: 'Plate II — Danielle Moore Desert Couture, Milan',
-      img: '/vivmgmt/assets/images/1778184121-danielle-moore-desert-couture-fashion-editorial.jpg'
+      img: '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg'
     },
     {
       title: 'Plate III — Zac Posen Studio Denim Portrait, NY',
-      img: '/vivmgmt/assets/images/1778184120-gap-studio-zac-posen-denim-portrait.jpg'
+      img: '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg'
     },
     {
       title: 'Plate IV — Barragan Stables Editorial, Mexico City',
-      img: '/vivmgmt/assets/images/1778184121-fashion-editorial-horse-barragan-stables-mexico.jpg'
+      img: '/assets/library/1778184121-fashion-editorial-horse-barragan-stables-mexico-d62757c7.jpg'
     }
   ];
 

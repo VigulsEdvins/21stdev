@@ -17,5 +17,27 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 19
+  "order": 19,
+  "legacyCategory": "3D & Carousels",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "saas"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "betteroff",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [],
+  "measured": {
+    "luma": 0.11,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

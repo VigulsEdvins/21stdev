@@ -23,5 +23,26 @@
     "React",
     "Tailwind CSS"
   ],
-  "order": 1
+  "order": 1,
+  "legacyCategory": "Cards & Tiles",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.46,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

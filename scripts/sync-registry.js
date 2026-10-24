@@ -8,36 +8,9 @@
 
 const fs = require('fs');
 const path = require('path');
+const { CATEGORIES, validateMeta } = require('./schema');
 
-/**
- * Safely combines standalone HTML, CSS, and JS into a single self-contained HTML string.
- * Uses function replacers so special $ patterns ($&, $', $1) in JS or CSS are never corrupted.
- * @param {string} html
- * @param {string} css
- * @param {string} js
- * @returns {string}
- */
-function combineFeatureHtml(html, css, js) {
-  let result = String(html || '');
-  const cleanCss = String(css || '');
-  const cleanJs = String(js || '');
-
-  const styleLinkRegex = /<link\b[^>]*href=["'](?:\.\/)?style\.css["'][^>]*>/i;
-  if (styleLinkRegex.test(result)) {
-    result = result.replace(styleLinkRegex, () => `<style>\n${cleanCss}\n</style>`);
-  } else if (cleanCss.trim()) {
-    result = result.replace(/<\/head>/i, () => `<style>\n${cleanCss}\n</style>\n</head>`);
-  }
-
-  const scriptTagRegex = /<script\b[^>]*src=["'](?:\.\/)?script\.js["'][^>]*>\s*<\/script>/i;
-  if (scriptTagRegex.test(result)) {
-    result = result.replace(scriptTagRegex, () => `<script>\n${cleanJs}\n</script>`);
-  } else if (cleanJs.trim()) {
-    result = result.replace(/<\/body>/i, () => `<script>\n${cleanJs}\n</script>\n</body>`);
-  }
-
-  return result;
-}
+const { combineFeatureHtml, FILE_MAP } = require('./feature-files');
 
 /**
  * Reads all features/<slug>/ folders, validates meta.json and code files, and writes registry.json + registry.js.
@@ -63,6 +36,11 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
     if (!fs.existsSync(metaPath)) continue;
 
     const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+    meta.slug = meta.slug || slug;
+    const problems = validateMeta(meta);
+    if (problems.length) {
+      console.warn(`⚠ features/${slug}/meta.json: ${problems.join('; ')}`);
+    }
     const htmlPath = path.join(dirPath, 'index.html');
     const cssPath = path.join(dirPath, 'style.css');
     const jsPath = path.join(dirPath, 'script.js');
@@ -76,8 +54,11 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
     const combined = combineFeatureHtml(html, css, js);
 
     const sourceRepoPath = meta.sourceRepoPath || meta.sourceFolder || null;
-    const extraTemplateFiles = {};
-    if ((meta.type === 'template') && sourceRepoPath && fs.existsSync(sourceRepoPath)) {
+
+    // Full-site templates ship extra files from a sibling project. Copy them into features/<slug>/site/
+    // when the source exists, so the vault stays self-contained and the catalogue can load them lazily.
+    const siteDir = path.join(dirPath, 'site');
+    if (meta.type === 'template' && sourceRepoPath && fs.existsSync(sourceRepoPath)) {
       const tryRead = (...fnames) => {
         for (const fname of fnames) {
           const p = path.join(sourceRepoPath, fname);
@@ -85,18 +66,26 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
         }
         return null;
       };
-      const siteHtml = tryRead('index.html');
-      const siteWorkHtml = tryRead('work.html');
-      const siteCss = tryRead('styles.css', 'src/style.css', 'src/index.css');
-      const siteJs = tryRead('app.js', 'src/main.js', 'src/App.jsx');
-      const siteDataJs = tryRead('site-data.js', 'src/default_grid.json', 'src/data/defaultData.js');
-      const adminHtml = tryRead('admin.html', 'admin8225.html', 'dist/admin8225.html');
-      if (siteHtml) extraTemplateFiles.siteHtml = siteHtml;
-      if (siteWorkHtml) extraTemplateFiles.siteWorkHtml = siteWorkHtml;
-      if (siteCss) extraTemplateFiles.siteCss = siteCss;
-      if (siteJs) extraTemplateFiles.siteJs = siteJs;
-      if (siteDataJs) extraTemplateFiles.siteDataJs = siteDataJs;
-      if (adminHtml) extraTemplateFiles.adminHtml = adminHtml;
+      const sources = {
+        'index.html': tryRead('index.html'),
+        'work.html': tryRead('work.html'),
+        'style.css': tryRead('styles.css', 'src/style.css', 'src/index.css'),
+        'script.js': tryRead('app.js', 'src/main.js', 'src/App.jsx'),
+        'data.js': tryRead('site-data.js', 'src/default_grid.json', 'src/data/defaultData.js'),
+        'admin.html': tryRead('admin.html', 'admin8225.html', 'dist/admin8225.html')
+      };
+      Object.entries(sources).forEach(([name, content]) => {
+        if (content === null) return;
+        fs.mkdirSync(siteDir, { recursive: true });
+        fs.writeFileSync(path.join(siteDir, name), content, 'utf8');
+      });
+    }
+    const extraTemplateFiles = {};
+    if (meta.type === 'template' && fs.existsSync(siteDir)) {
+      Object.entries(FILE_MAP).filter(([k]) => k.startsWith('site') || k === 'adminHtml').forEach(([key, rel]) => {
+        const p = path.join(dirPath, rel);
+        if (fs.existsSync(p)) extraTemplateFiles[key] = fs.readFileSync(p, 'utf8');
+      });
     }
 
     const displayName = meta.name || meta.title || slug;
@@ -105,6 +94,16 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       name: displayName,
       title: displayName,
       category: meta.category || 'Components',
+      legacyCategory: meta.legacyCategory || null,
+      status: meta.status || 'stable',
+      mood: Array.isArray(meta.mood) ? meta.mood : [],
+      industry: Array.isArray(meta.industry) ? meta.industry : [],
+      weight: meta.weight || 'light',
+      needsAssets: !!meta.needsAssets,
+      origin: meta.origin || null,
+      updatedAt: meta.updatedAt || null,
+      customizable: Array.isArray(meta.customizable) ? meta.customizable : [],
+      nativeWhen: Array.isArray(meta.nativeWhen) ? meta.nativeWhen : [],
       source: meta.source || 'custom',
       type: meta.type || 'component', // 'component' | 'template'
       description: meta.description || '',
@@ -115,6 +114,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       folderPath: `/home/edvins/features-for-web/web-for-options/features/${slug}`,
       relativePath: `features/${slug}`,
       previewUrl: meta.previewUrl || `features/${slug}/index.html`,
+      thumb: fs.existsSync(path.join(rootDir, 'thumbs', `${slug}.jpg`)) ? `thumbs/${slug}.jpg` : null,
       liveSiteUrl: meta.liveSiteUrl || null,
       adminUrl: meta.adminUrl || null,
       sourceRepoPath,
@@ -139,12 +139,22 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
     generatedAt: new Date().toISOString(),
     vaultRoot: '/home/edvins/features-for-web/web-for-options',
     totalFeatures: items.length,
-    categories: [...new Set(items.map((i) => i.category))],
+    categories: CATEGORIES.filter((c) => items.some((i) => i.category === c)),
     sources: [...new Set(items.map((i) => i.source))],
     items: items.map((item) => ({
       slug: item.slug,
       title: item.title,
       category: item.category,
+      legacyCategory: item.legacyCategory,
+      status: item.status,
+      mood: item.mood,
+      industry: item.industry,
+      weight: item.weight,
+      needsAssets: item.needsAssets,
+      origin: item.origin,
+      updatedAt: item.updatedAt,
+      customizable: item.customizable,
+      nativeWhen: item.nativeWhen,
       source: item.source,
       type: item.type,
       description: item.description,
@@ -153,6 +163,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       folderPath: item.folderPath,
       relativePath: item.relativePath,
       previewUrl: item.previewUrl,
+      thumb: item.thumb,
       liveSiteUrl: item.liveSiteUrl,
       adminUrl: item.adminUrl,
       sourceRepoPath: item.sourceRepoPath,
@@ -166,7 +177,9 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
     'utf8'
   );
 
-  const jsBundle = `// Auto-generated by scripts/sync-registry.js — Do not edit manually\nwindow.FEATURE_REGISTRY = ${JSON.stringify(items, null, 2)};\n`;
+  // registry.js carries metadata only; source files are fetched on demand (scripts/feature-files.js)
+  const slimItems = items.map(({ files, ...rest }) => ({ ...rest, availableFiles: Object.keys(files).filter((k) => k !== 'combined') }));
+  const jsBundle = `// Auto-generated by scripts/sync-registry.js — Do not edit manually\nwindow.FEATURE_REGISTRY = ${JSON.stringify(slimItems)};\n`;
   fs.writeFileSync(path.join(rootDir, 'registry.js'), jsBundle, 'utf8');
 
   return { count: items.length, items };

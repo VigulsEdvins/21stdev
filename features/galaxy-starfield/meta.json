@@ -23,5 +23,27 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 153
+  "order": 153,
+  "legacyCategory": "Audio & Shaders",
+  "status": "stable",
+  "weight": "heavy",
+  "mood": [
+    "minimal",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.11,
+    "webgl": true,
+    "canvas2d": false
+  }
 }

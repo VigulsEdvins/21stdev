@@ -16,5 +16,76 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 18
+  "order": 18,
+  "legacyCategory": "Buttons & UI",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "carousel-gallery-play",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [
+    {
+      "id": "text-questions-architecture",
+      "label": "Text: Questions & Architecture",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "text-frequently-asked",
+      "label": "Heading 2: Frequently Asked",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+    },
+    {
+      "id": "text-how-are-these-features-s",
+      "label": "Text: How are these features structured…",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "text-every-feature-is-isolate",
+      "label": "Paragraph: Every feature is isolated in its …",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "text-can-i-use-these-componen",
+      "label": "Text: Can I use these components in bot…",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "text-yes-every-component-incl",
+      "label": "Paragraph: Yes. Every component includes sta…",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+    },
+    {
+      "id": "text-how-does-the-css-grid-0f",
+      "label": "Text: How does the CSS Grid 0fr to 1fr …",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+    },
+    {
+      "id": "text-instead-of-animating-max",
+      "label": "Paragraph: Instead of animating max-height w…",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+    }
+  ],
+  "measured": {
+    "luma": 0.04,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

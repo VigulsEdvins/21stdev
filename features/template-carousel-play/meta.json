@@ -27,5 +27,28 @@
   "liveSiteUrl": "/carousel-gallery-play/index.html",
   "adminUrl": "/carousel-gallery-play/admin.html",
   "sourceFolder": "/home/edvins/features-for-web/carousel-gallery-play",
-  "order": 25
+  "order": 25,
+  "legacyCategory": "Full Templates",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "agency",
+    "portfolio"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "carousel-gallery-play",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.16,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

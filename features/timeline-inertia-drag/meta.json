@@ -16,5 +16,27 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 10
+  "order": 10,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "futuristic",
+    "light"
+  ],
+  "industry": [
+    "media"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "betteroff",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [],
+  "measured": {
+    "luma": 0.82,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

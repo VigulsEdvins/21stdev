@@ -2,7 +2,7 @@
   "name": "Dither Sweep Navbar",
   "title": "Dither Sweep Navbar",
   "slug": "dither-sweep-navbar",
-  "category": "Navigation & Headers",
+  "category": "Headers & Nav",
   "source": "21st.dev",
   "type": "component",
   "description": "An editorial, blueprint-styled header. Hairline-ruled cells, monospace caps, a wordmark that retracts behind its mark once the page scrolls, and a nav hover that fills each cell with a chunky left-to-right pixel dissolve.",
@@ -25,5 +25,28 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 138
+  "order": 138,
+  "legacyCategory": "Navigation & Headers",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 1,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

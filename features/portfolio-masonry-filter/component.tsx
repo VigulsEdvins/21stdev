@@ -13,14 +13,14 @@ interface Project {
 }
 
 const PROJECTS: Project[] = [
-  { id: '1', cat: 'sports', title: 'Patrick Mahomes MVP Series', client: 'Kansas City', year: '2025', desc: 'Dynamic stadium monochrome series.', img: '/mom/public/images/patrick-mahomes-thumb.png' },
-  { id: '2', cat: 'commercial', title: 'La Marzocco Heritage', client: 'Florence Studio', year: '2024', desc: 'Espresso machine artisanal metal fabrication documentary.', img: '/mom/public/images/la-marzocco-thumb.png' },
-  { id: '3', cat: 'portraits', title: 'Margarita Studio Sessions', client: 'Self Monograph', year: '2026', desc: 'Directional tungsten lighting and silhouette study.', img: '/mom/public/images/margarita-vigule.png' },
-  { id: '4', cat: 'editorial', title: 'Applause Monolith', client: 'Fashion Archive', year: '2024', desc: 'Runway couture and sculptural garment drape.', img: '/mom/public/images/applause-thumb.png' },
-  { id: '5', cat: 'commercial', title: 'Air Space Intelligence', client: 'Aero Systems', year: '2025', desc: 'Industrial flight deck documentary.', img: '/mom/public/images/air-space-intelligence-thumb.png' },
-  { id: '6', cat: 'editorial', title: 'Bad Boys Cinema', client: 'Film Series', year: '2024', desc: 'Miami night street cinematography.', img: '/mom/public/images/bad-boys-thumb.png' },
-  { id: '7', cat: 'sports', title: 'Pelé Heritage Foundation', client: 'Santos Archive', year: '2025', desc: 'Vintage football heritage preservation.', img: '/mom/public/images/pele-foundation-thumb.png' },
-  { id: '8', cat: 'portraits', title: 'Iyo Spatial Audio', client: 'Audio Monograph', year: '2024', desc: 'Ear-worn acoustics and minimal human-device interface.', img: '/mom/public/images/iyo-thumb.png' }
+  { id: '1', cat: 'sports', title: 'Patrick Mahomes MVP Series', client: 'Kansas City', year: '2025', desc: 'Dynamic stadium monochrome series.', img: '/assets/library/patrick-mahomes-thumb-4ce12ce7.png' },
+  { id: '2', cat: 'commercial', title: 'La Marzocco Heritage', client: 'Florence Studio', year: '2024', desc: 'Espresso machine artisanal metal fabrication documentary.', img: '/assets/library/la-marzocco-thumb-a0214898.png' },
+  { id: '3', cat: 'portraits', title: 'Margarita Studio Sessions', client: 'Self Monograph', year: '2026', desc: 'Directional tungsten lighting and silhouette study.', img: '/assets/library/margarita-vigule-0213f7e4.png' },
+  { id: '4', cat: 'editorial', title: 'Applause Monolith', client: 'Fashion Archive', year: '2024', desc: 'Runway couture and sculptural garment drape.', img: '/assets/library/applause-thumb-ae19f430.png' },
+  { id: '5', cat: 'commercial', title: 'Air Space Intelligence', client: 'Aero Systems', year: '2025', desc: 'Industrial flight deck documentary.', img: '/assets/library/air-space-intelligence-thumb-0f3ac386.png' },
+  { id: '6', cat: 'editorial', title: 'Bad Boys Cinema', client: 'Film Series', year: '2024', desc: 'Miami night street cinematography.', img: '/assets/library/bad-boys-thumb-6bf21a1e.png' },
+  { id: '7', cat: 'sports', title: 'Pelé Heritage Foundation', client: 'Santos Archive', year: '2025', desc: 'Vintage football heritage preservation.', img: '/assets/library/pele-foundation-thumb-c189a772.png' },
+  { id: '8', cat: 'portraits', title: 'Iyo Spatial Audio', client: 'Audio Monograph', year: '2024', desc: 'Ear-worn acoustics and minimal human-device interface.', img: '/assets/library/iyo-thumb-41d5f334.png' }
 ];
 
 export const PortfolioMasonryFilter: React.FC = () => {

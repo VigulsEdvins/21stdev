@@ -1,7 +1,7 @@
 {
   "slug": "athletes-filter-showcase",
   "title": "Filterable Roster & Portrait Hover Showcase",
-  "category": "Galleries & Grids",
+  "category": "Galleries & Bento",
   "source": "carousel-gallery-play",
   "type": "component",
   "description": "Category-filtered portrait showcase with animated pill tabs, horizontal snap rail, synced pagination dots, and directional hover CTA overlays.",
@@ -16,5 +16,27 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "order": 16
+  "order": 16,
+  "legacyCategory": "Galleries & Grids",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "dark"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "carousel-gallery-play",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.19,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

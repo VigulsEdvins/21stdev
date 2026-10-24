@@ -26,5 +26,27 @@
     "React (.tsx included)"
   ],
   "author": "avanishverma4",
-  "order": 7
+  "order": 7,
+  "legacyCategory": "Cards & Tiles",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.09,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

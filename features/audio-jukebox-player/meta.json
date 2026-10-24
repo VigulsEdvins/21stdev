@@ -16,5 +16,30 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS (Web Audio API)"
   ],
-  "order": 12
+  "order": 12,
+  "legacyCategory": "Audio & Shaders",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "dark"
+  ],
+  "industry": [
+    "media"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "betteroff",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.04,
+    "webgl": false,
+    "canvas2d": false
+  },
+  "nativeWhen": [
+    "light"
+  ]
 }

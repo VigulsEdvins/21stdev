@@ -28,5 +28,28 @@
   "liveSiteUrl": "/mom/index.html",
   "adminUrl": "/mom/admin8225.html",
   "sourceFolder": "/home/edvins/features-for-web/mom",
-  "order": 27
+  "order": 27,
+  "legacyCategory": "Full Templates",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "luxury",
+    "dark"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "mom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.08,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

@@ -30,5 +30,27 @@
   "liveSiteUrl": "/cvmaker/index.html",
   "adminUrl": "/cvmaker/index.html",
   "sourceFolder": "/home/edvins/features-for-web/cvmaker",
-  "order": 28
+  "order": 28,
+  "legacyCategory": "Full Templates",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "dark"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "cvmaker",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.18,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

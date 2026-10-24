@@ -1,7 +1,7 @@
 {
   "name": "Cursor-Tracked Spotlight Bento Grid",
   "slug": "spotlight-bento-grid",
-  "category": "Galleries & Grids",
+  "category": "Galleries & Bento",
   "source": "21st-crafted",
   "type": "component",
   "description": "Multi-card bento grid with shared mouse-tracking radial border illumination and inner surface spotlight.",
@@ -17,6 +17,29 @@
     "CSS Custom Properties",
     "CSS Grid"
   ],
-  "dependencies": [],
-  "order": 21
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 21,
+  "legacyCategory": "Galleries & Grids",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st-crafted",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.05,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

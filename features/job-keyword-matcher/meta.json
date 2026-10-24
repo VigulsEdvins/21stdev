@@ -1,7 +1,7 @@
 {
   "name": "Job Description Keyword Matcher & Gap Analyzer",
   "slug": "job-keyword-matcher",
-  "category": "Forms & Inputs",
+  "category": "Interactions & Physics",
   "source": "cvmaker",
   "type": "component",
   "description": "ATS job description parser that calculates live match score %, detects matched vs missing keyword tags, and provides 1-click insertion into the applicant profile.",
@@ -21,5 +21,31 @@
   "dependencies": [
     "vanilla-js"
   ],
-  "order": 34
+  "order": 34,
+  "legacyCategory": "Forms & Inputs",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "dark"
+  ],
+  "industry": [
+    "portfolio",
+    "saas"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "cvmaker",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.08,
+    "webgl": false,
+    "canvas2d": false
+  },
+  "nativeWhen": [
+    "light"
+  ]
 }

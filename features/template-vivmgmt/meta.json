@@ -18,9 +18,34 @@
     "Packery Masonry",
     "LocalStorage CMS"
   ],
-  "dependencies": [],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
   "liveSiteUrl": "/vivmgmt/index.html",
   "adminUrl": "/vivmgmt/admin.html",
   "sourceFolder": "/home/edvins/features-for-web/vivmgmt",
-  "order": 26
+  "order": 26,
+  "legacyCategory": "Full Templates",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "luxury",
+    "dark"
+  ],
+  "industry": [
+    "media"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "vivmgmt",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.26,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

@@ -26,5 +26,27 @@
     "React (.tsx included)"
   ],
   "author": "0xUrvish",
-  "order": 6
+  "order": 6,
+  "legacyCategory": "Buttons & UI",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "minimal",
+    "dark"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.19,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

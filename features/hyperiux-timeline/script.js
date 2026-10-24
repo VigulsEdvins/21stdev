@@ -158,11 +158,12 @@
 
   // Wheel / Trackpad Scroll
   trackWrap.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    isAutoScrolling = false;
-    updateAutoScrollBtn();
-    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    targetProgress = clamp(targetProgress + delta * 0.0006, 0, 1);
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      e.preventDefault();
+      isAutoScrolling = false;
+      updateAutoScrollBtn();
+      targetProgress = clamp(targetProgress + e.deltaX * 0.0006, 0, 1);
+    }
   }, { passive: false });
 
   // Progress input scrubber

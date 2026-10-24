@@ -2,7 +2,7 @@
   "name": "Flatlay Resume Board",
   "title": "Flatlay Resume Board",
   "slug": "flatlay-resume-board",
-  "category": "Galleries & Portfolios",
+  "category": "Interactions & Physics",
   "source": "21st.dev",
   "type": "component",
   "description": "A CV as a desk flat-lay, photographed from above: a creased perforated sheet, a pinned photo card, a smart-watch \"about me\", a crumpled receipt of experience with dotted leaders and a coffee ring, torn-paper education on a ruled page, a lolly-stick label over grid paper, a handwritten list, layered ",
@@ -25,5 +25,30 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 147
+  "order": 147,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "dark"
+  ],
+  "industry": [
+    "portfolio",
+    "education"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.27,
+    "webgl": false,
+    "canvas2d": false
+  },
+  "nativeWhen": [
+    "light"
+  ]
 }

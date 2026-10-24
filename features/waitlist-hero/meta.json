@@ -22,5 +22,28 @@
     "React",
     "Tailwind CSS"
   ],
-  "order": 41
+  "order": 41,
+  "legacyCategory": "Heroes",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "saas",
+    "media"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.06,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

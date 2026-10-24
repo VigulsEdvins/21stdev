@@ -17,6 +17,31 @@
     "3D Tilt",
     "Vanilla JS"
   ],
-  "dependencies": [],
-  "order": 22
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 22,
+  "legacyCategory": "Audio & Shaders",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "futuristic",
+    "luxury",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st-crafted",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.06,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

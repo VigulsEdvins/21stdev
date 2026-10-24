@@ -25,5 +25,28 @@
     "Vanilla HTML/CSS/JS"
   ],
   "author": "kedhareswer",
-  "order": 251
+  "order": 251,
+  "legacyCategory": "Cards & Tiles",
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "agency",
+    "ecommerce"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st.dev",
+    "license": "unverified"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.73,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

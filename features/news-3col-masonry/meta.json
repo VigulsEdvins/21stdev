@@ -1,7 +1,7 @@
 {
   "name": "3-Column Editorial Masonry Grid",
   "slug": "news-3col-masonry",
-  "category": "Galleries & Grids",
+  "category": "Galleries & Bento",
   "source": "vivmgmt",
   "type": "component",
   "description": "3-column Packery-style editorial masonry grid with category filtering and IntersectionObserver staggered card reveal.",
@@ -17,6 +17,30 @@
     "IntersectionObserver",
     "CSS Columns"
   ],
-  "dependencies": [],
-  "order": 17
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 17,
+  "legacyCategory": "Galleries & Grids",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "light"
+  ],
+  "industry": [
+    "media"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "vivmgmt",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [],
+  "measured": {
+    "luma": 0.78,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

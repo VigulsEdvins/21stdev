@@ -65,6 +65,24 @@
   const resultsSummary = document.getElementById('resultsSummary');
   const toastContainer = document.getElementById('toastContainer');
 
+  function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function debounce(fn, delay = 150) {
+    let timer = null;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
   function showToast(msg) {
     const el = document.createElement('div');
     el.className = 'toast';
@@ -73,9 +91,26 @@
     setTimeout(() => el.remove(), 2200);
   }
 
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+    } catch (_) {}
+    ta.remove();
+  }
+
   function copyText(text, label) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text);
+      navigator.clipboard.writeText(text).catch(() => {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
     }
     showToast(label || 'Copied to clipboard');
   }
@@ -99,8 +134,15 @@
     return `Take the "${getItemName(item)}" feature from ${absPath} (index.html, style.css, script.js) and integrate it.`;
   }
 
-  function downloadHtmlFile(item) {
-    const blob = new Blob([item.files.combined], { type: 'text/html;charset=utf-8' });
+  /** Source files are fetched on demand; registry.js only carries metadata. */
+  function ensureFiles(item) {
+    return window.FeatureFiles.load(item);
+  }
+
+  async function downloadHtmlFile(item) {
+    const files = await ensureFiles(item);
+    const content = files.combined || '';
+    const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -108,7 +150,7 @@
     document.body.appendChild(a);
     a.click();
     a.remove();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
     showToast(`Downloaded ${item.slug}.html`);
   }
 
@@ -160,7 +202,7 @@
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'filter-pill' + (state.source === src ? ' is-active' : '');
-      btn.innerHTML = `<span class="pill-label">${src === 'all' ? 'All Sources' : src}</span><span class="pill-count">${count}</span>`;
+      btn.innerHTML = `<span class="pill-label">${escapeHtml(src === 'all' ? 'All Sources' : src)}</span><span class="pill-count">${count}</span>`;
       btn.addEventListener('click', () => {
         state.source = src;
         if (src !== 'all') {
@@ -187,7 +229,7 @@
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'filter-pill' + (state.category === cat ? ' is-active' : '');
-      btn.innerHTML = `<span class="pill-label">${cat === 'all' ? 'All Categories' : cat}</span><span class="pill-count">${count}</span>`;
+      btn.innerHTML = `<span class="pill-label">${escapeHtml(cat === 'all' ? 'All Categories' : cat)}</span><span class="pill-count">${count}</span>`;
       btn.addEventListener('click', () => {
         state.category = cat;
         if (cat === 'Full Templates' && state.collectionType === 'component') {
@@ -215,28 +257,28 @@
     if (state.collectionType !== 'all') {
       const chip = document.createElement('span');
       chip.className = 'active-chip';
-      chip.innerHTML = `${state.collectionType === 'template' ? 'Templates' : 'Components'} <button class="active-chip-clear" title="Remove">&times;</button>`;
+      chip.innerHTML = `${state.collectionType === 'template' ? 'Templates' : 'Components'} <button class="active-chip-clear" type="button" title="Remove" aria-label="Remove collection type filter">&times;</button>`;
       chip.querySelector('button').addEventListener('click', () => { state.collectionType = 'all'; syncCollectionTabsUI(); renderAll(); });
       tagsEl.appendChild(chip);
     }
     if (state.source !== 'all') {
       const chip = document.createElement('span');
       chip.className = 'active-chip';
-      chip.innerHTML = `${state.source} <button class="active-chip-clear" title="Remove">&times;</button>`;
+      chip.innerHTML = `${escapeHtml(state.source)} <button class="active-chip-clear" type="button" title="Remove" aria-label="Remove source filter">&times;</button>`;
       chip.querySelector('button').addEventListener('click', () => { state.source = 'all'; renderAll(); });
       tagsEl.appendChild(chip);
     }
     if (state.category !== 'all') {
       const chip = document.createElement('span');
       chip.className = 'active-chip';
-      chip.innerHTML = `${state.category} <button class="active-chip-clear" title="Remove">&times;</button>`;
+      chip.innerHTML = `${escapeHtml(state.category)} <button class="active-chip-clear" type="button" title="Remove" aria-label="Remove category filter">&times;</button>`;
       chip.querySelector('button').addEventListener('click', () => { state.category = 'all'; renderAll(); });
       tagsEl.appendChild(chip);
     }
     if (state.search.trim()) {
       const chip = document.createElement('span');
       chip.className = 'active-chip';
-      chip.innerHTML = `"${state.search}" <button class="active-chip-clear" title="Remove">&times;</button>`;
+      chip.innerHTML = `"${escapeHtml(state.search)}" <button class="active-chip-clear" type="button" title="Remove" aria-label="Remove search filter">&times;</button>`;
       chip.querySelector('button').addEventListener('click', () => { state.search = ''; searchInput.value = ''; renderAll(); });
       tagsEl.appendChild(chip);
     }
@@ -255,9 +297,12 @@
     if (item.type === 'template' && item.liveSiteUrl) {
       frame.removeAttribute('srcdoc');
       frame.src = item.liveSiteUrl;
-    } else {
+    } else if (item.files && item.files.combined) {
       frame.removeAttribute('src');
       frame.srcdoc = item.files.combined;
+    } else {
+      frame.removeAttribute('srcdoc');
+      frame.src = item.previewUrl || `features/${item.slug}/index.html`;
     }
   }
 
@@ -275,7 +320,8 @@
           iframe = document.createElement('iframe');
           iframe.title = getItemName(item);
           iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
-          iframe.srcdoc = item.files.combined;
+          if (item.files && item.files.combined) iframe.srcdoc = item.files.combined;
+          else iframe.src = item.previewUrl || `features/${item.slug}/index.html`;
           box.appendChild(iframe);
         }
       } else if (state.pauseOffscreen && iframe) {
@@ -296,7 +342,7 @@
       emptyEl.innerHTML = `
         <p style="font-size: 15px; color: #ececf1; margin: 0 0 8px; font-weight: 600;">No features match the active filter combination</p>
         <p style="font-size: 13px; color: #8e8ea0; margin: 0 0 16px;">Try resetting your active category, source, or search filter.</p>
-        <button type="button" class="action-btn primary" id="emptyResetBtn">Show All 26 Features &amp; Templates</button>
+        <button type="button" class="action-btn primary" id="emptyResetBtn">Show All ${allFeatures.length} Features &amp; Templates</button>
       `;
       catalogGrid.appendChild(emptyEl);
       const resetBtn = emptyEl.querySelector('#emptyResetBtn');
@@ -311,7 +357,7 @@
     filtered.forEach((item) => {
       const card = document.createElement('article');
       card.className = 'vault-card' + (item.type === 'template' ? ' is-template' : '');
-      const hasTsx = Boolean(item.files && item.files.tsx);
+      const hasTsx = (item.availableFiles || []).includes('tsx') || Boolean(item.files && item.files.tsx);
 
       const previewBox = document.createElement('div');
       previewBox.className = 'card-preview-box';
@@ -320,13 +366,13 @@
       previewBox.innerHTML = `
         <div class="preview-Overlay-bar">
           <div class="badge-group">
-            <span class="source-badge">${item.source}</span>
-            <span class="cat-badge">${item.category}</span>
+            <span class="source-badge">${escapeHtml(item.source)}</span>
+            <span class="cat-badge">${escapeHtml(item.category)}</span>
             ${hasTsx ? '<span class="tsx-badge">React TSX + Vanilla</span>' : ''}
           </div>
           <div class="preview-quick-btns">
-            <button class="mini-icon-btn" data-action="reload" title="Reload Live Preview">&#8635;</button>
-            <button class="mini-icon-btn" data-action="inspect" title="Open Full Code &amp; Preview Inspector">&nearr;</button>
+            <button class="mini-icon-btn" data-action="reload" title="Reload Live Preview" aria-label="Reload live preview" type="button">&#8635;</button>
+            <button class="mini-icon-btn" data-action="inspect" title="Open Full Code &amp; Preview Inspector" aria-label="Open inspector" type="button">&nearr;</button>
           </div>
         </div>
       `;
@@ -338,19 +384,19 @@
 
       let extraTemplateBtns = '';
       if (item.liveSiteUrl) {
-        extraTemplateBtns += `<a class="action-btn accent" href="${item.liveSiteUrl}" target="_blank" rel="noopener">Live Site &nearr;</a>`;
+        extraTemplateBtns += `<a class="action-btn accent" href="${escapeHtml(item.liveSiteUrl)}" target="_blank" rel="noopener">Live Site &nearr;</a>`;
       }
       if (item.adminUrl) {
-        extraTemplateBtns += `<a class="action-btn accent" href="${item.adminUrl}" target="_blank" rel="noopener">Admin CMS &nearr;</a>`;
+        extraTemplateBtns += `<a class="action-btn accent" href="${escapeHtml(item.adminUrl)}" target="_blank" rel="noopener">Admin CMS &nearr;</a>`;
       }
 
       info.innerHTML = `
         <div>
           <div class="card-title-row">
-            <h2 class="card-title">${itemName}</h2>
-            <code class="card-slug">${folderDisplay}</code>
+            <h2 class="card-title">${escapeHtml(itemName)}</h2>
+            <code class="card-slug">${escapeHtml(folderDisplay)}</code>
           </div>
-          <p class="card-desc">${item.description}</p>
+          <p class="card-desc">${escapeHtml(item.description)}</p>
         </div>
         <div class="card-footer-actions">
           <button class="action-btn primary" data-action="copy-code" type="button">${item.type === 'template' ? 'Copy Site HTML' : 'Copy 1-File Code'}</button>
@@ -368,15 +414,17 @@
         if (!btn) return;
         const action = btn.getAttribute('data-action');
         if (action === 'copy-code') {
-          const codeToCopy = (item.type === 'template' && item.files.siteHtml) ? item.files.siteHtml : item.files.combined;
-          copyText(codeToCopy, `Copied code for ${itemName}`);
+          ensureFiles(item).then((files) => {
+            const codeToCopy = (item.type === 'template' && files.siteHtml) ? files.siteHtml : files.combined;
+            copyText(codeToCopy, `Copied code for ${itemName}`);
+          });
         } else if (action === 'copy-path') {
           copyText(getAbsoluteFolderPath(item), `Copied path: ${getAbsoluteFolderPath(item)}`);
         } else if (action === 'inspect') {
           openInspector(item.slug);
         } else if (action === 'reload') {
           const frame = previewBox.querySelector('iframe');
-          if (frame) frame.srcdoc = item.files.combined;
+          if (frame) loadPreviewIntoFrame(frame, item);
         }
       });
 
@@ -432,9 +480,10 @@
   const inspCodeContent = document.getElementById('inspCodeContent');
   let inspectedItem = null;
 
-  function openInspector(slug) {
+  async function openInspector(slug) {
     const item = allFeatures.find((f) => f.slug === slug);
     if (!item) return;
+    await ensureFiles(item);
     inspectedItem = item;
     const tabs = getAvailableTabs(item);
     state.inspActiveTab = tabs[0] ? tabs[0].id : 'combined';
@@ -455,7 +504,7 @@
     }
 
     const tagsEl = document.getElementById('inspTags');
-    tagsEl.innerHTML = (item.tags || []).map((t) => `<span class="tag-chip">#${t}</span>`).join('');
+    tagsEl.innerHTML = (item.tags || []).map((t) => `<span class="tag-chip">#${escapeHtml(t)}</span>`).join('');
 
     loadPreviewIntoFrame(inspPreviewFrame, item);
     renderInspectorCodeTabs();
@@ -556,7 +605,7 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'tree-item' + (item.slug === state.activeSlug ? ' is-active' : '');
-        btn.innerHTML = `<span>${getItemName(item)}</span>`;
+        btn.innerHTML = `<span>${escapeHtml(getItemName(item))}</span>`;
         btn.addEventListener('click', () => {
           state.activeSlug = item.slug;
           renderWorkbench();
@@ -588,25 +637,36 @@
       wbPreviewFrame.setAttribute('data-loaded-slug', activeItem.slug);
     }
 
-    const tabs = getAvailableTabs(activeItem);
-    if (!tabs.some((t) => t.id === state.wbActiveTab) && tabs[0]) {
-      state.wbActiveTab = tabs[0].id;
-    }
-    wbCodeTabs.innerHTML = '';
-    tabs.forEach((tab) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'code-tab' + (state.wbActiveTab === tab.id ? ' is-active' : '');
-      b.textContent = tab.label;
-      b.addEventListener('click', () => {
-        state.wbActiveTab = tab.id;
-        renderWorkbench();
+    const renderTabs = () => {
+      const tabs = getAvailableTabs(activeItem);
+      if (!tabs.some((t) => t.id === state.wbActiveTab) && tabs[0]) {
+        state.wbActiveTab = tabs[0].id;
+      }
+      wbCodeTabs.innerHTML = '';
+      tabs.forEach((tab) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'code-tab' + (state.wbActiveTab === tab.id ? ' is-active' : '');
+        b.textContent = tab.label;
+        b.addEventListener('click', () => {
+          state.wbActiveTab = tab.id;
+          renderWorkbench();
+        });
+        wbCodeTabs.appendChild(b);
       });
-      wbCodeTabs.appendChild(b);
-    });
 
-    const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
-    wbCodeDisplay.textContent = activeTabObj.content;
+      const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
+      wbCodeDisplay.textContent = activeTabObj.content;
+    };
+    if (activeItem.files) {
+      renderTabs();
+    } else {
+      wbCodeTabs.innerHTML = '';
+      wbCodeDisplay.textContent = 'Loading source…';
+      ensureFiles(activeItem).then(() => {
+        if (state.activeSlug === activeItem.slug) renderTabs();
+      });
+    }
   }
 
   document.getElementById('wbReloadBtn').addEventListener('click', () => {
@@ -622,9 +682,11 @@
   document.getElementById('wbCopyCodeBtn').addEventListener('click', () => {
     const activeItem = allFeatures.find((f) => f.slug === state.activeSlug);
     if (!activeItem) return;
-    const tabs = getAvailableTabs(activeItem);
-    const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
-    copyText(activeTabObj.content, `Copied ${activeTabObj.label}`);
+    ensureFiles(activeItem).then(() => {
+      const tabs = getAvailableTabs(activeItem);
+      const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
+      copyText(activeTabObj.content, `Copied ${activeTabObj.label}`);
+    });
   });
 
   document.getElementById('wbDownloadHtmlBtn').addEventListener('click', () => {
@@ -661,9 +723,13 @@
     });
   });
 
-  searchInput.addEventListener('input', (e) => {
-    state.search = e.target.value;
+  const onSearchInput = debounce((val) => {
+    state.search = val;
     renderAll();
+  }, 150);
+
+  searchInput.addEventListener('input', (e) => {
+    onSearchInput(e.target.value);
   });
 
   window.addEventListener('keydown', (e) => {
@@ -717,25 +783,16 @@
     renderAll();
   });
 
-  // Mobile sidebar toggle
-  const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
-  if (mobileSidebarToggle) {
-    mobileSidebarToggle.addEventListener('click', () => {
-      const sidebar = document.getElementById('catalogSidebar');
-      if (sidebar) sidebar.classList.toggle('is-open');
-    });
-  }
-
   // Workbench sidebar search filter
   const wbSearchInput = document.getElementById('wbSearchInput');
   if (wbSearchInput) {
-    wbSearchInput.addEventListener('input', (e) => {
+    wbSearchInput.addEventListener('input', debounce((e) => {
       const q = e.target.value.toLowerCase();
       document.querySelectorAll('#wbTree .tree-item').forEach((item) => {
         const text = item.textContent.toLowerCase();
         item.style.display = text.includes(q) ? '' : 'none';
       });
-    });
+    }, 100));
   }
 
   // Add Feature Studio Modal

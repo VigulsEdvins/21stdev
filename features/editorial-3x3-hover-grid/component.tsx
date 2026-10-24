@@ -9,14 +9,14 @@ interface GridCell {
 }
 
 const CELLS: GridCell[] = [
-  { id: '01', title: 'Patrick Mahomes', tag: 'SPORTS ACTION', images: ['/mom/public/images/patrick-mahomes-thumb.png', '/mom/public/images/patrick-mahomes-mesh-1.png'] },
-  { id: '02', title: 'La Marzocco Craft', tag: 'COMMERCIAL ARCHIVE', images: ['/mom/public/images/la-marzocco-thumb.png', '/mom/public/images/la-marzocco-mesh-1.png'] },
-  { id: '03', title: 'Air Space Intelligence', tag: 'AEROSPACE MONOGRAPH', images: ['/mom/public/images/air-space-intelligence-thumb.png', '/mom/public/images/air-space-intelligence-mesh-1.png'] },
-  { id: '04', title: 'Applause Monolith', tag: 'EDITORIAL SERIES', images: ['/mom/public/images/applause-thumb.png', '/mom/public/images/applause-mesh-1.png'] },
-  { id: '06', title: 'Bad Boys Cinema', tag: 'CINEMATIC STREET', images: ['/mom/public/images/bad-boys-thumb.png', '/mom/public/images/bad-boys-mesh-1.png'] },
-  { id: '07', title: '0G Spatial Motion', tag: 'GRAVITY EXPERIMENTAL', images: ['/mom/public/images/0g-thumb.png', '/mom/public/images/0g-mesh-1.png'] },
-  { id: '08', title: 'Margarita Studio', tag: 'PORTRAIT MONOGRAPH', images: ['/mom/public/images/margarita-vigule.png', '/mom/public/images/iyo-thumb.png'] },
-  { id: '09', title: 'Pelé Heritage', tag: 'CULTURAL LEGACY', images: ['/mom/public/images/pele-foundation-thumb.png', '/mom/public/images/pele-foundation-mesh-1.png'] }
+  { id: '01', title: 'Patrick Mahomes', tag: 'SPORTS ACTION', images: ['/assets/library/patrick-mahomes-thumb-4ce12ce7.png', '/assets/library/patrick-mahomes-mesh-1-b5630223.png'] },
+  { id: '02', title: 'La Marzocco Craft', tag: 'COMMERCIAL ARCHIVE', images: ['/assets/library/la-marzocco-thumb-a0214898.png', '/assets/library/la-marzocco-mesh-1-8fcb71a2.png'] },
+  { id: '03', title: 'Air Space Intelligence', tag: 'AEROSPACE MONOGRAPH', images: ['/assets/library/air-space-intelligence-thumb-0f3ac386.png', '/assets/library/air-space-intelligence-mesh-1-b15a18b9.png'] },
+  { id: '04', title: 'Applause Monolith', tag: 'EDITORIAL SERIES', images: ['/assets/library/applause-thumb-ae19f430.png', '/assets/library/applause-mesh-1-2b2e4eb0.png'] },
+  { id: '06', title: 'Bad Boys Cinema', tag: 'CINEMATIC STREET', images: ['/assets/library/bad-boys-thumb-6bf21a1e.png', '/assets/library/bad-boys-mesh-1-7c1d1043.png'] },
+  { id: '07', title: '0G Spatial Motion', tag: 'GRAVITY EXPERIMENTAL', images: ['/assets/library/0g-thumb-3ba91606.png', '/assets/library/0g-mesh-1-f88940d8.png'] },
+  { id: '08', title: 'Margarita Studio', tag: 'PORTRAIT MONOGRAPH', images: ['/assets/library/margarita-vigule-0213f7e4.png', '/assets/library/iyo-thumb-41d5f334.png'] },
+  { id: '09', title: 'Pelé Heritage', tag: 'CULTURAL LEGACY', images: ['/assets/library/pele-foundation-thumb-c189a772.png', '/assets/library/pele-foundation-mesh-1-bde5ac02.png'] }
 ];
 
 export const Editorial3x3HoverGrid: React.FC = () => {

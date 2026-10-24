@@ -18,6 +18,29 @@
     "requestAnimationFrame",
     "CSS Grid"
   ],
-  "dependencies": [],
-  "order": 14
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 14,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial"
+  ],
+  "industry": [
+    "portfolio"
+  ],
+  "needsAssets": true,
+  "origin": {
+    "source": "vivmgmt",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [],
+  "measured": {
+    "luma": 0.6,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

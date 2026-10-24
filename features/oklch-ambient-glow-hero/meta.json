@@ -17,6 +17,73 @@
     "CSS Keyframes",
     "Vanilla JS"
   ],
-  "dependencies": [],
-  "order": 20
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 20,
+  "legacyCategory": "Heroes",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "futuristic",
+    "dark"
+  ],
+  "industry": [
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "21st-crafted",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-22",
+  "customizable": [
+    {
+      "id": "text-21st-dev-wide-gamut-oklc",
+      "label": "Text: 21ST.DEV WIDE-GAMUT OKLCH ENGINE",
+      "type": "text",
+      "selector": ":scope div.hero-pill"
+    },
+    {
+      "id": "text-ship-interfaces-with-per",
+      "label": "Heading 1: Ship interfaces with perceptual d…",
+      "type": "text",
+      "selector": ":scope h1.hero-title"
+    },
+    {
+      "id": "text-interactive-oklch-radial",
+      "label": "Paragraph: Interactive OKLCH radial shaders …",
+      "type": "text",
+      "selector": ":scope p.hero-sub"
+    },
+    {
+      "id": "text-ultraviolet",
+      "label": "Button: Ultraviolet",
+      "type": "text",
+      "selector": ":scope button.is-active"
+    },
+    {
+      "id": "text-emerald-cyber",
+      "label": "Button: Emerald Cyber",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > button:nth-of-type(2)"
+    },
+    {
+      "id": "text-solar-flare",
+      "label": "Button: Solar Flare",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > button:nth-of-type(3)"
+    },
+    {
+      "id": "text-deep-cryo",
+      "label": "Button: Deep Cryo",
+      "type": "text",
+      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(2) > button:nth-of-type(4)"
+    }
+  ],
+  "measured": {
+    "luma": 0.09,
+    "webgl": false,
+    "canvas2d": false
+  }
 }
