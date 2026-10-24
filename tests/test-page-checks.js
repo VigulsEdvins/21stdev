@@ -20,3 +20,11 @@ assert.strictEqual(got.filter(i => i.id === 'img-alt').length, 1, 'script text i
 assert.strictEqual(got[0].severity, 'error', 'errors come first');
 assert(ids('<html lang="en"><body><p>no heading</p></body></html>', { title: 'T', description: 'D' }).includes('h1-missing'));
 console.log('✅ Page checks tests passed!');
+
+// pictures described in the Content tab are applied at load time: they count as fixed
+const noAlt = '<html lang="en"><body><section class="page-section" id="s1"><h1>H</h1><img src="a.jpg"><img src="b.jpg"></section></body></html>';
+const meta = { title: 'T', description: 'D' };
+assert.strictEqual(checkPage(noAlt, meta).filter(i => i.id === 'img-alt').length, 2);
+assert.strictEqual(checkPage(noAlt, meta, { s1: 1 }).filter(i => i.id === 'img-alt').length, 1, 'one described picture is credited');
+assert.strictEqual(checkPage(noAlt, meta, { s1: 2 }).filter(i => i.id === 'img-alt').length, 0);
+console.log('✅ Alt credit tests passed!');

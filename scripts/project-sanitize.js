@@ -69,7 +69,7 @@
     Object.keys(map).slice(0, 500).forEach(fieldId => {
       const o = map[fieldId];
       if (!/^[\w.:-]{1,80}$/.test(fieldId) || !o || typeof o !== 'object' || typeof o.selector !== 'string' || o.selector.length > 300) { counter.n++; return; }
-      const type = ['text', 'image', 'link', 'color'].includes(o.type) ? o.type : 'text';
+      const type = ['text', 'image', 'link', 'color', 'alt'].includes(o.type) ? o.type : 'text';
       let value = text(String(o.value === undefined ? '' : o.value), MAX_TEXT, counter);
       if (type === 'link' || type === 'image') value = safeUrl(value, counter);
       const entry = { selector: o.selector, type, value };

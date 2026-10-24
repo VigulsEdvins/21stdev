@@ -519,7 +519,7 @@
             <span>${escapeHtml(f.label)}${ov ? ' <em class="content-edited-dot" title="Edited">●</em>' : ''}</span>
             ${long ? `<textarea rows="3"></textarea>` : `<input type="${f.type === 'image' || f.type === 'link' ? 'text' : f.type === 'color' ? 'color' : 'text'}" autocomplete="off" />`}
           </label>
-          ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}" /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above.</p>` : ''}
+          ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}" /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><label class="ps-field content-alt"><span>Picture description (alt text)</span><input type="text" class="content-alt-input" autocomplete="off" maxlength="200" placeholder="Describe what the picture shows" /></label><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above. The description is read by screen readers and search engines.</p>` : ''}
           ${ov ? '<button type="button" class="content-reset">Reset to original</button>' : ''}`;
         const input = wrap.querySelector('textarea, input:not([type=file])');
         input.value = isData ? '(uploaded image)' : value;
@@ -544,6 +544,16 @@
         });
         const reset = wrap.querySelector('.content-reset');
         if (reset) reset.addEventListener('click', () => { sm.setSectionOverride(section.id, f.id, ''); setTimeout(renderContentFields, 50); });
+        const altInput = wrap.querySelector('.content-alt-input');
+        if (altInput) {
+          const altId = f.id + '__alt';
+          altInput.value = (overrides[altId] && overrides[altId].value) || '';
+          let altTimer = null;
+          altInput.addEventListener('input', () => {
+            clearTimeout(altTimer);
+            altTimer = setTimeout(() => sm.setSectionOverride(section.id, altId, altInput.value.trim(), { selector: f.selector, type: 'alt' }), 250);
+          });
+        }
         const upload = wrap.querySelector('.content-upload');
         if (upload) {
           const fileInput = wrap.querySelector('input[type=file]');
@@ -553,7 +563,9 @@
             try {
               const uri = await readImageAsDataUri(fileInput.files[0]);
               sm.setSectionOverride(section.id, f.id, uri, { selector: f.selector, type: 'image' });
+              const kb = Math.round(uri.length * 0.75 / 1024);
               const used = storageUsedBytes();
+              if (kb > 500) ctx.showToast(`That picture is about ${kb} KB after shrinking. Pictures over 500 KB slow the page down; a smaller or more compressed file is better.`, 6000);
               ctx.showToast(used > 3.5 * 1024 * 1024
                 ? `Image replaced, but browser storage is ${(used / 1048576).toFixed(1)} MB of about 5 MB. Export the project file and host big photos instead.`
                 : 'Image replaced', used > 3.5 * 1024 * 1024 ? 6000 : undefined);

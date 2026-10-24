@@ -2789,6 +2789,7 @@ const OVERRIDES_RUNTIME = `(function () {
   function restore(el, key, value) {
     if (key === 'html') el.innerHTML = value;
     else if (key === 'src') { if (value === null) el.removeAttribute('src'); else el.setAttribute('src', value); }
+    else if (key === 'alt' || key === 'aria-label' || key === 'role') { if (value === null) el.removeAttribute(key); else el.setAttribute(key, value); }
     else if (key === 'srcset') { if (value === null) el.removeAttribute('srcset'); else el.setAttribute('srcset', value); }
     else if (key === 'href') { if (value === null) el.removeAttribute('href'); else el.setAttribute('href', value); }
     else if (key.indexOf('style:') === 0) { if (value) el.style.setProperty(key.slice(6), value); else el.style.removeProperty(key.slice(6)); }
@@ -2812,6 +2813,18 @@ const OVERRIDES_RUNTIME = `(function () {
           key = remember(el, 'style:background-image', function () { return el.style.getPropertyValue('background-image'); });
           active.push([el, key]);
           el.style.backgroundImage = 'url("' + o.value.replace(/"/g, '%22') + '")';
+        }
+      } else if (o.type === 'alt') {
+        // the picture's description: alt on an <img>, aria-label on anything painted with a background image
+        if (el.tagName === 'IMG') {
+          remember(el, 'alt', function () { return el.getAttribute('alt'); });
+          active.push([el, 'alt']);
+          el.setAttribute('alt', o.value);
+        } else {
+          remember(el, 'aria-label', function () { return el.getAttribute('aria-label'); });
+          remember(el, 'role', function () { return el.getAttribute('role'); });
+          active.push([el, 'aria-label'], [el, 'role']);
+          el.setAttribute('aria-label', o.value); el.setAttribute('role', 'img');
         }
       } else if (o.type === 'link') {
         key = remember(el, 'href', function () { return el.getAttribute('href'); });

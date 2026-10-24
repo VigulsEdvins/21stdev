@@ -68,3 +68,10 @@ const withCsp = A.generateExportBundle([], 'midnight-dark', {}, { page: {}, csp:
 assert(withCsp['index.html'].includes('http-equiv="Content-Security-Policy"') && withCsp['README.md'].includes('Security policy'));
 assert(!A.generateExportBundle([], 'midnight-dark', {}, { page: {} })['index.html'].includes('Content-Security-Policy'), 'off by default');
 console.log('✅ CSP tests passed!');
+
+// picture descriptions travel as overrides and the runtime knows how to apply them
+const altList = A.collectOverrides([{ id: 's1', overrides: { 'hero__alt': { selector: 'img', type: 'alt', value: 'A dog on a beach' } } }]);
+assert.deepStrictEqual(altList.map(o => o.type), ['alt']);
+const altBundle = A.generateExportBundle([{ id: 's1', slug: 'x', overrides: { h: { selector: 'img', type: 'alt', value: 'A dog' } } }], 'midnight-dark', { x: { html: '<img src="a.jpg">', css: '', js: '' } }, { page: {} });
+assert(altBundle['script.js'].includes("o.type === 'alt'") && altBundle['script.js'].includes('"type": "alt"'), 'alt override is in the export script');
+console.log('✅ Alt override tests passed!');

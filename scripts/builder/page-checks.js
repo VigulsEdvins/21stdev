@@ -44,7 +44,8 @@
     return out;
   }
 
-  function checkPage(indexHtml, page = {}) {
+  /** `altFixed` maps a section id to the number of pictures whose description is set in the Content tab (applied when the page loads, so it is not in the markup). */
+  function checkPage(indexHtml, page = {}, altFixed = {}) {
     const issues = [];
     const add = (id, severity, message, sec) => issues.push({ id, severity, message, sectionId: sec && sec.id || undefined, slug: sec && sec.slug || undefined });
     const clean = stripNoise(indexHtml);
@@ -79,7 +80,14 @@
 
     scopes.forEach(sec => {
       // images
+      let altCredit = altFixed[sec.id] || 0;
       (sec.html.match(/<img\b[^>]*>/gi) || []).forEach(tag => {
+        if (!hasAttr(tag, 'alt') || ((attr(tag, 'alt') || '').trim() === '' && altCredit > 0)) {
+          if (altCredit > 0) { altCredit--; return; }
+          if (!hasAttr(tag, 'alt')) add('img-alt', 'error', 'An image has no alt attribute.', sec);
+          else add('img-alt-empty', 'info', 'An image has empty alt text (fine only if it is purely decorative).', sec);
+          return;
+        }
         if (!hasAttr(tag, 'alt')) add('img-alt', 'error', 'An image has no alt attribute.', sec);
         else if ((attr(tag, 'alt') || '').trim() === '' && attr(tag, 'role') !== 'presentation' && attr(tag, 'aria-hidden') !== 'true') {
           add('img-alt-empty', 'info', 'An image has empty alt text (fine only if it is purely decorative).', sec);
