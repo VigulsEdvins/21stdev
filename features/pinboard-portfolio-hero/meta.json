@@ -28,9 +28,8 @@
   "order": 207,
   "legacyCategory": "Heroes",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "light",
     "editorial"
   ],
   "industry": [
@@ -43,5 +42,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.47,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

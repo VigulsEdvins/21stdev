@@ -123,11 +123,11 @@
         if (d.activeId === id) d.activeId = Object.keys(d.projects)[0] || null;
         return persist(d);
       },
-      exportProject(id) {
+      exportProject(id, extras) {
         const p = load().projects[id];
         if (!p) return null;
         const { name, client, notes, state, snapshots, createdAt, updatedAt } = p;
-        return JSON.stringify({ format: FORMAT, version: 1, exportedAt: new Date().toISOString(), project: { name, client, notes, createdAt, updatedAt, state, snapshots } }, null, 2);
+        return JSON.stringify({ format: FORMAT, version: 1, exportedAt: new Date().toISOString(), project: { name, client, notes, createdAt, updatedAt, state, snapshots }, extras: extras || {} }, null, 2);
       },
       importProject(json) {
         let parsed;
@@ -151,7 +151,11 @@
         d.projects[p.id] = p;
         d.activeId = p.id;
         if (!persist(d)) throw new Error('Could not save: browser storage is full');
-        return clone(p);
+        const out = clone(p);
+        // Per-user extras that travel with the file (starred components); the caller decides what to merge
+        const ex = parsed.extras && typeof parsed.extras === 'object' ? parsed.extras : {};
+        out.extras = { favourites: (Array.isArray(ex.favourites) ? ex.favourites : []).filter(x => typeof x === 'string').slice(0, 500) };
+        return out;
       }
     };
   }

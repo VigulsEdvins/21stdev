@@ -20,9 +20,10 @@
   "order": 19,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "futuristic"
+    "futuristic",
+    "dark"
   ],
   "industry": [
     "saas"
@@ -33,5 +34,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-24",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.11,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

@@ -25,8 +25,8 @@
   "status": "stable",
   "weight": "light",
   "mood": [
-    "light",
-    "editorial"
+    "editorial",
+    "dark"
   ],
   "industry": [
     "portfolio"
@@ -37,5 +37,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.14,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

@@ -27,7 +27,7 @@
   "order": 222,
   "legacyCategory": "Footers & Endings",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "minimal"
   ],
@@ -41,5 +41,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.56,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

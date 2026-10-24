@@ -28,10 +28,11 @@
   "order": 104,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "editorial",
-    "retro"
+    "retro",
+    "dark"
   ],
   "industry": [
     "portfolio",
@@ -43,5 +44,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.12,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

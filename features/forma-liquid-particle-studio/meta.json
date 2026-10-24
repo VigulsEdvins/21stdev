@@ -45,5 +45,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.54,
+    "webgl": true,
+    "canvas2d": true
+  }
 }

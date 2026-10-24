@@ -28,9 +28,9 @@
   "order": 147,
   "legacyCategory": "Galleries & Portfolios",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "light"
+    "dark"
   ],
   "industry": [
     "portfolio",
@@ -42,5 +42,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.27,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

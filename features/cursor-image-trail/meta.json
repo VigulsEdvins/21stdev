@@ -21,7 +21,8 @@
   "status": "stable",
   "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "dark"
   ],
   "industry": [
     "hospitality"
@@ -32,5 +33,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.08,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

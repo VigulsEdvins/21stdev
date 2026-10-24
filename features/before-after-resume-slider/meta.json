@@ -24,9 +24,10 @@
   "order": 36,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "dark"
   ],
   "industry": [
     "portfolio"
@@ -37,5 +38,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.22,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

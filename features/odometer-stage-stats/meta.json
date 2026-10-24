@@ -28,7 +28,7 @@
   "order": 198,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "minimal"
   ],
@@ -41,5 +41,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.34,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

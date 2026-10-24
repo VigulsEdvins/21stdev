@@ -34,7 +34,8 @@
   "weight": "light",
   "mood": [
     "editorial",
-    "luxury"
+    "luxury",
+    "dark"
   ],
   "industry": [
     "portfolio"
@@ -45,5 +46,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.08,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

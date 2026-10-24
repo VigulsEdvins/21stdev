@@ -28,7 +28,7 @@
   "order": 247,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic"
   ],
@@ -41,5 +41,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.53,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

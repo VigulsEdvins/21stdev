@@ -29,7 +29,8 @@
   "status": "stable",
   "weight": "heavy",
   "mood": [
-    "editorial"
+    "editorial",
+    "light"
   ],
   "industry": [
     "saas"
@@ -40,5 +41,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.92,
+    "webgl": true,
+    "canvas2d": true
+  }
 }

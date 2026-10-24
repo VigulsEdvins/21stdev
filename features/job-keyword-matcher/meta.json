@@ -24,9 +24,10 @@
   "order": 34,
   "legacyCategory": "Forms & Inputs",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "dark"
   ],
   "industry": [
     "portfolio",
@@ -38,5 +39,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.08,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

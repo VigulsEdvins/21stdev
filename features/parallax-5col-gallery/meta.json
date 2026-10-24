@@ -24,7 +24,7 @@
   "order": 14,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "editorial"
   ],
@@ -37,5 +37,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-24",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.6,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

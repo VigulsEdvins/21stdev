@@ -23,9 +23,9 @@
   "order": 21,
   "legacyCategory": "Galleries & Grids",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "light"
+    "dark"
   ],
   "industry": [
     "general"
@@ -36,5 +36,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.05,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

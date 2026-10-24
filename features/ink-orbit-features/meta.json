@@ -28,9 +28,10 @@
   "order": 169,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "light"
   ],
   "industry": [
     "general"
@@ -90,5 +91,10 @@
       "type": "text",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
     }
-  ]
+  ],
+  "measured": {
+    "luma": 0.96,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T07:57:28.908Z",
+  "generatedAt": "2026-10-24T08:05:21.474Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 209,
   "categories": [
@@ -39,7 +39,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -84,12 +84,13 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "luxury"
+        "luxury",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -138,7 +139,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "media"
@@ -190,13 +192,12 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "dark",
-        "light"
+        "dark"
       ],
       "industry": [
         "ecommerce"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -248,7 +249,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -347,7 +348,8 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "general"
@@ -399,7 +401,8 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -522,7 +525,8 @@
       "legacyCategory": "Buttons & UI",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "portfolio"
@@ -573,7 +577,8 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "general"
@@ -624,7 +629,8 @@
       "legacyCategory": "Buttons & UI",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -674,12 +680,13 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "media"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": true,
       "origin": {
         "source": "betteroff",
@@ -723,7 +730,8 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "saas",
@@ -773,12 +781,13 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "heavy",
+      "weight": "medium",
       "needsAssets": true,
       "origin": {
         "source": "photo-caroulsel",
@@ -826,7 +835,8 @@
       "legacyCategory": "3D & Carousels",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -952,7 +962,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "media"
@@ -1000,12 +1011,13 @@
       "legacyCategory": "3D & Carousels",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": true,
       "origin": {
         "source": "carousel-gallery-play",
@@ -1049,13 +1061,14 @@
       "legacyCategory": "Buttons & UI",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "portfolio",
         "media"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": true,
       "origin": {
         "source": "betteroff",
@@ -1103,7 +1116,7 @@
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": true,
       "origin": {
         "source": "vivmgmt",
@@ -1146,7 +1159,8 @@
       "legacyCategory": "Cursors & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "hospitality"
@@ -1194,7 +1208,8 @@
       "legacyCategory": "Galleries & Grids",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -1291,12 +1306,13 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "vivmgmt",
@@ -1338,7 +1354,8 @@
       "legacyCategory": "Galleries & Grids",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "portfolio"
@@ -1386,7 +1403,8 @@
       "legacyCategory": "Footers & Endings",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -1433,7 +1451,8 @@
       "legacyCategory": "Galleries & Grids",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "media"
@@ -1480,7 +1499,8 @@
       "legacyCategory": "Cursors & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -1527,8 +1547,8 @@
       "legacyCategory": "Galleries & Grids",
       "status": "stable",
       "mood": [
-        "light",
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "portfolio"
@@ -1575,7 +1595,8 @@
       "legacyCategory": "Buttons & UI",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "general"
@@ -1672,7 +1693,8 @@
       "legacyCategory": "Navigation & UI",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "hospitality"
@@ -1780,12 +1802,13 @@
       "legacyCategory": "3D & Carousels",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "saas"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": true,
       "origin": {
         "source": "betteroff",
@@ -1829,13 +1852,13 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "dark",
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st-crafted",
@@ -1920,12 +1943,12 @@
       "legacyCategory": "Galleries & Grids",
       "status": "stable",
       "mood": [
-        "light"
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st-crafted",
@@ -1968,12 +1991,13 @@
       "status": "stable",
       "mood": [
         "futuristic",
-        "luxury"
+        "luxury",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "heavy",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "21st-crafted",
@@ -2015,12 +2039,13 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st-crafted",
@@ -2068,7 +2093,7 @@
         "agency",
         "media"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": true,
       "origin": {
         "source": "betteroff",
@@ -2118,13 +2143,14 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "agency",
         "portfolio"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": true,
       "origin": {
         "source": "carousel-gallery-play",
@@ -2175,7 +2201,8 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "luxury"
+        "luxury",
+        "dark"
       ],
       "industry": [
         "media"
@@ -2229,7 +2256,8 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "luxury"
+        "luxury",
+        "dark"
       ],
       "industry": [
         "portfolio"
@@ -2286,7 +2314,8 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "portfolio"
@@ -2342,7 +2371,8 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "portfolio"
@@ -2391,7 +2421,8 @@
       "legacyCategory": "Navigation & Headers",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "agency"
@@ -2440,8 +2471,8 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "light",
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "portfolio"
@@ -2545,7 +2576,7 @@
       "industry": [
         "portfolio"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "cvmaker",
@@ -2589,13 +2620,14 @@
       "legacyCategory": "Forms & Inputs",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "portfolio",
         "saas"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "cvmaker",
@@ -2639,7 +2671,8 @@
       "legacyCategory": "Forms & Inputs",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "portfolio"
@@ -2688,12 +2721,13 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "cvmaker",
@@ -2737,7 +2771,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "media"
@@ -2786,13 +2821,14 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "saas",
         "media"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -2836,12 +2872,13 @@
       "status": "stable",
       "mood": [
         "futuristic",
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "heavy",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -2884,7 +2921,8 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "general"
@@ -2932,12 +2970,13 @@
       "legacyCategory": "Footers & Endings",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -2980,12 +3019,12 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "light"
+        "dark"
       ],
       "industry": [
         "saas"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -3028,7 +3067,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "general"
@@ -3076,12 +3116,13 @@
       "legacyCategory": "Cursors & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -3124,7 +3165,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "general"
@@ -3171,13 +3213,14 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "saas",
         "ecommerce"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -3222,7 +3265,8 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -3271,12 +3315,13 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -3372,13 +3417,14 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "portfolio",
         "ecommerce"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -3423,8 +3469,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "light",
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "media"
@@ -3523,7 +3569,8 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "general"
@@ -3573,7 +3620,8 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -3623,7 +3671,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -3673,8 +3722,7 @@
       "legacyCategory": "Footers & Endings",
       "status": "stable",
       "mood": [
-        "dark",
-        "light"
+        "dark"
       ],
       "industry": [
         "agency"
@@ -3790,12 +3838,13 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -3891,7 +3940,8 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -3941,12 +3991,13 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "media"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -3996,7 +4047,7 @@
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4041,12 +4092,13 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "media"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4090,7 +4142,8 @@
       "legacyCategory": "3D & Carousels",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "general"
@@ -4140,12 +4193,13 @@
       "legacyCategory": "Preloaders & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4190,7 +4244,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "media"
@@ -4244,7 +4299,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4289,7 +4344,8 @@
       "legacyCategory": "Preloaders & Shaders",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "media"
@@ -4389,7 +4445,8 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "hospitality"
@@ -4439,12 +4496,12 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "light"
+        "minimal"
       ],
       "industry": [
         "general"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4489,7 +4546,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "saas",
@@ -4539,7 +4597,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "hospitality"
@@ -4589,7 +4648,6 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "light",
         "editorial"
       ],
       "industry": [
@@ -4644,7 +4702,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4689,12 +4747,13 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "media"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4738,7 +4797,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -4787,14 +4847,14 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "light",
-        "playful"
+        "playful",
+        "light"
       ],
       "industry": [
         "portfolio",
         "saas"
       ],
-      "weight": "heavy",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4839,8 +4899,8 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "dark",
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "general"
@@ -4889,8 +4949,7 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "retro",
-        "light"
+        "retro"
       ],
       "industry": [
         "media",
@@ -4940,12 +4999,13 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "ecommerce"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -4996,7 +5056,7 @@
       "industry": [
         "media"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -5041,7 +5101,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "media"
@@ -5090,7 +5151,7 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "light"
+        "dark"
       ],
       "industry": [
         "general"
@@ -5140,12 +5201,13 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -5190,8 +5252,8 @@
       "legacyCategory": "Preloaders & Shaders",
       "status": "stable",
       "mood": [
-        "light",
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "media"
@@ -5245,7 +5307,7 @@
       "industry": [
         "agency"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -5391,7 +5453,8 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "luxury"
+        "luxury",
+        "light"
       ],
       "industry": [
         "general"
@@ -5490,12 +5553,13 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -5590,13 +5654,13 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "light"
+        "dark"
       ],
       "industry": [
         "portfolio",
         "education"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -5641,7 +5705,8 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "saas"
@@ -5690,7 +5755,8 @@
       "legacyCategory": "3D & Carousels",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "general"
@@ -5740,12 +5806,13 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -5791,7 +5858,8 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "general"
@@ -5840,12 +5908,13 @@
       "legacyCategory": "Navigation & Headers",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "hospitality"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -5890,7 +5959,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -5938,12 +6008,13 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -5988,12 +6059,13 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6037,7 +6109,7 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "light"
+        "minimal"
       ],
       "industry": [
         "general"
@@ -6143,7 +6215,7 @@
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6188,7 +6260,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "retro"
+        "retro",
+        "light"
       ],
       "industry": [
         "general"
@@ -6286,12 +6359,13 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6335,7 +6409,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -6384,7 +6459,8 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "general"
@@ -6484,13 +6560,14 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "portfolio",
         "saas"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6536,7 +6613,8 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "general"
@@ -6586,8 +6664,7 @@
       "legacyCategory": "3D & Carousels",
       "status": "stable",
       "mood": [
-        "futuristic",
-        "light"
+        "futuristic"
       ],
       "industry": [
         "general"
@@ -6687,12 +6764,13 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6786,7 +6864,8 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -6836,12 +6915,13 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "ecommerce"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6936,7 +7016,8 @@
       "status": "stable",
       "mood": [
         "luxury",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "saas",
@@ -6988,12 +7069,13 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "saas"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7038,12 +7120,13 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7088,8 +7171,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "dark",
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "saas",
@@ -7140,12 +7223,13 @@
       "status": "stable",
       "mood": [
         "futuristic",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7239,7 +7323,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "luxury"
+        "luxury",
+        "dark"
       ],
       "industry": [
         "general"
@@ -7288,12 +7373,12 @@
       "legacyCategory": "Footers & Endings",
       "status": "stable",
       "mood": [
-        "dark"
+        "minimal"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7337,7 +7422,8 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -7436,7 +7522,6 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "light",
         "futuristic"
       ],
       "industry": [
@@ -7488,7 +7573,8 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "luxury"
+        "luxury",
+        "light"
       ],
       "industry": [
         "general"
@@ -7539,7 +7625,8 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "portfolio",
@@ -7596,7 +7683,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7640,12 +7727,13 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "retro"
+        "retro",
+        "light"
       ],
       "industry": [
         "hospitality"
       ],
-      "weight": "heavy",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7690,7 +7778,8 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "retro"
+        "retro",
+        "light"
       ],
       "industry": [
         "general"
@@ -7741,7 +7830,8 @@
       "status": "stable",
       "mood": [
         "luxury",
-        "futuristic"
+        "futuristic",
+        "dark"
       ],
       "industry": [
         "general"
@@ -7790,12 +7880,13 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7839,14 +7930,13 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "dark",
         "light"
       ],
       "industry": [
         "fintech",
         "saas"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7891,12 +7981,13 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "playful"
+        "playful",
+        "light"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -7941,8 +8032,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "light",
-        "retro"
+        "retro",
+        "light"
       ],
       "industry": [
         "saas",
@@ -7992,7 +8083,8 @@
       "legacyCategory": "Preloaders & Shaders",
       "status": "stable",
       "mood": [
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "media"
@@ -8042,7 +8134,8 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "portfolio"
@@ -8091,7 +8184,7 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "dark"
+        "minimal"
       ],
       "industry": [
         "general"
@@ -8245,7 +8338,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -8395,7 +8488,7 @@
       "industry": [
         "hospitality"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -8440,7 +8533,6 @@
       "legacyCategory": "3D & Carousels",
       "status": "stable",
       "mood": [
-        "light",
         "futuristic"
       ],
       "industry": [
@@ -8592,7 +8684,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "media",
@@ -8643,7 +8736,8 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "portfolio"
@@ -8693,14 +8787,13 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "light",
         "editorial"
       ],
       "industry": [
         "portfolio",
         "agency"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -8745,7 +8838,8 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "general"
@@ -8795,7 +8889,8 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "fintech"
@@ -8846,12 +8941,13 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -8895,8 +8991,8 @@
       "legacyCategory": "3D & Carousels",
       "status": "stable",
       "mood": [
-        "light",
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "general"
@@ -8946,13 +9042,13 @@
       "legacyCategory": "Heroes",
       "status": "stable",
       "mood": [
-        "light",
-        "playful"
+        "playful",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -8998,7 +9094,8 @@
       "status": "stable",
       "mood": [
         "retro",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -9078,7 +9175,7 @@
       "status": "stable",
       "mood": [
         "futuristic",
-        "light"
+        "dark"
       ],
       "industry": [
         "media"
@@ -9129,12 +9226,13 @@
       "status": "stable",
       "mood": [
         "minimal",
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -9179,7 +9277,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -9229,7 +9328,8 @@
       "legacyCategory": "Preloaders & Shaders",
       "status": "stable",
       "mood": [
-        "luxury"
+        "luxury",
+        "dark"
       ],
       "industry": [
         "general"
@@ -9328,8 +9428,8 @@
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
-        "light",
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "media"
@@ -9378,12 +9478,13 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -9484,7 +9585,7 @@
         "agency",
         "saas"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -9529,7 +9630,8 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "portfolio"
@@ -9579,7 +9681,8 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -9628,7 +9731,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "futuristic"
+        "futuristic",
+        "light"
       ],
       "industry": [
         "general"
@@ -9682,7 +9786,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -9732,7 +9836,7 @@
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -9782,7 +9886,7 @@
       "industry": [
         "agency"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -9828,12 +9932,13 @@
       "status": "stable",
       "mood": [
         "futuristic",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "ecommerce"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -9877,12 +9982,13 @@
       "legacyCategory": "Footers & Endings",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -9927,7 +10033,8 @@
       "legacyCategory": "Preloaders & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "dark"
       ],
       "industry": [
         "media"
@@ -9977,8 +10084,8 @@
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
-        "light",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "agency"
@@ -10028,7 +10135,8 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
@@ -10079,13 +10187,14 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "playful"
+        "playful",
+        "light"
       ],
       "industry": [
         "portfolio",
         "saas"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10130,7 +10239,6 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "light",
         "futuristic"
       ],
       "industry": [
@@ -10181,8 +10289,8 @@
       "legacyCategory": "Footers & Endings",
       "status": "stable",
       "mood": [
-        "dark",
-        "retro"
+        "retro",
+        "dark"
       ],
       "industry": [
         "agency",
@@ -10232,13 +10340,13 @@
       "legacyCategory": "Interactions & Physics",
       "status": "stable",
       "mood": [
-        "light",
-        "editorial"
+        "editorial",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10282,12 +10390,12 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "dark"
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10332,12 +10440,13 @@
       "status": "stable",
       "mood": [
         "futuristic",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10383,7 +10492,8 @@
       "status": "stable",
       "mood": [
         "editorial",
-        "luxury"
+        "luxury",
+        "dark"
       ],
       "industry": [
         "general"
@@ -10433,8 +10543,7 @@
       "legacyCategory": "Galleries & Portfolios",
       "status": "stable",
       "mood": [
-        "editorial",
-        "light"
+        "editorial"
       ],
       "industry": [
         "portfolio",
@@ -10485,12 +10594,13 @@
       "legacyCategory": "Preloaders & Shaders",
       "status": "stable",
       "mood": [
-        "editorial"
+        "editorial",
+        "dark"
       ],
       "industry": [
         "portfolio"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10535,7 +10645,7 @@
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
       "mood": [
-        "light"
+        "dark"
       ],
       "industry": [
         "media"
@@ -10635,12 +10745,13 @@
       "status": "stable",
       "mood": [
         "futuristic",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10741,7 +10852,7 @@
       "industry": [
         "saas"
       ],
-      "weight": "heavy",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10839,12 +10950,13 @@
       "status": "stable",
       "mood": [
         "futuristic",
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"
       ],
-      "weight": "medium",
+      "weight": "light",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10889,7 +11001,7 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "light"
+        "minimal"
       ],
       "industry": [
         "agency"
@@ -10938,7 +11050,8 @@
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "agency",
@@ -10989,7 +11102,8 @@
       "legacyCategory": "Preloaders & Shaders",
       "status": "stable",
       "mood": [
-        "minimal"
+        "minimal",
+        "light"
       ],
       "industry": [
         "general"

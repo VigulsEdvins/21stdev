@@ -23,10 +23,11 @@
   "order": 22,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic",
-    "luxury"
+    "luxury",
+    "dark"
   ],
   "industry": [
     "general"
@@ -37,5 +38,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.06,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

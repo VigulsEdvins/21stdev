@@ -1954,7 +1954,13 @@
         },
         getActiveSection,
         setActiveSection,
-        switchSidebarTab
+        switchSidebarTab,
+        getFavourites: () => catalogLib.favourites(),
+        mergeFavourites: (list) => {
+          const added = catalogLib.mergeFavourites(list);
+          if (added) renderElementsCatalog();
+          return added;
+        }
       });
     }
 

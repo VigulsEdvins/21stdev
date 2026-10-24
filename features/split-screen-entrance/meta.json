@@ -23,9 +23,10 @@
   "order": 15,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "dark"
   ],
   "industry": [
     "general"
@@ -36,5 +37,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.06,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

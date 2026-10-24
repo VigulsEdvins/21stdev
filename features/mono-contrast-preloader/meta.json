@@ -30,7 +30,8 @@
   "status": "stable",
   "weight": "heavy",
   "mood": [
-    "retro"
+    "retro",
+    "dark"
   ],
   "industry": [
     "media"
@@ -41,5 +42,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.23,
+    "webgl": true,
+    "canvas2d": false
+  }
 }

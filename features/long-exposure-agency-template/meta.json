@@ -32,7 +32,8 @@
   "weight": "heavy",
   "mood": [
     "editorial",
-    "futuristic"
+    "futuristic",
+    "light"
   ],
   "industry": [
     "portfolio",
@@ -44,5 +45,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.68,
+    "webgl": true,
+    "canvas2d": true
+  }
 }

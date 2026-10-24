@@ -29,7 +29,7 @@
   "status": "stable",
   "weight": "medium",
   "mood": [
-    "light"
+    "minimal"
   ],
   "industry": [
     "agency"
@@ -40,5 +40,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.38,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

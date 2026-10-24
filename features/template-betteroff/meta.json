@@ -30,7 +30,7 @@
   "order": 24,
   "legacyCategory": "Full Templates",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
     "futuristic"
   ],
@@ -44,5 +44,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.32,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

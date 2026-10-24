@@ -33,8 +33,9 @@ assert.strictEqual(store.deleteSnapshot(p1.id, snaps[0].id), true);
 assert.strictEqual(store.snapshots(p1.id).length, 2);
 
 // export / import round trip
-const json = store.exportProject(p1.id);
+const json = store.exportProject(p1.id, { favourites: ['a', 'b', 7] });
 const imported = store.importProject(json);
+assert.deepStrictEqual(imported.extras.favourites, ['a', 'b'], 'starred components travel with the file (non-strings dropped)');
 assert.notStrictEqual(imported.id, p1.id);
 assert.strictEqual(imported.name, 'Acme');
 assert.strictEqual(imported.state.stack.length, 2);

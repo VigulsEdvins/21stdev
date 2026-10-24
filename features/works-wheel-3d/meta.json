@@ -23,10 +23,11 @@
   "order": 11,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "editorial",
-    "futuristic"
+    "futuristic",
+    "dark"
   ],
   "industry": [
     "portfolio"
@@ -37,5 +38,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-24",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.13,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

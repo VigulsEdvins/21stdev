@@ -158,6 +158,13 @@
         write(FAV, next);
         return next.includes(slug);
       },
+      /** Adds slugs (e.g. from an imported project file) without duplicating or reordering existing ones. */
+      mergeFavourites(slugs) {
+        const cur = read(FAV);
+        const extra = (Array.isArray(slugs) ? slugs : []).filter(x => typeof x === 'string' && x && x.length <= 120 && !cur.includes(x)).slice(0, 500);
+        if (extra.length) write(FAV, [...cur, ...extra]);
+        return extra.length;
+      },
       addRecent(slug) {
         write(REC, [slug, ...read(REC).filter(s => s !== slug)].slice(0, MAX_RECENTS));
       }

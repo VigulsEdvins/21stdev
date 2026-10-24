@@ -30,7 +30,8 @@
   "status": "stable",
   "weight": "heavy",
   "mood": [
-    "futuristic"
+    "futuristic",
+    "dark"
   ],
   "industry": [
     "media"
@@ -41,5 +42,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.27,
+    "webgl": true,
+    "canvas2d": false
+  }
 }

@@ -28,10 +28,10 @@
   "order": 131,
   "legacyCategory": "Full Templates",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
-    "light",
-    "playful"
+    "playful",
+    "light"
   ],
   "industry": [
     "portfolio",
@@ -43,5 +43,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.9,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

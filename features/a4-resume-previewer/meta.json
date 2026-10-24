@@ -24,7 +24,7 @@
   "order": 33,
   "legacyCategory": "Layouts & Grids",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
     "minimal"
   ],
@@ -37,5 +37,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.43,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

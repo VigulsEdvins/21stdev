@@ -28,9 +28,10 @@
   "order": 220,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "light"
   ],
   "industry": [
     "general"
@@ -41,5 +42,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.64,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

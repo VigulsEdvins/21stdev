@@ -30,7 +30,8 @@
   "weight": "light",
   "mood": [
     "editorial",
-    "luxury"
+    "luxury",
+    "dark"
   ],
   "industry": [
     "media"
@@ -41,5 +42,10 @@
     "license": "own"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.26,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

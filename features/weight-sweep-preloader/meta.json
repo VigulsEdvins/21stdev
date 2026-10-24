@@ -28,10 +28,11 @@
   "order": 249,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "futuristic",
-    "minimal"
+    "minimal",
+    "light"
   ],
   "industry": [
     "general"
@@ -42,5 +43,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.79,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

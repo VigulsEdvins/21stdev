@@ -31,10 +31,9 @@
   "order": 3,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "dark",
-    "light"
+    "dark"
   ],
   "industry": [
     "ecommerce"
@@ -45,5 +44,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-24",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.08,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

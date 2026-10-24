@@ -28,9 +28,10 @@
   "order": 242,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "editorial"
+    "editorial",
+    "dark"
   ],
   "industry": [
     "portfolio"
@@ -41,5 +42,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.14,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

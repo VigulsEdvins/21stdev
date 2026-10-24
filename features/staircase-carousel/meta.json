@@ -27,10 +27,11 @@
   "order": 229,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "futuristic",
-    "minimal"
+    "minimal",
+    "light"
   ],
   "industry": [
     "ecommerce"
@@ -41,5 +42,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.82,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

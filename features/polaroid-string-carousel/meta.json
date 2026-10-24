@@ -25,7 +25,8 @@
   "status": "stable",
   "weight": "medium",
   "mood": [
-    "minimal"
+    "minimal",
+    "dark"
   ],
   "industry": [
     "general"
@@ -109,5 +110,10 @@
       "type": "image",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
     }
-  ]
+  ],
+  "measured": {
+    "luma": 0.18,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

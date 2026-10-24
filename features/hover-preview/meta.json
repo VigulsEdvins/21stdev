@@ -25,9 +25,10 @@
   "order": 47,
   "legacyCategory": "Cursors & Physics",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "dark"
   ],
   "industry": [
     "general"
@@ -38,5 +39,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.04,
+    "webgl": false,
+    "canvas2d": false
+  }
 }

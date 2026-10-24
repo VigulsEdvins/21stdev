@@ -29,8 +29,8 @@
   "status": "stable",
   "weight": "medium",
   "mood": [
-    "dark",
-    "retro"
+    "retro",
+    "dark"
   ],
   "industry": [
     "agency",
@@ -42,5 +42,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.25,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

@@ -20,7 +20,8 @@
     "test:e2e": "node tests/e2e/run-all.js",
     "lint-tokens": "node scripts/lint-tokens.js",
     "suggest-customizable": "node scripts/suggest-customizable.js",
-    "tokenize": "node scripts/tokenize.js"
+    "tokenize": "node scripts/tokenize.js",
+    "refine-meta": "node scripts/refine-meta.js"
   },
   "keywords": [],
   "author": "",

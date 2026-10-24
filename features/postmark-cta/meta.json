@@ -29,7 +29,8 @@
   "weight": "medium",
   "mood": [
     "retro",
-    "minimal"
+    "minimal",
+    "light"
   ],
   "industry": [
     "general"
@@ -71,5 +72,10 @@
       "type": "text",
       "selector": ":scope p.pm-note"
     }
-  ]
+  ],
+  "measured": {
+    "luma": 0.85,
+    "webgl": false,
+    "canvas2d": true
+  }
 }

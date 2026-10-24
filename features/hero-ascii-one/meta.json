@@ -25,10 +25,11 @@
   "order": 42,
   "legacyCategory": "Heroes",
   "status": "stable",
-  "weight": "medium",
+  "weight": "heavy",
   "mood": [
     "futuristic",
-    "retro"
+    "retro",
+    "dark"
   ],
   "industry": [
     "general"
@@ -39,5 +40,10 @@
     "license": "unverified"
   },
   "updatedAt": "2026-10-22",
-  "customizable": []
+  "customizable": [],
+  "measured": {
+    "luma": 0.03,
+    "webgl": true,
+    "canvas2d": true
+  }
 }
