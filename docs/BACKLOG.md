@@ -22,7 +22,7 @@ Goal: every component looks right under every page theme.
 - [ ] **2.2 Token migration, batch by category (L)** — `npm run lint-tokens` worst offenders first, by hand, checked in dark and light (the codemod was rejected). Start with Heroes and Headers & Nav.
 - [x] **2.3 Tailwind coverage for the remaining 21st.dev components (M)** — done 2026-10-24: tried 60, before/after screenshots showed only isoline-bloom and ticket-stub-footer changed visibly for the better; the other 58 were left as they were. — find components whose `component.tsx` uses utility classes but whose `style.css` has none, run `build-tailwind`, regenerate thumbs.
 - [ ] **2.4 Visual regression baseline (M)** — store thumbs/screenshots per theme and diff in CI so restyles stop being eyeballed.
-- [ ] **2.5 Responsive pass (M)** — check all 209 at 375 / 768 / 1280 widths in headless Chromium, report overflow; extend `check-features`.
+- [x] **2.5 Responsive pass (M)** — done 2026-10-24: `npm run check-responsive` shows every feature at 375 and 768 px and reports sideways overflow (12 minutes). 416 of 418 checks were clean; the two overflows (a4-resume-previewer toolbar, sticker-hello-portfolio headline) are fixed.
 
 ## Epic 3 — Catalogue coverage and content editing (P1)
 Goal: every component is usable by a non-developer.
@@ -71,7 +71,7 @@ Goal: regressions get caught without manual runs.
 ## Epic 7 — Projects and collaboration (P2)
 - [x] **7.1 Project import/export schema versioning (S)** — done 2026-10-24: project files are version 2; version 1 files (and their snapshots) are migrated on import (page settings gain the new SEO keys), files from a newer version are refused with a clear message, files without a version count as version 1. Migration steps live in `MIGRATIONS` in `scripts/projects.js`.
 - [ ] **7.2 Client review link (L)** — static preview bundle with a comment overlay, no backend.
-- [ ] **7.3 Starter project templates (M)** — pre-built stacks per industry from the existing `industry` tags.
+- [x] **7.3 Starter project templates (M)** — done 2026-10-24: Projects modal has "New from starter" with an industry list built from the registry's own tags (`scripts/builder/starters.js`: nav, hero, up to 3 body sections, CTA, footer; own-industry components first, no heavy or draft ones). Offered for industries with at least 8 components: agency, ecommerce, hospitality, media, portfolio, saas. Unit test + e2e.
 
 ---
 

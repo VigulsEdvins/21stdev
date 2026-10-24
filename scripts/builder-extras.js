@@ -179,6 +179,7 @@
       const active = activeProject();
       const list = store.list();
       const snaps = active ? store.snapshots(active.id) : [];
+      const starters = root.BuilderStarters ? root.BuilderStarters.listStarters(ctx.getRegistry()) : [];
       modalBody.innerHTML = `
         ${active ? `
         <section class="proj-section">
@@ -193,6 +194,8 @@
           <button type="button" class="builder-btn-primary" id="projSnapshotBtn">Save snapshot</button>
           <button type="button" class="builder-btn-subtle" id="projCopyBtn">Save as new project</button>
           <button type="button" class="builder-btn-subtle" id="projBlankBtn">New blank page</button>
+          ${starters.length ? `<select id="projStarterSelect" class="builder-select" aria-label="Starter page">${starters.map(s => `<option value="${escapeHtml(s.industry)}">${escapeHtml(s.label)} starter (${s.sections.length} sections)</option>`).join('')}</select>
+          <button type="button" class="builder-btn-subtle" id="projStarterBtn">New from starter</button>` : ''}
           <button type="button" class="builder-btn-subtle" id="projExportBtn">Export file</button>
           <button type="button" class="builder-btn-subtle" id="projImportBtn">Import file</button>
           <input type="file" id="projImportInput" accept="application/json,.json" hidden />
@@ -268,6 +271,22 @@
           saveCurrentIntoStore();
           store.create({ name, client: (activeProject() || {}).client || '', state: ctx.serializeState() });
           refreshLabel(); renderProjects(); ctx.showToast(`Created “${name}”`);
+        } catch (e) { ctx.showToast(e.message); }
+      });
+      const starterBtn = q('#projStarterBtn');
+      if (starterBtn) starterBtn.addEventListener('click', () => {
+        const industry = q('#projStarterSelect').value;
+        const starter = (root.BuilderStarters ? root.BuilderStarters.listStarters(ctx.getRegistry()) : []).find(s => s.industry === industry);
+        if (!starter) return;
+        const name = root.prompt(`Name for the new ${starter.label.toLowerCase()} project`, 'New client');
+        if (!name) return;
+        try {
+          saveCurrentIntoStore();
+          const blank = { stack: [], theme: 'midnight-dark', customColors: {}, page: { ...(root.StackManager && root.StackManager.DEFAULT_PAGE) }, viewport: 'desktop' };
+          store.create({ name, state: blank });
+          ctx.applyState(blank);
+          starter.sections.forEach(s => sm.addSection(s.slug, { title: s.title, category: s.category }));
+          refreshLabel(); renderProjects(); ctx.showToast(`Started “${name}” from the ${starter.label.toLowerCase()} starter`);
         } catch (e) { ctx.showToast(e.message); }
       });
       q('#projBlankBtn').addEventListener('click', () => {
