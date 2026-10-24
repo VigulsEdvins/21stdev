@@ -19,7 +19,7 @@ const { startServer, launchBrowser } = require('./lib/browser');
 const ROOT = path.resolve(__dirname, '..');
 const THEMES = { dark: 'midnight-dark', light: 'clean-minimal' };
 const REQUIRED = ['index.html', 'style.css', 'script.js', 'README.md'];
-const KNOWN_EMPTY = new Set(['cloth-peel-reveal', 'noise-dissolve-reveal', 'spotlight-offer-quiz', 'tile-scrollbar']);
+const KNOWN_EMPTY = new Set([]);
 const KNOWN_EXTERNAL = {
   'tilted-grid-hero': ['pub-940ccf6255b54fa799a9b01050e6c227.r2.dev'], // image URLs built at run time
   'hero-ascii-one': ['cdn.jsdelivr.net', 'storage.googleapis.com', 'assets.unicorn.studio'], // live Unicorn Studio embed

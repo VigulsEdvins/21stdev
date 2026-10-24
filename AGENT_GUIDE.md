@@ -72,7 +72,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 | `npm run declare-assets` | For a component that builds file paths at run time: lists the files in `meta.json` `exportAssets` so ZIP exports carry them |
 | `npm run check-features` | Load every feature in headless Chromium; writes `reports/features.json` |
 | `npm run thumbs` | Render `thumbs/<slug>.jpg` previews |
-| `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx` |
+| `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx`. Always run it after editing `component.tsx` or `demo.tsx`: the builder and exports use `script.js`, and `verify` fails when a stamped bundle is older than its sources |
 | `npm run lint-tokens` | Design-token adoption report |
 
 ## 4. Builder Workflow for Client Sites

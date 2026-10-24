@@ -5,15 +5,13 @@
  * whose script.js/style.css are broken or stubbed; the builder and exports use those files.
  *   npm run check-blank [-- --slug a,b] [--concurrency 4]
  * KNOWN_EMPTY lists features that stay empty in headless Chromium (no GPU, or they wait for interaction);
- * confirm any new entry in a real browser first.
+ * confirm any new entry in a real browser first. It is empty now: the four that used to be listed had stale bundles.
  */
 const path = require('path');
 const { startServer, launchBrowser } = require('./lib/browser');
 
 const ROOT = path.resolve(__dirname, '..');
-const KNOWN_EMPTY = new Set([
-  'cloth-peel-reveal', 'noise-dissolve-reveal', 'spotlight-offer-quiz', 'tile-scrollbar'
-]);
+const KNOWN_EMPTY = new Set([]);
 
 async function main() {
   const argv = process.argv.slice(2);

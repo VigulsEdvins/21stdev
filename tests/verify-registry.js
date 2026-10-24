@@ -178,3 +178,17 @@ for (const slug of fs.readdirSync(path.join(ROOT, 'features'))) {
 assert.strictEqual(stubbed.length, 0, `script.js is a stub while the real code is inline in index.html (the builder would render these blank):\n${stubbed.join('\n')}\nMove the inline module script into script.js and its <style> into style.css.`);
 
 console.log('Task 8 no feature depends on an inline bundle in index.html.');
+
+// Test 9: a script.js built by bundle-demo carries the hash of its sources; if component.tsx or demo.tsx changed since,
+// the bundle is stale and the builder and exports would show the old component.
+const { sourceHash } = require('../scripts/bundle-demo.js');
+const staleBundles = [];
+for (const slug of fs.readdirSync(path.join(ROOT, 'features'))) {
+  const dir = path.join(ROOT, 'features', slug);
+  if (!fs.existsSync(path.join(dir, 'script.js')) || !fs.existsSync(path.join(dir, 'demo.tsx')) || !fs.existsSync(path.join(dir, 'component.tsx'))) continue;
+  const head = fs.readFileSync(path.join(dir, 'script.js'), 'utf8').slice(0, 80);
+  const m = head.match(/^\/\*bundle-source:([0-9a-f]+)\*\//);
+  if (m && m[1] !== sourceHash(dir)) staleBundles.push(slug);
+}
+assert.strictEqual(staleBundles.length, 0, `script.js is older than its component.tsx/demo.tsx for: ${staleBundles.join(', ')}. Run: npm run bundle-demo -- --slug <slug>`);
+console.log('Task 9 stamped bundles are up to date.');
