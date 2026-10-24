@@ -44,5 +44,8 @@
     "luma": 0.08,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "nativeWhen": [
+    "light"
+  ]
 }

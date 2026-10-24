@@ -387,14 +387,14 @@
           const img = new root.Image();
           img.onerror = () => reject(new Error('That file is not a usable image'));
           img.onload = () => {
-            const max = 1600;
+            const max = 1400;
             const scale = Math.min(1, max / Math.max(img.width, img.height));
             const canvas = doc.createElement('canvas');
             canvas.width = Math.round(img.width * scale);
             canvas.height = Math.round(img.height * scale);
             canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
             const uri = canvas.toDataURL('image/webp', 0.85);
-            if (uri.length > 1.4 * 1024 * 1024) reject(new Error('Image is too large to store in the browser. Host it and paste the URL instead.'));
+            if (uri.length > 900 * 1024) reject(new Error(`That image is still ${Math.round(uri.length / 1024)} KB after shrinking, too big to keep in the browser. Host it and paste its URL instead.`));
             else resolve(uri);
           };
           img.src = reader.result;
@@ -404,6 +404,18 @@
     }
 
     let renderRetries = 0;
+    /** Rough size of everything this origin keeps in localStorage (UTF-16, so 2 bytes per character). */
+    function storageUsedBytes() {
+      try {
+        let n = 0;
+        for (let i = 0; i < safeStorage.length; i++) {
+          const k = safeStorage.key(i);
+          n += (k.length + (safeStorage.getItem(k) || '').length) * 2;
+        }
+        return n;
+      } catch (_) { return 0; }
+    }
+
     function renderContentFields() {
       if (!fieldsEl) return;
       populateSectionSelect();
@@ -440,7 +452,7 @@
             <span>${escapeHtml(f.label)}${ov ? ' <em class="content-edited-dot" title="Edited">●</em>' : ''}</span>
             ${long ? `<textarea rows="3"></textarea>` : `<input type="${f.type === 'image' || f.type === 'link' ? 'text' : f.type === 'color' ? 'color' : 'text'}" autocomplete="off" />`}
           </label>
-          ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}" /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div>` : ''}
+          ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}" /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above.</p>` : ''}
           ${ov ? '<button type="button" class="content-reset">Reset to original</button>' : ''}`;
         const input = wrap.querySelector('textarea, input:not([type=file])');
         input.value = isData ? '(uploaded image)' : value;
@@ -461,7 +473,10 @@
             try {
               const uri = await readImageAsDataUri(fileInput.files[0]);
               sm.setSectionOverride(section.id, f.id, uri, { selector: f.selector, type: 'image' });
-              ctx.showToast('Image replaced');
+              const used = storageUsedBytes();
+              ctx.showToast(used > 3.5 * 1024 * 1024
+                ? `Image replaced, but browser storage is ${(used / 1048576).toFixed(1)} MB of about 5 MB. Export the project file and host big photos instead.`
+                : 'Image replaced', used > 3.5 * 1024 * 1024 ? 6000 : undefined);
               setTimeout(renderContentFields, 50);
             } catch (e) { ctx.showToast(e.message); }
           });

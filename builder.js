@@ -31,6 +31,14 @@
     const featureCache = new Map();
     const registry = Array.isArray(window.FEATURE_REGISTRY) ? window.FEATURE_REGISTRY : [];
 
+    // Components that keep their own palette under some page themes (meta.json "nativeWhen")
+    const nativeMap = {};
+    const licenseMap = {};
+    registry.forEach(feature => {
+      if (Array.isArray(feature.nativeWhen) && feature.nativeWhen.length) nativeMap[feature.slug] = feature.nativeWhen;
+      if (feature.origin && feature.origin.license) licenseMap[feature.slug] = feature.origin.license;
+    });
+
     registry.forEach(feature => {
       featuresMap.set(feature.slug, feature);
       if (feature.files && (feature.files.html || feature.files.css || feature.files.js)) {
@@ -1033,7 +1041,7 @@
         latestState.stack,
         themeConfig,
         featuresData,
-        { suppressPreloader, page: latestState.page }
+        { suppressPreloader, page: latestState.page, nativeMap }
       );
 
       lastPreviewStructureKey = structureKey;
@@ -1363,6 +1371,7 @@
               <div style="display:flex;align-items:center;gap:6px;">
                 ${scopeBadgeHtml}
                 <span class="element-card-badge ${badgeClass}">${escapeHtml(normCat)}</span>
+                ${(!item.isWidget && item.origin && item.origin.license === 'unverified') ? '<span class="element-license-badge" title="The source licence of this component has not been verified. Check it before using it for a paying client.">Licence?</span>' : ''}
               </div>
               <div class="element-card-actions">
                 <button type="button" class="element-icon-btn element-fav-btn${catalogLib.isFavourite(item.slug) ? ' is-on' : ''}" aria-pressed="${catalogLib.isFavourite(item.slug)}" aria-label="Favourite ${escapeHtml(title)}" title="Add to favourites">&#9733;</button>
@@ -1863,7 +1872,7 @@
 
     // 9. Export modal & project ZIP generator (scripts/builder/export-panel.js)
     const exportController = (window.BuilderExport || require('./scripts/builder/export-panel.js')).createExportController({
-      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer
+      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, licenseMap
     });
     const { prepareExportData, setActiveExportTab, setActiveCodeSubtab, openExportModal, closeExportModal, handleDownloadZip } = exportController;
 

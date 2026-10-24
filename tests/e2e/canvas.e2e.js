@@ -28,8 +28,21 @@ async function main() {
 
   const widget = frame.locator('.canvas-element.is-selected').first();
   await widget.dblclick();
+  // the toolbar must not cover the widget it edits
+  await page.waitForFunction(() => getComputedStyle(document.getElementById('elementEditToolbar')).display !== 'none');
   await page.waitForFunction(() => getComputedStyle(document.getElementById('elementEditToolbar')).display !== 'none');
   step('double-click opens the edit toolbar');
+  const overlap = await page.evaluate(() => {
+    const tb = document.getElementById('elementEditToolbar').getBoundingClientRect();
+    const fr = document.querySelector('iframe').getBoundingClientRect();
+    const w = document.querySelector('iframe').contentDocument.querySelector('.canvas-element.is-selected').getBoundingClientRect();
+    const wl = fr.left + w.left, wt = fr.top + w.top, wr = fr.left + w.right, wb = fr.top + w.bottom;
+    const ix = Math.max(0, Math.min(tb.right, wr) - Math.max(tb.left, wl));
+    const iy = Math.max(0, Math.min(tb.bottom, wb) - Math.max(tb.top, wt));
+    return ix * iy;
+  });
+  assert.strictEqual(overlap, 0, 'the edit toolbar must not cover the widget it edits (overlap ' + overlap + 'px²)');
+  step('the toolbar does not cover the widget');
 
   await page.fill('#toolbarBtnText', 'Book a call');
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.body.innerText.includes('Book a call'), null, { timeout: 8000 });

@@ -3178,3 +3178,15 @@ select option {
 .widgets-catalog-header { padding: 14px 14px 6px; }
 .widgets-header-title { font-size: 14px; font-weight: 600; color: var(--text-main, #fafafa); }
 .widgets-header-subtitle { margin-top: 2px; font-size: 11px; color: var(--text-dim, #71717a); line-height: 1.4; }
+
+.element-license-badge {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  cursor: help;
+}

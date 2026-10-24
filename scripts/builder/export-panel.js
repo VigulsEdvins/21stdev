@@ -8,7 +8,7 @@
   const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function createExportController(ctx) {
-    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer } = ctx;
+    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, licenseMap } = ctx;
 
     // 9. Export Modal & Project ZIP Generator Controller
     const exportModal = document.getElementById('exportModal');
@@ -145,11 +145,11 @@
       const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
 
       if (window.Assembler && typeof window.Assembler.generateExportBundle === 'function') {
-        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page });
+        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, licenseMap });
       }
 
       if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
-        currentSingleHtml = window.Assembler.generateSingleFileBundle(currentStack, themeConfig, featuresData, { page: state.page });
+        currentSingleHtml = window.Assembler.generateSingleFileBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap });
       } else if (window.Assembler && typeof window.Assembler.assemblePreviewDocument === 'function') {
         currentSingleHtml = window.Assembler.assemblePreviewDocument(currentStack, themeConfig, featuresData);
       }

@@ -116,15 +116,27 @@
         const elRect = el.getBoundingClientRect();
         const frameRect = previewFrame.getBoundingClientRect();
 
-        const left = frameRect.left + elRect.left + (elRect.width / 2) - 140;
-        let top = frameRect.top + elRect.top - 240;
-
-        if (top < 70) {
-          top = frameRect.top + elRect.bottom + 20;
-        }
-
-        const clampedLeft = Math.max(10, Math.min(window.innerWidth - 300, left));
-        const clampedTop = Math.max(70, Math.min(window.innerHeight - 260, top));
+        // Place the toolbar where it does not cover the widget being edited: above, below, then to a side
+        const tbW = elementEditToolbar.offsetWidth || 280;
+        const tbH = elementEditToolbar.offsetHeight || 240;
+        const gap = 12;
+        const elTop = frameRect.top + elRect.top;
+        const elBottom = frameRect.top + elRect.bottom;
+        const elLeft = frameRect.left + elRect.left;
+        const elRight = frameRect.left + elRect.right;
+        const minTop = 70;
+        const maxBottom = window.innerHeight - 10;
+        const centred = elLeft + elRect.width / 2 - tbW / 2;
+        const fits = (l, t) => l >= 10 && t >= minTop && l + tbW <= window.innerWidth - 10 && t + tbH <= maxBottom;
+        const options = [
+          [centred, elTop - tbH - gap],
+          [centred, elBottom + gap],
+          [elRight + gap, elTop],
+          [elLeft - tbW - gap, elTop]
+        ];
+        const chosen = options.find(([l, t]) => fits(l, t)) || options[1];
+        const clampedLeft = Math.max(10, Math.min(window.innerWidth - tbW - 10, chosen[0]));
+        const clampedTop = Math.max(minTop, Math.min(maxBottom - tbH, chosen[1]));
 
         elementEditToolbar.style.left = `${clampedLeft}px`;
         elementEditToolbar.style.top = `${clampedTop}px`;

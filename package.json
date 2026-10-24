@@ -20,7 +20,9 @@
     "test:e2e": "node tests/e2e/run-all.js",
     "lint-tokens": "node scripts/lint-tokens.js",
     "suggest-customizable": "node scripts/suggest-customizable.js",
-    "refine-meta": "node scripts/refine-meta.js"
+    "refine-meta": "node scripts/refine-meta.js",
+    "audit-themes": "node scripts/audit-themes.js",
+    "set-license": "node scripts/set-license.js"
   },
   "keywords": [],
   "author": "",

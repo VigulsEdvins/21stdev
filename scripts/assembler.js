@@ -1909,11 +1909,18 @@ function applyThemeToDocument(doc, themeConfig) {
 
   // 3. Update normal page sections
   const sections = doc.querySelectorAll('.page-section:not(.is-preloader)');
+  const pagePol = isDark ? 'dark' : 'light';
+  const isNativeEl = (el) => {
+    const host = el && typeof el.closest === 'function' ? el.closest('.page-section[data-native-for]') : null;
+    return !!host && (host.getAttribute('data-native-for') || '').split(' ').includes(pagePol);
+  };
   sections.forEach(s => {
-    s.style.backgroundColor = theme.bg;
-    s.style.color = theme.text;
+    const native = isNativeEl(s);
+    // Native sections keep their own palette (set by the scoped CSS), so no inline theme colours
+    s.style.backgroundColor = native ? '' : theme.bg;
+    s.style.color = native ? '' : theme.text;
     if (typeof s.setAttribute === 'function') {
-      s.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      s.setAttribute('data-theme', native ? (isDark ? 'light' : 'dark') : pagePol);
     }
   });
 
@@ -1922,7 +1929,7 @@ function applyThemeToDocument(doc, themeConfig) {
   const themedElements = doc.querySelectorAll('[data-theme]');
   themedElements.forEach(el => {
     if (typeof el.setAttribute === 'function') {
-      el.setAttribute('data-theme', themeMode);
+      el.setAttribute('data-theme', isNativeEl(el) ? (isDark ? 'light' : 'dark') : themeMode);
     }
   });
 
@@ -1977,7 +1984,9 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
       styleAttr = ' style="display: none !important; pointer-events: none !important;"';
     }
     const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${isDark ? 'dark' : 'light'}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
+    const nativeList = nativePolarities(options.nativeMap, slug);
+    const nativeAttr = nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '';
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -2065,6 +2074,7 @@ ${allScopedStyles}
 
 ${OVERLAY_ELEMENT_CSS}
 ${pageHead.css}
+${renderNativePaletteCss(sections, options.nativeMap)}
   </style>
 </head>
 <body data-theme="${isDark ? 'dark' : 'light'}">
@@ -2137,13 +2147,19 @@ ${allHtml}
           document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
           document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
           if (document.body) document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          var pagePol = isDark ? 'dark' : 'light';
+          var isNativeEl = function (el) {
+            var host = el.closest ? el.closest('.page-section[data-native-for]') : null;
+            return !!host && (host.getAttribute('data-native-for') || '').split(' ').indexOf(pagePol) !== -1;
+          };
           document.querySelectorAll('.page-section:not(.is-preloader)').forEach(function (s) {
-            if (t.bg) s.style.backgroundColor = t.bg;
-            if (t.text) s.style.color = t.text;
-            s.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            var native = isNativeEl(s);
+            s.style.backgroundColor = native ? '' : (t.bg || '');
+            s.style.color = native ? '' : (t.text || '');
+            s.setAttribute('data-theme', native ? (isDark ? 'light' : 'dark') : pagePol);
           });
           document.querySelectorAll('[data-theme]').forEach(function (el) {
-            el.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            el.setAttribute('data-theme', isNativeEl(el) ? (isDark ? 'light' : 'dark') : pagePol);
           });
           try {
             window.dispatchEvent(new CustomEvent('themechange', { detail: { isDark: isDark, theme: t } }));
@@ -2308,6 +2324,42 @@ window.__setOverrides(${JSON.stringify(collectOverrides(sections)).replace(/</g,
 }
 
 /**
+ * "Native palette" sections. Some components are designed for one polarity (a dark footer, a cream
+ * editorial grid). Forcing the page theme onto them leaves unreadable text, so a component can declare
+ * `nativeWhen: ["light"]` in meta.json: when the page theme is light, that section keeps rendering with
+ * the dark preset (and vice versa) instead of following the page.
+ * `nativeMap` is { slug: ['light'] | ['dark'] | ['light','dark'] }.
+ */
+const NATIVE_PRESET_FOR_PAGE = { light: 'midnight-dark', dark: 'clean-minimal' };
+
+function nativePolarities(nativeMap, slug) {
+  const v = nativeMap && nativeMap[slug];
+  return Array.isArray(v) ? v.filter(p => p === 'light' || p === 'dark') : [];
+}
+
+/** Value for a section's data-theme attribute: the opposite polarity when it is native under the page theme. */
+function sectionThemeAttr(pageIsDark, nativeList) {
+  const pagePol = pageIsDark ? 'dark' : 'light';
+  if (nativeList.includes(pagePol)) return pageIsDark ? 'light' : 'dark';
+  return pagePol;
+}
+
+/** CSS that re-scopes the theme variables of native sections to their own palette. */
+function renderNativePaletteCss(sections, nativeMap) {
+  const blocks = [];
+  (Array.isArray(sections) ? sections : []).forEach((sec, index) => {
+    const id = sec.id || `sec-${index + 1}`;
+    nativePolarities(nativeMap, sec.slug).forEach(pol => {
+      const local = THEME_PRESETS[NATIVE_PRESET_FOR_PAGE[pol]];
+      const m = generateUniversalThemeStyles(local).match(/:root\s*\{([\s\S]*?)\n    \}/);
+      if (!m) return;
+      blocks.push(`:root[data-theme="${pol}"] .page-section#${id}[data-native-for~="${pol}"] {${m[1]}\n      background-color: ${local.bg};\n      color: ${local.text};\n      color-scheme: ${pol === 'light' ? 'dark' : 'light'};\n    }`);
+    });
+  });
+  return blocks.length ? `/* Native-palette sections */\n${blocks.join('\n')}\n` : '';
+}
+
+/**
  * Page-level settings (title, description, favicon, fonts) -> head tags and CSS.
  * @param {object} [page]
  * @param {string} [fallbackTitle]
@@ -2439,7 +2491,9 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${isDark ? 'dark' : 'light'}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    const nativeList = nativePolarities(options.nativeMap, slug);
+    const nativeAttr = nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '';
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -2524,7 +2578,8 @@ ${generateUniversalThemeStyles(theme)}
 ${allScopedStyles || '/* No custom section styles */'}
 
 ${OVERLAY_ELEMENT_CSS}
-${pageHead.css ? `\n/* Page fonts */\n${pageHead.css}\n` : ''}`;
+${pageHead.css ? `\n/* Page fonts */\n${pageHead.css}\n` : ''}
+${renderNativePaletteCss(safeSections, options.nativeMap)}`;
 
   // 3. script.js
   const scriptJs = `/**
@@ -2627,6 +2682,7 @@ window.__setOverrides(${JSON.stringify(collectOverrides(safeSections), null, 2)}
 `;
 
   // 4. README.md
+  const unverifiedLicences = sectionInfoList.filter(sec => (options.licenseMap || {})[sec.slug] === 'unverified');
   const readmeMd = `# Assembled Web Page Project
 
 This standalone web project was created with the **Page Preview Builder**.
@@ -2636,7 +2692,13 @@ It bundles your selected components into a clean, editable, and ready-to-run pac
 
 ${sectionInfoList.map((s, idx) => `${idx + 1}. **${s.title}** (\`${s.slug}\`) — Container: \`#${s.id}\``).join('\n') || '- No sections assembled yet.'}
 
-## Page Settings
+${unverifiedLicences.length ? `## Licences to check before delivery
+
+These components come from sources whose licence has not been verified in the vault. Confirm you may ship them to a paying client, or replace them:
+
+${unverifiedLicences.map(s => `- ${s.title} (\`${s.slug}\`)`).join('\n')}
+
+` : ''}## Page Settings
 
 - **Title:** ${pageHead.title}
 - **Language:** \`${pageHead.lang}\`
@@ -2715,7 +2777,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page) });
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap });
   return doc
     .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }
@@ -2917,6 +2979,7 @@ if (typeof module !== 'undefined' && module.exports) {
     generateExportBundle,
     generateSingleFileBundle,
     renderPageHead,
+    renderNativePaletteCss,
     collectOverrides,
     computeSectionSizingStyles,
     findLocalAssetUrls,
@@ -2942,6 +3005,7 @@ if (typeof window !== 'undefined') {
     generateExportBundle,
     generateSingleFileBundle,
     renderPageHead,
+    renderNativePaletteCss,
     collectOverrides,
     computeSectionSizingStyles,
     findLocalAssetUrls,
