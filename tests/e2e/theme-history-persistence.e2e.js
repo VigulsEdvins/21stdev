@@ -58,6 +58,18 @@ async function main() {
   assert.strictEqual(await page.inputValue('#themePresetSelect'), 'clean-minimal');
   step('reload restores the sections and the theme');
 
+  // active sections list: duplicate, move, remove
+  await page.click('#tabSectionsBtn');
+  await page.waitForSelector('#pageStackList .stack-item-card');
+  const listed = await count();
+  await page.locator('#pageStackList .btn-duplicate:not([disabled])').first().click();
+  await page.waitForFunction(n => Number(document.getElementById('stackCountBadge').textContent) === n + 1, listed);
+  await page.locator('#pageStackList .btn-move-up:not([disabled])').nth(1).click();
+  await page.waitForFunction(n => Number(document.getElementById('stackCountBadge').textContent) === n + 1, listed);
+  await page.locator('#pageStackList .btn-remove:not([disabled])').last().click();
+  await page.waitForFunction(n => Number(document.getElementById('stackCountBadge').textContent) === n, listed);
+  step('sections list duplicates, moves and removes a section');
+
   // component drawer: browse, search and add
   await page.click('#tabSectionsBtn');
   await page.click('#openDrawerBtn');
