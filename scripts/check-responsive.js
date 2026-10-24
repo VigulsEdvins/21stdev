@@ -54,10 +54,7 @@ async function main() {
           }
           return { w, over, widest };
         });
-        let r = await measure();
-        // A real overflow stays put. One that is gone a moment later was an animation or a late font swap caught
-        // mid-way on a slow machine (the CI runner), so it is measured again before it is reported.
-        if (r.over > 1) { await page.waitForTimeout(2000); r = await measure(); }
+        const r = await measure();
         if (r.over > 1) found.push({ slug, mode, over: r.over, widest: r.widest });
       } catch (e) {
         found.push({ slug, mode, over: -1, widest: 'could not render: ' + e.message.split('\n')[0] });

@@ -454,8 +454,8 @@ const BPT_CSS = `
 .bpt-avail:hover{background:var(--bpt-raised);color:var(--bpt-ink)}
 .bpt-dot{position:relative;width:9px;height:9px;border-radius:999px;background:var(--bpt-status);box-shadow:0 0 0 3px color-mix(in srgb,var(--bpt-status) 22%,transparent)}
 .bpt-dot::after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--bpt-status);animation:bpt-ping 2.2s cubic-bezier(0,0,.2,1) infinite}
-.bpt-tip{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,4px);white-space:nowrap;padding:6px 10px;border-radius:8px;background:var(--bpt-inverse);color:var(--bpt-on-inverse);font-size:12.5px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
-.bpt-avail:hover .bpt-tip,.bpt-avail:focus-visible .bpt-tip{opacity:1;transform:translate(-50%,0)}
+.bpt-tip{position:absolute;right:0;bottom:calc(100% + 10px);transform:translateY(4px);width:max-content;max-width:min(260px,calc(100vw - 48px));padding:6px 10px;border-radius:8px;background:var(--bpt-inverse);color:var(--bpt-on-inverse);font-size:12.5px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.bpt-avail:hover .bpt-tip,.bpt-avail:focus-visible .bpt-tip{opacity:1;transform:none}
 
 .bpt-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:64px}
 .bpt-card{position:relative;min-height:236px;background:var(--bpt-card);border:1px solid var(--bpt-line);border-radius:14px;box-shadow:var(--bpt-shadow);overflow:hidden;animation:bpt-rise .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms);transition:background-color .35s,border-color .35s}

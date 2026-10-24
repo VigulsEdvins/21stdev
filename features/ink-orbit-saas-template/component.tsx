@@ -523,14 +523,14 @@ const NF_CSS = `
 /* nav */
 .nf-nav{position:sticky;top:10px;z-index:30}
 .nf-navbar{display:flex;align-items:center;gap:16px;height:58px;padding:0 14px 0 18px;background:color-mix(in srgb,var(--nf-paper) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--nf-line);box-shadow:var(--nf-shadow);transition:background-color .45s,border-color .45s}
-.nf-brand{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+.nf-brand{display:inline-flex;align-items:center;gap:9px;min-width:0;overflow:hidden;font-weight:600;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
 .nf-brand svg{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 .nf-brand:hover svg{transform:rotate(-180deg)}
 .nf-links{position:relative;display:none;align-items:center;gap:2px;margin:0 auto}
 .nf-link{position:relative;padding:8px 12px;font-size:13.5px;color:var(--nf-soft);transition:color .2s}
 .nf-link:hover,.nf-link[aria-current="true"]{color:var(--nf-ink)}
 .nf-caret{position:absolute;bottom:2px;left:0;width:10px;height:6px;color:var(--nf-ink);transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .3s}
-.nf-nav-end{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nf-nav-end{display:flex;align-items:center;flex:none;gap:8px;margin-left:auto}
 .nf-icon-btn{display:inline-grid;place-items:center;width:34px;height:34px;color:var(--nf-muted);border:1px solid transparent;transition:color .2s,border-color .2s}
 .nf-icon-btn:hover{color:var(--nf-ink);border-color:var(--nf-line)}
 .nf-menu-btn{display:inline-grid}
