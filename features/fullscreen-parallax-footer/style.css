@@ -15,8 +15,8 @@ body, html {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: #141413;
-  color: #f4f1ea;
+  background: var(--bg, #141413);
+  color: var(--text, #f4f1ea);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,7 +32,7 @@ body, html {
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(244, 241, 234, 0.55);
+  color: color-mix(in srgb, var(--text, #f4f1ea) 55%, transparent);
   z-index: 3;
 }
 
@@ -47,14 +47,14 @@ body, html {
   grid-template-columns: 48px 1fr auto;
   align-items: baseline;
   padding: 18px 0;
-  border-top: 1px solid rgba(244, 241, 234, 0.14);
-  color: #f4f1ea;
+  border-top: 1px solid color-mix(in srgb, var(--text, #f4f1ea) 14%, transparent);
+  color: var(--text, #f4f1ea);
   text-decoration: none;
   transition: padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
 }
 
 .footer-link:last-child {
-  border-bottom: 1px solid rgba(244, 241, 234, 0.14);
+  border-bottom: 1px solid color-mix(in srgb, var(--text, #f4f1ea) 14%, transparent);
 }
 
 .footer-nav:hover .footer-link {
@@ -69,7 +69,7 @@ body, html {
 .link-index {
   font-size: 11px;
   font-family: monospace;
-  color: rgba(244, 241, 234, 0.5);
+  color: color-mix(in srgb, var(--text, #f4f1ea) 50%, transparent);
 }
 
 .link-label {
@@ -93,9 +93,9 @@ body, html {
   left: 0;
   width: 240px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--text, #f4f1ea) 8%, transparent);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid color-mix(in srgb, var(--text, #f4f1ea) 18%, transparent);
   border-radius: 8px;
   pointer-events: none;
   opacity: 0;
@@ -119,5 +119,5 @@ body, html {
 .floating-caption {
   font-size: 11px;
   letter-spacing: 0.06em;
-  color: #f4f1ea;
+  color: var(--text, #f4f1ea);
 }

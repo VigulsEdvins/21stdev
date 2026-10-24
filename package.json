@@ -31,6 +31,7 @@
     "check-responsive": "node scripts/check-responsive.js",
     "check-starters": "node scripts/check-starters.js",
     "ci": "node scripts/ci.js",
+    "rank-token-work": "node scripts/rank-token-work.js",
     "measure-weight": "node scripts/measure-weight.js",
     "find-duplicates": "node scripts/find-duplicates.js",
     "check-cross-browser": "node scripts/check-cross-browser.js",

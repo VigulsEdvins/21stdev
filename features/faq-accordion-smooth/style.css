@@ -7,8 +7,8 @@
 html, body {
   width: 100%;
   min-height: 100%;
-  background: #09090b;
-  color: #fafafa;
+  background: var(--bg, #09090b);
+  color: var(--text, #fafafa);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
 }
 
@@ -27,7 +27,7 @@ html, body {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #ff3700;
+  color: var(--accent, #ff3700);
 }
 
 .faq-header h2 {
@@ -40,11 +40,11 @@ html, body {
 .faq-list {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid color-mix(in srgb, var(--text, #fafafa) 10%, transparent);
 }
 
 .faq-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--text, #fafafa) 10%, transparent);
 }
 
 .faq-trigger {
@@ -52,7 +52,7 @@ html, body {
   appearance: none;
   background: none;
   border: none;
-  color: #fafafa;
+  color: var(--text, #fafafa);
   padding: 20px 4px;
   display: flex;
   align-items: center;
@@ -66,7 +66,7 @@ html, body {
 }
 
 .faq-trigger:hover {
-  color: #ff3700;
+  color: var(--accent, #ff3700);
 }
 
 .faq-trigger__icon {
@@ -78,7 +78,7 @@ html, body {
 
 .faq-trigger[aria-expanded="true"] .faq-trigger__icon {
   transform: rotate(45deg);
-  color: #ff3700;
+  color: var(--accent, #ff3700);
 }
 
 .faq-panel {
@@ -99,5 +99,5 @@ html, body {
   padding: 0 4px 20px;
   font-size: 14px;
   line-height: 1.65;
-  color: rgba(250, 250, 250, 0.65);
+  color: color-mix(in srgb, var(--text, #fafafa) 65%, transparent);
 }
