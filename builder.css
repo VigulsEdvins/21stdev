@@ -426,7 +426,7 @@ select option {
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  background: #a855f7;
+  background: #7e22ce; /* 7:1 against white (was #a855f7, 3.9:1) */
   color: #ffffff;
   padding: 1px 5px;
   border-radius: 3px;
@@ -1848,6 +1848,7 @@ select option {
 }
 
 .url-text {
+  color: #a1a1ad; /* AA on the browser-bar background (was #71717a, 4.0:1) */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1856,7 +1857,7 @@ select option {
 .browser-dimension-label {
   font-size: 11px;
   font-family: monospace;
-  color: var(--text-dim, #71717a);
+  color: var(--text-dim-aa, #a1a1ad);
 }
 
 /* Live Preview Iframe */

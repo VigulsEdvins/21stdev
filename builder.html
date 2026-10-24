@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>21st.local — Visual Page Builder &amp; Preview Studio</title>
+  <meta name="description" content="Assemble client web pages from a library of ready-made sections, edit their content, and export a ZIP, a single HTML file or a React project." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="builder.css" />
 </head>
@@ -25,7 +26,7 @@
       </a>
 
       <!-- Workspace Navigation Tabs -->
-      <nav class="mode-switcher" role="group" aria-label="Workspace Mode">
+      <nav class="mode-switcher" aria-label="Workspace Mode">
         <a href="index.html" class="mode-btn" id="navCatalogLink" title="21st.dev Catalog Grid Mode">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="7" height="7" rx="1"></rect>
@@ -73,7 +74,7 @@
             </svg>
             <span>Theme:</span>
           </label>
-          <select id="themePresetSelect" class="builder-select">
+          <select id="themePresetSelect" class="builder-select" aria-label="Page theme">
             <option value="midnight-dark" selected>Midnight Dark</option>
             <option value="cyber-glow">Cyber Glow</option>
             <option value="clean-minimal">Clean Minimal</option>
