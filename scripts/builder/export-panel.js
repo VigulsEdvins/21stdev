@@ -8,7 +8,7 @@
   const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function createExportController(ctx) {
-    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap, exportAssets = {} } = ctx;
+    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap, exportAssets = {}, weightMap = {} } = ctx;
 
     // 9. Export Modal & Project ZIP Generator Controller
     const exportModal = document.getElementById('exportModal');
@@ -159,7 +159,8 @@
       return { bundle: currentExportBundle, singleHtml: currentSingleHtml, assets: currentExportAssets };
     }
 
-    const assetBundler = (window.ExportAssets || require('./export-assets.js')).createAssetBundler({
+    const ExportAssetsApi = window.ExportAssets || require('./export-assets.js');
+    const assetBundler = ExportAssetsApi.createAssetBundler({
       assembler: window.Assembler,
       fetchFn: (url) => fetch(url)
     });
@@ -175,6 +176,10 @@
       const extraAssets = Array.from(new Set(stackManager.getStack().flatMap(s => exportAssets[s.slug] || [])));
       const result = await assetBundler.bundle({ files: currentExportBundle, singleHtml: currentSingleHtml, extraAssets });
       currentExportAssets = result.assets;
+      if (currentExportBundle && typeof currentExportBundle['README.md'] === 'string' && ExportAssetsApi.renderWeightReport) {
+        const sections = stackManager.getStack().map(s => ({ slug: s.slug, title: (featuresData[s.slug] && featuresData[s.slug].title) || s.slug }));
+        currentExportBundle['README.md'] += '\n' + ExportAssetsApi.renderWeightReport({ files: currentExportBundle, assets: result.assets, sections, weightMap });
+      }
       currentSingleHtml = result.singleHtml;
       if (result.missing.length) {
         console.warn('Export: assets not found and left as-is:', result.missing);

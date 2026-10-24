@@ -34,11 +34,13 @@
     // Components that keep their own palette under some page themes (meta.json "nativeWhen")
     const nativeMap = {};
     const licenseMap = {};
+    const weightMap = {};
     const exportAssets = {}; // files a component loads at run time (paths built in code), declared in meta.json "exportAssets"
     const ownPalette = {}; // components whose own colours must not be overridden by the theme engine's heading/text rules
     registry.forEach(feature => {
       if (Array.isArray(feature.nativeWhen) && feature.nativeWhen.length) nativeMap[feature.slug] = feature.nativeWhen;
       if (feature.ownPalette) ownPalette[feature.slug] = true;
+      if (feature.weight) weightMap[feature.slug] = feature.weight;
       if (Array.isArray(feature.exportAssets) && feature.exportAssets.length) exportAssets[feature.slug] = feature.exportAssets;
       if (feature.origin && feature.origin.license) licenseMap[feature.slug] = feature.origin.license;
     });
@@ -420,7 +422,7 @@
 
     // 9. Export modal & project ZIP generator (scripts/builder/export-panel.js)
     const exportController = (window.BuilderExport || require('./scripts/builder/export-panel.js')).createExportController({
-      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap, exportAssets
+      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap, exportAssets, weightMap
     });
     const { prepareExportData, setActiveExportTab, setActiveCodeSubtab, openExportModal, closeExportModal, handleDownloadZip } = exportController;
 

@@ -1,6 +1,6 @@
 const assert = require('assert');
 const assembler = require('../scripts/assembler.js');
-const { createAssetBundler, bytesToDataUri } = require('../scripts/builder/export-assets.js');
+const { createAssetBundler, bytesToDataUri, renderWeightReport } = require('../scripts/builder/export-assets.js');
 
 (async () => {
   console.log('Testing export asset bundler...');
@@ -72,6 +72,17 @@ const { createAssetBundler, bytesToDataUri } = require('../scripts/builder/expor
 
   const none = await bundler.bundle({ files: { 'index.html': '<p>hi</p>' }, singleHtml: '<p>hi</p>' });
   assert.deepStrictEqual(none.assets, {});
+
+  const report = renderWeightReport({
+    files: { 'index.html': 'x'.repeat(2000), 'style.css': 'y'.repeat(1000), 'script.js': 'z'.repeat(1000) },
+    assets: { 'assets/library/big.jpg': new Uint8Array(3e6), 'assets/library/small.png': new Uint8Array(500) },
+    sections: [{ slug: 'a', title: 'Alpha' }, { slug: 'b', title: 'Beta' }], weightMap: { a: 'heavy', b: 'light' }
+  });
+  assert(report.includes('## Page weight') && report.includes('Code (HTML, CSS, JS): 4 KB'), 'code size');
+  assert(report.includes('`assets/library/big.jpg` (3.0 MB)'), 'largest file listed first');
+  assert(report.includes('Heavy sections') && report.includes('Alpha') && !report.includes('Beta,'), 'heavy sections named');
+  assert(!report.includes('over 8 MB'), 'no warning under 8 MB');
+  assert(renderWeightReport({ files: {}, assets: { 'a.jpg': new Uint8Array(9e6) }, sections: [], weightMap: {} }).includes('over 8 MB'), 'warning over 8 MB');
 
   assert.strictEqual(bytesToDataUri(new Uint8Array([72, 105]), 'text/plain'), 'data:text/plain;base64,SGk=');
   console.log('✅ Export asset bundler tests passed!');

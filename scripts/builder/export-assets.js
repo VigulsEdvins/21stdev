@@ -132,7 +132,25 @@
     return { bundle, fetchLocalAsset };
   }
 
-  const api = { createAssetBundler, bytesToDataUri, ASSET_MIME_TYPES };
+  /**
+   * Markdown "Page weight" section for the export README: what the visitor downloads and which sections are heavy.
+   * @param {{ files: Record<string,string>, assets: Record<string, Uint8Array>, sections: {slug:string,title?:string}[], weightMap: Record<string,string> }} input
+   */
+  function renderWeightReport({ files, assets, sections, weightMap = {} }) {
+    const size = (s) => (typeof s === 'string' ? new TextEncoder().encode(s).length : 0);
+    const kb = (n) => (n >= 1e6 ? (n / 1e6).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1000)) + ' KB');
+    const code = ['index.html', 'style.css', 'script.js'].reduce((n, k) => n + size(files[k]), 0);
+    const list = Object.entries(assets || {}).map(([name, bytes]) => ({ name, n: bytes.length })).sort((a, b) => b.n - a.n);
+    const assetTotal = list.reduce((n, a) => n + a.n, 0);
+    const heavy = sections.filter(s => weightMap[s.slug] === 'heavy');
+    const lines = ['## Page weight', '', `- Code (HTML, CSS, JS): ${kb(code)}`, `- Images, video and fonts: ${kb(assetTotal)} in ${list.length} file${list.length === 1 ? '' : 's'}`, `- Total download: about ${kb(code + assetTotal)} before compression`];
+    if (list.length) lines.push('', 'Largest files:', '', ...list.slice(0, 5).map(a => `- \`${a.name}\` (${kb(a.n)})`));
+    if (heavy.length) lines.push('', `Heavy sections (WebGL or long-running animation; consider fewer of these on one page, and test on a phone): ${heavy.map(s => s.title || s.slug).join(', ')}.`);
+    if (assetTotal + code > 8e6) lines.push('', '**This page is over 8 MB. Compress the largest files above before launch.**');
+    return lines.join('\n') + '\n';
+  }
+
+  const api = { createAssetBundler, bytesToDataUri, renderWeightReport, ASSET_MIME_TYPES };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.ExportAssets = api;
 })();
