@@ -30,6 +30,8 @@
     "check-visual": "node scripts/check-visual.js",
     "check-responsive": "node scripts/check-responsive.js",
     "check-starters": "node scripts/check-starters.js",
+    "ci": "node scripts/ci.js",
+    "find-unused-assets": "node scripts/find-unused-assets.js",
     "check-code-safety": "node scripts/check-code-safety.js",
     "declare-assets": "node scripts/declare-assets.js",
     "localize-remote": "node scripts/localize-remote.js"

@@ -466,6 +466,8 @@
       } catch (_) { return 0; }
     }
 
+    const customizableCache = {}; // slug -> named fields from meta.json (null while loading)
+
     function renderContentFields() {
       if (!fieldsEl) return;
       populateSectionSelect();
@@ -482,7 +484,22 @@
       }
       renderRetries = 0;
       const feature = ctx.getRegistry().find(f => f.slug === section.slug);
-      const fields = discoverFields(sectionEl, feature && feature.customizable);
+      let explicit = feature && feature.customizable;
+      if (explicit === undefined && feature && feature.customizableCount) {
+        // registry.js only carries the number of named fields; the list comes from the feature's meta.json (fetched once)
+        if (!(section.slug in customizableCache)) {
+          customizableCache[section.slug] = null;
+          fetch(`features/${encodeURIComponent(section.slug)}/meta.json`).then(r => (r.ok ? r.json() : {})).then(m => { customizableCache[section.slug] = Array.isArray(m.customizable) ? m.customizable : []; })
+            .catch(() => { customizableCache[section.slug] = []; })
+            .then(() => { if (contentTabVisible()) renderContentFields(); });
+        }
+        if (customizableCache[section.slug] === null) {
+          fieldsEl.innerHTML = '<p class="content-empty">Loading the editable fields…</p>';
+          return;
+        }
+        explicit = customizableCache[section.slug];
+      }
+      const fields = discoverFields(sectionEl, explicit);
       if (!fields.length) {
         fieldsEl.innerHTML = '<p class="content-empty">No editable text, images or links were found in this section.</p>';
         return;
