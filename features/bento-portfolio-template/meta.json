@@ -116,5 +116,6 @@
     "luma": 0.9,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "ownPalette": true
 }

@@ -34,8 +34,10 @@
     // Components that keep their own palette under some page themes (meta.json "nativeWhen")
     const nativeMap = {};
     const licenseMap = {};
+    const ownPalette = {}; // components whose own colours must not be overridden by the theme engine's heading/text rules
     registry.forEach(feature => {
       if (Array.isArray(feature.nativeWhen) && feature.nativeWhen.length) nativeMap[feature.slug] = feature.nativeWhen;
+      if (feature.ownPalette) ownPalette[feature.slug] = true;
       if (feature.origin && feature.origin.license) licenseMap[feature.slug] = feature.origin.license;
     });
 
@@ -51,194 +53,6 @@
       }
     });
 
-    // Landing Page Singleton Rules:
-    // Singletons: Preloader (Optional, index 0), Header (Essential, top), Hero (Essential, after header), Footer (Essential, bottom).
-    const LANDING_PAGE_SINGLETONS = {
-      preloader: {
-        type: 'preloader',
-        name: 'Preloader',
-        category: 'Preloaders & Shaders',
-        necessity: 'optional',
-        needLabel: 'Optional',
-        match: (slug, title, cat) => {
-          const s = (slug || '').toLowerCase();
-          const t = (title || '').toLowerCase();
-          const c = (cat || '').toLowerCase();
-          return c.includes('preloader') || s.includes('preloader') || t.includes('preloader');
-        }
-      },
-      header: {
-        type: 'header',
-        name: 'Header',
-        category: 'Headers & Nav',
-        necessity: 'required',
-        needLabel: 'Essential',
-        match: (slug, title, cat) => {
-          const s = (slug || '').toLowerCase();
-          const t = (title || '').toLowerCase();
-          const c = (cat || '').toLowerCase();
-          return c.includes('nav') || c.includes('header') || s.includes('header') || s.includes('nav') || s.includes('burger') || s.includes('menu') || t.includes('header') || t.includes('navbar') || t.includes('navigation');
-        }
-      },
-      hero: {
-        type: 'hero',
-        name: 'Hero Section',
-        category: 'Heroes',
-        necessity: 'required',
-        needLabel: 'Essential',
-        match: (slug, title, cat) => {
-          const s = (slug || '').toLowerCase();
-          const t = (title || '').toLowerCase();
-          const c = (cat || '').toLowerCase();
-          return c === 'heroes' || c.includes('hero') || s.includes('hero') || t.includes('hero');
-        }
-      },
-      footer: {
-        type: 'footer',
-        name: 'Footer',
-        category: 'Footers & Endings',
-        necessity: 'required',
-        needLabel: 'Essential',
-        match: (slug, title, cat) => {
-          const s = (slug || '').toLowerCase();
-          const t = (title || '').toLowerCase();
-          const c = (cat || '').toLowerCase();
-          return c.includes('footer') || s.includes('footer') || t.includes('footer');
-        }
-      }
-    };
-
-    function getSingletonType(slug, title, cat) {
-      if (!slug && !title && !cat) return null;
-      for (const [key, def] of Object.entries(LANDING_PAGE_SINGLETONS)) {
-        if (def.match(slug, title, cat)) return key;
-      }
-      return null;
-    }
-
-    function findExistingSingleton(type) {
-      if (!type || !stackManager) return null;
-      const stack = stackManager.getStack();
-      return stack.find(sec => {
-        const feat = featuresMap.get(sec.slug);
-        const title = sec.title || (feat ? (feat.title || feat.name) : '');
-        const cat = sec.category || (feat ? feat.category : '');
-        return getSingletonType(sec.slug, title, cat) === type;
-      }) || null;
-    }
-
-    // Preloader play state tracking:
-    // "It need to play once after I add it and other times only if I run it"
-    let playedPreloaderId = null;
-    let preloaderForceReplay = false;
-
-    function addOrReplaceLandingSection(slug, extraProps = {}, preferredIndex = null) {
-      catalogLib.addRecent(slug);
-      const title = extraProps.title || slug;
-      const category = extraProps.category || '';
-      const singletonType = getSingletonType(slug, title, category);
-
-      if (singletonType === 'preloader') {
-        // Explicitly added or replaced preloader: play once
-        preloaderForceReplay = true;
-        playedPreloaderId = null;
-      }
-
-      if (singletonType) {
-        const singletonDef = LANDING_PAGE_SINGLETONS[singletonType];
-        const existing = findExistingSingleton(singletonType);
-
-        if (existing) {
-          // Landing page can only have one! Replace the existing singleton in place
-          let replaced;
-          if (typeof stackManager.replaceSection === 'function') {
-            replaced = stackManager.replaceSection(existing.id, slug, extraProps);
-          } else {
-            const stack = stackManager.getStack();
-            const idx = stack.findIndex(s => s.id === existing.id);
-            stackManager.removeSection(existing.id);
-            replaced = stackManager.insertSection(idx >= 0 ? idx : stackManager.getStack().length, slug, extraProps);
-          }
-
-          // Ensure proper canonical position if needed (Preloader at 0, Header at 0/1, Footer at bottom)
-          if (singletonType === 'preloader') {
-            const stack = stackManager.getStack();
-            const currIdx = stack.findIndex(s => s.id === (replaced ? replaced.id : existing.id));
-            if (currIdx > 0) {
-              stackManager.moveSection(replaced ? replaced.id : existing.id, -currIdx);
-            }
-          } else if (singletonType === 'header') {
-            const stack = stackManager.getStack();
-            const preloader = findExistingSingleton('preloader');
-            const targetPos = preloader ? 1 : 0;
-            const currIdx = stack.findIndex(s => s.id === (replaced ? replaced.id : existing.id));
-            if (currIdx !== targetPos && currIdx >= 0) {
-              stackManager.moveSection(replaced ? replaced.id : existing.id, targetPos - currIdx);
-            }
-          } else if (singletonType === 'footer') {
-            const stack = stackManager.getStack();
-            const currIdx = stack.findIndex(s => s.id === (replaced ? replaced.id : existing.id));
-            if (currIdx >= 0 && currIdx < stack.length - 1) {
-              stackManager.moveSection(replaced ? replaced.id : existing.id, (stack.length - 1) - currIdx);
-            }
-          }
-
-          showToast(`Landing page can only have one ${singletonDef.name}. Replaced with "${title}".`);
-          return { section: replaced, replaced: true, singletonType };
-        } else {
-          // No existing singleton: insert at canonical position
-          let targetIndex = preferredIndex;
-          if (singletonType === 'preloader') {
-            targetIndex = 0; // Preloaders always go at the very top (entry screen)
-          } else if (singletonType === 'header') {
-            const preloader = findExistingSingleton('preloader');
-            targetIndex = preloader ? 1 : 0; // Header goes after preloader if present, else 0
-          } else if (singletonType === 'hero') {
-            const header = findExistingSingleton('header');
-            if (header) {
-              const stack = stackManager.getStack();
-              const headerIdx = stack.findIndex(s => s.id === header.id);
-              targetIndex = headerIdx >= 0 ? headerIdx + 1 : 1;
-            } else {
-              const preloader = findExistingSingleton('preloader');
-              targetIndex = preloader ? 1 : 0;
-            }
-          } else if (singletonType === 'footer') {
-            targetIndex = stackManager.getStack().length;
-          } else if (targetIndex === null || targetIndex === undefined) {
-            const footer = findExistingSingleton('footer');
-            if (footer) {
-              const stack = stackManager.getStack();
-              const footerIdx = stack.findIndex(s => s.id === footer.id);
-              targetIndex = footerIdx >= 0 ? footerIdx : stack.length;
-            } else {
-              targetIndex = stackManager.getStack().length;
-            }
-          }
-
-          const newSec = stackManager.insertSection(targetIndex, slug, extraProps);
-          showToast(`Added ${singletonDef.name}: "${title}"`);
-          return { section: newSec, replaced: false, singletonType };
-        }
-      }
-
-      // Non-singleton component: if footer exists at end, keep footer at bottom by inserting before it
-      let targetIndex = preferredIndex;
-      if (targetIndex === null || targetIndex === undefined) {
-        const footer = findExistingSingleton('footer');
-        if (footer) {
-          const stack = stackManager.getStack();
-          const footerIdx = stack.findIndex(s => s.id === footer.id);
-          targetIndex = footerIdx >= 0 ? footerIdx : stack.length;
-        } else {
-          targetIndex = stackManager.getStack().length;
-        }
-      }
-
-      const newSec = stackManager.insertSection(targetIndex, slug, extraProps);
-      showToast(`Added "${title}"`);
-      return { section: newSec, replaced: false, singletonType: null };
-    }
 
     /**
      * Client-side memory cache for feature source files.
@@ -313,11 +127,6 @@
 
     // Viewport & Preview Elements
     const previewFrame = document.getElementById('previewFrame');
-    const viewportStage = document.getElementById('viewportStage');
-    const viewportDimensionLabel = document.getElementById('viewportDimensionLabel');
-    const viewportDesktopBtn = document.getElementById('viewportDesktopBtn');
-    const viewportTabletBtn = document.getElementById('viewportTabletBtn');
-    const viewportMobileBtn = document.getElementById('viewportMobileBtn');
 
     // Theme Elements
     const themePresetSelect = document.getElementById('themePresetSelect');
@@ -347,6 +156,11 @@
       try { return window.localStorage; } catch (_) { return { getItem: () => null, setItem: () => {} }; }
     })());
     const elementsFilters = { mood: '', industry: '', weight: '', showDrafts: false };
+
+    // Landing-page rules and section add/replace (scripts/builder/landing.js)
+    const rt = { playedPreloaderId: null, preloaderForceReplay: false, forceFullPreviewReload: false }; // preloader and preview state shared by several modules
+    const landing = (window.BuilderLanding || require('./scripts/builder/landing.js')).createLandingSections({ catalogLib, featuresMap, stackManager, rt });
+    const { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection } = landing;
     let activeTargetSectionId = null;
 
     // Styling Tab Elements
@@ -373,7 +187,10 @@
 
     // History (undo/redo) and autosave (scripts/builder/history.js)
     const historyCtl = (window.BuilderHistory || require('./scripts/builder/history.js')).createHistory({
-      stackManager, applyDynamicTheme, setViewportMode, updatePreview,
+      stackManager,
+      applyDynamicTheme: (theme) => applyDynamicTheme(theme), // the preview module is created below, so these resolve at call time
+      updatePreview: () => updatePreview(),
+      setViewportMode: (mode) => setViewportMode(mode), // defined further down, so resolved at call time
       renderStackList: () => renderStackList(), // defined further down, so resolved at call time
       themePresetSelect, customColorsControls, customThemeToggle, bgColorInput, textColorInput, accentColorInput,
       undoBtn, redoBtn
@@ -387,190 +204,18 @@
     // 3. Active sections list (scripts/builder/stack-list.js)
     const stackListController = (window.BuilderStackList || require('./scripts/builder/stack-list.js')).createStackList({
       LANDING_PAGE_SINGLETONS, featuresMap, getSingletonType, pageStackList, previewFrame, setActiveSection,
-      stackManager, updateActiveSectionUI, updatePreview,
-      requestPreloaderReplay: () => { preloaderForceReplay = true; forceFullPreviewReload = true; updatePreview(); }
+      stackManager, updateActiveSectionUI, updatePreview: () => updatePreview(),
+      requestPreloaderReplay: () => { rt.preloaderForceReplay = true; rt.forceFullPreviewReload = true; updatePreview(); }
     });
     const { renderStackList } = stackListController;
 
-    /**
-     * Propagates theme variables to the live preview iframe.
-     * Uses postMessage and direct DOM property injection for instantaneous 60fps color updates without reload flicker.
-     */
-    function applyDynamicTheme(themeConfig) {
-      const theme = (window.Assembler && typeof window.Assembler.resolveTheme === 'function')
-        ? window.Assembler.resolveTheme(themeConfig)
-        : themeConfig;
+    // Live preview iframe and theme push (scripts/builder/preview.js)
+    const preview = (window.BuilderPreview || require('./scripts/builder/preview.js')).createPreview({
+      stackManager, previewFrame, elementEditToolbar, featureCache, featuresData, fetchFeatureFiles,
+      nativeMap, ownPalette, rt, getCanvas: () => canvas // the canvas controller is created right after
+    });
+    const { applyDynamicTheme, updatePreview } = preview;
 
-      if (!theme) return;
-
-      // 1. PostMessage to iframe for dynamic zero-flicker update
-      if (previewFrame && previewFrame.contentWindow) {
-        try {
-          previewFrame.contentWindow.postMessage({
-            type: 'UPDATE_THEME',
-            theme: theme
-          }, '*');
-        } catch (_) {}
-      }
-
-      // 2. Direct style property update on iframe documentElement if same-origin accessible
-      try {
-        const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
-        if (doc) {
-          if (window.Assembler && typeof window.Assembler.applyThemeToDocument === 'function') {
-            window.Assembler.applyThemeToDocument(doc, theme);
-          } else if (doc.documentElement) {
-            if (theme.bg) {
-              doc.documentElement.style.setProperty('--preview-bg', theme.bg);
-              doc.querySelectorAll('.page-section').forEach(s => s.style.backgroundColor = theme.bg);
-            }
-            if (theme.text) {
-              doc.documentElement.style.setProperty('--preview-text', theme.text);
-              doc.querySelectorAll('.page-section').forEach(s => s.style.color = theme.text);
-            }
-            if (theme.accent) doc.documentElement.style.setProperty('--preview-accent', theme.accent);
-            if (theme.cardBg) doc.documentElement.style.setProperty('--preview-card-bg', theme.cardBg);
-            if (theme.border) doc.documentElement.style.setProperty('--preview-border', theme.border);
-          }
-        }
-      } catch (_) {}
-    }
-
-    // 4. Update Live Preview Iframe
-    let isUpdatingPreview = false;
-    let pendingPreviewUpdate = false;
-
-    async function updatePreview() {
-      if (!previewFrame) return;
-
-      if (!window.Assembler || typeof window.Assembler.assemblePreviewDocument !== 'function') {
-        return;
-      }
-
-      const state = stackManager.getState();
-      const currentStack = state.stack;
-
-      // Identify any sections whose source files need fetching
-      const missingSlugs = currentStack
-        .map(item => item.slug)
-        .filter(slug => slug && !featureCache.has(slug));
-
-      if (missingSlugs.length > 0) {
-        if (isUpdatingPreview) {
-          pendingPreviewUpdate = true;
-          return;
-        }
-        isUpdatingPreview = true;
-        try {
-          await Promise.all(missingSlugs.map(slug => fetchFeatureFiles(slug)));
-        } catch (err) {
-          console.error('Error fetching feature files for preview:', err);
-        } finally {
-          isUpdatingPreview = false;
-          if (pendingPreviewUpdate) {
-            pendingPreviewUpdate = false;
-            updatePreview();
-            return;
-          }
-        }
-      }
-
-      // Re-read latest state and assemble preview document
-      const latestState = stackManager.getState();
-      const themeConfig = latestState.theme === 'custom' ? latestState.customColors : latestState.theme;
-
-      // Preloader play-state tracking:
-      // Requirement: Play ONCE when newly added; suppressed on subsequent section additions/modifications
-      // and runs again only when user explicitly runs it via the Replay (▶) button.
-      const preloaderSection = latestState.stack.find(s => {
-        const slug = s.slug || '';
-        const cat = s.category || '';
-        return slug.includes('preloader') || cat.toLowerCase().includes('preloader');
-      });
-
-      let suppressPreloader = false;
-      if (preloaderSection) {
-        if (preloaderForceReplay) {
-          // Explicitly triggered via Run/Replay button
-          suppressPreloader = false;
-          preloaderForceReplay = false;
-          playedPreloaderId = preloaderSection.id;
-        } else if (playedPreloaderId === preloaderSection.id) {
-          // Already played: suppress on subsequent section additions/modifications
-          suppressPreloader = true;
-        } else {
-          // Newly added preloader: play once
-          suppressPreloader = false;
-          playedPreloaderId = preloaderSection.id;
-        }
-      } else {
-        playedPreloaderId = null;
-        preloaderForceReplay = false;
-      }
-
-      // Only sizing and overlay elements are patched in place; anything else (sections, their
-      // source, theme, preloader state) changes this key and triggers a full reload.
-      // Yield so callers can set canvas.state.pendingElement right after the state change that notified us
-      await Promise.resolve();
-      const structureKey = JSON.stringify({
-        theme: themeConfig,
-        suppressPreloader,
-        page: latestState.page,
-        stack: latestState.stack.map(({ elements, sizing, overrides, ...rest }) => rest)
-      });
-      const canPatch = !forceFullPreviewReload && structureKey === lastPreviewStructureKey;
-      forceFullPreviewReload = false;
-      if (canPatch && patchPreviewInPlace(latestState.stack)) {
-        return;
-      }
-
-      const assembledHtml = window.Assembler.assemblePreviewDocument(
-        latestState.stack,
-        themeConfig,
-        featuresData,
-        { suppressPreloader, page: latestState.page, nativeMap }
-      );
-
-      lastPreviewStructureKey = structureKey;
-      previewFrame.srcdoc = assembledHtml;
-    }
-
-    let lastPreviewStructureKey = null;
-    let forceFullPreviewReload = false;
-    /**
-     * Patches the loaded preview in place (see scripts/builder/preview-patch.js), then restores the
-     * canvas selection on the rebuilt overlay the way the iframe load handler does.
-     * Returns false when a full reload is needed instead.
-     */
-    function patchPreviewInPlace(stack) {
-      let doc;
-      try {
-        doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
-      } catch (_) {
-        return false;
-      }
-      if (!(window.PreviewPatch || require('./scripts/builder/preview-patch.js')).patchPreview({ doc, win: previewFrame.contentWindow, stack, assembler: window.Assembler })) return false;
-
-      if (canvas.state.pendingElement) {
-        const el = doc.getElementById(canvas.state.pendingElement.elementId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          selectCanvasElement(canvas.state.pendingElement.sectionId, canvas.state.pendingElement.elementId);
-          closeToolbarPopup();
-        }
-        canvas.state.pendingElement = null;
-      } else if (canvas.state.selected) {
-        const el = doc.getElementById(canvas.state.selected.elementId);
-        if (el) {
-          el.classList.add('is-selected');
-          ensureResizeHandles(el);
-          if (elementEditToolbar && elementEditToolbar.style.display !== 'none') updateToolbarPosition();
-        } else {
-          clearElementSelection();
-        }
-      }
-      return true;
-    }
 
     // Freeform canvas: overlay widgets, context menu, edit toolbar, selection (scripts/builder/canvas.js)
     const canvas = (window.BuilderCanvas || require('./scripts/builder/canvas.js')).createCanvasController({
@@ -763,192 +408,17 @@
     });
     const { openDrawer, renderDrawerFeatures } = drawer;
 
-    // 6. Viewport Controls
-    function setViewportMode(mode) {
-      historyCtl.state.viewport = mode;
-      stackManager.setViewport(mode);
-      if (viewportStage) {
-        viewportStage.setAttribute('data-active-viewport', mode);
-      }
+    // 6-8. Viewport, theme controls and open-in-tab (scripts/builder/page-controls.js)
+    const pageControls = (window.BuilderPageControls || require('./scripts/builder/page-controls.js')).createPageControls({
+      stackManager, applyDynamicTheme, featureCache, featuresData, fetchFeatureFiles, historyState: historyCtl.state,
+      themePresetSelect, customThemeToggle, customColorsControls, bgColorInput, textColorInput, accentColorInput
+    });
+    const { setViewportMode } = pageControls;
 
-      const frameWrapper = document.getElementById('viewportFrameWrapper');
-      if (frameWrapper) {
-        frameWrapper.classList.remove('is-desktop', 'is-tablet', 'is-mobile');
-        frameWrapper.classList.add(`is-${mode}`);
-      }
-
-      const buttons = [
-        { el: viewportDesktopBtn, mode: 'desktop', label: 'Desktop (100%)' },
-        { el: viewportTabletBtn, mode: 'tablet', label: 'Tablet (768px)' },
-        { el: viewportMobileBtn, mode: 'mobile', label: 'Mobile (375px)' }
-      ];
-
-      buttons.forEach(b => {
-        if (b.el) {
-          if (b.mode === mode) {
-            b.el.classList.add('is-active');
-            b.el.setAttribute('aria-pressed', 'true');
-            if (viewportDimensionLabel) viewportDimensionLabel.textContent = b.label;
-          } else {
-            b.el.classList.remove('is-active');
-            b.el.setAttribute('aria-pressed', 'false');
-          }
-        }
-      });
-    }
-
-    if (viewportDesktopBtn) {
-      viewportDesktopBtn.addEventListener('click', () => setViewportMode('desktop'));
-    }
-    if (viewportTabletBtn) {
-      viewportTabletBtn.addEventListener('click', () => setViewportMode('tablet'));
-    }
-    if (viewportMobileBtn) {
-      viewportMobileBtn.addEventListener('click', () => setViewportMode('mobile'));
-    }
-
-    // 7. Theme Controls
-    if (themePresetSelect) {
-      themePresetSelect.addEventListener('change', (e) => {
-        const themeKey = e.target.value;
-        if (themeKey === 'custom') {
-          if (customColorsControls) customColorsControls.style.display = 'inline-flex';
-          if (customThemeToggle) customThemeToggle.classList.add('is-active');
-          const customColors = {
-            bg: bgColorInput ? bgColorInput.value : '#0b0f19',
-            text: textColorInput ? textColorInput.value : '#f3f4f6',
-            accent: accentColorInput ? accentColorInput.value : '#6366f1'
-          };
-          applyDynamicTheme(customColors);
-          if (stackManager.getState().theme !== 'custom') {
-            stackManager.setTheme('custom');
-          }
-          stackManager.setCustomColors(customColors);
-        } else {
-          const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
-          const preset = presets[themeKey];
-          if (preset) {
-            if (bgColorInput) bgColorInput.value = preset.bg;
-            if (textColorInput) textColorInput.value = preset.text;
-            if (accentColorInput) accentColorInput.value = preset.accent;
-            applyDynamicTheme(preset);
-          }
-          stackManager.setTheme(themeKey);
-        }
-      });
-    }
-
-    if (customThemeToggle) {
-      customThemeToggle.addEventListener('click', () => {
-        if (customColorsControls) {
-          const isShown = customColorsControls.style.display !== 'none';
-          customColorsControls.style.display = isShown ? 'none' : 'inline-flex';
-          customThemeToggle.classList.toggle('is-active', !isShown);
-        }
-      });
-    }
-
-    let themeDebounceTimer = null;
-
-    function handleCustomColorInput() {
-      const colors = {
-        bg: bgColorInput ? bgColorInput.value : '#0b0f19',
-        text: textColorInput ? textColorInput.value : '#f3f4f6',
-        accent: accentColorInput ? accentColorInput.value : '#6366f1'
-      };
-
-      if (themePresetSelect && themePresetSelect.value !== 'custom') {
-        themePresetSelect.value = 'custom';
-      }
-
-      // Immediately propagate theme variables to iframe in real time via postMessage/DOM
-      applyDynamicTheme(colors);
-
-      // Debounce updating state and srcdoc to prevent lag during rapid slider dragging
-      clearTimeout(themeDebounceTimer);
-      themeDebounceTimer = setTimeout(() => {
-        if (stackManager.getState().theme !== 'custom') {
-          stackManager.setTheme('custom');
-        }
-        stackManager.setCustomColors(colors);
-      }, 120);
-    }
-
-    function handleCustomColorChange() {
-      clearTimeout(themeDebounceTimer);
-      const colors = {
-        bg: bgColorInput ? bgColorInput.value : '#0b0f19',
-        text: textColorInput ? textColorInput.value : '#f3f4f6',
-        accent: accentColorInput ? accentColorInput.value : '#6366f1'
-      };
-
-      if (themePresetSelect && themePresetSelect.value !== 'custom') {
-        themePresetSelect.value = 'custom';
-      }
-
-      applyDynamicTheme(colors);
-
-      // Consolidate updates: set theme only if needed, setCustomColors triggers notify() once
-      if (stackManager.getState().theme !== 'custom') {
-        stackManager.setTheme('custom');
-      }
-      stackManager.setCustomColors(colors);
-    }
-
-    if (bgColorInput) {
-      bgColorInput.addEventListener('input', handleCustomColorInput);
-      bgColorInput.addEventListener('change', handleCustomColorChange);
-    }
-    if (textColorInput) {
-      textColorInput.addEventListener('input', handleCustomColorInput);
-      textColorInput.addEventListener('change', handleCustomColorChange);
-    }
-    if (accentColorInput) {
-      accentColorInput.addEventListener('input', handleCustomColorInput);
-      accentColorInput.addEventListener('change', handleCustomColorChange);
-    }
-
-    // 8. Open in New Tab Action
-    const openInTabBtn = document.getElementById('openInTabBtn') || document.getElementById('openNewTabBtn');
-    if (openInTabBtn) {
-      openInTabBtn.addEventListener('click', async () => {
-        if (!window.Assembler || typeof window.Assembler.assemblePreviewDocument !== 'function') {
-          showToast('Assembler engine not available');
-          return;
-        }
-
-        const state = stackManager.getState();
-        const missingSlugs = state.stack
-          .map(s => s.slug)
-          .filter(slug => slug && !featureCache.has(slug));
-
-        if (missingSlugs.length > 0) {
-          await Promise.all(missingSlugs.map(slug => fetchFeatureFiles(slug)));
-        }
-
-        const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
-        const fullDoc = window.Assembler.assemblePreviewDocument(state.stack, themeConfig, featuresData);
-
-        try {
-          const blob = new Blob([fullDoc], { type: 'text/html;charset=utf-8' });
-          const blobUrl = URL.createObjectURL(blob);
-          const newTab = window.open(blobUrl, '_blank');
-          if (newTab) {
-            showToast('Opened live assembled preview in new tab');
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
-          } else {
-            showToast('Pop-up was blocked. Please allow pop-ups for this page.');
-          }
-        } catch (err) {
-          console.error('Error opening preview in new tab:', err);
-          showToast('Failed to open preview tab');
-        }
-      });
-    }
 
     // 9. Export modal & project ZIP generator (scripts/builder/export-panel.js)
     const exportController = (window.BuilderExport || require('./scripts/builder/export-panel.js')).createExportController({
-      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, licenseMap
+      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap
     });
     const { prepareExportData, setActiveExportTab, setActiveCodeSubtab, openExportModal, closeExportModal, handleDownloadZip } = exportController;
 
@@ -990,7 +460,7 @@
               return slug.includes('preloader') || cat.toLowerCase().includes('preloader');
             });
             if (restoredPreloader) {
-              playedPreloaderId = restoredPreloader.id;
+              rt.playedPreloaderId = restoredPreloader.id;
             }
           }
         }
