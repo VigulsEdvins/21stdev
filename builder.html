@@ -133,6 +133,9 @@
 
     <!-- Header Action Buttons -->
     <div class="header-right builder-actions">
+      <button type="button" class="builder-btn-subtle" id="uiThemeBtn" aria-pressed="false" title="Switch the builder between dark and light">
+        <span id="uiThemeLabel">Light UI</span>
+      </button>
       <button type="button" class="builder-btn-subtle" id="projectsBtn" title="Client projects: save, switch, snapshot, import and export" aria-haspopup="dialog">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -426,6 +429,7 @@
               <button type="button" class="empty-browse-btn" id="emptyBrowseBtn">
                 <span>Browse Component Catalog</span>
               </button>
+              <button type="button" class="builder-btn-subtle" id="emptyStarterBtn" style="margin-top:8px">Start from a starter page</button>
             </div>
           </div>
         </div>
@@ -1073,6 +1077,8 @@
   <script src="scripts/builder/history.js"></script>
   <script src="scripts/builder/page-controls.js"></script>
   <script src="scripts/builder/landing.js"></script>
+  <script src="scripts/builder/tour.js"></script>
+  <script src="scripts/builder/ui-theme.js"></script>
   <script src="scripts/builder/preview.js"></script>
   <script src="scripts/assembler.js"></script>
   <script src="scripts/stack-manager.js" defer></script>

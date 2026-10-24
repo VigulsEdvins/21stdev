@@ -3209,3 +3209,20 @@ select option {
 .stack-tool-btn.is-active { color: var(--accent, #a855f7); }
 .stack-tool-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 .sr-only-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* First-run tour */
+.tour-card { position: fixed; left: 16px; bottom: 16px; z-index: 900; width: min(320px, calc(100vw - 32px)); padding: 14px 16px; border-radius: 12px; background: var(--bg-elevated, #18181b); border: 1px solid var(--accent, #a855f7); color: var(--text-main, #fafafa); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); }
+.tour-step { font-size: 11px; opacity: 0.6; }
+.tour-title { margin: 4px 0; font-size: 14px; }
+.tour-text { margin: 0 0 12px; font-size: 12.5px; line-height: 1.5; opacity: 0.85; }
+.tour-actions { display: flex; justify-content: space-between; gap: 8px; }
+.tour-highlight { outline: 2px solid var(--accent, #a855f7); outline-offset: 2px; border-radius: 8px; }
+
+/* Light builder UI: invert the shell, restore everything that shows real content */
+html[data-ui-theme="light"] .builder-body { filter: invert(0.93) hue-rotate(180deg); }
+html[data-ui-theme="light"] .builder-body iframe,
+html[data-ui-theme="light"] .builder-body img,
+html[data-ui-theme="light"] .builder-body video,
+html[data-ui-theme="light"] .builder-body canvas,
+html[data-ui-theme="light"] .builder-body .tour-highlight-keep { filter: invert(1) hue-rotate(180deg); }
+html[data-ui-theme="light"] .builder-body { background-color: #09090b; }

@@ -565,6 +565,10 @@
       getHistoryIndex: () => historyCtl.state.index
     };
 
+    const emptyStarterBtn = document.getElementById('emptyStarterBtn');
+    if (emptyStarterBtn && loadStarterBtn) emptyStarterBtn.addEventListener('click', () => loadStarterBtn.click());
+    if (typeof window !== 'undefined' && window.BuilderTour) window.BuilderTour.start(document); // first visit only
+
     if (typeof window !== 'undefined') {
       window.builderPreview = controller;
       window.builderExport = controller;
