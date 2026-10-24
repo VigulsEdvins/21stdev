@@ -49,7 +49,7 @@ console.log('  ✓ builder.css styling verified');
 // 3. builder.js History Stack & LocalStorage logic verification
 // ============================================================================
 console.log('  Testing builder.js history & persistence implementation...');
-const builderJs = fs.readFileSync(path.resolve(__dirname, '../builder.js'), 'utf8');
+const builderJs = require('./helpers/builder-source.js').readBuilderSource();
 
 assert(builderJs.includes('MAX_HISTORY'), 'builder.js must define MAX_HISTORY (50)');
 assert(builderJs.includes('pushHistorySnapshot'), 'builder.js must implement pushHistorySnapshot');

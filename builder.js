@@ -6,493 +6,10 @@
 (function () {
   'use strict';
 
-  // Helper: HTML escaping
-  function escapeHtml(str) {
-    if (typeof str !== 'string') return '';
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  // Helper: Toast Notifications
-  function showToast(message, duration = 2200) {
-    const container = document.getElementById('toastContainer');
-    if (!container) return;
-
-    const toast = document.createElement('div');
-    toast.className = 'builder-toast';
-    toast.style.cssText = `
-      background: rgba(18, 18, 24, 0.95);
-      border: 1px solid rgba(168, 85, 247, 0.4);
-      color: #fafafa;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 500;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-      animation: fadeIn 0.2s ease-out;
-      pointer-events: auto;
-    `;
-    toast.innerHTML = `
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#a855f7" stroke-width="2">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-      </svg>
-      <span>${escapeHtml(message)}</span>
-    `;
-
-    container.appendChild(toast);
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 0.25s ease';
-      setTimeout(() => toast.remove(), 260);
-    }, duration);
-  }
-
-  // Normalized Category Resolver
-  function getNormalizedCategory(feature) {
-    if (!feature) return 'Component';
-    const cat = (feature.category || '').trim();
-    const slug = (feature.slug || '').toLowerCase();
-    const title = (feature.title || feature.name || '').toLowerCase();
-
-    // 1. Footers & Endings
-    if (slug.includes('footer') || title.includes('footer') || cat.toLowerCase().includes('footer')) {
-      return 'Footers & Endings';
-    }
-
-    // 2. Pricing & Tables
-    if (slug.includes('pricing') || title.includes('pricing') || slug.includes('turntable') || title.includes('turntable') || slug.includes('matrix')) {
-      return 'Pricing & Tables';
-    }
-
-    // 3. Headers & Nav
-    if (slug.includes('nav') || slug.includes('menu') || slug.includes('burger') || slug.includes('header') || slug.includes('lang-switcher') || cat.toLowerCase().includes('navigation')) {
-      return 'Headers & Nav';
-    }
-
-    // 4. Heroes
-    if (slug.includes('hero') || title.includes('hero') || cat.toLowerCase() === 'heroes') {
-      return 'Heroes';
-    }
-
-    // 5. Buttons & UI
-    if (cat.toLowerCase().includes('button') || slug.includes('btn') || slug.includes('button') || slug.includes('cta') || slug.includes('drawer') || slug.includes('accordion') || slug.includes('tabs')) {
-      return 'Buttons & UI';
-    }
-
-    // 6. Cards & Tiles
-    if (cat.toLowerCase().includes('cards') || slug.includes('card') || slug.includes('ticket') || slug.includes('testimonial')) {
-      return 'Cards & Tiles';
-    }
-
-    // 7. Galleries & Bento
-    if (cat.toLowerCase().includes('galleries') || cat.toLowerCase().includes('layouts') || slug.includes('bento') || slug.includes('gallery') || slug.includes('marquee') || slug.includes('showcase')) {
-      return 'Galleries & Bento';
-    }
-
-    // 8. 3D & Carousels
-    if (cat.toLowerCase().includes('3d') || cat.toLowerCase().includes('carousel') || slug.includes('carousel') || slug.includes('3d') || slug.includes('wheel')) {
-      return '3D & Carousels';
-    }
-
-    // 9. Scroll & Parallax
-    if (cat.toLowerCase().includes('scroll') || cat.toLowerCase().includes('parallax') || slug.includes('parallax') || slug.includes('scroll') || slug.includes('timeline')) {
-      return 'Scroll & Parallax';
-    }
-
-    // 10. Preloaders & Shaders
-    if (cat.toLowerCase().includes('preloader') || slug.includes('preloader')) {
-      return 'Preloaders & Shaders';
-    }
-
-    // 11. Audio & Shaders
-    if (cat.toLowerCase().includes('audio') || slug.includes('audio') || slug.includes('sound') || slug.includes('shader')) {
-      return 'Audio & Shaders';
-    }
-
-    // 12. Full Templates
-    if (cat.toLowerCase().includes('full') || slug.includes('template') || slug.includes('landing')) {
-      return 'Full Templates';
-    }
-
-    // 13. Interactions & Physics / Cursors
-    if (cat.toLowerCase().includes('physics') || cat.toLowerCase().includes('cursor') || cat.toLowerCase().includes('form')) {
-      return 'Interactions & Physics';
-    }
-
-    return cat || 'Component';
-  }
-
-  // Category matching rule: maps registry categories/tags to drawer and sidebar categories
-  function matchesCategory(feature, targetCategory) {
-    if (!targetCategory || targetCategory === 'all') return true;
-    const norm = getNormalizedCategory(feature);
-    const targetNorm = targetCategory.toLowerCase().trim();
-    const currentNorm = norm.toLowerCase().trim();
-
-    if (currentNorm === targetNorm) return true;
-    if ((targetNorm === 'footers' || targetNorm === 'footers & endings') && currentNorm.includes('footer')) return true;
-    if ((targetNorm === 'headers & nav' || targetNorm === 'navigation & headers') && currentNorm.includes('nav')) return true;
-    if ((targetNorm === 'pricing & tables' || targetNorm === 'tables & pricing') && (currentNorm.includes('pricing') || currentNorm.includes('table'))) return true;
-    if (targetNorm === 'buttons & ui' && (currentNorm.includes('button') || currentNorm.includes('ui'))) return true;
-    if (targetNorm === 'cards & tiles' && currentNorm.includes('card')) return true;
-    if ((targetNorm === 'galleries & bento' || targetNorm === 'galleries & grids') && (currentNorm.includes('galleries') || currentNorm.includes('grid') || currentNorm.includes('bento'))) return true;
-    if (targetNorm === '3d & carousels' && (currentNorm.includes('3d') || currentNorm.includes('carousel'))) return true;
-    if (targetNorm === 'scroll & parallax' && (currentNorm.includes('scroll') || currentNorm.includes('parallax'))) return true;
-    if (targetNorm === 'audio & shaders' && (currentNorm.includes('audio') || currentNorm.includes('shader'))) return true;
-    if ((targetNorm === 'interactions & physics' || targetNorm === 'physics & cursors') && currentNorm.includes('physics')) return true;
-    if ((targetNorm === 'preloaders & shaders' || targetNorm === 'preloaders') && currentNorm.includes('preloader')) return true;
-    if (targetNorm === 'full templates' && currentNorm.includes('template')) return true;
-
-    return currentNorm.includes(targetNorm);
-  }
-
-  // -------------------------------------------------------------
-  // 20 Insertable In-Section Widgets with Real Rendered HTML Previews
-  // -------------------------------------------------------------
-  const WIDGET_CATALOG_ITEMS = [
-    {
-      id: 'btn-neon',
-      slug: 'btn-neon',
-      type: 'button',
-      isWidget: true,
-      title: 'Neon Glow Button',
-      desc: 'Cyberpunk animated neon glow button with glowing aura',
-      category: 'Buttons & UI',
-      tags: ['button', 'neon', 'glow', 'cyberpunk', 'cta'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-neon"><span>Launch Terminal ⚡</span></div></div>',
-      elData: { type: 'button', text: 'Launch Terminal ⚡', style: 'neon', link: '#' }
-    },
-    {
-      id: 'btn-glass',
-      slug: 'btn-glass',
-      type: 'button',
-      isWidget: true,
-      title: 'Frosted Glass Button',
-      desc: 'Backdrop blur with glass reflection and sleek border',
-      category: 'Buttons & UI',
-      tags: ['button', 'glass', 'frosted', 'minimal', 'blur'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-glass"><span>Glass Action 💎</span></div></div>',
-      elData: { type: 'button', text: 'Explore Platform →', style: 'glass', link: '#' }
-    },
-    {
-      id: 'btn-shine',
-      slug: 'btn-shine',
-      type: 'button',
-      isWidget: true,
-      title: 'Gradient Shine Button',
-      desc: 'Animated gradient light sheen across vibrant background',
-      category: 'Buttons & UI',
-      tags: ['button', 'shine', 'gradient', 'animated', 'cta'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-shine"><span class="mini-shine-sweep"></span><span>Upgrade to Pro ✨</span></div></div>',
-      elData: { type: 'button', text: 'Upgrade to Pro ✨', style: 'shine', link: '#' }
-    },
-    {
-      id: 'btn-solid',
-      slug: 'btn-solid',
-      type: 'button',
-      isWidget: true,
-      title: 'Pill Accent Button',
-      desc: 'High-contrast solid primary CTA with rounded pill shape',
-      category: 'Buttons & UI',
-      tags: ['button', 'pill', 'solid', 'primary', 'cta'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-solid"><span>Get Started 🟣</span></div></div>',
-      elData: { type: 'button', text: 'Get Started', style: 'solid', link: '#' }
-    },
-    {
-      id: 'btn-outline',
-      slug: 'btn-outline',
-      type: 'button',
-      isWidget: true,
-      title: 'Minimal Outline Button',
-      desc: 'Clean subtle border with smooth hover background fill',
-      category: 'Buttons & UI',
-      tags: ['button', 'outline', 'minimal', 'border', 'cta'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-preview-btn btn-style-outline"><span>Documentation ⭕</span></div></div>',
-      elData: { type: 'button', text: 'Documentation →', style: 'outline', link: '#' }
-    },
-    {
-      id: 'table-pricing',
-      slug: 'table-pricing',
-      type: 'table',
-      isWidget: true,
-      title: 'Pricing Tier Card',
-      desc: 'Floating card with price, feature checkmarks & CTA',
-      category: 'Pricing & Tables',
-      tags: ['table', 'pricing', 'card', 'tier', 'saas'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-pricing-card"><div class="mini-pricing-header"><span class="mini-plan-badge">PRO PLAN</span><div class="mini-pricing-val">$29<span class="mini-per">/mo</span></div></div><div class="mini-pricing-features"><div>✓ Unlimited Projects</div><div>✓ Priority Support</div></div></div></div>',
-      elData: {
-        type: 'table',
-        tableType: 'pricing',
-        title: 'Pro Plan',
-        price: '$29/mo',
-        features: ['Unlimited Projects', 'Custom Domains', '24/7 Priority Support'],
-        ctaText: 'Get Started',
-        ctaLink: '#pricing'
-      }
-    },
-    {
-      id: 'table-comparison',
-      slug: 'table-comparison',
-      type: 'table',
-      isWidget: true,
-      title: 'Comparison Matrix',
-      desc: 'Clean feature comparison matrix table with checkmarks',
-      category: 'Pricing & Tables',
-      tags: ['table', 'comparison', 'matrix', 'features'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-matrix-box"><div class="mini-matrix-row mini-matrix-head"><span>Feature</span><span>Free</span><span>Pro</span></div><div class="mini-matrix-row"><span>Storage</span><span>5 GB</span><span class="mini-hl">500 GB</span></div><div class="mini-matrix-row"><span>Speed</span><span>1x</span><span class="mini-hl">10x</span></div></div></div>',
-      elData: {
-        type: 'table',
-        tableType: 'comparison',
-        headers: ['Feature', 'Free', 'Pro'],
-        rows: [
-          ['Storage', '5 GB', '500 GB'],
-          ['Bandwidth', '10 GB/mo', 'Unlimited'],
-          ['Support', 'Community', '24/7 Priority']
-        ]
-      }
-    },
-    {
-      id: 'card-feature',
-      slug: 'card-feature',
-      type: 'card',
-      isWidget: true,
-      title: 'Feature Card',
-      desc: 'Glassmorphic card with badge, title, desc & link',
-      category: 'Cards & Tiles',
-      tags: ['card', 'feature', 'glass', 'bento', 'badge'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-feature-card"><div class="mini-card-head"><span class="mini-feature-badge">HOT</span><span class="mini-card-title">Real-time Analytics</span></div><p class="mini-card-desc">Telemetry with sub-millisecond precision.</p></div></div>',
-      elData: {
-        type: 'card',
-        cardType: 'feature',
-        title: 'Real-time Analytics',
-        description: 'Track conversion rates and user telemetry with sub-millisecond precision.',
-        badgeText: 'HOT',
-        ctaText: 'Learn More →',
-        link: '#features'
-      }
-    },
-    {
-      id: 'card-testimonial',
-      slug: 'card-testimonial',
-      type: 'card',
-      isWidget: true,
-      title: 'Testimonial Card',
-      desc: 'Quote card with author avatar, rating stars & company',
-      category: 'Cards & Tiles',
-      tags: ['card', 'testimonial', 'review', 'quote', 'stars'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-testimonial-card"><div class="mini-stars">★★★★★</div><p class="mini-quote">"Boosted conversions by 48% within hours."</p><div class="mini-author">— Sarah J., VP Product</div></div></div>',
-      elData: {
-        type: 'card',
-        cardType: 'testimonial',
-        author: 'Sarah Jenkins',
-        role: 'VP of Product, Apex Digital',
-        avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80',
-        description: 'This platform transformed our landing page conversion rates within 48 hours.',
-        rating: 5
-      }
-    },
-    {
-      id: 'card-file-pdf',
-      slug: 'card-file-pdf',
-      type: 'file-card',
-      isWidget: true,
-      title: 'PDF Document Card',
-      desc: 'Discrete PDF document card with red badge and file metadata',
-      category: 'Cards & Tiles',
-      tags: ['card', 'file', 'pdf', 'document', 'download'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-file-card"><span class="mini-file-badge mini-file-badge-pdf">PDF</span><div class="mini-file-info"><div class="mini-file-name">Contract-2026.pdf</div><div class="mini-file-size">320 KB</div></div></div></div>',
-      elData: {
-        type: 'file-card',
-        fileType: 'pdf',
-        badge: 'PDF',
-        fileName: 'Contract-2026.pdf',
-        fileSize: '320 KB'
-      }
-    },
-    {
-      id: 'card-file-code',
-      slug: 'card-file-code',
-      type: 'file-card',
-      isWidget: true,
-      title: 'Code Source Card',
-      desc: 'Developer code source card with blue badge and size badge',
-      category: 'Cards & Tiles',
-      tags: ['card', 'file', 'code', 'source', 'developer', 'script'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-file-card"><span class="mini-file-badge mini-file-badge-code">CODE</span><div class="mini-file-info"><div class="mini-file-name">app.tsx</div><div class="mini-file-size">14 KB</div></div></div></div>',
-      elData: {
-        type: 'file-card',
-        fileType: 'code',
-        badge: 'CODE',
-        fileName: 'app.tsx',
-        fileSize: '14 KB'
-      }
-    },
-    {
-      id: 'card-file-doc',
-      slug: 'card-file-doc',
-      type: 'file-card',
-      isWidget: true,
-      title: 'Word Document Card',
-      desc: 'Rich document card with indigo badge and document specs',
-      category: 'Cards & Tiles',
-      tags: ['card', 'file', 'doc', 'word', 'document', 'brief'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-file-card"><span class="mini-file-badge mini-file-badge-doc">DOC</span><div class="mini-file-info"><div class="mini-file-name">Project-Brief.docx</div><div class="mini-file-size">85 KB</div></div></div></div>',
-      elData: {
-        type: 'file-card',
-        fileType: 'doc',
-        badge: 'DOC',
-        fileName: 'Project-Brief.docx',
-        fileSize: '85 KB'
-      }
-    },
-    {
-      id: 'card-file-media',
-      slug: 'card-file-media',
-      type: 'file-card',
-      isWidget: true,
-      title: 'Media Assets Card',
-      desc: 'Image and media card with emerald badge and preview meta',
-      category: 'Cards & Tiles',
-      tags: ['card', 'file', 'media', 'image', 'photo', 'png'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-file-card"><span class="mini-file-badge mini-file-badge-media">IMG</span><div class="mini-file-info"><div class="mini-file-name">Hero-Visual.png</div><div class="mini-file-size">2.4 MB</div></div></div></div>',
-      elData: {
-        type: 'file-card',
-        fileType: 'media',
-        badge: 'IMG',
-        fileName: 'Hero-Visual.png',
-        fileSize: '2.4 MB'
-      }
-    },
-    {
-      id: 'card-file-zip',
-      slug: 'card-file-zip',
-      type: 'file-card',
-      isWidget: true,
-      title: 'Compressed Archive Card',
-      desc: 'Compressed archive bundle card with amber badge and size',
-      category: 'Cards & Tiles',
-      tags: ['card', 'file', 'zip', 'archive', 'tar', 'bundle'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-file-card"><span class="mini-file-badge mini-file-badge-zip">ZIP</span><div class="mini-file-info"><div class="mini-file-name">Source-Bundle.zip</div><div class="mini-file-size">48 MB</div></div></div></div>',
-      elData: {
-        type: 'file-card',
-        fileType: 'zip',
-        badge: 'ZIP',
-        fileName: 'Source-Bundle.zip',
-        fileSize: '48 MB'
-      }
-    },
-    {
-      id: 'card-folder-aurora',
-      slug: 'card-folder-aurora',
-      type: 'folder-card',
-      isWidget: true,
-      title: 'Aurora Glass Folder',
-      desc: 'Aurora liquid art frosted glass folder with tab and item count',
-      category: 'Cards & Tiles',
-      tags: ['card', 'folder', 'glass', 'aurora', 'frosted', 'vault'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-folder-card mini-folder-aurora"><div class="mini-folder-tab"><span class="mini-folder-badge">AURORA</span></div><div class="mini-folder-header"></div><div class="mini-folder-body"><div class="mini-folder-title">Aurora Project</div><div class="mini-folder-meta">12 items</div></div></div></div>',
-      elData: {
-        type: 'folder-card',
-        art: 'aurora',
-        label: 'Aurora Project',
-        badge: 'AURORA',
-        itemCount: '12 items'
-      }
-    },
-    {
-      id: 'card-folder-archive',
-      slug: 'card-folder-archive',
-      type: 'folder-card',
-      isWidget: true,
-      title: 'Archive Glass Folder',
-      desc: 'Production archives frosted glass folder with dusk art header',
-      category: 'Cards & Tiles',
-      tags: ['card', 'folder', 'glass', 'archive', 'dusk', 'files'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-folder-card mini-folder-dusk"><div class="mini-folder-tab"><span class="mini-folder-badge">ARCHIVE</span></div><div class="mini-folder-header"></div><div class="mini-folder-body"><div class="mini-folder-title">Production Archives</div><div class="mini-folder-meta">48 items</div></div></div></div>',
-      elData: {
-        type: 'folder-card',
-        art: 'dusk',
-        label: 'Production Archives',
-        badge: 'ARCHIVE',
-        itemCount: '48 items'
-      }
-    },
-    {
-      id: 'card-folder-ember',
-      slug: 'card-folder-ember',
-      type: 'folder-card',
-      isWidget: true,
-      title: 'Smoked Ember Glass Folder',
-      desc: 'Smoked dark ember glass folder with red ink art and tab',
-      category: 'Cards & Tiles',
-      tags: ['card', 'folder', 'glass', 'ember', 'smoke', 'vault'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-folder-card mini-folder-ember"><div class="mini-folder-tab"><span class="mini-folder-badge">EMBER</span></div><div class="mini-folder-header"></div><div class="mini-folder-body"><div class="mini-folder-title">Creative Vault</div><div class="mini-folder-meta">24 items</div></div></div></div>',
-      elData: {
-        type: 'folder-card',
-        art: 'ember',
-        label: 'Creative Vault',
-        badge: 'EMBER',
-        itemCount: '24 items'
-      }
-    },
-    {
-      id: 'badge-pulse',
-      slug: 'badge-pulse',
-      type: 'badge',
-      isWidget: true,
-      title: 'Pulse Glow Badge',
-      desc: 'Live pulsing neon indicator dot with status text pill',
-      category: 'Cards & Tiles',
-      tags: ['badge', 'pulse', 'status', 'tag', 'live'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-badge-pulse"><span class="mini-pulse-dot"></span><span>v2.0 LIVE</span></div></div>',
-      elData: {
-        type: 'badge',
-        text: 'v2.0 LIVE',
-        badgeStyle: 'pulse'
-      }
-    },
-    {
-      id: 'badge-pill',
-      slug: 'badge-pill',
-      type: 'badge',
-      isWidget: true,
-      title: 'Metric Pill Tag',
-      desc: 'Glassmorphic badge for stats, versions & highlights',
-      category: 'Cards & Tiles',
-      tags: ['badge', 'pill', 'metric', 'tag', 'glass'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-badge-pill"><span>+99.8% Faster</span></div></div>',
-      elData: {
-        type: 'badge',
-        text: '+99.8% Faster',
-        badgeStyle: 'pill'
-      }
-    },
-    {
-      id: 'image-custom',
-      slug: 'image-custom',
-      type: 'image',
-      isWidget: true,
-      title: 'Custom Floating Image',
-      desc: 'Free-floating framed media with subtle rounded shadow',
-      category: 'Cards & Tiles',
-      tags: ['image', 'photo', 'media', 'custom', 'floating'],
-      previewHtml: '<div class="mini-widget-preview-box"><div class="mini-image-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Thumbnail" /></div></div>',
-      elData: {
-        type: 'image',
-        imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80',
-        imageSize: 'medium'
-      }
-    }
-  ];
+  // Shared helpers live in scripts/builder/*.js (loaded first by builder.html; required in Node).
+  const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./scripts/builder/ui-helpers.js');
+  const { getNormalizedCategory, matchesCategory } = (typeof window !== 'undefined' && window.BuilderCategories) || require('./scripts/builder/categories.js');
+  const WIDGET_CATALOG_ITEMS = (typeof window !== 'undefined' && window.WidgetCatalog) || require('./scripts/builder/widget-catalog.js');
 
   function initBuilder() {
     // 1. Initialize State Manager
@@ -968,8 +485,23 @@
     function scheduleAutoSave() {
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
       autoSaveTimer = setTimeout(() => {
+        autoSaveTimer = null;
         saveStateToStorage();
       }, 200);
+    }
+
+    // Autosave is debounced; flush it when the tab is closed or hidden so the last 200ms of edits survive.
+    function flushAutoSave() {
+      if (!autoSaveTimer) return;
+      clearTimeout(autoSaveTimer);
+      autoSaveTimer = null;
+      saveStateToStorage();
+    }
+    if (typeof window !== 'undefined' && window.addEventListener) {
+      window.addEventListener('pagehide', flushAutoSave);
+      if (typeof document !== 'undefined' && document.addEventListener) {
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushAutoSave(); });
+      }
     }
 
     function pushHistorySnapshot() {
@@ -1557,12 +1089,10 @@
 
     let lastPreviewStructureKey = null;
     let forceFullPreviewReload = false;
-    const SECTION_SIZING_PROPS = ['min-height', 'height', 'overflow', 'padding-top', 'padding-bottom'];
-
     /**
-     * Applies sizing and overlay-element changes directly to the loaded preview document, so
-     * section scripts, animations and scroll position survive. Returns false when the preview
-     * is not ready or out of sync, in which case the caller does a full reload.
+     * Patches the loaded preview in place (see scripts/builder/preview-patch.js), then restores the
+     * canvas selection on the rebuilt overlay the way the iframe load handler does.
+     * Returns false when a full reload is needed instead.
      */
     function patchPreviewInPlace(stack) {
       let doc;
@@ -1571,44 +1101,8 @@
       } catch (_) {
         return false;
       }
-      if (!doc || doc.readyState !== 'complete' || stack.length === 0) return false;
+      if (!(window.PreviewPatch || require('./scripts/builder/preview-patch.js')).patchPreview({ doc, win: previewFrame.contentWindow, stack, assembler: window.Assembler })) return false;
 
-      const sectionEls = stack.map(sec => doc.getElementById(sec.id));
-      if (sectionEls.some(el => !el || !el.classList.contains('page-section'))) return false;
-
-      stack.forEach((sec, i) => {
-        const secEl = sectionEls[i];
-        if (!secEl.classList.contains('is-preloader')) {
-          SECTION_SIZING_PROPS.forEach(prop => secEl.style.removeProperty(prop));
-          window.Assembler.computeSectionSizingStyles(sec.sizing).split(';').forEach(decl => {
-            const idx = decl.indexOf(':');
-            if (idx > 0) secEl.style.setProperty(decl.slice(0, idx).trim(), decl.slice(idx + 1).trim());
-          });
-        }
-
-        const overlayHtml = window.Assembler.renderSectionOverlayHtml(sec.elements);
-        const layer = secEl.querySelector(':scope > .section-overlay-layer');
-        if (!overlayHtml) {
-          if (layer) layer.remove();
-        } else {
-          const tpl = doc.createElement('template');
-          tpl.innerHTML = overlayHtml.trim();
-          const fresh = tpl.content.firstElementChild;
-          if (layer) {
-            layer.replaceWith(fresh);
-          } else {
-            secEl.insertBefore(fresh, secEl.querySelector(':scope > .section-resize-handle'));
-          }
-        }
-      });
-
-      // Client-content overrides are applied by the runtime inside the preview document
-      const previewWin = previewFrame.contentWindow;
-      if (previewWin && typeof previewWin.__setOverrides === 'function') {
-        previewWin.__setOverrides(window.Assembler.collectOverrides(stack));
-      }
-
-      // Restore selection on the rebuilt overlay (mirrors the iframe load handler)
       if (pendingSelectedElement) {
         const el = doc.getElementById(pendingSelectedElement.elementId);
         if (el) {
@@ -4151,78 +3645,25 @@
       return { bundle: currentExportBundle, singleHtml: currentSingleHtml, assets: currentExportAssets };
     }
 
-    const ASSET_MIME_TYPES = {
-      png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif',
-      svg: 'image/svg+xml', avif: 'image/avif', ico: 'image/x-icon', mp4: 'video/mp4', webm: 'video/webm',
-      mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg', woff: 'font/woff', woff2: 'font/woff2',
-      ttf: 'font/ttf', otf: 'font/otf'
-    };
-    const assetFetchCache = new Map();
-
-    async function fetchLocalAsset(url) {
-      if (assetFetchCache.has(url)) return assetFetchCache.get(url);
-      let result = null;
-      try {
-        const res = await fetch(url);
-        if (res.ok) {
-          const ext = url.split('.').pop().toLowerCase();
-          result = { bytes: new Uint8Array(await res.arrayBuffer()), mime: ASSET_MIME_TYPES[ext] || 'application/octet-stream' };
-        }
-      } catch (err) {
-        console.warn('Could not fetch asset for export:', url, err);
-      }
-      assetFetchCache.set(url, result);
-      return result;
-    }
-
-    function bytesToDataUri(bytes, mime) {
-      let bin = '';
-      for (let i = 0; i < bytes.length; i += 0x8000) {
-        bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
-      }
-      return `data:${mime};base64,${btoa(bin)}`;
-    }
+    const assetBundler = (window.ExportAssets || require('./scripts/builder/export-assets.js')).createAssetBundler({
+      assembler: window.Assembler,
+      fetchFn: (url) => fetch(url)
+    });
 
     /**
-     * Root-relative assets (e.g. /vivmgmt/assets/images/a.jpg) only resolve on the dev server.
+     * Root-relative assets (e.g. /assets/library/a.jpg) only resolve on the dev server.
      * Copies them into the ZIP under assets/ and inlines them as data URIs in the single-file HTML.
      * Assets that cannot be fetched are left untouched and reported in a toast.
      */
     async function bundleLocalAssets() {
       currentExportAssets = {};
-      const A = window.Assembler;
-      if (!A || !A.findLocalAssetUrls) return;
-
-      const textKeys = ['index.html', 'style.css', 'script.js'];
-      const urls = new Set();
-      if (currentExportBundle) textKeys.forEach(k => A.findLocalAssetUrls(currentExportBundle[k]).forEach(u => urls.add(u)));
-      A.findLocalAssetUrls(currentSingleHtml).forEach(u => urls.add(u));
-      if (urls.size === 0) return;
-
-      const list = Array.from(urls);
-      const fetched = await Promise.all(list.map(fetchLocalAsset));
-      const zipMap = {};
-      const inlineMap = {};
-      const missing = [];
-      list.forEach((url, i) => {
-        const asset = fetched[i];
-        if (!asset) { missing.push(url); return; }
-        const zipPath = 'assets' + decodeURIComponent(url);
-        currentExportAssets[zipPath] = asset.bytes;
-        zipMap[url] = zipPath;
-        inlineMap[url] = bytesToDataUri(asset.bytes, asset.mime);
-      });
-
-      if (currentExportBundle) {
-        textKeys.forEach(k => {
-          if (typeof currentExportBundle[k] === 'string') currentExportBundle[k] = A.rewriteLocalAssetUrls(currentExportBundle[k], zipMap);
-        });
-      }
-      currentSingleHtml = A.rewriteLocalAssetUrls(currentSingleHtml, inlineMap);
-
-      if (missing.length) {
-        console.warn('Export: assets not found and left as-is:', missing);
-        showToast(`${missing.length} asset(s) could not be bundled (see console)`, 4000);
+      if (!window.Assembler || !window.Assembler.findLocalAssetUrls) return;
+      const result = await assetBundler.bundle({ files: currentExportBundle, singleHtml: currentSingleHtml });
+      currentExportAssets = result.assets;
+      currentSingleHtml = result.singleHtml;
+      if (result.missing.length) {
+        console.warn('Export: assets not found and left as-is:', result.missing);
+        showToast(`${result.missing.length} asset(s) could not be bundled (see console)`, 4000);
       }
     }
 

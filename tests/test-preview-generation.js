@@ -52,7 +52,7 @@ assert(cssContent.includes('375px'), 'Mobile viewport must specify 375px width')
 assert(cssContent.includes('box-shadow: 0 24px 60px'), 'Tablet/Mobile viewports must have frame shadow');
 
 // Test 6: Verify builder.js contains feature cache and open in new tab handlers
-const builderJsContent = fs.readFileSync('builder.js', 'utf8');
+const builderJsContent = require('./helpers/builder-source.js').readBuilderSource();
 assert(builderJsContent.includes('featureCache'), 'builder.js must declare client-side featureCache');
 assert(builderJsContent.includes('fetchFeatureFiles'), 'builder.js must contain fetchFeatureFiles');
 assert(builderJsContent.includes('openInTabBtn') || builderJsContent.includes('openNewTabBtn'), 'builder.js must wire open tab button');

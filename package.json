@@ -17,7 +17,7 @@
     "test": "node tests/test-builder-integration.js",
     "bundle-demo": "node scripts/bundle-demo.js",
     "clean-features": "node scripts/clean-features.js",
-    "test:e2e": "node tests/e2e/builder-flow.e2e.js",
+    "test:e2e": "node tests/e2e/run-all.js",
     "lint-tokens": "node scripts/lint-tokens.js"
   },
   "keywords": [],

@@ -6,7 +6,7 @@ const { assemblePreviewDocument, generateExportBundle, THEME_PRESETS } = require
 console.log('Testing Complete Landing Page Example & Singleton Constraints...');
 
 // 1. Verify STARTER_SECTIONS in builder.js
-const builderJs = fs.readFileSync('builder.js', 'utf8');
+const builderJs = require('./helpers/builder-source.js').readBuilderSource();
 assert(builderJs.includes('LANDING_PAGE_SINGLETONS'), 'builder.js must define LANDING_PAGE_SINGLETONS');
 assert(builderJs.includes('addOrReplaceLandingSection'), 'builder.js must define addOrReplaceLandingSection');
 assert(builderJs.includes('getSingletonType'), 'builder.js must define getSingletonType');

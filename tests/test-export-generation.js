@@ -83,7 +83,7 @@ assert(builderHtml.includes('id="copyCodeBtn"'), 'Must have #copyCodeBtn');
 // -------------------------------------------------------------
 // Test 5: Verify builder.js export modal wiring
 // -------------------------------------------------------------
-const builderJs = fs.readFileSync('builder.js', 'utf8');
+const builderJs = require('./helpers/builder-source.js').readBuilderSource();
 assert(builderJs.includes('openExportModal'), 'builder.js must define or handle openExportModal');
 assert(builderJs.includes('downloadZipBtn') || builderJs.includes('downloadZip'), 'builder.js must wire downloadZipBtn');
 assert(builderJs.includes('my-assembled-page.zip') || builderJs.includes('assembled-page.zip'), 'builder.js must specify zip filename');

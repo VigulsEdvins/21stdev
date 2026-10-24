@@ -8,7 +8,7 @@ console.log('Testing Dark Frosted Search Bar & Double/Right-Click Text Editing..
 
 const cssContent = fs.readFileSync(path.resolve(__dirname, '../builder.css'), 'utf8');
 const htmlContent = fs.readFileSync(path.resolve(__dirname, '../builder.html'), 'utf8');
-const jsContent = fs.readFileSync(path.resolve(__dirname, '../builder.js'), 'utf8');
+const jsContent = require('./helpers/builder-source.js').readBuilderSource();
 
 // -------------------------------------------------------------
 // 1. Test CSS Rules for Dark Frosted Search Bar

@@ -23,37 +23,64 @@ This directory (`/home/edvins/features-for-web/web-for-options`) is a self-conta
 
 ## 2. How to Add a New Feature or Design to This Vault (Via Agent)
 
-Whenever the user asks you to *"add this feature/design to `web-for-options`"* (or extract a feature from a website/folder into this vault):
+Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 
-1. **Create a New Folder:**
-   Create `/home/edvins/features-for-web/web-for-options/features/<your-feature-slug>/`.
-2. **Create the 4 Required Files inside `features/<your-feature-slug>/`:**
-   - **`meta.json`**:
-     ```json
-     {
-       "slug": "your-feature-slug",
-       "title": "Human Readable Title",
-       "category": "3D & Carousels",
-       "source": "custom",
-       "type": "component",
-       "description": "Concise description of the visual effect, physics, and interaction.",
-       "tags": ["3d", "carousel", "physics", "interactive"],
-       "dependencies": ["Vanilla HTML/CSS/JS"],
-       "order": 30
-     }
-     ```
-     *(Standard categories: `"3D & Carousels"`, `"Scroll & Parallax"`, `"Cursors & Physics"`, `"Galleries & Grids"`, `"Navigation & UI"`, `"Audio & Shaders"`, `"Full Templates"`)*
-   - **`index.html`**: Must be a 100% working standalone HTML5 page linking `<link rel="stylesheet" href="style.css">` and `<script src="script.js"></script>`, with zero broken external image links.
-   - **`style.css`**: Self-contained CSS rules.
-   - **`script.js`**: Self-contained JavaScript.
-   - **`component.tsx`** *(optional)*: React TypeScript version if applicable.
-3. **Sync the Registry:**
-   Run the sync command from `/home/edvins/features-for-web/web-for-options`:
+1. **Scaffold it** (creates a schema-valid folder, then syncs the registry):
    ```bash
-   node scripts/sync-registry.js
+   npm run new-feature -- my-slug --category "Heroes" --title "My Hero"
    ```
-   This automatically updates `registry.json` and `registry.js` (`window.FEATURE_REGISTRY`) so the new feature appears immediately in both the **21st.local Catalog Grid** and **IDE Workbench**.
-4. **Verify Everything Passes:**
+   Categories are a **fixed list** defined in `scripts/schema.js` (Heroes, Headers & Nav, Footers & Endings, Buttons & UI, Cards & Tiles, Galleries & Bento, 3D & Carousels, Scroll & Parallax, Interactions & Physics, Audio & Shaders, Preloaders & Shaders, Full Templates). Do not invent new ones; add to the list in `schema.js` first if one is truly missing.
+2. **Fill in `features/<slug>/`**:
+   - `meta.json` — validated by `scripts/schema.js`. Required: `slug`, `title`, `description` (20+ chars), `tags` (3+), `category`, `type`, `status` (`draft` until checked), `mood[]`, `industry[]`, `weight` (`light|medium|heavy`), `needsAssets`, `origin {source, license}`, `updatedAt`, `customizable[]`, `dependencies[]`. Mood/industry/weight drive the builder's filters, so set them honestly.
+   - `index.html`, `style.css`, `script.js` — standalone and runnable; no external image links that can break.
+   - `component.tsx` + `demo.tsx` *(React features)* — then run `npm run bundle-demo -- --slug <slug>` so `script.js` is built from the **demo** (real props), not the bare component.
+   - Images/video/fonts: copy them into `assets/library/` (or run `node scripts/localize-assets.js`) and reference them as `/assets/library/<file>`. Never reference files outside this folder.
+   - Use the standard design tokens in CSS: `var(--bg)`, `var(--text)`, `var(--accent)`, `var(--radius)`, `var(--font-display)`, `var(--font-body)` so themes and page fonts apply. `npm run lint-tokens` lists the worst offenders.
+3. **Sync, verify, check**:
    ```bash
-   node tests/verify-registry.js
+   npm run sync              # rebuilds registry.json and registry.js
+   npm run verify            # schema + registry checks
+   npm run check-features -- --slug my-slug   # opens it in headless Chromium and reports errors
+   npm run thumbs -- --slug my-slug           # renders thumbs/<slug>.jpg for the builder grid
+   npm run sync              # picks up the thumbnail
    ```
+   `npm run check-features -- --promote` marks clean `draft` features `stable`. The builder hides drafts unless "Drafts" is ticked.
+4. **Optional: make it client-editable.** The Content tab auto-detects headings, paragraphs, images and links. To control labels or limit what clients can change, list fields in `meta.json`:
+   ```json
+   "customizable": [
+     { "id": "headline", "label": "Headline", "type": "text", "selector": ":scope h1" },
+     { "id": "photo", "label": "Hero image", "type": "image", "selector": ":scope img.hero" },
+     { "id": "cta", "label": "Button link", "type": "link", "selector": ":scope a.cta" },
+     { "id": "tint", "label": "Overlay colour", "type": "color", "selector": ":scope", "attr": "--overlay" }
+   ]
+   ```
+   Selectors are resolved inside the section (`:scope`). Types: `text`, `image`, `link`, `color`.
+
+## 3. Everyday Commands
+
+| Command | What it does |
+| --- | --- |
+| `npm start` | Serves the vault at http://localhost:4173 (`VAULT_STRICT=1` serves only vault files) |
+| `npm test` | All unit and structure tests (`tests/test-*.js`) |
+| `npm run test:e2e` | Playwright end-to-end tests of builder.html (search, preview, content, projects, ZIP export) |
+| `npm run sync` | Regenerate `registry.json` / `registry.js` from `features/*/meta.json` |
+| `npm run new-feature -- <slug>` | Scaffold a new feature |
+| `npm run check-features` | Load every feature in headless Chromium; writes `reports/features.json` |
+| `npm run thumbs` | Render `thumbs/<slug>.jpg` previews |
+| `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx` |
+| `npm run lint-tokens` | Design-token adoption report |
+
+## 4. Builder Workflow for Client Sites
+
+1. **Pick components** in the *Elements* tab: fuzzy search, mood/industry/weight filters, ★ favourites, 🕘 recents, ≈ "find similar". Hover a thumbnail for the live preview.
+2. **Arrange** them in *Sections*, then set colours and **page settings** (title, description, favicon, Google fonts, language) in *Styling*.
+3. **Edit client content** in the *Content* tab: text, images (upload or URL) and links. Edits are stored per section and re-applied in the preview and the export.
+4. **Save the work** under *Projects*: one project per client with notes, up to 20 snapshots, and JSON export/import to move a project between machines.
+5. **Export**: the ZIP contains `index.html`, `style.css`, `script.js`, a handoff `README.md` and an `assets/` folder; the single-file HTML inlines the images.
+
+## 5. Where Things Live
+
+- `builder.html`, `builder.js`, `builder.css` — the builder shell. Extracted modules are in `scripts/builder/` (categories, widget catalog, UI helpers, export asset bundling, in-place preview patching).
+- `scripts/builder-extras.js` — projects modal, page settings, Content tab. `scripts/projects.js` — project store. `scripts/catalog-search.js` — search, filters, favourites.
+- `scripts/assembler.js` — builds the preview document and the export bundle. `scripts/stack-manager.js` — page state.
+- `assets/library/` — shared, content-hash-named images used by features. `thumbs/` — grid thumbnails. `reports/` — generated, git-ignored.
