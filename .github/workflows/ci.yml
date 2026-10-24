@@ -97,6 +97,10 @@ jobs:
         continue-on-error: true
       - run: npm run check-visual | tee reports/visual.txt
         continue-on-error: true
+      - run: npm audit --omit=dev | tee reports/npm-audit.txt
+        continue-on-error: true
+      - run: npm run check-starters
+        continue-on-error: true
       - uses: actions/upload-artifact@v4
         if: always()
         with:

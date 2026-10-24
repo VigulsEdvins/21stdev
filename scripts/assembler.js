@@ -2382,6 +2382,44 @@ function renderJsonLd(page = {}, title = '') {
   return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
 }
 
+/**
+ * Content-Security-Policy for the ZIP export. Scripts may only come from the page itself and the CDNs the page really
+ * uses; inline event handlers, inline scripts or eval need a weaker rule and are named in `reasons` so the README can say so.
+ */
+function renderCsp(indexHtml = '', scriptJs = '') {
+  const reasons = [];
+  const hosts = new Set();
+  const scriptSrcRe = /<script\b[^>]*\bsrc\s*=\s*["'](?:https?:)?\/\/([^/"']+)/gi;
+  let m;
+  while ((m = scriptSrcRe.exec(indexHtml))) hosts.add(m[1].toLowerCase());
+  const importRe = /\bimport\s*\(\s*["'`]https?:\/\/([^/"'`]+)/g;
+  while ((m = importRe.exec(scriptJs))) hosts.add(m[1].toLowerCase());
+  const body = String(indexHtml).replace(/<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi, '');
+  const scriptSrc = ["'self'", ...hosts];
+  if (/\son[a-z]+\s*=\s*["']/i.test(body) || /<script\b(?![^>]*\bsrc=)[^>]*>[\s\S]*?\S[\s\S]*?<\/script>/i.test(body)) {
+    scriptSrc.push("'unsafe-inline'");
+    reasons.push('inline scripts or event handlers in a section');
+  }
+  if (/\beval\s*\(|\bnew\s+Function\s*\(/.test(scriptJs)) {
+    scriptSrc.push("'unsafe-eval'");
+    reasons.push('eval() in a section script');
+  }
+  const policy = [
+    "default-src 'self'",
+    'script-src ' + scriptSrc.join(' '),
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "img-src 'self' data: blob: https:",
+    "font-src 'self' data: https://fonts.gstatic.com",
+    "media-src 'self' data: blob: https:",
+    "connect-src 'self' https: data: blob:",
+    "worker-src 'self' blob:",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self' https:"
+  ].join('; ');
+  return { policy, strict: reasons.length === 0, reasons };
+}
+
 /** Host helper files: cache and security headers for Netlify / Cloudflare Pages, and plain deploy steps. */
 function renderDeployFiles() {
   const headers = `/*
@@ -2682,6 +2720,7 @@ const REVIEW_RUNTIME = `(function () {
     });
     html += comments.length ? '</ol>' : '';
     html += '<div class="rv-row" style="margin-top:10px"><button type="button" class="rv-btn rv-ghost" data-act="copy">Copy text</button><button type="button" class="rv-btn" data-act="download">Download comments</button></div>';
+    html += '<p class="rv-note" style="margin:8px 0 0;font-size:11px;opacity:.7">Comments are saved only in this browser until you download them. Nothing is sent anywhere.</p>';
     list.innerHTML = html;
     var spans = list.querySelectorAll('[data-t]');
     comments.forEach(function (c, i) { spans[i].textContent = c.comment; });
@@ -3069,6 +3108,10 @@ Change the title, description and favicon in the \`<head>\` of \`index.html\`. F
 
 ${contentOverrides.length ? contentOverrides.map(o => `- \`#${o.section}\` → \`${o.selector}\` (${o.type}): ${o.value.length > 80 ? o.value.slice(0, 77) + '...' : o.value}`).join('\n') + '\n\nThese were edited in the builder and are applied by the `window.__setOverrides([...])` list at the bottom of `script.js`. Edit the values there, or change the markup in `index.html` and delete the matching entry.' : 'No content was overridden in the builder; edit text directly in `index.html`.'}
 
+## Libraries
+
+Some sections bundle GSAP (animation). Its licence (https://gsap.com/standard-license) allows normal website use; read it if you plan to resell the page as part of a design tool.
+
 ## Assets
 
 Images, video and fonts used by the components are in \`assets/\`. Keep that folder next to \`index.html\` when you upload the site.
@@ -3124,11 +3167,18 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
 \`\`\`
 `;
 
+  let finalIndex = indexHtml;
+  let cspNote = '';
+  if (options.csp) {
+    const csp = renderCsp(indexHtml, scriptJs);
+    finalIndex = indexHtml.replace('<meta charset="UTF-8">', `<meta charset="UTF-8">\n  <meta http-equiv="Content-Security-Policy" content="${escapeHtml(csp.policy)}">`);
+    cspNote = `\n## Security policy\n\nindex.html carries a Content-Security-Policy that only lets scripts run from this site${csp.strict ? '' : ' (relaxed because of: ' + csp.reasons.join(', ') + ')'} and from the CDNs this page uses. If you add a new third-party script, add its address to \`script-src\` in the \`<meta http-equiv="Content-Security-Policy">\` tag.\n`;
+  }
   return Object.assign({
-    'index.html': indexHtml,
+    'index.html': finalIndex,
     'style.css': styleCss,
     'script.js': scriptJs,
-    'README.md': readmeMd
+    'README.md': readmeMd + cspNote
   }, renderSiteFiles(pageOpts), renderDeployFiles());
 }
 
@@ -3341,6 +3391,7 @@ if (typeof module !== 'undefined' && module.exports) {
     renderJsonLd,
     renderSiteFiles,
     renderDeployFiles,
+    renderCsp,
     renderNativePaletteCss,
     collectOverrides,
     REVIEW_RUNTIME,

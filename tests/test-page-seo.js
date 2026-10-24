@@ -54,3 +54,17 @@ console.log('✅ JSON-LD and site files tests passed!');
 const deploy = A.generateExportBundle([], 'midnight-dark', {}, { page: {} });
 assert(deploy['_headers'].includes('Cache-Control') && deploy['DEPLOY.md'].includes('`_headers`'), 'deploy files in the bundle');
 console.log('✅ Deploy files tests passed!');
+
+// Content-Security-Policy option
+const cspPlain = A.renderCsp('<html><body><section><button>Hi</button></section><script src="script.js"></script></body></html>', 'var a = 1;');
+assert(cspPlain.strict && cspPlain.policy.includes("script-src 'self'") && !cspPlain.policy.includes('unsafe'.concat('-eval')), 'plain page gets a strict policy');
+const cspCdn = A.renderCsp('<script src="https://cdn.jsdelivr.net/npm/x.js"></script>', 'import("https://esm.sh/three")');
+assert(cspCdn.policy.includes('cdn.jsdelivr.net') && cspCdn.policy.includes('esm.sh'), 'CDNs the page uses are allowed');
+const cspInline = A.renderCsp('<button onclick="go()">x</button>', '');
+assert(!cspInline.strict && cspInline.policy.includes("'unsafe-inline'") && cspInline.reasons.length, 'inline handlers relax the policy and say why');
+assert(A.renderCsp('<script type="application/ld+json">{"a":1}</script>', '').strict, 'JSON-LD is data, not a script');
+assert(A.renderCsp('', 'eval("1")').policy.includes("'unsafe-eval'"));
+const withCsp = A.generateExportBundle([], 'midnight-dark', {}, { page: {}, csp: true });
+assert(withCsp['index.html'].includes('http-equiv="Content-Security-Policy"') && withCsp['README.md'].includes('Security policy'));
+assert(!A.generateExportBundle([], 'midnight-dark', {}, { page: {} })['index.html'].includes('Content-Security-Policy'), 'off by default');
+console.log('✅ CSP tests passed!');

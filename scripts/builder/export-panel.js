@@ -146,7 +146,7 @@
       const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
 
       if (window.Assembler && typeof window.Assembler.generateExportBundle === 'function') {
-        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, licenseMap, review: !!exportOptions.review });
+        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked });
       }
 
       if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
@@ -348,6 +348,9 @@
       exportModal.classList.add('is-open');
       exportModal.setAttribute('aria-hidden', 'false');
     }
+
+    const cspToggle = document.getElementById('exportCspToggle');
+    if (cspToggle) cspToggle.addEventListener('change', async () => { await prepareExportData(); updateCodeView(); renderPageChecks(); });
 
     function closeExportModal() {
       if (!exportModal) return;
