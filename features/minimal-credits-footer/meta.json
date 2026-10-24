@@ -1,0 +1,62 @@
+{
+  "name": "Minimal Credits Footer",
+  "slug": "minimal-credits-footer",
+  "title": "Minimal Credits Footer",
+  "category": "Footers & Endings",
+  "source": "custom",
+  "type": "component",
+  "description": "A slim closing footer: a one-line sign-off, social links with icons, and a back-to-top button that appears after scrolling and respects reduced motion.",
+  "tags": [
+    "footer",
+    "minimal",
+    "social",
+    "back-to-top",
+    "credits"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "portfolio",
+    "agency",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "line",
+      "label": "Sign-off",
+      "type": "text",
+      "selector": ":scope .mcf-line"
+    },
+    {
+      "id": "copyright",
+      "label": "Copyright",
+      "type": "text",
+      "selector": ":scope .mcf-copy"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .mcf-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

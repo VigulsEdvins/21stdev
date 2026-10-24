@@ -19,7 +19,7 @@ const { startServer, launchBrowser } = require('./lib/browser');
 const ROOT = path.resolve(__dirname, '..');
 const THEMES = { dark: 'midnight-dark', light: 'clean-minimal' };
 const REQUIRED = ['index.html', 'style.css', 'script.js', 'README.md'];
-const KNOWN_EMPTY = new Set(['cloth-peel-reveal', 'noise-dissolve-reveal', 'spotlight-offer-quiz', 'tile-scrollbar']);
+const KNOWN_EMPTY = new Set([]);
 const KNOWN_EXTERNAL = {
   'tilted-grid-hero': ['pub-940ccf6255b54fa799a9b01050e6c227.r2.dev'], // image URLs built at run time
   'hero-ascii-one': ['cdn.jsdelivr.net', 'storage.googleapis.com', 'assets.unicorn.studio'], // live Unicorn Studio embed
@@ -28,9 +28,7 @@ const KNOWN_EXTERNAL = {
     'spotlight-offer-quiz', 'staircase-carousel', 'tilt-cascade-carousel', 'viewfinder-flip-carousel'].map(s => [s, ['images.unsplash.com']])) // URLs built at run time
 };
 
-const KNOWN_BROKEN = {
-  'forma-liquid-particle-studio': 'builds its image paths at run time (/features/.../img/${name}.webp), so the exporter never copies those images into the ZIP'
-};
+const KNOWN_BROKEN = {};
 
 async function exportOne(builder, srvUrl, slug, theme) {
   const page = await builder.newPage();

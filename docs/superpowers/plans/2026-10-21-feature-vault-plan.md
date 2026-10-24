@@ -1,5 +1,7 @@
 # Local 21st.dev Feature & Design Registry Implementation Plan
 
+> **Status (2026-10-24): implemented.** This plan was carried out and the work is in git history; its checkboxes were not kept up to date. Open work now lives in `docs/BACKLOG.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build a 100% local, zero-auth, zero-build Component, Feature & Design Vault modeled after 21st.dev inside `/home/edvins/features-for-web/web-for-options` with 26 standalone, runnable features and full templates extracted from `photo-caroulsel`, `carousel-gallery-play`, `betteroff`, `vivmgmt`, and `21st.dev`.

@@ -6,6 +6,7 @@
   'use strict';
 
   const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
+  const { createAutosave } = (typeof window !== 'undefined' && window.BuilderAutosave) || require('./autosave.js');
 
   function createHistory(ctx) {
     const {
@@ -53,15 +54,52 @@
       saveStateToStorage();
     }
 
-    function saveStateToStorage() {
-      if (typeof localStorage === 'undefined') return;
-      try {
-        const currentState = serializeState();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState));
-        if (state.extras) state.extras.onStateSaved(currentState);
-      } catch (err) {
-        console.warn('Failed to save builder state to localStorage:', err);
+    // A failed autosave must not pass unnoticed: show a banner until a save works again.
+    function showStorageWarning(status) {
+      if (typeof document === 'undefined') return;
+      let bar = document.getElementById('storageWarning');
+      if (status.ok) { if (bar) bar.remove(); return; }
+      const why = status.reason === 'full'
+        ? 'The browser storage is full, so your latest changes are not being saved.'
+        : 'This browser is not letting the builder save, so your latest changes are not being kept (a private window?).';
+      if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'storageWarning';
+        bar.setAttribute('role', 'alert');
+        bar.style.cssText = 'position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:9999;max-width:min(680px,92vw);padding:10px 14px;border-radius:10px;background:#7a1f1f;color:#fff;font:13px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.5);display:flex;gap:12px;align-items:center';
+        document.body.appendChild(bar);
       }
+      bar.innerHTML = '';
+      const text = document.createElement('span');
+      text.textContent = why + ' Download a copy of your work now.';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'Download backup';
+      btn.style.cssText = 'flex:none;padding:6px 10px;border-radius:8px;border:0;background:#fff;color:#7a1f1f;font-weight:600;cursor:pointer';
+      btn.addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(serializeState(), null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'page-backup.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      });
+      bar.append(text, btn);
+    }
+
+    const storage = (() => { try { return typeof localStorage !== 'undefined' ? localStorage : null; } catch (_) { return null; } })();
+    const autosave = createAutosave({
+      storage: storage || { getItem: () => null, setItem: () => { throw new Error('no storage'); }, removeItem: () => {} },
+      key: STORAGE_KEY,
+      onStatus: showStorageWarning
+    });
+
+    function saveStateToStorage() {
+      const currentState = serializeState();
+      autosave.save(currentState);
+      try { if (state.extras) state.extras.onStateSaved(currentState); } catch (err) { console.warn('Project bookkeeping after autosave failed:', err); }
     }
 
     function scheduleAutoSave() {
@@ -228,7 +266,7 @@
     return {
       state,
       MAX_HISTORY,
-      STORAGE_KEY,
+      STORAGE_KEY, autosave,
       updateHistoryUI,
       serializeState,
       applyState,

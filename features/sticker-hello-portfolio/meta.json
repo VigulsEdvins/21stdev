@@ -51,10 +51,28 @@
   "updatedAt": "2026-10-22",
   "customizable": [
     {
-      "id": "button-text",
-      "label": "Button text",
+      "id": "button-text-1",
+      "label": "Button text 1",
       "type": "text",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Button text 3",
+      "type": "text",
+      "selector": ":scope button.sh-brand"
+    },
+    {
+      "id": "button-text-4",
+      "label": "Button text 4",
+      "type": "text",
+      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
     },
     {
       "id": "headline",
@@ -84,25 +102,7 @@
       "id": "section-heading-3",
       "label": "Section heading 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > article:nth-of-type(3) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-4",
-      "label": "Section heading 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > article:nth-of-type(4) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-5",
-      "label": "Section heading 5",
-      "type": "text",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-6",
-      "label": "Section heading 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > h2:nth-of-type(1)"
     },
     {
       "id": "link-2",
@@ -111,10 +111,10 @@
       "selector": ":scope a.sh-pill-solid"
     },
     {
-      "id": "link-3",
-      "label": "Link 3",
+      "id": "footer-link",
+      "label": "Footer link",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(2)"
+      "selector": ":scope a.sh-email"
     }
   ],
   "measured": {

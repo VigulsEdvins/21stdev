@@ -1,0 +1,22 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.mcb-demo { min-height: 100%; display: grid; place-content: center; justify-items: center; gap: 14px; padding: 80px 24px; text-align: center; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.mcb-eyebrow { margin: 0; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; opacity: .6; }
+.mcb-title { margin: 0; font-family: var(--font-display, inherit); font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; }
+.mcb-zone { padding: 40px; margin: 8px 0; }
+.mcb-button { position: relative; display: inline-flex; align-items: center; gap: 12px; padding: 20px 34px; border-radius: 999px; background: var(--accent, #6366f1); color: #fff; font-size: 1.1rem; font-weight: 600; text-decoration: none; overflow: hidden; isolation: isolate; transform: translate(var(--x, 0px), var(--y, 0px)); transition: transform .35s cubic-bezier(.2,.9,.3,1.2), box-shadow .3s; box-shadow: 0 10px 30px color-mix(in srgb, var(--accent, #6366f1) 45%, transparent); }
+.mcb-button.is-near { transition: transform .08s linear, box-shadow .3s; }
+.mcb-button:hover { box-shadow: 0 16px 44px color-mix(in srgb, var(--accent, #6366f1) 55%, transparent); }
+.mcb-button:focus-visible { outline: 3px solid var(--text, #fff); outline-offset: 4px; }
+.mcb-label { position: relative; display: block; height: 1.3em; overflow: hidden; line-height: 1.3; }
+.mcb-label-a, .mcb-label-b { display: block; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.mcb-label-b { position: absolute; left: 0; top: 100%; white-space: nowrap; }
+.mcb-button:hover .mcb-label-a, .mcb-button:focus-visible .mcb-label-a { transform: translateY(-100%); }
+.mcb-button:hover .mcb-label-b, .mcb-button:focus-visible .mcb-label-b { transform: translateY(-100%); }
+.mcb-arrow { width: 20px; height: 20px; transition: transform .3s; }
+.mcb-button:hover .mcb-arrow { transform: translateX(4px); }
+.mcb-ripple-layer { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.mcb-ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,.35); transform: scale(0); animation: mcb-ripple .65s ease-out forwards; }
+@keyframes mcb-ripple { to { transform: scale(1); opacity: 0; } }
+.mcb-note { margin: 0; font-size: .85rem; opacity: .55; }
+@media (hover: none) { .mcb-button { transform: none !important; } .mcb-zone { padding: 16px; } }
+@media (prefers-reduced-motion: reduce) { .mcb-button, .mcb-label-a, .mcb-label-b, .mcb-arrow { transition: none; } .mcb-ripple { animation: none; opacity: 0; } .mcb-button { transform: none !important; } }

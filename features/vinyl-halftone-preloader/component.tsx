@@ -820,7 +820,7 @@ export default function VinylHalftonePreloader({
                 <path id={ringId} d={"M " + -ringR + " 0 A " + ringR + " " + ringR + " 0 1 1 " + ringR + " 0 A " + ringR + " " + ringR + " 0 1 1 " + -ringR + " 0"} />
               </defs>
               <circle r={lay.rl * 0.985} fill="none" stroke={colors.ink} strokeWidth={lay.u * 0.012} strokeDasharray={lay.u * 0.006 + " " + lay.u * 0.0135} opacity={0.55} />
-              <circle r={ringR - ringFont * 0.95} fill="none" stroke={colors.ink} strokeWidth={0.75} opacity={0.35} />
+              <circle r={Math.max(0, ringR - ringFont * 0.95)} fill="none" stroke={colors.ink} strokeWidth={0.75} opacity={0.35} />
               <text fontSize={ringFont} opacity={0.62}>
                 <textPath href={"#" + ringId}>{ringText + ringText + ringText}</textPath>
               </text>

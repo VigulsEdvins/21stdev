@@ -8,7 +8,7 @@
   const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function createExportController(ctx) {
-    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap } = ctx;
+    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap, exportAssets = {}, weightMap = {} } = ctx;
 
     // 9. Export Modal & Project ZIP Generator Controller
     const exportModal = document.getElementById('exportModal');
@@ -35,6 +35,7 @@
 
     // Actions
     const downloadZipBtn = document.getElementById('downloadZipBtn');
+    const downloadReactBtn = document.getElementById('downloadReactBtn');
     const downloadSingleHtmlBtn = document.getElementById('downloadSingleHtmlBtn');
     const copySingleBundleBtn = document.getElementById('copySingleBundleBtn');
     const copyBundleBtnText = document.getElementById('copyBundleBtnText');
@@ -122,7 +123,7 @@
     /**
      * Generates export bundle & single file bundle from current stack and theme.
      */
-    async function prepareExportData() {
+    async function prepareExportData(exportOptions = {}) {
       const state = stackManager.getState();
       const currentStack = state.stack;
 
@@ -145,7 +146,7 @@
       const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
 
       if (window.Assembler && typeof window.Assembler.generateExportBundle === 'function') {
-        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, licenseMap });
+        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, licenseMap, review: !!exportOptions.review });
       }
 
       if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
@@ -159,7 +160,8 @@
       return { bundle: currentExportBundle, singleHtml: currentSingleHtml, assets: currentExportAssets };
     }
 
-    const assetBundler = (window.ExportAssets || require('./export-assets.js')).createAssetBundler({
+    const ExportAssetsApi = window.ExportAssets || require('./export-assets.js');
+    const assetBundler = ExportAssetsApi.createAssetBundler({
       assembler: window.Assembler,
       fetchFn: (url) => fetch(url)
     });
@@ -172,8 +174,13 @@
     async function bundleLocalAssets() {
       currentExportAssets = {};
       if (!window.Assembler || !window.Assembler.findLocalAssetUrls) return;
-      const result = await assetBundler.bundle({ files: currentExportBundle, singleHtml: currentSingleHtml });
+      const extraAssets = Array.from(new Set(stackManager.getStack().flatMap(s => exportAssets[s.slug] || [])));
+      const result = await assetBundler.bundle({ files: currentExportBundle, singleHtml: currentSingleHtml, extraAssets });
       currentExportAssets = result.assets;
+      if (currentExportBundle && typeof currentExportBundle['README.md'] === 'string' && ExportAssetsApi.renderWeightReport) {
+        const sections = stackManager.getStack().map(s => ({ slug: s.slug, title: (featuresData[s.slug] && featuresData[s.slug].title) || s.slug }));
+        currentExportBundle['README.md'] += '\n' + ExportAssetsApi.renderWeightReport({ files: currentExportBundle, assets: result.assets, sections, weightMap });
+      }
       currentSingleHtml = result.singleHtml;
       if (result.missing.length) {
         console.warn('Export: assets not found and left as-is:', result.missing);
@@ -387,7 +394,7 @@
      * Generates a clean archive with index.html, style.css, script.js, and README.md.
      * Uses window.JSZip if available, otherwise uses native pure-JS zip creator.
      */
-    async function handleDownloadZip() {
+    async function handleDownloadZip(exportOptions = {}) {
       const stack = stackManager.getStack();
       if (!Array.isArray(stack) || stack.length === 0) {
         showToast('Please add at least one section before downloading ZIP.');
@@ -413,12 +420,15 @@
       }
 
       try {
-        await prepareExportData();
+        await prepareExportData(exportOptions);
         if (!currentExportBundle) {
           throw new Error('Could not generate export bundle');
         }
 
-        const zipFilename = 'my-assembled-page.zip';
+        const zipFilename = exportOptions.review ? 'my-review-copy.zip' : 'my-assembled-page.zip';
+        if (exportOptions.review) {
+          currentExportBundle['README.md'] += '\n## Review copy\n\nThis copy has a Review button (bottom left). Open `index.html`, press **Comment mode**, click anything on the page and write what should change. Press **Review** to see the list and **Download comments** to send the file back. Comments stay in the browser until downloaded. Remove the review code before the final launch by exporting a normal copy.\n';
+        }
 
         if (typeof window.JSZip !== 'undefined') {
           // 1. Client-side JSZip
@@ -463,8 +473,116 @@
     }
 
     if (downloadZipBtn) {
-      downloadZipBtn.addEventListener('click', handleDownloadZip);
+      downloadZipBtn.addEventListener('click', () => handleDownloadZip());
     }
+    const downloadReviewBtn = document.getElementById('downloadReviewBtn');
+    if (downloadReviewBtn) downloadReviewBtn.addEventListener('click', () => handleDownloadZip({ review: true }));
+
+    // Reviewer comments come back as a JSON file: list them and jump to the section each one is about.
+    const reviewFileInput = document.getElementById('reviewFileInput');
+    const reviewList = document.getElementById('reviewCommentList');
+    function renderReviewComments(data) {
+      if (!reviewList) return;
+      reviewList.innerHTML = '';
+      const comments = Array.isArray(data.comments) ? data.comments : [];
+      if (!comments.length) { reviewList.textContent = 'That file has no comments.'; return; }
+      const stack = stackManager.getStack();
+      comments.forEach((c, i) => {
+        const li = document.createElement('li');
+        const where = (c.section && c.section.slug) || 'page';
+        const sec = stack.find(s => s.id === (c.section && c.section.id)) || stack.find(s => s.slug === where);
+        const text = document.createElement('span');
+        text.textContent = `${i + 1}. ${c.comment}${c.author ? ' (' + c.author + ')' : ''} `;
+        const small = document.createElement('small');
+        small.textContent = `on ${(sec && (sec.title || sec.slug)) || where}${c.text ? ': "' + c.text + '"' : ''}`;
+        li.append(text, small);
+        if (sec) {
+          const go = document.createElement('button');
+          go.type = 'button';
+          go.className = 'builder-btn-subtle';
+          go.textContent = 'Show section';
+          go.addEventListener('click', () => {
+            closeExportModal();
+            if (typeof ctx.setActiveSection === 'function') ctx.setActiveSection(sec.id);
+            const frame = document.querySelector('iframe');
+            const el = frame && frame.contentDocument && frame.contentDocument.getElementById(sec.id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+          li.appendChild(go);
+        }
+        reviewList.appendChild(li);
+      });
+    }
+    if (reviewFileInput) {
+      reviewFileInput.addEventListener('change', async () => {
+        const file = reviewFileInput.files[0];
+        if (!file) return;
+        try {
+          const data = JSON.parse(await file.text());
+          if (!data || data.format !== 'web-builder-review') throw new Error('not a review file');
+          renderReviewComments(data);
+        } catch (err) {
+          if (reviewList) reviewList.textContent = 'That file is not a review comments file from this builder.';
+        }
+        reviewFileInput.value = '';
+      });
+    }
+
+    /**
+     * React project: sections with a React source become components of a Vite project. Sources and assets are
+     * fetched from the vault; sections without a React source are listed in the project's README.
+     */
+    async function handleDownloadReact() {
+      const state = stackManager.getState();
+      if (!Array.isArray(state.stack) || state.stack.length === 0) {
+        showToast('Please add at least one section before downloading.');
+        return;
+      }
+      const label = document.getElementById('downloadReactBtnText');
+      const original = label ? label.textContent : '';
+      if (downloadReactBtn) downloadReactBtn.disabled = true;
+      if (label) label.textContent = 'Packaging project...';
+      try {
+        const text = async (url) => { const r = await fetch(url); return r.ok ? r.text() : ''; };
+        const slugs = Array.from(new Set(state.stack.map(s => s.slug).filter(Boolean)));
+        const sources = {};
+        await Promise.all(slugs.map(async (slug) => {
+          const base = `/features/${slug}/`;
+          const [component, demo, css] = await Promise.all([text(base + 'component.tsx'), text(base + 'demo.tsx'), text(base + 'style.css')]);
+          sources[slug] = { title: (featuresData[slug] && featuresData[slug].title) || slug, component, demo, css };
+        }));
+        const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
+        const out = (window.ReactExport || require('./react-export.js')).generateReactProject({ stack: state.stack, theme: themeConfig, page: state.page, sources });
+        if (!out.included.length) {
+          showToast('None of these sections has a React source, so there is nothing to put in a React project.', 5000);
+          return;
+        }
+        const extra = Array.from(new Set(out.included.flatMap(slug => exportAssets[slug] || [])));
+        const urls = Array.from(new Set([...out.assetUrls, ...extra]));
+        const fetched = await Promise.all(urls.map(async (u) => {
+          try { const r = await fetch(u); return r.ok ? new Uint8Array(await r.arrayBuffer()) : null; } catch (_) { return null; }
+        }));
+        const entries = Object.assign({}, out.files);
+        urls.forEach((u, i) => { if (fetched[i]) entries['public' + decodeURIComponent(u)] = fetched[i]; });
+        let blob;
+        if (typeof window.JSZip !== 'undefined') {
+          const zip = new window.JSZip();
+          Object.entries(entries).forEach(([name, data]) => zip.file(name, data));
+          blob = await zip.generateAsync({ type: 'blob' });
+        } else {
+          blob = new Blob([window.Assembler.createZipArchive(entries)], { type: 'application/zip' });
+        }
+        triggerDownload(blob, 'my-react-project.zip', 'application/zip');
+        showToast(out.skipped.length ? `Downloaded. ${out.skipped.length} section(s) without a React source were left out (see README.md).` : 'Downloaded my-react-project.zip', 4500);
+      } catch (err) {
+        console.error('Error generating React project:', err);
+        showToast('Failed to generate the React project');
+      } finally {
+        if (downloadReactBtn) downloadReactBtn.disabled = false;
+        if (label) label.textContent = original;
+      }
+    }
+    if (downloadReactBtn) downloadReactBtn.addEventListener('click', handleDownloadReact);
 
     return {
       prepareExportData,
@@ -472,7 +590,8 @@
       setActiveCodeSubtab,
       openExportModal,
       closeExportModal,
-      handleDownloadZip
+      handleDownloadZip,
+      renderReviewComments
     };
   }
 

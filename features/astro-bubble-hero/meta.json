@@ -83,6 +83,13 @@
       "label": "Text 2",
       "type": "text",
       "selector": ":scope div.aa-credit"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .aa-root",
+      "attr": "--aa-accent"
     }
   ],
   "measured": {

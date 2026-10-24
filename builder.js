@@ -34,10 +34,14 @@
     // Components that keep their own palette under some page themes (meta.json "nativeWhen")
     const nativeMap = {};
     const licenseMap = {};
+    const weightMap = {};
+    const exportAssets = {}; // files a component loads at run time (paths built in code), declared in meta.json "exportAssets"
     const ownPalette = {}; // components whose own colours must not be overridden by the theme engine's heading/text rules
     registry.forEach(feature => {
       if (Array.isArray(feature.nativeWhen) && feature.nativeWhen.length) nativeMap[feature.slug] = feature.nativeWhen;
       if (feature.ownPalette) ownPalette[feature.slug] = true;
+      if (feature.weight) weightMap[feature.slug] = feature.weight;
+      if (Array.isArray(feature.exportAssets) && feature.exportAssets.length) exportAssets[feature.slug] = feature.exportAssets;
       if (feature.origin && feature.origin.license) licenseMap[feature.slug] = feature.origin.license;
     });
 
@@ -418,17 +422,19 @@
 
     // 9. Export modal & project ZIP generator (scripts/builder/export-panel.js)
     const exportController = (window.BuilderExport || require('./scripts/builder/export-panel.js')).createExportController({
-      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap
+      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap, exportAssets, weightMap
     });
     const { prepareExportData, setActiveExportTab, setActiveCodeSubtab, openExportModal, closeExportModal, handleDownloadZip } = exportController;
 
     // Check localStorage for saved builder state
     let hasLoadedSavedState = false;
-    if (typeof localStorage !== 'undefined') {
+    {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
+        const loaded = historyCtl.autosave.load();
+        if (loaded.status === 'recovered') showToast('Your last save could not be read, so the one before it was restored.', 6000);
+        if (loaded.status === 'corrupt') showToast('Your saved work could not be read. A copy was kept in this browser; starting a new page.', 7000);
+        const parsed = loaded.state;
+        {
           if (parsed && Array.isArray(parsed.stack) && parsed.stack.length > 0) {
             const prevApplying = historyCtl.state.applying;
             historyCtl.state.applying = true;

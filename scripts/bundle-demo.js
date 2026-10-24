@@ -7,6 +7,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const esbuild = require('esbuild');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -35,9 +36,20 @@ async function bundleDemo(slug) {
         }
       }]
     });
+    // Stamp the bundle with what it was built from, so tests can tell when component.tsx or demo.tsx changed
+    // afterwards and script.js (which the builder and exports use) has gone stale.
+    const out = path.join(dir, 'script.js');
+    fs.writeFileSync(out, `/*bundle-source:${sourceHash(dir)}*/\n` + fs.readFileSync(out, 'utf8'));
   } finally {
     fs.rmSync(entry, { force: true });
   }
+}
+
+/** Hash of the files script.js is built from. */
+function sourceHash(dir) {
+  const hash = crypto.createHash('sha1');
+  ['component.tsx', 'demo.tsx'].forEach(f => hash.update(fs.readFileSync(path.join(dir, f))));
+  return hash.digest('hex').slice(0, 12);
 }
 
 async function main() {
@@ -58,4 +70,4 @@ async function main() {
 }
 
 if (require.main === module) main();
-module.exports = { bundleDemo };
+module.exports = { bundleDemo, sourceHash };

@@ -46,14 +46,7 @@
     "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
-  "customizable": [
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope div.tcp-perc"
-    }
-  ],
+  "customizable": [],
   "measured": {
     "luma": 0.39,
     "webgl": true,

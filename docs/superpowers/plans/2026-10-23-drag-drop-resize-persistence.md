@@ -1,5 +1,7 @@
 # Drag-and-Drop, Sizing Controls, Individual Cards & State Persistence Implementation Plan
 
+> **Status (2026-10-24): implemented.** This plan was carried out and the work is in git history; its checkboxes were not kept up to date. Open work now lives in `docs/BACKLOG.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Implement sidebar drag-and-drop onto canvas sections, live corner/edge element resize handles with custom width/height inputs, standalone individual File and Glass Folder Cards, redesigned dark frosted-glass search bar, full Undo/Redo history, and automated LocalStorage persistence.

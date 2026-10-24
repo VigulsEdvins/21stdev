@@ -1,0 +1,24 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.tns-demo { position: relative; min-height: max(100%, 560px); display: grid; place-content: center; justify-items: center; gap: 14px; padding: 64px 20px; text-align: center; overflow: hidden; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.tns-title { margin: 0; font-family: var(--font-display, inherit); font-size: clamp(1.8rem, 4vw, 2.6rem); }
+.tns-sub { margin: 0; opacity: .65; max-width: 40ch; line-height: 1.5; }
+.tns-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 8px; }
+.tns-btn { padding: 11px 20px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--text, #fff) 22%, transparent); background: transparent; color: inherit; font: inherit; font-weight: 600; cursor: pointer; transition: background-color .2s, transform .15s; }
+.tns-btn:hover { background: color-mix(in srgb, var(--text, #fff) 10%, transparent); }
+.tns-btn:active { transform: scale(.97); }
+.tns-btn:focus-visible { outline: 2px solid var(--accent, #6366f1); outline-offset: 3px; }
+.tns-region { position: absolute; right: 16px; bottom: 16px; display: flex; flex-direction: column-reverse; gap: 10px; width: min(340px, calc(100% - 32px)); pointer-events: none; }
+.tns-toast { position: relative; display: flex; align-items: center; gap: 12px; padding: 14px 14px 14px 16px; border-radius: 14px; text-align: left; font-size: .94rem; background: color-mix(in srgb, var(--bg, #0b0f19) 80%, var(--text, #fff) 18%); border: 1px solid color-mix(in srgb, var(--text, #fff) 14%, transparent); box-shadow: 0 14px 36px rgba(0,0,0,.35); pointer-events: auto; overflow: hidden; animation: tns-in .35s cubic-bezier(.2,.9,.3,1.2); }
+.tns-toast.is-leaving { animation: tns-out .25s ease forwards; }
+.tns-dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--tone, var(--accent, #6366f1)); }
+.tns-toast[data-kind="success"] { --tone: #22c55e; } .tns-toast[data-kind="error"] { --tone: #ef4444; } .tns-toast[data-kind="info"] { --tone: #3b82f6; }
+.tns-text { flex: 1; }
+.tns-x { flex: none; width: 28px; height: 28px; border: 0; border-radius: 50%; background: transparent; color: inherit; opacity: .6; cursor: pointer; display: grid; place-items: center; }
+.tns-x:hover, .tns-x:focus-visible { opacity: 1; background: color-mix(in srgb, var(--text, #fff) 12%, transparent); outline: none; }
+.tns-x svg { width: 12px; height: 12px; }
+.tns-bar { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--tone); transform-origin: left; animation: tns-bar var(--life, 4s) linear forwards; }
+.tns-toast:hover .tns-bar, .tns-toast.is-paused .tns-bar { animation-play-state: paused; }
+@keyframes tns-in { from { opacity: 0; transform: translateX(24px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes tns-out { to { opacity: 0; transform: translateX(24px) scale(.96); } }
+@keyframes tns-bar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .tns-toast, .tns-toast.is-leaving { animation: none; } .tns-toast.is-leaving { opacity: 0; } .tns-bar { animation: none; transform: scaleX(0); } }

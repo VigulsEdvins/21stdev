@@ -1,5 +1,7 @@
 # Implementation Plan: Category Reclassification & Draggable Element Overlay System
 
+> **Status (2026-10-24): implemented.** This plan was carried out and the work is in git history; its checkboxes were not kept up to date. Open work now lives in `docs/BACKLOG.md`.
+
 ## 1. Overview
 This plan implements two requested features for the Page Preview Builder:
 1. **Audit & Reclassify Component Categories:** Clean up the 200+ vault registry so Footers, Headers, Heroes, and UI elements are accurately placed, eliminating footers appearing in headers and misclassified items.

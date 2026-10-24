@@ -113,6 +113,13 @@
       "label": "Section heading 3",
       "type": "text",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .sl-root",
+      "attr": "--sl-accent"
     }
   ],
   "measured": {

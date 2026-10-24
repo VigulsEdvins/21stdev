@@ -145,5 +145,34 @@
     "luma": 0.54,
     "webgl": true,
     "canvas2d": true
-  }
+  },
+  "exportAssets": [
+    "/features/forma-liquid-particle-studio/img/approach-1-dark.webp",
+    "/features/forma-liquid-particle-studio/img/approach-1-light.webp",
+    "/features/forma-liquid-particle-studio/img/approach-2-dark.webp",
+    "/features/forma-liquid-particle-studio/img/approach-2-light.webp",
+    "/features/forma-liquid-particle-studio/img/approach-3-dark.webp",
+    "/features/forma-liquid-particle-studio/img/approach-3-light.webp",
+    "/features/forma-liquid-particle-studio/img/approach-4-dark.webp",
+    "/features/forma-liquid-particle-studio/img/approach-4-light.webp",
+    "/features/forma-liquid-particle-studio/img/sculpture-dark.webp",
+    "/features/forma-liquid-particle-studio/img/sculpture-light.webp",
+    "/features/forma-liquid-particle-studio/img/sculpture-mobile-dark.webp",
+    "/features/forma-liquid-particle-studio/img/sculpture-mobile-light.webp",
+    "/features/forma-liquid-particle-studio/img/studio-dark.webp",
+    "/features/forma-liquid-particle-studio/img/studio-light.webp",
+    "/features/forma-liquid-particle-studio/img/studio.webp",
+    "/features/forma-liquid-particle-studio/img/work-1-dark.webp",
+    "/features/forma-liquid-particle-studio/img/work-1-light.webp",
+    "/features/forma-liquid-particle-studio/img/work-2-dark.webp",
+    "/features/forma-liquid-particle-studio/img/work-2-light.webp",
+    "/features/forma-liquid-particle-studio/img/work-3-dark.webp",
+    "/features/forma-liquid-particle-studio/img/work-3-light.webp",
+    "/features/forma-liquid-particle-studio/img/work-4-dark.webp",
+    "/features/forma-liquid-particle-studio/img/work-4-light.webp",
+    "/features/forma-liquid-particle-studio/img/work-5-dark.webp",
+    "/features/forma-liquid-particle-studio/img/work-5-light.webp",
+    "/features/forma-liquid-particle-studio/img/work-6-dark.webp",
+    "/features/forma-liquid-particle-studio/img/work-6-light.webp"
+  ]
 }

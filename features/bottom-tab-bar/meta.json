@@ -1,0 +1,56 @@
+{
+  "name": "Bottom Tab Bar",
+  "slug": "bottom-tab-bar",
+  "title": "Bottom Tab Bar",
+  "category": "Headers & Nav",
+  "source": "custom",
+  "type": "component",
+  "description": "A phone-style navigation bar fixed to the bottom of the screen: icons with labels, a sliding highlight under the active tab, and arrow-key support.",
+  "tags": [
+    "navigation",
+    "tab-bar",
+    "mobile",
+    "bottom-nav",
+    "icons"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "saas",
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Screen title",
+      "type": "text",
+      "selector": ":scope .btb-screen h1"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .btb-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

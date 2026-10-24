@@ -1,0 +1,63 @@
+{
+  "name": "Split Navigation With Announcement Bar",
+  "slug": "split-nav-announcement",
+  "title": "Split Navigation With Announcement Bar",
+  "category": "Headers & Nav",
+  "source": "custom",
+  "type": "component",
+  "description": "An editorial header: a dismissible announcement bar on top, links split left and right of a centred wordmark, and a thin rule underneath.",
+  "tags": [
+    "header",
+    "navigation",
+    "editorial",
+    "announcement",
+    "centered"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "light"
+  ],
+  "industry": [
+    "portfolio",
+    "media",
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "announcement",
+      "label": "Announcement text",
+      "type": "text",
+      "selector": ":scope .sna-announce p"
+    },
+    {
+      "id": "wordmark",
+      "label": "Wordmark",
+      "type": "text",
+      "selector": ":scope .sna-wordmark"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Bar colour",
+      "type": "color",
+      "selector": ":scope .sna-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

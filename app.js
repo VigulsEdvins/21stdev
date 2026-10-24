@@ -1,46 +1,14 @@
 (function () {
-  const STORAGE_KEY = '21st_local_custom_features_v1';
-  const WORKSPACE_ROOT = '/home/edvins/features-for-web/web-for-options';
+  const H = window.CatalogHelpers;
+  const { escapeHtml, debounce, getItemName, getRelativeFolderPath, getAbsoluteFolderPath } = H;
 
   const rawReg = window.FEATURE_REGISTRY;
   const baseRegistry = Array.isArray(rawReg)
     ? rawReg
     : (rawReg && Array.isArray(rawReg.items) ? rawReg.items : []);
 
-  function loadCustomFeatures() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch (_) {
-      return [];
-    }
-  }
-
-  function saveCustomFeatures(list) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    } catch (_) {}
-  }
-
-  function combineRuntimeHtml(html, css, js) {
-    const cleanCss = (css || '').trim();
-    const cleanJs = (js || '').trim();
-    let out = html || '';
-    if (/<link[^>]+href=["']style\.css["'][^>]*>/i.test(out)) {
-      out = out.replace(/<link[^>]+href=["']style\.css["'][^>]*>/i, () => `<style>\n${cleanCss}\n</style>`);
-    } else {
-      out = `<style>\n${cleanCss}\n</style>\n` + out;
-    }
-    if (/<script[^>]+src=["']script\.js["'][^>]*>\s*<\/script>/i.test(out)) {
-      out = out.replace(/<script[^>]+src=["']script\.js["'][^>]*>\s*<\/script>/i, () => `<script>\n${cleanJs}\n</script>`);
-    } else {
-      out = out + `\n<script>\n${cleanJs}\n</script>`;
-    }
-    return out;
-  }
-
-  let customFeatures = loadCustomFeatures();
-  let allFeatures = [...baseRegistry, ...customFeatures];
+  // Custom features live in localStorage (see scripts/catalog/studio.js)
+  let allFeatures = [...baseRegistry, ...window.CatalogStudio.loadCustomFeatures()];
 
   // State
   const state = {
@@ -64,24 +32,6 @@
   const searchInput = document.getElementById('searchInput');
   const resultsSummary = document.getElementById('resultsSummary');
   const toastContainer = document.getElementById('toastContainer');
-
-  function escapeHtml(str) {
-    if (str == null) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  function debounce(fn, delay = 150) {
-    let timer = null;
-    return function (...args) {
-      clearTimeout(timer);
-      timer = setTimeout(() => fn.apply(this, args), delay);
-    };
-  }
 
   function showToast(msg) {
     const el = document.createElement('div');
@@ -115,25 +65,6 @@
     showToast(label || 'Copied to clipboard');
   }
 
-  function getItemName(item) {
-    return item.name || item.title || item.slug;
-  }
-
-  function getRelativeFolderPath(item) {
-    return item.relativePath || `features/${item.slug}`;
-  }
-
-  function getAbsoluteFolderPath(item) {
-    if (item.sourceFolder) return item.sourceFolder;
-    if (item.folderPath && item.folderPath.startsWith('/')) return item.folderPath;
-    return `${WORKSPACE_ROOT}/${getRelativeFolderPath(item)}`;
-  }
-
-  function getAgentReference(item) {
-    const absPath = getAbsoluteFolderPath(item);
-    return `Take the "${getItemName(item)}" feature from ${absPath} (index.html, style.css, script.js) and integrate it.`;
-  }
-
   /** Source files are fetched on demand; registry.js only carries metadata. */
   function ensureFiles(item) {
     return window.FeatureFiles.load(item);
@@ -155,7 +86,7 @@
   }
 
   function updateHeaderCounts() {
-    allFeatures = [...baseRegistry, ...customFeatures];
+    allFeatures = [...baseRegistry, ...studio.getCustomFeatures()];
     const compCount = allFeatures.filter((i) => i.type !== 'template').length;
     const tplCount = allFeatures.filter((i) => i.type === 'template').length;
     document.getElementById('totalCountBadge').textContent = `${allFeatures.length} BLOCKS`;
@@ -433,279 +364,20 @@
     });
   }
 
-  // File Tab Helper
-  function getAvailableTabs(item) {
-    const tabs = [];
-    if (item.type === 'template' && item.files && item.files.siteHtml) {
-      tabs.push({ id: 'siteHtml', label: 'Full Site index.html', content: item.files.siteHtml });
-      if (item.files.siteWorkHtml) tabs.push({ id: 'siteWorkHtml', label: 'Work work.html', content: item.files.siteWorkHtml });
-      if (item.files.siteCss) tabs.push({ id: 'siteCss', label: 'Full Site styles.css', content: item.files.siteCss });
-      if (item.files.siteJs) tabs.push({ id: 'siteJs', label: 'Full Site app.js / main.js', content: item.files.siteJs });
-      if (item.files.siteDataJs) tabs.push({ id: 'siteDataJs', label: 'CMS / Config Data', content: item.files.siteDataJs });
-      if (item.files.adminHtml) tabs.push({ id: 'adminHtml', label: 'CMS admin.html', content: item.files.adminHtml });
-      tabs.push({ id: 'combined', label: 'Card Showcase HTML', content: item.files.combined });
-    } else {
-      tabs.push(
-        { id: 'combined', label: 'Combined (1-File)', content: item.files.combined },
-        { id: 'html', label: 'index.html', content: item.files.html },
-        { id: 'css', label: 'style.css', content: item.files.css },
-        { id: 'js', label: 'script.js', content: item.files.js }
-      );
-    }
-    if (item.files && item.files.tsx) {
-      tabs.push({ id: 'tsx', label: 'component.tsx', content: item.files.tsx });
-    }
-    tabs.push({
-      id: 'meta',
-      label: 'meta.json',
-      content: JSON.stringify({
-        name: getItemName(item),
-        slug: item.slug,
-        category: item.category,
-        source: item.source,
-        type: item.type,
-        description: item.description,
-        tags: item.tags,
-        tech: item.tech,
-        folderPath: getAbsoluteFolderPath(item)
-      }, null, 2)
-    });
-    return tabs;
-  }
 
-  // Inspector Modal
-  const inspectorModal = document.getElementById('inspectorModal');
-  const inspPreviewFrame = document.getElementById('inspPreviewFrame');
-  const inspCodeTabs = document.getElementById('inspCodeTabs');
-  const inspCodeContent = document.getElementById('inspCodeContent');
-  let inspectedItem = null;
-
-  async function openInspector(slug) {
-    const item = allFeatures.find((f) => f.slug === slug);
-    if (!item) return;
-    await ensureFiles(item);
-    inspectedItem = item;
-    const tabs = getAvailableTabs(item);
-    state.inspActiveTab = tabs[0] ? tabs[0].id : 'combined';
-
-    document.getElementById('inspSourceBadge').textContent = item.source;
-    document.getElementById('inspTitle').textContent = getItemName(item);
-    document.getElementById('inspFolderPath').textContent = getAbsoluteFolderPath(item);
-    document.getElementById('inspDescription').textContent = item.description;
-    document.getElementById('inspStandaloneLink').href = item.liveSiteUrl || `${getRelativeFolderPath(item)}/index.html`;
-
-    const tplBtns = document.getElementById('inspTemplateBtns');
-    tplBtns.innerHTML = '';
-    if (item.liveSiteUrl) {
-      tplBtns.innerHTML += `<a class="subtle-btn" href="${item.liveSiteUrl}" target="_blank" rel="noopener">Full Site &nearr;</a> `;
-    }
-    if (item.adminUrl) {
-      tplBtns.innerHTML += `<a class="subtle-btn" href="${item.adminUrl}" target="_blank" rel="noopener">Admin CMS &nearr;</a>`;
-    }
-
-    const tagsEl = document.getElementById('inspTags');
-    tagsEl.innerHTML = (item.tags || []).map((t) => `<span class="tag-chip">#${escapeHtml(t)}</span>`).join('');
-
-    loadPreviewIntoFrame(inspPreviewFrame, item);
-    renderInspectorCodeTabs();
-    inspectorModal.classList.remove('is-hidden');
-  }
-
-  function renderInspectorCodeTabs() {
-    if (!inspectedItem) return;
-    const tabs = getAvailableTabs(inspectedItem);
-    inspCodeTabs.innerHTML = '';
-    tabs.forEach((tab) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'code-tab' + (state.inspActiveTab === tab.id ? ' is-active' : '');
-      btn.textContent = tab.label;
-      btn.addEventListener('click', () => {
-        state.inspActiveTab = tab.id;
-        renderInspectorCodeTabs();
-      });
-      inspCodeTabs.appendChild(btn);
-    });
-    const activeObj = tabs.find((t) => t.id === state.inspActiveTab) || tabs[0];
-    inspCodeContent.textContent = activeObj.content;
-  }
-
-  document.getElementById('closeInspectorBtn').addEventListener('click', () => {
-    inspectorModal.classList.add('is-hidden');
-    inspPreviewFrame.removeAttribute('src');
-    inspPreviewFrame.srcdoc = '';
+  // Inspector modal, IDE workbench and the Add Feature Studio are separate modules (scripts/catalog/)
+  const shared = {
+    state,
+    findItem: (slug) => allFeatures.find((f) => f.slug === slug),
+    ensureFiles, copyText, loadPreviewIntoFrame, downloadHtmlFile
+  };
+  const inspector = window.CatalogInspector.createInspector(shared);
+  const workbench = window.CatalogWorkbench.createWorkbench({
+    ...shared, getFilteredFeatures, firstItem: () => allFeatures[0]
   });
-
-  document.getElementById('inspCopyPathBtn').addEventListener('click', () => {
-    if (inspectedItem) copyText(getAbsoluteFolderPath(inspectedItem), 'Copied folder path');
-  });
-
-  document.getElementById('inspCopyAgentBtn').addEventListener('click', () => {
-    if (inspectedItem) copyText(getAgentReference(inspectedItem), 'Copied Agent implementation reference');
-  });
-
-  document.getElementById('inspCopyCombinedBtn').addEventListener('click', () => {
-    if (inspectedItem) {
-      const code = (inspectedItem.type === 'template' && inspectedItem.files.siteHtml)
-        ? inspectedItem.files.siteHtml
-        : inspectedItem.files.combined;
-      copyText(code, 'Copied HTML bundle');
-    }
-  });
-
-  document.getElementById('inspCopyActiveTabBtn').addEventListener('click', () => {
-    if (!inspectedItem) return;
-    const tabs = getAvailableTabs(inspectedItem);
-    const activeObj = tabs.find((t) => t.id === state.inspActiveTab) || tabs[0];
-    copyText(activeObj.content, `Copied ${activeObj.label}`);
-  });
-
-  document.getElementById('inspDownloadBtn').addEventListener('click', () => {
-    if (inspectedItem) downloadHtmlFile(inspectedItem);
-  });
-
-  document.getElementById('inspReloadFrameBtn').addEventListener('click', () => {
-    if (inspectedItem) loadPreviewIntoFrame(inspPreviewFrame, inspectedItem);
-  });
-
-  document.querySelectorAll('#inspViewportGroup .vp-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#inspViewportGroup .vp-btn').forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      document.getElementById('inspIframeHolder').style.width = btn.getAttribute('data-vp');
-    });
-  });
-
-  // IDE Workbench Mode
-  const wbTree = document.getElementById('wbTree');
-  const wbPreviewFrame = document.getElementById('wbPreviewFrame');
-  const wbCodeTabs = document.getElementById('wbCodeTabs');
-  const wbCodeDisplay = document.getElementById('wbCodeDisplay');
-
-  function renderWorkbench() {
-    const filtered = getFilteredFeatures();
-    if (!filtered.some((f) => f.slug === state.activeSlug) && filtered[0]) {
-      state.activeSlug = filtered[0].slug;
-    }
-
-    wbTree.innerHTML = '';
-    const bySource = {};
-    filtered.forEach((item) => {
-      if (!bySource[item.source]) bySource[item.source] = [];
-      bySource[item.source].push(item);
-    });
-
-    Object.keys(bySource).forEach((src) => {
-      const header = document.createElement('div');
-      header.className = 'tree-group-label';
-      header.textContent = `${src} (${bySource[src].length})`;
-      wbTree.appendChild(header);
-
-      bySource[src].forEach((item) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'tree-item' + (item.slug === state.activeSlug ? ' is-active' : '');
-        btn.innerHTML = `<span>${escapeHtml(getItemName(item))}</span>`;
-        btn.addEventListener('click', () => {
-          state.activeSlug = item.slug;
-          renderWorkbench();
-        });
-        wbTree.appendChild(btn);
-      });
-    });
-
-    const activeItem = allFeatures.find((f) => f.slug === state.activeSlug) || allFeatures[0];
-    if (!activeItem) return;
-
-    document.getElementById('wbActiveSource').textContent = activeItem.source;
-    document.getElementById('wbActiveName').textContent = getItemName(activeItem);
-    document.getElementById('wbActivePath').textContent = getAbsoluteFolderPath(activeItem);
-    document.getElementById('wbActiveDesc').textContent = activeItem.description;
-    document.getElementById('wbOpenStandaloneBtn').href = activeItem.liveSiteUrl || `${getRelativeFolderPath(activeItem)}/index.html`;
-
-    const tplLinks = document.getElementById('wbTemplateLinks');
-    tplLinks.innerHTML = '';
-    if (activeItem.liveSiteUrl) {
-      tplLinks.innerHTML += `<a class="subtle-btn" href="${activeItem.liveSiteUrl}" target="_blank" rel="noopener">Launch Live Site &nearr;</a> `;
-    }
-    if (activeItem.adminUrl) {
-      tplLinks.innerHTML += `<a class="subtle-btn" href="${activeItem.adminUrl}" target="_blank" rel="noopener">Open Admin CMS &nearr;</a>`;
-    }
-
-    if (wbPreviewFrame.getAttribute('data-loaded-slug') !== activeItem.slug) {
-      loadPreviewIntoFrame(wbPreviewFrame, activeItem);
-      wbPreviewFrame.setAttribute('data-loaded-slug', activeItem.slug);
-    }
-
-    const renderTabs = () => {
-      const tabs = getAvailableTabs(activeItem);
-      if (!tabs.some((t) => t.id === state.wbActiveTab) && tabs[0]) {
-        state.wbActiveTab = tabs[0].id;
-      }
-      wbCodeTabs.innerHTML = '';
-      tabs.forEach((tab) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'code-tab' + (state.wbActiveTab === tab.id ? ' is-active' : '');
-        b.textContent = tab.label;
-        b.addEventListener('click', () => {
-          state.wbActiveTab = tab.id;
-          renderWorkbench();
-        });
-        wbCodeTabs.appendChild(b);
-      });
-
-      const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
-      wbCodeDisplay.textContent = activeTabObj.content;
-    };
-    if (activeItem.files) {
-      renderTabs();
-    } else {
-      wbCodeTabs.innerHTML = '';
-      wbCodeDisplay.textContent = 'Loading source…';
-      ensureFiles(activeItem).then(() => {
-        if (state.activeSlug === activeItem.slug) renderTabs();
-      });
-    }
-  }
-
-  document.getElementById('wbReloadBtn').addEventListener('click', () => {
-    const activeItem = allFeatures.find((f) => f.slug === state.activeSlug);
-    if (activeItem) loadPreviewIntoFrame(wbPreviewFrame, activeItem);
-  });
-
-  document.getElementById('wbCopyPathBtn').addEventListener('click', () => {
-    const activeItem = allFeatures.find((f) => f.slug === state.activeSlug);
-    if (activeItem) copyText(getAbsoluteFolderPath(activeItem), 'Copied folder path');
-  });
-
-  document.getElementById('wbCopyCodeBtn').addEventListener('click', () => {
-    const activeItem = allFeatures.find((f) => f.slug === state.activeSlug);
-    if (!activeItem) return;
-    ensureFiles(activeItem).then(() => {
-      const tabs = getAvailableTabs(activeItem);
-      const activeTabObj = tabs.find((t) => t.id === state.wbActiveTab) || tabs[0];
-      copyText(activeTabObj.content, `Copied ${activeTabObj.label}`);
-    });
-  });
-
-  document.getElementById('wbDownloadHtmlBtn').addEventListener('click', () => {
-    const activeItem = allFeatures.find((f) => f.slug === state.activeSlug);
-    if (activeItem) downloadHtmlFile(activeItem);
-  });
-
-  document.getElementById('wbCopyAgentRefBtn').addEventListener('click', () => {
-    const activeItem = allFeatures.find((f) => f.slug === state.activeSlug);
-    if (activeItem) copyText(getAgentReference(activeItem), 'Copied Agent folder reference');
-  });
-
-  document.querySelectorAll('#wbViewportGroup .vp-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#wbViewportGroup .vp-btn').forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      document.getElementById('wbIframeWrap').style.width = btn.getAttribute('data-vp');
-    });
-  });
+  const studio = window.CatalogStudio.createStudio({ state, showToast, updateHeaderCounts, renderAll });
+  const openInspector = inspector.openInspector;
+  const renderWorkbench = workbench.renderWorkbench;
 
   // Top Bar Controls
   document.querySelectorAll('#collectionTabs .col-tab').forEach((tab) => {
@@ -738,7 +410,7 @@
       e.preventDefault();
       searchInput.focus();
     } else if (e.key === 'Escape') {
-      inspectorModal.classList.add('is-hidden');
+      inspector.close();
       document.getElementById('addFeatureModal').classList.add('is-hidden');
     }
   });
@@ -794,87 +466,6 @@
       });
     }, 100));
   }
-
-  // Add Feature Studio Modal
-  const addFeatureModal = document.getElementById('addFeatureModal');
-  const newFeatureName = document.getElementById('newFeatureName');
-  const newFeatureSlug = document.getElementById('newFeatureSlug');
-
-  newFeatureName.addEventListener('input', () => {
-    newFeatureSlug.value = newFeatureName.value
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
-  });
-
-  document.getElementById('openAddModalBtn').addEventListener('click', () => {
-    addFeatureModal.classList.remove('is-hidden');
-  });
-
-  document.getElementById('closeAddModalBtn').addEventListener('click', () => {
-    addFeatureModal.classList.add('is-hidden');
-  });
-
-  function buildCustomFeatureFromForm() {
-    const name = newFeatureName.value.trim() || 'Custom Feature';
-    const slug = (newFeatureSlug.value.trim() || 'custom-feature').toLowerCase();
-    const category = document.getElementById('newFeatureCategory').value;
-    const source = document.getElementById('newFeatureSource').value.trim() || 'custom';
-    const type = document.getElementById('newFeatureType').value;
-    const description = document.getElementById('newFeatureDesc').value.trim();
-    const tags = document.getElementById('newFeatureTags').value.split(',').map((s) => s.trim()).filter(Boolean);
-    const html = document.getElementById('newFeatureHtml').value;
-    const css = document.getElementById('newFeatureCss').value;
-    const js = document.getElementById('newFeatureJs').value;
-    const combined = combineRuntimeHtml(html, css, js);
-
-    return {
-      name,
-      slug,
-      category,
-      source,
-      type,
-      description,
-      tags,
-      tech: ['Custom HTML/CSS/JS'],
-      dependencies: [],
-      order: 100 + customFeatures.length,
-      folderPath: `features/${slug}`,
-      files: { html, css, js, tsx: null, combined }
-    };
-  }
-
-  document.getElementById('addFeatureForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const item = buildCustomFeatureFromForm();
-    customFeatures = customFeatures.filter((f) => f.slug !== item.slug).concat(item);
-    saveCustomFeatures(customFeatures);
-    updateHeaderCounts();
-    state.activeSlug = item.slug;
-    addFeatureModal.classList.add('is-hidden');
-    renderAll();
-    showToast(`Added "${item.name}" to Vault`);
-  });
-
-  document.getElementById('exportCustomBundleBtn').addEventListener('click', () => {
-    const item = buildCustomFeatureFromForm();
-    const blob = new Blob([JSON.stringify(item, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${item.slug}-vault-bundle.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast(`Downloaded ${item.slug}-vault-bundle.json`);
-  });
-
-  document.getElementById('clearCustomFeaturesBtn').addEventListener('click', () => {
-    customFeatures = [];
-    saveCustomFeatures([]);
-    updateHeaderCounts();
-    renderAll();
-    showToast('Cleared custom localStorage features');
-  });
 
   function renderAll() {
     updateHeaderCounts();

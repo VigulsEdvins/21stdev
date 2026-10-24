@@ -25,7 +25,12 @@
     "set-license": "node scripts/set-license.js",
     "build-tailwind": "node scripts/build-tailwind.js",
     "check-blank": "node scripts/check-blank.js",
-    "check-exports": "node scripts/check-exports.js"
+    "check-exports": "node scripts/check-exports.js",
+    "check-fields": "node scripts/check-fields.js",
+    "check-visual": "node scripts/check-visual.js",
+    "check-responsive": "node scripts/check-responsive.js",
+    "declare-assets": "node scripts/declare-assets.js",
+    "localize-remote": "node scripts/localize-remote.js"
   },
   "keywords": [],
   "author": "",

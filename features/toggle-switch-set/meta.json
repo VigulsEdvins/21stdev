@@ -1,0 +1,55 @@
+{
+  "name": "Toggle Switches And Segmented Control",
+  "slug": "toggle-switch-set",
+  "title": "Toggle Switches And Segmented Control",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "Accessible form controls: animated on/off switches with a live status line and a segmented control (radio group) with a sliding thumb, all usable by keyboard.",
+  "tags": [
+    "toggle",
+    "switch",
+    "segmented-control",
+    "form",
+    "settings"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "saas",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "title-1",
+      "label": "First heading",
+      "type": "text",
+      "selector": ":scope .tsw-title"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .tsw-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

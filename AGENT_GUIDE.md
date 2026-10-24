@@ -67,9 +67,12 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 | `npm run new-feature -- <slug>` | Scaffold a new feature |
 | `npm run check-blank` | Adds every feature alone in the builder and fails if a section renders nothing (4 known-empty features are listed in the script). `verify` also fails when `script.js` is a stub and the real code is inline in `index.html` |
 | `npm run check-exports` | Exports every feature as a ZIP through the real Download button, unpacks it and opens `index.html` from disk (file://); fails on errors, failed local requests, broken images or an empty section. `-- --themes both` also checks the light theme (about 6 min per theme). Two known-broken exports are listed in the script |
+| `npm run localize-remote` | Downloads hot-linked Google Fonts and images (Unsplash, cdn.21st.dev, r2.dev) into `assets/library/` and rewrites the references, so exports do not depend on other websites. Run it after importing a component that links to remote files |
+| `npm run check-fields` | Renders every feature with `customizable` fields in the builder and fails when a field's selector matches nothing or the wrong kind of element |
+| `npm run declare-assets` | For a component that builds file paths at run time: lists the files in `meta.json` `exportAssets` so ZIP exports carry them |
 | `npm run check-features` | Load every feature in headless Chromium; writes `reports/features.json` |
 | `npm run thumbs` | Render `thumbs/<slug>.jpg` previews |
-| `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx` |
+| `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx`. Always run it after editing `component.tsx` or `demo.tsx`: the builder and exports use `script.js`, and `verify` fails when a stamped bundle is older than its sources |
 | `npm run lint-tokens` | Design-token adoption report |
 
 ## 4. Builder Workflow for Client Sites
@@ -78,12 +81,13 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 2. **Arrange** them in *Sections*, then set colours and **page settings** (title, description, favicon, Google fonts, language) in *Styling*.
 3. **Edit client content** in the *Content* tab: text, images (upload or URL) and links. Edits are stored per section and re-applied in the preview and the export.
 4. **Save the work** under *Projects*: one project per client with notes, up to 20 snapshots, and JSON export/import to move a project between machines.
-5. **Export**: the ZIP contains `index.html`, `style.css`, `script.js`, a handoff `README.md` and an `assets/` folder; the single-file HTML inlines the images.
+5. **Export**: the ZIP contains `index.html`, `style.css`, `script.js`, a handoff `README.md` and an `assets/` folder; the single-file HTML inlines the images. A **Review copy** download adds a comment overlay for clients (they send the comments back as a file; load it in the Export modal). A separate **React project** download (Vite + TypeScript) holds every section that has a `component.tsx` + `demo.tsx`; the others are left out and listed in its README.
 
 ## 5. Where Things Live
 
 - `builder.html`, `builder.js`, `builder.css` — the builder shell. Extracted modules are in `scripts/builder/` (categories, widget catalog, UI helpers, export asset bundling, in-place preview patching).
 - `scripts/builder-extras.js` — projects modal, page settings, Content tab. `scripts/projects.js` — project store. `scripts/catalog-search.js` — search, filters, favourites.
+- `index.html` + `app.js` — the catalogue; its inspector, workbench and Add Feature Studio are in `scripts/catalog/`.
 - `registry.js` is **metadata only** (about 0.3 MB). Source files are fetched on demand by `scripts/feature-files.js` (catalogue) and `fetchFeatureFiles` (builder). Full-site templates keep their extra files in `features/<slug>/site/`.
 - `scripts/assembler.js` — builds the preview document and the export bundle. `scripts/stack-manager.js` — page state.
 - `assets/library/` — shared, content-hash-named images used by features. `thumbs/` — grid thumbnails. `reports/` — generated, git-ignored.
@@ -96,3 +100,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 - **Formerly known theme issues (fixed with `ownPalette` and Tailwind):** `wirebound-inquiry` (dark text on blue in the light theme), `pixel-park-template` (hero text in the light theme), `bento-portfolio-template` (faint secondary text in the light theme), `torn-postcard-portfolio` (headline crowds the top edge), `exploded-assembly-scroll` (renders without its intended styling). 
 - **Licences:** 173 components come from 21st.dev and are recorded as `unverified`. 21st.dev's Terms say community components stay the property of their authors, may be used only through the platform, and may not be redistributed. Check each component's page for an open licence (MIT etc.) or get the author's permission before using it for a client, then record it with `npm run set-license`. Exports list every unverified component in their README.
 - **Content tab names:** `npm run suggest-customizable -- --slug <slug> --write` regenerates the named field list (Headline, Intro text, Button text, Hero photo, Menu item 2 …) from the rendered component. Edit `meta.json` by hand to rename or trim.
+
+## 7. Backlog
+
+Open work, with priorities and what is already done, is in [`docs/BACKLOG.md`](docs/BACKLOG.md). Licence evidence is in `docs/licence-audit/`. CI (`.github/workflows/ci.yml`) runs `verify`, the unit and e2e tests, `check-blank` and `check-exports`.
