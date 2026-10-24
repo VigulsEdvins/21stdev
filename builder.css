@@ -2629,7 +2629,7 @@ select option {
   min-width: 0;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1760px) {
   .builder-header .brand-tag,
   .builder-header .mode-btn span,
   .builder-header .builder-control-label span {

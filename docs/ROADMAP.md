@@ -1,4 +1,47 @@
-# Roadmap — round 2, detailed plan (epics C to I)
+# Roadmap — round 2: what was done (epics C to I)
+
+Updated 2026-10-25. Epics A (publishing, CI on GitHub) and B (licences, credits) are **dropped by decision**.
+Below, each task is marked **done**, **partly** (what is left is stated) or **not done** (with the reason). The detailed
+plan that follows the table is kept as written, so the original intent stays visible.
+
+| Task | Status |
+|---|---|
+| C1 16 new building blocks (pricing, feature grid, stats, logos, team, CTA band, contact / sign-in / multi-step forms, search, file drop, cookie bar, centered and search-first headers, CTA footer, 404) | **done**; each has Content fields, keyboard support, reduced-motion handling, thumbnails and a behaviour test (`building-blocks.e2e.js`); Headers 10, Footers 11, Buttons & UI 15, Cards 21 |
+| C2 Token migration | **partly**: `rank-token-work` queue (73 components left, `reports/token-queue.json`) and 2 migrated by hand (faq-accordion-smooth, fullscreen-parallax-footer, checked in 3 themes). 40 of 234 use tokens. Continue 10 at a time from the queue |
+| C3 Weight | **partly**: `measure-weight` (labels agree with WebGL use), heavy-section warning in the Sections tab. Lazy start below the fold: **not done** (needs a runtime change for every export); frame times not measured |
+| C4 Prune duplicates | **done as analysis**: `find-duplicates` finds no near-identical pairs worth removing, so nothing was deleted |
+| C5 Kits | **done**: six reviewed kits in the Projects modal, test fails if a kit rots |
+| C6 Search | **done**: synonyms (plans → pricing, navbar → header, gdpr → cookie); fuzzy, favourites, recents and "similar" already existed |
+| D1 Split big modules | **partly**: `canvas.js` 1,425 → 340 lines (3 new modules). `export-panel.js` is 711 lines and was not split |
+| D2 Section tools | **done**: lock, hide, copy / paste between projects, Alt+Arrow reorder with announcements; sizing panels stay open |
+| D3 Multi-page | **done**: page tabs, links to pages, header / footer to all pages, one HTML + CSS + JS per page in the ZIP, per-page sitemap, saved in projects (format v4), undo history. Single-file export and the code viewer show the open page only |
+| D4 Images | **done**: picture descriptions (alt) in the Content tab, size warning. Upload already shrank to WebP |
+| D5 Responsive | **done**: hide on desktop / tablet / phone, tablet and phone padding |
+| D6 Onboarding | **done**: three-step tour (shown once; silent for automated browsers unless `?tour=1`), starter button on the empty page |
+| D7 Light builder UI | **partly**: switch works and is remembered (dark stays default); the light look inverts the shell with the preview turned back, so it is a first version, not hand-tuned colours |
+| D8 History panel | **done** |
+| E1 Lighthouse | **not done** (no Lighthouse runner here); replaced by `check-starters` (page checks on every starter) |
+| E2 Page checks | **done** |
+| E3 Site files | **done**: robots.txt, sitemap.xml, JSON-LD. Favicon set: **not done** |
+| E4 Fonts | **done for the ZIP**; the single-file page keeps the Google link |
+| E5 / E6 | **done**: third-party report, `_headers`, `DEPLOY.md` |
+| E7 MP4 fallback | **not done**: no H.264 encoder available (Playwright's ffmpeg is VP8 only) |
+| F1 CSP | **partly**: strict-CSP export option, tested with an exported page. The builder shell itself has no CSP |
+| F2 – F6 | **done**: code-safety scan (in `npm test`), `npm audit` (0 issues) and `docs/dependencies.md`, import sanitiser, server path guard, review-copy privacy note |
+| G1 – G5 | **partly**: registry.js 584 → 272 KB; CLS already 0.03; `.superpowers` untracked; size report. WebP thumbnails not done (width / height added). Add-section latency measured at 340–420 ms with 20+ sections (target 300 ms not met; the preview rebuilds the whole frame) |
+| H1 – H7 | **done** except WebKit: `npm run ci`, Firefox smoke passes, WebKit cannot start in this environment (reported as skipped), flaky log, sync-registry test, one-off scripts removed, docs refreshed, unused-asset finder (nothing unused) |
+| I | decision notes below |
+
+## Epic I decisions
+- **I1 Optional backend: not now.** Revisit only if the vault goes public; the review copy covers client feedback without a server.
+- **I2 Contribution flow: not now.** No contributors; `new-feature` + `check-features` already describe the process.
+- **I3 AI assist: not now.** Needs key handling and cost limits; prototype as a local dev tool first if wanted.
+- **I4 Token import: later**, small (read colours / fonts / radius from JSON into the page theme).
+- **I5 Internationalisation: later**; start with `lang` per page now that pages exist.
+
+---
+
+# Detailed plan as written (epics C to I)
 
 Written 2026-10-24. Epics A (publishing, CI on GitHub) and B (licences, credits) are **dropped by decision**: the vault stays private for now and licences are not required. Their letters are kept so older notes still match.
 
