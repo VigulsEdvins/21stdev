@@ -111,6 +111,13 @@
       "label": "Paragraph 2",
       "type": "text",
       "selector": ":scope p.kmm-dayno"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .kmm-root",
+      "attr": "--kmm-accent"
     }
   ],
   "measured": {

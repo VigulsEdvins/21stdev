@@ -30,7 +30,7 @@ Goal: every component is usable by a non-developer.
 - [x] **3.1 Named Content fields for the 45 components without `customizable` (M)** — done 2026-10-24. 34 of the 45 are shader/canvas backgrounds with no editable text, so none is correct. Found that 11 imported 21st.dev components (waitlist-hero, hover-footer, web-gl-shader, …) rendered blank in the builder and exports because script.js was a stub; moved their inlined bundle into script.js/style.css, then named fields for 10 of them. Skipped on purpose: SVG-text artwork (brushstroke-portfolio-hero, alter-ego-mask-reveal, tiger-tear-reveal, silhouette-wrap, type-remix-preloader) and loading-screen preloaders, whose text is tied to the layout.
 - [ ] **3.2 Thin categories (M)** — Headers & Nav has 4, Buttons & UI 6, Footers & Endings 8. Add or import until each has ~12 usable options.
 - [x] **3.3 Content-field validation (S)** — done 2026-10-24: `npm run check-fields` (also in CI). It found 6 features with fields that matched nothing (counters, carousel slides, readouts); those 11 fields were removed.
-- [ ] **3.4 Colour and font fields in the Content tab (S)** — surface the `color` type already in the schema.
+- [x] **3.4 Colour and font fields in the Content tab (S)** — done 2026-10-24 for colour: the picker now starts at the colour the component really shows (computed, not only inline), 9 components got an "Accent colour" field (their own `--xx-accent` variable), and "Reset to original" appears on the first edit instead of after a re-render. e2e covers picker, preview, export and reset. Fonts stay a page-level setting (Page Settings), because a per-section font would add another Google Fonts request to every export.
 - [x] **3.5 Re-check `mood`/`industry`/`weight` tags (S)** — done 2026-10-24: re-measured all 209; 4 weights corrected (alice-scroll-story, amour-sunrise-preloader, sidebar-portfolio-template, vertical-tabs). Mood flips on animated shader components were ignored because their brightness depends on when the frame is taken.
 
 ## Epic 4 — Builder UX and robustness (P1)
@@ -69,7 +69,7 @@ Goal: regressions get caught without manual runs.
 - [x] **6.6 Refresh `AGENT_GUIDE.md` and the plan docs (S)** — done 2026-10-24: plans carry a status banner, the guide lists `localize-remote` and points to the backlog.
 
 ## Epic 7 — Projects and collaboration (P2)
-- [ ] **7.1 Project import/export schema versioning (S)** — migrate old JSON files.
+- [x] **7.1 Project import/export schema versioning (S)** — done 2026-10-24: project files are version 2; version 1 files (and their snapshots) are migrated on import (page settings gain the new SEO keys), files from a newer version are refused with a clear message, files without a version count as version 1. Migration steps live in `MIGRATIONS` in `scripts/projects.js`.
 - [ ] **7.2 Client review link (L)** — static preview bundle with a comment overlay, no backend.
 - [ ] **7.3 Starter project templates (M)** — pre-built stacks per industry from the existing `industry` tags.
 

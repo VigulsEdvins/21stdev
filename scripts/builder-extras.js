@@ -61,6 +61,27 @@
    * `explicit` is the feature's meta.json `customizable` list; when present it wins over discovery.
    * @returns {Array<{id,label,type,selector,attr?,current,auto}>}
    */
+  /**
+   * The colour an element shows for a property or custom property, as #rrggbb (what <input type=color> needs).
+   * Reads the computed value, so a colour set by the component's own stylesheet is found, not just inline ones.
+   */
+  function currentColor(el, attr) {
+    let raw = '';
+    try {
+      raw = (el.style.getPropertyValue(attr) || (el.ownerDocument.defaultView || window).getComputedStyle(el).getPropertyValue(attr) || '').trim();
+    } catch (_) { return ''; }
+    if (!raw) return '';
+    // let the browser resolve names, rgb() and var() references to rgb
+    const probe = el.ownerDocument.createElement('span');
+    probe.style.color = raw;
+    if (!probe.style.color) return '';
+    el.ownerDocument.body.appendChild(probe);
+    const rgb = (el.ownerDocument.defaultView || window).getComputedStyle(probe).color;
+    probe.remove();
+    const m = rgb.match(/rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)/);
+    return m ? '#' + [m[1], m[2], m[3]].map(n => Number(n).toString(16).padStart(2, '0')).join('') : '';
+  }
+
   function discoverFields(sectionEl, explicit, opts = {}) {
     if (!sectionEl) return [];
     const maxText = opts.limit || MAX_TEXT_FIELDS;
@@ -74,7 +95,7 @@
         try { el = sectionEl.querySelector(def.selector); } catch (_) { /* bad selector in meta */ }
         if (!el) return;
         const type = def.type || 'text';
-        const current = type === 'image' ? (el.getAttribute('src') || '') : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? (el.style.getPropertyValue(def.attr || 'color') || '') : el.textContent.trim();
+        const current = type === 'image' ? (el.getAttribute('src') || '') : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? currentColor(el, def.attr || 'color') : el.textContent.trim();
         fields.push({ id: def.id, label: def.label || def.id, type, selector: def.selector, attr: def.attr, current, auto: false });
       });
       return fields;
@@ -464,9 +485,22 @@
         input.value = isData ? '(uploaded image)' : value;
         if (isData) input.readOnly = true;
         let timer = null;
+        const addReset = () => {
+          // first edit of this field: offer "Reset to original" now, without re-rendering (that would drop focus)
+          if (wrap.querySelector('.content-reset')) return;
+          wrap.classList.add('is-edited');
+          const label = wrap.querySelector('label.ps-field > span');
+          if (label && !label.querySelector('.content-edited-dot')) label.insertAdjacentHTML('beforeend', ' <em class="content-edited-dot" title="Edited">●</em>');
+          const b = doc.createElement('button');
+          b.type = 'button';
+          b.className = 'content-reset';
+          b.textContent = 'Reset to original';
+          b.addEventListener('click', () => { sm.setSectionOverride(section.id, f.id, ''); setTimeout(renderContentFields, 50); });
+          wrap.appendChild(b);
+        };
         input.addEventListener('input', () => {
           clearTimeout(timer);
-          timer = setTimeout(() => sm.setSectionOverride(section.id, f.id, input.value, { selector: f.selector, type: f.type, attr: f.attr }), 250);
+          timer = setTimeout(() => { sm.setSectionOverride(section.id, f.id, input.value, { selector: f.selector, type: f.type, attr: f.attr }); addReset(); }, 250);
         });
         const reset = wrap.querySelector('.content-reset');
         if (reset) reset.addEventListener('click', () => { sm.setSectionOverride(section.id, f.id, ''); setTimeout(renderContentFields, 50); });

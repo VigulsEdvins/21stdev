@@ -7,6 +7,26 @@
   const KEY = 'web_builder_projects_v1';
   const FORMAT = 'web-builder-project';
   const MAX_SNAPSHOTS = 20;
+  // Version of the project file format. Bump it when the shape of a saved page changes and add a step to MIGRATIONS.
+  const CURRENT_VERSION = 2;
+  const PAGE_DEFAULTS = { title: 'Assembled Web Page', description: '', favicon: '', fontDisplay: '', fontBody: '', lang: 'en', shareImage: '', canonical: '', robots: '' };
+
+  /**
+   * Steps that bring a page state saved by an older version up to the next one, keyed by the version they start from.
+   * 1 -> 2: page settings gained share image, canonical address and robots; every key is now always present.
+   */
+  const MIGRATIONS = {
+    1: (state) => ({ ...state, page: { ...PAGE_DEFAULTS, ...(state.page || {}) } })
+  };
+
+  /** Brings a page state from `fromVersion` to the current format (a copy; the input is not changed). */
+  function migrateState(state, fromVersion) {
+    let out = clone(state);
+    for (let v = Number(fromVersion) || 1; v < CURRENT_VERSION; v++) {
+      if (MIGRATIONS[v]) out = MIGRATIONS[v](out);
+    }
+    return out;
+  }
 
   function uid(prefix) {
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
@@ -127,14 +147,19 @@
         const p = load().projects[id];
         if (!p) return null;
         const { name, client, notes, state, snapshots, createdAt, updatedAt } = p;
-        return JSON.stringify({ format: FORMAT, version: 1, exportedAt: new Date().toISOString(), project: { name, client, notes, createdAt, updatedAt, state, snapshots }, extras: extras || {} }, null, 2);
+        return JSON.stringify({ format: FORMAT, version: CURRENT_VERSION, exportedAt: new Date().toISOString(), project: { name, client, notes, createdAt, updatedAt, state, snapshots }, extras: extras || {} }, null, 2);
       },
       importProject(json) {
         let parsed;
         try { parsed = JSON.parse(json); } catch (_) { throw new Error('That file is not valid JSON'); }
         if (!parsed || parsed.format !== FORMAT || !parsed.project) throw new Error('That file is not a Web Builder project export');
+        const fileVersion = Number(parsed.version) || 1;
+        if (fileVersion > CURRENT_VERSION) throw new Error(`That project file was saved by a newer version of the builder (file version ${fileVersion}, this one reads up to ${CURRENT_VERSION}). Update the builder to open it.`);
         const src = parsed.project;
         if (!validState(src.state)) throw new Error('The project file has no page content');
+        // older files are brought up to date, saved snapshots included
+        src.state = migrateState(src.state, fileVersion);
+        if (Array.isArray(src.snapshots)) src.snapshots = src.snapshots.map(s => (s && validState(s.state) ? { ...s, state: migrateState(s.state, fileVersion) } : s));
         const d = load();
         const now = new Date().toISOString();
         const p = {
@@ -160,7 +185,7 @@
     };
   }
 
-  const api = { createProjectStore, FORMAT, MAX_SNAPSHOTS };
+  const api = { createProjectStore, migrateState, FORMAT, MAX_SNAPSHOTS, CURRENT_VERSION };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.ProjectStore = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);
