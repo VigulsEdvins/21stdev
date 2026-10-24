@@ -57,7 +57,7 @@ Goal: the exported site works with nothing from the vault.
 ## Epic 6 — Tooling, tests and CI (P2)
 Goal: regressions get caught without manual runs.
 
-- [ ] **6.1 CI workflow (S)** — `npm test`, `verify`, `test:e2e` on PR (headless Chromium via playwright-core).
+- [x] **6.1 CI workflow (S)** — done 2026-10-24: `.github/workflows/ci.yml` runs verify, unit and e2e tests, and check-blank as a second job. Not yet run on GitHub.
 - [ ] **6.2 Fold `check-features` and `audit-themes` into CI as non-blocking reports (S)**.
 - [ ] **6.3 Pin the thumbnail pipeline (S)** — deterministic renders so regenerated thumbs don't churn the diff.
 - [ ] **6.4 Repo size (M)** — `registry.json` / thumbs / assets growth; consider Git LFS or `.gitattributes` for images, and check what is tracked.
