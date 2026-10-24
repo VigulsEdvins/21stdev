@@ -14,6 +14,7 @@
     } = ctx;
     const SECTION_CLIPBOARD_FORMAT = 'web-builder-section';
     let sectionClipboard = null;
+    const openDrawers = new Set(); // sections whose sizing panel is open: a state change re-renders the list and must not close it
     const stackAnnouncer = document.getElementById('stackAnnouncer');
     function announce(text) { if (stackAnnouncer) stackAnnouncer.textContent = text; }
 
@@ -89,7 +90,7 @@
                   </svg>
                 </button>
               ` : `
-                <button type="button" class="stack-tool-btn btn-sizing" title="Adjust Sizing" aria-label="Adjust section sizing">
+                <button type="button" class="stack-tool-btn btn-sizing ${openDrawers.has(item.id) ? 'is-active' : ''}" title="Adjust Sizing" aria-label="Adjust section sizing">
                   <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 3L3 21"></path>
                     <path d="M14 3h7v7"></path>
@@ -140,7 +141,7 @@
               </button>
             </div>
           </div>
-          <div class="stack-item-sizing-drawer" style="display: none;">
+          <div class="stack-item-sizing-drawer" style="display: ${openDrawers.has(item.id) ? 'flex' : 'none'};">
             <div class="sizing-row">
               <span class="sizing-label">Height:</span>
               <div class="sizing-pills height-mode-pills">
@@ -163,6 +164,20 @@
                 <button type="button" class="sizing-pill ${sizing.paddingY === 'large' ? 'is-active' : ''}" data-pad="large">120px</button>
               </div>
             </div>
+            ${[['Tablet', 'paddingYTablet', 'tablet'], ['Phone', 'paddingYMobile', 'mobile']].map(([label, key, bp]) => `
+            <div class="sizing-row">
+              <span class="sizing-label">${label} padding:</span>
+              <div class="sizing-pills bp-pad-pills" data-key="${key}">
+                <button type="button" class="sizing-pill ${!sizing[key] ? 'is-active' : ''}" data-pad="" aria-label="${label} padding: same as desktop">Same</button>
+                ${[['none', '0'], ['compact', '32'], ['medium', '64'], ['large', '120']].map(([v, px]) => `<button type="button" class="sizing-pill ${sizing[key] === v ? 'is-active' : ''}" data-pad="${v}" aria-label="${label} padding ${px} pixels">${px}</button>`).join('')}
+              </div>
+            </div>`).join('')}
+            <div class="sizing-row">
+              <span class="sizing-label">Hide on:</span>
+              <div class="sizing-pills hide-on-pills">
+                ${[['desktop', 'Desktop'], ['tablet', 'Tablet'], ['mobile', 'Phone']].map(([bp, label]) => `<button type="button" class="sizing-pill ${(item.hideOn || []).includes(bp) ? 'is-active' : ''}" data-bp="${bp}" aria-pressed="${(item.hideOn || []).includes(bp) ? 'true' : 'false'}">${label}</button>`).join('')}
+              </div>
+            </div>
           </div>
         `;
 
@@ -175,6 +190,7 @@
             const isHidden = sizingDrawer.style.display === 'none';
             sizingDrawer.style.display = isHidden ? 'flex' : 'none';
             sizingBtn.classList.toggle('is-active', isHidden);
+            if (isHidden) openDrawers.add(item.id); else openDrawers.delete(item.id);
           });
         }
 
@@ -236,6 +252,25 @@
             stackManager.updateSectionSizing(item.id, { paddingY: pad });
           });
         });
+
+        // Padding per breakpoint and "hide on" toggles
+        card.querySelectorAll('.bp-pad-pills').forEach(group => {
+          group.querySelectorAll('.sizing-pill').forEach(pill => pill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            group.querySelectorAll('.sizing-pill').forEach(p => p.classList.remove('is-active'));
+            pill.classList.add('is-active');
+            stackManager.updateSectionSizing(item.id, { [group.dataset.key]: pill.dataset.pad });
+          }));
+        });
+        const hidePills = card.querySelectorAll('.hide-on-pills .sizing-pill');
+        hidePills.forEach(pill => pill.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const on = pill.getAttribute('aria-pressed') !== 'true';
+          pill.setAttribute('aria-pressed', String(on));
+          pill.classList.toggle('is-active', on);
+          const list = Array.from(hidePills).filter(p => p.getAttribute('aria-pressed') === 'true').map(p => p.dataset.bp);
+          stackManager.setSectionHideOn(item.id, list);
+        }));
 
         const moveUpBtn = card.querySelector('.btn-move-up');
         if (moveUpBtn) {

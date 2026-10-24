@@ -36,3 +36,21 @@ const bundle = A.generateExportBundle(stack, 'midnight-dark', feats);
 assert(!bundle['index.html'].includes('AAA') && bundle['index.html'].includes('CCC'), 'hidden section is not in the ZIP');
 assert(!A.generateSingleFileBundle(stack, 'midnight-dark', feats).includes('AAA'), 'hidden section is not in the single file');
 console.log('✅ Section tools tests passed!');
+
+// responsive settings: hide per breakpoint, padding per breakpoint
+const rm = createStackManager();
+const r1 = rm.addSection('hero-a');
+rm.setSectionHideOn(r1.id, ['mobile', 'bogus', 'mobile', 'tablet']);
+assert.deepStrictEqual(rm.getStack()[0].hideOn, ['mobile', 'tablet'], 'unknown breakpoints dropped, duplicates merged');
+rm.updateSectionSizing(r1.id, { paddingYTablet: 'compact', paddingYMobile: 'none' });
+const css = A.renderResponsiveCss(rm.getStack());
+assert(/@media \(max-width: 767px\) \{[^}]*#[\w-]+ \{ display: none !important; \}/.test(css), 'mobile hide rule');
+assert(/@media \(min-width: 768px\) and \(max-width: 1023px\)/.test(css) && css.includes('padding-top: 32px !important'), 'tablet padding rule');
+assert(css.includes('padding-top: 0px !important'), 'a zero padding is written, not skipped');
+assert(!/min-width: 1024px/.test(css), 'no desktop rule when nothing is hidden there');
+assert.strictEqual(A.renderResponsiveCss([{ id: 'a', sizing: {} }]), '', 'nothing set, nothing written');
+assert(A.generateExportBundle(rm.getStack(), 'midnight-dark', { 'hero-a': { html: '<h1>x</h1>', css: '', js: '' } })['style.css'].includes('Responsive section settings'), 'export carries the rules');
+assert(A.assemblePreviewDocument(rm.getStack(), 'midnight-dark', { 'hero-a': { html: '<h1>x</h1>', css: '', js: '' } }).includes('Responsive section settings'), 'preview carries the rules');
+rm.setSectionHideOn(r1.id, []);
+assert.strictEqual(rm.getStack()[0].hideOn, undefined);
+console.log('✅ Responsive settings tests passed!');

@@ -1275,6 +1275,35 @@ function computeSectionSizingStyles(sizing) {
   return styles.length > 0 ? styles.join('; ') + ';' : '';
 }
 
+const BREAKPOINT_QUERIES = {
+  mobile: '(max-width: 767px)',
+  tablet: '(min-width: 768px) and (max-width: 1023px)',
+  desktop: '(min-width: 1024px)'
+};
+const PADDING_PX = { none: 0, compact: 32, medium: 64, large: 120 };
+
+/**
+ * Per-breakpoint rules for sections: "hide on mobile / tablet / desktop" and a different top/bottom padding on tablet
+ * and phone (`sizing.paddingYTablet`, `sizing.paddingYMobile`). Written as media queries so the preview (whose
+ * Tablet/Mobile buttons resize the frame) and the export behave the same.
+ */
+function renderResponsiveCss(sections) {
+  const rules = { mobile: [], tablet: [], desktop: [] };
+  (Array.isArray(sections) ? sections : []).forEach(sec => {
+    const id = String(sec.id || '').replace(/[^A-Za-z0-9_-]/g, '');
+    if (!id) return;
+    (Array.isArray(sec.hideOn) ? sec.hideOn : []).forEach(bp => {
+      if (rules[bp]) rules[bp].push(`#${id} { display: none !important; }`);
+    });
+    const z = sec.sizing || {};
+    [['tablet', z.paddingYTablet], ['mobile', z.paddingYMobile]].forEach(([bp, pad]) => {
+      if (pad in PADDING_PX) rules[bp].push(`#${id} { padding-top: ${PADDING_PX[pad]}px !important; padding-bottom: ${PADDING_PX[pad]}px !important; }`);
+    });
+  });
+  const blocks = Object.keys(rules).filter(bp => rules[bp].length).map(bp => `@media ${BREAKPOINT_QUERIES[bp]} {\n  ${rules[bp].join('\n  ')}\n}`);
+  return blocks.length ? `/* Responsive section settings */\n${blocks.join('\n')}` : '';
+}
+
 /**
  * Generates universal CSS rules ensuring the active theme propagates
  * to all sections, component containers, and utilities on the page.
@@ -2057,6 +2086,8 @@ ${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
   }
 
   const externalLinksHtml = Array.from(headLinks).join('\n  ');
+  const responsiveCss = renderResponsiveCss(sections);
+  if (responsiveCss) scopedStyleBlocks.push(responsiveCss);
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
   const allHtml = sectionHtmlBlocks.join('\n\n');
   const allScripts = scriptBlocks.join('\n\n');
@@ -2948,6 +2979,8 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
   } catch (e) {}`);
 
   const externalLinksHtml = Array.from(headLinks).join('\n  ');
+  const responsiveCss = renderResponsiveCss(safeSections);
+  if (responsiveCss) scopedStyleBlocks.push(responsiveCss);
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
   const allHtml = sectionHtmlBlocks.join('\n\n');
   const allScripts = scriptBlocks.join('\n\n');
@@ -3409,6 +3442,7 @@ if (typeof module !== 'undefined' && module.exports) {
     collectOverrides,
     REVIEW_RUNTIME,
     computeSectionSizingStyles,
+    renderResponsiveCss,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,
     createZipArchive
@@ -3437,6 +3471,7 @@ if (typeof window !== 'undefined') {
     renderNativePaletteCss,
     collectOverrides,
     computeSectionSizingStyles,
+    renderResponsiveCss,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,
     createZipArchive

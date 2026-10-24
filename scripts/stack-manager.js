@@ -119,6 +119,17 @@ function createStackManager(initialConfig = {}) {
     return section.sizing;
   }
 
+  /** Sets the breakpoints a section is hidden on: any of 'mobile', 'tablet', 'desktop'. */
+  function setSectionHideOn(id, list) {
+    if (isLocked(id)) return null;
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    const clean = Array.from(new Set((Array.isArray(list) ? list : []).filter(b => b === 'mobile' || b === 'tablet' || b === 'desktop')));
+    if (clean.length) section.hideOn = clean; else delete section.hideOn;
+    notify();
+    return section;
+  }
+
   function isLocked(id) {
     const section = state.stack.find(s => s.id === id);
     return !!(section && section.locked);
@@ -392,6 +403,7 @@ function createStackManager(initialConfig = {}) {
     removeSection,
     isLocked,
     setSectionFlag,
+    setSectionHideOn,
     moveSection,
     duplicateSection,
     replaceSection,

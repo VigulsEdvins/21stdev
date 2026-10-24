@@ -137,7 +137,9 @@
         theme: themeConfig,
         suppressPreloader,
         page: latestState.page,
-        stack: latestState.stack.map(({ elements, sizing, overrides, ...rest }) => rest)
+        stack: latestState.stack.map(({ elements, sizing, overrides, ...rest }) => rest),
+        // per-breakpoint padding lives in a media-query block in the page CSS, so it needs a full reload
+        responsivePadding: latestState.stack.map(s => [s.sizing && s.sizing.paddingYTablet, s.sizing && s.sizing.paddingYMobile])
       });
       const canPatch = !rt.forceFullPreviewReload && structureKey === lastPreviewStructureKey;
       rt.forceFullPreviewReload = false;
