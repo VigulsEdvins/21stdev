@@ -42,6 +42,9 @@
     return !!state && typeof state === 'object' && Array.isArray(state.stack);
   }
 
+  const Sanitize = (typeof require === 'function' && typeof module !== 'undefined' && module.exports) ? require('./project-sanitize.js') : root.ProjectSanitize;
+  const MAX_IMPORT_BYTES = 20 * 1024 * 1024;
+
   function createProjectStore(storage, options = {}) {
     const key = options.key || KEY;
     const maxSnapshots = options.maxSnapshots || MAX_SNAPSHOTS;
@@ -152,6 +155,7 @@
         return JSON.stringify({ format: FORMAT, version: CURRENT_VERSION, exportedAt: new Date().toISOString(), project: { name, client, notes, createdAt, updatedAt, state, snapshots }, extras: extras || {} }, null, 2);
       },
       importProject(json) {
+        if (typeof json === 'string' && json.length > MAX_IMPORT_BYTES) throw new Error('That file is too large to be a project (over 20 MB)');
         let parsed;
         try { parsed = JSON.parse(json); } catch (_) { throw new Error('That file is not valid JSON'); }
         if (!parsed || parsed.format !== FORMAT || !parsed.project) throw new Error('That file is not a Web Builder project export');
@@ -162,6 +166,14 @@
         // older files are brought up to date, saved snapshots included
         src.state = migrateState(src.state, fileVersion);
         if (Array.isArray(src.snapshots)) src.snapshots = src.snapshots.map(s => (s && validState(s.state) ? { ...s, state: migrateState(s.state, fileVersion) } : s));
+        // anything that could carry code is stripped; the page keeps what the builder itself would have written
+        let removed = 0;
+        if (Sanitize) {
+          const cleaned = Sanitize.sanitizeState(src.state);
+          src.state = cleaned.state;
+          removed += cleaned.removed;
+          if (Array.isArray(src.snapshots)) src.snapshots = src.snapshots.map(s => { if (!s || !validState(s.state)) return s; const c = Sanitize.sanitizeState(s.state); removed += c.removed; return { ...s, state: c.state }; });
+        }
         const d = load();
         const now = new Date().toISOString();
         const p = {
@@ -179,6 +191,7 @@
         d.activeId = p.id;
         if (!persist(d)) throw new Error('Could not save: browser storage is full');
         const out = clone(p);
+        out.sanitizedCount = removed;
         // Per-user extras that travel with the file (starred components); the caller decides what to merge
         const ex = parsed.extras && typeof parsed.extras === 'object' ? parsed.extras : {};
         out.extras = { favourites: (Array.isArray(ex.favourites) ? ex.favourites : []).filter(x => typeof x === 'string').slice(0, 500) };

@@ -323,7 +323,7 @@
           const p = store.importProject(await file.text());
           const added = ctx.mergeFavourites(p.extras && p.extras.favourites);
           ctx.applyState(p.state);
-          refreshLabel(); renderProjects(); ctx.showToast(`Imported “${p.name}”${added ? ` and ${added} starred component${added === 1 ? '' : 's'}` : ''}`);
+          refreshLabel(); renderProjects(); ctx.showToast(`Imported “${p.name}”${p.sanitizedCount ? ` (${p.sanitizedCount} unsafe or invalid item${p.sanitizedCount === 1 ? '' : 's'} removed)` : ''}${added ? ` and ${added} starred component${added === 1 ? '' : 's'}` : ''}`);
         } catch (e) { ctx.showToast(e.message); }
       });
 

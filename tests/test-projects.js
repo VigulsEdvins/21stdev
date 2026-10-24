@@ -16,7 +16,7 @@ assert.strictEqual(store.activeId(), p1.id);
 assert.throws(() => store.create({ name: 'x', state: {} }), /needs a state/);
 
 // state is copied, not shared
-state.stack.push({ id: 'b' });
+state.stack.push({ id: 'b', slug: 'footer' });
 assert.strictEqual(store.get(p1.id).state.stack.length, 1);
 
 assert.strictEqual(store.saveState(p1.id, state), true);
