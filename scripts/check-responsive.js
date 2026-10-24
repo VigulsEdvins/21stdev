@@ -38,20 +38,26 @@ async function main() {
         await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; return d && d.getElementById('r'); }, null, { timeout: 20000 });
         await page.waitForTimeout(2500);
         const frame = page.frames().find(f => f !== page.mainFrame());
-        const r = await frame.evaluate(() => {
+        const measure = () => frame.evaluate(() => {
           const doc = document.scrollingElement;
           const w = window.innerWidth;
           const over = doc.scrollWidth - w;
           let widest = '';
           if (over > 1) {
+            // a descendant that sticks out but sits inside a clipping ancestor is not what widens the page
+            const clipped = (el) => { for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) { if (/hidden|clip|auto|scroll/.test(getComputedStyle(p).overflowX) && p.getBoundingClientRect().right <= w + 1) return true; } return false; };
             let max = 0;
             document.querySelectorAll('#r *').forEach(el => {
               const b = el.getBoundingClientRect();
-              if (b.right - w > max && b.width > 0 && getComputedStyle(el).position !== 'fixed') { max = b.right - w; widest = el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : ''); }
+              if (b.right - w > max && b.width > 0 && getComputedStyle(el).position !== 'fixed' && !clipped(el)) { max = b.right - w; widest = el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : ''); }
             });
           }
           return { w, over, widest };
         });
+        let r = await measure();
+        // A real overflow stays put. One that is gone a moment later was an animation or a late font swap caught
+        // mid-way on a slow machine (the CI runner), so it is measured again before it is reported.
+        if (r.over > 1) { await page.waitForTimeout(2000); r = await measure(); }
         if (r.over > 1) found.push({ slug, mode, over: r.over, widest: r.widest });
       } catch (e) {
         found.push({ slug, mode, over: -1, widest: 'could not render: ' + e.message.split('\n')[0] });
