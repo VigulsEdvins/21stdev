@@ -1,0 +1,79 @@
+{
+  "name": "Stats Count-Up Row",
+  "slug": "stats-count-up",
+  "title": "Stats Count-Up Row",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "A row of four big numbers that count up once when they scroll into view; with reduced motion the final numbers show immediately.",
+  "tags": [
+    "stats",
+    "numbers",
+    "counter",
+    "metrics",
+    "social proof"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "saas",
+    "agency",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .scu-title"
+    },
+    {
+      "id": "label-1",
+      "label": "Stat 1 label",
+      "type": "text",
+      "selector": ":scope .scu-item:nth-child(1) .scu-label"
+    },
+    {
+      "id": "label-2",
+      "label": "Stat 2 label",
+      "type": "text",
+      "selector": ":scope .scu-item:nth-child(2) .scu-label"
+    },
+    {
+      "id": "label-3",
+      "label": "Stat 3 label",
+      "type": "text",
+      "selector": ":scope .scu-item:nth-child(3) .scu-label"
+    },
+    {
+      "id": "label-4",
+      "label": "Stat 4 label",
+      "type": "text",
+      "selector": ":scope .scu-item:nth-child(4) .scu-label"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .scu-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

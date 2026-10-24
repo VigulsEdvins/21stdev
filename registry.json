@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-24T20:45:51.311Z",
+  "generatedAt": "2026-10-24T21:01:42.638Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 218,
+  "totalFeatures": 234,
   "categories": [
     "Heroes",
     "Headers & Nav",
@@ -20091,6 +20091,764 @@
       ]
     },
     {
+      "slug": "cta-band",
+      "title": "Call-To-Action Band",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "saas",
+        "agency",
+        "ecommerce",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope .cta-title"
+        },
+        {
+          "id": "text",
+          "label": "Supporting text",
+          "type": "text",
+          "selector": ":scope .cta-text"
+        },
+        {
+          "id": "primary",
+          "label": "Primary button",
+          "type": "text",
+          "selector": ":scope .cta-primary"
+        },
+        {
+          "id": "primary-link",
+          "label": "Primary button link",
+          "type": "link",
+          "selector": ":scope .cta-primary"
+        },
+        {
+          "id": "secondary",
+          "label": "Secondary button",
+          "type": "text",
+          "selector": ":scope .cta-secondary"
+        },
+        {
+          "id": "secondary-link",
+          "label": "Secondary button link",
+          "type": "link",
+          "selector": ":scope .cta-secondary"
+        },
+        {
+          "id": "accent",
+          "label": "Band colour",
+          "type": "color",
+          "selector": ":scope .cta-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A full-width banner with a short headline, one line of supporting text and a primary and a secondary button, placed above a footer.",
+      "tags": [
+        "cta",
+        "banner",
+        "call to action",
+        "conversion",
+        "band"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/cta-band",
+      "relativePath": "features/cta-band",
+      "previewUrl": "features/cta-band/index.html",
+      "thumb": "thumbs/cta-band.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "cta-footer",
+      "title": "Call-To-Action Footer",
+      "category": "Footers & Endings",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "saas",
+        "agency",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope .ctf-title"
+        },
+        {
+          "id": "text",
+          "label": "Supporting text",
+          "type": "text",
+          "selector": ":scope .ctf-text"
+        },
+        {
+          "id": "button",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope .ctf-btn"
+        },
+        {
+          "id": "copy",
+          "label": "Copyright line",
+          "type": "text",
+          "selector": ":scope .ctf-copy"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .ctf-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A closing section with a big headline, an email sign-up with inline validation, and a slim footer with link columns and a copyright line.",
+      "tags": [
+        "footer",
+        "cta",
+        "newsletter",
+        "links",
+        "closing"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/cta-footer",
+      "relativePath": "features/cta-footer",
+      "previewUrl": "features/cta-footer/index.html",
+      "thumb": "thumbs/cta-footer.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "centered-logo-header",
+      "title": "Centered Logo Header",
+      "category": "Headers & Nav",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "editorial"
+      ],
+      "industry": [
+        "ecommerce",
+        "hospitality",
+        "portfolio",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "logo",
+          "label": "Logo text",
+          "type": "text",
+          "selector": ":scope .clh-logo"
+        },
+        {
+          "id": "link-1",
+          "label": "Link 1",
+          "type": "text",
+          "selector": ":scope .clh-left a:nth-child(1)"
+        },
+        {
+          "id": "link-2",
+          "label": "Link 2",
+          "type": "text",
+          "selector": ":scope .clh-left a:nth-child(2)"
+        },
+        {
+          "id": "link-3",
+          "label": "Link 3",
+          "type": "text",
+          "selector": ":scope .clh-right a:nth-child(1)"
+        },
+        {
+          "id": "link-4",
+          "label": "Link 4",
+          "type": "text",
+          "selector": ":scope .clh-right a:nth-child(2)"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .clh-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A header with the logo in the middle, navigation links on both sides and a menu button that opens a full-width list on phones.",
+      "tags": [
+        "header",
+        "navigation",
+        "centered",
+        "logo",
+        "menu"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/centered-logo-header",
+      "relativePath": "features/centered-logo-header",
+      "previewUrl": "features/centered-logo-header/index.html",
+      "thumb": "thumbs/centered-logo-header.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "contact-form-validated",
+      "title": "Contact Form With Validation",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "agency",
+        "saas"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .cfv-title"
+        },
+        {
+          "id": "intro",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope .cfv-sub"
+        },
+        {
+          "id": "button",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope .cfv-btn"
+        },
+        {
+          "id": "success",
+          "label": "Success message",
+          "type": "text",
+          "selector": ":scope .cfv-success-text"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .cfv-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A contact form with name, email and message fields, inline error messages tied to each field, and a success message; it never sends anything until you add an address in the form action.",
+      "tags": [
+        "form",
+        "contact",
+        "validation",
+        "input",
+        "accessible"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/contact-form-validated",
+      "relativePath": "features/contact-form-validated",
+      "previewUrl": "features/contact-form-validated/index.html",
+      "thumb": "thumbs/contact-form-validated.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "cookie-notice-bar",
+      "title": "Cookie Notice Bar",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "ecommerce",
+        "saas"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "text",
+          "label": "Notice text",
+          "type": "text",
+          "selector": ":scope .cnb-text"
+        },
+        {
+          "id": "accept",
+          "label": "Accept button",
+          "type": "text",
+          "selector": ":scope .cnb-accept"
+        },
+        {
+          "id": "decline",
+          "label": "Decline button",
+          "type": "text",
+          "selector": ":scope .cnb-decline"
+        },
+        {
+          "id": "policy",
+          "label": "Policy link text",
+          "type": "text",
+          "selector": ":scope .cnb-policy"
+        },
+        {
+          "id": "policy-link",
+          "label": "Policy link",
+          "type": "link",
+          "selector": ":scope .cnb-policy"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .cnb-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A privacy notice fixed to the bottom of the page with Accept, Decline and a settings panel with an optional-cookies switch. The choice is remembered in the browser and the bar then stays away.",
+      "tags": [
+        "cookies",
+        "privacy",
+        "consent",
+        "gdpr",
+        "banner"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/cookie-notice-bar",
+      "relativePath": "features/cookie-notice-bar",
+      "previewUrl": "features/cookie-notice-bar/index.html",
+      "thumb": "thumbs/cookie-notice-bar.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "feature-grid-icons",
+      "title": "Feature Grid With Icons",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "saas",
+        "agency",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .fgi-title"
+        },
+        {
+          "id": "intro",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope .fgi-sub"
+        },
+        {
+          "id": "title-1",
+          "label": "Feature 1 title",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(1) .fgi-h"
+        },
+        {
+          "id": "text-1",
+          "label": "Feature 1 text",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(1) .fgi-p"
+        },
+        {
+          "id": "title-2",
+          "label": "Feature 2 title",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(2) .fgi-h"
+        },
+        {
+          "id": "text-2",
+          "label": "Feature 2 text",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(2) .fgi-p"
+        },
+        {
+          "id": "title-3",
+          "label": "Feature 3 title",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(3) .fgi-h"
+        },
+        {
+          "id": "text-3",
+          "label": "Feature 3 text",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(3) .fgi-p"
+        },
+        {
+          "id": "title-4",
+          "label": "Feature 4 title",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(4) .fgi-h"
+        },
+        {
+          "id": "text-4",
+          "label": "Feature 4 text",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(4) .fgi-p"
+        },
+        {
+          "id": "title-5",
+          "label": "Feature 5 title",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(5) .fgi-h"
+        },
+        {
+          "id": "text-5",
+          "label": "Feature 5 text",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(5) .fgi-p"
+        },
+        {
+          "id": "title-6",
+          "label": "Feature 6 title",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(6) .fgi-h"
+        },
+        {
+          "id": "text-6",
+          "label": "Feature 6 text",
+          "type": "text",
+          "selector": ":scope .fgi-card:nth-child(6) .fgi-p"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .fgi-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A heading with six feature cards in a responsive grid, each with an icon, a title and a short description.",
+      "tags": [
+        "features",
+        "grid",
+        "icons",
+        "benefits",
+        "cards"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/feature-grid-icons",
+      "relativePath": "features/feature-grid-icons",
+      "previewUrl": "features/feature-grid-icons/index.html",
+      "thumb": "thumbs/feature-grid-icons.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "file-drop-zone",
+      "title": "File Drop Zone",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "saas",
+        "education"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .fdz-title"
+        },
+        {
+          "id": "hint",
+          "label": "Hint text",
+          "type": "text",
+          "selector": ":scope .fdz-hint"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .fdz-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A drop area for files with a browse button, a size and type check, a list of the chosen files with remove buttons and live announcements. Files stay in the browser; nothing is uploaded.",
+      "tags": [
+        "upload",
+        "file",
+        "dropzone",
+        "drag and drop",
+        "form"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/file-drop-zone",
+      "relativePath": "features/file-drop-zone",
+      "previewUrl": "features/file-drop-zone/index.html",
+      "thumb": "thumbs/file-drop-zone.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "logo-cloud-grid",
+      "title": "Logo Cloud Grid",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "saas",
+        "agency",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .lcg-title"
+        },
+        {
+          "id": "logo-1",
+          "label": "Client 1 name",
+          "type": "text",
+          "selector": ":scope .lcg-item:nth-child(1) .lcg-mark"
+        },
+        {
+          "id": "logo-2",
+          "label": "Client 2 name",
+          "type": "text",
+          "selector": ":scope .lcg-item:nth-child(2) .lcg-mark"
+        },
+        {
+          "id": "logo-3",
+          "label": "Client 3 name",
+          "type": "text",
+          "selector": ":scope .lcg-item:nth-child(3) .lcg-mark"
+        },
+        {
+          "id": "logo-4",
+          "label": "Client 4 name",
+          "type": "text",
+          "selector": ":scope .lcg-item:nth-child(4) .lcg-mark"
+        },
+        {
+          "id": "logo-5",
+          "label": "Client 5 name",
+          "type": "text",
+          "selector": ":scope .lcg-item:nth-child(5) .lcg-mark"
+        },
+        {
+          "id": "logo-6",
+          "label": "Client 6 name",
+          "type": "text",
+          "selector": ":scope .lcg-item:nth-child(6) .lcg-mark"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A \"trusted by\" strip with six client wordmarks in a quiet grid that gain colour on hover; drop in real logos by replacing the text marks.",
+      "tags": [
+        "logos",
+        "clients",
+        "trust",
+        "social proof",
+        "partners"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/logo-cloud-grid",
+      "relativePath": "features/logo-cloud-grid",
+      "previewUrl": "features/logo-cloud-grid/index.html",
+      "thumb": "thumbs/logo-cloud-grid.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "magnetic-cta-button",
       "title": "Magnetic Call-To-Action Button",
       "category": "Buttons & UI",
@@ -20334,6 +21092,520 @@
       ]
     },
     {
+      "slug": "multi-step-form",
+      "title": "Multi-Step Form",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "agency",
+        "saas",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .msf-title"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .msf-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A three-step form (about you, your project, review) with a progress bar, per-step validation, back and next buttons and a final summary. Keyboard friendly; nothing is sent.",
+      "tags": [
+        "form",
+        "wizard",
+        "steps",
+        "onboarding",
+        "quote"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/multi-step-form",
+      "relativePath": "features/multi-step-form",
+      "previewUrl": "features/multi-step-form/index.html",
+      "thumb": "thumbs/multi-step-form.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "not-found-page",
+      "title": "Not Found (404) Page",
+      "category": "Heroes",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "saas",
+        "ecommerce"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "code",
+          "label": "Status number",
+          "type": "text",
+          "selector": ":scope .nfp-code"
+        },
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .nfp-title"
+        },
+        {
+          "id": "text",
+          "label": "Explanation",
+          "type": "text",
+          "selector": ":scope .nfp-text"
+        },
+        {
+          "id": "button",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope .nfp-home"
+        },
+        {
+          "id": "button-link",
+          "label": "Button link",
+          "type": "link",
+          "selector": ":scope .nfp-home"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .nfp-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A friendly 404 screen with a large status number, a short explanation, a button back home and a few useful links.",
+      "tags": [
+        "404",
+        "error",
+        "not found",
+        "page",
+        "hero"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/not-found-page",
+      "relativePath": "features/not-found-page",
+      "previewUrl": "features/not-found-page/index.html",
+      "thumb": "thumbs/not-found-page.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "pricing-table-switch",
+      "title": "Pricing Table With Billing Switch",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "saas",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .ptw-title"
+        },
+        {
+          "id": "intro",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope .ptw-sub"
+        },
+        {
+          "id": "plan-1",
+          "label": "Plan 1 name",
+          "type": "text",
+          "selector": ":scope .ptw-card:nth-child(1) .ptw-name"
+        },
+        {
+          "id": "plan-2",
+          "label": "Plan 2 name",
+          "type": "text",
+          "selector": ":scope .ptw-card:nth-child(2) .ptw-name"
+        },
+        {
+          "id": "plan-3",
+          "label": "Plan 3 name",
+          "type": "text",
+          "selector": ":scope .ptw-card:nth-child(3) .ptw-name"
+        },
+        {
+          "id": "cta-1",
+          "label": "Plan 1 button",
+          "type": "text",
+          "selector": ":scope .ptw-card:nth-child(1) .ptw-cta"
+        },
+        {
+          "id": "cta-2",
+          "label": "Plan 2 button",
+          "type": "text",
+          "selector": ":scope .ptw-card:nth-child(2) .ptw-cta"
+        },
+        {
+          "id": "cta-3",
+          "label": "Plan 3 button",
+          "type": "text",
+          "selector": ":scope .ptw-card:nth-child(3) .ptw-cta"
+        },
+        {
+          "id": "link-2",
+          "label": "Plan 2 button link",
+          "type": "link",
+          "selector": ":scope .ptw-card:nth-child(2) .ptw-cta"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .ptw-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Three plain pricing cards with a monthly / yearly switch that updates the prices, a highlighted plan and a feature list per plan.",
+      "tags": [
+        "pricing",
+        "plans",
+        "switch",
+        "cards",
+        "saas"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/pricing-table-switch",
+      "relativePath": "features/pricing-table-switch",
+      "previewUrl": "features/pricing-table-switch/index.html",
+      "thumb": "thumbs/pricing-table-switch.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "search-suggest-bar",
+      "title": "Search Bar With Suggestions",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "ecommerce",
+        "saas"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .ssb-title"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .ssb-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A search field with a suggestion list that filters as you type: arrow keys move through the options, Enter picks one, Escape closes. Built to the ARIA combobox pattern.",
+      "tags": [
+        "search",
+        "autocomplete",
+        "combobox",
+        "input",
+        "suggestions"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/search-suggest-bar",
+      "relativePath": "features/search-suggest-bar",
+      "previewUrl": "features/search-suggest-bar/index.html",
+      "thumb": "thumbs/search-suggest-bar.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "search-first-header",
+      "title": "Search-First Header",
+      "category": "Headers & Nav",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "ecommerce",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "logo",
+          "label": "Logo text",
+          "type": "text",
+          "selector": ":scope .sfh-logo"
+        },
+        {
+          "id": "cat-1",
+          "label": "Category 1",
+          "type": "text",
+          "selector": ":scope .sfh-cats a:nth-child(1)"
+        },
+        {
+          "id": "cat-2",
+          "label": "Category 2",
+          "type": "text",
+          "selector": ":scope .sfh-cats a:nth-child(2)"
+        },
+        {
+          "id": "cat-3",
+          "label": "Category 3",
+          "type": "text",
+          "selector": ":scope .sfh-cats a:nth-child(3)"
+        },
+        {
+          "id": "cat-4",
+          "label": "Category 4",
+          "type": "text",
+          "selector": ":scope .sfh-cats a:nth-child(4)"
+        },
+        {
+          "id": "cat-5",
+          "label": "Category 5",
+          "type": "text",
+          "selector": ":scope .sfh-cats a:nth-child(5)"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .sfh-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A shop-style header with the logo, a wide search field, account and cart links, and a second row of category links that scrolls sideways on small screens.",
+      "tags": [
+        "header",
+        "search",
+        "ecommerce",
+        "shop",
+        "navigation"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/search-first-header",
+      "relativePath": "features/search-first-header",
+      "previewUrl": "features/search-first-header/index.html",
+      "thumb": "thumbs/search-first-header.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "auth-card-login",
+      "title": "Sign-In Card",
+      "category": "Buttons & UI",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "dark"
+      ],
+      "industry": [
+        "saas",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .acl-title"
+        },
+        {
+          "id": "button",
+          "label": "Button text",
+          "type": "text",
+          "selector": ":scope .acl-btn"
+        },
+        {
+          "id": "forgot",
+          "label": "Forgot-password text",
+          "type": "text",
+          "selector": ":scope .acl-forgot"
+        },
+        {
+          "id": "forgot-link",
+          "label": "Forgot-password link",
+          "type": "link",
+          "selector": ":scope .acl-forgot"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .acl-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A sign-in card with email and password, a show/hide password button, inline validation, a link to switch to creating an account and a forgot-password link. Nothing is sent anywhere.",
+      "tags": [
+        "login",
+        "sign in",
+        "auth",
+        "password",
+        "form"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/auth-card-login",
+      "relativePath": "features/auth-card-login",
+      "previewUrl": "features/auth-card-login/index.html",
+      "thumb": "thumbs/auth-card-login.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "sitemap-newsletter-footer",
       "title": "Sitemap Footer With Newsletter Signup",
       "category": "Footers & Endings",
@@ -20494,6 +21766,96 @@
       ]
     },
     {
+      "slug": "stats-count-up",
+      "title": "Stats Count-Up Row",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "saas",
+        "agency",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .scu-title"
+        },
+        {
+          "id": "label-1",
+          "label": "Stat 1 label",
+          "type": "text",
+          "selector": ":scope .scu-item:nth-child(1) .scu-label"
+        },
+        {
+          "id": "label-2",
+          "label": "Stat 2 label",
+          "type": "text",
+          "selector": ":scope .scu-item:nth-child(2) .scu-label"
+        },
+        {
+          "id": "label-3",
+          "label": "Stat 3 label",
+          "type": "text",
+          "selector": ":scope .scu-item:nth-child(3) .scu-label"
+        },
+        {
+          "id": "label-4",
+          "label": "Stat 4 label",
+          "type": "text",
+          "selector": ":scope .scu-item:nth-child(4) .scu-label"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .scu-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A row of four big numbers that count up once when they scroll into view; with reduced motion the final numbers show immediately.",
+      "tags": [
+        "stats",
+        "numbers",
+        "counter",
+        "metrics",
+        "social proof"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stats-count-up",
+      "relativePath": "features/stats-count-up",
+      "previewUrl": "features/stats-count-up/index.html",
+      "thumb": "thumbs/stats-count-up.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "sticky-shrink-header",
       "title": "Sticky Shrinking Header",
       "category": "Headers & Nav",
@@ -20562,6 +21924,126 @@
       "relativePath": "features/sticky-shrink-header",
       "previewUrl": "features/sticky-shrink-header/index.html",
       "thumb": "thumbs/sticky-shrink-header.jpg",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "team-grid-simple",
+      "title": "Team Grid",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "agency",
+        "saas",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-24",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .tgs-title"
+        },
+        {
+          "id": "intro",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope .tgs-sub"
+        },
+        {
+          "id": "name-1",
+          "label": "Person 1 name",
+          "type": "text",
+          "selector": ":scope .tgs-card:nth-child(1) .tgs-name"
+        },
+        {
+          "id": "role-1",
+          "label": "Person 1 role",
+          "type": "text",
+          "selector": ":scope .tgs-card:nth-child(1) .tgs-role"
+        },
+        {
+          "id": "name-2",
+          "label": "Person 2 name",
+          "type": "text",
+          "selector": ":scope .tgs-card:nth-child(2) .tgs-name"
+        },
+        {
+          "id": "role-2",
+          "label": "Person 2 role",
+          "type": "text",
+          "selector": ":scope .tgs-card:nth-child(2) .tgs-role"
+        },
+        {
+          "id": "name-3",
+          "label": "Person 3 name",
+          "type": "text",
+          "selector": ":scope .tgs-card:nth-child(3) .tgs-name"
+        },
+        {
+          "id": "role-3",
+          "label": "Person 3 role",
+          "type": "text",
+          "selector": ":scope .tgs-card:nth-child(3) .tgs-role"
+        },
+        {
+          "id": "name-4",
+          "label": "Person 4 name",
+          "type": "text",
+          "selector": ":scope .tgs-card:nth-child(4) .tgs-name"
+        },
+        {
+          "id": "role-4",
+          "label": "Person 4 role",
+          "type": "text",
+          "selector": ":scope .tgs-card:nth-child(4) .tgs-role"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .tgs-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A team section with four member cards: initials avatar, name, role and a profile link, in a grid that stacks on phones.",
+      "tags": [
+        "team",
+        "people",
+        "about",
+        "grid",
+        "cards"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/team-grid-simple",
+      "relativePath": "features/team-grid-simple",
+      "previewUrl": "features/team-grid-simple/index.html",
+      "thumb": "thumbs/team-grid-simple.jpg",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,

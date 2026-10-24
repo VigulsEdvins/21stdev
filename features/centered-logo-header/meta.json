@@ -1,0 +1,81 @@
+{
+  "name": "Centered Logo Header",
+  "slug": "centered-logo-header",
+  "title": "Centered Logo Header",
+  "category": "Headers & Nav",
+  "source": "custom",
+  "type": "component",
+  "description": "A header with the logo in the middle, navigation links on both sides and a menu button that opens a full-width list on phones.",
+  "tags": [
+    "header",
+    "navigation",
+    "centered",
+    "logo",
+    "menu"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "editorial"
+  ],
+  "industry": [
+    "ecommerce",
+    "hospitality",
+    "portfolio",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "logo",
+      "label": "Logo text",
+      "type": "text",
+      "selector": ":scope .clh-logo"
+    },
+    {
+      "id": "link-1",
+      "label": "Link 1",
+      "type": "text",
+      "selector": ":scope .clh-left a:nth-child(1)"
+    },
+    {
+      "id": "link-2",
+      "label": "Link 2",
+      "type": "text",
+      "selector": ":scope .clh-left a:nth-child(2)"
+    },
+    {
+      "id": "link-3",
+      "label": "Link 3",
+      "type": "text",
+      "selector": ":scope .clh-right a:nth-child(1)"
+    },
+    {
+      "id": "link-4",
+      "label": "Link 4",
+      "type": "text",
+      "selector": ":scope .clh-right a:nth-child(2)"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .clh-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

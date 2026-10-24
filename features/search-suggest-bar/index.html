@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Bar With Suggestions</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="ssb-demo" aria-labelledby="ssbTitle">
+  <div class="ssb-wrap">
+    <h2 class="ssb-title" id="ssbTitle">What are you looking for?</h2>
+    <div class="ssb-box">
+      <label class="ssb-label" for="ssbInput">Search</label>
+      <input class="ssb-input" id="ssbInput" type="text" role="combobox" aria-expanded="false" aria-controls="ssbList" aria-autocomplete="list" autocomplete="off" placeholder="Try &quot;pricing&quot; or &quot;support&quot;">
+      <ul class="ssb-list" id="ssbList" role="listbox" aria-label="Suggestions" hidden></ul>
+    </div>
+    <p class="ssb-picked" id="ssbPicked" role="status"></p>
+  </div>
+</section>
+  <script src="script.js"></script>
+</body>
+</html>

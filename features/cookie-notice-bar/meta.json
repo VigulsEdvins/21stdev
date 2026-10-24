@@ -1,0 +1,79 @@
+{
+  "name": "Cookie Notice Bar",
+  "slug": "cookie-notice-bar",
+  "title": "Cookie Notice Bar",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "A privacy notice fixed to the bottom of the page with Accept, Decline and a settings panel with an optional-cookies switch. The choice is remembered in the browser and the bar then stays away.",
+  "tags": [
+    "cookies",
+    "privacy",
+    "consent",
+    "gdpr",
+    "banner"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "ecommerce",
+    "saas"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "text",
+      "label": "Notice text",
+      "type": "text",
+      "selector": ":scope .cnb-text"
+    },
+    {
+      "id": "accept",
+      "label": "Accept button",
+      "type": "text",
+      "selector": ":scope .cnb-accept"
+    },
+    {
+      "id": "decline",
+      "label": "Decline button",
+      "type": "text",
+      "selector": ":scope .cnb-decline"
+    },
+    {
+      "id": "policy",
+      "label": "Policy link text",
+      "type": "text",
+      "selector": ":scope .cnb-policy"
+    },
+    {
+      "id": "policy-link",
+      "label": "Policy link",
+      "type": "link",
+      "selector": ":scope .cnb-policy"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .cnb-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

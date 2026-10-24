@@ -1,0 +1,55 @@
+{
+  "name": "Search Bar With Suggestions",
+  "slug": "search-suggest-bar",
+  "title": "Search Bar With Suggestions",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "A search field with a suggestion list that filters as you type: arrow keys move through the options, Enter picks one, Escape closes. Built to the ARIA combobox pattern.",
+  "tags": [
+    "search",
+    "autocomplete",
+    "combobox",
+    "input",
+    "suggestions"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "ecommerce",
+    "saas"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .ssb-title"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .ssb-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

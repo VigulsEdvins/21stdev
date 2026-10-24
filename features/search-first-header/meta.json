@@ -1,0 +1,84 @@
+{
+  "name": "Search-First Header",
+  "slug": "search-first-header",
+  "title": "Search-First Header",
+  "category": "Headers & Nav",
+  "source": "custom",
+  "type": "component",
+  "description": "A shop-style header with the logo, a wide search field, account and cart links, and a second row of category links that scrolls sideways on small screens.",
+  "tags": [
+    "header",
+    "search",
+    "ecommerce",
+    "shop",
+    "navigation"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "logo",
+      "label": "Logo text",
+      "type": "text",
+      "selector": ":scope .sfh-logo"
+    },
+    {
+      "id": "cat-1",
+      "label": "Category 1",
+      "type": "text",
+      "selector": ":scope .sfh-cats a:nth-child(1)"
+    },
+    {
+      "id": "cat-2",
+      "label": "Category 2",
+      "type": "text",
+      "selector": ":scope .sfh-cats a:nth-child(2)"
+    },
+    {
+      "id": "cat-3",
+      "label": "Category 3",
+      "type": "text",
+      "selector": ":scope .sfh-cats a:nth-child(3)"
+    },
+    {
+      "id": "cat-4",
+      "label": "Category 4",
+      "type": "text",
+      "selector": ":scope .sfh-cats a:nth-child(4)"
+    },
+    {
+      "id": "cat-5",
+      "label": "Category 5",
+      "type": "text",
+      "selector": ":scope .sfh-cats a:nth-child(5)"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .sfh-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

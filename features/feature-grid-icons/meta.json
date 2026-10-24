@@ -1,0 +1,133 @@
+{
+  "name": "Feature Grid With Icons",
+  "slug": "feature-grid-icons",
+  "title": "Feature Grid With Icons",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "A heading with six feature cards in a responsive grid, each with an icon, a title and a short description.",
+  "tags": [
+    "features",
+    "grid",
+    "icons",
+    "benefits",
+    "cards"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "saas",
+    "agency",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .fgi-title"
+    },
+    {
+      "id": "intro",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .fgi-sub"
+    },
+    {
+      "id": "title-1",
+      "label": "Feature 1 title",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(1) .fgi-h"
+    },
+    {
+      "id": "text-1",
+      "label": "Feature 1 text",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(1) .fgi-p"
+    },
+    {
+      "id": "title-2",
+      "label": "Feature 2 title",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(2) .fgi-h"
+    },
+    {
+      "id": "text-2",
+      "label": "Feature 2 text",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(2) .fgi-p"
+    },
+    {
+      "id": "title-3",
+      "label": "Feature 3 title",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(3) .fgi-h"
+    },
+    {
+      "id": "text-3",
+      "label": "Feature 3 text",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(3) .fgi-p"
+    },
+    {
+      "id": "title-4",
+      "label": "Feature 4 title",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(4) .fgi-h"
+    },
+    {
+      "id": "text-4",
+      "label": "Feature 4 text",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(4) .fgi-p"
+    },
+    {
+      "id": "title-5",
+      "label": "Feature 5 title",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(5) .fgi-h"
+    },
+    {
+      "id": "text-5",
+      "label": "Feature 5 text",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(5) .fgi-p"
+    },
+    {
+      "id": "title-6",
+      "label": "Feature 6 title",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(6) .fgi-h"
+    },
+    {
+      "id": "text-6",
+      "label": "Feature 6 text",
+      "type": "text",
+      "selector": ":scope .fgi-card:nth-child(6) .fgi-p"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .fgi-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

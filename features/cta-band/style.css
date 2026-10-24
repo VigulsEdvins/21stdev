@@ -1,0 +1,12 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.cta-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); padding: 4rem 1.5rem; }
+.cta-inner { max-width: 960px; margin: 0 auto; padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 5vw, 4rem); border-radius: calc(var(--radius, 16px) * 1.6); text-align: center; color: #fff; background: radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--accent, #6366f1) 100%, #fff 12%), color-mix(in srgb, var(--accent, #6366f1) 70%, #000)); }
+.cta-title { font-family: var(--font-display, inherit); font-size: clamp(1.8rem, 4.5vw, 2.8rem); line-height: 1.15; margin: 0 0 .75rem; }
+.cta-text { margin: 0 0 1.75rem; opacity: .9; font-size: 1.05rem; }
+.cta-actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+.cta-primary, .cta-secondary { padding: 13px 26px; border-radius: 999px; font-weight: 600; text-decoration: none; transition: transform .2s; }
+.cta-primary { background: #fff; color: #111827; }
+.cta-secondary { border: 1.5px solid rgba(255, 255, 255, .7); color: #fff; }
+.cta-primary:hover, .cta-secondary:hover { transform: translateY(-2px); }
+.cta-primary:focus-visible, .cta-secondary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .cta-primary, .cta-secondary { transition: none; } .cta-primary:hover, .cta-secondary:hover { transform: none; } }

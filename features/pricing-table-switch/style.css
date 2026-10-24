@@ -1,0 +1,27 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.ptw-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); padding: 5rem 1.5rem; }
+.ptw-head { max-width: 640px; margin: 0 auto 2.5rem; text-align: center; }
+.ptw-title { font-family: var(--font-display, inherit); font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 .75rem; }
+.ptw-sub { margin: 0 0 1.75rem; line-height: 1.6; color: color-mix(in srgb, var(--text, #f3f4f6) 72%, transparent); }
+.ptw-switch { display: inline-flex; padding: 4px; border-radius: 999px; background: color-mix(in srgb, var(--text, #f3f4f6) 8%, var(--bg, #0b0f19)); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 14%, transparent); }
+.ptw-opt { border: 0; background: transparent; color: inherit; font: inherit; font-size: .95rem; padding: 8px 18px; border-radius: 999px; cursor: pointer; transition: background-color .2s, color .2s; }
+.ptw-opt.is-on { background: var(--accent, #6366f1); color: #fff; }
+.ptw-opt:focus-visible, .ptw-cta:focus-visible { outline: 2px solid var(--accent, #6366f1); outline-offset: 3px; }
+.ptw-save { font-size: .75rem; opacity: .85; margin-left: 4px; }
+.ptw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1040px; margin: 0 auto; align-items: stretch; }
+.ptw-card { position: relative; display: flex; flex-direction: column; padding: 1.75rem; border-radius: var(--radius, 16px); background: color-mix(in srgb, var(--text, #f3f4f6) 6%, var(--bg, #0b0f19)); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 14%, transparent); }
+.ptw-card.is-featured { border-color: var(--accent, #6366f1); box-shadow: 0 0 0 1px var(--accent, #6366f1), 0 24px 60px color-mix(in srgb, var(--accent, #6366f1) 22%, transparent); }
+.ptw-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); margin: 0; padding: 4px 12px; border-radius: 999px; background: var(--accent, #6366f1); color: #fff; font-size: .75rem; font-weight: 600; white-space: nowrap; }
+.ptw-name { font-family: var(--font-display, inherit); font-size: 1.15rem; margin: 0 0 .75rem; }
+.ptw-price { margin: 0 0 1.25rem; display: flex; align-items: baseline; gap: 6px; }
+.ptw-price::before { content: '$'; font-size: 1.4rem; font-weight: 600; }
+.ptw-amount { font-size: 3rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.ptw-per { color: color-mix(in srgb, var(--text, #f3f4f6) 62%, transparent); font-size: .9rem; }
+.ptw-list { list-style: none; margin: 0 0 1.75rem; padding: 0; display: grid; gap: .6rem; flex: 1; }
+.ptw-list li { padding-left: 1.5rem; position: relative; color: color-mix(in srgb, var(--text, #f3f4f6) 82%, transparent); }
+.ptw-list li::before { content: ''; position: absolute; left: 0; top: .45em; width: .8rem; height: .45rem; border-left: 2px solid var(--accent, #6366f1); border-bottom: 2px solid var(--accent, #6366f1); transform: rotate(-45deg); }
+.ptw-cta { display: block; text-align: center; padding: 12px 18px; border-radius: 999px; font-weight: 600; text-decoration: none; color: inherit; border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 26%, transparent); transition: transform .2s, background-color .2s; }
+.ptw-card.is-featured .ptw-cta { background: var(--accent, #6366f1); border-color: transparent; color: #fff; }
+.ptw-cta:hover { transform: translateY(-1px); }
+@media (max-width: 860px) { .ptw-grid { grid-template-columns: 1fr; max-width: 440px; } .ptw-card.is-featured { margin-top: 12px; } }
+@media (prefers-reduced-motion: reduce) { .ptw-opt, .ptw-cta { transition: none; } .ptw-cta:hover { transform: none; } }

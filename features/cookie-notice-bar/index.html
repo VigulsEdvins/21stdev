@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Notice Bar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="cnb-demo" aria-label="Cookie notice demo">
+  <p class="cnb-placeholder">Page content sits here. The notice appears at the bottom of the window until a choice is made.</p>
+  <div class="cnb-bar" id="cnbBar" role="region" aria-label="Cookie notice">
+    <p class="cnb-text">We use cookies to make this site work and, with your permission, to understand how it is used. <a class="cnb-policy" href="#privacy">Privacy policy</a></p>
+    <div class="cnb-settings" id="cnbSettings" hidden>
+      <label class="cnb-switch"><input type="checkbox" checked disabled> <span>Essential (always on)</span></label>
+      <label class="cnb-switch"><input type="checkbox" id="cnbAnalytics"> <span>Analytics</span></label>
+    </div>
+    <div class="cnb-actions">
+      <button class="cnb-link" id="cnbToggle" type="button" aria-expanded="false" aria-controls="cnbSettings">Settings</button>
+      <button class="cnb-decline" id="cnbDecline" type="button">Decline</button>
+      <button class="cnb-accept" id="cnbAccept" type="button">Accept all</button>
+    </div>
+  </div>
+</section>
+  <script src="script.js"></script>
+</body>
+</html>
