@@ -1521,14 +1521,16 @@ select option {
 /* Stack Items (Rendered by builder.js in Task 3) */
 .stack-item-card {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
   padding: 10px 12px;
   background: rgba(24, 24, 30, 0.9);
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
   border-radius: 8px;
   transition: all 0.18s ease;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .stack-item-card:hover {
@@ -1570,6 +1572,37 @@ select option {
   color: var(--text-muted, #a1a1aa);
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.singleton-badge {
+  display: inline-block;
+  padding: 1px 5px;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+.singleton-badge.badge-required {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.singleton-badge.badge-optional {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.stack-tool-btn.btn-duplicate:disabled,
+.stack-tool-btn.btn-duplicate.is-disabled {
+  opacity: 0.3 !important;
+  cursor: not-allowed !important;
 }
 
 .stack-item-tools {
@@ -1626,6 +1659,7 @@ select option {
   font-size: 11px;
   width: 100%;
   margin-top: 4px;
+  box-sizing: border-box;
 }
 
 .sizing-row {
@@ -1633,6 +1667,15 @@ select option {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sizing-label {
+  color: var(--text-muted, #a1a1aa);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .sizing-pills {
@@ -2574,9 +2617,51 @@ select option {
 }
 
 /* Responsive Overrides */
-@media (max-width: 900px) {
-  .header-center {
+/* Header: collapse labels progressively so no control is ever hidden or clipped */
+.builder-header .header-left,
+.builder-header .header-center,
+.builder-header .header-right {
+  min-width: 0;
+}
+
+@media (max-width: 1500px) {
+  .builder-header .brand-tag,
+  .builder-header .mode-btn span,
+  .builder-header .builder-control-label span {
     display: none;
+  }
+}
+
+@media (max-width: 1280px) {
+  .builder-header {
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .builder-header .brand-text,
+  .viewport-btn span,
+  .builder-actions .builder-btn-subtle span {
+    display: none;
+  }
+  .builder-header .header-left,
+  .builder-header .header-center {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Wrap into two rows instead of hiding theme/viewport controls */
+  .builder-header {
+    height: auto;
+    min-height: 60px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    row-gap: 8px;
+  }
+  .builder-header .header-center {
+    order: 3;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .builder-sidebar {

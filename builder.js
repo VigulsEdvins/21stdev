@@ -526,6 +526,194 @@
       }
     });
 
+    // Landing Page Singleton Rules:
+    // Singletons: Preloader (Optional, index 0), Header (Essential, top), Hero (Essential, after header), Footer (Essential, bottom).
+    const LANDING_PAGE_SINGLETONS = {
+      preloader: {
+        type: 'preloader',
+        name: 'Preloader',
+        category: 'Preloaders & Shaders',
+        necessity: 'optional',
+        needLabel: 'Optional',
+        match: (slug, title, cat) => {
+          const s = (slug || '').toLowerCase();
+          const t = (title || '').toLowerCase();
+          const c = (cat || '').toLowerCase();
+          return c.includes('preloader') || s.includes('preloader') || t.includes('preloader');
+        }
+      },
+      header: {
+        type: 'header',
+        name: 'Header',
+        category: 'Headers & Nav',
+        necessity: 'required',
+        needLabel: 'Essential',
+        match: (slug, title, cat) => {
+          const s = (slug || '').toLowerCase();
+          const t = (title || '').toLowerCase();
+          const c = (cat || '').toLowerCase();
+          return c.includes('nav') || c.includes('header') || s.includes('header') || s.includes('nav') || s.includes('burger') || s.includes('menu') || t.includes('header') || t.includes('navbar') || t.includes('navigation');
+        }
+      },
+      hero: {
+        type: 'hero',
+        name: 'Hero Section',
+        category: 'Heroes',
+        necessity: 'required',
+        needLabel: 'Essential',
+        match: (slug, title, cat) => {
+          const s = (slug || '').toLowerCase();
+          const t = (title || '').toLowerCase();
+          const c = (cat || '').toLowerCase();
+          return c === 'heroes' || c.includes('hero') || s.includes('hero') || t.includes('hero');
+        }
+      },
+      footer: {
+        type: 'footer',
+        name: 'Footer',
+        category: 'Footers & Endings',
+        necessity: 'required',
+        needLabel: 'Essential',
+        match: (slug, title, cat) => {
+          const s = (slug || '').toLowerCase();
+          const t = (title || '').toLowerCase();
+          const c = (cat || '').toLowerCase();
+          return c.includes('footer') || s.includes('footer') || t.includes('footer');
+        }
+      }
+    };
+
+    function getSingletonType(slug, title, cat) {
+      if (!slug && !title && !cat) return null;
+      for (const [key, def] of Object.entries(LANDING_PAGE_SINGLETONS)) {
+        if (def.match(slug, title, cat)) return key;
+      }
+      return null;
+    }
+
+    function findExistingSingleton(type) {
+      if (!type || !stackManager) return null;
+      const stack = stackManager.getStack();
+      return stack.find(sec => {
+        const feat = featuresMap.get(sec.slug);
+        const title = sec.title || (feat ? (feat.title || feat.name) : '');
+        const cat = sec.category || (feat ? feat.category : '');
+        return getSingletonType(sec.slug, title, cat) === type;
+      }) || null;
+    }
+
+    // Preloader play state tracking:
+    // "It need to play once after I add it and other times only if I run it"
+    let playedPreloaderId = null;
+    let preloaderForceReplay = false;
+
+    function addOrReplaceLandingSection(slug, extraProps = {}, preferredIndex = null) {
+      const title = extraProps.title || slug;
+      const category = extraProps.category || '';
+      const singletonType = getSingletonType(slug, title, category);
+
+      if (singletonType === 'preloader') {
+        // Explicitly added or replaced preloader: play once
+        preloaderForceReplay = true;
+        playedPreloaderId = null;
+      }
+
+      if (singletonType) {
+        const singletonDef = LANDING_PAGE_SINGLETONS[singletonType];
+        const existing = findExistingSingleton(singletonType);
+
+        if (existing) {
+          // Landing page can only have one! Replace the existing singleton in place
+          let replaced;
+          if (typeof stackManager.replaceSection === 'function') {
+            replaced = stackManager.replaceSection(existing.id, slug, extraProps);
+          } else {
+            const stack = stackManager.getStack();
+            const idx = stack.findIndex(s => s.id === existing.id);
+            stackManager.removeSection(existing.id);
+            replaced = stackManager.insertSection(idx >= 0 ? idx : stackManager.getStack().length, slug, extraProps);
+          }
+
+          // Ensure proper canonical position if needed (Preloader at 0, Header at 0/1, Footer at bottom)
+          if (singletonType === 'preloader') {
+            const stack = stackManager.getStack();
+            const currIdx = stack.findIndex(s => s.id === (replaced ? replaced.id : existing.id));
+            if (currIdx > 0) {
+              stackManager.moveSection(replaced ? replaced.id : existing.id, -currIdx);
+            }
+          } else if (singletonType === 'header') {
+            const stack = stackManager.getStack();
+            const preloader = findExistingSingleton('preloader');
+            const targetPos = preloader ? 1 : 0;
+            const currIdx = stack.findIndex(s => s.id === (replaced ? replaced.id : existing.id));
+            if (currIdx !== targetPos && currIdx >= 0) {
+              stackManager.moveSection(replaced ? replaced.id : existing.id, targetPos - currIdx);
+            }
+          } else if (singletonType === 'footer') {
+            const stack = stackManager.getStack();
+            const currIdx = stack.findIndex(s => s.id === (replaced ? replaced.id : existing.id));
+            if (currIdx >= 0 && currIdx < stack.length - 1) {
+              stackManager.moveSection(replaced ? replaced.id : existing.id, (stack.length - 1) - currIdx);
+            }
+          }
+
+          showToast(`Landing page can only have one ${singletonDef.name}. Replaced with "${title}".`);
+          return { section: replaced, replaced: true, singletonType };
+        } else {
+          // No existing singleton: insert at canonical position
+          let targetIndex = preferredIndex;
+          if (singletonType === 'preloader') {
+            targetIndex = 0; // Preloaders always go at the very top (entry screen)
+          } else if (singletonType === 'header') {
+            const preloader = findExistingSingleton('preloader');
+            targetIndex = preloader ? 1 : 0; // Header goes after preloader if present, else 0
+          } else if (singletonType === 'hero') {
+            const header = findExistingSingleton('header');
+            if (header) {
+              const stack = stackManager.getStack();
+              const headerIdx = stack.findIndex(s => s.id === header.id);
+              targetIndex = headerIdx >= 0 ? headerIdx + 1 : 1;
+            } else {
+              const preloader = findExistingSingleton('preloader');
+              targetIndex = preloader ? 1 : 0;
+            }
+          } else if (singletonType === 'footer') {
+            targetIndex = stackManager.getStack().length;
+          } else if (targetIndex === null || targetIndex === undefined) {
+            const footer = findExistingSingleton('footer');
+            if (footer) {
+              const stack = stackManager.getStack();
+              const footerIdx = stack.findIndex(s => s.id === footer.id);
+              targetIndex = footerIdx >= 0 ? footerIdx : stack.length;
+            } else {
+              targetIndex = stackManager.getStack().length;
+            }
+          }
+
+          const newSec = stackManager.insertSection(targetIndex, slug, extraProps);
+          showToast(`Added ${singletonDef.name}: "${title}"`);
+          return { section: newSec, replaced: false, singletonType };
+        }
+      }
+
+      // Non-singleton component: if footer exists at end, keep footer at bottom by inserting before it
+      let targetIndex = preferredIndex;
+      if (targetIndex === null || targetIndex === undefined) {
+        const footer = findExistingSingleton('footer');
+        if (footer) {
+          const stack = stackManager.getStack();
+          const footerIdx = stack.findIndex(s => s.id === footer.id);
+          targetIndex = footerIdx >= 0 ? footerIdx : stack.length;
+        } else {
+          targetIndex = stackManager.getStack().length;
+        }
+      }
+
+      const newSec = stackManager.insertSection(targetIndex, slug, extraProps);
+      showToast(`Added "${title}"`);
+      return { section: newSec, replaced: false, singletonType: null };
+    }
+
     /**
      * Client-side memory cache for feature source files.
      * Fetches features/<slug>/index.html, style.css, script.js if not yet cached.
@@ -926,6 +1114,13 @@
         const category = item.category || (feature ? feature.category : 'Component');
         const sizing = item.sizing || { heightMode: 'auto', customHeight: 600, paddingY: 'none' };
 
+        const singletonType = getSingletonType(item.slug, title, category);
+        const singletonDef = singletonType ? LANDING_PAGE_SINGLETONS[singletonType] : null;
+        const singletonLabel = singletonDef ? singletonDef.name : null;
+        const isOptional = singletonDef && singletonDef.necessity === 'optional';
+        const badgeClass = isOptional ? 'singleton-badge badge-optional' : 'singleton-badge badge-required';
+        const badgeText = isOptional ? 'Need: Optional · 1 Only' : 'Need: Essential · 1 Only';
+
         const card = document.createElement('div');
         card.className = 'stack-item-card';
         card.setAttribute('role', 'listitem');
@@ -938,17 +1133,28 @@
               <span class="stack-item-order">${index + 1}</span>
               <div class="stack-item-info">
                 <div class="stack-item-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
-                <div class="stack-item-category">${escapeHtml(category)}</div>
+                <div class="stack-item-category">
+                  <span>${escapeHtml(category)}</span>
+                  ${singletonDef ? `<span class="${badgeClass}" title="${isOptional ? 'Optional: Use when heavy 3D or assets need loading' : 'Essential component for landing pages'}">${badgeText}</span>` : ''}
+                </div>
               </div>
             </div>
             <div class="stack-item-tools">
-              <button type="button" class="stack-tool-btn btn-sizing" title="Adjust Sizing" aria-label="Adjust section sizing">
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 3L3 21"></path>
-                  <path d="M14 3h7v7"></path>
-                  <path d="M10 21H3v-7"></path>
-                </svg>
-              </button>
+              ${singletonType === 'preloader' ? `
+                <button type="button" class="stack-tool-btn btn-replay" title="Replay Preloader Intro Animation" aria-label="Replay preloader animation">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                </button>
+              ` : `
+                <button type="button" class="stack-tool-btn btn-sizing" title="Adjust Sizing" aria-label="Adjust section sizing">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 3L3 21"></path>
+                    <path d="M14 3h7v7"></path>
+                    <path d="M10 21H3v-7"></path>
+                  </svg>
+                </button>
+              `}
               <button type="button" class="stack-tool-btn btn-move-up" title="Move Up" aria-label="Move section up" ${index === 0 ? 'disabled' : ''}>
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="18 15 12 9 6 15"></polyline>
@@ -959,7 +1165,7 @@
                   <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
               </button>
-              <button type="button" class="stack-tool-btn btn-duplicate" title="Duplicate Section" aria-label="Duplicate section">
+              <button type="button" class="stack-tool-btn btn-duplicate ${singletonType ? 'is-disabled' : ''}" title="${singletonType ? `Landing page can only have one ${singletonLabel}` : 'Duplicate Section'}" aria-label="Duplicate section" ${singletonType ? 'disabled' : ''}>
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -1086,10 +1292,25 @@
           });
         }
 
+        const replayBtn = card.querySelector('.btn-replay');
+        if (replayBtn) {
+          replayBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showToast('Running preloader intro animation...');
+            preloaderForceReplay = true;
+            forceFullPreviewReload = true;
+            updatePreview();
+          });
+        }
+
         const duplicateBtn = card.querySelector('.btn-duplicate');
         if (duplicateBtn) {
           duplicateBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            if (singletonType) {
+              showToast(`A landing page can only have one ${singletonLabel}.`);
+              return;
+            }
             stackManager.duplicateSection(item.id);
             showToast(`Duplicated "${title}"`);
           });
@@ -1184,18 +1405,22 @@
       // 2. Direct style property update on iframe documentElement if same-origin accessible
       try {
         const doc = previewFrame && (previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document));
-        if (doc && doc.documentElement) {
-          if (theme.bg) {
-            doc.documentElement.style.setProperty('--preview-bg', theme.bg);
-            doc.querySelectorAll('.page-section').forEach(s => s.style.backgroundColor = theme.bg);
+        if (doc) {
+          if (window.Assembler && typeof window.Assembler.applyThemeToDocument === 'function') {
+            window.Assembler.applyThemeToDocument(doc, theme);
+          } else if (doc.documentElement) {
+            if (theme.bg) {
+              doc.documentElement.style.setProperty('--preview-bg', theme.bg);
+              doc.querySelectorAll('.page-section').forEach(s => s.style.backgroundColor = theme.bg);
+            }
+            if (theme.text) {
+              doc.documentElement.style.setProperty('--preview-text', theme.text);
+              doc.querySelectorAll('.page-section').forEach(s => s.style.color = theme.text);
+            }
+            if (theme.accent) doc.documentElement.style.setProperty('--preview-accent', theme.accent);
+            if (theme.cardBg) doc.documentElement.style.setProperty('--preview-card-bg', theme.cardBg);
+            if (theme.border) doc.documentElement.style.setProperty('--preview-border', theme.border);
           }
-          if (theme.text) {
-            doc.documentElement.style.setProperty('--preview-text', theme.text);
-            doc.querySelectorAll('.page-section').forEach(s => s.style.color = theme.text);
-          }
-          if (theme.accent) doc.documentElement.style.setProperty('--preview-accent', theme.accent);
-          if (theme.cardBg) doc.documentElement.style.setProperty('--preview-card-bg', theme.cardBg);
-          if (theme.border) doc.documentElement.style.setProperty('--preview-border', theme.border);
         }
       } catch (_) {}
     }
@@ -1242,9 +1467,129 @@
       // Re-read latest state and assemble preview document
       const latestState = stackManager.getState();
       const themeConfig = latestState.theme === 'custom' ? latestState.customColors : latestState.theme;
-      const assembledHtml = window.Assembler.assemblePreviewDocument(latestState.stack, themeConfig, featuresData);
 
+      // Preloader play-state tracking:
+      // Requirement: Play ONCE when newly added; suppressed on subsequent section additions/modifications
+      // and runs again only when user explicitly runs it via the Replay (▶) button.
+      const preloaderSection = latestState.stack.find(s => {
+        const slug = s.slug || '';
+        const cat = s.category || '';
+        return slug.includes('preloader') || cat.toLowerCase().includes('preloader');
+      });
+
+      let suppressPreloader = false;
+      if (preloaderSection) {
+        if (preloaderForceReplay) {
+          // Explicitly triggered via Run/Replay button
+          suppressPreloader = false;
+          preloaderForceReplay = false;
+          playedPreloaderId = preloaderSection.id;
+        } else if (playedPreloaderId === preloaderSection.id) {
+          // Already played: suppress on subsequent section additions/modifications
+          suppressPreloader = true;
+        } else {
+          // Newly added preloader: play once
+          suppressPreloader = false;
+          playedPreloaderId = preloaderSection.id;
+        }
+      } else {
+        playedPreloaderId = null;
+        preloaderForceReplay = false;
+      }
+
+      // Only sizing and overlay elements are patched in place; anything else (sections, their
+      // source, theme, preloader state) changes this key and triggers a full reload.
+      // Yield so callers can set pendingSelectedElement right after the state change that notified us
+      await Promise.resolve();
+      const structureKey = JSON.stringify({
+        theme: themeConfig,
+        suppressPreloader,
+        stack: latestState.stack.map(({ elements, sizing, ...rest }) => rest)
+      });
+      const canPatch = !forceFullPreviewReload && structureKey === lastPreviewStructureKey;
+      forceFullPreviewReload = false;
+      if (canPatch && patchPreviewInPlace(latestState.stack)) {
+        return;
+      }
+
+      const assembledHtml = window.Assembler.assemblePreviewDocument(
+        latestState.stack,
+        themeConfig,
+        featuresData,
+        { suppressPreloader }
+      );
+
+      lastPreviewStructureKey = structureKey;
       previewFrame.srcdoc = assembledHtml;
+    }
+
+    let lastPreviewStructureKey = null;
+    let forceFullPreviewReload = false;
+    const SECTION_SIZING_PROPS = ['min-height', 'height', 'overflow', 'padding-top', 'padding-bottom'];
+
+    /**
+     * Applies sizing and overlay-element changes directly to the loaded preview document, so
+     * section scripts, animations and scroll position survive. Returns false when the preview
+     * is not ready or out of sync, in which case the caller does a full reload.
+     */
+    function patchPreviewInPlace(stack) {
+      let doc;
+      try {
+        doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+      } catch (_) {
+        return false;
+      }
+      if (!doc || doc.readyState !== 'complete' || stack.length === 0) return false;
+
+      const sectionEls = stack.map(sec => doc.getElementById(sec.id));
+      if (sectionEls.some(el => !el || !el.classList.contains('page-section'))) return false;
+
+      stack.forEach((sec, i) => {
+        const secEl = sectionEls[i];
+        if (!secEl.classList.contains('is-preloader')) {
+          SECTION_SIZING_PROPS.forEach(prop => secEl.style.removeProperty(prop));
+          window.Assembler.computeSectionSizingStyles(sec.sizing).split(';').forEach(decl => {
+            const idx = decl.indexOf(':');
+            if (idx > 0) secEl.style.setProperty(decl.slice(0, idx).trim(), decl.slice(idx + 1).trim());
+          });
+        }
+
+        const overlayHtml = window.Assembler.renderSectionOverlayHtml(sec.elements);
+        const layer = secEl.querySelector(':scope > .section-overlay-layer');
+        if (!overlayHtml) {
+          if (layer) layer.remove();
+        } else {
+          const tpl = doc.createElement('template');
+          tpl.innerHTML = overlayHtml.trim();
+          const fresh = tpl.content.firstElementChild;
+          if (layer) {
+            layer.replaceWith(fresh);
+          } else {
+            secEl.insertBefore(fresh, secEl.querySelector(':scope > .section-resize-handle'));
+          }
+        }
+      });
+
+      // Restore selection on the rebuilt overlay (mirrors the iframe load handler)
+      if (pendingSelectedElement) {
+        const el = doc.getElementById(pendingSelectedElement.elementId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          selectCanvasElement(pendingSelectedElement.sectionId, pendingSelectedElement.elementId);
+          closeToolbarPopup();
+        }
+        pendingSelectedElement = null;
+      } else if (selectedElementState) {
+        const el = doc.getElementById(selectedElementState.elementId);
+        if (el) {
+          el.classList.add('is-selected');
+          ensureResizeHandles(el);
+          if (elementEditToolbar && elementEditToolbar.style.display !== 'none') updateToolbarPosition();
+        } else {
+          clearElementSelection();
+        }
+      }
+      return true;
     }
 
     // ==========================================================================
@@ -2188,7 +2533,7 @@
             let finalXPct = parseFloat(elementEl.style.left) || 50;
             let finalYPct = parseFloat(elementEl.style.top) || 50;
 
-            function onResizeMove(moveEvent) {
+            function onElementResizeMove(moveEvent) {
               const frameRect = previewFrame.getBoundingClientRect();
               const mouseX = (moveEvent.view === window) ? (moveEvent.clientX - frameRect.left) : moveEvent.clientX;
               const mouseY = (moveEvent.view === window) ? (moveEvent.clientY - frameRect.top) : moveEvent.clientY;
@@ -2248,11 +2593,11 @@
               }
             }
 
-            function onResizeUp() {
-              doc.removeEventListener('mousemove', onResizeMove);
-              doc.removeEventListener('mouseup', onResizeUp);
-              window.removeEventListener('mousemove', onResizeMove);
-              window.removeEventListener('mouseup', onResizeUp);
+            function onElementResizeUp() {
+              doc.removeEventListener('mousemove', onElementResizeMove);
+              doc.removeEventListener('mouseup', onElementResizeUp);
+              window.removeEventListener('mousemove', onElementResizeMove);
+              window.removeEventListener('mouseup', onElementResizeUp);
 
               stackManager.updateElement(sectionId, elementId, {
                 width: finalWidth,
@@ -2265,10 +2610,10 @@
               }
             }
 
-            doc.addEventListener('mousemove', onResizeMove);
-            doc.addEventListener('mouseup', onResizeUp);
-            window.addEventListener('mousemove', onResizeMove);
-            window.addEventListener('mouseup', onResizeUp);
+            doc.addEventListener('mousemove', onElementResizeMove);
+            doc.addEventListener('mouseup', onElementResizeUp);
+            window.addEventListener('mousemove', onElementResizeMove);
+            window.addEventListener('mouseup', onElementResizeUp);
             return;
           }
 
@@ -2376,7 +2721,7 @@
             }
           }
 
-          function onResizeMove(moveEvent) {
+          function onSectionResizeMove(moveEvent) {
             const frameRect = previewFrame.getBoundingClientRect();
             const mouseY = (moveEvent.view === window) ? (moveEvent.clientY - frameRect.top) : moveEvent.clientY;
             const deltaY = mouseY - startY;
@@ -2399,12 +2744,12 @@
             updateToolbarPosition();
           }
 
-          function onResizeUp() {
+          function onSectionResizeUp() {
             handleEl.classList.remove('is-resizing');
-            doc.removeEventListener('mousemove', onResizeMove);
-            doc.removeEventListener('mouseup', onResizeUp);
-            window.removeEventListener('mousemove', onResizeMove);
-            window.removeEventListener('mouseup', onResizeUp);
+            doc.removeEventListener('mousemove', onSectionResizeMove);
+            doc.removeEventListener('mouseup', onSectionResizeUp);
+            window.removeEventListener('mousemove', onSectionResizeMove);
+            window.removeEventListener('mouseup', onSectionResizeUp);
 
             const sizeTooltip = doc.getElementById('sectionResizeTooltip');
             if (sizeTooltip) sizeTooltip.style.display = 'none';
@@ -2416,10 +2761,10 @@
             showToast(`Section height updated: ${newHeight}px`);
           }
 
-          doc.addEventListener('mousemove', onResizeMove);
-          doc.addEventListener('mouseup', onResizeUp);
-          window.addEventListener('mousemove', onResizeMove);
-          window.addEventListener('mouseup', onResizeUp);
+          doc.addEventListener('mousemove', onSectionResizeMove);
+          doc.addEventListener('mouseup', onSectionResizeUp);
+          window.addEventListener('mousemove', onSectionResizeMove);
+          window.addEventListener('mouseup', onSectionResizeUp);
         });
 
         // =============================================================
@@ -2578,15 +2923,14 @@
               }
             }
 
-            const newSec = stackManager.insertSection(targetIndex, payload.slug, {
+            const res = addOrReplaceLandingSection(payload.slug, {
               title: payload.title,
               category: payload.normCat
-            });
+            }, targetIndex);
 
-            if (newSec) {
-              setActiveSection(newSec.id);
-              pendingSelectedSection = newSec.id;
-              showToast(`Inserted section "${payload.title}" at position ${targetIndex + 1}`);
+            if (res && res.section) {
+              setActiveSection(res.section.id);
+              pendingSelectedSection = res.section.id;
             }
           }
         });
@@ -2890,13 +3234,14 @@
             }
           } else {
             // Add as new page section row
-            const newSec = stackManager.addSection(item.slug, {
+            const res = addOrReplaceLandingSection(item.slug, {
               title: title,
               category: normCat
             });
-            setActiveSection(newSec.id);
-            pendingSelectedSection = newSec.id;
-            showToast(`Added section "${title}" to page stack`);
+            if (res && res.section) {
+              setActiveSection(res.section.id);
+              pendingSelectedSection = res.section.id;
+            }
           }
 
           if (addBtn) {
@@ -3055,11 +3400,18 @@
       });
     }
 
-    // Starter Website Template (Default Presets)
+    // Complete High-Converting Landing Page Architecture (10 Sections)
+    // Structure: 1 Header (top) -> 1 Hero -> Social Proof Marquee -> Features -> Showcase -> Testimonials -> Pricing -> FAQ -> Final CTA -> 1 Footer (bottom)
     const STARTER_SECTIONS = [
       { slug: 'responsive-burger-menu', title: 'Morphing Burger & Staggered Overlay Menu', category: 'Headers & Nav' },
       { slug: 'oklch-ambient-glow-hero', title: 'OKLCH Ambient Aurora Hero', category: 'Heroes' },
+      { slug: 'client-logo-marquee', title: 'Infinite Dual-Direction Partner Logo Marquee', category: 'Galleries & Bento' },
+      { slug: 'ink-orbit-features', title: 'Ink Orbit Features & Benefits', category: 'Interactions & Physics' },
       { slug: 'polaroid-string-carousel', title: 'Polaroid Sagging String & Breeze Physics Carousel', category: '3D & Carousels' },
+      { slug: 'stagger-testimonials', title: 'Staggered Customer Testimonials', category: 'Cards & Tiles' },
+      { slug: 'ink-orbit-pricing', title: 'Interactive Tiered Pricing Matrix', category: 'Pricing & Tables' },
+      { slug: 'faq-accordion-smooth', title: 'Editorial Smooth-Height FAQ Accordion', category: 'Buttons & UI' },
+      { slug: 'postmark-cta', title: 'Postmark High-Conversion Final CTA', category: 'Buttons & UI' },
       { slug: 'beam-wordmark-footer', title: 'Beam Wordmark Footer', category: 'Footers & Endings' }
     ];
 
@@ -3077,7 +3429,7 @@
       pushHistorySnapshot();
       saveStateToStorage();
       if (!silent) {
-        showToast('Loaded starter website template');
+        showToast('Loaded complete 10-section landing page template');
       }
     }
 
@@ -3223,6 +3575,15 @@
         const category = feature.category || 'Component';
         const tags = Array.isArray(feature.tags) ? feature.tags.slice(0, 3) : [];
 
+        const singletonType = getSingletonType(feature.slug, title, category);
+        const singletonDef = singletonType ? LANDING_PAGE_SINGLETONS[singletonType] : null;
+        const existingSingleton = singletonType ? findExistingSingleton(singletonType) : null;
+        const isCurrentItem = existingSingleton && existingSingleton.slug === feature.slug;
+        const singletonLabel = singletonDef ? singletonDef.name : null;
+        const isOptional = singletonDef && singletonDef.necessity === 'optional';
+        const addBtnText = isCurrentItem ? 'In Page' : (existingSingleton ? `Replace ${singletonLabel}` : '+ Add to Stack');
+        const badgeNeed = singletonDef ? (isOptional ? ' · Optional' : ' · Essential') : '';
+
         card.innerHTML = `
           <div class="drawer-card-preview-box" data-slug="${feature.slug}">
             <div class="drawer-card-preview-placeholder">Live Preview</div>
@@ -3230,7 +3591,7 @@
           <div class="drawer-card-body">
             <div class="drawer-card-header-row">
               <div class="drawer-card-title-group">
-                <span class="drawer-card-badge">${escapeHtml(category)}</span>
+                <span class="drawer-card-badge">${escapeHtml(category)}${badgeNeed}</span>
                 <div class="drawer-card-title" title="${escapeHtml(title)}">${escapeHtml(title)}</div>
               </div>
               <button type="button" class="drawer-add-btn" aria-label="Add ${escapeHtml(title)} to page stack">
@@ -3238,7 +3599,7 @@
                   <line x1="12" y1="5" x2="12" y2="19"></line>
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                <span>+ Add to Stack</span>
+                <span>${addBtnText}</span>
               </button>
             </div>
             <div class="drawer-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
@@ -3260,10 +3621,14 @@
         const addBtn = card.querySelector('.drawer-add-btn');
 
         const triggerAdd = () => {
-          stackManager.addSection(feature.slug, {
+          const res = addOrReplaceLandingSection(feature.slug, {
             title: feature.title || feature.name || feature.slug,
             category: feature.category || 'Component'
           });
+
+          if (res && res.section) {
+            setActiveSection(res.section.id);
+          }
 
           if (addBtn) {
             if (!addBtn.dataset.originalHtml) {
@@ -3272,7 +3637,7 @@
             if (addBtn._restoreTimer) {
               clearTimeout(addBtn._restoreTimer);
             }
-            addBtn.innerHTML = `<span>✓ Added!</span>`;
+            addBtn.innerHTML = res && res.replaced ? `<span>✓ Replaced!</span>` : `<span>✓ Added!</span>`;
             addBtn.style.background = '#10b981';
             addBtn.style.borderColor = '#10b981';
             addBtn.style.color = '#ffffff';
@@ -3575,6 +3940,7 @@
     let activeExportTab = 'zip';
     let activeCodeFile = 'index.html';
     let currentExportBundle = null;
+    let currentExportAssets = {};
     let currentSingleHtml = '';
 
     /**
@@ -3660,6 +4026,7 @@
 
       if (!Array.isArray(currentStack) || currentStack.length === 0) {
         currentExportBundle = null;
+        currentExportAssets = {};
         currentSingleHtml = '';
         return null;
       }
@@ -3685,7 +4052,84 @@
         currentSingleHtml = window.Assembler.assemblePreviewDocument(currentStack, themeConfig, featuresData);
       }
 
-      return { bundle: currentExportBundle, singleHtml: currentSingleHtml };
+      await bundleLocalAssets();
+
+      return { bundle: currentExportBundle, singleHtml: currentSingleHtml, assets: currentExportAssets };
+    }
+
+    const ASSET_MIME_TYPES = {
+      png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif',
+      svg: 'image/svg+xml', avif: 'image/avif', ico: 'image/x-icon', mp4: 'video/mp4', webm: 'video/webm',
+      mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg', woff: 'font/woff', woff2: 'font/woff2',
+      ttf: 'font/ttf', otf: 'font/otf'
+    };
+    const assetFetchCache = new Map();
+
+    async function fetchLocalAsset(url) {
+      if (assetFetchCache.has(url)) return assetFetchCache.get(url);
+      let result = null;
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const ext = url.split('.').pop().toLowerCase();
+          result = { bytes: new Uint8Array(await res.arrayBuffer()), mime: ASSET_MIME_TYPES[ext] || 'application/octet-stream' };
+        }
+      } catch (err) {
+        console.warn('Could not fetch asset for export:', url, err);
+      }
+      assetFetchCache.set(url, result);
+      return result;
+    }
+
+    function bytesToDataUri(bytes, mime) {
+      let bin = '';
+      for (let i = 0; i < bytes.length; i += 0x8000) {
+        bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+      }
+      return `data:${mime};base64,${btoa(bin)}`;
+    }
+
+    /**
+     * Root-relative assets (e.g. /vivmgmt/assets/images/a.jpg) only resolve on the dev server.
+     * Copies them into the ZIP under assets/ and inlines them as data URIs in the single-file HTML.
+     * Assets that cannot be fetched are left untouched and reported in a toast.
+     */
+    async function bundleLocalAssets() {
+      currentExportAssets = {};
+      const A = window.Assembler;
+      if (!A || !A.findLocalAssetUrls) return;
+
+      const textKeys = ['index.html', 'style.css', 'script.js'];
+      const urls = new Set();
+      if (currentExportBundle) textKeys.forEach(k => A.findLocalAssetUrls(currentExportBundle[k]).forEach(u => urls.add(u)));
+      A.findLocalAssetUrls(currentSingleHtml).forEach(u => urls.add(u));
+      if (urls.size === 0) return;
+
+      const list = Array.from(urls);
+      const fetched = await Promise.all(list.map(fetchLocalAsset));
+      const zipMap = {};
+      const inlineMap = {};
+      const missing = [];
+      list.forEach((url, i) => {
+        const asset = fetched[i];
+        if (!asset) { missing.push(url); return; }
+        const zipPath = 'assets' + decodeURIComponent(url);
+        currentExportAssets[zipPath] = asset.bytes;
+        zipMap[url] = zipPath;
+        inlineMap[url] = bytesToDataUri(asset.bytes, asset.mime);
+      });
+
+      if (currentExportBundle) {
+        textKeys.forEach(k => {
+          if (typeof currentExportBundle[k] === 'string') currentExportBundle[k] = A.rewriteLocalAssetUrls(currentExportBundle[k], zipMap);
+        });
+      }
+      currentSingleHtml = A.rewriteLocalAssetUrls(currentSingleHtml, inlineMap);
+
+      if (missing.length) {
+        console.warn('Export: assets not found and left as-is:', missing);
+        showToast(`${missing.length} asset(s) could not be bundled (see console)`, 4000);
+      }
     }
 
     /**
@@ -3934,11 +4378,12 @@
           zip.file('style.css', currentExportBundle['style.css']);
           zip.file('script.js', currentExportBundle['script.js']);
           zip.file('README.md', currentExportBundle['README.md']);
+          Object.entries(currentExportAssets).forEach(([name, bytes]) => zip.file(name, bytes));
           const blob = await zip.generateAsync({ type: 'blob' });
           triggerDownload(blob, zipFilename, 'application/zip');
         } else if (window.Assembler && typeof window.Assembler.createZipArchive === 'function') {
           // 2. Native Pure-JS ZIP Generator
-          const zipBytes = window.Assembler.createZipArchive(currentExportBundle);
+          const zipBytes = window.Assembler.createZipArchive(Object.assign({}, currentExportBundle, currentExportAssets));
           const blob = new Blob([zipBytes], { type: 'application/zip' });
           triggerDownload(blob, zipFilename, 'application/zip');
         } else {
@@ -3999,6 +4444,16 @@
             }
             isApplyingHistory = prevApplying;
             hasLoadedSavedState = true;
+
+            // If the restored stack already contains a preloader, mark as already played
+            const restoredPreloader = stackManager.getStack().find(s => {
+              const slug = s.slug || '';
+              const cat = s.category || '';
+              return slug.includes('preloader') || cat.toLowerCase().includes('preloader');
+            });
+            if (restoredPreloader) {
+              playedPreloaderId = restoredPreloader.id;
+            }
           }
         }
       } catch (err) {

@@ -57,6 +57,7 @@ const THEME_PRESETS = {
  */
 function resolveTheme(themeConfig) {
   if (typeof themeConfig === 'string') {
+    if (themeConfig === 'clean-light' || themeConfig === 'light') return THEME_PRESETS['clean-minimal'];
     return THEME_PRESETS[themeConfig] || THEME_PRESETS['midnight-dark'];
   }
   if (themeConfig && typeof themeConfig === 'object') {
@@ -107,41 +108,69 @@ function scopeSectionStyles(css, sectionId) {
   if (!css || typeof css !== 'string') return '';
   let scoped = css;
 
-  // 1. Replace html, body or body, html compound selectors
+  // 1. Rewrite :root selector to section container so component root variables don't pollute global document
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-]):root(?![a-zA-Z0-9_-])/g, `.page-section#${sectionId}`);
+
+  // 2. Rewrite universal * selectors so margin/padding resets do not bleed across the entire page,
+  // using :where() to preserve (0, 0, 0) specificity so component class styles (padding, margin) are never overridden!
+  scoped = scoped.replace(/(^|[\s,;{}])\*(?=[,\s{:]|::)/g, `$1:where(.page-section#${sectionId}) *`);
+
+  // 3. Replace html, body or body, html compound selectors
   scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])(html\s*,\s*body|body\s*,\s*html)(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
 
-  // 2. Replace standalone body or html selectors
+  // 4. Replace standalone body, html, or main selectors
   scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])body(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
   scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])html(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])main(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
 
-  // 3. Rewrite #root to #root-${sectionId}
+  // 5. Rewrite #root to #root-${sectionId}
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])#root(?![a-zA-Z0-9_-])/g, `#root-${sectionId}`);
 
-  // 4. Replace viewport locking 100vh on height with responsive section height that never collapses
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*100vh(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(520px, 80vh, 900px)$1; height: 100%$1');
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*100vh(\s*!important)?/gi, 'min-height: clamp(520px, 80vh, 900px)$1');
+  // 6. Replace viewport locking 100vh on height with responsive section height that never collapses
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(680px, 90vh, 1000px)$1; height: auto$1');
+  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: clamp(680px, 90vh, 1000px)$1');
 
-  // 5. Clean up viewport-locking rules on .page-section container inherited from html, body
-  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)overflow\\s*:\\s*hidden\\b`, 'gi'), '$1overflow: visible');
-  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*100%(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
-  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*100vh(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
+  // 7. Clean up viewport-locking rules on .page-section container inherited from html, body
+  scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*(?:100%|100vh|100svh|100dvh)(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
 
-  // 6. Universal color normalizer: replace hardcoded dark backgrounds with var(--preview-bg)
+  // 8. Universal color normalizer: replace hardcoded dark backgrounds on container with var(--preview-bg)
+  scoped = scoped.replace(
+    new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\bbackground(?:-color)?\\s*:\\s*)(#[0-9a-fA-F]{3,8}|black)\\b`, 'gi'),
+    (match, prop, hex) => hex === 'black' || isDarkHex(hex) ? `${prop}var(--preview-bg)` : match
+  );
+
+  // Replace background: black / #000 / #050505 etc with var(--preview-bg) on root-like selectors
   scoped = scoped.replace(
     /(background(?:-color)?\s*:\s*)(#[0-9a-fA-F]{3,8})\b/gi,
     (match, prop, hex) => isDarkHex(hex) ? `${prop}var(--preview-bg)` : match
   );
-
-  // Replace CSS variable dark backgrounds (e.g. --pl-bg: #161514 or --bg: #09090b)
   scoped = scoped.replace(
-    /(--[a-zA-Z0-9_-]*(?:bg|background)\s*:\s*)(#[0-9a-fA-F]{3,8})\b/gi,
+    /(?<![a-zA-Z0-9_-])background(?:-color)?\s*:\s*(?:black|#000|#000000|#050505|#08080a|#09090b|#0a0a0c|#0b0f19|#0d0e12|#0f172a|#141413|#18181b|#111111|#111|#121212|#1a1a1a)\b/gi,
+    'background-color: var(--preview-bg)'
+  );
+
+  // Replace CSS variable dark backgrounds (e.g. --pl-bg, --bg-color, --g, --ib-page)
+  scoped = scoped.replace(
+    /(--[a-zA-Z0-9_-]*(?:bg|background|ground|page)\s*:\s*)(#[0-9a-fA-F]{3,8})\b/gi,
     (match, prop, hex) => isDarkHex(hex) ? `${prop}var(--preview-bg)` : match
   );
 
-  // Replace hardcoded dark text colors in light-designed components with var(--preview-text)
+  // Replace hardcoded light text colors with var(--preview-text) so they adapt to light themes
   scoped = scoped.replace(
-    /(?<![a-zA-Z0-9_-])color\s*:\s*(?:#141413|#18181b|#111111|#111|#000000|#000|#222222|#222)\b/gi,
+    /(?<![a-zA-Z0-9_-])color\s*:\s*(?:#ffffff|#fff|#fafafa|#f4f4f5|#f8fafc|#ececf1|#e4e4e7|#eeeeee|#eee|#f4f1ea)\b/gi,
     'color: var(--preview-text)'
+  );
+
+  // Replace translucent light text colors with dynamic color-mix so text remains legible in both themes
+  scoped = scoped.replace(
+    /(?<![a-zA-Z0-9_-])color\s*:\s*rgba\(\s*(?:255|250|244)\s*,\s*(?:255|250|241|244)\s*,\s*(?:255|250|234|245)\s*,\s*(0?\.[0-9]+)\)/gi,
+    'color: color-mix(in srgb, var(--preview-text) calc($1 * 100%), transparent)'
+  );
+
+  // Replace CSS variable text colors with var(--preview-text)
+  scoped = scoped.replace(
+    /(--[a-zA-Z0-9_-]*(?:text|ink|fg|foreground)\s*:\s*)(?:#[0-9a-fA-F]{3,8}|rgba?\([^)]+\))\b/gi,
+    '$1var(--preview-text)'
   );
 
   // Replace hardcoded light text colors on section container with var(--preview-text)
@@ -231,7 +260,7 @@ function renderEmptyPreview(theme) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page Preview - Empty</title>
-  <style>
+  <style id="universal-theme-styles">
     :root {
       --preview-bg: ${theme.bg};
       --preview-text: ${theme.text};
@@ -317,6 +346,17 @@ function renderEmptyPreview(theme) {
         if (t.accent) document.documentElement.style.setProperty('--preview-accent', t.accent);
         if (t.cardBg) document.documentElement.style.setProperty('--preview-card-bg', t.cardBg);
         if (t.border) document.documentElement.style.setProperty('--preview-border', t.border);
+        var isDark = t.bg ? (function(hex) {
+          hex = String(hex).replace('#', '');
+          if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+          var r = parseInt(hex.slice(0, 2), 16) || 0;
+          var g = parseInt(hex.slice(2, 4), 16) || 0;
+          var b = parseInt(hex.slice(4, 6), 16) || 0;
+          return (r * 0.299 + g * 0.587 + b * 0.114) < 70;
+        })(t.bg) : true;
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        if (document.body) document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
       }
     });
   </script>
@@ -1241,12 +1281,21 @@ function computeSectionSizingStyles(sizing) {
  */
 function generateUniversalThemeStyles(theme) {
   const isDark = isDarkTheme(theme);
+  const textMuted = `color-mix(in srgb, ${theme.text} 65%, transparent)`;
+  const textSubtle = `color-mix(in srgb, ${theme.text} 45%, transparent)`;
+  const bgSoft = isDark
+    ? `color-mix(in srgb, ${theme.text} 6%, ${theme.bg})`
+    : `color-mix(in srgb, ${theme.text} 3%, ${theme.bg})`;
+  const cardBg = theme.cardBg || (isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)');
+  const border = theme.border || (isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)');
+  const accent = theme.accent || '#6366f1';
+
   return `    :root {
       --preview-bg: ${theme.bg};
       --preview-text: ${theme.text};
-      --preview-accent: ${theme.accent};
-      --preview-card-bg: ${theme.cardBg};
-      --preview-border: ${theme.border};
+      --preview-accent: ${accent};
+      --preview-card-bg: ${cardBg};
+      --preview-border: ${border};
 
       /* Universal design system tokens (Tailwind, 21st.dev, shadcn) */
       --background: ${theme.bg};
@@ -1255,14 +1304,89 @@ function generateUniversalThemeStyles(theme) {
       --color-foreground: ${theme.text};
       --bg: ${theme.bg};
       --text: ${theme.text};
-      --accent: ${theme.accent};
-      --card: ${theme.cardBg};
+      --accent: ${accent};
+      --card: ${cardBg};
       --card-foreground: ${theme.text};
-      --border: ${theme.border};
+      --border: ${border};
+      --input: ${border};
+      --ring: ${accent};
+      --primary: ${accent};
+      --primary-foreground: ${isDark ? '#000000' : '#ffffff'};
+      --secondary: ${cardBg};
+      --secondary-foreground: ${theme.text};
+      --muted: ${cardBg};
+      --muted-foreground: ${textMuted};
+      --popover: ${cardBg};
+      --popover-foreground: ${theme.text};
+
+      /* Component-specific variables mapped universally */
+      --bg-color: ${theme.bg};
+      --text-color: ${theme.text};
+      --text-main: ${theme.text};
+      --text-muted: ${textMuted};
+      --muted-text: ${textMuted};
+      --card-bg: ${cardBg};
+      --card-border: ${border};
+      --card-hover: ${isDark ? 'color-mix(in srgb, ' + theme.text + ' 12%, ' + theme.bg + ')' : 'color-mix(in srgb, ' + theme.text + ' 6%, ' + theme.bg + ')'};
+      --active-border: ${accent};
+      --active-color: ${accent};
+      --header-bg: color-mix(in srgb, ${theme.bg} 85%, transparent);
+      --header-border: ${border};
+      --rail-bg: color-mix(in srgb, ${theme.text} 12%, transparent);
+      --fg: ${theme.text};
+      --soft: ${bgSoft};
+      --line: ${border};
+
+      /* Polaroid & Wordmark footers */
       --pl-bg: ${theme.bg};
       --pl-ink: ${theme.text};
+      --pl-muted: ${textMuted};
+      --pl-line: ${border};
       --bwf-bg: ${theme.bg};
       --bwf-ink: ${theme.text};
+      --bwf-muted: ${textMuted};
+      --hwf-bg: ${theme.bg};
+      --hwf-ink: ${theme.text};
+
+      /* Ink-Orbit SaaS family */
+      --ib-page: ${theme.bg};
+      --ib-paper: ${cardBg};
+      --ib-card: ${cardBg};
+      --ib-raise: ${bgSoft};
+      --ib-ink: ${theme.text};
+      --ib-soft: ${textMuted};
+      --ib-muted: ${textSubtle};
+      --ib-line: ${border};
+      --ip-page: ${theme.bg};
+      --ip-paper: ${cardBg};
+      --ip-card: ${cardBg};
+      --ip-raise: ${bgSoft};
+      --ip-ink: ${theme.text};
+      --ip-soft: ${textMuted};
+      --ip-muted: ${textSubtle};
+      --ip-line: ${border};
+
+      /* Postmark CTA */
+      --pl-ground: ${theme.bg};
+      --pd-ground: ${theme.bg};
+      --pl-ink: ${theme.text};
+      --pd-ink: ${theme.text};
+      --pl-muted: ${textMuted};
+      --pd-muted: ${textMuted};
+      --pl-accent: ${accent};
+      --pd-accent: ${accent};
+      --pl-highlight: ${accent};
+      --pd-highlight: ${accent};
+      --g: ${theme.bg};
+      --k: ${theme.text};
+      --mu: ${textMuted};
+      --a: ${accent};
+      --pm-paper: ${cardBg};
+
+      /* Audio / Shaders / Into-the-ether */
+      --bg-core: ${theme.bg};
+      --bg-card: ${cardBg};
+      --bg-card-border: ${border};
     }
 
     *, *::before, *::after {
@@ -1271,6 +1395,9 @@ function generateUniversalThemeStyles(theme) {
 
     html {
       scroll-behavior: smooth;
+      background-color: var(--preview-bg);
+      color: var(--preview-text);
+      color-scheme: ${isDark ? 'dark' : 'light'};
     }
 
     body {
@@ -1281,62 +1408,284 @@ function generateUniversalThemeStyles(theme) {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
+      overflow-y: auto;
     }
 
     .page-section {
       position: relative;
       width: 100%;
       clear: both;
-      background-color: var(--preview-bg) !important;
-      color: var(--preview-text) !important;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      background-color: var(--preview-bg);
+      color: var(--preview-text);
+      display: block;
       box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    /* Seamless section height filling: child root containers expand to fill the section */
-    .page-section > div[id^="root-"],
-    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) {
-      flex: 1 1 auto;
+    /* Seamless document flow: React roots match container width without forcing flex overrides */
+    .page-section > div[id^="root-"] {
       width: 100%;
-      display: flex;
-      flex-direction: column;
       box-sizing: border-box;
       background-color: transparent;
       color: inherit;
     }
 
-    .page-section > div[id^="root-"] > *,
-    .page-section > :first-child:not(.section-overlay-layer):not(.section-resize-handle) > * {
-      width: 100%;
-      box-sizing: border-box;
+    /* Preloader Overlay Mode: floats full-screen over the page without pushing headers down */
+    .page-section.is-preloader,
+    .page-section[data-section-slug*="preloader"] {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+      z-index: 99999 !important;
+      pointer-events: auto;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+      background: transparent !important;
+      transition: opacity 0.5s ease;
     }
 
-    /* Universal component container background and text color propagation */
-    .page-section .pl-root,
-    .page-section [class*="-root"],
-    .page-section .bwf {
+    .page-section[data-section-slug*="preloader"] .section-resize-handle {
+      display: none !important;
+    }
+
+    /* Auto-dismiss or suppress preloader container when completed to reveal the website underneath */
+    .page-section.is-preloader.is-suppressed,
+    .page-section[data-section-slug*="preloader"].is-suppressed,
+    .page-section[data-section-slug*="preloader"].is-dismissed,
+    .page-section[data-section-slug*="preloader"]:has([data-phase="done"]),
+    .page-section[data-section-slug*="preloader"]:has(.amr-root[data-phase="done"]),
+    .page-section[data-section-slug*="preloader"]:has(.scp-gate[data-phase="done"]),
+    .page-section[data-section-slug*="preloader"]:has([data-completed="true"]) {
+      display: none !important;
+      pointer-events: none !important;
+    }
+
+    /* Universal component container background and text color propagation (excluding preloaders) */
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .pl-root,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .bwf,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .pm,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .ib-root,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .ip-root,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .aurora-hero,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .stagger-stage,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .faq-wrap,
+    .page-section:not([data-section-slug*="preloader"]):not(.is-preloader) .marquee-section {
       --pl-bg: var(--preview-bg) !important;
       --pl-ink: var(--preview-text) !important;
-      --pl-muted: color-mix(in srgb, var(--preview-text) 55%, transparent) !important;
-      --pl-line: color-mix(in srgb, var(--preview-text) 18%, transparent) !important;
+      --pl-muted: ${textMuted} !important;
+      --pl-line: ${border} !important;
       --bwf-bg: var(--preview-bg) !important;
       --bwf-ink: var(--preview-text) !important;
-      --bwf-muted: color-mix(in srgb, var(--preview-text) 60%, transparent) !important;
+      --bwf-muted: ${textMuted} !important;
       background-color: var(--preview-bg) !important;
       color: var(--preview-text) !important;
     }
 
-    .page-section .pl-title,
-    .page-section .pl-note,
-    .page-section .pl-count,
-    .page-section .pl-count b {
+    .page-section:not([data-section-slug*="preloader"]) .pl-title,
+    .page-section:not([data-section-slug*="preloader"]) .pl-count,
+    .page-section:not([data-section-slug*="preloader"]) .pl-count b {
       color: var(--preview-text) !important;
     }
 
     .page-section .bwf-foot {
       background: linear-gradient(180deg, transparent, var(--preview-bg)) !important;
+    }
+
+    /* FAQ accordion styles adaptation */
+    .page-section .faq-trigger {
+      color: var(--preview-text) !important;
+    }
+    .page-section .faq-panel__inner p {
+      color: ${textMuted} !important;
+    }
+    .page-section .faq-list,
+    .page-section .faq-item {
+      border-color: var(--preview-border) !important;
+    }
+
+    /* Client Logo Marquee adaptation */
+    .page-section .marquee-label {
+      color: ${textMuted} !important;
+    }
+    .page-section .marquee-btn {
+      background-color: ${cardBg} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }
+    .page-section .clients-marquee__item {
+      background-color: ${cardBg} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }
+
+    /* Hero Headline & Desc adaptation */
+    .page-section .hero-title {
+      color: var(--preview-text) !important;
+    }
+    .page-section .hero-desc {
+      color: ${textMuted} !important;
+    }
+    .page-section .hero-tag {
+      background-color: ${cardBg} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }
+
+    /* Testimonials & Cards adaptation */
+    .page-section .stagger-card {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .stagger-title,
+    .page-section .stagger-author {
+      color: var(--preview-text) !important;
+    }
+    .page-section .stagger-company {
+      color: ${textMuted} !important;
+    }
+    .page-section .theme-btn,
+    .page-section .filter-btn {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+
+    /* Ink-Orbit SaaS Pricing & Bento adaptation */
+    .page-section .ip-root,
+    .page-section .ib-root {
+      --ip-page: var(--preview-bg) !important;
+      --ip-paper: var(--preview-bg) !important;
+      --ip-card: var(--preview-card-bg) !important;
+      --ip-raise: ${bgSoft} !important;
+      --ip-ink: var(--preview-text) !important;
+      --ip-soft: ${textMuted} !important;
+      --ip-muted: ${textSubtle} !important;
+      --ip-faint: ${textSubtle} !important;
+      --ip-line: var(--preview-border) !important;
+      --ip-line-strong: var(--preview-border) !important;
+      --ip-inv: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+      --ip-inv-ink: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+      --ip-inv-muted: ${isDark ? 'rgba(15, 23, 42, 0.7)' : 'rgba(248, 250, 252, 0.7)'} !important;
+      --ib-page: var(--preview-bg) !important;
+      --ib-paper: var(--preview-bg) !important;
+      --ib-card: var(--preview-card-bg) !important;
+      --ib-raise: ${bgSoft} !important;
+      --ib-ink: var(--preview-text) !important;
+      --ib-soft: ${textMuted} !important;
+      --ib-muted: ${textSubtle} !important;
+      --ib-faint: ${textSubtle} !important;
+      --ib-line: var(--preview-border) !important;
+      --ib-line-strong: var(--preview-border) !important;
+      --ib-inv: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+      --ib-inv-ink: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+    }
+
+    .page-section .ib-sec,
+    .page-section .ip-sec {
+      background-color: transparent !important;
+      border-color: var(--preview-border) !important;
+    }
+    .page-section .ib-h2,
+    .page-section .ip-h2 {
+      color: var(--preview-text) !important;
+    }
+    .page-section .ip-plan {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .ip-plan-hot {
+      background-color: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+      color: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+      border-color: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+    }
+    .page-section .ip-plan-hot .ip-plan-desc,
+    .page-section .ip-plan-hot .ip-per,
+    .page-section .ip-plan-hot .ip-saving {
+      color: ${isDark ? 'rgba(15, 23, 42, 0.7)' : 'rgba(248, 250, 252, 0.7)'} !important;
+    }
+    .page-section .ip-toggle {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+    }
+    .page-section .ip-toggle-pill {
+      background-color: ${isDark ? '#f1f5f9' : '#0f172a'} !important;
+    }
+    .page-section .ip-toggle button[aria-pressed="true"] {
+      color: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+    }
+    .page-section .ip-toggle button[aria-pressed="false"] {
+      color: ${textMuted} !important;
+    }
+    .page-section .ip-tag {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .ip-btn-ghost {
+      background-color: ${bgSoft} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }
+    .page-section .ip-plan-hot .ip-btn-dark {
+      background-color: ${isDark ? '#0f172a' : '#f8fafc'} !important;
+      color: ${isDark ? '#f8fafc' : '#0f172a'} !important;
+    }
+    .page-section .ib-card {
+      background: ${isDark ? 'linear-gradient(180deg, color-mix(in srgb, var(--preview-card-bg) 80%, white 5%), var(--preview-card-bg))' : 'linear-gradient(180deg, #ffffff, var(--preview-card-bg))'} !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .ib-card h3 {
+      color: var(--preview-text) !important;
+    }
+    .page-section .ib-card p {
+      color: ${textMuted} !important;
+    }
+    .page-section .ib-node {
+      fill: ${isDark ? 'var(--preview-card-bg)' : '#ffffff'} !important;
+      stroke: var(--preview-border) !important;
+    }
+    .page-section .ib-tag {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
+      color: var(--preview-text) !important;
+    }
+
+    /* Navigation & Menu adaptation */
+    .page-section .nav-demo-shell,
+    .page-section .nav-demo-shell .brand,
+    .page-section .nav-demo-shell .burger-btn {
+      color: var(--preview-text) !important;
+    }
+
+    /* Postmark CTA adaptation */
+    .page-section .pm {
+      background-color: var(--preview-bg) !important;
+      color: var(--preview-text) !important;
+    }
+    .page-section .pm-h {
+      color: var(--preview-text) !important;
+    }
+    .page-section .pm-p {
+      color: ${textMuted} !important;
+    }
+    .page-section .pm-paper {
+      fill: var(--preview-card-bg) !important;
+      stroke: var(--preview-border) !important;
+    }
+
+    /* Document and glass preview cards */
+    .page-section .doc-preview-card {
+      background-color: var(--preview-card-bg) !important;
+      border-color: var(--preview-border) !important;
     }
 
     /* Tailwind / utility dark backgrounds adapt to active theme */
@@ -1353,27 +1702,238 @@ function generateUniversalThemeStyles(theme) {
       background-color: var(--preview-bg) !important;
     }
 ${!isDark ? `
-    /* Light Theme Text Adjustments for dark-first components */
+    /* Light Theme Adjustments for dark-designed elements */
     .page-section .text-white,
     .page-section .text-zinc-100,
+    .page-section .text-zinc-200,
     .page-section .text-neutral-100,
+    .page-section .text-neutral-200,
     .page-section .text-slate-100,
-    .page-section .text-gray-100 {
+    .page-section .text-slate-200,
+    .page-section .text-gray-100,
+    .page-section .text-gray-200 {
       color: var(--preview-text) !important;
     }
     .page-section .text-zinc-400,
+    .page-section .text-zinc-500,
     .page-section .text-neutral-400,
     .page-section .text-slate-400,
     .page-section .text-gray-400 {
-      color: color-mix(in srgb, var(--preview-text) 65%, transparent) !important;
-    }` : ''}`;
+      color: ${textMuted} !important;
+    }
+    .page-section .border-zinc-800,
+    .page-section .border-zinc-900,
+    .page-section .border-neutral-800,
+    .page-section .border-slate-800 {
+      border-color: var(--preview-border) !important;
+    }
+
+    .page-section:not(.is-preloader) h1:not([class*="gradient"]),
+    .page-section:not(.is-preloader) h2:not([class*="gradient"]),
+    .page-section:not(.is-preloader) h3:not([class*="gradient"]),
+    .page-section:not(.is-preloader) h4,
+    .page-section:not(.is-preloader) h5,
+    .page-section:not(.is-preloader) h6,
+    .page-section:not(.is-preloader) p:not([class*="gradient"]),
+    .page-section:not(.is-preloader) .cyl-title,
+    .page-section:not(.is-preloader) .cyl-footer,
+    .page-section:not(.is-preloader) .strapline-copy,
+    .page-section:not(.is-preloader) .conv-h2,
+    .page-section:not(.is-preloader) .timeline-card__title,
+    .page-section:not(.is-preloader) .viv-artist-name,
+    .page-section:not(.is-preloader) .card-title,
+    .page-section:not(.is-preloader) .pricing-title,
+    .page-section:not(.is-preloader) .pricing-price {
+      color: var(--preview-text) !important;
+    }
+
+    .page-section:not(.is-preloader) .strapline-meta,
+    .page-section:not(.is-preloader) .conv-p,
+    .page-section:not(.is-preloader) .hero-sub,
+    .page-section:not(.is-preloader) .viv-artist-role,
+    .page-section:not(.is-preloader) .card-desc,
+    .page-section:not(.is-preloader) .pricing-feature,
+    .page-section:not(.is-preloader) .testimonial-quote {
+      color: ${textMuted} !important;
+    }
+
+    .page-section:not(.is-preloader) .hero-pill,
+    .page-section:not(.is-preloader) .cyl-btn,
+    .page-section:not(.is-preloader) .ruler-month-btn,
+    .page-section:not(.is-preloader) .chip,
+    .page-section:not(.is-preloader) .btn-secondary {
+      background-color: ${cardBg} !important;
+      color: var(--preview-text) !important;
+      border-color: var(--preview-border) !important;
+    }` : `
+    /* Dark Theme Adjustments for light-designed elements */
+    .page-section .text-black,
+    .page-section .text-zinc-900,
+    .page-section .text-neutral-900,
+    .page-section .text-slate-900 {
+      color: var(--preview-text) !important;
+    }`}`;
+}
+
+/**
+ * Synchronously applies all dynamic theme variables, color-scheme, data-theme,
+ * universal styles, and section backgrounds directly to a target document (e.g. iframe).
+ */
+function applyThemeToDocument(doc, themeConfig) {
+  if (!doc) return;
+  const theme = resolveTheme(themeConfig);
+  const isDark = isDarkTheme(theme);
+  const textMuted = `color-mix(in srgb, ${theme.text} 65%, transparent)`;
+  const textSubtle = `color-mix(in srgb, ${theme.text} 45%, transparent)`;
+  const bgSoft = isDark
+    ? `color-mix(in srgb, ${theme.text} 6%, ${theme.bg})`
+    : `color-mix(in srgb, ${theme.text} 3%, ${theme.bg})`;
+  const cardBg = theme.cardBg || (isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)');
+  const border = theme.border || (isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)');
+  const accent = theme.accent || '#6366f1';
+
+  // 1. Update stylesheet in head
+  let styleEl = doc.getElementById('universal-theme-styles');
+  if (!styleEl && doc.head) {
+    styleEl = doc.createElement('style');
+    styleEl.id = 'universal-theme-styles';
+    doc.head.insertBefore(styleEl, doc.head.firstChild);
+  }
+  if (styleEl) {
+    styleEl.textContent = generateUniversalThemeStyles(theme);
+  }
+
+  // 2. Set root CSS variables
+  const root = doc.documentElement;
+  if (root && root.style) {
+    const vars = {
+      '--preview-bg': theme.bg,
+      '--preview-text': theme.text,
+      '--preview-accent': accent,
+      '--preview-card-bg': cardBg,
+      '--preview-border': border,
+      '--background': theme.bg,
+      '--foreground': theme.text,
+      '--color-background': theme.bg,
+      '--color-foreground': theme.text,
+      '--bg': theme.bg,
+      '--text': theme.text,
+      '--accent': accent,
+      '--card': cardBg,
+      '--card-foreground': theme.text,
+      '--border': border,
+      '--input': border,
+      '--ring': accent,
+      '--primary': accent,
+      '--primary-foreground': isDark ? '#000000' : '#ffffff',
+      '--secondary': cardBg,
+      '--secondary-foreground': theme.text,
+      '--muted': cardBg,
+      '--muted-foreground': textMuted,
+      '--popover': cardBg,
+      '--popover-foreground': theme.text,
+      '--bg-color': theme.bg,
+      '--text-color': theme.text,
+      '--text-main': theme.text,
+      '--text-muted': textMuted,
+      '--muted-text': textMuted,
+      '--card-bg': cardBg,
+      '--card-border': border,
+      '--card-hover': isDark ? `color-mix(in srgb, ${theme.text} 12%, ${theme.bg})` : `color-mix(in srgb, ${theme.text} 6%, ${theme.bg})`,
+      '--active-border': accent,
+      '--active-color': accent,
+      '--header-bg': `color-mix(in srgb, ${theme.bg} 85%, transparent)`,
+      '--header-border': border,
+      '--rail-bg': `color-mix(in srgb, ${theme.text} 12%, transparent)`,
+      '--fg': theme.text,
+      '--soft': bgSoft,
+      '--line': border,
+      '--pl-bg': theme.bg,
+      '--pl-ink': theme.text,
+      '--pl-muted': textMuted,
+      '--pl-line': border,
+      '--bwf-bg': theme.bg,
+      '--bwf-ink': theme.text,
+      '--bwf-muted': textMuted,
+      '--hwf-bg': theme.bg,
+      '--hwf-ink': theme.text,
+      '--ib-page': theme.bg,
+      '--ib-paper': cardBg,
+      '--ib-card': cardBg,
+      '--ib-raise': bgSoft,
+      '--ib-ink': theme.text,
+      '--ib-soft': textMuted,
+      '--ib-muted': textSubtle,
+      '--ib-line': border,
+      '--ip-page': theme.bg,
+      '--ip-paper': cardBg,
+      '--ip-card': cardBg,
+      '--ip-raise': bgSoft,
+      '--ip-ink': theme.text,
+      '--ip-soft': textMuted,
+      '--ip-muted': textSubtle,
+      '--ip-line': border,
+      '--pl-ground': theme.bg,
+      '--pd-ground': theme.bg,
+      '--pl-ink': theme.text,
+      '--pd-ink': theme.text,
+      '--pl-muted': textMuted,
+      '--pd-muted': textMuted,
+      '--pl-accent': accent,
+      '--pd-accent': accent,
+      '--pl-highlight': accent,
+      '--pd-highlight': accent,
+      '--g': theme.bg,
+      '--k': theme.text,
+      '--mu': textMuted,
+      '--a': accent,
+      '--pm-paper': cardBg,
+      '--bg-core': theme.bg,
+      '--bg-card': cardBg,
+      '--bg-card-border': border
+    };
+    for (const k in vars) {
+      root.style.setProperty(k, vars[k]);
+    }
+    root.style.colorScheme = isDark ? 'dark' : 'light';
+    root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    if (doc.body) {
+      doc.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+  }
+
+  // 3. Update normal page sections
+  const sections = doc.querySelectorAll('.page-section:not(.is-preloader)');
+  sections.forEach(s => {
+    s.style.backgroundColor = theme.bg;
+    s.style.color = theme.text;
+    if (typeof s.setAttribute === 'function') {
+      s.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+  });
+
+  // 4. Synchronize all nested component theme attributes with active theme
+  const themeMode = isDark ? 'dark' : 'light';
+  const themedElements = doc.querySelectorAll('[data-theme]');
+  themedElements.forEach(el => {
+    if (typeof el.setAttribute === 'function') {
+      el.setAttribute('data-theme', themeMode);
+    }
+  });
+
+  try {
+    if (doc.defaultView) {
+      doc.defaultView.dispatchEvent(new CustomEvent('themechange', { detail: { isDark, theme } }));
+    }
+  } catch (e) {}
 }
 
 /**
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
-function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
+function assemblePreviewDocument(sections, themeConfig, featuresData = {}, options = {}) {
   const theme = resolveTheme(themeConfig);
+  const isDark = isDarkTheme(theme);
   if (!Array.isArray(sections) || sections.length === 0) {
     return renderEmptyPreview(theme);
   }
@@ -1400,19 +1960,85 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
     }
 
     // Isolated HTML
+    const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
+    const isSuppressed = isPreloader && (options.suppressPreloader === true || section.suppressPreloader === true);
+    const preloaderClass = isPreloader ? (' is-preloader' + (isSuppressed ? ' is-dismissed is-suppressed' : '')) : '';
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    const sizingStyle = computeSectionSizingStyles(section.sizing);
-    const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
-    const resizeHandleHtml = `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
+    const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
+    let styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
+    if (isPreloader && isSuppressed) {
+      styleAttr = ' style="display: none !important; pointer-events: none !important;"';
+    }
+    const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${isDark ? 'dark' : 'light'}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
-    // Isolated JS wrapped safely
+    // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      scriptBlocks.push(`        // Section: ${slug} (${id})\n        try {\n          (function () {\n${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}\n          })();\n        } catch (err) {\n          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);\n        }`);
+      if (isPreloader && isSuppressed) {
+        scriptBlocks.push(`        // Section: ${slug} (${id}) [PRELOADER SUPPRESSED IN PREVIEW - WILL RUN ON REPLAY OR EXPORT]`);
+      } else {
+        scriptBlocks.push(`        // Section: ${slug} (${id})
+        try {
+          window.__activeSectionRegisteringId = ${JSON.stringify(id)};
+          (function () {
+${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
+          })();
+        } catch (err) {
+          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);
+        } finally {
+          window.__activeSectionRegisteringId = null;
+        }`);
+      }
     }
   });
+
+  // Preloader auto-dismiss script (only needed when a preloader is active and not suppressed)
+  const hasActivePreloader = sections.some(s => {
+    const slug = s.slug || '';
+    const cat = s.category || '';
+    const isP = slug.includes('preloader') || cat.toLowerCase().includes('preloader');
+    return isP && !options.suppressPreloader && !s.suppressPreloader;
+  });
+
+  if (hasActivePreloader) {
+    scriptBlocks.push(`        // Preloader Auto-Dismiss Handler
+        try {
+          (function() {
+            function initPreloaderWatch() {
+              const sec = document.querySelector('.page-section.is-preloader:not(.is-suppressed), .page-section[data-section-slug*="preloader"]:not(.is-suppressed)');
+              if (!sec) return;
+              function dismiss() {
+                sec.classList.add('is-dismissed');
+                sec.style.opacity = '0';
+                sec.style.pointerEvents = 'none';
+                setTimeout(() => { sec.style.display = 'none'; }, 500);
+              }
+              const checkDone = () => {
+                const root = sec.querySelector('[data-phase="done"], [data-completed="true"], [data-state="done"]');
+                const gate = sec.querySelector('.amr-gate, .scp-gate, [class*="-gate"]');
+                if (root || (gate && window.getComputedStyle(gate).display === 'none')) {
+                  dismiss();
+                  return true;
+                }
+                return false;
+              };
+              const obs = new MutationObserver(() => {
+                if (checkDone()) obs.disconnect();
+              });
+              obs.observe(sec, { attributes: true, subtree: true, attributeFilter: ['data-phase', 'data-completed', 'class', 'style'] });
+              sec.addEventListener('click', () => { setTimeout(dismiss, 1000); });
+              setTimeout(() => { if (sec.style.display !== 'none') dismiss(); }, 5000);
+            }
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', initPreloaderWatch);
+            } else {
+              initPreloaderWatch();
+            }
+          })();
+        } catch (e) {}`);
+  }
 
   const externalLinksHtml = Array.from(headLinks).join('\n  ');
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
@@ -1420,20 +2046,21 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}) {
   const allScripts = scriptBlocks.join('\n\n');
 
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="${isDark ? 'dark' : 'light'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Page Preview</title>
-  ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style>
+  ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style id="universal-theme-styles">
 ${generateUniversalThemeStyles(theme)}
-
+  </style>
+  <style>
 ${allScopedStyles}
 
 ${OVERLAY_ELEMENT_CSS}
   </style>
 </head>
-<body>
+<body data-theme="${isDark ? 'dark' : 'light'}">
 ${allHtml}
   <script>
     (function () {
@@ -1441,19 +2068,126 @@ ${allHtml}
       window.addEventListener('message', function (event) {
         if (event.data && event.data.type === 'UPDATE_THEME' && event.data.theme) {
           var t = event.data.theme;
-          if (t.bg) {
-            document.documentElement.style.setProperty('--preview-bg', t.bg);
-            document.querySelectorAll('.page-section').forEach(function (s) { s.style.backgroundColor = t.bg; });
+          var isDark = t.bg ? (function(hex) {
+            hex = String(hex).replace('#', '');
+            if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+            var r = parseInt(hex.slice(0, 2), 16) || 0;
+            var g = parseInt(hex.slice(2, 4), 16) || 0;
+            var b = parseInt(hex.slice(4, 6), 16) || 0;
+            return (r * 0.299 + g * 0.587 + b * 0.114) < 70;
+          })(t.bg) : true;
+
+          var textMuted = 'color-mix(in srgb, ' + t.text + ' 65%, transparent)';
+          var cardBg = t.cardBg || (isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.03)');
+          var border = t.border || (isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)');
+          var accent = t.accent || '#6366f1';
+
+          var vars = {
+            '--preview-bg': t.bg,
+            '--preview-text': t.text,
+            '--preview-accent': accent,
+            '--preview-card-bg': cardBg,
+            '--preview-border': border,
+            '--background': t.bg,
+            '--foreground': t.text,
+            '--bg': t.bg,
+            '--text': t.text,
+            '--accent': accent,
+            '--card': cardBg,
+            '--card-foreground': t.text,
+            '--border': border,
+            '--primary': accent,
+            '--muted': cardBg,
+            '--muted-foreground': textMuted,
+            '--bg-color': t.bg,
+            '--text-color': t.text,
+            '--text-main': t.text,
+            '--text-muted': textMuted,
+            '--card-bg': cardBg,
+            '--card-border': border,
+            '--pl-bg': t.bg,
+            '--pl-ink': t.text,
+            '--pl-muted': textMuted,
+            '--bwf-bg': t.bg,
+            '--bwf-ink': t.text,
+            '--bwf-muted': textMuted,
+            '--ib-page': t.bg,
+            '--ib-paper': cardBg,
+            '--ib-card': cardBg,
+            '--ib-ink': t.text,
+            '--ib-soft': textMuted,
+            '--ib-line': border,
+            '--ip-page': t.bg,
+            '--ip-paper': cardBg,
+            '--ip-card': cardBg,
+            '--ip-ink': t.text,
+            '--ip-soft': textMuted,
+            '--ip-line': border
+          };
+          for (var k in vars) {
+            if (vars[k]) document.documentElement.style.setProperty(k, vars[k]);
           }
-          if (t.text) {
-            document.documentElement.style.setProperty('--preview-text', t.text);
-            document.querySelectorAll('.page-section').forEach(function (s) { s.style.color = t.text; });
-          }
-          if (t.accent) document.documentElement.style.setProperty('--preview-accent', t.accent);
-          if (t.cardBg) document.documentElement.style.setProperty('--preview-card-bg', t.cardBg);
-          if (t.border) document.documentElement.style.setProperty('--preview-border', t.border);
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+          if (document.body) document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          document.querySelectorAll('.page-section:not(.is-preloader)').forEach(function (s) {
+            if (t.bg) s.style.backgroundColor = t.bg;
+            if (t.text) s.style.color = t.text;
+            s.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          });
+          document.querySelectorAll('[data-theme]').forEach(function (el) {
+            el.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          });
+          try {
+            window.dispatchEvent(new CustomEvent('themechange', { detail: { isDark: isDark, theme: t } }));
+          } catch (_) {}
         }
       });
+
+      // Theme-Aware MatchMedia Polyfill for prefers-color-scheme in live preview
+      (function () {
+        var origMatchMedia = window.matchMedia;
+        window.matchMedia = function (query) {
+          if (typeof query === 'string' && query.includes('prefers-color-scheme')) {
+            var checkIsDark = function () {
+              var attr = document.documentElement.getAttribute('data-theme');
+              if (attr) return attr === 'dark';
+              var cs = document.documentElement.style.colorScheme;
+              if (cs) return cs === 'dark';
+              return true;
+            };
+            var isDarkQuery = query.includes('dark');
+            var checkMatches = function () {
+              return isDarkQuery ? checkIsDark() : !checkIsDark();
+            };
+            var listeners = [];
+            var mql = {
+              get matches() { return checkMatches(); },
+              media: query,
+              onchange: null,
+              addListener: function (fn) { this.addEventListener('change', fn); },
+              removeListener: function (fn) { this.removeEventListener('change', fn); },
+              addEventListener: function (type, fn) {
+                if (type === 'change' && typeof fn === 'function') listeners.push(fn);
+              },
+              removeEventListener: function (type, fn) {
+                listeners = listeners.filter(function (l) { return l !== fn; });
+              },
+              dispatchEvent: function (e) {
+                listeners.forEach(function (fn) { fn(e); });
+                return true;
+              }
+            };
+            window.addEventListener('themechange', function () {
+              var e = { matches: checkMatches(), media: query };
+              if (typeof mql.onchange === 'function') mql.onchange(e);
+              listeners.forEach(function (fn) { fn(e); });
+            });
+            return mql;
+          }
+          return origMatchMedia ? origMatchMedia.call(window, query) : { matches: false };
+        };
+      })();
 
       // Notify parent builder when a section is clicked in preview
       document.addEventListener('click', function (e) {
@@ -1462,6 +2196,91 @@ ${allHtml}
           window.parent.postMessage({ type: 'SECTION_CLICKED', sectionId: sec.id }, '*');
         }
       });
+
+      // Theme-Aware MatchMedia Polyfill for prefers-color-scheme
+(function () {
+  var origMatchMedia = window.matchMedia;
+  window.matchMedia = function (query) {
+    if (typeof query === 'string' && query.includes('prefers-color-scheme')) {
+      var checkIsDark = function () {
+        var attr = document.documentElement.getAttribute('data-theme');
+        if (attr) return attr === 'dark';
+        var cs = document.documentElement.style.colorScheme;
+        if (cs) return cs === 'dark';
+        return ${isDark ? 'true' : 'false'};
+      };
+      var isDarkQuery = query.includes('dark');
+      var checkMatches = function () {
+        return isDarkQuery ? checkIsDark() : !checkIsDark();
+      };
+      var listeners = [];
+      var mql = {
+        get matches() { return checkMatches(); },
+        media: query,
+        onchange: null,
+        addListener: function (fn) { this.addEventListener('change', fn); },
+        removeListener: function (fn) { this.removeEventListener('change', fn); },
+        addEventListener: function (type, fn) {
+          if (type === 'change' && typeof fn === 'function') listeners.push(fn);
+        },
+        removeEventListener: function (type, fn) {
+          listeners = listeners.filter(function (l) { return l !== fn; });
+        },
+        dispatchEvent: function (e) {
+          listeners.forEach(function (fn) { fn(e); });
+          return true;
+        }
+      };
+      window.addEventListener('themechange', function () {
+        var e = { matches: checkMatches(), media: query };
+        if (typeof mql.onchange === 'function') mql.onchange(e);
+        listeners.forEach(function (fn) { fn(e); });
+      });
+      return mql;
+    }
+    return origMatchMedia ? origMatchMedia.call(window, query) : { matches: false };
+  };
+})();
+
+// Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
+      (function () {
+        var origAdd = EventTarget.prototype.addEventListener;
+        EventTarget.prototype.addEventListener = function (type, listener, options) {
+          if (type === 'wheel') {
+            var target = this;
+            var isGlobal = target === window || target === document || target === document.documentElement || target === document.body;
+            var secId = window.__activeSectionRegisteringId || null;
+
+            var safeWheel = function (e) {
+              if (isGlobal && secId) {
+                var sec = document.getElementById(secId);
+                if (sec && !sec.contains(e.target) && e.target !== sec) {
+                  return;
+                }
+              }
+
+              var safeEvent = new Proxy(e, {
+                get: function (t, prop) {
+                  if (prop === 'preventDefault') {
+                    return function () {
+                      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                        e.preventDefault();
+                      }
+                    };
+                  }
+                  var val = t[prop];
+                  return typeof val === 'function' ? val.bind(t) : val;
+                }
+              });
+
+              return listener.call(this, safeEvent);
+            };
+
+            return origAdd.call(this, type, safeWheel, options);
+          }
+          return origAdd.call(this, type, listener, options);
+        };
+      })();
 
       function initAllSections() {
 ${allScripts}
@@ -1482,6 +2301,7 @@ ${allScripts}
  */
 function generateExportBundle(sections, themeConfig, featuresData = {}) {
   const theme = resolveTheme(themeConfig);
+  const isDark = isDarkTheme(theme);
   const safeSections = Array.isArray(sections) ? sections : [];
 
   const headLinks = new Set();
@@ -1510,18 +2330,57 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
     }
 
     // Isolated HTML
+    const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
+    const preloaderClass = isPreloader ? ' is-preloader' : '';
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    const sizingStyle = computeSectionSizingStyles(section.sizing);
+    const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section" id="${id}" data-section-slug="${slug}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${isDark ? 'dark' : 'light'}"${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
-    // Isolated JS wrapped safely
+    // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      scriptBlocks.push(`  // Section: ${slug}\n  try {\n    (function () {\n${isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n')}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  }`);
+      scriptBlocks.push(`  // Section: ${slug}\n  try {\n    window.__activeSectionRegisteringId = ${JSON.stringify(id)};\n    (function () {\n${isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n')}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  } finally {\n    window.__activeSectionRegisteringId = null;\n  }`);
     }
   });
+
+  // Preloader auto-dismiss script for exported bundle
+  scriptBlocks.push(`  // Preloader Auto-Dismiss Handler
+  try {
+    (function() {
+      function initPreloaderWatch() {
+        const sec = document.querySelector('.page-section.is-preloader, .page-section[data-section-slug*="preloader"]');
+        if (!sec) return;
+        function dismiss() {
+          sec.classList.add('is-dismissed');
+          sec.style.opacity = '0';
+          sec.style.pointerEvents = 'none';
+          setTimeout(() => { sec.style.display = 'none'; }, 500);
+        }
+        const checkDone = () => {
+          const root = sec.querySelector('[data-phase="done"], [data-completed="true"], [data-state="done"]');
+          const gate = sec.querySelector('.amr-gate, .scp-gate, [class*="-gate"]');
+          if (root || (gate && window.getComputedStyle(gate).display === 'none')) {
+            dismiss();
+            return true;
+          }
+          return false;
+        };
+        const obs = new MutationObserver(() => {
+          if (checkDone()) obs.disconnect();
+        });
+        obs.observe(sec, { attributes: true, subtree: true, attributeFilter: ['data-phase', 'data-completed', 'class', 'style'] });
+        sec.addEventListener('click', () => { setTimeout(dismiss, 1000); });
+        setTimeout(() => { if (sec.style.display !== 'none') dismiss(); }, 5000);
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initPreloaderWatch);
+      } else {
+        initPreloaderWatch();
+      }
+    })();
+  } catch (e) {}`);
 
   const externalLinksHtml = Array.from(headLinks).join('\n  ');
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
@@ -1530,14 +2389,14 @@ function generateExportBundle(sections, themeConfig, featuresData = {}) {
 
   // 1. index.html
   const indexHtml = `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="${isDark ? 'dark' : 'light'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assembled Web Page</title>
   ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-theme="${isDark ? 'dark' : 'light'}">
 ${allHtml}
   <script src="script.js"></script>
 </body>
@@ -1566,6 +2425,91 @@ ${OVERLAY_ELEMENT_CSS}
  * Assembled Page Scripts
  * Bundled by Page Preview Builder
  */
+
+// Theme-Aware MatchMedia Polyfill for prefers-color-scheme
+(function () {
+  var origMatchMedia = window.matchMedia;
+  window.matchMedia = function (query) {
+    if (typeof query === 'string' && query.includes('prefers-color-scheme')) {
+      var checkIsDark = function () {
+        var attr = document.documentElement.getAttribute('data-theme');
+        if (attr) return attr === 'dark';
+        var cs = document.documentElement.style.colorScheme;
+        if (cs) return cs === 'dark';
+        return ${isDark ? 'true' : 'false'};
+      };
+      var isDarkQuery = query.includes('dark');
+      var checkMatches = function () {
+        return isDarkQuery ? checkIsDark() : !checkIsDark();
+      };
+      var listeners = [];
+      var mql = {
+        get matches() { return checkMatches(); },
+        media: query,
+        onchange: null,
+        addListener: function (fn) { this.addEventListener('change', fn); },
+        removeListener: function (fn) { this.removeEventListener('change', fn); },
+        addEventListener: function (type, fn) {
+          if (type === 'change' && typeof fn === 'function') listeners.push(fn);
+        },
+        removeEventListener: function (type, fn) {
+          listeners = listeners.filter(function (l) { return l !== fn; });
+        },
+        dispatchEvent: function (e) {
+          listeners.forEach(function (fn) { fn(e); });
+          return true;
+        }
+      };
+      window.addEventListener('themechange', function () {
+        var e = { matches: checkMatches(), media: query };
+        if (typeof mql.onchange === 'function') mql.onchange(e);
+        listeners.forEach(function (fn) { fn(e); });
+      });
+      return mql;
+    }
+    return origMatchMedia ? origMatchMedia.call(window, query) : { matches: false };
+  };
+})();
+
+// Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
+(function () {
+  var origAdd = EventTarget.prototype.addEventListener;
+  EventTarget.prototype.addEventListener = function (type, listener, options) {
+    if (type === 'wheel') {
+      var target = this;
+      var isGlobal = target === window || target === document || target === document.documentElement || target === document.body;
+      var secId = window.__activeSectionRegisteringId || null;
+
+      var safeWheel = function (e) {
+        if (isGlobal && secId) {
+          var sec = document.getElementById(secId);
+          if (sec && !sec.contains(e.target) && e.target !== sec) {
+            return;
+          }
+        }
+
+        var safeEvent = new Proxy(e, {
+          get: function (t, prop) {
+            if (prop === 'preventDefault') {
+              return function () {
+                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                  e.preventDefault();
+                }
+              };
+            }
+            var val = t[prop];
+            return typeof val === 'function' ? val.bind(t) : val;
+          }
+        });
+
+        return listener.call(this, safeEvent);
+      };
+
+      return origAdd.call(this, type, safeWheel, options);
+    }
+    return origAdd.call(this, type, listener, options);
+  };
+})();
 
 document.addEventListener("DOMContentLoaded", function () {
 ${allScripts || '  // No section scripts'}
@@ -1699,6 +2643,25 @@ function putU32(buffer, offset, val) {
 }
 
 /**
+ * Root-relative local asset references (e.g. "/vivmgmt/assets/images/a.jpg") only resolve on the
+ * builder's dev server. These helpers find them so export can bundle or inline the files.
+ */
+const LOCAL_ASSET_RE = /(["'(=,\s])(\/(?!\/)[A-Za-z0-9_\-.%~@+\/]+\.(?:png|jpe?g|webp|gif|svg|avif|ico|mp4|webm|mp3|wav|ogg|woff2?|ttf|otf))(?=[?#"')\s>,]|$)/gi;
+
+function findLocalAssetUrls(text) {
+  const found = new Set();
+  if (typeof text !== 'string') return [];
+  for (const m of text.matchAll(LOCAL_ASSET_RE)) found.add(m[2]);
+  return Array.from(found);
+}
+
+function rewriteLocalAssetUrls(text, urlMap) {
+  if (typeof text !== 'string' || !urlMap) return text;
+  return text.replace(LOCAL_ASSET_RE, (full, pre, url) =>
+    Object.prototype.hasOwnProperty.call(urlMap, url) ? pre + urlMap[url] : full);
+}
+
+/**
  * Pure JavaScript ZIP archive generator (standard PKZIP 2.0 uncompressed STORE format).
  * Bundles files into a clean valid zip archive with zero third-party dependencies.
  * @param {Record<string, string|Uint8Array>} files - Map of filename to text or binary content
@@ -1816,6 +2779,9 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     THEME_PRESETS,
     resolveTheme,
+    isDarkTheme,
+    generateUniversalThemeStyles,
+    applyThemeToDocument,
     scopeSectionStyles,
     isolateSectionMarkup,
     isolateSectionScript,
@@ -1825,6 +2791,9 @@ if (typeof module !== 'undefined' && module.exports) {
     assemblePreviewDocument,
     generateExportBundle,
     generateSingleFileBundle,
+    computeSectionSizingStyles,
+    findLocalAssetUrls,
+    rewriteLocalAssetUrls,
     createZipArchive
   };
 }
@@ -1833,6 +2802,9 @@ if (typeof window !== 'undefined') {
   window.Assembler = {
     THEME_PRESETS,
     resolveTheme,
+    isDarkTheme,
+    generateUniversalThemeStyles,
+    applyThemeToDocument,
     scopeSectionStyles,
     isolateSectionMarkup,
     isolateSectionScript,
@@ -1842,6 +2814,9 @@ if (typeof window !== 'undefined') {
     assemblePreviewDocument,
     generateExportBundle,
     generateSingleFileBundle,
+    computeSectionSizingStyles,
+    findLocalAssetUrls,
+    rewriteLocalAssetUrls,
     createZipArchive
   };
 }
