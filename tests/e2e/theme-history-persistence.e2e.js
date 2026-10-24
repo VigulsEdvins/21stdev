@@ -49,6 +49,18 @@ async function main() {
   assert.strictEqual(await page.inputValue('#themePresetSelect'), 'clean-minimal');
   step('reload restores the sections and the theme');
 
+  // component drawer: browse, search and add
+  await page.click('#tabSectionsBtn');
+  await page.click('#openDrawerBtn');
+  await page.waitForSelector('#componentDrawer.is-open, #componentDrawer[aria-hidden="false"]');
+  await page.waitForSelector('#drawerFeatureGrid > *');
+  await page.fill('#drawerSearchInput', 'glass folder');
+  await page.waitForFunction(() => /^[1-9]/.test(document.getElementById('drawerCountBadge').textContent.trim()));
+  const before = await count();
+  await page.click('#drawerFeatureGrid .drawer-add-btn >> nth=0');
+  await page.waitForFunction(n => Number(document.getElementById('stackCountBadge').textContent) === n + 1, before);
+  step('component drawer searches and adds a section');
+
   assert.deepStrictEqual(errors, [], 'no uncaught page errors: ' + errors.join('; '));
   await browser.close();
   await srv.close();
