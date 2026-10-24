@@ -20,7 +20,7 @@ Goal: every component looks right under every page theme.
 
 - [x] **2.1 Triage `reports/themes.json` (M)** — done 2026-10-24: 8 reviewed as false positives (themeReviewed), 1 fixed (stencil-labs-template). — run `npm run audit-themes`, review each flag, then fix, add `themeReviewed`, `nativeWhen` or `ownPalette`.
 - [ ] **2.2 Token migration, batch by category (L)** — `npm run lint-tokens` worst offenders first, by hand, checked in dark and light (the codemod was rejected). Start with Heroes and Headers & Nav.
-- [ ] **2.3 Tailwind coverage for the remaining 21st.dev components (M)** — find components whose `component.tsx` uses utility classes but whose `style.css` has none, run `build-tailwind`, regenerate thumbs.
+- [x] **2.3 Tailwind coverage for the remaining 21st.dev components (M)** — done 2026-10-24: tried 60, before/after screenshots showed only isoline-bloom and ticket-stub-footer changed visibly for the better; the other 58 were left as they were. — find components whose `component.tsx` uses utility classes but whose `style.css` has none, run `build-tailwind`, regenerate thumbs.
 - [ ] **2.4 Visual regression baseline (M)** — store thumbs/screenshots per theme and diff in CI so restyles stop being eyeballed.
 - [ ] **2.5 Responsive pass (M)** — check all 209 at 375 / 768 / 1280 widths in headless Chromium, report overflow; extend `check-features`.
 
