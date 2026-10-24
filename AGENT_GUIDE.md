@@ -67,6 +67,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 | `npm run new-feature -- <slug>` | Scaffold a new feature |
 | `npm run check-blank` | Adds every feature alone in the builder and fails if a section renders nothing (4 known-empty features are listed in the script). `verify` also fails when `script.js` is a stub and the real code is inline in `index.html` |
 | `npm run check-exports` | Exports every feature as a ZIP through the real Download button, unpacks it and opens `index.html` from disk (file://); fails on errors, failed local requests, broken images or an empty section. `-- --themes both` also checks the light theme (about 6 min per theme). Two known-broken exports are listed in the script |
+| `npm run localize-remote` | Downloads hot-linked Google Fonts and images (Unsplash, cdn.21st.dev, r2.dev) into `assets/library/` and rewrites the references, so exports do not depend on other websites. Run it after importing a component that links to remote files |
 | `npm run check-features` | Load every feature in headless Chromium; writes `reports/features.json` |
 | `npm run thumbs` | Render `thumbs/<slug>.jpg` previews |
 | `npm run bundle-demo -- --slug <slug>` | Rebuild a React feature from its `demo.tsx` |
@@ -96,3 +97,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 - **Formerly known theme issues (fixed with `ownPalette` and Tailwind):** `wirebound-inquiry` (dark text on blue in the light theme), `pixel-park-template` (hero text in the light theme), `bento-portfolio-template` (faint secondary text in the light theme), `torn-postcard-portfolio` (headline crowds the top edge), `exploded-assembly-scroll` (renders without its intended styling). 
 - **Licences:** 173 components come from 21st.dev and are recorded as `unverified`. 21st.dev's Terms say community components stay the property of their authors, may be used only through the platform, and may not be redistributed. Check each component's page for an open licence (MIT etc.) or get the author's permission before using it for a client, then record it with `npm run set-license`. Exports list every unverified component in their README.
 - **Content tab names:** `npm run suggest-customizable -- --slug <slug> --write` regenerates the named field list (Headline, Intro text, Button text, Hero photo, Menu item 2 …) from the rendered component. Edit `meta.json` by hand to rename or trim.
+
+## 7. Backlog
+
+Open work, with priorities and what is already done, is in [`docs/BACKLOG.md`](docs/BACKLOG.md). Licence evidence is in `docs/licence-audit/`. CI (`.github/workflows/ci.yml`) runs `verify`, the unit and e2e tests, `check-blank` and `check-exports`.

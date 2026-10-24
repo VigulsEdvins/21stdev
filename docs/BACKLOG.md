@@ -51,7 +51,7 @@ Goal: the exported site works with nothing from the vault.
 - [x] **5.1 Exported-site e2e matrix (M)** — done 2026-10-24: `npm run check-exports` (also a CI job). 207 of 209 pass in both themes; 2 are known broken, see 5.6 and 5.7.
 - [ ] **5.2 Export weight report (S)** — total KB and heavy-section warning in the README.
 - [ ] **5.3 Optional React/Vite project export (L)** — emit `component.tsx` + `package.json` for components that have them.
-- [ ] **5.4 Font and asset self-hosting option (M)** — avoid runtime Google Fonts requests.
+- [x] **5.4 Font and asset self-hosting option (M)** — done by 5.8.
 - [ ] **5.9 Remaining external hosts (M)** — 9 features build Unsplash URLs at run time (`"…/photo-"+id+"?w=…"`), `tilted-grid-hero` does the same with r2.dev, 3 preloaders stream MDN demo videos (17 MB), `hero-ascii-one` embeds a live Unicorn Studio scene. The static localizer cannot see them: needs a declared per-feature asset list (meta.json) plus rewriting of run-time-built paths; same root cause as 5.6.
 - [ ] **5.5 SEO/meta basics in page settings (S)** — OG tags, canonical, robots.
 - [ ] **5.6 Fix `forma-liquid-particle-studio` export (M)** — it builds `/features/.../img/${name}.webp` paths at run time so the asset bundler never sees them. Needs the bundler to accept a declared asset list (see 5.9).
@@ -65,8 +65,8 @@ Goal: regressions get caught without manual runs.
 - [ ] **6.2 Fold `check-features` and `audit-themes` into CI as non-blocking reports (S)**.
 - [ ] **6.3 Pin the thumbnail pipeline (S)** — deterministic renders so regenerated thumbs don't churn the diff.
 - [ ] **6.4 Repo size (M)** — `registry.json` / thumbs / assets growth; consider Git LFS or `.gitattributes` for images, and check what is tracked.
-- [ ] **6.5 Remove the stray TODOs** in `features/agent-console-template/` (S).
-- [ ] **6.6 Refresh `AGENT_GUIDE.md` and the plan docs (S)** — mark finished plans in `docs/superpowers/plans` as done.
+- [x] **6.5 Remove the stray TODOs** — checked 2026-10-24: not code TODOs; the matches are sample prompt text inside the agent-console demo. Nothing to remove.
+- [x] **6.6 Refresh `AGENT_GUIDE.md` and the plan docs (S)** — done 2026-10-24: plans carry a status banner, the guide lists `localize-remote` and points to the backlog.
 
 ## Epic 7 — Projects and collaboration (P2)
 - [ ] **7.1 Project import/export schema versioning (S)** — migrate old JSON files.
