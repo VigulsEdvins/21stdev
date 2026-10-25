@@ -20,9 +20,11 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.goto(srv.url + '/builder.html');
   await ready();
   await page.evaluate(() => { const sm = window.builderPreview.stackManager; sm.setStack([{ id: 'a', slug: 'engraved-ticket', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }]); });
-  await page.waitForTimeout(500);
+  // autosave is debounced: let the first save land before making the second change
+  await page.waitForFunction(k => { try { return JSON.parse(localStorage.getItem(k)).stack.length === 1; } catch (_) { return false; } }, KEY, { timeout: 8000 });
   await page.evaluate(() => { const sm = window.builderPreview.stackManager; sm.setStack([{ id: 'a', slug: 'engraved-ticket', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }, { id: 'b', slug: 'glass-folder-cards', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }]); });
-  await page.waitForTimeout(500);
+  // autosave is debounced: wait for the second save to land rather than a fixed time
+  await page.waitForFunction(k => { try { return JSON.parse(localStorage.getItem(k)).stack.length === 2 && JSON.parse(localStorage.getItem(k + '_prev')).stack.length === 1; } catch (_) { return false; } }, KEY, { timeout: 8000 }).catch(() => {});
   const saved = await page.evaluate(k => ({ now: JSON.parse(localStorage.getItem(k)).stack.length, prev: JSON.parse(localStorage.getItem(k + '_prev')).stack.length }), KEY);
   assert.deepStrictEqual(saved, { now: 2, prev: 1 }, 'the previous good copy is kept');
   console.log('  ✓ each save keeps the one before it');
