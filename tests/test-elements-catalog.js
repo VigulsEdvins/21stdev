@@ -54,7 +54,7 @@ assert.strictEqual(carouselFeatures.length, 21, `3D & Carousels must contain 21 
 
 // Full websites (own pages and CMS) are told apart from landing pages (a whole page in one section)
 const websites = registry.items.filter(f => matchesCategory(f, 'Full Websites')).map(f => f.slug).sort();
-assert.deepStrictEqual(websites, ['template-betteroff', 'template-carousel-play', 'template-cvmaker', 'template-mom', 'template-vivmgmt'], 'Full Websites are exactly the five sites with a live site and CMS');
+assert.deepStrictEqual(websites, ['template-arena', 'template-cvmaker', 'template-mom', 'template-roster', 'template-yearbook'], 'Full Websites are exactly the five sites with a live site and CMS');
 assert(registry.items.filter(f => f.type === 'template').every(f => f.liveSiteUrl), 'only full websites have type template');
 const landing = registry.items.filter(f => matchesCategory(f, 'Landing Pages'));
 assert(landing.length >= 25 && !landing.some(f => f.liveSiteUrl), 'Landing Pages hold the single-section page designs, none of them a full website');

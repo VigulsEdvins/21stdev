@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T18:34:49.333Z",
+  "generatedAt": "2026-10-25T18:58:42.543Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -416,7 +416,8 @@
         "combined",
         "html",
         "css",
-        "js"
+        "js",
+        "tsx"
       ]
     },
     {
@@ -3555,8 +3556,8 @@
       ]
     },
     {
-      "slug": "template-betteroff",
-      "title": "BetterOff Studio — Lookback Annual & CMS Website",
+      "slug": "template-yearbook",
+      "title": "edvlabs Yearbook — Annual Review & CMS Website",
       "category": "Full Websites",
       "legacyCategory": "Full Templates",
       "status": "stable",
@@ -3570,10 +3571,10 @@
       "weight": "light",
       "needsAssets": true,
       "origin": {
-        "source": "betteroff",
+        "source": "edvlabs",
         "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "small-label-1",
@@ -3633,15 +3634,14 @@
       "nativeWhen": [],
       "ownPalette": true,
       "exportAssets": [],
-      "source": "betteroff",
+      "source": "edvlabs",
       "type": "template",
-      "description": "Complete multi-chapter interactive annual review website with 3D WebGL Surf ribbon, inertia timeline, jukebox audio player, and live visual Admin CMS studio.",
+      "description": "Complete multi-chapter interactive annual review website with a 3D WebGL ribbon, inertia timeline, jukebox audio player, and a live visual Admin CMS studio.",
       "tags": [
         "full-website",
         "cms",
         "admin",
         "threejs",
-        "betteroff",
         "annual-report"
       ],
       "dependencies": [
@@ -3649,13 +3649,13 @@
         "gsap",
         "lenis"
       ],
-      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-betteroff",
-      "relativePath": "features/template-betteroff",
-      "previewUrl": "features/template-betteroff/index.html",
-      "thumb": "thumbs/template-betteroff.webp",
-      "liveSiteUrl": "/betteroff/index.html",
-      "adminUrl": "/betteroff/admin.html",
-      "sourceRepoPath": "/home/edvins/features-for-web/betteroff",
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-yearbook",
+      "relativePath": "features/template-yearbook",
+      "previewUrl": "features/template-yearbook/index.html",
+      "thumb": "thumbs/template-yearbook.webp",
+      "liveSiteUrl": "/edv-yearbook/index.html",
+      "adminUrl": "/edv-yearbook/admin.html",
+      "sourceRepoPath": "/home/edvins/features-for-web/edv-yearbook",
       "availableFiles": [
         "combined",
         "html",
@@ -3669,8 +3669,8 @@
       ]
     },
     {
-      "slug": "template-carousel-play",
-      "title": "PLAY Sports Agency — 3D Cylinder & CMS Website",
+      "slug": "template-arena",
+      "title": "edvlabs Arena — 3D Cylinder & CMS Website",
       "category": "Full Websites",
       "legacyCategory": "Full Templates",
       "status": "stable",
@@ -3685,10 +3685,10 @@
       "weight": "light",
       "needsAssets": true,
       "origin": {
-        "source": "carousel-gallery-play",
+        "source": "edvlabs",
         "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "small-label-1",
@@ -3748,29 +3748,28 @@
       "nativeWhen": [],
       "ownPalette": true,
       "exportAssets": [],
-      "source": "carousel-gallery-play",
+      "source": "edvlabs",
       "type": "template",
-      "description": "Complete creative sports agency website featuring a 3D cylindrical WebGL hero carousel, cursor image trail, athlete roster filter, and live Admin CMS.",
+      "description": "Complete creative sports studio website featuring a 3D cylindrical WebGL hero carousel, cursor image trail, athlete roster filter, and a live Admin CMS.",
       "tags": [
         "full-website",
         "cms",
         "admin",
         "threejs",
-        "sports-agency",
-        "carousel-gallery-play"
+        "sports-agency"
       ],
       "dependencies": [
         "three",
         "gsap",
         "lenis"
       ],
-      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-carousel-play",
-      "relativePath": "features/template-carousel-play",
-      "previewUrl": "features/template-carousel-play/index.html",
-      "thumb": "thumbs/template-carousel-play.webp",
-      "liveSiteUrl": "/carousel-gallery-play/index.html",
-      "adminUrl": "/carousel-gallery-play/admin.html",
-      "sourceRepoPath": "/home/edvins/features-for-web/carousel-gallery-play",
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-arena",
+      "relativePath": "features/template-arena",
+      "previewUrl": "features/template-arena/index.html",
+      "thumb": "thumbs/template-arena.webp",
+      "liveSiteUrl": "/edv-arena/index.html",
+      "adminUrl": "/edv-arena/admin.html",
+      "sourceRepoPath": "/home/edvins/features-for-web/edv-arena",
       "availableFiles": [
         "combined",
         "html",
@@ -3784,8 +3783,8 @@
       ]
     },
     {
-      "slug": "template-vivmgmt",
-      "title": "Vivienne Mgmt — 5-Column Editorial & CMS Website",
+      "slug": "template-roster",
+      "title": "edvlabs Roster — 5-Column Editorial & CMS Website",
       "category": "Full Websites",
       "legacyCategory": "Full Templates",
       "status": "stable",
@@ -3800,10 +3799,10 @@
       "weight": "light",
       "needsAssets": true,
       "origin": {
-        "source": "vivmgmt",
+        "source": "edvlabs",
         "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "small-label-1",
@@ -3863,27 +3862,26 @@
       "nativeWhen": [],
       "ownPalette": true,
       "exportAssets": [],
-      "source": "vivmgmt",
+      "source": "edvlabs",
       "type": "template",
-      "description": "High-fashion artist representation & syndication website featuring a 5-column parallax roster, split-curtain entrance, masonry newsroom, and visual Admin CMS.",
+      "description": "Artist representation website featuring a 5-column parallax roster, split-curtain entrance, masonry newsroom, and a visual Admin CMS.",
       "tags": [
         "full-website",
         "cms",
         "admin",
         "editorial",
-        "vivmgmt",
         "parallax"
       ],
       "dependencies": [
         "Vanilla HTML/CSS/JS"
       ],
-      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-vivmgmt",
-      "relativePath": "features/template-vivmgmt",
-      "previewUrl": "features/template-vivmgmt/index.html",
-      "thumb": "thumbs/template-vivmgmt.webp",
-      "liveSiteUrl": "/vivmgmt/index.html",
-      "adminUrl": "/vivmgmt/admin.html",
-      "sourceRepoPath": "/home/edvins/features-for-web/vivmgmt",
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/template-roster",
+      "relativePath": "features/template-roster",
+      "previewUrl": "features/template-roster/index.html",
+      "thumb": "thumbs/template-roster.webp",
+      "liveSiteUrl": "/edv-roster/index.html",
+      "adminUrl": "/edv-roster/admin.html",
+      "sourceRepoPath": "/home/edvins/features-for-web/edv-roster",
       "availableFiles": [
         "combined",
         "html",

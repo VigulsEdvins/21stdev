@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>edvlabs Arena — Culture &amp; Content Platform</title>
+  <meta name="description" content="edvlabs Arena positions athletes, clubs, and brands where they belong: at the heart of culture. Culture-shifting creativity for the world of sports.">
+  <meta name="theme-color" content="#1E1E1E">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./assets/svg/favicon.svg">
+
+  <!-- Preload Critical Fonts & Hero Asset -->
+  <link rel="preload" href="./assets/images/wide-1.svg" as="image" type="image/svg+xml">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="./styles.css?v=2">
+
+  <!-- Vendor Scripts (Local copies for zero-CORS, fast offline-capable loading) -->
+  <script src="./assets/vendor/gsap.min.js" defer></script>
+  <script src="./assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="./assets/vendor/Observer.min.js" defer></script>
+  <script src="./assets/vendor/lenis.min.js" defer></script>
+
+  <!-- CMS Data Store & Main Application Logic -->
+  <script src="./site-data.js?v=2" defer></script>
+  <script src="./app.js?v=2" defer></script>
+</head>
+<body>
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Custom Glassmorphic Cursor (for Ready to Play CTA section on desktop) -->
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+    <img src="./assets/svg/get_in_touch.svg" alt="" width="56" height="56">
+  </div>
+
+  <!-- Floating Quick-Access Admin Panel Button -->
+  <a href="./admin.html" id="floating-admin-btn" class="floating-admin-btn" aria-label="Open Admin Panel to edit images and text">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M12 20h9"></path>
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+    </svg>
+    <span>Admin Panel</span>
+  </a>
+
+  <!-- Page Loader Overlay -->
+  <div id="page-loader" class="page-loader-overlay" aria-hidden="true">
+    <div class="page-loader-mask">
+      <div class="page-loader-background"></div>
+    </div>
+  </div>
+
+  <!-- Fixed Header with mix-blend-mode: difference -->
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <a href="#top" class="site-logo" aria-label="edvlabs Arena Home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="252" height="128" viewBox="0 0 252 128" fill="none"><text x="126" y="82" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="800" font-size="50" letter-spacing="-2" fill="#E1E1E1">edvlabs</text></svg>
+      </a>
+
+      <nav class="menu-dropdown" aria-label="Primary navigation">
+        <button type="button" class="menu-open" aria-expanded="false" aria-controls="primary-menu-list">
+          Menu
+        </button>
+        <ul id="primary-menu-list" class="menu-dropdown__list">
+          <li><a href="#work" class="menu-button"><span>Projects</span></a></li>
+          <li><a href="#services" class="menu-button"><span>Services</span></a></li>
+          <li><a href="#athletes" class="menu-button"><span>Athletes</span></a></li>
+          <li><a href="#team" class="menu-button"><span>Team</span></a></li>
+          <li><a href="#contact" class="menu-button"><span>Contact</span></a></li>
+          <li><a href="#faq" class="menu-button"><span>Faq</span></a></li>
+          <li><a href="./admin.html" class="menu-button"><span>Admin</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- =====================================================================
+         SECTION 1: HERO
+         ===================================================================== -->
+    <section id="top" class="hero-home" aria-labelledby="hero-heading">
+      <div class="hero-home-overlay" aria-hidden="true"></div>
+      <div class="hero-home__inner">
+        <h1 id="hero-heading" class="hero-home__title">
+          BOLD CREATIVITY<br>FOR THE<br>WORLD OF SPORTS
+        </h1>
+        <div class="hero-home__aside">
+          <p id="hero-subtitle">
+            We craft campaigns, stories and collaborations that move sport and culture forward. This is sample copy: replace it with your own.
+          </p>
+          <a id="hero-cta" href="#contact" class="edv-button">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 2: CLIENTS LOGO MARQUEE
+         ===================================================================== -->
+    <section class="clients-home" aria-label="Featured Clients and Partners">
+      <div id="clients-marquee" class="clients-marquee">
+        <!-- Populated dynamically by app.js from EDVStore (with static fallback below) -->
+        <div class="clients-marquee__group">
+          <div class="clients-marquee__item"><img src="./assets/images/client-1.svg" alt="Northport FC" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-2.svg" alt="Classic Kits" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-3.svg" alt="Lumen Sport" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-4.svg" alt="Broadcast One" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-5.svg" alt="Media Group" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-6.svg" alt="Stride" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-7.svg" alt="Atelier J" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-8.svg" alt="Kappa Group" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-9.svg" alt="Rivermouth" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-10.svg" alt="NGA" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-11.svg" alt="Pennant" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-12.svg" alt="Harbour United" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-13.svg" alt="Fieldwork" loading="lazy"></div>
+        </div>
+        <div class="clients-marquee__group" aria-hidden="true">
+          <div class="clients-marquee__item"><img src="./assets/images/client-1.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-2.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-3.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-4.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-5.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-6.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-7.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-8.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-9.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-10.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-11.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-12.svg" alt="" loading="lazy"></div>
+          <div class="clients-marquee__item"><img src="./assets/images/client-13.svg" alt="" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 3: ABOUT STATEMENT (Scroll-scrubbed character reveal)
+         ===================================================================== -->
+    <section id="about" class="about-section" aria-label="About edvlabs Arena">
+      <div class="about-section__overlay">
+        <div class="about-section__inner">
+          <p id="about-text" class="about-text-scroll" data-scroll-reveal>
+            Rooted in top-level sport, fluent in branding, content and campaigns. edvlabs Arena positions athletes, clubs and brands where they belong: at the heart of culture.
+          </p>
+          <div class="about-section__actions">
+            <a id="about-cta-primary" href="#contact" class="edv-button">Start the conversation</a>
+            <a id="about-cta-secondary" href="#work" class="edv-button edv-button--outline">Explore projects</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 4 & 5: "WORK THAT SPEAKS LOUDER THAN WORDS" + 3D CAROUSEL
+         ===================================================================== -->
+    <section id="work" class="projects-section-wrapper" aria-labelledby="work-heading">
+      <!-- Europe Dark-Grey Map Parallax Layer (#target in original site) -->
+      <div id="target" class="projects-bg-target" aria-hidden="true"></div>
+
+      <div id="reference" class="projects-bg-reference">
+        <!-- Heading -->
+        <div class="projects-header">
+          <h2 id="work-heading" class="work-that-speaks">
+            WORK THAT SPEAKS<br>LOUDER THAN WORDS.
+          </h2>
+        </div>
+
+        <!-- Mobile / Tablet View Mode Switcher (Allows switching between Touch Slider & 3D Cylinder on mobile) -->
+        <div class="mobile-carousel-mode-bar">
+          <button type="button" id="mobile-mode-slider" class="carousel-control-btn is-active-mode" aria-pressed="true">
+            Touch Slider
+          </button>
+          <button type="button" id="mobile-mode-3d" class="carousel-control-btn" aria-pressed="false">
+            3D Cylinder
+          </button>
+        </div>
+
+        <!-- 3D Cylindrical Image Carousel (Desktop default, or toggleable on mobile) -->
+        <div id="carousel-3d-wrap" class="img-carousel__wrap" role="region" aria-label="3D Project Showcase Carousel">
+          <div id="carousel-3d-list" class="img-carousel__list">
+            <!-- Dynamically rendered from EDVStore by app.js (with static fallback for SEO/no-JS) -->
+          </div>
+        </div>
+
+        <!-- Accessible Interactive Controls for the 3D Carousel -->
+        <div id="carousel-3d-controls" class="carousel-controls" aria-label="3D Carousel playback controls">
+          <button type="button" id="carousel-prev" class="carousel-control-btn" aria-label="Spin carousel reverse">
+            &#8592; Spin Left
+          </button>
+          <button type="button" id="carousel-toggle" class="carousel-control-btn" aria-pressed="false">
+            Pause
+          </button>
+          <button type="button" id="carousel-next" class="carousel-control-btn" aria-label="Spin carousel forward">
+            Spin Right &#8594;
+          </button>
+        </div>
+
+        <!-- Tablet & Mobile Touch Slider (Matches edvlabs.example mobile layout <= 1024px) -->
+        <div id="projects-mobile-slider" class="projects-mobile-slider" role="region" aria-label="Projects Touch Slider">
+          <div id="projects-mobile-track" class="projects-mobile-track">
+            <!-- Dynamically rendered from EDVStore by app.js -->
+          </div>
+          <div id="projects-mobile-dots" class="slider-dots" aria-hidden="true"></div>
+        </div>
+
+        <!-- Projects Footer -->
+        <div class="projects-footer">
+          <p id="projects-footer-text" class="projects-footer__text">
+            From kit launches and announcements to player branding and cultural collaborations. Our work tells stories that last beyond the game.
+          </p>
+          <div class="projects-footer__actions">
+            <a id="projects-cta-primary" href="#contact" class="edv-button">Get in touch</a>
+            <a id="projects-cta-secondary" href="#services" class="edv-button edv-button--outline">Learn more</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 6: SERVICES ("CREATIVE PRECISION. CULTURAL DEPTH.")
+         ===================================================================== -->
+    <section id="services" class="services-section" aria-labelledby="services-heading">
+      <div class="services-section__inner">
+        <h2 id="services-heading" class="creative-precision">
+          CREATIVE PRECISION.<br>CULTURAL DEPTH.
+        </h2>
+        <p id="services-subtitle" class="services-section__subtitle">
+          We tailor every collaboration to the client: brands, athletes, clubs and federations.
+        </p>
+
+        <div id="services-cards-container" class="services-cards">
+          <!-- Dynamically rendered from EDVStore by app.js -->
+        </div>
+
+        <a id="services-cta" href="#contact" class="edv-button edv-button--dark">Let's get started</a>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 7: ATHLETES + CURSOR IMAGE TRAIL + TEAM
+         ===================================================================== -->
+    <div id="athletes" class="culture-platform-wrapper">
+      <!-- Rotating Pitch Geometric Lines Background -->
+      <div class="track-field-bg" aria-hidden="true">
+        <div class="track-field-col"><div class="track-bg-circle"></div></div>
+        <div class="track-field-col"><div class="track-bg-circle"></div></div>
+        <div class="track-field-col"><div class="track-bg-circle"></div></div>
+        <div class="track-field-col"><div class="track-bg-circle"></div></div>
+      </div>
+
+      <!-- 7A: Athletes Section -->
+      <section class="athletes-section" aria-labelledby="athletes-heading">
+        <h2 id="athletes-heading" class="section-heading-sm">
+          PLAYERS WE'VE<br>WORKED WITH
+        </h2>
+
+        <div class="athletes-tabs" role="tablist" aria-label="Athlete Categories">
+          <button
+            type="button"
+            role="tab"
+            id="tab-all-athletes"
+            class="athletes-tab-btn"
+            aria-selected="true"
+            aria-controls="panel-athletes"
+            data-filter="all"
+          >
+            All Athletes
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="tab-exclusive-athletes"
+            class="athletes-tab-btn"
+            aria-selected="false"
+            aria-controls="panel-athletes"
+            data-filter="exclusive"
+          >
+            edvlabs Exclusive
+          </button>
+        </div>
+
+        <div id="panel-athletes" class="cards-rail-wrap" role="tabpanel" aria-labelledby="tab-all-athletes">
+          <div id="athletes-rail" class="cards-rail">
+            <!-- Dynamically rendered from EDVStore by app.js -->
+          </div>
+          <div id="athletes-dots" class="slider-dots" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- 7B: Interactive Cursor Image Trail (#main-container) -->
+      <section id="main-container" aria-label="Culture Statement">
+        <div id="image-trail-pool">
+          <!-- 10 Cursor Trail Images rendered from EDVStore -->
+        </div>
+
+        <div class="image-trail-content">
+          <p id="image-trail-text" class="image-trail-text" data-scroll-reveal>
+            edvlabs Arena is building a creative platform where sport meets fashion, art, design and lifestyle. From iconic campaigns to cultural collaborations, our ambition is to shape the next era of sports communication.
+          </p>
+          <div class="image-trail-actions">
+            <a id="trail-cta-primary" href="#contact" class="edv-button">Get in touch</a>
+            <a id="trail-cta-secondary" href="#faq" class="edv-button edv-button--outline">Check out FAQ</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7C: Team Section -->
+      <section id="team" class="team-section" aria-labelledby="team-heading">
+        <h2 id="team-heading" class="section-heading-sm">
+          MEET THE TEAM
+        </h2>
+
+        <div class="cards-rail-wrap">
+          <div id="team-rail" class="cards-rail cards-rail--centered">
+            <!-- Dynamically rendered from EDVStore by app.js -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =====================================================================
+         SECTION 8: READY TO PLAY CTA (With Thermal Orbs & Custom Cursor)
+         ===================================================================== -->
+    <section class="ready-section" data-cursor-zone aria-labelledby="ready-heading">
+      <div id="ready-image" class="ready-section__image" role="img" aria-label="Athlete portrait in monochrome"></div>
+      <div class="ready-section__content">
+        <h2 id="ready-heading" class="ready-to-play">
+          READY TO PLAY<br>AT THE HIGHEST<br>LEVEL?
+        </h2>
+        <div class="ready-section__cta">
+          <a id="ready-cta" href="#contact" class="edv-button edv-button--dark">Start the conversation</a>
+        </div>
+        <!-- Blurred Thermal Heatmap Orbs (Static ambient background art in Ready section) -->
+        <div class="heatmap-orbs" aria-hidden="true">
+          <div class="heatmap-orb heatmap-orb--1"></div>
+          <div class="heatmap-orb heatmap-orb--2"></div>
+          <div class="heatmap-orb heatmap-orb--3"></div>
+          <div class="heatmap-orb heatmap-orb--4"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 9: CONTACT FORM ("LET'S BRING YOUR VISION TO LIFE")
+         ===================================================================== -->
+    <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+      <div class="track-field-bg" aria-hidden="true">
+        <div class="track-field-col"><div class="track-bg-circle"></div></div>
+        <div class="track-field-col"><div class="track-bg-circle"></div></div>
+        <div class="track-field-col"><div class="track-bg-circle"></div></div>
+        <div class="track-field-col"><div class="track-bg-circle"></div></div>
+      </div>
+
+      <div class="contact-section__inner">
+        <h2 id="contact-heading" class="lets-talk-about">
+          LET'S BRING YOUR<br>VISION TO LIFE
+        </h2>
+
+        <div class="contact-card">
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="form-group">
+              <label for="first-name" class="form-label">First name *</label>
+              <input type="text" id="first-name" name="firstName" class="form-input" placeholder="First name" required autocomplete="given-name">
+            </div>
+
+            <div class="form-group">
+              <label for="last-name" class="form-label">Last name *</label>
+              <input type="text" id="last-name" name="lastName" class="form-input" placeholder="Last name" required autocomplete="family-name">
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">Email *</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="Email" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">Phone</label>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="Phone" autocomplete="tel">
+            </div>
+
+            <div class="form-group form-group--full">
+              <label for="subject" class="form-label">Subject *</label>
+              <input type="text" id="subject" name="subject" class="form-input" placeholder="Subject" required>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label for="message" class="form-label">Message *</label>
+              <textarea id="message" name="message" rows="4" class="form-textarea" placeholder="Message" required></textarea>
+            </div>
+
+            <div class="form-group form-group--full">
+              <label class="form-checkbox-label">
+                <input type="checkbox" id="privacy" name="privacy" required>
+                <span>I agree to the Privacy Policy and Terms &amp; Conditions *</span>
+              </label>
+            </div>
+
+            <div class="form-group form-group--full">
+              <button type="submit" id="contact-submit-btn" class="edv-button form-submit-btn">Send</button>
+            </div>
+
+            <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 10: FAQ ACCORDION
+         ===================================================================== -->
+    <section id="faq" class="faq-section" aria-labelledby="faq-heading">
+      <div class="faq-section__inner">
+        <h2 id="faq-heading" class="faq-heading">FAQ</h2>
+        <div id="faq-accordion" class="faq-accordion">
+          <!-- Dynamically rendered from EDVStore by app.js -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =======================================================================
+       FOOTER
+       ======================================================================= -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <p>&copy; 2026 EDVLABS ARENA</p>
+      <ul class="site-footer__links">
+        <li><a href="#work">Privacy Policy</a></li>
+        <li><a href="#work">Cookie Policy</a></li>
+        <li><a href="#work">Terms &amp; Conditions</a></li>
+        <li><a href="./admin.html">Admin Panel</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

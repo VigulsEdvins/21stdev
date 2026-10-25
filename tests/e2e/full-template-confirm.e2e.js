@@ -18,8 +18,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 
   const findTemplateCard = async () => {
     await page.click('#tabElementsBtn');
-    await page.fill('#elementsSearchInput', 'Vivienne Mgmt');
-    const card = page.locator('.element-feature-card', { hasText: 'Vivienne Mgmt' }).first();
+    await page.fill('#elementsSearchInput', 'edvlabs Roster');
+    const card = page.locator('.element-feature-card', { hasText: 'edvlabs Roster' }).first();
     await card.waitFor({ timeout: 10000 });
     return card;
   };
@@ -52,7 +52,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.click('#confirmOkBtn');
   await page.waitForSelector('.confirm-dialog', { state: 'detached' });
   await page.waitForFunction(() => window.builderPreview.stackManager.getStack().length === 1, null, { timeout: 15000 });
-  assert.deepStrictEqual(await slugs(), ['template-vivmgmt'], 'the page is now just the website');
+  assert.deepStrictEqual(await slugs(), ['template-roster'], 'the page is now just the website');
   assert.strictEqual(await page.evaluate(() => window.builderPreview.stackManager.getState().theme), 'clean-minimal', 'the theme stays');
   console.log('  ✓ yes: the whole page becomes the template, the theme stays');
 

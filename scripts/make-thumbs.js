@@ -121,7 +121,7 @@ async function main() {
           await page.setViewportSize({ width: 1280, height: 740 });
           await page.goto(`${srv.url}${siteUrls[slug]}`, { waitUntil: 'load', timeout: 30000 });
           await page.waitForTimeout(Math.max(waitMs, 4000));
-          shot = await composeSiteThumb(judge, await page.screenshot({ type: 'png' }), (siteUrls[slug].split('/')[1] || slug) + '.com');
+          shot = await composeSiteThumb(judge, await page.screenshot({ type: 'png' }), (siteUrls[slug].split('/')[1] || slug) + '.example');
         } else {
           await page.goto(`${srv.url}/features/${slug}/index.html`, { waitUntil: 'load', timeout: 20000 });
           await page.waitForTimeout(waitMs);

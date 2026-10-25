@@ -114,7 +114,7 @@ function resolveSafePath(urlPath, referer = '') {
     }
   }
 
-  // 4. Fallback to PARENT_ROOT (/home/edvins/features-for-web) for ../betteroff, ../vivmgmt, ../carousel-gallery-play, etc.
+  // 4. Fallback to PARENT_ROOT (/home/edvins/features-for-web) for ../edv-yearbook, ../edv-roster, ../edv-arena, etc.
   const parentCandidate = path.resolve(PARENT_ROOT, '.' + rel);
   if (!STRICT && (parentCandidate === PARENT_ROOT || isInside(parentCandidate, PARENT_ROOT)) && fs.existsSync(parentCandidate)) {
     const stat = fs.statSync(parentCandidate);
@@ -135,7 +135,7 @@ function resolveSafePath(urlPath, referer = '') {
   return null;
 }
 
-const SITE_PREFIXES = ['mom', 'cvmaker', 'vivmgmt', 'betteroff', 'carousel-gallery-play'];
+const SITE_PREFIXES = ['mom', 'cvmaker', 'edv-roster', 'edv-yearbook', 'edv-arena'];
 
 /** The /prefix/page URL a page request from inside a sibling site should go to, or null. */
 function redirectWithinSite(req) {

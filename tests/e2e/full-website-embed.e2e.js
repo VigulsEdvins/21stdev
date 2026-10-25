@@ -11,7 +11,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   console.log('Full website in the builder');
   await page.goto(srv.url + '/builder.html');
   await page.waitForFunction(() => window.builderPreview && document.querySelector('iframe'));
-  const sites = [['template-mom', '/mom/index.html'], ['template-vivmgmt', '/vivmgmt/index.html'], ['template-betteroff', '/betteroff/index.html'], ['template-carousel-play', '/carousel-gallery-play/index.html'], ['template-cvmaker', '/cvmaker/index.html']];
+  const sites = [['template-mom', '/mom/index.html'], ['template-roster', '/edv-roster/index.html'], ['template-yearbook', '/edv-yearbook/index.html'], ['template-arena', '/edv-arena/index.html'], ['template-cvmaker', '/cvmaker/index.html']];
   for (const [slug, url] of sites) {
     await page.evaluate((s) => window.builderPreview.stackManager.setStack([{ id: 'site', slug: s, sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }]), slug);
     await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; const f = d && d.querySelector('#site .fullsite-frame'); return f && f.src; }, null, { timeout: 20000 });
