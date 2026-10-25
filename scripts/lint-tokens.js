@@ -14,7 +14,10 @@ const TOKEN_RE = /var\(\s*--(bg|text|accent|radius|font-display|font-body)\b/g;
 const COLOR_RE = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|hsla?\([^)]*\)/g;
 
 function analyse(css) {
-  const stripped = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  // Tailwind's preflight (--tw-* defaults, #e5e7eb borders, #9ca3af placeholders) is boilerplate, not a design choice.
+  const stripped = css.replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/--tw-[\w-]+\s*:[^;}]*/g, '')
+    .replace(/border:\s*0\s+solid\s+#e5e7eb|color:\s*#9ca3af/g, '');
   const tokens = (stripped.match(TOKEN_RE) || []).length;
   const colors = (stripped.match(COLOR_RE) || []).length;
   return { tokens, colors, tokenised: tokens > 0 && tokens >= colors * 0.25 };

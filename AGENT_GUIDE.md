@@ -112,3 +112,5 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 ## 7. Backlog
 
 The first backlog is closed ([`docs/BACKLOG.md`](docs/BACKLOG.md), kept as an archive). Current work is in [`docs/ROADMAP.md`](docs/ROADMAP.md); data flow is in [`docs/architecture.md`](docs/architecture.md); how the vault was first filled is in [`docs/vault-origin.md`](docs/vault-origin.md). Licence evidence is in `docs/licence-audit/`. CI (`.github/workflows/ci.yml`) runs `verify`, the unit and e2e tests, `check-blank` and `check-exports`.
+
+- When a component is migrated to the tokens, empty its `nativeWhen` in `meta.json`: `nativeWhen` keeps a component in its designed polarity (e.g. dark on a light page), which stops it following the theme. Use a light foreground (`#fefefe`) for text on accent-filled buttons and photos.

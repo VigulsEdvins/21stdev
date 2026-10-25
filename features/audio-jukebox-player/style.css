@@ -7,8 +7,8 @@
 html, body {
   width: 100%;
   height: 100%;
-  background: #09090b;
-  color: #fafafa;
+  background: var(--bg, #09090b);
+  color: var(--text, #fafafa);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", monospace;
   overflow: hidden;
 }
@@ -22,13 +22,13 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  background: radial-gradient(circle at 50% 40%, rgba(16, 185, 129, 0.12), transparent 65%), #09090b;
+  background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent, #10b981) 12%, transparent), transparent 65%), var(--bg, #09090b);
 }
 
 .sound-gate {
   position: fixed;
   inset: 0;
-  background: rgba(9, 9, 11, 0.92);
+  background: color-mix(in srgb, var(--bg, #09090b) 92%, transparent);
   backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
@@ -53,7 +53,7 @@ html, body {
 
 .sound-gate p {
   font-size: 13px;
-  color: rgba(250, 250, 250, 0.6);
+  color: color-mix(in srgb, var(--text, #fafafa) 60%, transparent);
 }
 
 .gate-actions {
@@ -70,22 +70,22 @@ html, body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--text, #fafafa) 16%, transparent);
+  background: color-mix(in srgb, var(--text, #fafafa) 5%, transparent);
+  color: var(--text, #fff);
 }
 
 .gate-btn--primary {
-  background: #10b981;
-  border-color: #10b981;
-  color: #052e16;
+  background: var(--accent, #10b981);
+  border-color: var(--accent, #10b981);
+  color: #fefefe;
 }
 
 .audio-pill {
   position: relative;
   width: 340px;
-  background: #18181b;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: color-mix(in srgb, var(--text, #fafafa) 8%, var(--bg, #09090b));
+  border: 1px solid color-mix(in srgb, var(--text, #fafafa) 14%, transparent);
   border-radius: 16px;
   padding: 12px 14px;
   box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7);
@@ -102,8 +102,8 @@ html, body {
   height: 36px;
   border-radius: 50%;
   border: none;
-  background: #10b981;
-  color: #052e16;
+  background: var(--accent, #10b981);
+  color: #fefefe;
   font-weight: 800;
   cursor: pointer;
   display: grid;
@@ -139,7 +139,7 @@ html, body {
 .eq-bar {
   width: 3px;
   height: 4px;
-  background: #10b981;
+  background: var(--accent, #10b981);
   border-radius: 2px;
   transition: height 0.12s ease;
 }
@@ -157,7 +157,7 @@ html, body {
 .tracklist {
   margin-top: 12px;
   padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--text, #fafafa) 8%, transparent);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -165,9 +165,9 @@ html, body {
 
 .track-item {
   appearance: none;
-  background: rgba(255, 255, 255, 0.02);
+  background: color-mix(in srgb, var(--text, #fafafa) 2%, transparent);
   border: 1px solid transparent;
-  color: rgba(250, 250, 250, 0.75);
+  color: color-mix(in srgb, var(--text, #fafafa) 75%, transparent);
   padding: 8px 10px;
   border-radius: 8px;
   display: flex;
@@ -179,12 +179,12 @@ html, body {
 }
 
 .track-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--text, #fafafa) 6%, transparent);
 }
 
 .track-item.is-active {
-  border-color: rgba(16, 185, 129, 0.5);
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  border-color: color-mix(in srgb, var(--accent, #10b981) 50%, transparent);
+  background: color-mix(in srgb, var(--accent, #10b981) 10%, transparent);
+  color: var(--accent, #10b981);
   font-weight: 700;
 }

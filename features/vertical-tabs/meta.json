@@ -28,6 +28,7 @@
   "author": "0xUrvish",
   "order": 6,
   "legacyCategory": "Buttons & UI",
+  "ownPalette": true,
   "status": "stable",
   "weight": "light",
   "mood": [

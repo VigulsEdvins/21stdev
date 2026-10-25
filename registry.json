@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T05:28:24.767Z",
+  "generatedAt": "2026-10-25T07:08:22.513Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -1030,7 +1030,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "21st.dev",
       "type": "component",
@@ -1603,7 +1603,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "photo-caroulsel",
       "type": "component",
@@ -1838,9 +1838,7 @@
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "betteroff",
@@ -2044,9 +2042,7 @@
           "selector": ":scope > aside:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > p:nth-of-type(2)"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "betteroff",
@@ -2431,9 +2427,7 @@
           "selector": ":scope button.replay-btn"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "vivmgmt",
@@ -2764,9 +2758,7 @@
           "selector": ":scope > main:nth-of-type(1) > section:nth-of-type(1) > article:nth-of-type(4) > div:nth-of-type(2) > h2:nth-of-type(1)"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "vivmgmt",
@@ -2966,9 +2958,7 @@
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "vivmgmt",
@@ -4317,10 +4307,8 @@
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(7)"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
-      "ownPalette": false,
+      "nativeWhen": [],
+      "ownPalette": true,
       "exportAssets": [],
       "source": "mom",
       "type": "component",
@@ -4549,10 +4537,8 @@
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
-      "ownPalette": false,
+      "nativeWhen": [],
+      "ownPalette": true,
       "exportAssets": [],
       "source": "mom",
       "type": "component",

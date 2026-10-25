@@ -23,6 +23,7 @@
   ],
   "order": 31,
   "legacyCategory": "Galleries & Portfolios",
+  "ownPalette": true,
   "status": "stable",
   "weight": "light",
   "mood": [
@@ -117,7 +118,5 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "light"
-  ]
+  "nativeWhen": []
 }
