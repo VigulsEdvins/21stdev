@@ -181,6 +181,14 @@
               </div>
             </div>`).join('')}
             <div class="sizing-row">
+              <span class="sizing-label" title="How this section treats the page theme">Colours:</span>
+              <div class="sizing-pills theme-mode-pills">
+                <button type="button" class="sizing-pill ${!item.themeMode ? 'is-active' : ''}" data-theme-mode="" title="What this component does by default">Default</button>
+                <button type="button" class="sizing-pill ${item.themeMode === 'match' ? 'is-active' : ''}" data-theme-mode="match" title="Follow the page theme's colours">Match page</button>
+                <button type="button" class="sizing-pill ${item.themeMode === 'keep' ? 'is-active' : ''}" data-theme-mode="keep" title="Keep the colours it was designed in, whatever the page theme">Keep original</button>
+              </div>
+            </div>
+            <div class="sizing-row">
               <span class="sizing-label">Hide on:</span>
               <div class="sizing-pills hide-on-pills">
                 ${[['desktop', 'Desktop'], ['tablet', 'Tablet'], ['mobile', 'Phone']].map(([bp, label]) => `<button type="button" class="sizing-pill ${(item.hideOn || []).includes(bp) ? 'is-active' : ''}" data-bp="${bp}" aria-pressed="${(item.hideOn || []).includes(bp) ? 'true' : 'false'}">${label}</button>`).join('')}
@@ -266,6 +274,17 @@
             stackManager.updateSectionSizing(item.id, { [group.dataset.key]: pill.dataset.pad });
           }));
         });
+        const themeModePills = card.querySelectorAll('.theme-mode-pills .sizing-pill');
+        themeModePills.forEach(pill => pill.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const mode = pill.dataset.themeMode;
+          themeModePills.forEach(p => p.classList.toggle('is-active', p === pill));
+          // the polarity the component was designed in: from its measured brightness, else from its nativeWhen lock
+          const entry = (window.FEATURE_REGISTRY || []).find(f => f.slug === item.slug) || {};
+          const designed = typeof entry.luma === 'number' ? (entry.luma < 0.5 ? 'dark' : 'light') : ((entry.nativeWhen || []).includes('light') ? 'dark' : (entry.nativeWhen || []).includes('dark') ? 'light' : 'dark');
+          stackManager.setSectionThemeMode(item.id, mode, designed);
+        }));
+
         const hidePills = card.querySelectorAll('.hide-on-pills .sizing-pill');
         hidePills.forEach(pill => pill.addEventListener('click', (e) => {
           e.stopPropagation();

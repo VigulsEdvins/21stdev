@@ -93,6 +93,10 @@
     };
     if (typeof z.fitScale === 'number' && Number.isFinite(z.fitScale) && z.fitScale >= 0.3 && z.fitScale < 1) out.sizing.fitScale = z.fitScale;
     ['paddingYTablet', 'paddingYMobile'].forEach(k => { if (['none', 'compact', 'medium', 'large'].includes(z[k])) out.sizing[k] = z[k]; });
+    if (s.themeMode === 'match' || s.themeMode === 'keep') {
+      out.themeMode = s.themeMode;
+      if (s.themeMode === 'keep') out.designPolarity = s.designPolarity === 'light' ? 'light' : 'dark';
+    }
     if (Array.isArray(s.hideOn)) {
       const hide = s.hideOn.filter(b => b === 'mobile' || b === 'tablet' || b === 'desktop');
       if (hide.length) out.hideOn = Array.from(new Set(hide));

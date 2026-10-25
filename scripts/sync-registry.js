@@ -105,6 +105,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       customizable: Array.isArray(meta.customizable) ? meta.customizable : [],
       nativeWhen: Array.isArray(meta.nativeWhen) ? meta.nativeWhen : [],
       ownPalette: meta.ownPalette === true,
+      luma: meta.measured && typeof meta.measured.luma === 'number' ? meta.measured.luma : null,
       lazy: meta.lazy === true,
       reserveHeight: Number(meta.reserveHeight) > 0 ? Number(meta.reserveHeight) : 0,
       minScale: Number(meta.minScale) >= 0.3 && Number(meta.minScale) <= 1 ? Number(meta.minScale) : 0,

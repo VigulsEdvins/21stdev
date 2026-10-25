@@ -2105,7 +2105,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
       styleAttr = ' style="display: none !important; pointer-events: none !important;"';
     }
     const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
-    const nativeList = nativePolarities(options.nativeMap, slug);
+    const nativeList = sectionNativeList(section, options.nativeMap);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
     sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
@@ -2448,6 +2448,17 @@ function nativePolarities(nativeMap, slug) {
   return Array.isArray(v) ? v.filter(p => p === 'light' || p === 'dark') : [];
 }
 
+/**
+ * The page polarities under which a section keeps its own palette. A section can override the component's default:
+ * `themeMode: 'match'` follows every page theme, `themeMode: 'keep'` keeps the colours it was designed in
+ * (`designPolarity`) under the opposite page theme.
+ */
+function sectionNativeList(section, nativeMap) {
+  if (section && section.themeMode === 'match') return [];
+  if (section && section.themeMode === 'keep') return [section.designPolarity === 'light' ? 'dark' : 'light'];
+  return nativePolarities(nativeMap, section && section.slug);
+}
+
 /** Value for a section's data-theme attribute: the opposite polarity when it is native under the page theme. */
 function sectionThemeAttr(pageIsDark, nativeList) {
   const pagePol = pageIsDark ? 'dark' : 'light';
@@ -2460,7 +2471,7 @@ function renderNativePaletteCss(sections, nativeMap) {
   const blocks = [];
   (Array.isArray(sections) ? sections : []).forEach((sec, index) => {
     const id = sec.id || `sec-${index + 1}`;
-    nativePolarities(nativeMap, sec.slug).forEach(pol => {
+    sectionNativeList(sec, nativeMap).forEach(pol => {
       const local = THEME_PRESETS[NATIVE_PRESET_FOR_PAGE[pol]];
       const m = generateUniversalThemeStyles(local).match(/:root\s*\{([\s\S]*?)\n    \}/);
       if (!m) return;
@@ -3080,7 +3091,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
-    const nativeList = nativePolarities(options.nativeMap, slug);
+    const nativeList = sectionNativeList(section, options.nativeMap);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
     sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 

@@ -258,6 +258,26 @@ function createStackManager(initialConfig = {}) {
     return section;
   }
 
+  /**
+   * How a section treats the page theme: 'match' makes it follow the theme even when the component keeps its own
+   * look by default, 'keep' makes it keep its own colours under every page theme (`designPolarity` is how the
+   * component was designed, 'dark' or 'light'); anything else goes back to the component's default.
+   */
+  function setSectionThemeMode(id, mode, designPolarity) {
+    if (isLocked(id)) return null;
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    if (mode === 'match' || mode === 'keep') {
+      section.themeMode = mode;
+      if (mode === 'keep') section.designPolarity = designPolarity === 'light' ? 'light' : 'dark'; else delete section.designPolarity;
+    } else {
+      delete section.themeMode;
+      delete section.designPolarity;
+    }
+    notify();
+    return section;
+  }
+
   function isLocked(id) {
     const section = state.stack.find(s => s.id === id);
     return !!(section && section.locked);
@@ -532,6 +552,7 @@ function createStackManager(initialConfig = {}) {
     isLocked,
     setSectionFlag,
     setSectionHideOn,
+    setSectionThemeMode,
     moveSection,
     duplicateSection,
     replaceSection,

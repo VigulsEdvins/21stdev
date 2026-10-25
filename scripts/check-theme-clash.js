@@ -44,16 +44,38 @@ async function main() {
           await page.waitForTimeout(2500);
           const frame = page.frames().find(f => f !== page.mainFrame());
           const el = frame.locator('#clash');
-          const buf = await el.screenshot({ timeout: 15000 });
-          const lum = await page.evaluate(async (b64) => {
-            const img = new Image();
-            await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/png;base64,' + b64; });
-            const c = document.createElement('canvas'); c.width = 48; c.height = 48;
-            const x = c.getContext('2d'); x.drawImage(img, 0, 0, 48, 48);
-            const d = x.getImageData(0, 0, 48, 48).data;
-            let s = 0; for (let i = 0; i < d.length; i += 4) s += (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]) / 255;
-            return s / (d.length / 4);
-          }, buf.toString('base64'));
+          // A section that never settles (heavy canvas, endless animation) cannot be screenshotted: read the colours the
+          // browser has painted under a grid of points instead (first opaque background under each point).
+          let lum;
+          try {
+            const buf = await el.screenshot({ timeout: 8000, animations: 'disabled' });
+            lum = await page.evaluate(async (b64) => {
+              const img = new Image();
+              await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/png;base64,' + b64; });
+              const c = document.createElement('canvas'); c.width = 48; c.height = 48;
+              const x = c.getContext('2d'); x.drawImage(img, 0, 0, 48, 48);
+              const d = x.getImageData(0, 0, 48, 48).data;
+              let sum = 0; for (let i = 0; i < d.length; i += 4) sum += (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]) / 255;
+              return sum / (d.length / 4);
+            }, buf.toString('base64'));
+          } catch (_) {
+            lum = await frame.evaluate(() => {
+              const sec = document.getElementById('clash');
+              sec.scrollIntoView();
+              const r = sec.getBoundingClientRect();
+              let sum = 0, n = 0;
+              for (let i = 0; i < 6; i++) for (let j = 0; j < 6; j++) {
+                const px = Math.min(innerWidth - 2, r.left + (r.width * (i + 0.5)) / 6), py = Math.min(innerHeight - 2, Math.max(2, r.top + (Math.min(r.height, innerHeight) * (j + 0.5)) / 6));
+                let L = null;
+                for (const e of document.elementsFromPoint(px, py)) {
+                  const m = getComputedStyle(e).backgroundColor.match(/[\d.]+/g);
+                  if (m && (m.length < 4 || Number(m[3]) > 0.5)) { L = (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) / 255; break; }
+                }
+                if (L !== null) { sum += L; n++; }
+              }
+              return n ? sum / n : 0.5;
+            });
+          }
           row.lum[th.id] = Math.round(lum * 100) / 100;
           if (th.dark ? lum > 0.62 : lum < 0.30) row.clash.push(th.id);
         }
