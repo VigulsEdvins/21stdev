@@ -57,7 +57,13 @@
     if (contentEl) {
       // zoom shrinks the element's own box too, so ask for r.height / scale of layout height to fill the section
       const inner = `${Math.round(r.height / r.scale)}px`;
-      [contentEl, contentEl.firstElementChild].filter(Boolean).forEach((t, i) => {
+      // A single wrapper inside the root is stretched with it; with several children (header + rows) only the root is
+      const wrapper = contentEl.children.length === 1 ? contentEl.firstElementChild : null;
+      if (!wrapper && contentEl.firstElementChild) {
+        const f = contentEl.firstElementChild;
+        f.style.flex = ''; f.style.height = ''; f.style.minHeight = ''; f.style.zoom = '';
+      }
+      [contentEl, wrapper].filter(Boolean).forEach((t, i) => {
         t.style.flex = '1 1 auto';
         t.style.height = inner;
         t.style.minHeight = inner;

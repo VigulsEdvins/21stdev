@@ -47,40 +47,88 @@
       "selector": ":scope span.marquee-label"
     },
     {
-      "id": "small-label-1",
-      "label": "Small label 1",
+      "id": "name-1",
+      "label": "Row 1 name 1",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1)"
+      "selector": ":scope .clients-marquee:not(.clients-marquee--reverse) .clients-marquee__group:first-child .clients-marquee__item:nth-child(1) > span:last-child"
     },
     {
-      "id": "small-label-2",
-      "label": "Small label 2",
+      "id": "name-2",
+      "label": "Row 1 name 2",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
+      "selector": ":scope .clients-marquee:not(.clients-marquee--reverse) .clients-marquee__group:first-child .clients-marquee__item:nth-child(2) > span:last-child"
     },
     {
-      "id": "small-label-3",
-      "label": "Small label 3",
+      "id": "name-3",
+      "label": "Row 1 name 3",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3)"
+      "selector": ":scope .clients-marquee:not(.clients-marquee--reverse) .clients-marquee__group:first-child .clients-marquee__item:nth-child(3) > span:last-child"
     },
     {
-      "id": "small-label-4",
-      "label": "Small label 4",
+      "id": "name-4",
+      "label": "Row 1 name 4",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4)"
+      "selector": ":scope .clients-marquee:not(.clients-marquee--reverse) .clients-marquee__group:first-child .clients-marquee__item:nth-child(4) > span:last-child"
     },
     {
-      "id": "small-label-5",
-      "label": "Small label 5",
+      "id": "name-5",
+      "label": "Row 1 name 5",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5)"
+      "selector": ":scope .clients-marquee:not(.clients-marquee--reverse) .clients-marquee__group:first-child .clients-marquee__item:nth-child(5) > span:last-child"
     },
     {
-      "id": "small-label-6",
-      "label": "Small label 6",
+      "id": "name-6",
+      "label": "Row 1 name 6",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(6)"
+      "selector": ":scope .clients-marquee:not(.clients-marquee--reverse) .clients-marquee__group:first-child .clients-marquee__item:nth-child(6) > span:last-child"
+    },
+    {
+      "id": "name-7",
+      "label": "Row 1 name 7",
+      "type": "text",
+      "selector": ":scope .clients-marquee:not(.clients-marquee--reverse) .clients-marquee__group:first-child .clients-marquee__item:nth-child(7) > span:last-child"
+    },
+    {
+      "id": "name-8",
+      "label": "Row 2 name 1",
+      "type": "text",
+      "selector": ":scope .clients-marquee--reverse .clients-marquee__group:first-child .clients-marquee__item:nth-child(1) > span:last-child"
+    },
+    {
+      "id": "name-9",
+      "label": "Row 2 name 2",
+      "type": "text",
+      "selector": ":scope .clients-marquee--reverse .clients-marquee__group:first-child .clients-marquee__item:nth-child(2) > span:last-child"
+    },
+    {
+      "id": "name-10",
+      "label": "Row 2 name 3",
+      "type": "text",
+      "selector": ":scope .clients-marquee--reverse .clients-marquee__group:first-child .clients-marquee__item:nth-child(3) > span:last-child"
+    },
+    {
+      "id": "name-11",
+      "label": "Row 2 name 4",
+      "type": "text",
+      "selector": ":scope .clients-marquee--reverse .clients-marquee__group:first-child .clients-marquee__item:nth-child(4) > span:last-child"
+    },
+    {
+      "id": "name-12",
+      "label": "Row 2 name 5",
+      "type": "text",
+      "selector": ":scope .clients-marquee--reverse .clients-marquee__group:first-child .clients-marquee__item:nth-child(5) > span:last-child"
+    },
+    {
+      "id": "name-13",
+      "label": "Row 2 name 6",
+      "type": "text",
+      "selector": ":scope .clients-marquee--reverse .clients-marquee__group:first-child .clients-marquee__item:nth-child(6) > span:last-child"
+    },
+    {
+      "id": "name-14",
+      "label": "Row 2 name 7",
+      "type": "text",
+      "selector": ":scope .clients-marquee--reverse .clients-marquee__group:first-child .clients-marquee__item:nth-child(7) > span:last-child"
     }
   ],
   "measured": {
