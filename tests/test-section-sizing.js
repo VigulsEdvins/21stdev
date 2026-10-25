@@ -62,3 +62,23 @@ assert(indexHtml.includes('min-height: 100vh'), 'Exported index.html must retain
 assert(indexHtml.includes('min-height: 820px'), 'Exported index.html must retain custom height');
 
 console.log('✅ Section Sizing tests passed!');
+
+// 2. Fit scale: shrinking a section shrinks its content down to the component's minimum, then stops
+const SectionFit = require('../scripts/builder/section-fit.js');
+assert.deepStrictEqual(SectionFit.fit(800, 600, 0.6), { height: 800, scale: 1, minHeight: 360, atMinimum: false });
+assert.strictEqual(SectionFit.fit(450, 600, 0.6).scale, 0.75);
+const floor = SectionFit.fit(100, 600, 0.6);
+assert.strictEqual(floor.height, 360);
+assert.strictEqual(floor.scale, 0.6);
+assert.strictEqual(floor.atMinimum, true);
+assert.strictEqual(SectionFit.fit(100, 600, 0.8).height, 480);
+assert.strictEqual(SectionFit.fit(100, 600, 'junk').scale, SectionFit.DEFAULT_MIN_SCALE);
+
+const fitSm = createStackManager();
+const fitSec = fitSm.addSection('hero-section');
+fitSm.updateSectionSizing(fitSec.id, { heightMode: 'custom', customHeight: 450, fitScale: 0.75 });
+const fitDoc = assemblePreviewDocument(fitSm.getStack(), THEME_PRESETS.dark || Object.values(THEME_PRESETS)[0], {});
+assert.ok(fitDoc.includes('zoom: 0.75'), 'preview applies the fit scale');
+fitSm.updateSectionSizing(fitSec.id, { heightMode: 'auto' });
+assert.ok(!assemblePreviewDocument(fitSm.getStack(), THEME_PRESETS.dark || Object.values(THEME_PRESETS)[0], {}).includes('zoom: 0.75'), 'auto height drops the scale');
+console.log('Section fit scale OK');

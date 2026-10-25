@@ -91,6 +91,7 @@
       customHeight: typeof z.customHeight === 'number' && Number.isFinite(z.customHeight) ? Math.max(100, Math.min(5000, z.customHeight)) : 600,
       paddingY: ['none', 'compact', 'medium', 'large'].includes(z.paddingY) ? z.paddingY : 'none'
     };
+    if (typeof z.fitScale === 'number' && Number.isFinite(z.fitScale) && z.fitScale >= 0.3 && z.fitScale < 1) out.sizing.fitScale = z.fitScale;
     ['paddingYTablet', 'paddingYMobile'].forEach(k => { if (['none', 'compact', 'medium', 'large'].includes(z[k])) out.sizing[k] = z[k]; });
     if (Array.isArray(s.hideOn)) {
       const hide = s.hideOn.filter(b => b === 'mobile' || b === 'tablet' || b === 'desktop');

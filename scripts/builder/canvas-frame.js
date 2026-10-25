@@ -349,29 +349,21 @@
         const initialHeight = sectionEl.getBoundingClientRect().height;
         let newHeight = initialHeight;
 
-        // Prepare section & children for live stretching without blank gaps
-        sectionEl.style.display = 'flex';
-        sectionEl.style.flexDirection = 'column';
-        const contentEl = sectionEl.querySelector(':scope > div[id^="root-"], :scope > :first-child:not(.section-overlay-layer):not(.section-resize-handle)');
-        if (contentEl) {
-          contentEl.style.flex = '1 1 auto';
-          contentEl.style.height = '100%';
-          contentEl.style.minHeight = '100%';
-          if (contentEl.firstElementChild) {
-            contentEl.firstElementChild.style.flex = '1 1 auto';
-            contentEl.firstElementChild.style.height = '100%';
-            contentEl.firstElementChild.style.minHeight = '100%';
-          }
-        }
+        // Content shrinks (text included) as the section gets shorter, down to this component's minimum
+        const naturalHeight = window.SectionFit.measureNatural(sectionEl);
+        const minScale = window.SectionFit.minScaleFor(sectionEl.dataset.sectionSlug);
+        let newScale = 1;
+        let atMinimum = false;
 
         function onSectionResizeMove(moveEvent) {
           const frameRect = previewFrame.getBoundingClientRect();
           const mouseY = (moveEvent.view === window) ? (moveEvent.clientY - frameRect.top) : moveEvent.clientY;
           const deltaY = mouseY - startY;
-          newHeight = Math.max(48, Math.min(2600, Math.round(initialHeight + deltaY)));
-          sectionEl.style.height = `${newHeight}px`;
-          sectionEl.style.minHeight = `${newHeight}px`;
-          sectionEl.style.overflow = 'hidden';
+          const requested = Math.min(2600, Math.round(initialHeight + deltaY));
+          const fitted = window.SectionFit.apply(sectionEl, requested, naturalHeight, minScale);
+          newHeight = fitted.height;
+          newScale = fitted.scale;
+          atMinimum = requested <= fitted.minHeight;
 
           // Show live height floating tooltip inside the iframe
           let sizeTooltip = doc.getElementById('sectionResizeTooltip');
@@ -381,7 +373,7 @@
             sizeTooltip.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(15,15,22,0.92);color:#fafafa;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:monospace;border:1px solid rgba(168,85,247,0.5);box-shadow:0 8px 24px rgba(0,0,0,0.6);z-index:99999;pointer-events:none;';
             doc.body.appendChild(sizeTooltip);
           }
-          sizeTooltip.textContent = `Section Height: ${newHeight}px`;
+          sizeTooltip.textContent = `Section Height: ${newHeight}px` + (newScale < 1 ? ` · text ${Math.round(newScale * 100)}%` : '') + (atMinimum ? ' · minimum' : '');
           sizeTooltip.style.display = 'block';
 
           updateToolbarPosition();
@@ -399,9 +391,10 @@
 
           stackManager.updateSectionSizing(sectionId, {
             heightMode: 'custom',
-            customHeight: newHeight
+            customHeight: newHeight,
+            fitScale: newScale
           });
-          showToast(`Section height updated: ${newHeight}px`);
+          showToast(atMinimum ? `Smallest size for this section: ${newHeight}px` : `Section height updated: ${newHeight}px`);
         }
 
         doc.addEventListener('mousemove', onSectionResizeMove);

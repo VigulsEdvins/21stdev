@@ -107,6 +107,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       ownPalette: meta.ownPalette === true,
       lazy: meta.lazy === true,
       reserveHeight: Number(meta.reserveHeight) > 0 ? Number(meta.reserveHeight) : 0,
+      minScale: Number(meta.minScale) >= 0.3 && Number(meta.minScale) <= 1 ? Number(meta.minScale) : 0,
       exportAssets: Array.isArray(meta.exportAssets) ? meta.exportAssets : [],
       source: meta.source || 'custom',
       type: meta.type || 'component', // 'component' | 'template'

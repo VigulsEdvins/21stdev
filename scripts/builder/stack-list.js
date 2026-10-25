@@ -227,25 +227,21 @@
               const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
               const secEl = doc.getElementById(item.id);
               if (secEl) {
-                secEl.style.height = `${val}px`;
-                secEl.style.minHeight = `${val}px`;
-                secEl.style.overflow = 'hidden';
-                const contentEl = secEl.querySelector(':scope > div[id^="root-"], :scope > :first-child:not(.section-overlay-layer):not(.section-resize-handle)');
-                if (contentEl) {
-                  contentEl.style.flex = '1 1 auto';
-                  contentEl.style.height = '100%';
-                  contentEl.style.minHeight = '100%';
-                  if (contentEl.firstElementChild) {
-                    contentEl.firstElementChild.style.flex = '1 1 auto';
-                    contentEl.firstElementChild.style.height = '100%';
-                    contentEl.firstElementChild.style.minHeight = '100%';
-                  }
-                }
+                const natural = window.SectionFit.measureNatural(secEl);
+                const r = window.SectionFit.apply(secEl, Number(val), natural, window.SectionFit.minScaleFor(secEl.dataset.sectionSlug));
+                valLabel.textContent = `${r.height}px`;
+                if (r.height !== Number(val)) slider.value = r.height;
               }
             } catch (_) {}
           });
           slider.addEventListener('change', (e) => {
-            stackManager.updateSectionSizing(item.id, { heightMode: 'custom', customHeight: Number(e.target.value) });
+            let fitScale = 1;
+            try {
+              const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+              const secEl = doc.getElementById(item.id);
+              if (secEl) fitScale = window.SectionFit.fit(Number(e.target.value), window.SectionFit.measureNatural(secEl), window.SectionFit.minScaleFor(secEl.dataset.sectionSlug)).scale;
+            } catch (_) {}
+            stackManager.updateSectionSizing(item.id, { heightMode: 'custom', customHeight: Number(e.target.value), fitScale });
           });
         }
 

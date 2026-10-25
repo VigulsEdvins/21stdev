@@ -1302,6 +1302,17 @@ function computeSectionSizingStyles(sizing) {
 }
 
 /**
+ * CSS that shrinks a section's content when the section was made shorter than it needs (`sizing.fitScale`, set by the
+ * builder's resize handle and never below the component's minimum), so the text scales instead of being cropped.
+ */
+function fitScaleCss(section, id) {
+  const z = section && section.sizing;
+  const f = z && z.heightMode === 'custom' ? Number(z.fitScale) : 0;
+  if (!(f >= 0.3 && f < 1)) return '';
+  return `#${id} > :first-child:not(.section-overlay-layer):not(.section-resize-handle) { zoom: ${f}; }`;
+}
+
+/**
  * Sizing plus the space a script-rendered section will fill (`reserveHeight` in meta.json, measured by
  * scripts/measure-reserve.js). Reserving it before the script runs stops the sections below from jumping down.
  */
@@ -2076,6 +2087,9 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     if (scopedCss.trim()) {
       scopedStyleBlocks.push(`    /* Section: ${slug} (${id}) */\n    ${scopedCss.trim()}`);
     }
+
+    const fitCss = fitScaleCss(section, id);
+    if (fitCss) scopedStyleBlocks.push(`    /* Section: ${slug} (${id}) fit */\n    ${fitCss}`);
 
     // Isolated HTML
     const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
@@ -3042,6 +3056,9 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     if (scopedCss.trim()) {
       scopedStyleBlocks.push(`/* Section: ${slug} */\n${scopedCss.trim()}`);
     }
+
+    const fitCss = fitScaleCss(section, id);
+    if (fitCss) scopedStyleBlocks.push(fitCss);
 
     // Isolated HTML
     const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
