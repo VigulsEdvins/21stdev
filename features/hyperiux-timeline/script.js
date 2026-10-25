@@ -187,9 +187,8 @@
   // Theme Toggle Button
   if (btnThemeToggle) {
     btnThemeToggle.addEventListener("click", () => {
-      const current = document.body.getAttribute("data-theme") || "dark";
-      const next = current === "dark" ? "light" : "dark";
-      document.body.setAttribute("data-theme", next);
+      const inverted = document.body.getAttribute("data-hx-inverted") === "true";
+      document.body.setAttribute("data-hx-inverted", inverted ? "false" : "true");
     });
   }
 

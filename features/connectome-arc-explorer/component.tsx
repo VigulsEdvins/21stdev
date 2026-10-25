@@ -541,10 +541,10 @@ export function sampleConnectome(seed = 7): ConnectomeData {
 
 // ---- presentation --------------------------------------------------------------------------
 
-const BG = "var(--color-background, #ffffff)"
-const FG = "var(--color-foreground, #0a0a0a)"
-const MUTED = "var(--color-muted-foreground, #737373)"
-const BORDER = "var(--color-border, #e5e5e5)"
+const BG = "var(--color-background, var(--bg, #ffffff))"
+const FG = "var(--color-foreground, var(--text, #0a0a0a))"
+const MUTED = "var(--color-muted-foreground, color-mix(in srgb, var(--text, #0a0a0a) 55%, transparent))"
+const BORDER = "var(--color-border, color-mix(in srgb, var(--text, #0a0a0a) 14%, transparent))"
 const mix = (pct: number) => "color-mix(in oklab, " + FG + " " + pct + "%, " + BG + ")"
 const TILE = mix(6)
 const BAND = mix(10.5)

@@ -101,8 +101,7 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "light"
-  ],
-  "reserveHeight": 844
+  "nativeWhen": [],
+  "reserveHeight": 844,
+  "themeReviewed": "one orange data figure is a series colour kept for meaning; everything else follows the tokens"
 }

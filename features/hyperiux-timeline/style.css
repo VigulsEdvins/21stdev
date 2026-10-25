@@ -4,28 +4,28 @@
   padding: 0;
 }
 
-:root {
-  --bg-color: #090a0f;
-  --text-color: #ffffff;
-  --muted-text: #a1a1aa;
-  --card-bg: #14151b;
-  --card-border: rgba(255, 255, 255, 0.1);
-  --active-color: #ff5f00;
-  --rail-bg: rgba(255, 255, 255, 0.12);
-  --header-bg: rgba(14, 16, 23, 0.85);
-  --header-border: rgba(255, 255, 255, 0.08);
+:root, .hx-themed {
+  --bg-color: var(--bg, #090a0f);
+  --text-color: var(--text, #ffffff);
+  --muted-text: color-mix(in srgb, var(--text, #ffffff) 62%, transparent);
+  --card-bg: color-mix(in srgb, var(--text, #ffffff) 7%, var(--bg, #090a0f));
+  --card-border: color-mix(in srgb, var(--text, #ffffff) 12%, transparent);
+  --active-color: var(--accent, #ff5f00);
+  --rail-bg: color-mix(in srgb, var(--text, #ffffff) 14%, transparent);
+  --header-bg: color-mix(in srgb, var(--bg, #090a0f) 85%, transparent);
+  --header-border: color-mix(in srgb, var(--text, #ffffff) 10%, transparent);
 }
 
-body[data-theme="light"] {
-  --bg-color: #f8fafc;
-  --text-color: #0f172a;
-  --muted-text: #475569;
-  --card-bg: #ffffff;
-  --card-border: rgba(0, 0, 0, 0.1);
-  --active-color: #ff5f00;
-  --rail-bg: rgba(0, 0, 0, 0.12);
-  --header-bg: rgba(255, 255, 255, 0.85);
-  --header-border: rgba(0, 0, 0, 0.08);
+/* The Theme button swaps this section's background and text colours */
+body[data-hx-inverted="true"] {
+  --bg-color: var(--text, #ffffff);
+  --text-color: var(--bg, #090a0f);
+  --muted-text: color-mix(in srgb, var(--bg, #090a0f) 62%, transparent);
+  --card-bg: color-mix(in srgb, var(--bg, #090a0f) 7%, var(--text, #ffffff));
+  --card-border: color-mix(in srgb, var(--bg, #090a0f) 12%, transparent);
+  --rail-bg: color-mix(in srgb, var(--bg, #090a0f) 14%, transparent);
+  --header-bg: color-mix(in srgb, var(--text, #ffffff) 85%, transparent);
+  --header-border: color-mix(in srgb, var(--bg, #090a0f) 10%, transparent);
 }
 
 html, body {
@@ -97,7 +97,7 @@ html, body {
 }
 
 .btn-ctrl, .btn-theme {
-  background: rgba(255, 255, 255, 0.07);
+  background: color-mix(in srgb, var(--text-color) 7%, transparent);
   border: 1px solid var(--card-border);
   color: var(--text-color);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -108,11 +108,6 @@ html, body {
   border-radius: 9999px;
   cursor: pointer;
   transition: all 0.2s ease;
-}
-
-body[data-theme="light"] .btn-ctrl,
-body[data-theme="light"] .btn-theme {
-  background: rgba(0, 0, 0, 0.05);
 }
 
 .btn-ctrl:hover, .btn-theme:hover {

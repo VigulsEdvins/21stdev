@@ -118,8 +118,7 @@
     "webgl": false,
     "canvas2d": true
   },
-  "nativeWhen": [
-    "light"
-  ],
-  "reserveHeight": 800
+  "nativeWhen": [],
+  "reserveHeight": 800,
+  "themeReviewed": "small tracked text is dark ink on the page background (about 0.78 opacity); checked by eye in light and dark"
 }

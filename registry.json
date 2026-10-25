@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T11:56:04.854Z",
+  "generatedAt": "2026-10-25T11:58:35.248Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -411,9 +411,7 @@
           "selector": ":scope > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > p:nth-of-type(1)"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
@@ -8589,9 +8587,7 @@
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(7)"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
@@ -11667,9 +11663,7 @@
           "selector": ":scope button.hwf-up"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
