@@ -2397,7 +2397,9 @@ ${allHtml}
                 get: function (t, prop) {
                   if (prop === 'preventDefault') {
                     return function () {
-                      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                      // a component that holds the page on purpose ([data-scroll-pin]) decides for itself when to let go
+                      var pinned = e.target && e.target.closest && e.target.closest('[data-scroll-pin]');
+                      if (pinned || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                         e.preventDefault();
                       }
                     };
@@ -3266,7 +3268,9 @@ ${OFFSCREEN_RUNTIME}
           get: function (t, prop) {
             if (prop === 'preventDefault') {
               return function () {
-                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                // a component that holds the page on purpose ([data-scroll-pin]) decides for itself when to let go
+                var pinned = e.target && e.target.closest && e.target.closest('[data-scroll-pin]');
+                if (pinned || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                   e.preventDefault();
                 }
               };

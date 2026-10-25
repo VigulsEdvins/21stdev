@@ -103,13 +103,23 @@
   }
   window.addEventListener("resize", updateDimensions);
 
-  // Wheel interaction on stage
+  // Wheel interaction on stage. The stage holds the page while the tunnel plays: the wheel flies the camera, and once
+  // it has reached the far end (or the start again) the page is released to scroll on to the next (or previous) section.
   stageEl.addEventListener("wheel", (e) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    const forward = e.deltaY > 0;
+    if ((forward && targetProgress >= 1) || (!forward && targetProgress <= 0)) return;
+    // arriving from above or below, the stage is not yet filling the screen: let the page finish scrolling, then
+    // line the stage up with the top of the screen before it takes over
+    const top = stageEl.getBoundingClientRect().top;
+    if (Math.abs(top) > 80) return;
+    if (top !== 0) window.scrollBy(0, top);
+    e.preventDefault();
     isAutoPlaying = false;
     updateAutoPlayBtn();
     const delta = e.deltaY * 0.00085;
     targetProgress = clamp(targetProgress + delta, 0, 1);
-  }, { passive: true });
+  }, { passive: false });
 
   // Pointer move parallax
   window.addEventListener("pointermove", (e) => {
