@@ -37,6 +37,23 @@ export const hexToRgb = (hex: string, fallback: string = "61, 107, 255"): string
   return ((n >> 16) & 255) + ", " + ((n >> 8) & 255) + ", " + (n & 255)
 }
 
+/** Any computed CSS colour ("#36f", "rgb(1, 2, 3)", "color(srgb 0.1 0.2 0.3)") → "r, g, b". Anything else falls back. */
+export const colourToRgb = (value: string, fallback: string = "61, 107, 255"): string => {
+  const v = (value || "").trim()
+  const rgb = /^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/i.exec(v)
+  if (rgb) return [rgb[1], rgb[2], rgb[3]].map((n) => Math.round(Number(n))).join(", ")
+  const srgb = /^color\(\s*srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)/i.exec(v)
+  if (srgb) return [srgb[1], srgb[2], srgb[3]].map((n) => Math.round(Number(n) * 255)).join(", ")
+  return hexToRgb(v, fallback)
+}
+
+/** Mixes two "r, g, b" triplets: t = 0 is all `a`, t = 1 is all `b`. */
+export const mixRgb = (a: string, b: string, t: number): string => {
+  const pa = a.split(",").map(Number)
+  const pb = b.split(",").map(Number)
+  return pa.map((n, i) => Math.round(n + (pb[i] - n) * t)).join(", ")
+}
+
 /**
  * Font size (px) that makes a word measured at 100px span `target` px. A short
  * word would grow into a tower, so it is capped at `cap` px. Bad input is 0.
@@ -94,6 +111,8 @@ export type BeamWordmarkFooterProps = {
   /** What the giant wordmark spells. Defaults to `brand`. */
   wordmark?: string
   company?: string
+  /** Take background, text and accent colours from the page's design tokens (--bg, --text, --accent) instead of the props below. */
+  themed?: boolean
   year?: number
   socials?: FooterSocial[]
   credits?: FooterCredit[]
@@ -295,6 +314,7 @@ export default function BeamWordmarkFooter({
   brand = "Zephyr",
   wordmark,
   company,
+  themed = false,
   year = new Date().getFullYear(),
   socials = DEFAULT_SOCIALS,
   credits,
@@ -488,16 +508,42 @@ export default function BeamWordmarkFooter({
     onLinkClick?.(label, href)
   }
 
+  // With `themed`, colours come from the page's tokens and follow theme changes
+  const [tokens, setTokens] = React.useState<{ bg: string; ink: string; acc: string } | null>(null)
+  React.useLayoutEffect(() => {
+    const root = rootRef.current
+    if (!themed || !root) { setTokens(null); return }
+    const read = () => {
+      const probe = document.createElement("span")
+      probe.style.cssText = "position:absolute;visibility:hidden;pointer-events:none"
+      root.appendChild(probe)
+      const get = (name: string, fb: string) => {
+        probe.style.color = ""
+        probe.style.color = "var(" + name + ", " + fb + ")"
+        return colourToRgb(getComputedStyle(probe).color, hexToRgb(fb))
+      }
+      const next = { bg: get("--bg", "#02040b"), ink: get("--text", "#eef1f8"), acc: get("--accent", "#3d6bff") }
+      probe.remove()
+      setTokens((p) => (p && p.bg === next.bg && p.ink === next.ink && p.acc === next.acc ? p : next))
+    }
+    read()
+    const mo = new MutationObserver(read)
+    const watch = [document.documentElement, document.body, root.closest(".page-section")].filter(Boolean) as Element[]
+    watch.forEach((el) => mo.observe(el, { attributes: true, attributeFilter: ["style", "class", "data-theme"] }))
+    return () => mo.disconnect()
+  }, [themed])
+
+  const t = themed ? tokens : null
   const vars = {
-    "--bwf-bg": background,
-    "--bwf-bg-rgb": hexToRgb(background, "2, 4, 11"),
-    "--bwf-ink": ink,
-    "--bwf-ink-rgb": hexToRgb(ink, "238, 241, 248"),
-    "--bwf-muted": muted,
-    "--bwf-acc": hexToRgb(accent),
-    "--bwf-lit": hexToRgb(accent),
-    "--bwf-wt": wordTop,
-    "--bwf-wf": wordFoot,
+    "--bwf-bg": t ? "rgb(" + t.bg + ")" : background,
+    "--bwf-bg-rgb": t ? t.bg : hexToRgb(background, "2, 4, 11"),
+    "--bwf-ink": t ? "rgb(" + t.ink + ")" : ink,
+    "--bwf-ink-rgb": t ? t.ink : hexToRgb(ink, "238, 241, 248"),
+    "--bwf-muted": t ? "rgb(" + mixRgb(t.ink, t.bg, 0.4) + ")" : muted,
+    "--bwf-acc": t ? t.acc : hexToRgb(accent),
+    "--bwf-lit": t ? t.acc : hexToRgb(accent),
+    "--bwf-wt": t ? "rgb(" + mixRgb(t.acc, t.bg, 0.35) + ")" : wordTop,
+    "--bwf-wf": t ? "rgb(" + mixRgb(t.acc, t.bg, 0.9) + ")" : wordFoot,
     "--bwf-sans": fontSans,
     "--bwf-ww": String(wordWeight),
     "--bwf-ang": "118deg",
