@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T11:52:04.559Z",
+  "generatedAt": "2026-10-25T11:56:04.854Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -11794,10 +11794,8 @@
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > a:nth-of-type(1)"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
-      "ownPalette": false,
+      "nativeWhen": [],
+      "ownPalette": true,
       "exportAssets": [],
       "source": "21st.dev",
       "type": "component",
@@ -15513,9 +15511,7 @@
           "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
@@ -16673,10 +16669,8 @@
           "selector": ":scope p.pm-note"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
-      "ownPalette": false,
+      "nativeWhen": [],
+      "ownPalette": true,
       "exportAssets": [],
       "source": "21st.dev",
       "type": "component",
@@ -18180,9 +18174,7 @@
           "selector": ":scope a.stf-phone"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
@@ -18766,9 +18758,7 @@
           "selector": ":scope a.tsf-cta"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",

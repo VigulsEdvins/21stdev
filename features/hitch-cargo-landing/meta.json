@@ -119,10 +119,9 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "light"
-  ],
+  "nativeWhen": [],
   "reserveHeight": 6238,
   "palette": "designed",
-  "paletteNote": "Mixed dark panels on a light page: a token mapping flips text onto the wrong surface (tried, reverted)"
+  "paletteNote": "Mixed dark panels on a light page: a token mapping flips text onto the wrong surface (tried, reverted)",
+  "ownPalette": true
 }

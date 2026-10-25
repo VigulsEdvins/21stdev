@@ -83,8 +83,8 @@
     "webgl": false,
     "canvas2d": true
   },
-  "nativeWhen": [
-    "dark"
-  ],
-  "reserveHeight": 800
+  "nativeWhen": [],
+  "reserveHeight": 800,
+  "ownPalette": true,
+  "themeReviewed": "stamp lettering sits on stamp paper, not on the page background; checked by eye in dark and light"
 }
