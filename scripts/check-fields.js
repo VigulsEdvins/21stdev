@@ -2,7 +2,8 @@
 /**
  * Content-field check: renders every feature that declares `customizable` fields in the real builder and fails
  * when a field's selector matches nothing (the Content tab would silently drop it), or matches an element of the
- * wrong kind (an image field on a non-<img>, a link field on a non-link).
+ * wrong kind (an image field on a non-<img>, a link field on a non-link). Then it edits every field the way the
+ * Content tab does and fails when the edit does not show, or is undone by the component a moment later.
  *   npm run check-fields [-- --slug a,b] [--concurrency 4]
  */
 const path = require('path');
@@ -50,6 +51,36 @@ async function main() {
           if (!result.length) break;
         }
         fields += item.customizable.length;
+        if (!result.length) {
+          // edit every field exactly as the Content tab does, give the component time to re-render, then read it back
+          const PNG = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+          const frame = page.frames().find(f => f !== page.mainFrame());
+          await frame.evaluate((defs) => { const root = document.getElementById('field-check'); window.__fieldEls = defs.map(d => root.querySelector(d.selector)); }, item.customizable);
+          await page.evaluate(({ defs, png }) => {
+            const sm = window.builderPreview.stackManager;
+            defs.forEach((d, i) => {
+              const value = d.type === 'link' ? 'https://example.test/edit-' + i : d.type === 'image' ? png : d.type === 'color' ? '#123456' : 'ZZedit' + i;
+              sm.setSectionOverride('field-check', d.id, value, { selector: d.selector, type: d.type, attr: d.attr });
+            });
+          }, { defs: item.customizable, png: PNG });
+          await page.waitForTimeout(3000);
+          const edits = await frame.evaluate(({ defs, png }) => {
+            const root = document.getElementById('field-check');
+            const out = [];
+            if (!window.__fieldEls) return /preloader/.test(root ? root.dataset.sectionSlug : '') ? [] : [{ id: '*', problem: 'preview reloaded' }];
+            defs.forEach((d, i) => {
+              const el = window.__fieldEls[i];
+              // a loading screen that finishes and removes itself is not a failed edit
+              if (!el || !el.isConnected) { if (!/preloader/.test(root.dataset.sectionSlug || '')) out.push({ id: d.id, problem: 'gone after edit' }); return; }
+              if (d.type === 'text') { if (!el.textContent.includes('ZZedit' + i)) out.push({ id: d.id, problem: 'text edit not shown' }); }
+              else if (d.type === 'link') { const a = el.tagName === 'A' ? el : (el.closest('a') || el.querySelector('a')); if (!a || a.getAttribute('href') !== 'https://example.test/edit-' + i) out.push({ id: d.id, problem: 'link edit not shown' }); }
+              else if (d.type === 'image') { const img = el.tagName === 'IMG' ? el : el.querySelector('img'); const ok = img ? img.getAttribute('src') === png : getComputedStyle(el).backgroundImage.includes('data:image'); if (!ok) out.push({ id: d.id, problem: 'image edit not shown' }); }
+              else if (d.type === 'color') { const v = el.style.getPropertyValue(d.attr || 'color').trim(); if (v !== '#123456') out.push({ id: d.id, problem: 'colour edit not applied' }); }
+            });
+            return out;
+          }, { defs: item.customizable, png: PNG });
+          result = edits;
+        }
         if (result.length) bad.push({ slug: item.slug, problems: result.map(r => `${r.id}: ${r.problem}`) });
       } catch (e) {
         bad.push({ slug: item.slug, problems: ['could not render: ' + e.message.split('\n')[0]] });

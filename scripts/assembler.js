@@ -2958,6 +2958,16 @@ const OVERRIDES_RUNTIME = `(function () {
     else if (key === 'href') { if (value === null) el.removeAttribute('href'); else el.setAttribute('href', value); }
     else if (key.indexOf('style:') === 0) { if (value) el.style.setProperty(key.slice(6), value); else el.style.removeProperty(key.slice(6)); }
   }
+  // Replaces the words of an element without destroying elements inside it (a link, an icon, another editable field):
+  // when it has child elements, only its own text nodes change.
+  function setText(el, value) {
+    if (!el.children.length) { el.textContent = value; return; }
+    var texts = [];
+    for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) texts.push(n);
+    if (!texts.length) { el.insertBefore(document.createTextNode(value), el.firstChild); return; }
+    texts[0].nodeValue = value;
+    for (var i = 1; i < texts.length; i++) texts[i].nodeValue = '';
+  }
   function apply() {
     var active = [];
     list.forEach(function (o) {
@@ -3001,7 +3011,7 @@ const OVERRIDES_RUNTIME = `(function () {
       } else {
         key = remember(el, 'html', function () { return el.innerHTML; });
         active.push([el, key]);
-        el.textContent = o.value;
+        setText(el, o.value);
       }
     });
     // anything an override changed earlier but no longer asks for goes back to what it was
