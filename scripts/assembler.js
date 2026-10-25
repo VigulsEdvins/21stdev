@@ -2059,6 +2059,31 @@ function applyThemeToDocument(doc, themeConfig) {
 /**
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
+/**
+ * A full website lives in its own project (served at its `liveSiteUrl`); the vault holds a showcase card for it.
+ * In the builder's live preview (options.embedSites) the section shows the real site in a frame instead of the card,
+ * so what you see is what that URL serves. The frame is a window of fixed height that scrolls on its own: sites lay
+ * themselves out in viewport units, so a frame sized to its content would never settle. Exports keep the card,
+ * because the site's files are not part of the page.
+ */
+function siteEmbedFor(slug, options) {
+  if (!options || !options.embedSites) return null;
+  let list = options.embedMap;
+  if (!list && typeof window !== 'undefined' && Array.isArray(window.FEATURE_REGISTRY)) {
+    list = {};
+    window.FEATURE_REGISTRY.forEach(f => { if (f.liveSiteUrl && f.category === 'Full Websites') list[f.slug] = { url: f.liveSiteUrl, admin: f.adminUrl || '', title: f.title || f.name || f.slug }; });
+  }
+  const info = list && list[slug];
+  if (!info || !/^\/[A-Za-z0-9._\/-]+$/.test(info.url || '')) return null;
+  const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  const admin = info.admin && /^\/[A-Za-z0-9._\/-]+$/.test(info.admin) ? `<a class="fullsite-link" data-href="${esc(info.admin)}" target="_blank" rel="noopener">CMS ↗</a>` : '';
+  return {
+    html: `<div class="fullsite"><div class="fullsite-bar"><span class="fullsite-name">Full website · ${esc(info.title)}</span><span class="fullsite-links"><a class="fullsite-link" data-href="${esc(info.url)}" target="_blank" rel="noopener">Open live site ↗</a>${admin}</span></div><iframe class="fullsite-frame" data-src="${esc(info.url)}" title="${esc(info.title)}" loading="lazy"></iframe></div>`,
+    css: `.fullsite{display:block;width:100%;background:#0b0b0f}.fullsite-bar{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:8px 14px;font:600 12px/1.2 system-ui,sans-serif;color:#d4d4d8 !important;background:#17171d !important;border-bottom:1px solid #2a2a33}.fullsite-name{color:#d4d4d8 !important}.fullsite-links{display:flex;gap:14px}.fullsite-link{color:#a5b4fc !important;text-decoration:none}.fullsite-link:hover{text-decoration:underline}.fullsite-frame{display:block;width:100%;height:88vh;min-height:560px;border:0;background:#fff}`,
+    js: `(function(){var origin=window.origin&&window.origin!=='null'?window.origin:'';if(!origin){try{origin=new URL(document.baseURI).origin;}catch(e){}}document.querySelectorAll('.fullsite-link[data-href]').forEach(function(a){a.href=new URL(a.getAttribute('data-href'),origin).href;});document.querySelectorAll('.fullsite-frame[data-src]').forEach(function(f){f.src=new URL(f.getAttribute('data-src'),origin).href;});})();`
+  };
+}
+
 function assemblePreviewDocument(sections, themeConfig, featuresData = {}, options = {}) {
   if (Array.isArray(sections)) sections = mapPageLinks(sections.filter(s => !s.hidden), options.pageLinks);
   const pageHead = renderPageHead(options.page, 'Page Preview');
@@ -2077,9 +2102,10 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
   sections.forEach((section, index) => {
     const id = section.id || `sec-${index + 1}`;
     const slug = section.slug || `section-${index + 1}`;
-    const rawHtml = section.html !== undefined ? section.html : (featuresData[slug] && featuresData[slug].html) || '';
-    const rawCss = section.css !== undefined ? section.css : (featuresData[slug] && featuresData[slug].css) || '';
-    const rawJs = section.js !== undefined ? section.js : (featuresData[slug] && featuresData[slug].js) || '';
+    const embed = section.html === undefined ? siteEmbedFor(slug, options) : null;
+    const rawHtml = embed ? embed.html : (section.html !== undefined ? section.html : (featuresData[slug] && featuresData[slug].html) || '');
+    const rawCss = embed ? embed.css : (section.css !== undefined ? section.css : (featuresData[slug] && featuresData[slug].css) || '');
+    const rawJs = embed ? embed.js : (section.js !== undefined ? section.js : (featuresData[slug] && featuresData[slug].js) || '');
 
     // Collect external head links
     extractHeadLinks(rawHtml).forEach(link => headLinks.add(link));
