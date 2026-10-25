@@ -120,5 +120,6 @@
     "webgl": false,
     "canvas2d": true
   },
-  "reserveHeight": 6535
+  "reserveHeight": 6535,
+  "themeReviewed": "full-page design with its own dark look"
 }

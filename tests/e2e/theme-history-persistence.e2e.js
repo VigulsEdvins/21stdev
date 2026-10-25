@@ -41,15 +41,15 @@ async function main() {
   await page.selectOption('#themePresetSelect', 'clean-minimal');
   await page.waitForFunction(() => (document.querySelector('iframe').contentDocument.documentElement || { getAttribute() {} }).getAttribute('data-theme') === 'light', null, { timeout: 8000 });
   step('switching to a light theme reaches the preview');
-  // a dark-designed component keeps its own palette under the light page theme instead of turning unreadable
+  // a component migrated to the page tokens follows the light theme (it no longer keeps a dark palette)
   const footerLooksDark = await page.evaluate(() => {
     const sec = document.querySelector('iframe').contentDocument.querySelector('.page-section[data-section-slug="beam-wordmark-footer"]');
     if (!sec) return null;
     const m = getComputedStyle(sec).backgroundColor.match(/\d+/g).map(Number);
     return (m[0] * 0.299 + m[1] * 0.587 + m[2] * 0.114) < 90;
   });
-  assert.strictEqual(footerLooksDark, true, 'native-palette footer stays dark under the light theme');
-  step('dark-designed footer keeps its palette under the light theme');
+  assert.strictEqual(footerLooksDark, false, 'the themed footer follows the light theme');
+  step('themed footer follows the light theme');
 
   // reload restores everything
   await page.reload();

@@ -2035,6 +2035,8 @@ function applyThemeToDocument(doc, themeConfig) {
     s.style.color = native ? '' : theme.text;
     if (typeof s.setAttribute === 'function') {
       s.setAttribute('data-theme', native ? (isDark ? 'light' : 'dark') : pagePol);
+      // `.dark` on the section is what shadcn-style components with theme="auto" follow
+      if (s.classList && typeof s.classList.toggle === 'function') s.classList.toggle('dark', (native ? (isDark ? 'light' : 'dark') : pagePol) === 'dark');
     }
   });
 
@@ -2105,7 +2107,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
     const nativeList = nativePolarities(options.nativeMap, slug);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -2265,6 +2267,7 @@ ${allHtml}
             s.style.backgroundColor = native ? '' : (t.bg || '');
             s.style.color = native ? '' : (t.text || '');
             s.setAttribute('data-theme', native ? (isDark ? 'light' : 'dark') : pagePol);
+            if (s.classList && typeof s.classList.toggle === 'function') s.classList.toggle('dark', (native ? (isDark ? 'light' : 'dark') : pagePol) === 'dark');
           });
           document.querySelectorAll('[data-theme]').forEach(function (el) {
             el.setAttribute('data-theme', isNativeEl(el) ? (isDark ? 'light' : 'dark') : pagePol);
@@ -3079,7 +3082,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
     const nativeList = nativePolarities(options.nativeMap, slug);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);

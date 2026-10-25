@@ -105,5 +105,6 @@
     "luma": 0.19,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "themeReviewed": "photo gallery: the low brightness comes from the photographs; its own colours already follow the tokens"
 }

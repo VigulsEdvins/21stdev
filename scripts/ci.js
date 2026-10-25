@@ -13,6 +13,7 @@ const steps = [
   ['e2e tests', 'npm run test:e2e'],
   !fast && ['code safety', 'npm run check-code-safety'],
   !fast && ['content fields', 'npm run check-fields'],
+  !fast && ['theme clash', 'npm run check-theme-clash'],
   !fast && ['blank sections', 'npm run check-blank'],
   !fast && ['export matrix', 'npm run check-exports'],
   !fast && ['responsive', 'npm run check-responsive'],

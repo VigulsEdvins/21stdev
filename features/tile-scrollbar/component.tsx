@@ -539,8 +539,8 @@ export default function TileScrollbar({
  */
 const styles = `
 .tsb-root {
-  --tsb-bg: var(--color-background, #ececec);
-  --tsb-fg: var(--color-foreground, #1a1a1a);
+  --tsb-bg: var(--color-background, var(--bg, #ececec));
+  --tsb-fg: var(--color-foreground, var(--text, #1a1a1a));
   --tsb-tray: color-mix(in oklab, var(--tsb-fg) 9%, var(--tsb-bg));
   --tsb-edge: color-mix(in oklab, var(--tsb-fg) 24%, var(--tsb-bg));
   --tsb-tilt-x: 46deg;
@@ -700,8 +700,8 @@ const styles = `
   gap: 0.5rem;
   padding: 6px 9px;
   border-radius: 6px;
-  background: var(--color-foreground, #1a1a1a);
-  color: var(--color-background, #ececec);
+  background: var(--color-foreground, var(--text, #1a1a1a));
+  color: var(--color-background, var(--bg, #ececec));
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -713,7 +713,7 @@ const styles = `
 }
 .tsb-tip[data-on="true"] { opacity: 1; }
 .tsb-tip-pct {
-  color: color-mix(in oklab, var(--color-background, #ececec) 62%, var(--color-foreground, #1a1a1a));
+  color: color-mix(in oklab, var(--color-background, var(--bg, #ececec)) 62%, var(--color-foreground, var(--text, #1a1a1a)));
   font-variant-numeric: tabular-nums;
 }
 

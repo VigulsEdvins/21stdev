@@ -22,6 +22,7 @@
     "suggest-customizable": "node scripts/suggest-customizable.js",
     "refine-meta": "node scripts/refine-meta.js",
     "audit-themes": "node scripts/audit-themes.js",
+    "check-theme-clash": "node scripts/check-theme-clash.js",
     "set-license": "node scripts/set-license.js",
     "build-tailwind": "node scripts/build-tailwind.js",
     "check-blank": "node scripts/check-blank.js",
