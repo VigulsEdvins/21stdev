@@ -78,6 +78,10 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 | `npm run check-starters` | Builds every starter project and records the export page checks (alt text, headings, links, labels) in `reports/starter-checks.json`; fails on errors |
 | `npm run check-code-safety` | Scans `features/` for `eval`, `new Function`, `document.write`, remote scripts outside an allow-list and `message` listeners without an origin check (also part of `npm test`) |
 | `npm run check-cross-browser` | Builder flow and 10 components in Firefox and WebKit from the Playwright cache (an engine that cannot start is reported as skipped) |
+| `npm run setup-webkit-libs` | One-off, no root: the libraries Playwright's cached WebKit needs on a newer Linux, so `check-cross-browser` and `BROWSER=webkit` can start it |
+| `npm run check-lighthouse` | Exports the six starters, serves each ZIP and runs Lighthouse (mobile); writes `reports/lighthouse.json` with scores, LCP/TBT/CLS and what failed |
+| `node scripts/measure-reserve.js` | Records `reserveHeight` (space a script-rendered section reserves in an export so nothing jumps) and `lazy` (heavy one-screen sections start when near the viewport) in `meta.json`. Run after adding or changing a component that renders through script, then `npm run sync` |
+| `npm run encode-video-fallback` | Writes an H.264 MP4 next to each bundled WebM in `assets/library` that has none |
 | `npm run find-unused-assets` | Lists files in `assets/library` that nothing mentions (`-- --delete` removes them) |
 | `npm run size-report` | Largest tracked files; fails if one is over 5 MB |
 

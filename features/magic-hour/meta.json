@@ -51,5 +51,8 @@
     "luma": 1,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "exportAssets": [
+    "/assets/library/magic-hour-scrub-882598d5.mp4"
+  ]
 }

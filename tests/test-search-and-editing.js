@@ -24,7 +24,7 @@ assert(cssContent.includes('#clearElementsSearchBtn') || cssContent.includes('.c
 const searchBoxRuleMatch = cssContent.match(/\.elements-search-box\s*\{([^}]+)\}/);
 assert(searchBoxRuleMatch, '.elements-search-box rule block must exist in builder.css');
 const searchBoxRule = searchBoxRuleMatch[1];
-assert(searchBoxRule.includes('background: rgba(255, 255, 255, 0.04)'), '.elements-search-box must have dark frosted background');
+assert(searchBoxRule.includes('background: color-mix(in srgb, var(--ui-ink) 4%, transparent)'), '.elements-search-box must have a translucent frosted background that follows the UI theme');
 assert(!searchBoxRule.includes('background: #fff') && !searchBoxRule.includes('background: white'), 'Search box must not have white background');
 
 // Focus-within rule

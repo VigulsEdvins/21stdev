@@ -98,8 +98,29 @@
 
     // start the new sections; page-load listeners they add are called straight away because the page has loaded
     if (scripts) {
-      const run = win.eval('(function (run) { return function () { var addDoc = document.addEventListener, addWin = window.addEventListener; var late = function (add, target) { return function (type, fn) { if ((type === "DOMContentLoaded" || type === "load") && typeof fn === "function") { setTimeout(function () { try { fn.call(target, new Event(type)); } catch (err) { console.error(err); } }, 0); return; } return add.apply(this, arguments); }; }; document.addEventListener = late(addDoc, document); window.addEventListener = late(addWin, window); try { run(); } finally { document.addEventListener = addDoc; window.addEventListener = addWin; } }; })');
-      run(new win.Function(scripts))();
+      const el = doc.createElement('script');
+      el.textContent = `(function () {
+        var addDoc = document.addEventListener, addWin = window.addEventListener;
+        var late = function (add, target) {
+          return function (type, fn) {
+            if ((type === 'DOMContentLoaded' || type === 'load') && typeof fn === 'function') {
+              setTimeout(function () { try { fn.call(target, new Event(type)); } catch (err) { console.error(err); } }, 0);
+              return;
+            }
+            return add.apply(this, arguments);
+          };
+        };
+        document.addEventListener = late(addDoc, document);
+        window.addEventListener = late(addWin, window);
+        try {
+${scripts}
+        } finally {
+          document.addEventListener = addDoc;
+          window.addEventListener = addWin;
+        }
+      })();`;
+      doc.body.appendChild(el);
+      el.remove();
     }
     return true;
   }

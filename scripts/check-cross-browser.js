@@ -18,7 +18,7 @@ function cachedExecutable(prefix, rel) {
 }
 async function launch(name, type) {
   try { return await type.launch({ headless: true }); } catch (_) { /* revision not installed: try the cached build */ }
-  const exe = name === 'firefox' ? cachedExecutable('firefox', 'firefox/firefox') : cachedExecutable('webkit', 'pw_run.sh');
+  const exe = name === 'firefox' ? cachedExecutable('firefox', 'firefox/firefox') : (require('./lib/webkit').webkitExecutable() || cachedExecutable('webkit', 'pw_run.sh'));
   if (!exe) throw new Error('no ' + name + ' build installed (run: npx playwright install ' + name + ')');
   return type.launch({ headless: true, executablePath: exe, timeout: 30000 });
 }

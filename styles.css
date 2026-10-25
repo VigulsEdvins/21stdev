@@ -11,9 +11,66 @@
   --accent-primary: oklch(0.68 0.24 280);
   --accent-secondary: oklch(0.72 0.19 200);
   --accent-emerald: #10b981;
+  --ui-bg0-rgb: 9 9 11;
+  --ui-shade-k: 1; /* how strongly black overlays show (much less in the light UI) */
+  --ui-ink: #ffffff; /* base of every white-alpha surface and border (black in the light UI) */
+  --ui-panel-rgb: 12 12 16;
+  --ui-glass-rgb: 22 22 30;
+  --ui-bg-deep: #08080c;
+  --ui-input-bg: rgba(0, 0, 0, 0.4);
+  --ui-surface: #18181b;
+  --ui-surface-2: #27272a;
+  --ui-faint: #71717a;
+  --ui-text-soft: #e4e4e7;
+  --text-dim-aa: #a1a1ad;
+  --ui-accent-text: #c084fc;
+  --ui-accent-soft: #d8b4fe;
+  --ui-accent-lilac: #c4b5fd;
+  --ui-warn: #fcd34d;
+  --ui-danger: #f87171;
+  --ui-danger-soft: #fca5a5;
+  --ui-info: #818cf8;
+  --ui-ok: #34d399;
+  --ui-teal: #5eead4;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
+}
+
+
+/* Light interface: only the variables change, so every panel, border and text colour follows */
+html[data-ui-theme="light"] {
+  color-scheme: light;
+  --bg-0: #f4f4f7;
+  --bg-1: #ffffff;
+  --bg-2: #ececf1;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+  --border-subtle: rgba(0, 0, 0, 0.1);
+  --border-hover: rgba(0, 0, 0, 0.25);
+  --text-main: #18181b;
+  --text-muted: #52525b;
+  --text-dim: #5f5f6b;
+  --ui-bg0-rgb: 244 244 247;
+  --ui-shade-k: 0.18;
+  --ui-ink: #000000;
+  --ui-panel-rgb: 255 255 255;
+  --ui-glass-rgb: 250 250 253;
+  --ui-bg-deep: #e9e9ef;
+  --ui-input-bg: rgba(0, 0, 0, 0.05);
+  --ui-surface: #ececf1;
+  --ui-surface-2: #dcdce3;
+  --ui-faint: #6b6b76;
+  --ui-text-soft: #27272a;
+  --text-dim-aa: #55555f;
+  --ui-accent-text: #7e22ce;
+  --ui-accent-soft: #6b21a8;
+  --ui-accent-lilac: #6d28d9;
+  --ui-warn: #b45309;
+  --ui-danger: #b91c1c;
+  --ui-danger-soft: #b91c1c;
+  --ui-info: #4f46e5;
+  --ui-ok: #047857;
+  --ui-teal: #0f766e;
 }
 
 * {
@@ -88,7 +145,7 @@ code, pre, kbd {
   justify-content: space-between;
   gap: 16px;
   padding: 0 24px;
-  background: rgba(9, 9, 11, 0.84);
+  background: rgb(var(--ui-bg0-rgb) / 0.84);
   backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -112,7 +169,7 @@ code, pre, kbd {
   height: 28px;
   border-radius: 7px;
   background: linear-gradient(135deg, #a855f7, #38bdf8);
-  color: #09090b;
+  color: var(--bg-0);
   font-weight: 800;
   font-size: 12px;
   display: inline-flex;
@@ -190,7 +247,7 @@ code, pre, kbd {
 
 .mode-btn.is-active {
   background: #fafafa;
-  color: #09090b;
+  color: var(--bg-0);
 }
 
 .add-feature-btn {
@@ -685,7 +742,7 @@ code, pre, kbd {
   position: relative;
   width: 100%;
   height: 255px;
-  background: #050507;
+  background: var(--ui-bg-deep);
   border-bottom: 1px solid var(--border-subtle);
   overflow: hidden;
 }
@@ -727,7 +784,7 @@ code, pre, kbd {
 }
 
 .source-badge {
-  background: rgba(9, 9, 11, 0.78);
+  background: rgb(var(--ui-bg0-rgb) / 0.78);
   color: #e4e4e7;
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
@@ -754,7 +811,7 @@ code, pre, kbd {
   width: 28px;
   height: 28px;
   border-radius: 6px;
-  background: rgba(9, 9, 11, 0.78);
+  background: rgb(var(--ui-bg0-rgb) / 0.78);
   border: 1px solid rgba(255, 255, 255, 0.16);
   color: #fafafa;
   cursor: pointer;
@@ -766,7 +823,7 @@ code, pre, kbd {
 
 .mini-icon-btn:hover {
   background: #fafafa;
-  color: #09090b;
+  color: var(--bg-0);
 }
 
 .card-info {
@@ -834,7 +891,7 @@ code, pre, kbd {
 
 .action-btn.primary {
   background: #fafafa;
-  color: #09090b;
+  color: var(--bg-0);
   border-color: #fafafa;
   font-weight: 600;
 }
@@ -948,7 +1005,7 @@ code, pre, kbd {
 .wb-stage {
   display: flex;
   flex-direction: column;
-  background: #050507;
+  background: var(--ui-bg-deep);
   overflow: hidden;
 }
 
@@ -1041,7 +1098,7 @@ code, pre, kbd {
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  background: #09090b;
+  background: var(--bg-0);
   transition: width 0.25s ease;
 }
 
@@ -1107,7 +1164,7 @@ code, pre, kbd {
   flex: 1;
   overflow: auto;
   padding: 16px;
-  background: #0b0b0e;
+  background: var(--bg-0);
   font-size: 12px;
   line-height: 1.55;
   color: #e4e4e7;
@@ -1201,7 +1258,7 @@ code, pre, kbd {
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--border-subtle);
-  background: #050507;
+  background: var(--ui-bg-deep);
   overflow: hidden;
 }
 
@@ -1282,7 +1339,7 @@ code, pre, kbd {
   flex: 1;
   overflow: auto;
   padding: 16px;
-  background: #0b0b0e;
+  background: var(--bg-0);
   font-size: 12px;
   line-height: 1.55;
   color: #e4e4e7;
@@ -1339,7 +1396,7 @@ code, pre, kbd {
 }
 
 .form-field input, .form-field select, .form-field textarea {
-  background: #0b0b0e;
+  background: var(--bg-0);
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
   padding: 8px 10px;
@@ -1388,7 +1445,7 @@ code, pre, kbd {
 
 .toast {
   background: #fafafa;
-  color: #09090b;
+  color: var(--bg-0);
   padding: 10px 16px;
   border-radius: 8px;
   font-size: 12.5px;

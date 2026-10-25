@@ -15,8 +15,17 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.click('#uiThemeBtn');
   assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'light');
   assert.strictEqual(await page.getAttribute('#uiThemeBtn', 'aria-pressed'), 'true');
-  const filters = await page.evaluate(() => ({ body: getComputedStyle(document.body).filter, frame: getComputedStyle(document.querySelector('iframe')).filter }));
-  assert(/invert/.test(filters.body) && /invert/.test(filters.frame), 'shell inverted, preview turned back: ' + JSON.stringify(filters));
+  // the light look is a set of variables, not an inverted filter: panels are light, the preview is not touched
+  const look = await page.evaluate(() => ({
+    filter: getComputedStyle(document.body).filter,
+    frameFilter: getComputedStyle(document.querySelector('iframe')).filter,
+    panel: getComputedStyle(document.querySelector('.builder-header')).backgroundColor,
+    text: getComputedStyle(document.body).color
+  }));
+  assert.strictEqual(look.filter, 'none', 'no filter hack');
+  assert.strictEqual(look.frameFilter, 'none');
+  const lum = c => { const [r, g, b] = (c.match(/[\d.]+/g) || []).map(Number); return 0.299 * r + 0.587 * g + 0.114 * b; };
+  assert(lum(look.panel) > 200 && lum(look.text) < 80, 'light panels, dark text: ' + JSON.stringify(look));
   await page.reload();
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.querySelector('.page-section'));
   assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'light', 'remembered across a reload');

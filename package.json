@@ -40,7 +40,9 @@
     "check-code-safety": "node scripts/check-code-safety.js",
     "declare-assets": "node scripts/declare-assets.js",
     "localize-remote": "node scripts/localize-remote.js",
-    "check-lighthouse": "node scripts/check-lighthouse.js"
+    "check-lighthouse": "node scripts/check-lighthouse.js",
+    "encode-video-fallback": "node scripts/encode-video-fallback.js",
+    "setup-webkit-libs": "node scripts/setup-webkit-libs.js"
   },
   "keywords": [],
   "author": "",
@@ -55,6 +57,7 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "acorn": "^8.19.0",
     "esbuild": "^0.28.2",
     "eslint-scope": "^9.1.2",

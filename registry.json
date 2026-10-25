@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T08:19:55.506Z",
+  "generatedAt": "2026-10-25T08:37:48.949Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -14383,7 +14383,9 @@
       "customizable": [],
       "nativeWhen": [],
       "ownPalette": false,
-      "exportAssets": [],
+      "exportAssets": [
+        "/assets/library/magic-hour-scrub-882598d5.mp4"
+      ],
       "source": "21st.dev",
       "type": "component",
       "description": "A scroll-scrubbed video. Scroll owns the timeline — nothing autoplays. Scroll progress maps to a target frame, a critically-damped chase with a speed cap follows it, and the integer frame is written to `video.currentTime` with seeks serialized so fast flicks skim instead of queueing a backlog of dec",
