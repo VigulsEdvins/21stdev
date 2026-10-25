@@ -30,6 +30,7 @@
   "sourceFolder": "/home/edvins/features-for-web/mom",
   "order": 27,
   "legacyCategory": "Full Templates",
+  "ownPalette": true,
   "status": "stable",
   "weight": "light",
   "mood": [

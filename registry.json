@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T21:52:58.661Z",
+  "generatedAt": "2026-10-25T05:28:24.767Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -1942,7 +1942,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "carousel-gallery-play",
       "type": "component",
@@ -3720,7 +3720,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "betteroff",
       "type": "template",
@@ -3835,7 +3835,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "carousel-gallery-play",
       "type": "template",
@@ -3950,7 +3950,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "vivmgmt",
       "type": "template",
@@ -4093,7 +4093,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "mom",
       "type": "template",

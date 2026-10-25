@@ -16,7 +16,7 @@ body, html {
   width: 100%;
   min-height: auto;
   background: transparent;
-  color: #141413;
+  color: var(--text, #141413);
 }
 
 .topbar {
@@ -36,7 +36,7 @@ body, html {
 }
 
 .nav-demo-shell.is-open .brand {
-  color: #f4f1ea;
+  color: var(--bg, #f4f1ea);
 }
 
 .burger-btn {
@@ -55,7 +55,7 @@ body, html {
 }
 
 .nav-demo-shell.is-open .burger-btn {
-  color: #f4f1ea;
+  color: var(--bg, #f4f1ea);
 }
 
 .burger-lines {
@@ -93,8 +93,8 @@ body, html {
 .overlay-menu {
   position: fixed;
   inset: 0;
-  background: #141413;
-  color: #f4f1ea;
+  background: var(--text, #141413);
+  color: var(--bg, #f4f1ea);
   z-index: 20;
   display: flex;
   align-items: center;
@@ -114,7 +114,7 @@ body, html {
 
 .menu-links li {
   overflow: hidden;
-  border-bottom: 1px solid rgba(244, 241, 234, 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--bg, #f4f1ea) 12%, transparent);
 }
 
 .menu-links a {
@@ -122,7 +122,7 @@ body, html {
   align-items: baseline;
   gap: 24px;
   padding: 18px 0;
-  color: #f4f1ea;
+  color: var(--bg, #f4f1ea);
   text-decoration: none;
   font-size: clamp(2rem, 4.5vw, 3.6rem);
   transform: translateY(100%);
@@ -138,7 +138,7 @@ body, html {
 
 .menu-links a:hover {
   padding-left: 18px;
-  color: #e6ccb2;
+  color: var(--accent, #e6ccb2);
 }
 
 .menu-links a span {
