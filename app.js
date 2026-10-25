@@ -163,10 +163,10 @@
       btn.innerHTML = `<span class="pill-label">${escapeHtml(cat === 'all' ? 'All Categories' : cat)}</span><span class="pill-count">${count}</span>`;
       btn.addEventListener('click', () => {
         state.category = cat;
-        if (cat === 'Full Templates' && state.collectionType === 'component') {
+        if (cat === 'Full Websites' && state.collectionType === 'component') {
           state.collectionType = 'all';
           syncCollectionTabsUI();
-        } else if (cat !== 'all' && cat !== 'Full Templates' && state.collectionType === 'template') {
+        } else if (cat !== 'all' && cat !== 'Full Websites' && state.collectionType === 'template') {
           state.collectionType = 'all';
           syncCollectionTabsUI();
         }
@@ -388,7 +388,7 @@
       if (state.collectionType === 'template') {
         state.category = 'all';
         state.source = 'all';
-      } else if (state.collectionType === 'component' && state.category === 'Full Templates') {
+      } else if (state.collectionType === 'component' && state.category === 'Full Websites') {
         state.category = 'all';
       }
       renderAll();

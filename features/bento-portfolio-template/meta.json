@@ -2,9 +2,9 @@
   "name": "Bento Portfolio Template",
   "title": "Bento Portfolio Template",
   "slug": "bento-portfolio-template",
-  "category": "Full Templates",
+  "category": "Landing Pages",
   "source": "21st.dev",
-  "type": "template",
+  "type": "component",
   "description": "A complete personal site in one component: a soft, warm-gray bento where every card does something small when you reach for it.",
   "tags": [
     "bento",

@@ -194,29 +194,28 @@
       return { section: newSec, replaced: false, singletonType: null };
     }
 
-    /** A full template is a whole page in one section: adding one replaces everything else on the page. */
-    function isFullTemplate(slug, extraProps = {}) {
+    /** A full website (own pages and CMS) is a whole site: adding one replaces everything else on the page. */
+    function isFullWebsite(slug) {
       const f = (featuresMap && featuresMap.get && featuresMap.get(slug)) || {};
-      const cat = String(f.category || extraProps.category || '').toLowerCase();
-      return f.type === 'template' || cat.includes('full templates') || cat === 'full template';
+      return !!f.liveSiteUrl || f.category === 'Full Websites';
     }
 
     /**
-     * Adds a section from the catalogue. A full template first asks, because it throws away the page's sections:
+     * Adds a section from the catalogue. A full website first asks, because it throws away the page's sections:
      * resolves to the same result as addOrReplaceLandingSection, or null when the person says no.
      */
     async function addWithTemplateGuard(slug, extraProps = {}, preferredIndex = null) {
       const existing = stackManager.getStack();
-      if (!isFullTemplate(slug, extraProps) || existing.length === 0) {
+      if (!isFullWebsite(slug) || existing.length === 0) {
         return addOrReplaceLandingSection(slug, extraProps, preferredIndex);
       }
       const title = extraProps.title || (featuresMap.get(slug) || {}).title || slug;
       const locked = existing.filter(sec => sec.locked).length;
       const ok = await window.BuilderConfirm.ask({
-        title: `Use the full template “${title}”?`,
-        message: 'A full template is a whole page. Using it replaces the page you have built so far.',
+        title: `Use the full website “${title}”?`,
+        message: 'A full website is a complete site, not one section. Using it replaces the page you have built so far.',
         details: [
-          `All ${existing.length} section${existing.length === 1 ? '' : 's'} on this page will be discarded${locked ? ` (including ${locked} locked)` : ''}, whether you added them or came from another template.`,
+          `All ${existing.length} section${existing.length === 1 ? '' : 's'} on this page will be discarded${locked ? ` (including ${locked} locked)` : ''}, whether you added them or came from a template.`,
           'Edits to their content and sizing go with them.',
           'Your theme, colours, page title and settings stay.',
           'Undo brings the old page back.'
@@ -232,7 +231,7 @@
       return { section, replaced: true, singletonType: null, wholePage: true };
     }
 
-    return { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection, addWithTemplateGuard, isFullTemplate };
+    return { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection, addWithTemplateGuard, isFullWebsite };
   }
 
   const api = { createLandingSections };

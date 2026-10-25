@@ -1,12 +1,12 @@
 {
-  "name": "PLAY Sports Agency — 3D Cylinder & CMS Template",
+  "name": "PLAY Sports Agency — 3D Cylinder & CMS Website",
   "slug": "template-carousel-play",
-  "category": "Full Templates",
+  "category": "Full Websites",
   "source": "carousel-gallery-play",
   "type": "template",
   "description": "Complete creative sports agency website featuring a 3D cylindrical WebGL hero carousel, cursor image trail, athlete roster filter, and live Admin CMS.",
   "tags": [
-    "full-template",
+    "full-website",
     "cms",
     "admin",
     "threejs",

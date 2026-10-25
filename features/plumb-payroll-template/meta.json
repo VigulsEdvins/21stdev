@@ -2,9 +2,9 @@
   "name": "Plumb Payroll Template",
   "title": "Plumb Payroll Template",
   "slug": "plumb-payroll-template",
-  "category": "Full Templates",
+  "category": "Landing Pages",
   "source": "21st.dev",
-  "type": "template",
+  "type": "component",
   "description": "A complete construction-payroll landing page in one component, laid out on a drafting grid: hairline rails run down the page, dashed guides run out past them, and every block is boxed in by its own rules.",
   "tags": [
     "plumb",

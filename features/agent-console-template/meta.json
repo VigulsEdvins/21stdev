@@ -2,9 +2,9 @@
   "name": "Agent Console Template",
   "title": "Agent Console Template",
   "slug": "agent-console-template",
-  "category": "Full Templates",
+  "category": "Landing Pages",
   "source": "21st.dev",
-  "type": "template",
+  "type": "component",
   "description": "A complete, working front end for an agent that plans its work as a small state machine. You ask for something, the agent writes a machine for it, and nothing runs until you approve. Then it runs state by state while you watch the transcript, a live state graph, and the store it writes to.",
   "tags": [
     "agent",

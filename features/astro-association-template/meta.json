@@ -2,9 +2,9 @@
   "name": "Astro Association Template",
   "title": "Astro Association Template",
   "slug": "astro-association-template",
-  "category": "Full Templates",
+  "category": "Landing Pages",
   "source": "21st.dev",
-  "type": "template",
+  "type": "component",
   "description": "A complete landing page for an astronomy club, set like a Swiss space poster. A giant wordmark is filled with confetti bubbles, and a compass-ring logo's needle follows your pointer. A bubble band has the mark knocked out of it, ribbons cross over oversized type, and the whole page sits inside a per",
   "tags": [
     "astro",

@@ -2,9 +2,9 @@
   "name": "Editorial Folio Template",
   "title": "Editorial Folio Template",
   "slug": "editorial-folio-template",
-  "category": "Full Templates",
+  "category": "Landing Pages",
   "source": "21st.dev",
-  "type": "template",
+  "type": "component",
   "description": "A whole portfolio laid out as a printed folio. Grey paper sheets with a fine grain sit on a soft wash of your accent colour, like prints on a desk. The display face is a high-contrast Didone, set big enough to fall off the page. Everything else is typewriter mono, with thin rules, `fig.` captions, h",
   "tags": [
     "editorial",

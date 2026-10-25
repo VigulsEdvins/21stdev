@@ -227,7 +227,7 @@ function createStackManager(initialConfig = {}) {
     return section;
   }
 
-  /** Throws every section away and leaves just this one (a full template replaces the whole page): one change, one undo step. */
+  /** Throws every section away and leaves just this one (a full website replaces the whole page): one change, one undo step. */
   function replaceAllWithSection(slugOrSection, extraProps = {}) {
     const slug = typeof slugOrSection === 'string' ? slugOrSection : (slugOrSection && slugOrSection.slug) || '';
     if (!slug) throw new Error('Invalid section provided to replaceAllWithSection');

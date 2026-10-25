@@ -12,6 +12,10 @@
     const slug = (feature.slug || '').toLowerCase();
     const title = (feature.title || feature.name || '').toLowerCase();
 
+    // 0. A whole website (own pages and CMS) or a whole landing page: the category in meta.json decides
+    if (feature.liveSiteUrl || cat === 'Full Websites') return 'Full Websites';
+    if (cat === 'Landing Pages') return 'Landing Pages';
+
     // 1. Footers & Endings
     if (slug.includes('footer') || title.includes('footer') || cat.toLowerCase().includes('footer')) {
       return 'Footers & Endings';
@@ -67,9 +71,12 @@
       return 'Audio & Shaders';
     }
 
-    // 12. Full Templates
-    if (cat.toLowerCase().includes('full') || slug.includes('template') || slug.includes('landing')) {
-      return 'Full Templates';
+    // 12. Full Websites (a whole site with its own pages and CMS) and Landing Pages (a whole page in one section)
+    if (feature.liveSiteUrl || cat.toLowerCase().includes('full websites')) {
+      return 'Full Websites';
+    }
+    if (cat.toLowerCase().includes('landing pages') || cat.toLowerCase().includes('full templates') || slug.includes('template') || slug.includes('landing')) {
+      return 'Landing Pages';
     }
 
     // 13. Interactions & Physics / Cursors
@@ -99,7 +106,6 @@
     if (targetNorm === 'audio & shaders' && (currentNorm.includes('audio') || currentNorm.includes('shader'))) return true;
     if ((targetNorm === 'interactions & physics' || targetNorm === 'physics & cursors') && currentNorm.includes('physics')) return true;
     if ((targetNorm === 'preloaders & shaders' || targetNorm === 'preloaders') && currentNorm.includes('preloader')) return true;
-    if (targetNorm === 'full templates' && currentNorm.includes('template')) return true;
 
     return currentNorm.includes(targetNorm);
   }

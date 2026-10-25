@@ -29,7 +29,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
    ```bash
    npm run new-feature -- my-slug --category "Heroes" --title "My Hero"
    ```
-   Categories are a **fixed list** defined in `scripts/schema.js` (Heroes, Headers & Nav, Footers & Endings, Buttons & UI, Cards & Tiles, Galleries & Bento, 3D & Carousels, Scroll & Parallax, Interactions & Physics, Audio & Shaders, Preloaders & Shaders, Full Templates). Do not invent new ones; add to the list in `schema.js` first if one is truly missing.
+   Categories are a **fixed list** defined in `scripts/schema.js` (Heroes, Headers & Nav, Footers & Endings, Buttons & UI, Cards & Tiles, Galleries & Bento, 3D & Carousels, Scroll & Parallax, Interactions & Physics, Audio & Shaders, Preloaders & Shaders, Landing Pages, Full Websites). Do not invent new ones; add to the list in `schema.js` first if one is truly missing.
 2. **Fill in `features/<slug>/`**:
    - `meta.json` — validated by `scripts/schema.js`. Required: `slug`, `title`, `description` (20+ chars), `tags` (3+), `category`, `type`, `status` (`draft` until checked), `mood[]`, `industry[]`, `weight` (`light|medium|heavy`), `needsAssets`, `origin {source, license}`, `updatedAt`, `customizable[]`, `dependencies[]`. Mood/industry/weight drive the builder's filters, so set them honestly. Optional `minScale` (0.3–1, default 0.6): how far the builder's section resize handle may shrink the component's content (text included) before it refuses to go shorter.
    - `index.html`, `style.css`, `script.js` — standalone and runnable; no external image links that can break.

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T13:35:12.297Z",
+  "generatedAt": "2026-10-25T14:16:28.335Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -14,7 +14,8 @@
     "Interactions & Physics",
     "Audio & Shaders",
     "Preloaders & Shaders",
-    "Full Templates"
+    "Landing Pages",
+    "Full Websites"
   ],
   "sources": [
     "21st.dev",
@@ -520,7 +521,7 @@
     {
       "slug": "forma-liquid-particle-studio",
       "title": "Forma - Liquid Particle Studio",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Websites",
       "status": "stable",
       "mood": [
@@ -666,7 +667,7 @@
         "/features/forma-liquid-particle-studio/img/work-6-light.webp"
       ],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "Form that answers back. (Images are generated placeholders: swap them in the Content tab.) High-end independent studio template featuring real-time WebGL liquid particle simulations, responsive layout, and smooth typography.",
       "tags": [
         "template",
@@ -3707,8 +3708,8 @@
     },
     {
       "slug": "template-betteroff",
-      "title": "BetterOff Studio — Lookback Annual & CMS Template",
-      "category": "Full Templates",
+      "title": "BetterOff Studio — Lookback Annual & CMS Website",
+      "category": "Full Websites",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -3788,7 +3789,7 @@
       "type": "template",
       "description": "Complete multi-chapter interactive annual review website with 3D WebGL Surf ribbon, inertia timeline, jukebox audio player, and live visual Admin CMS studio.",
       "tags": [
-        "full-template",
+        "full-website",
         "cms",
         "admin",
         "threejs",
@@ -3821,8 +3822,8 @@
     },
     {
       "slug": "template-carousel-play",
-      "title": "PLAY Sports Agency — 3D Cylinder & CMS Template",
-      "category": "Full Templates",
+      "title": "PLAY Sports Agency — 3D Cylinder & CMS Website",
+      "category": "Full Websites",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -3903,7 +3904,7 @@
       "type": "template",
       "description": "Complete creative sports agency website featuring a 3D cylindrical WebGL hero carousel, cursor image trail, athlete roster filter, and live Admin CMS.",
       "tags": [
-        "full-template",
+        "full-website",
         "cms",
         "admin",
         "threejs",
@@ -3936,8 +3937,8 @@
     },
     {
       "slug": "template-vivmgmt",
-      "title": "Vivienne Mgmt — 5-Column Editorial & CMS Template",
-      "category": "Full Templates",
+      "title": "Vivienne Mgmt — 5-Column Editorial & CMS Website",
+      "category": "Full Websites",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -4018,7 +4019,7 @@
       "type": "template",
       "description": "High-fashion artist representation & syndication website featuring a 5-column parallax roster, split-curtain entrance, masonry newsroom, and visual Admin CMS.",
       "tags": [
-        "full-template",
+        "full-website",
         "cms",
         "admin",
         "editorial",
@@ -4049,8 +4050,8 @@
     },
     {
       "slug": "template-mom",
-      "title": "Margarita Vigule — Editorial Photography & Grid CMS Template",
-      "category": "Full Templates",
+      "title": "Margarita Vigule — Editorial Photography & Grid CMS Website",
+      "category": "Full Websites",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -4161,7 +4162,7 @@
       "type": "template",
       "description": "High-fashion & sports photography portfolio featuring an interactive 3x3 multi-image hover grid, Lenis smooth scrolling, multilingual support (LV/EN/RU), filterable work masonry, and CMS visual grid manager.",
       "tags": [
-        "full-template",
+        "full-website",
         "cms",
         "photography",
         "editorial",
@@ -4196,8 +4197,8 @@
     },
     {
       "slug": "template-cvmaker",
-      "title": "CV Craft Pro — Intelligent Resume Builder & Career Suite Template",
-      "category": "Full Templates",
+      "title": "CV Craft Pro — Intelligent Resume Builder & Career Suite Website",
+      "category": "Full Websites",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -4277,7 +4278,7 @@
       "type": "template",
       "description": "Full-stack client-side resume architect built with React & Vite. Features 8 professional templates, real-time A4 document preview, job description ATS keyword matcher, STAR accomplishment enhancer, and matching cover letter suite.",
       "tags": [
-        "full-template",
+        "full-website",
         "resume-builder",
         "react",
         "ats-matcher",
@@ -6057,7 +6058,7 @@
     {
       "slug": "agent-console-template",
       "title": "Agent Console Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -6134,7 +6135,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete, working front end for an agent that plans its work as a small state machine. You ask for something, the agent writes a machine for it, and nothing runs until you approve. Then it runs state by state while you watch the transcript, a live state graph, and the store it writes to.",
       "tags": [
         "agent",
@@ -6590,7 +6591,7 @@
     {
       "slug": "astro-association-template",
       "title": "Astro Association Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -6691,7 +6692,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete landing page for an astronomy club, set like a Swiss space poster. A giant wordmark is filled with confetti bubbles, and a compass-ring logo's needle follows your pointer. A bubble band has the mark knocked out of it, ribbons cross over oversized type, and the whole page sits inside a per",
       "tags": [
         "astro",
@@ -7107,7 +7108,7 @@
     {
       "slug": "bento-portfolio-template",
       "title": "Bento Portfolio Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -7201,7 +7202,7 @@
       "ownPalette": true,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete personal site in one component: a soft, warm-gray bento where every card does something small when you reach for it.",
       "tags": [
         "bento",
@@ -7233,7 +7234,7 @@
     {
       "slug": "blossom-dusk-template",
       "title": "Blossom Dusk Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -7329,7 +7330,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete landing page for an integrations product, opening under cherry boughs against a periwinkle dusk sky. Big quiet type bottom-left, a glass nav with frosted dropdowns, and the brand mark — eight spokes, two of them joined through the middle — hanging faintly in the sky behind it all.",
       "tags": [
         "blossom",
@@ -7565,7 +7566,7 @@
     {
       "slug": "callsign-radio-landing",
       "title": "Callsign Radio Landing",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -8158,7 +8159,7 @@
     {
       "slug": "cobalt-toile-landing",
       "title": "Cobalt Toile Landing",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -8750,7 +8751,7 @@
     {
       "slug": "coquette-desktop-portfolio",
       "title": "Coquette Desktop Portfolio",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -9026,7 +9027,7 @@
     {
       "slug": "design-process-template",
       "title": "Design Process Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -9108,7 +9109,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A case-study page that walks through how a product was made, one phase at a time. A small eyebrow sits above a large indented headline with a round accent badge in the middle of the sentence. Below that, a short intro sits beside the team's role chips. Then each phase gets a ruled row: its share of ",
       "tags": [
         "design",
@@ -9676,7 +9677,7 @@
     {
       "slug": "earth-limb-landing",
       "title": "Earth Limb Landing",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -9802,7 +9803,7 @@
     {
       "slug": "editorial-folio-template",
       "title": "Editorial Folio Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -9903,7 +9904,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A whole portfolio laid out as a printed folio. Grey paper sheets with a fine grain sit on a soft wash of your accent colour, like prints on a desk. The display face is a high-contrast Didone, set big enough to fall off the page. Everything else is typewriter mono, with thin rules, `fig.` captions, h",
       "tags": [
         "editorial",
@@ -10386,7 +10387,7 @@
     {
       "slug": "florilegium-template",
       "title": "Florilegium Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -10480,7 +10481,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A full landing page for a botanical journal and atelier, built around **one flower that never cuts**. It blooms out of the preloader, settles into the editorial hero, and every scroll step after that morphs the same mesh into the next species. Nothing is swapped or cross-faded, so the flower stays u",
       "tags": [
         "florilegium",
@@ -10601,7 +10602,7 @@
     {
       "slug": "folder-tab-portfolio-template",
       "title": "Folder Tab Portfolio Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -10695,7 +10696,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete designer portfolio built from file folders: saturated blue, green, orange and pale-yellow tabs, frosted glass bodies, a wide monoline wordmark with a pill-shaped `OO`, crosshair marks and a handwritten signature. It reads like the pages of a printed portfolio deck, one rounded \"sheet\" per",
       "tags": [
         "folder",
@@ -11647,7 +11648,7 @@
     {
       "slug": "hitch-cargo-landing",
       "title": "Hitch Cargo Landing",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -12638,7 +12639,7 @@
     {
       "slug": "ink-orbit-saas-template",
       "title": "Ink Orbit SaaS Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -12741,7 +12742,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete monochrome landing page for an AI product. White panels sit on a hatched page, held together by thin corner brackets. In the hero is a generative ink sculpture: stippled loops caged around a glass sphere.",
       "tags": [
         "ink",
@@ -12774,7 +12775,7 @@
     {
       "slug": "ink-orbit-testimonials",
       "title": "Ink Orbit Testimonials",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -12882,7 +12883,7 @@
     {
       "slug": "iris-folio-template",
       "title": "Iris Folio Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -12976,7 +12977,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete graphic-design portfolio drawn like a gouache cover. A swash **PORTFOLIO** wordmark in sky blue sits over a band of sunrise sky. Heart-shaped leaves spill past its edges, an art-nouveau vine frames a white iris, petals drift and sparkles glint. The cover carries your name in your own scri",
       "tags": [
         "iris",
@@ -13158,7 +13159,7 @@
     {
       "slug": "kamm-trek-landing",
       "title": "Kamm Trek Landing",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -13684,7 +13685,7 @@
     {
       "slug": "lilac-meadow-landing",
       "title": "Lilac Meadow Landing",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -13798,7 +13799,7 @@
     {
       "slug": "long-exposure-agency-template",
       "title": "Long Exposure Agency Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -13894,7 +13895,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete automation-agency site in one component, full screen and edge to edge: a pale page with a quiet serif, ink buttons and soft grey cards. Every picture is a long-exposure blur of a landscape that was never photographed, drawn live in WebGL.",
       "tags": [
         "long",
@@ -13927,7 +13928,7 @@
     {
       "slug": "longhand-notes-landing",
       "title": "Longhand Notes Landing",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -14465,7 +14466,7 @@
     {
       "slug": "maroon-fintech-landing",
       "title": "Maroon Fintech Landing",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -15187,7 +15188,7 @@
     {
       "slug": "onward-summit-template",
       "title": "Onward Summit Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -15280,7 +15281,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete one-day event page in one component. The hero runs from navy down to white and is filled with tiny arrows that lean away from the pointer, ripple out from a click and shimmer on their own, clearing a space around the event's name. Below it, on white, come seven sections: what to expect, a",
       "tags": [
         "onward",
@@ -16033,7 +16034,7 @@
     {
       "slug": "pixel-park-template",
       "title": "Pixel Park Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -16121,7 +16122,7 @@
       "ownPalette": true,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete one-page site for a small New York company, told in pixel art. A moonlit park meadow sits under a floating glass nav, with the company name and a frosted mission card over it. Below that come a manifesto, a signed letter with a postage stamp, a careers card over a skyline and lake, contac",
       "tags": [
         "pixel",
@@ -16153,7 +16154,7 @@
     {
       "slug": "plumb-payroll-template",
       "title": "Plumb Payroll Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -16247,7 +16248,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete construction-payroll landing page in one component, laid out on a drafting grid: hairline rails run down the page, dashed guides run out past them, and every block is boxed in by its own rules.",
       "tags": [
         "plumb",
@@ -16279,7 +16280,7 @@
     {
       "slug": "pocket-portfolio",
       "title": "Pocket Portfolio",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -16712,7 +16713,7 @@
     {
       "slug": "quiet-portfolio-template",
       "title": "Quiet Portfolio Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -16807,7 +16808,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete, minimal personal site in one component: calm type, generous whitespace, one accent colour, and a lot of small interactions that only show up when you reach for them.",
       "tags": [
         "quiet",
@@ -17395,7 +17396,7 @@
     {
       "slug": "sidebar-portfolio-template",
       "title": "Sidebar Portfolio Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -17490,7 +17491,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete one-page portfolio in a single file. It's quiet and minimal: warm paper, serif headings, one accent colour. A profile sidebar sticks on the left, and the reading column holds everything else:",
       "tags": [
         "sidebar",
@@ -18219,7 +18220,7 @@
     {
       "slug": "stencil-labs-template",
       "title": "Stencil Labs Template",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [
@@ -18320,7 +18321,7 @@
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
-      "type": "template",
+      "type": "component",
       "description": "A complete studio / incubator site on one hairline grid. The page is cool grey paper with monospace text, orange chamfered buttons, and display type in a stencil face that is drawn in the file. Empty spacer rows between sections let the column rules run through the page.",
       "tags": [
         "stencil",
@@ -18424,7 +18425,7 @@
     {
       "slug": "sticker-hello-portfolio",
       "title": "Sticker Hello Portfolio",
-      "category": "Full Templates",
+      "category": "Landing Pages",
       "legacyCategory": "Full Templates",
       "status": "stable",
       "mood": [

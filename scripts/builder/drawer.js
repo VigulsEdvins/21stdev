@@ -188,7 +188,7 @@
             title: feature.title || feature.name || feature.slug,
             category: feature.category || 'Component'
           });
-          if (!res) return; // a full template that the person chose not to use
+          if (!res) return; // a full website that the person chose not to use
 
           if (res && res.section) {
             setActiveSection(res.section.id);

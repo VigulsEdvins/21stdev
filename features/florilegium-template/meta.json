@@ -2,9 +2,9 @@
   "name": "Florilegium Template",
   "title": "Florilegium Template",
   "slug": "florilegium-template",
-  "category": "Full Templates",
+  "category": "Landing Pages",
   "source": "21st.dev",
-  "type": "template",
+  "type": "component",
   "description": "A full landing page for a botanical journal and atelier, built around **one flower that never cuts**. It blooms out of the preloader, settles into the editorial hero, and every scroll step after that morphs the same mesh into the next species. Nothing is swapped or cross-faded, so the flower stays u",
   "tags": [
     "florilegium",

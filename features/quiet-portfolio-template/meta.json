@@ -2,9 +2,9 @@
   "name": "Quiet Portfolio Template",
   "title": "Quiet Portfolio Template",
   "slug": "quiet-portfolio-template",
-  "category": "Full Templates",
+  "category": "Landing Pages",
   "source": "21st.dev",
-  "type": "template",
+  "type": "component",
   "description": "A complete, minimal personal site in one component: calm type, generous whitespace, one accent colour, and a lot of small interactions that only show up when you reach for them.",
   "tags": [
     "quiet",

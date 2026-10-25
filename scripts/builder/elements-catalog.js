@@ -219,11 +219,17 @@
         else if (catLower.includes('audio') || catLower.includes('shader')) badgeClass = 'badge-shaders';
         else if (catLower.includes('physics') || catLower.includes('cursor')) badgeClass = 'badge-physics';
 
+        // a widget sits inside a section; a section is one row; a landing page is a whole page in one row;
+        // a full website is a complete site (own pages and CMS) that replaces the page
+        const isWebsite = !item.isWidget && normCat === 'Full Websites';
+        const isLanding = !item.isWidget && normCat === 'Landing Pages';
         const scopeBadgeHtml = item.isWidget
           ? '<span class="element-scope-badge scope-widget">Widget</span>'
-          : '<span class="element-scope-badge scope-section">Section</span>';
+          : isWebsite ? '<span class="element-scope-badge scope-website">Full website</span>'
+            : isLanding ? '<span class="element-scope-badge scope-landing">Landing page</span>'
+              : '<span class="element-scope-badge scope-section">Section</span>';
 
-        const btnLabel = item.isWidget ? '+ Add to Section' : '+ Add Section';
+        const btnLabel = item.isWidget ? '+ Add to Section' : isWebsite ? '+ Add Full Website' : isLanding ? '+ Add Landing Page' : '+ Add Section';
 
         // Preview box HTML: rendered widget preview for widgets, live iframe box for sections
         const previewBoxHtml = item.isWidget
@@ -340,7 +346,7 @@
               title: title,
               category: normCat
             });
-            if (!res) return; // a full template that the person chose not to use
+            if (!res) return; // a full website that the person chose not to use
             if (res && res.section) {
               setActiveSection(res.section.id);
               canvas.state.pendingSection = res.section.id;

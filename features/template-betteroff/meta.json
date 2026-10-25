@@ -1,12 +1,12 @@
 {
-  "name": "BetterOff Studio — Lookback Annual & CMS Template",
+  "name": "BetterOff Studio — Lookback Annual & CMS Website",
   "slug": "template-betteroff",
-  "category": "Full Templates",
+  "category": "Full Websites",
   "source": "betteroff",
   "type": "template",
   "description": "Complete multi-chapter interactive annual review website with 3D WebGL Surf ribbon, inertia timeline, jukebox audio player, and live visual Admin CMS studio.",
   "tags": [
-    "full-template",
+    "full-website",
     "cms",
     "admin",
     "threejs",

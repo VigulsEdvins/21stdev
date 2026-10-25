@@ -15,7 +15,8 @@ const CATEGORIES = [
   'Interactions & Physics',
   'Audio & Shaders',
   'Preloaders & Shaders',
-  'Full Templates'
+  'Landing Pages',
+  'Full Websites'
 ];
 
 const STATUSES = ['draft', 'stable', 'deprecated'];
@@ -26,7 +27,7 @@ const TYPES = ['component', 'template'];
 
 /** Maps pre-schema category names to the fixed list. */
 const LEGACY_CATEGORY_MAP = {
-  'Full Websites': 'Full Templates',
+  'Full Templates': 'Landing Pages',
   'Cursors & Physics': 'Interactions & Physics',
   'Forms & Inputs': 'Interactions & Physics',
   'Galleries & Grids': 'Galleries & Bento',

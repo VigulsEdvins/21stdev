@@ -2,9 +2,9 @@
   "name": "Sidebar Portfolio Template",
   "title": "Sidebar Portfolio Template",
   "slug": "sidebar-portfolio-template",
-  "category": "Full Templates",
+  "category": "Landing Pages",
   "source": "21st.dev",
-  "type": "template",
+  "type": "component",
   "description": "A complete one-page portfolio in a single file. It's quiet and minimal: warm paper, serif headings, one accent colour. A profile sidebar sticks on the left, and the reading column holds everything else:",
   "tags": [
     "sidebar",
