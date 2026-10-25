@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T09:13:37.767Z",
+  "generatedAt": "2026-10-25T09:54:03.970Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -1781,7 +1781,7 @@
       "industry": [
         "media"
       ],
-      "weight": "light",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "betteroff",
@@ -3316,7 +3316,7 @@
       "industry": [
         "general"
       ],
-      "weight": "light",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "21st-crafted",
@@ -3601,9 +3601,7 @@
           "selector": ":scope p.strapline-copy"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st-crafted",
@@ -4409,9 +4407,7 @@
           "selector": ":scope button.secondary"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "mom",
@@ -4657,9 +4653,7 @@
           "selector": ":scope h2.demo-title"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "mom",
@@ -6216,7 +6210,7 @@
       "industry": [
         "general"
       ],
-      "weight": "light",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -6337,7 +6331,7 @@
         "portfolio",
         "ecommerce"
       ],
-      "weight": "light",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -8061,7 +8055,7 @@
       "industry": [
         "general"
       ],
-      "weight": "light",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",
@@ -10981,9 +10975,7 @@
           "attr": "--gft-accent"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
@@ -12553,9 +12545,7 @@
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > article:nth-of-type(1) > p:nth-of-type(1)"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
@@ -19139,7 +19129,7 @@
       "industry": [
         "portfolio"
       ],
-      "weight": "light",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "21st.dev",

@@ -10,7 +10,7 @@ const PRIORITY = { 'Headers & Nav': 0, Heroes: 1, 'Footers & Endings': 2, 'Cards
 
 function rank(tokens, registry) {
   const meta = new Map(registry.map(i => [i.slug, i]));
-  return tokens.filter(t => !t.tokenised && meta.has(t.slug) && !meta.get(t.slug).ownPalette && !(meta.get(t.slug).nativeWhen || []).length && t.colors > 0)
+  return tokens.filter(t => !t.tokenised && !t.art && !t.designed && !t.neutral && meta.has(t.slug) && !meta.get(t.slug).ownPalette && !(meta.get(t.slug).nativeWhen || []).length && t.colors > 0)
     .map(t => ({ slug: t.slug, colors: t.colors, category: meta.get(t.slug).category, priority: PRIORITY[meta.get(t.slug).category] ?? 9 }))
     .sort((a, b) => (a.priority - b.priority) || (a.colors - b.colors));
 }

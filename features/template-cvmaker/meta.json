@@ -107,5 +107,7 @@
     "luma": 0.18,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "palette": "designed",
+  "paletteNote": "A4 resume paper: a white printed page with print colours, on purpose"
 }

@@ -97,8 +97,6 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "dark"
-  ],
+  "nativeWhen": [],
   "reserveHeight": 813
 }

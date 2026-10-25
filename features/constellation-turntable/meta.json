@@ -65,5 +65,7 @@
     "webgl": false,
     "canvas2d": false
   },
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "palette": "designed",
+  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it"
 }

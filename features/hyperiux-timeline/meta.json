@@ -111,5 +111,7 @@
   },
   "nativeWhen": [
     "dark"
-  ]
+  ],
+  "palette": "designed",
+  "paletteNote": "Has its own dark/light switch with two fixed palettes"
 }

@@ -95,5 +95,7 @@
     "webgl": false,
     "canvas2d": false
   },
-  "reserveHeight": 2720
+  "reserveHeight": 2720,
+  "palette": "designed",
+  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
 }

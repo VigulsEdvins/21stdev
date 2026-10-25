@@ -122,5 +122,7 @@
   "nativeWhen": [
     "light"
   ],
-  "reserveHeight": 6238
+  "reserveHeight": 6238,
+  "palette": "designed",
+  "paletteNote": "Mixed dark panels on a light page: a token mapping flips text onto the wrong surface (tried, reverted)"
 }
