@@ -4,39 +4,42 @@
   padding: 0;
 }
 
-:root {
-  --bg-color: #090a0f;
-  --text-main: #ffffff;
-  --text-muted: #94a3b8;
-  --card-bg: rgba(23, 23, 27, 0.6);
-  --card-border: rgba(255, 255, 255, 0.1);
-  --card-hover: rgba(30, 31, 38, 0.9);
-  --active-border: rgba(99, 102, 241, 0.8);
-  --accent: #6366f1;
+:root, .stagger-stage {
+  --ts-bg: var(--bg, #090a0f);
+  --ts-text: var(--text, #ffffff);
+  --ts-accent: var(--accent, #6366f1);
 }
 
-body[data-theme="light"] {
-  --bg-color: #f8fafc;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --card-border: rgba(0, 0, 0, 0.1);
-  --card-hover: rgba(255, 255, 255, 1);
-  --active-border: rgba(99, 102, 241, 0.9);
-  --accent: #4f46e5;
+.stagger-stage {
+  --bg-color: var(--ts-bg);
+  --text-main: var(--ts-text);
+  --text-muted: color-mix(in srgb, var(--ts-text) 62%, transparent);
+  --card-bg: color-mix(in srgb, var(--ts-text) 6%, var(--ts-bg));
+  --card-border: color-mix(in srgb, var(--ts-text) 12%, transparent);
+  --card-hover: color-mix(in srgb, var(--ts-text) 10%, var(--ts-bg));
+  --active-border: color-mix(in srgb, var(--ts-accent) 85%, transparent);
+  --accent: var(--ts-accent);
+}
+
+.stagger-stage.is-inverted {
+  --ts-bg: var(--text, #ffffff);
+  --ts-text: var(--bg, #090a0f);
 }
 
 html, body {
   width: 100%;
   height: 100%;
-  background-color: var(--bg-color);
-  color: var(--text-main);
+  background-color: var(--bg, #090a0f);
+  color: var(--text, #ffffff);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .stagger-stage {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
   max-width: 1200px;
   margin: 0 auto;
   padding: 3rem 1.5rem 5rem;
@@ -120,10 +123,12 @@ html, body {
   .stagger-grid {
     grid-template-columns: repeat(4, 1fr);
   }
-  .card-staggered:nth-child(even) {
+  .stagger-card.is-offset {
     transform: translateY(2rem);
   }
 }
+
+.stagger-card[hidden] { display: none; }
 
 .stagger-card {
   position: relative;
@@ -145,7 +150,7 @@ html, body {
 
 .stagger-card.featured {
   border-color: var(--active-border);
-  box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 20px 40px -10px color-mix(in srgb, var(--ts-accent) 28%, transparent);
   background: var(--card-hover);
 }
 
@@ -177,7 +182,7 @@ html, body {
 }
 
 .star-rating {
-  color: #f59e0b;
+  color: color-mix(in srgb, #f59e0b 60%, var(--ts-text));
   font-size: 12px;
   letter-spacing: 2px;
   margin-bottom: 0.75rem;

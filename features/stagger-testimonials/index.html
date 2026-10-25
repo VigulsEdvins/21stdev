@@ -6,8 +6,8 @@
   <title>Stagger Testimonials</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body data-theme="dark">
-  <div class="stagger-stage">
+<body>
+  <div class="stagger-stage" id="staggerStage">
     <!-- Header Controls -->
     <div class="stagger-controls">
       <button type="button" class="theme-btn" id="btnThemeToggle">Toggle Theme</button>
@@ -27,7 +27,50 @@
 
     <!-- Staggered Cards Grid -->
     <div class="stagger-grid" id="staggerGrid">
-      <!-- Injected via script.js -->
+      <article class="stagger-card featured" data-category="leadership">
+        <div class="card-author">
+          <img class="avatar-img" src="/assets/library/photo-1534528741775-53994a69daeb-bd154484.jpg" alt="Elena Rostova" />
+          <div class="author-info">
+            <h4>Elena Rostova</h4>
+            <p>Head of Product &bull; Veloce Labs</p>
+          </div>
+        </div>
+        <div class="star-rating" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="quote-text">&ldquo;The subtle attention to physics and tactile feedback transformed our user retention. It feels like software built by craftsmen.&rdquo;</p>
+      </article>
+      <article class="stagger-card" data-category="engineering">
+        <div class="card-author">
+          <img class="avatar-img" src="/assets/library/photo-1507003211169-0a1dd7228f2d-d65277f1.jpg" alt="Marcus Vance" />
+          <div class="author-info">
+            <h4>Marcus Vance</h4>
+            <p>Design Architect &bull; Monolith Media</p>
+          </div>
+        </div>
+        <div class="star-rating" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="quote-text">&ldquo;Stands entirely apart from boring quote grids. The staggered layout gives every testimonial its own breathing room.&rdquo;</p>
+      </article>
+      <article class="stagger-card" data-category="leadership">
+        <div class="card-author">
+          <img class="avatar-img" src="/assets/library/photo-1517841905240-472988babdf9-dcba0d88.jpg" alt="Aria Chen" />
+          <div class="author-info">
+            <h4>Aria Chen</h4>
+            <p>Founder &amp; CEO &bull; Hyperion AI</p>
+          </div>
+        </div>
+        <div class="star-rating" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="quote-text">&ldquo;Integrated directly into our landing page within an hour. Zero unnecessary motion weight, just pure responsive elegance.&rdquo;</p>
+      </article>
+      <article class="stagger-card" data-category="engineering">
+        <div class="card-author">
+          <img class="avatar-img" src="/assets/library/photo-1500648767791-00dcc994a43e-8046e619.jpg" alt="Julian Thorne" />
+          <div class="author-info">
+            <h4>Julian Thorne</h4>
+            <p>VP Engineering &bull; Synthesis Cloud</p>
+          </div>
+        </div>
+        <div class="star-rating" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="quote-text">&ldquo;Our customer conversion jumped by 24% after replacing static cards with this staggered dynamic review section.&rdquo;</p>
+      </article>
     </div>
   </div>
 

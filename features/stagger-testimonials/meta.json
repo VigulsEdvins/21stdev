@@ -48,27 +48,27 @@
   "customizable": [
     {
       "id": "button-text-1",
-      "label": "Button text 1",
+      "label": "Theme button",
       "type": "text",
-      "selector": ":scope button.theme-btn"
+      "selector": ":scope .theme-btn"
     },
     {
       "id": "button-text-2",
-      "label": "Button text 2",
+      "label": "Filter: all",
       "type": "text",
-      "selector": ":scope button.active"
+      "selector": ":scope .filter-btn[data-filter=\"all\"]"
     },
     {
       "id": "button-text-3",
-      "label": "Button text 3",
+      "label": "Filter: leadership",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
+      "selector": ":scope .filter-btn[data-filter=\"leadership\"]"
     },
     {
       "id": "button-text-4",
-      "label": "Button text 4",
+      "label": "Filter: engineering",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)"
+      "selector": ":scope .filter-btn[data-filter=\"engineering\"]"
     },
     {
       "id": "headline",
@@ -83,40 +83,100 @@
       "selector": ":scope p.stagger-sub"
     },
     {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "person-1-name",
+      "label": "Person 1 name",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > rect:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .stagger-card:nth-of-type(1) h4"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
+      "id": "person-1-role",
+      "label": "Person 1 role",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > rect:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .stagger-card:nth-of-type(1) .author-info p"
     },
     {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > img:nth-of-type(1)"
+      "id": "person-1-quote",
+      "label": "Person 1 quote",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(1) .quote-text"
     },
     {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
+      "id": "person-1-photo",
+      "label": "Person 1 photo",
       "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > img:nth-of-type(1)"
+      "selector": ":scope .stagger-card:nth-of-type(1) .avatar-img"
+    },
+    {
+      "id": "person-2-name",
+      "label": "Person 2 name",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(2) h4"
+    },
+    {
+      "id": "person-2-role",
+      "label": "Person 2 role",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(2) .author-info p"
+    },
+    {
+      "id": "person-2-quote",
+      "label": "Person 2 quote",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(2) .quote-text"
+    },
+    {
+      "id": "person-2-photo",
+      "label": "Person 2 photo",
+      "type": "image",
+      "selector": ":scope .stagger-card:nth-of-type(2) .avatar-img"
+    },
+    {
+      "id": "person-3-name",
+      "label": "Person 3 name",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(3) h4"
+    },
+    {
+      "id": "person-3-role",
+      "label": "Person 3 role",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(3) .author-info p"
+    },
+    {
+      "id": "person-3-quote",
+      "label": "Person 3 quote",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(3) .quote-text"
+    },
+    {
+      "id": "person-3-photo",
+      "label": "Person 3 photo",
+      "type": "image",
+      "selector": ":scope .stagger-card:nth-of-type(3) .avatar-img"
+    },
+    {
+      "id": "person-4-name",
+      "label": "Person 4 name",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(4) h4"
+    },
+    {
+      "id": "person-4-role",
+      "label": "Person 4 role",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(4) .author-info p"
+    },
+    {
+      "id": "person-4-quote",
+      "label": "Person 4 quote",
+      "type": "text",
+      "selector": ":scope .stagger-card:nth-of-type(4) .quote-text"
+    },
+    {
+      "id": "person-4-photo",
+      "label": "Person 4 photo",
+      "type": "image",
+      "selector": ":scope .stagger-card:nth-of-type(4) .avatar-img"
     }
   ],
   "measured": {
@@ -124,7 +184,5 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "light"
-  ]
+  "nativeWhen": []
 }
