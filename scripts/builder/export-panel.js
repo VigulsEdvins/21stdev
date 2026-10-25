@@ -35,7 +35,6 @@
 
     // Actions
     const downloadZipBtn = document.getElementById('downloadZipBtn');
-    const downloadReactBtn = document.getElementById('downloadReactBtn');
     const downloadSingleHtmlBtn = document.getElementById('downloadSingleHtmlBtn');
     const copySingleBundleBtn = document.getElementById('copySingleBundleBtn');
     const copyBundleBtnText = document.getElementById('copyBundleBtnText');
@@ -283,52 +282,7 @@
       updateCodeView();
     }
 
-    /**
-     * Opens the Export Modal with zero-section guard check.
-     */
-    /** Lists page problems (alt text, headings, links, labels) above the export tabs; never blocks an export. */
-    function renderPageChecks() {
-      const box = document.getElementById('exportChecks');
-      if (!box) return;
-      box.textContent = '';
-      const checks = window.PageChecks;
-      const html = currentExportBundle && currentExportBundle['index.html'];
-      if (!checks || !html) return;
-      const altFixed = {};
-      stackManager.getStack().forEach(s => { const n = Object.values(s.overrides || {}).filter(o => o && o.type === 'alt' && o.value).length; if (n) altFixed[s.id] = n; });
-      const issues = checks.checkPage(html, stackManager.getState().page, altFixed);
-      const head = document.createElement('div');
-      head.className = 'export-checks-head';
-      head.textContent = issues.length ? `Page check: ${issues.length} thing${issues.length === 1 ? '' : 's'} to look at (you can still export)` : 'Page check: nothing to fix';
-      box.appendChild(head);
-      if (!issues.length) return;
-      const list = document.createElement('ul');
-      list.className = 'export-checks-list';
-      issues.slice(0, 40).forEach(issue => {
-        const li = document.createElement('li');
-        li.className = 'export-check is-' + issue.severity;
-        const label = document.createElement('span');
-        label.textContent = `${issue.severity}: ${issue.message}${issue.slug ? ' (' + issue.slug + ')' : ''}`;
-        li.appendChild(label);
-        if (issue.sectionId) {
-          const go = document.createElement('button');
-          go.type = 'button';
-          go.className = 'builder-btn-subtle';
-          go.textContent = 'Show section';
-          go.addEventListener('click', () => {
-            closeExportModal();
-            if (typeof ctx.setActiveSection === 'function') ctx.setActiveSection(issue.sectionId);
-            const frame = document.querySelector('iframe');
-            const el = frame && frame.contentDocument && frame.contentDocument.getElementById(issue.sectionId);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          });
-          li.appendChild(go);
-        }
-        list.appendChild(li);
-      });
-      box.appendChild(list);
-    }
-
+    /** Opens the Export Modal with zero-section guard check. */
     async function openExportModal() {
       if (!exportModal) return;
 
@@ -588,111 +542,9 @@
     const downloadReviewBtn = document.getElementById('downloadReviewBtn');
     if (downloadReviewBtn) downloadReviewBtn.addEventListener('click', () => handleDownloadZip({ review: true }));
 
-    // Reviewer comments come back as a JSON file: list them and jump to the section each one is about.
-    const reviewFileInput = document.getElementById('reviewFileInput');
-    const reviewList = document.getElementById('reviewCommentList');
-    function renderReviewComments(data) {
-      if (!reviewList) return;
-      reviewList.innerHTML = '';
-      const comments = Array.isArray(data.comments) ? data.comments : [];
-      if (!comments.length) { reviewList.textContent = 'That file has no comments.'; return; }
-      const stack = stackManager.getStack();
-      comments.forEach((c, i) => {
-        const li = document.createElement('li');
-        const where = (c.section && c.section.slug) || 'page';
-        const sec = stack.find(s => s.id === (c.section && c.section.id)) || stack.find(s => s.slug === where);
-        const text = document.createElement('span');
-        text.textContent = `${i + 1}. ${c.comment}${c.author ? ' (' + c.author + ')' : ''} `;
-        const small = document.createElement('small');
-        small.textContent = `on ${(sec && (sec.title || sec.slug)) || where}${c.text ? ': "' + c.text + '"' : ''}`;
-        li.append(text, small);
-        if (sec) {
-          const go = document.createElement('button');
-          go.type = 'button';
-          go.className = 'builder-btn-subtle';
-          go.textContent = 'Show section';
-          go.addEventListener('click', () => {
-            closeExportModal();
-            if (typeof ctx.setActiveSection === 'function') ctx.setActiveSection(sec.id);
-            const frame = document.querySelector('iframe');
-            const el = frame && frame.contentDocument && frame.contentDocument.getElementById(sec.id);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          });
-          li.appendChild(go);
-        }
-        reviewList.appendChild(li);
-      });
-    }
-    if (reviewFileInput) {
-      reviewFileInput.addEventListener('change', async () => {
-        const file = reviewFileInput.files[0];
-        if (!file) return;
-        try {
-          const data = JSON.parse(await file.text());
-          if (!data || data.format !== 'web-builder-review') throw new Error('not a review file');
-          renderReviewComments(data);
-        } catch (err) {
-          if (reviewList) reviewList.textContent = 'That file is not a review comments file from this builder.';
-        }
-        reviewFileInput.value = '';
-      });
-    }
-
-    /**
-     * React project: sections with a React source become components of a Vite project. Sources and assets are
-     * fetched from the vault; sections without a React source are listed in the project's README.
-     */
-    async function handleDownloadReact() {
-      const state = stackManager.getState();
-      if (!Array.isArray(state.stack) || state.stack.length === 0) {
-        showToast('Please add at least one section before downloading.');
-        return;
-      }
-      const label = document.getElementById('downloadReactBtnText');
-      const original = label ? label.textContent : '';
-      if (downloadReactBtn) downloadReactBtn.disabled = true;
-      if (label) label.textContent = 'Packaging project...';
-      try {
-        const text = async (url) => { const r = await fetch(url); return r.ok ? r.text() : ''; };
-        const slugs = Array.from(new Set(state.stack.map(s => s.slug).filter(Boolean)));
-        const sources = {};
-        await Promise.all(slugs.map(async (slug) => {
-          const base = `/features/${slug}/`;
-          const [component, demo, css] = await Promise.all([text(base + 'component.tsx'), text(base + 'demo.tsx'), text(base + 'style.css')]);
-          sources[slug] = { title: (featuresData[slug] && featuresData[slug].title) || slug, component, demo, css };
-        }));
-        const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
-        const out = (window.ReactExport || require('./react-export.js')).generateReactProject({ stack: state.stack, theme: themeConfig, page: state.page, sources });
-        if (!out.included.length) {
-          showToast('None of these sections has a React source, so there is nothing to put in a React project.', 5000);
-          return;
-        }
-        const extra = Array.from(new Set(out.included.flatMap(slug => exportAssets[slug] || [])));
-        const urls = Array.from(new Set([...out.assetUrls, ...extra]));
-        const fetched = await Promise.all(urls.map(async (u) => {
-          try { const r = await fetch(u); return r.ok ? new Uint8Array(await r.arrayBuffer()) : null; } catch (_) { return null; }
-        }));
-        const entries = Object.assign({}, out.files);
-        urls.forEach((u, i) => { if (fetched[i]) entries['public' + decodeURIComponent(u)] = fetched[i]; });
-        let blob;
-        if (typeof window.JSZip !== 'undefined') {
-          const zip = new window.JSZip();
-          Object.entries(entries).forEach(([name, data]) => zip.file(name, data));
-          blob = await zip.generateAsync({ type: 'blob' });
-        } else {
-          blob = new Blob([window.Assembler.createZipArchive(entries)], { type: 'application/zip' });
-        }
-        triggerDownload(blob, 'my-react-project.zip', 'application/zip');
-        showToast(out.skipped.length ? `Downloaded. ${out.skipped.length} section(s) without a React source were left out (see README.md).` : 'Downloaded my-react-project.zip', 4500);
-      } catch (err) {
-        console.error('Error generating React project:', err);
-        showToast('Failed to generate the React project');
-      } finally {
-        if (downloadReactBtn) downloadReactBtn.disabled = false;
-        if (label) label.textContent = original;
-      }
-    }
-    if (downloadReactBtn) downloadReactBtn.addEventListener('click', handleDownloadReact);
+    const notes = (window.BuilderExportNotes || require('./export-notes.js')).createExportNotes(ctx, { closeExportModal, getBundle: () => currentExportBundle });
+    const { renderPageChecks, renderReviewComments } = notes;
+    (window.BuilderExportReact || require('./export-react-download.js')).createReactDownload(ctx, { triggerDownload });
 
     return {
       prepareExportData,

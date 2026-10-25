@@ -49,6 +49,12 @@ assert.strictEqual(A.renderSiteFiles({})['sitemap.xml'], undefined, 'no address,
 const bundle = A.generateExportBundle([], 'midnight-dark', {}, { page: { canonical: 'https://a.example/' } });
 assert(bundle['robots.txt'] && bundle['sitemap.xml'], 'bundle carries the site files');
 assert(!A.generateExportBundle([], 'midnight-dark', {}, { page: {} })['sitemap.xml']);
+// emoji favicon: a real favicon.svg and a manifest in the export, a data URI in the preview
+const fb = A.generateExportBundle([], 'midnight-dark', {}, { page: { favicon: '🚀', title: 'Rocket' } });
+assert(fb['favicon.svg'].includes('🚀') && JSON.parse(fb['site.webmanifest']).name === 'Rocket', 'bundle carries favicon.svg and a manifest');
+assert(fb['index.html'].includes('href="favicon.svg"') && fb['index.html'].includes('rel="manifest"'));
+assert(!A.generateExportBundle([], 'midnight-dark', {}, { page: { favicon: '/logo.png' } })['favicon.svg'], 'an image URL stays as it is');
+assert(A.renderPageHead({ favicon: '🚀' }).headTags.includes('data:image/svg+xml'), 'preview keeps the data URI');
 console.log('✅ JSON-LD and site files tests passed!');
 
 const deploy = A.generateExportBundle([], 'midnight-dark', {}, { page: {} });

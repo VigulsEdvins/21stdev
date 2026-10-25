@@ -12,7 +12,7 @@ plan that follows the table is kept as written, so the original intent stays vis
 | C4 Prune duplicates | **done as analysis**: `find-duplicates` finds no near-identical pairs worth removing, so nothing was deleted |
 | C5 Kits | **done**: six reviewed kits in the Projects modal, test fails if a kit rots |
 | C6 Search | **done**: synonyms (plans → pricing, navbar → header, gdpr → cookie); fuzzy, favourites, recents and "similar" already existed |
-| D1 Split big modules | **partly**: `canvas.js` 1,425 → 340 lines (3 new modules). `export-panel.js` is 711 lines and was not split |
+| D1 Split big modules | **partly**: `canvas.js` 1,425 → 340 lines (3 new modules). `export-panel.js` 711 → 563 lines (page checks and reviewer comments in `export-notes.js`, React download in `export-react-download.js`); the ZIP builder is still inside it |
 | D2 Section tools | **done**: lock, hide, copy / paste between projects, Alt+Arrow reorder with announcements; sizing panels stay open |
 | D3 Multi-page | **done**: page tabs, links to pages, header / footer to all pages, one HTML + CSS + JS per page in the ZIP, per-page sitemap, saved in projects (format v4), undo history. Single-file export and the code viewer show the open page only |
 | D4 Images | **done**: picture descriptions (alt) in the Content tab, size warning. Upload already shrank to WebP |
@@ -22,7 +22,7 @@ plan that follows the table is kept as written, so the original intent stays vis
 | D8 History panel | **done** |
 | E1 Lighthouse | **not done** (no Lighthouse runner here); replaced by `check-starters` (page checks on every starter) |
 | E2 Page checks | **done** |
-| E3 Site files | **done**: robots.txt, sitemap.xml, JSON-LD. Favicon set: **not done** |
+| E3 Site files | **done**: robots.txt, sitemap.xml, JSON-LD. Favicon: an emoji favicon exports as `favicon.svg` plus `site.webmanifest` (PNG / apple-touch icons: **not done**, no image encoder in the assembler) |
 | E4 Fonts | **done for the ZIP**; the single-file page keeps the Google link |
 | E5 / E6 | **done**: third-party report, `_headers`, `DEPLOY.md` |
 | E7 MP4 fallback | **not done**: no H.264 encoder available (Playwright's ffmpeg is VP8 only) |

@@ -2526,6 +2526,12 @@ function renderSiteFiles(page = {}, pageFiles = null) {
   const canonical = String(page.canonical || '').trim();
   const url = /^https?:\/\/[^\s"'<>]+$/i.test(canonical) ? canonical : '';
   const files = {};
+  const icon = emojiFavicon(page);
+  if (icon) {
+    const name = (page.title || '').trim() || 'My site';
+    files['favicon.svg'] = icon + '\n';
+    files['site.webmanifest'] = JSON.stringify({ name, short_name: name.slice(0, 12), icons: [{ src: 'favicon.svg', sizes: 'any', type: 'image/svg+xml' }], display: 'browser' }, null, 2) + '\n';
+  }
   if (page.robots === 'noindex') {
     files['robots.txt'] = 'User-agent: *\nDisallow: /\n';
     return files;
@@ -2543,7 +2549,14 @@ function renderSiteFiles(page = {}, pageFiles = null) {
   return files;
 }
 
-function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
+/** An emoji favicon becomes a real favicon.svg (and a web manifest) in an export; an image URL stays as it is. */
+function emojiFavicon(page = {}) {
+  const fav = (page.favicon || '').trim();
+  if (!fav || /^(https?:|data:|\/|\.\/|[\w-]+\/)/i.test(fav) && !/^\p{Extended_Pictographic}/u.test(fav)) return '';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${escapeHtml(fav)}</text></svg>`;
+}
+
+function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page', opts = {}) {
   const title = (page.title || '').trim() || fallbackTitle;
   const tags = [`<title>${escapeHtml(title)}</title>`];
   if ((page.description || '').trim()) {
@@ -2570,7 +2583,11 @@ function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
     const href = isUrl
       ? fav
       : 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${escapeHtml(fav)}</text></svg>`);
-    tags.push(`<link rel="icon" href="${escapeHtml(href)}">`);
+    if (opts.siteFiles && emojiFavicon(page)) {
+      tags.push('<link rel="icon" href="favicon.svg" type="image/svg+xml">', '<link rel="manifest" href="site.webmanifest">');
+    } else {
+      tags.push(`<link rel="icon" href="${escapeHtml(href)}">`);
+    }
   }
 
   const families = [];
@@ -2929,7 +2946,7 @@ const OVERRIDES_RUNTIME = `(function () {
  */
 function generateExportBundle(sections, themeConfig, featuresData = {}, options = {}) {
   if (Array.isArray(sections)) sections = mapPageLinks(sections.filter(s => !s.hidden), options.pageLinks);
-  const pageHead = renderPageHead(options.page);
+  const pageHead = renderPageHead(options.page, undefined, { siteFiles: true });
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);
   const safeSections = Array.isArray(sections) ? sections : [];
