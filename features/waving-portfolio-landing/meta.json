@@ -66,5 +66,6 @@
     "luma": 0.91,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "reserveHeight": 800
 }

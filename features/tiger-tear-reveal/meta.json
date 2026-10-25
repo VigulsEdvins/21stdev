@@ -54,5 +54,6 @@
   },
   "nativeWhen": [
     "dark"
-  ]
+  ],
+  "reserveHeight": 2080
 }

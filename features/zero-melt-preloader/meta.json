@@ -60,5 +60,6 @@
     "webgl": true,
     "canvas2d": false
   },
-  "themeReviewed": "Hint text is drawn over a WebGL surface the audit cannot sample; headless Chromium has no GPU so not visually confirmed. Accepted 2026-10-24."
+  "themeReviewed": "Hint text is drawn over a WebGL surface the audit cannot sample; headless Chromium has no GPU so not visually confirmed. Accepted 2026-10-24.",
+  "reserveHeight": 800
 }

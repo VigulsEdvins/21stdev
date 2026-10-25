@@ -8,7 +8,7 @@
   const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function createExportController(ctx) {
-    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap, exportAssets = {}, weightMap = {} } = ctx;
+    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, exportAssets = {}, weightMap = {} } = ctx;
 
     // 9. Export Modal & Project ZIP Generator Controller
     const exportModal = document.getElementById('exportModal');
@@ -145,7 +145,7 @@
       const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
 
       if (window.Assembler && typeof window.Assembler.generateExportBundle === 'function') {
-        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked });
+        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked });
       }
 
       if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
@@ -420,7 +420,7 @@
         const missing = p.stack.map(s => s.slug).filter(slug => slug && !featureCache.has(slug));
         if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
         const settings = { ...state.page, title: home ? state.page.title : `${p.title} | ${state.page.title}`, description: p.description || state.page.description };
-        const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles });
+        const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles });
         const extraAssets = Array.from(new Set(p.stack.flatMap(s => exportAssets[s.slug] || [])));
         const bundled = await assetBundler.bundle({ files: bundle, singleHtml: '', extraAssets });
         Object.assign(out.assets, bundled.assets);
@@ -429,7 +429,7 @@
           if (fonts.hosted) Object.assign(out.assets, fonts.assets);
         }
         if (home) {
-          ['index.html', 'style.css', 'script.js', 'README.md', 'robots.txt', 'sitemap.xml', '_headers', 'DEPLOY.md'].forEach(n => { if (bundle[n] !== undefined) out.files[n] = bundle[n]; });
+          ['index.html', 'style.css', 'script.js', 'README.md', 'robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md'].forEach(n => { if (bundle[n] !== undefined) out.files[n] = bundle[n]; });
           out.files['README.md'] += `\n## Pages\n\n${pages.map(p2 => `- **${p2.title}**: \`${fileOf(p2)}\``).join('\n')}\n\nEach page has its own stylesheet and script (\`<page>.css\`, \`<page>.js\`); shared images and fonts are in \`assets/\`.\n`;
         } else {
           out.files[`${p.slug}.html`] = bundle['index.html'].replace('href="style.css"', `href="${p.slug}.css"`).replace('src="script.js"', `src="${p.slug}.js"`);
@@ -500,7 +500,7 @@
           zip.file('style.css', currentExportBundle['style.css']);
           zip.file('script.js', currentExportBundle['script.js']);
           zip.file('README.md', currentExportBundle['README.md']);
-          ['robots.txt', 'sitemap.xml', '_headers', 'DEPLOY.md'].forEach(n => { if (currentExportBundle[n]) zip.file(n, currentExportBundle[n]); });
+          ['robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md'].forEach(n => { if (currentExportBundle[n]) zip.file(n, currentExportBundle[n]); });
           Object.entries(currentExportAssets).forEach(([name, bytes]) => zip.file(name, bytes));
           const blob = await zip.generateAsync({ type: 'blob' });
           triggerDownload(blob, zipFilename, 'application/zip');

@@ -10,3 +10,5 @@ Checked 2026-10-24 with `npm audit --omit=dev`: 0 known vulnerabilities. CI runs
 | jszip, playwright-core, esbuild, acorn, eslint-scope, tailwindcss | development and tests only | MIT / BSD |
 
 Updating: run `npm outdated`, update one package at a time, then `npm run verify`, `npm test`, `npm run test:e2e`. React and GSAP are bundled into many `script.js` files, so a major upgrade means re-running `bundle-demo` for the affected slugs, one at a time.
+
+Lighthouse (`lighthouse`, dev only, Apache-2.0) runs in `npm run check-lighthouse` against exported starter sites; it is not part of any export.

@@ -50,5 +50,6 @@
     "luma": 0.08,
     "webgl": true,
     "canvas2d": false
-  }
+  },
+  "lazy": true
 }

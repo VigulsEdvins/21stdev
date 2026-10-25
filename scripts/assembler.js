@@ -1275,6 +1275,54 @@ function computeSectionSizingStyles(sizing) {
   return styles.length > 0 ? styles.join('; ') + ';' : '';
 }
 
+/**
+ * Sizing plus the space a script-rendered section will fill (`reserveHeight` in meta.json, measured by
+ * scripts/measure-reserve.js). Reserving it before the script runs stops the sections below from jumping down.
+ */
+function sectionSizingStyle(section, reserveHeight) {
+  let style = computeSectionSizingStyles(section.sizing);
+  const reserve = Number(reserveHeight) || 0;
+  const mode = section.sizing && section.sizing.heightMode;
+  if (reserve > 0 && mode !== 'screen' && mode !== 'custom') style += `min-height: min(${reserve}px, 100svh);`;
+  return style;
+}
+
+/**
+ * Runtime for sections that start late: `__lazySection(id, slug, run)` runs a section's script when the section is
+ * within one screen of the viewport. Listeners for DOMContentLoaded / load that the script adds after the page has
+ * loaded are called straight away, so scripts written for page load still start.
+ */
+const LAZY_SECTION_RUNTIME = `  // Lazy start for heavy sections
+  window.__lazySection = function (id, slug, run) {
+    var el = document.getElementById(id);
+    var start = function () {
+      var addDoc = document.addEventListener, addWin = window.addEventListener;
+      var late = function (add, target) {
+        return function (type, fn) {
+          if ((type === 'DOMContentLoaded' || type === 'load') && document.readyState === 'complete' && typeof fn === 'function') {
+            setTimeout(function () { try { fn.call(target, new Event(type)); } catch (err) { console.error(err); } }, 0);
+            return;
+          }
+          return add.apply(this, arguments);
+        };
+      };
+      document.addEventListener = late(addDoc, document);
+      window.addEventListener = late(addWin, window);
+      window.__activeSectionRegisteringId = id;
+      try { run(); } catch (err) { console.error('Error executing ' + slug + ':', err); }
+      finally {
+        window.__activeSectionRegisteringId = null;
+        document.addEventListener = addDoc;
+        window.addEventListener = addWin;
+      }
+    };
+    if (!el || !('IntersectionObserver' in window)) { start(); return; }
+    var io = new IntersectionObserver(function (entries) {
+      if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); }
+    }, { rootMargin: '100% 0px' });
+    io.observe(el);
+  };`;
+
 const BREAKPOINT_QUERIES = {
   mobile: '(max-width: 767px)',
   tablet: '(min-width: 768px) and (max-width: 1023px)',
@@ -1985,6 +2033,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
   const scopedStyleBlocks = [];
   const sectionHtmlBlocks = [];
   const scriptBlocks = [];
+  let usesLazy = false;
 
   sections.forEach((section, index) => {
     const id = section.id || `sec-${index + 1}`;
@@ -2008,7 +2057,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     const preloaderClass = isPreloader ? (' is-preloader' + (isSuppressed ? ' is-dismissed is-suppressed' : '')) : '';
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
+    const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     let styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
     if (isPreloader && isSuppressed) {
       styleAttr = ' style="display: none !important; pointer-events: none !important;"';
@@ -2588,6 +2637,9 @@ function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page', opts = 
     } else {
       tags.push(`<link rel="icon" href="${escapeHtml(href)}">`);
     }
+  } else if (opts.siteFiles) {
+    // no favicon chosen: an empty icon keeps browsers from requesting /favicon.ico and logging a 404
+    tags.push('<link rel="icon" href="data:,">');
   }
 
   const families = [];
@@ -2955,6 +3007,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
   const scopedStyleBlocks = [];
   const sectionHtmlBlocks = [];
   const scriptBlocks = [];
+  let usesLazy = false;
   const sectionInfoList = [];
   const contentOverrides = collectOverrides(safeSections);
   const pageOpts = options.page || {};
@@ -2983,7 +3036,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     const preloaderClass = isPreloader ? ' is-preloader' : '';
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
+    const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
     const nativeList = nativePolarities(options.nativeMap, slug);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
@@ -2992,7 +3045,14 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      scriptBlocks.push(`  // Section: ${slug}\n  try {\n    window.__activeSectionRegisteringId = ${JSON.stringify(id)};\n    (function () {\n${isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n')}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  } finally {\n    window.__activeSectionRegisteringId = null;\n  }`);
+      const body = isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n');
+      if ((options.lazyMap || {})[slug] && !isPreloader) {
+        // heavy one-screen section: start it when it is about to scroll into view
+        usesLazy = true;
+        scriptBlocks.push(`  // Section: ${slug} (starts when it is close to the screen)\n  window.__lazySection(${JSON.stringify(id)}, ${JSON.stringify(slug)}, function () {\n    (function () {\n${body}\n    })();\n  });`);
+      } else {
+        scriptBlocks.push(`  // Section: ${slug}\n  try {\n    window.__activeSectionRegisteringId = ${JSON.stringify(id)};\n    (function () {\n${body}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  } finally {\n    window.__activeSectionRegisteringId = null;\n  }`);
+      }
     }
   });
 
@@ -3038,6 +3098,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
   if (responsiveCss) scopedStyleBlocks.push(responsiveCss);
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
   const allHtml = sectionHtmlBlocks.join('\n\n');
+  if (usesLazy) scriptBlocks.unshift(LAZY_SECTION_RUNTIME);
   const allScripts = scriptBlocks.join('\n\n');
 
   // 1. index.html
@@ -3287,7 +3348,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, ownPalette: options.ownPalette });
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette });
   return doc
     .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }

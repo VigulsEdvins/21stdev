@@ -105,6 +105,8 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       customizable: Array.isArray(meta.customizable) ? meta.customizable : [],
       nativeWhen: Array.isArray(meta.nativeWhen) ? meta.nativeWhen : [],
       ownPalette: meta.ownPalette === true,
+      lazy: meta.lazy === true,
+      reserveHeight: Number(meta.reserveHeight) > 0 ? Number(meta.reserveHeight) : 0,
       exportAssets: Array.isArray(meta.exportAssets) ? meta.exportAssets : [],
       source: meta.source || 'custom',
       type: meta.type || 'component', // 'component' | 'template'
@@ -116,7 +118,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       folderPath: `/home/edvins/features-for-web/web-for-options/features/${slug}`,
       relativePath: `features/${slug}`,
       previewUrl: meta.previewUrl || `features/${slug}/index.html`,
-      thumb: fs.existsSync(path.join(rootDir, 'thumbs', `${slug}.jpg`)) ? `thumbs/${slug}.jpg` : null,
+      thumb: ['webp', 'jpg'].map(ext => `thumbs/${slug}.${ext}`).find(rel => fs.existsSync(path.join(rootDir, rel))) || null,
       liveSiteUrl: meta.liveSiteUrl || null,
       adminUrl: meta.adminUrl || null,
       sourceRepoPath,

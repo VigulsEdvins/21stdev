@@ -102,5 +102,6 @@
   },
   "nativeWhen": [
     "light"
-  ]
+  ],
+  "reserveHeight": 8800
 }

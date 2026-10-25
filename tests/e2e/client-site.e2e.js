@@ -80,6 +80,7 @@ async function main() {
     fs.mkdirSync(path.dirname(path.join(dir, name)), { recursive: true });
     fs.writeFileSync(path.join(dir, name), await entry.async('nodebuffer'));
   }
+  assert(zip.file('favicon.svg') && zip.file('site.webmanifest'), 'an emoji favicon ships as favicon.svg with a manifest');
   const fileCount = Object.keys(zip.files).filter(n => !n.endsWith('/')).length;
   assert(Object.keys(zip.files).some(n => n.startsWith('assets/library/')), 'image-heavy sections bring their assets into the ZIP');
   step(`ZIP unpacked (${fileCount} files)`);
