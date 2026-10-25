@@ -339,8 +339,25 @@
     if (sidebarTextColor) sidebarTextColor.addEventListener('input', (e) => syncColorsFromSidebar({ text: e.target.value }));
     if (sidebarAccentColor) sidebarAccentColor.addEventListener('input', (e) => syncColorsFromSidebar({ accent: e.target.value }));
 
+    // One place keeps every theme control in step with the project's theme, whichever control (or undo, or a loaded
+    // project) changed it: the header select and colour pickers, the Styling tab's preset cards and its palette.
+    function syncThemeControls() {
+      const st = stackManager.getState();
+      const theme = st.theme || 'midnight-dark';
+      if (themePresetSelect && themePresetSelect.value !== theme) themePresetSelect.value = theme;
+      if (themePresetCards) themePresetCards.querySelectorAll('.theme-card-btn').forEach(b => b.classList.toggle('is-active', b.dataset.theme === theme));
+      const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
+      const colors = theme === 'custom' ? (st.customColors || {}) : (presets[theme] || {});
+      [[colors.bg, bgColorInput, sidebarBgColor], [colors.text, textColorInput, sidebarTextColor], [colors.accent, accentColorInput, sidebarAccentColor]].forEach(([value, ...inputs]) => {
+        if (typeof value !== 'string' || !/^#[0-9a-f]{6}$/i.test(value)) return;
+        inputs.forEach(input => { if (input && input.value.toLowerCase() !== value.toLowerCase()) input.value = value; });
+      });
+    }
+    syncThemeControls();
+
     // Subscribe to stack changes
     stackManager.subscribe(() => {
+      syncThemeControls();
       renderStackList();
       updatePreview();
       if (!historyCtl.state.applying) {
