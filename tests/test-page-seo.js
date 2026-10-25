@@ -52,6 +52,7 @@ assert(!A.generateExportBundle([], 'midnight-dark', {}, { page: {} })['sitemap.x
 // emoji favicon: a real favicon.svg and a manifest in the export, a data URI in the preview
 const fb = A.generateExportBundle([], 'midnight-dark', {}, { page: { favicon: '🚀', title: 'Rocket' } });
 assert(fb['favicon.svg'].includes('🚀') && JSON.parse(fb['site.webmanifest']).name === 'Rocket', 'bundle carries favicon.svg and a manifest');
+assert(fb['index.html'].includes('rel="apple-touch-icon"') && JSON.parse(fb['site.webmanifest']).icons.length === 3);
 assert(fb['index.html'].includes('href="favicon.svg"') && fb['index.html'].includes('rel="manifest"'));
 assert(!A.generateExportBundle([], 'midnight-dark', {}, { page: { favicon: '/logo.png' } })['favicon.svg'], 'an image URL stays as it is');
 assert(A.renderPageHead({ favicon: '🚀' }).headTags.includes('data:image/svg+xml'), 'preview keeps the data URI');

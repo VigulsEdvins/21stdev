@@ -22,7 +22,7 @@ plan that follows the table is kept as written, so the original intent stays vis
 | D8 History panel | **done** |
 | E1 Lighthouse | **done**: `npm run check-lighthouse` exports each of the six starters, serves the ZIP and runs Lighthouse (mobile preset). After the exporter fixes: accessibility 95-96, SEO 100, best practices 100, performance 52-100 (thresholds 0.90 / 0.95 / 0.95 / 0.50; part of `npm run ci` as a reported, non-blocking step). Fixes made: an empty icon instead of a /favicon.ico 404, a description in the starters, reserved space for script-rendered sections (layout shift 0.88 → 0), names for icon-only buttons |
 | E2 Page checks | **done** |
-| E3 Site files | **done**: robots.txt, sitemap.xml, JSON-LD, and an emoji favicon exports as `favicon.svg` plus `site.webmanifest`. PNG and apple-touch icons are not made (no image encoder in the assembler) |
+| E3 Site files | **done**: robots.txt, sitemap.xml, JSON-LD, and an emoji favicon exports as `favicon.svg` plus `site.webmanifest`. the builder also draws the emoji into `apple-touch-icon.png`, `icon-192.png` and `icon-512.png` with a canvas (`scripts/builder/favicon-png.js`), so the ZIP carries a full icon set; an image-address favicon is left as it is |
 | E4 Fonts | **done for the ZIP**; the single-file page keeps the Google link |
 | E5 / E6 | **done**: third-party report, `_headers`, `DEPLOY.md` |
 | E7 MP4 fallback | **done**: `@ffmpeg-installer/ffmpeg` (dev only) has x264; `npm run encode-video-fallback` writes an H.264 MP4 next to each bundled WebM (magic-hour: 454 KB), the component picks it when VP8 is not playable, and the ZIP carries it |

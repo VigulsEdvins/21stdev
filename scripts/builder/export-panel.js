@@ -170,12 +170,20 @@
      * Copies them into the ZIP under assets/ and inlines them as data URIs in the single-file HTML.
      * Assets that cannot be fetched are left untouched and reported in a toast.
      */
+    /** PNG versions of an emoji favicon (apple-touch icon and manifest icons); {} for an image address or none. */
+    async function iconFiles(page) {
+      const fp = window.FaviconPng;
+      if (!fp) return {};
+      try { return await fp.renderEmojiIcons(fp.emojiOf(page)); } catch (_) { return {}; }
+    }
+
     async function bundleLocalAssets() {
       currentExportAssets = {};
       if (!window.Assembler || !window.Assembler.findLocalAssetUrls) return;
       const extraAssets = Array.from(new Set(stackManager.getStack().flatMap(s => exportAssets[s.slug] || [])));
       const result = await assetBundler.bundle({ files: currentExportBundle, singleHtml: currentSingleHtml, extraAssets });
       currentExportAssets = result.assets;
+      Object.assign(currentExportAssets, await iconFiles(stackManager.getState().page));
       if (currentExportBundle && window.FontHost && window.FontHost.cssUrl(stackManager.getState().page)) {
         const fonts = await window.FontHost.hostFonts({ files: currentExportBundle, page: stackManager.getState().page, fetchFn: (u) => fetch(u) });
         if (fonts.hosted) {
@@ -424,6 +432,7 @@
         const extraAssets = Array.from(new Set(p.stack.flatMap(s => exportAssets[s.slug] || [])));
         const bundled = await assetBundler.bundle({ files: bundle, singleHtml: '', extraAssets });
         Object.assign(out.assets, bundled.assets);
+        if (home) Object.assign(out.assets, await iconFiles(settings));
         if (window.FontHost && window.FontHost.cssUrl(settings)) {
           const fonts = await window.FontHost.hostFonts({ files: bundle, page: settings, fetchFn: (u) => fetch(u) });
           if (fonts.hosted) Object.assign(out.assets, fonts.assets);
