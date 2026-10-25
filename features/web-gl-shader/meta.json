@@ -1,21 +1,20 @@
 {
-  "name": "WebGL Chromatic Wave Distortion",
-  "title": "WebGL Chromatic Wave Distortion",
+  "name": "Chromatic Ripple Field",
+  "title": "Chromatic Ripple Field",
   "slug": "web-gl-shader",
   "category": "Audio & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Fullscreen interactive WebGL fluid chromatic wave distortion shader with mouse movement tracking.",
+  "description": "Full-section WebGL shader where rings spread from the pointer and the red, green and blue channels drift apart as the pointer moves.",
   "tags": [
-    "webgl",
     "shader",
+    "webgl",
+    "ripples",
     "chromatic",
-    "distortion",
-    "waves"
+    "pointer"
   ],
   "tech": [
     "WebGL",
-    "Fragment Shader",
     "GLSL"
   ],
   "dependencies": [
@@ -34,43 +33,25 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "permission",
-    "verifiedAt": "2026-10-24",
-    "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.mb-3"
+      "selector": ":scope .cr-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.text-white\\/60"
-    },
-    {
-      "id": "paragraph",
-      "label": "Paragraph",
-      "type": "text",
-      "selector": ":scope p.text-green-500"
-    },
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope div.pointer-events-none"
+      "selector": ":scope .cr-lead"
     }
   ],
-  "measured": {
-    "luma": 0.21,
-    "webgl": true,
-    "canvas2d": false
-  },
   "reserveHeight": 800,
-  "lazy": true
+  "lazy": true,
+  "nativeWhen": []
 }

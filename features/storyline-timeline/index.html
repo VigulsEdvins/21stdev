@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storyline Timeline</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="st-stage">
+    <header class="st-head">
+      <span class="st-kicker">Our story</span>
+      <h2 class="st-title">Five milestones, one long road</h2>
+      <p class="st-intro">Drag the track, use the mouse wheel or the arrow buttons. Each milestone lights up as it reaches the middle.</p>
+    </header>
+
+    <div class="st-viewport">
+      <div class="st-track" id="stTrack" tabindex="0" aria-label="Timeline, scroll sideways">
+        <div class="st-rail"><span class="st-rail-fill" id="stFill"></span></div>
+        <ol class="st-list">
+          <li class="st-item st-up"><time>2019</time><div class="st-dot"></div><div class="st-card"><h3>First sketch</h3><p>A notebook page and a rough idea for a faster way to build pages.</p></div></li>
+          <li class="st-item st-down"><time>2020</time><div class="st-dot"></div><div class="st-card"><h3>Private beta</h3><p>Twenty friendly teams tried it and told us what was confusing.</p></div></li>
+          <li class="st-item st-up"><time>2021</time><div class="st-dot"></div><div class="st-card"><h3>Public launch</h3><p>The first stable release, with a library of ready-made sections.</p></div></li>
+          <li class="st-item st-down"><time>2023</time><div class="st-dot"></div><div class="st-card"><h3>Theme engine</h3><p>One palette and one font pair now restyle a whole page at once.</p></div></li>
+          <li class="st-item st-up"><time>2025</time><div class="st-dot"></div><div class="st-card"><h3>Export anywhere</h3><p>Pages leave as plain HTML, CSS and JavaScript you fully own.</p></div></li>
+        </ol>
+      </div>
+      <div class="st-controls">
+        <button type="button" class="st-btn" id="stPrev" aria-label="Previous">&larr;</button>
+        <button type="button" class="st-btn" id="stNext" aria-label="Next">&rarr;</button>
+      </div>
+    </div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>

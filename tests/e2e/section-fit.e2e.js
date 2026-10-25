@@ -16,7 +16,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
     { id: 'fit-a', slug: 'client-logo-marquee', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } },
     { id: 'fit-b', slug: 'stagger-testimonials', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }
   ]));
-  await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; return d && d.getElementById('fit-a') && d.getElementById('fit-b') && d.querySelector('#fit-a .clients-marquee__item') && d.querySelector('#fit-b .stagger-card'); }, null, { timeout: 20000 });
+  await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; return d && d.getElementById('fit-a') && d.getElementById('fit-b') && d.querySelector('#fit-a .clients-marquee__item') && d.querySelector('#fit-b .sq-card'); }, null, { timeout: 20000 });
   await page.waitForTimeout(1500);
   const frame = () => page.frames().find(f => f !== page.mainFrame());
 

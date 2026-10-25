@@ -3,56 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testimonial Block v2</title>
+  <title>Metrics Quote Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="testi-stage">
-    <div class="testi-container">
-      <!-- Left Column: Metrics & Proof -->
-      <div class="testi-metric-col">
-        <span class="testi-badge">Client Endorsements</span>
-        <h2 class="testi-heading">Validated by industry professionals</h2>
-        <p class="testi-sub">Real impact measured by product and engineering teams after integrating core feature blocks.</p>
-
-        <div class="metric-card">
-          <div class="metric-block">
-            <span class="metric-val" id="metricVal">4.8x</span>
-            <span class="metric-label" id="metricLabel">Faster Dev Velocity</span>
-          </div>
-          <div class="metric-sep"></div>
-          <div class="metric-review">
-            <div class="star-row">★★★★★</div>
-            <span class="verified-label">Verified Client Review</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Column: Card Showcase -->
-      <div class="testi-card-col">
-        <div class="testi-card" id="testiCard">
-          <div class="quote-symbol">&ldquo;</div>
-          <p class="quote-body" id="quoteBody">
-            Integrating these micro-interactions into our design system eliminated months of back-and-forth between design and engineering teams.
-          </p>
-
-          <div class="card-footer">
-            <div class="client-meta">
-              <img class="client-avatar" id="clientAvatar" src="" alt="Client" />
-              <div>
-                <h4 class="client-name" id="clientName">Sarah Jenkins</h4>
-                <p class="client-title" id="clientTitle">Chief Design Officer &bull; Stratos Systems</p>
-              </div>
-            </div>
-
-            <!-- Dots Indicator -->
-            <div class="dots-row" id="dotsRow"></div>
-          </div>
-        </div>
+  <section class="mq-stage" id="mqStage" aria-roledescription="carousel" aria-label="Customer quotes">
+    <div class="mq-left">
+      <span class="mq-badge">Customer results</span>
+      <h2 class="mq-title">Numbers that back up the praise</h2>
+      <p class="mq-sub">Each quote comes with the result it led to. Use the arrows, the dots or your keyboard.</p>
+      <div class="mq-nav">
+        <button type="button" class="mq-btn" id="mqPrev" aria-label="Previous quote">&larr;</button>
+        <button type="button" class="mq-btn" id="mqNext" aria-label="Next quote">&rarr;</button>
+        <span class="mq-dots" id="mqDots"></span>
       </div>
     </div>
-  </div>
 
+    <div class="mq-right">
+      <figure class="mq-slide is-current" data-metric="+38%" data-label="more sign-ups">
+        <blockquote>We cut the page down to what mattered and sign-ups rose within the first month.</blockquote>
+        <figcaption><span class="mq-avatar">AV</span><span><strong>Ava Linden</strong><small>Head of Growth, Northgate</small></span></figcaption>
+      </figure>
+      <figure class="mq-slide" data-metric="2x" data-label="faster page builds">
+        <blockquote>Our team now assembles a campaign page in an afternoon instead of a week.</blockquote>
+        <figcaption><span class="mq-avatar">KS</span><span><strong>Kofi Salmen</strong><small>Marketing lead, Brightwell</small></span></figcaption>
+      </figure>
+      <figure class="mq-slide" data-metric="-45%" data-label="support questions">
+        <blockquote>Clearer layouts meant fewer customers writing in to ask where things were.</blockquote>
+        <figcaption><span class="mq-avatar">RJ</span><span><strong>Rosa Jelen</strong><small>Operations, Paperlane</small></span></figcaption>
+      </figure>
+      <div class="mq-metric"><strong id="mqNum">+38%</strong><span id="mqLab">more sign-ups</span></div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

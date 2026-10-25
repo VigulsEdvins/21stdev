@@ -1,21 +1,21 @@
 {
-  "name": "Liquid Metal Fluid Hero",
-  "title": "Liquid Metal Fluid Hero",
+  "name": "Mercury Flow Hero",
+  "title": "Mercury Flow Hero",
   "slug": "liquid-metal-hero",
   "category": "Heroes",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Fluid iridescent liquid metal hero section with real-time shader dynamics and responsive layout.",
+  "description": "Hero over a real-time shader of flowing reflective metal with a soft iridescent edge that bends around the pointer.",
   "tags": [
     "shader",
-    "liquid-metal",
-    "fluid",
-    "hero"
+    "webgl",
+    "metal",
+    "hero",
+    "fluid"
   ],
   "tech": [
     "WebGL",
-    "GLSL Shaders",
-    "React"
+    "GLSL"
   ],
   "dependencies": [
     "WebGL",
@@ -34,67 +34,44 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "permission",
-    "verifiedAt": "2026-10-24",
-    "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope div.inline-flex"
+      "selector": ":scope .mf-pill"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.text-5xl"
+      "selector": ":scope .mf-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.max-w-3xl"
+      "selector": ":scope .mf-lead"
     },
     {
       "id": "button-text-1",
       "label": "Button text 1",
       "type": "text",
-      "selector": ":scope button.border"
+      "selector": ":scope .mf-solid"
     },
     {
       "id": "button-text-2",
       "label": "Button text 2",
       "type": "text",
-      "selector": ":scope button.bg-foreground"
-    },
-    {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > p:nth-of-type(1)"
+      "selector": ":scope .mf-line"
     }
   ],
-  "measured": {
-    "luma": 0.03,
-    "webgl": true,
-    "canvas2d": false
-  },
   "reserveHeight": 800,
-  "lazy": true
+  "lazy": true,
+  "nativeWhen": [],
+  "ownPalette": true
 }

@@ -1,92 +1,35 @@
-/**
- * Testimonial v2 Controller
- * Author: avanishverma4 (@avanishverma4)
- */
 (function () {
-  const TESTIMONIALS = [
-    {
-      id: "1",
-      name: "Sarah Jenkins",
-      title: "Chief Design Officer &bull; Stratos Systems",
-      avatar: "/assets/library/photo-1494790108377-be9c29b29330-910f42a6.jpg",
-      quote: "Integrating these micro-interactions into our design system eliminated months of back-and-forth between design and engineering teams.",
-      metric: "4.8x",
-      metricLabel: "Faster Dev Velocity"
-    },
-    {
-      id: "2",
-      name: "Alexandre Moreau",
-      title: "Lead Frontend Engineer &bull; Luminary AI",
-      avatar: "/assets/library/photo-1472099645785-5658abf4ff4e-06fc600d.jpg",
-      quote: "Clean code structure, zero dependency bloat, and instant copy-paste usability. Exactly how modern web blocks should be packaged.",
-      metric: "99.4%",
-      metricLabel: "Satisfaction Rate"
-    },
-    {
-      id: "3",
-      name: "Chloe Zhao",
-      title: "Product Growth Lead &bull; Apex Scale",
-      avatar: "/assets/library/photo-1544005313-94ddf0286df2-995556a6.jpg",
-      quote: "The visual polish and tactile spring curves boosted user engagement across all key onboarding steps.",
-      metric: "+38%",
-      metricLabel: "Conversion Lift"
-    }
-  ];
+  var stage = document.getElementById("mqStage");
+  var slides = Array.prototype.slice.call(stage.querySelectorAll(".mq-slide"));
+  var dotsBox = document.getElementById("mqDots");
+  var num = document.getElementById("mqNum"), lab = document.getElementById("mqLab");
+  var i = 0, timer = 0;
 
-  let currentIdx = 0;
-  const quoteBody = document.getElementById("quoteBody");
-  const clientAvatar = document.getElementById("clientAvatar");
-  const clientName = document.getElementById("clientName");
-  const clientTitle = document.getElementById("clientTitle");
-  const metricVal = document.getElementById("metricVal");
-  const metricLabel = document.getElementById("metricLabel");
-  const dotsRow = document.getElementById("dotsRow");
-
-  function makeAvatarFallback(name) {
-    const initials = name.split(" ").map(p => p[0]).join("");
-    return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" rx="40" fill="%236366f1"/><text x="50%" y="55%" fill="white" font-family="sans-serif" font-weight="bold" font-size="28" text-anchor="middle" dominant-baseline="middle">${initials}</text></svg>`;
-  }
-
-  function updateSlide(idx) {
-    currentIdx = idx;
-    const item = TESTIMONIALS[currentIdx];
-
-    quoteBody.style.opacity = "0.2";
-    setTimeout(() => {
-      quoteBody.textContent = item.quote;
-      clientName.textContent = item.name;
-      clientTitle.innerHTML = item.title;
-      metricVal.textContent = item.metric;
-      metricLabel.textContent = item.metricLabel;
-
-      const fallback = makeAvatarFallback(item.name);
-      clientAvatar.onerror = () => { clientAvatar.src = fallback; };
-      clientAvatar.src = item.avatar;
-
-      quoteBody.style.opacity = "1";
-    }, 150);
-
-    // Update dots
-    document.querySelectorAll(".dot-btn").forEach((dot, i) => {
-      dot.classList.toggle("active", i === idx);
-    });
-  }
-
-  // Populate Dots
-  dotsRow.innerHTML = "";
-  TESTIMONIALS.forEach((_, i) => {
-    const dot = document.createElement("button");
-    dot.type = "button";
-    dot.className = `dot-btn ${i === 0 ? "active" : ""}`;
-    dot.setAttribute("aria-label", `Slide ${i + 1}`);
-    dot.addEventListener("click", () => updateSlide(i));
-    dotsRow.appendChild(dot);
+  var dots = slides.map(function (_, n) {
+    var d = document.createElement("button");
+    d.type = "button"; d.className = "mq-dot"; d.setAttribute("aria-label", "Quote " + (n + 1));
+    d.addEventListener("click", function () { go(n); restart(); });
+    dotsBox.appendChild(d);
+    return d;
   });
-
-  // Autoplay
-  setInterval(() => {
-    updateSlide((currentIdx + 1) % TESTIMONIALS.length);
-  }, 6000);
-
-  updateSlide(0);
+  function go(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.classList.toggle("is-current", k === i); s.setAttribute("aria-hidden", k === i ? "false" : "true"); });
+    dots.forEach(function (d, k) { d.classList.toggle("is-on", k === i); });
+    num.textContent = slides[i].dataset.metric;
+    lab.textContent = slides[i].dataset.label;
+  }
+  function restart() {
+    clearInterval(timer);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(function () { go(i + 1); }, 6000);
+  }
+  document.getElementById("mqPrev").addEventListener("click", function () { go(i - 1); restart(); });
+  document.getElementById("mqNext").addEventListener("click", function () { go(i + 1); restart(); });
+  stage.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") { go(i + 1); restart(); }
+    if (e.key === "ArrowLeft") { go(i - 1); restart(); }
+  });
+  stage.addEventListener("mouseenter", function () { clearInterval(timer); });
+  stage.addEventListener("mouseleave", restart);
+  go(0); restart();
 })();

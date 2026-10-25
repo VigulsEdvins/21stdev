@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T17:42:01.783Z",
+  "generatedAt": "2026-10-25T18:34:49.333Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -18,12 +18,12 @@
     "Full Websites"
   ],
   "sources": [
+    "edvlabs",
     "imported",
     "betteroff",
     "photo-caroulsel",
     "carousel-gallery-play",
     "vivmgmt",
-    "edvlabs",
     "mom",
     "cvmaker",
     "custom"
@@ -31,7 +31,7 @@
   "items": [
     {
       "slug": "file-card-collections",
-      "title": "File Card Collections",
+      "title": "Folder Stack Cards",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
@@ -44,28 +44,57 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
-      "customizable": [],
+      "updatedAt": "2026-10-25",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope .fs-title"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope .fs-intro"
+        },
+        {
+          "id": "button-text-1",
+          "label": "Folder tab 1",
+          "type": "text",
+          "selector": ":scope .fs-folder:nth-of-type(1) .fs-tab"
+        },
+        {
+          "id": "button-text-2",
+          "label": "Folder tab 2",
+          "type": "text",
+          "selector": ":scope .fs-folder:nth-of-type(2) .fs-tab"
+        },
+        {
+          "id": "button-text-3",
+          "label": "Folder tab 3",
+          "type": "text",
+          "selector": ":scope .fs-folder:nth-of-type(3) .fs-tab"
+        }
+      ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Interactive frosted glass folder and card collection stacks with vibrant abstract liquid art tabs, active tab states, and smooth spring physics.",
+      "description": "Three tabbed folders, each holding a stack of cards that fans out when the folder opens. Hover or click to switch folders.",
       "tags": [
         "cards",
         "folders",
-        "glassmorphism",
-        "file-card"
+        "tabs",
+        "stack",
+        "fan"
       ],
       "dependencies": [
-        "React",
-        "Tailwind CSS"
+        "Vanilla HTML/CSS/JS"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/file-card-collections",
       "relativePath": "features/file-card-collections",
@@ -322,8 +351,8 @@
       ]
     },
     {
-      "slug": "hyperiux-timeline",
-      "title": "Hyperiux Product Storyline Timeline",
+      "slug": "storyline-timeline",
+      "title": "Storyline Timeline",
       "category": "Scroll & Parallax",
       "legacyCategory": "Scroll & Parallax",
       "status": "stable",
@@ -336,91 +365,50 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-24",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
-          "id": "button-text-1",
-          "label": "Button text 1",
+          "id": "small-label",
+          "label": "Small label",
           "type": "text",
-          "selector": ":scope button.btn-theme"
-        },
-        {
-          "id": "button-text-2",
-          "label": "Button text 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2)"
-        },
-        {
-          "id": "button-text-3",
-          "label": "Button text 3",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(3)"
-        },
-        {
-          "id": "hero-photo",
-          "label": "Hero photo",
-          "type": "image",
-          "selector": ":scope img.vision-img"
+          "selector": ":scope .st-kicker"
         },
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > h4:nth-of-type(1)"
-        },
-        {
-          "id": "section-heading",
-          "label": "Section heading",
-          "type": "text",
-          "selector": ":scope h2.section-title"
+          "selector": ":scope .st-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
-        },
-        {
-          "id": "paragraph-1",
-          "label": "Paragraph 1",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)"
-        },
-        {
-          "id": "paragraph-2",
-          "label": "Paragraph 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > p:nth-of-type(1)"
+          "selector": ":scope .st-intro"
         }
       ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Horizontal scroll timeline with Lenis-style inertia smoothing, GSAP milestone reveals, dynamic connecting active rail, alternating top/bottom dates, and dual light/dark themes.",
+      "description": "Horizontal milestone timeline with drag, wheel and button scrolling, smooth glide, and a glowing rail that fills as each milestone reaches the middle.",
       "tags": [
         "timeline",
         "horizontal-scroll",
-        "gsap",
-        "lenis",
+        "drag",
         "milestones",
-        "roadmap",
-        "interactive"
+        "history"
       ],
       "dependencies": [
-        "Vanilla HTML/CSS/JS",
-        "React (.tsx included)"
+        "Vanilla HTML/CSS/JS"
       ],
-      "folderPath": "/home/edvins/features-for-web/web-for-options/features/hyperiux-timeline",
-      "relativePath": "features/hyperiux-timeline",
-      "previewUrl": "features/hyperiux-timeline/index.html",
-      "thumb": "thumbs/hyperiux-timeline.webp",
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/storyline-timeline",
+      "relativePath": "features/storyline-timeline",
+      "previewUrl": "features/storyline-timeline/index.html",
+      "thumb": "thumbs/storyline-timeline.webp",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,
@@ -428,8 +416,7 @@
         "combined",
         "html",
         "css",
-        "js",
-        "tsx"
+        "js"
       ]
     },
     {
@@ -788,7 +775,7 @@
     },
     {
       "slug": "stagger-testimonials",
-      "title": "Stagger Testimonials",
+      "title": "Staggered Quote Cards",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
@@ -802,152 +789,102 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
-        {
-          "id": "button-text-1",
-          "label": "Theme button",
-          "type": "text",
-          "selector": ":scope .theme-btn"
-        },
-        {
-          "id": "button-text-2",
-          "label": "Filter: all",
-          "type": "text",
-          "selector": ":scope .filter-btn[data-filter=\"all\"]"
-        },
-        {
-          "id": "button-text-3",
-          "label": "Filter: leadership",
-          "type": "text",
-          "selector": ":scope .filter-btn[data-filter=\"leadership\"]"
-        },
-        {
-          "id": "button-text-4",
-          "label": "Filter: engineering",
-          "type": "text",
-          "selector": ":scope .filter-btn[data-filter=\"engineering\"]"
-        },
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope h2.stagger-title"
+          "selector": ":scope .sq-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope p.stagger-sub"
-        },
-        {
-          "id": "person-1-name",
-          "label": "Person 1 name",
-          "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(1) h4"
-        },
-        {
-          "id": "person-1-role",
-          "label": "Person 1 role",
-          "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(1) .author-info p"
+          "selector": ":scope .sq-intro"
         },
         {
           "id": "person-1-quote",
           "label": "Person 1 quote",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(1) .quote-text"
+          "selector": ":scope .sq-card:nth-of-type(1) .sq-quote"
         },
         {
-          "id": "person-1-photo",
-          "label": "Person 1 photo",
-          "type": "image",
-          "selector": ":scope .stagger-card:nth-of-type(1) .avatar-img"
-        },
-        {
-          "id": "person-2-name",
-          "label": "Person 2 name",
+          "id": "person-1-name",
+          "label": "Person 1 name",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(2) h4"
+          "selector": ":scope .sq-card:nth-of-type(1) strong"
         },
         {
-          "id": "person-2-role",
-          "label": "Person 2 role",
+          "id": "person-1-role",
+          "label": "Person 1 role",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(2) .author-info p"
+          "selector": ":scope .sq-card:nth-of-type(1) small"
         },
         {
           "id": "person-2-quote",
           "label": "Person 2 quote",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(2) .quote-text"
+          "selector": ":scope .sq-card:nth-of-type(2) .sq-quote"
         },
         {
-          "id": "person-2-photo",
-          "label": "Person 2 photo",
-          "type": "image",
-          "selector": ":scope .stagger-card:nth-of-type(2) .avatar-img"
-        },
-        {
-          "id": "person-3-name",
-          "label": "Person 3 name",
+          "id": "person-2-name",
+          "label": "Person 2 name",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(3) h4"
+          "selector": ":scope .sq-card:nth-of-type(2) strong"
         },
         {
-          "id": "person-3-role",
-          "label": "Person 3 role",
+          "id": "person-2-role",
+          "label": "Person 2 role",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(3) .author-info p"
+          "selector": ":scope .sq-card:nth-of-type(2) small"
         },
         {
           "id": "person-3-quote",
           "label": "Person 3 quote",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(3) .quote-text"
+          "selector": ":scope .sq-card:nth-of-type(3) .sq-quote"
         },
         {
-          "id": "person-3-photo",
-          "label": "Person 3 photo",
-          "type": "image",
-          "selector": ":scope .stagger-card:nth-of-type(3) .avatar-img"
-        },
-        {
-          "id": "person-4-name",
-          "label": "Person 4 name",
+          "id": "person-3-name",
+          "label": "Person 3 name",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(4) h4"
+          "selector": ":scope .sq-card:nth-of-type(3) strong"
         },
         {
-          "id": "person-4-role",
-          "label": "Person 4 role",
+          "id": "person-3-role",
+          "label": "Person 3 role",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(4) .author-info p"
+          "selector": ":scope .sq-card:nth-of-type(3) small"
         },
         {
           "id": "person-4-quote",
           "label": "Person 4 quote",
           "type": "text",
-          "selector": ":scope .stagger-card:nth-of-type(4) .quote-text"
+          "selector": ":scope .sq-card:nth-of-type(4) .sq-quote"
         },
         {
-          "id": "person-4-photo",
-          "label": "Person 4 photo",
-          "type": "image",
-          "selector": ":scope .stagger-card:nth-of-type(4) .avatar-img"
+          "id": "person-4-name",
+          "label": "Person 4 name",
+          "type": "text",
+          "selector": ":scope .sq-card:nth-of-type(4) strong"
+        },
+        {
+          "id": "person-4-role",
+          "label": "Person 4 role",
+          "type": "text",
+          "selector": ":scope .sq-card:nth-of-type(4) small"
         }
       ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Testimonial review cards layout layered with alternating column offset, glowing active state, star ratings, category filtering, and zero heavy motion library overhead.",
+      "description": "Two-column testimonial cards with every second card dropped down, role filter tabs, initials avatars and a click-to-front highlight.",
       "tags": [
         "testimonials",
         "stagger",
@@ -956,8 +893,7 @@
         "cards"
       ],
       "dependencies": [
-        "Vanilla HTML/CSS/JS",
-        "React (.tsx included)"
+        "Vanilla HTML/CSS/JS"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/stagger-testimonials",
       "relativePath": "features/stagger-testimonials",
@@ -970,8 +906,7 @@
         "combined",
         "html",
         "css",
-        "js",
-        "tsx"
+        "js"
       ]
     },
     {
@@ -1087,7 +1022,7 @@
     },
     {
       "slug": "testimonial-v2",
-      "title": "Testimonial Block v2",
+      "title": "Metrics Quote Carousel",
       "category": "Cards & Tiles",
       "legacyCategory": "Cards & Tiles",
       "status": "stable",
@@ -1101,85 +1036,45 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "small-label",
           "label": "Small label",
           "type": "text",
-          "selector": ":scope span.testi-badge"
+          "selector": ":scope .mq-badge"
         },
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope h2.testi-heading"
+          "selector": ":scope .mq-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope p.quote-body"
-        },
-        {
-          "id": "paragraph-1",
-          "label": "Paragraph 1",
-          "type": "text",
-          "selector": ":scope p.testi-sub"
-        },
-        {
-          "id": "text-1",
-          "label": "Text 1",
-          "type": "text",
-          "selector": ":scope div.metric-block"
-        },
-        {
-          "id": "hero-photo",
-          "label": "Hero photo",
-          "type": "image",
-          "selector": ":scope img.client-avatar"
-        },
-        {
-          "id": "text-2",
-          "label": "Text 2",
-          "type": "text",
-          "selector": ":scope div.star-row"
-        },
-        {
-          "id": "subheading",
-          "label": "Subheading",
-          "type": "text",
-          "selector": ":scope h4.client-name"
-        },
-        {
-          "id": "paragraph-2",
-          "label": "Paragraph 2",
-          "type": "text",
-          "selector": ":scope p.client-title"
+          "selector": ":scope .mq-sub"
         }
       ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Modern reusable testimonial showcase block with social proof metrics, user avatars, verified client pill, quote typography, and interactive carousel navigation.",
+      "description": "Quote carousel that pairs each testimonial with the result it led to, with arrows, dots, keyboard control and a gentle autoplay that pauses on hover.",
       "tags": [
         "testimonials",
-        "social-proof",
-        "reviews",
-        "metrics",
         "carousel",
-        "cards"
+        "metrics",
+        "social-proof",
+        "quotes"
       ],
       "dependencies": [
-        "Vanilla HTML/CSS/JS",
-        "React (.tsx included)"
+        "Vanilla HTML/CSS/JS"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/testimonial-v2",
       "relativePath": "features/testimonial-v2",
@@ -1192,8 +1087,7 @@
         "combined",
         "html",
         "css",
-        "js",
-        "tsx"
+        "js"
       ]
     },
     {
@@ -3405,7 +3299,7 @@
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
-      "description": "the source site signature dark hero with wide-gamut oklch() radial pulsing aurora shaders, blur-to-sharp entrance choreography, and interactive category chip river.",
+      "description": "Signature dark hero with wide-gamut oklch() radial pulsing aurora shaders, blur-to-sharp entrance choreography, and interactive category chip river.",
       "tags": [
         "oklch",
         "aurora",
@@ -5124,7 +5018,7 @@
     },
     {
       "slug": "vapour-text-effect",
-      "title": "Vapour Text Effect",
+      "title": "Smoke Text Cycle",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
@@ -5138,36 +5032,39 @@
       "weight": "medium",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "headline",
-          "label": "Headline",
+          "label": "Phrases (separate with |)",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)"
+          "selector": ":scope .sm-words"
+        },
+        {
+          "id": "intro-text",
+          "label": "Caption",
+          "type": "text",
+          "selector": ":scope .sm-hint"
         }
       ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Interactive text vaporization animation using Canvas with customizable text cycling and particle dissolving effects.",
+      "description": "Canvas text built from tiny particles that condenses, holds, then drifts away like smoke before the next phrase forms. Phrases are separated by a pipe character.",
       "tags": [
-        "text-effect",
-        "vapour",
+        "text",
         "particles",
         "canvas",
-        "animation"
+        "smoke",
+        "typography"
       ],
       "dependencies": [
-        "React",
-        "Tailwind CSS"
+        "HTML5 Canvas"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/vapour-text-effect",
       "relativePath": "features/vapour-text-effect",
@@ -5185,7 +5082,7 @@
     },
     {
       "slug": "waitlist-hero",
-      "title": "Waitlist Hero Animation",
+      "title": "Orbit Waitlist Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
       "status": "stable",
@@ -5200,60 +5097,28 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
-        {
-          "id": "hero-photo-1",
-          "label": "Hero photo 1",
-          "type": "image",
-          "selector": ":scope img.opacity-50"
-        },
-        {
-          "id": "hero-photo-2",
-          "label": "Hero photo 2",
-          "type": "image",
-          "selector": ":scope img.opacity-60"
-        },
-        {
-          "id": "hero-photo-3",
-          "label": "Hero photo 3",
-          "type": "image",
-          "selector": ":scope img.opacity-80"
-        },
-        {
-          "id": "hero-photo-4",
-          "label": "Hero photo 4",
-          "type": "image",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > img:nth-of-type(1)"
-        },
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope h1.text-5xl"
+          "selector": ":scope .ow-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope p.text-lg"
+          "selector": ":scope .ow-lead"
         },
         {
           "id": "button-text",
           "label": "Button text",
           "type": "text",
-          "selector": ":scope button.h-full"
-        },
-        {
-          "id": "text",
-          "label": "Text",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
+          "selector": ":scope .ow-btn"
         }
       ],
       "nativeWhen": [
@@ -5261,18 +5126,18 @@
       ],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Sleek modern waitlist hero with ambient background particles, glowing input, and smooth interaction states.",
+      "description": "Waitlist hero with slowly orbiting rings, a pill-shaped email field with validation and a success message, and a live joined counter.",
       "tags": [
-        "hero",
         "waitlist",
-        "animation",
-        "particles"
+        "hero",
+        "email",
+        "signup",
+        "orbit"
       ],
       "dependencies": [
-        "React",
-        "Tailwind CSS"
+        "Vanilla HTML/CSS/JS"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/waitlist-hero",
       "relativePath": "features/waitlist-hero",
@@ -5290,7 +5155,7 @@
     },
     {
       "slug": "hero-ascii-one",
-      "title": "Hero ASCII Wireframe Globe",
+      "title": "Terminal Globe Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
       "status": "stable",
@@ -5302,77 +5167,51 @@
       "industry": [
         "general"
       ],
-      "weight": "heavy",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
-          "id": "small-label-1",
-          "label": "Small label 1",
+          "id": "small-label",
+          "label": "Small label",
           "type": "text",
-          "selector": ":scope span.lg\\:hidden"
-        },
-        {
-          "id": "small-label-2",
-          "label": "Small label 2",
-          "type": "text",
-          "selector": ":scope div.text-white"
-        },
-        {
-          "id": "small-label-3",
-          "label": "Small label 3",
-          "type": "text",
-          "selector": ":scope span.text-white\\/60"
-        },
-        {
-          "id": "small-label-4",
-          "label": "Small label 4",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)"
+          "selector": ":scope .tg-tag"
         },
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope h1.text-2xl"
+          "selector": ":scope .tg-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope p.text-xs"
+          "selector": ":scope .tg-lead"
         },
         {
-          "id": "button-text-1",
-          "label": "Button text 1",
+          "id": "button-text",
+          "label": "Button text",
           "type": "text",
-          "selector": ":scope button.group"
-        },
-        {
-          "id": "button-text-2",
-          "label": "Button text 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(8) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > button:nth-of-type(2)"
+          "selector": ":scope .tg-btn"
         }
       ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Retro-futuristic terminal ASCII wireframe 3D globe animation with responsive canvas rendering.",
+      "description": "Hero with a rotating wireframe globe drawn entirely from text characters chosen by depth and light. Drag to spin it.",
       "tags": [
         "ascii",
-        "3d",
         "globe",
-        "retro",
-        "terminal"
+        "terminal",
+        "canvas",
+        "hero"
       ],
       "dependencies": [
         "HTML5 Canvas"
@@ -5393,7 +5232,7 @@
     },
     {
       "slug": "liquid-metal-hero",
-      "title": "Liquid Metal Fluid Hero",
+      "title": "Mercury Flow Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
       "status": "stable",
@@ -5407,73 +5246,54 @@
       "weight": "heavy",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "small-label",
           "label": "Small label",
           "type": "text",
-          "selector": ":scope div.inline-flex"
+          "selector": ":scope .mf-pill"
         },
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope h1.text-5xl"
+          "selector": ":scope .mf-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope p.max-w-3xl"
+          "selector": ":scope .mf-lead"
         },
         {
           "id": "button-text-1",
           "label": "Button text 1",
           "type": "text",
-          "selector": ":scope button.border"
+          "selector": ":scope .mf-solid"
         },
         {
           "id": "button-text-2",
           "label": "Button text 2",
           "type": "text",
-          "selector": ":scope button.bg-foreground"
-        },
-        {
-          "id": "paragraph-1",
-          "label": "Paragraph 1",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
-        },
-        {
-          "id": "paragraph-2",
-          "label": "Paragraph 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
-        },
-        {
-          "id": "paragraph-3",
-          "label": "Paragraph 3",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > p:nth-of-type(1)"
+          "selector": ":scope .mf-line"
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Fluid iridescent liquid metal hero section with real-time shader dynamics and responsive layout.",
+      "description": "Hero over a real-time shader of flowing reflective metal with a soft iridescent edge that bends around the pointer.",
       "tags": [
         "shader",
-        "liquid-metal",
-        "fluid",
-        "hero"
+        "webgl",
+        "metal",
+        "hero",
+        "fluid"
       ],
       "dependencies": [
         "WebGL",
@@ -5495,7 +5315,7 @@
     },
     {
       "slug": "hover-footer",
-      "title": "Hover Magnetic Footer",
+      "title": "Spotlight Footer",
       "category": "Footers & Endings",
       "legacyCategory": "Footers & Endings",
       "status": "stable",
@@ -5509,95 +5329,63 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "footer-heading-1",
-          "label": "Footer heading 1",
+          "label": "Brand name",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h4:nth-of-type(1)"
-        },
-        {
-          "id": "footer-heading-2",
-          "label": "Footer heading 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > h4:nth-of-type(1)"
-        },
-        {
-          "id": "footer-heading-3",
-          "label": "Footer heading 3",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > h4:nth-of-type(1)"
+          "selector": ":scope .sf-name"
         },
         {
           "id": "footer-text-1",
-          "label": "Footer text 1",
+          "label": "About text",
           "type": "text",
-          "selector": ":scope div.space-x-2"
+          "selector": ":scope .sf-about"
         },
         {
-          "id": "footer-link-1",
-          "label": "Footer link 1",
-          "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+          "id": "footer-heading-2",
+          "label": "Column 1 heading",
+          "type": "text",
+          "selector": ":scope .sf-col:nth-of-type(1) h4"
+        },
+        {
+          "id": "footer-heading-3",
+          "label": "Column 2 heading",
+          "type": "text",
+          "selector": ":scope .sf-col:nth-of-type(2) h4"
+        },
+        {
+          "id": "footer-heading-4",
+          "label": "Column 3 heading",
+          "type": "text",
+          "selector": ":scope .sf-col:nth-of-type(3) h4"
         },
         {
           "id": "footer-text-2",
-          "label": "Footer text 2",
+          "label": "Legal line",
           "type": "text",
-          "selector": ":scope p.text-sm"
-        },
-        {
-          "id": "footer-link-text-1",
-          "label": "Footer link text 1",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)"
-        },
-        {
-          "id": "footer-link-text-2",
-          "label": "Footer link text 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1)"
-        },
-        {
-          "id": "footer-link-2",
-          "label": "Footer link 2",
-          "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-        },
-        {
-          "id": "footer-link-3",
-          "label": "Footer link 3",
-          "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-        },
-        {
-          "id": "footer-text-3",
-          "label": "Footer text 3",
-          "type": "text",
-          "selector": ":scope span.hover\\:text-\\[\\#3ca2fa\\]"
+          "selector": ":scope .sf-legal"
         }
       ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Interactive magnetic hover footer animation with glowing cursor dynamics and social docks.",
+      "description": "Footer with link columns, social chips that lean toward the cursor, and a giant wordmark that lights up under a gradient spotlight.",
       "tags": [
         "footer",
-        "magnetic",
-        "cursor",
-        "interactive"
+        "spotlight",
+        "hover",
+        "wordmark",
+        "social"
       ],
       "dependencies": [
-        "React",
-        "Tailwind CSS"
+        "Vanilla HTML/CSS/JS"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/hover-footer",
       "relativePath": "features/hover-footer",
@@ -5615,7 +5403,7 @@
     },
     {
       "slug": "gradient-bar-hero-section",
-      "title": "Gradient Bar Hero Section",
+      "title": "Rising Bars Hero",
       "category": "Heroes",
       "legacyCategory": "Heroes",
       "status": "stable",
@@ -5628,102 +5416,40 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
-          "id": "button-text-1",
-          "label": "Button text 1",
+          "id": "small-label",
+          "label": "Logo text",
           "type": "text",
-          "selector": ":scope button.px-5"
-        },
-        {
-          "id": "menu-item-1",
-          "label": "Menu item 1",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
-        },
-        {
-          "id": "menu-item-2",
-          "label": "Menu item 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > a:nth-of-type(1)"
-        },
-        {
-          "id": "hero-photo-1",
-          "label": "Hero photo 1",
-          "type": "image",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
-        },
-        {
-          "id": "hero-photo-2",
-          "label": "Hero photo 2",
-          "type": "image",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > img:nth-of-type(1)"
-        },
-        {
-          "id": "hero-photo-3",
-          "label": "Hero photo 3",
-          "type": "image",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > img:nth-of-type(1)"
-        },
-        {
-          "id": "hero-photo-4",
-          "label": "Hero photo 4",
-          "type": "image",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > img:nth-of-type(1)"
-        },
-        {
-          "id": "paragraph-1",
-          "label": "Paragraph 1",
-          "type": "text",
-          "selector": ":scope p.text-white"
+          "selector": ":scope .rb-logo"
         },
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope h1.w-full"
+          "selector": ":scope .rb-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope p.animation-delay-200"
+          "selector": ":scope .rb-lead"
         },
         {
-          "id": "paragraph-2",
-          "label": "Paragraph 2",
+          "id": "button-text-1",
+          "label": "Button text 1",
           "type": "text",
-          "selector": ":scope p.animation-delay-300"
+          "selector": ":scope .rb-primary"
         },
         {
           "id": "button-text-2",
           "label": "Button text 2",
           "type": "text",
-          "selector": ":scope button.px-6"
-        },
-        {
-          "id": "link-1",
-          "label": "Link 1",
-          "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > a:nth-of-type(1)"
-        },
-        {
-          "id": "link-2",
-          "label": "Link 2",
-          "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > a:nth-of-type(2)"
-        },
-        {
-          "id": "link-3",
-          "label": "Link 3",
-          "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(4) > a:nth-of-type(3)"
+          "selector": ":scope .rb-ghost"
         }
       ],
       "nativeWhen": [
@@ -5731,18 +5457,18 @@
       ],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "High-contrast gradient bar waitlist hero section with animated illuminated light bars and badge counter.",
+      "description": "Dark hero with a skyline of gradient bars that ripple like a sound wave, a counting badge, a short nav and two call-to-action buttons.",
       "tags": [
         "hero",
-        "gradient",
         "bars",
-        "waitlist"
+        "gradient",
+        "waitlist",
+        "animated"
       ],
       "dependencies": [
-        "React",
-        "Tailwind CSS"
+        "Vanilla HTML/CSS/JS"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/gradient-bar-hero-section",
       "relativePath": "features/gradient-bar-hero-section",
@@ -5760,7 +5486,7 @@
     },
     {
       "slug": "web-gl-shader",
-      "title": "WebGL Chromatic Wave Distortion",
+      "title": "Chromatic Ripple Field",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
@@ -5774,50 +5500,36 @@
       "weight": "heavy",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope h1.mb-3"
+          "selector": ":scope .cr-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope p.text-white\\/60"
-        },
-        {
-          "id": "paragraph",
-          "label": "Paragraph",
-          "type": "text",
-          "selector": ":scope p.text-green-500"
-        },
-        {
-          "id": "text",
-          "label": "Text",
-          "type": "text",
-          "selector": ":scope div.pointer-events-none"
+          "selector": ":scope .cr-lead"
         }
       ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Fullscreen interactive WebGL fluid chromatic wave distortion shader with mouse movement tracking.",
+      "description": "Full-section WebGL shader where rings spread from the pointer and the red, green and blue channels drift apart as the pointer moves.",
       "tags": [
-        "webgl",
         "shader",
+        "webgl",
+        "ripples",
         "chromatic",
-        "distortion",
-        "waves"
+        "pointer"
       ],
       "dependencies": [
         "WebGL"
@@ -5838,7 +5550,7 @@
     },
     {
       "slug": "hover-preview",
-      "title": "Cursor Hover Link Preview",
+      "title": "Cursor Preview List",
       "category": "Interactions & Physics",
       "legacyCategory": "Cursors & Physics",
       "status": "stable",
@@ -5852,24 +5564,46 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "imported",
-        "license": "permission",
-        "verifiedAt": "2026-10-24",
-        "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+        "source": "edvlabs",
+        "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-25",
       "customizable": [
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
+          "selector": ":scope .cp-intro"
         },
         {
-          "id": "paragraph",
-          "label": "Paragraph",
+          "id": "project-1",
+          "label": "Project 1",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)"
+          "selector": ":scope .cp-list li:nth-of-type(1) .cp-name"
+        },
+        {
+          "id": "project-2",
+          "label": "Project 2",
+          "type": "text",
+          "selector": ":scope .cp-list li:nth-of-type(2) .cp-name"
+        },
+        {
+          "id": "project-3",
+          "label": "Project 3",
+          "type": "text",
+          "selector": ":scope .cp-list li:nth-of-type(3) .cp-name"
+        },
+        {
+          "id": "project-4",
+          "label": "Project 4",
+          "type": "text",
+          "selector": ":scope .cp-list li:nth-of-type(4) .cp-name"
+        },
+        {
+          "id": "project-5",
+          "label": "Project 5",
+          "type": "text",
+          "selector": ":scope .cp-list li:nth-of-type(5) .cp-name"
         }
       ],
       "nativeWhen": [
@@ -5877,18 +5611,18 @@
       ],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "imported",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Smooth cursor-following floating image card preview component that displays previews above text links.",
+      "description": "Editorial project list where hovering a row shows a small floating preview card that glides after the cursor.",
       "tags": [
-        "cursor",
         "hover",
         "preview",
-        "floating"
+        "list",
+        "cursor",
+        "portfolio"
       ],
       "dependencies": [
-        "React",
-        "Tailwind CSS"
+        "Vanilla HTML/CSS/JS"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/hover-preview",
       "relativePath": "features/hover-preview",
@@ -6691,7 +6425,7 @@
       "exportAssets": [],
       "source": "imported",
       "type": "component",
-      "description": "Interactive component by Kedhareswer Naidu published on the source site.",
+      "description": "Interactive component.",
       "tags": [
         "astro",
         "bubble",
@@ -6802,7 +6536,7 @@
       "exportAssets": [],
       "source": "imported",
       "type": "component",
-      "description": "Interactive component by Kedhareswer Naidu published on the source site.",
+      "description": "Interactive component.",
       "tags": [
         "astro",
         "mission",
@@ -12093,7 +11827,7 @@
       "exportAssets": [],
       "source": "imported",
       "type": "component",
-      "description": "Interactive component by Kedhareswer Naidu published on the source site.",
+      "description": "Interactive component.",
       "tags": [
         "ink",
         "orbit",
@@ -12167,7 +11901,7 @@
       "exportAssets": [],
       "source": "imported",
       "type": "component",
-      "description": "Interactive component by Kedhareswer Naidu published on the source site.",
+      "description": "Interactive component.",
       "tags": [
         "ink",
         "orbit",
@@ -12271,7 +12005,7 @@
       "exportAssets": [],
       "source": "imported",
       "type": "component",
-      "description": "Interactive component by Kedhareswer Naidu published on the source site.",
+      "description": "Interactive component.",
       "tags": [
         "ink",
         "orbit",
