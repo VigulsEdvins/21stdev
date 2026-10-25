@@ -56,19 +56,19 @@
       "id": "footer-heading-1",
       "label": "Footer heading 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > h3:nth-of-type(1)"
+      "selector": ":scope nav.hwf-col:nth-of-type(1) h3"
     },
     {
       "id": "footer-heading-2",
       "label": "Footer heading 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > h3:nth-of-type(1)"
+      "selector": ":scope nav.hwf-col:nth-of-type(2) h3"
     },
     {
       "id": "footer-heading-3",
       "label": "Footer heading 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(3) > h3:nth-of-type(1)"
+      "selector": ":scope nav.hwf-col:nth-of-type(3) h3"
     },
     {
       "id": "footer-text-2",
@@ -80,31 +80,31 @@
       "id": "footer-link-text-1",
       "label": "Footer link text 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
+      "selector": ":scope nav.hwf-col:nth-of-type(1) li:nth-of-type(1) a"
     },
     {
       "id": "footer-link-text-2",
       "label": "Footer link text 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)"
+      "selector": ":scope nav.hwf-col:nth-of-type(2) li:nth-of-type(1) a"
     },
     {
       "id": "footer-link-1",
       "label": "Footer link 1",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope nav.hwf-col:nth-of-type(1) li:nth-of-type(1) a"
     },
     {
       "id": "footer-link-2",
       "label": "Footer link 2",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope nav.hwf-col:nth-of-type(2) li:nth-of-type(1) a"
     },
     {
       "id": "footer-link-3",
       "label": "Footer link 3",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope nav.hwf-col:nth-of-type(3) li:nth-of-type(1) a"
     },
     {
       "id": "button-text",
