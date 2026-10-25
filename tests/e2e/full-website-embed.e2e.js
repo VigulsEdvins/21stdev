@@ -30,6 +30,19 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
     console.log(`  ✓ ${slug}: ${url} (window ${Math.round(winH)}px)`);
   }
 
+  // links inside the site go to the site's own pages (they point at /work.html, the site root of the live domain)
+  await page.evaluate(() => window.builderPreview.stackManager.setStack([{ id: 'site', slug: 'template-mom', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }]));
+  await page.waitForFunction(() => { const f = document.querySelector('iframe').contentDocument.querySelector('#site .fullsite-frame'); try { return f.contentDocument.URL.endsWith('/mom/index.html') && f.contentDocument.readyState === 'complete'; } catch (_) { return false; } }, null, { timeout: 20000 });
+  await page.waitForTimeout(1500);
+  const home = page.frames().find(f => f.url().endsWith('/mom/index.html'));
+  await home.locator('a[href="/work.html"]').first().click();
+  await page.waitForFunction(() => { const f = document.querySelector('iframe').contentDocument.querySelector('#site .fullsite-frame'); try { return f.contentDocument.URL.endsWith('/mom/work.html') && f.contentDocument.readyState === 'complete'; } catch (_) { return false; } }, null, { timeout: 20000 });
+  await page.waitForTimeout(2500);
+  const work = await page.evaluate(() => { const d = document.querySelector('iframe').contentDocument.querySelector('#site .fullsite-frame').contentDocument; const cs = getComputedStyle(d.body); return { title: d.title, bg: cs.backgroundColor, font: cs.fontFamily, pad: getComputedStyle(d.querySelector('h1') || d.body).fontSize }; });
+  assert(/All Work/i.test(work.title), 'the All Work page of the site opened: ' + work.title);
+  assert(!/Times/i.test(work.font) && work.bg !== 'rgba(0, 0, 0, 0)', `the page is styled like the live site (font ${work.font}, background ${work.bg})`);
+  console.log('  ✓ All Work inside the site opens the site\'s own styled page');
+
   // an export keeps the self-contained showcase card: the site's own files are not part of the page
   const html = await page.evaluate(() => window.Assembler.assemblePreviewDocument(window.builderPreview.stackManager.getStack(), window.Assembler.THEME_PRESETS['midnight-dark'], {}));
   assert(!/fullsite-frame/.test(html), 'without embedSites the section is the card');

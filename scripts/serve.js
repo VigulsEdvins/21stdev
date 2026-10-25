@@ -135,10 +135,39 @@ function resolveSafePath(urlPath, referer = '') {
   return null;
 }
 
+const SITE_PREFIXES = ['mom', 'cvmaker', 'vivmgmt', 'betteroff', 'carousel-gallery-play'];
+
+/** The /prefix/page URL a page request from inside a sibling site should go to, or null. */
+function redirectWithinSite(req) {
+  if (STRICT) return null;
+  let from;
+  try { from = new URL(req.headers.referer || '').pathname; } catch { return null; }
+  const site = SITE_PREFIXES.find(p => from === '/' + p || from.startsWith('/' + p + '/'));
+  if (!site) return null;
+  let target;
+  try { target = new URL(req.url || '/', 'http://x'); } catch { return null; }
+  const pathname = target.pathname;
+  if (pathname === '/' + site || pathname.startsWith('/' + site + '/')) return null;
+  const dest = String(req.headers['sec-fetch-dest'] || '');
+  const isPage = ['document', 'iframe', 'frame'].includes(dest) || /\.html?$/i.test(pathname) || pathname === '/';
+  if (!isPage) return null;
+  const inSite = '/' + site + (pathname === '/' ? '/index.html' : pathname);
+  return resolveSafePath(inSite, req.headers.referer || '') ? '/' + site + (pathname === '/' ? '/' : pathname) + target.search : null;
+}
+
 const server = http.createServer((req, res) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('405 Method Not Allowed');
+    return;
+  }
+
+  // A sibling site is served under a prefix (/mom/...) but its pages link to the site root (/work.html). When a page
+  // of that site asks for another page, send the visitor to the same page under the prefix instead of to a vault file.
+  const siteRedirect = redirectWithinSite(req);
+  if (siteRedirect) {
+    res.writeHead(302, { Location: siteRedirect, 'Cache-Control': 'no-cache' });
+    res.end();
     return;
   }
 
