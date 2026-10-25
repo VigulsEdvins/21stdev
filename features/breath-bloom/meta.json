@@ -65,10 +65,9 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "light"
-  ],
+  "nativeWhen": [],
   "reserveHeight": 800,
   "palette": "designed",
-  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it"
+  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it",
+  "themeReviewed": "light pages get the light solstice bloom, dark pages the abyss bloom; small captions are the bloom's own ink on its own background, checked by eye in both"
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T12:01:31.629Z",
+  "generatedAt": "2026-10-25T12:02:30.006Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 234,
   "categories": [
@@ -7469,9 +7469,7 @@
           "selector": ":scope p.pointer-events-none"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "21st.dev",
