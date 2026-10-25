@@ -227,6 +227,24 @@ function createStackManager(initialConfig = {}) {
     return section;
   }
 
+  /** Throws every section away and leaves just this one (a full template replaces the whole page): one change, one undo step. */
+  function replaceAllWithSection(slugOrSection, extraProps = {}) {
+    const slug = typeof slugOrSection === 'string' ? slugOrSection : (slugOrSection && slugOrSection.slug) || '';
+    if (!slug) throw new Error('Invalid section provided to replaceAllWithSection');
+    const base = typeof slugOrSection === 'object' ? slugOrSection : {};
+    const section = {
+      id: generateId(),
+      slug,
+      sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none', ...(base.sizing || {}), ...(extraProps.sizing || {}) },
+      ...base,
+      ...extraProps
+    };
+    section.id = generateId();
+    state.stack = [section];
+    notify();
+    return section;
+  }
+
   function addSection(slugOrSection, extraProps = {}) {
     return insertSection(state.stack.length, slugOrSection, extraProps);
   }
@@ -553,6 +571,7 @@ function createStackManager(initialConfig = {}) {
     setSectionFlag,
     setSectionHideOn,
     setSectionThemeMode,
+    replaceAllWithSection,
     moveSection,
     duplicateSection,
     replaceSection,

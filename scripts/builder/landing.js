@@ -194,7 +194,45 @@
       return { section: newSec, replaced: false, singletonType: null };
     }
 
-    return { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection };
+    /** A full template is a whole page in one section: adding one replaces everything else on the page. */
+    function isFullTemplate(slug, extraProps = {}) {
+      const f = (featuresMap && featuresMap.get && featuresMap.get(slug)) || {};
+      const cat = String(f.category || extraProps.category || '').toLowerCase();
+      return f.type === 'template' || cat.includes('full templates') || cat === 'full template';
+    }
+
+    /**
+     * Adds a section from the catalogue. A full template first asks, because it throws away the page's sections:
+     * resolves to the same result as addOrReplaceLandingSection, or null when the person says no.
+     */
+    async function addWithTemplateGuard(slug, extraProps = {}, preferredIndex = null) {
+      const existing = stackManager.getStack();
+      if (!isFullTemplate(slug, extraProps) || existing.length === 0) {
+        return addOrReplaceLandingSection(slug, extraProps, preferredIndex);
+      }
+      const title = extraProps.title || (featuresMap.get(slug) || {}).title || slug;
+      const locked = existing.filter(sec => sec.locked).length;
+      const ok = await window.BuilderConfirm.ask({
+        title: `Use the full template “${title}”?`,
+        message: 'A full template is a whole page. Using it replaces the page you have built so far.',
+        details: [
+          `All ${existing.length} section${existing.length === 1 ? '' : 's'} on this page will be discarded${locked ? ` (including ${locked} locked)` : ''}, whether you added them or came from another template.`,
+          'Edits to their content and sizing go with them.',
+          'Your theme, colours, page title and settings stay.',
+          'Undo brings the old page back.'
+        ],
+        confirmLabel: 'Yes, replace the page',
+        cancelLabel: 'Keep my page'
+      });
+      if (!ok) return null;
+      catalogLib.addRecent(slug);
+      rt.preloaderForceReplay = false;
+      const section = stackManager.replaceAllWithSection(slug, extraProps);
+      showToast(`Page replaced with “${title}”`);
+      return { section, replaced: true, singletonType: null, wholePage: true };
+    }
+
+    return { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection, addWithTemplateGuard, isFullTemplate };
   }
 
   const api = { createLandingSections };

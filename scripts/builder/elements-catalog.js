@@ -11,7 +11,7 @@
 
   function createElementsCatalog(ctx) {
     const {
-      addOrReplaceLandingSection, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
+      addOrReplaceLandingSection, addWithTemplateGuard, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
       previewFrame, registry, setActiveSection, stackManager, updateActiveSectionUI
     } = ctx;
 
@@ -316,7 +316,7 @@
           });
         }
 
-        const triggerAction = () => {
+        const triggerAction = async () => {
           catalogLib.addRecent(item.slug);
           if (item.isWidget) {
             // Add directly into active section
@@ -336,10 +336,11 @@
             }
           } else {
             // Add as new page section row
-            const res = addOrReplaceLandingSection(item.slug, {
+            const res = await addWithTemplateGuard(item.slug, {
               title: title,
               category: normCat
             });
+            if (!res) return; // a full template that the person chose not to use
             if (res && res.section) {
               setActiveSection(res.section.id);
               canvas.state.pendingSection = res.section.id;

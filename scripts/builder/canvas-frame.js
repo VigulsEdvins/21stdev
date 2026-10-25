@@ -8,7 +8,7 @@
   const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function wire(deps) {
-    const { previewFrame, handleHistoryKeydown, handleCanvasElementKeydown, cs, selectCanvasElement, closeToolbarPopup, ensureResizeHandles, elementEditToolbar, updateToolbarPosition, clearElementSelection, canvasContextMenu, hideContextMenu, focusElementPrimaryText, pushHistorySnapshot, toolbarBtnWidth, toolbarBtnHeight, toolbarImgWidth, toolbarImgHeight, toolbarCardWidth, toolbarCardHeight, toolbarTableWidth, toolbarTableHeight, stackManager, getActiveSection, setActiveSection, addOrReplaceLandingSection } = deps;
+    const { previewFrame, handleHistoryKeydown, handleCanvasElementKeydown, cs, selectCanvasElement, closeToolbarPopup, ensureResizeHandles, elementEditToolbar, updateToolbarPosition, clearElementSelection, canvasContextMenu, hideContextMenu, focusElementPrimaryText, pushHistorySnapshot, toolbarBtnWidth, toolbarBtnHeight, toolbarImgWidth, toolbarImgHeight, toolbarCardWidth, toolbarCardHeight, toolbarTableWidth, toolbarTableHeight, stackManager, getActiveSection, setActiveSection, addOrReplaceLandingSection, addWithTemplateGuard } = deps;
 
   // Preview Frame load handler: wire dragging & context menu inside iframe
   if (previewFrame) {
@@ -473,7 +473,7 @@
         }
       });
 
-      doc.addEventListener('drop', (e) => {
+      doc.addEventListener('drop', async (e) => {
         e.preventDefault();
 
         let payload = null;
@@ -559,10 +559,11 @@
             }
           }
 
-          const res = addOrReplaceLandingSection(payload.slug, {
+          const res = await addWithTemplateGuard(payload.slug, {
             title: payload.title,
             category: payload.normCat
           }, targetIndex);
+          if (!res) return; // a full template that the person chose not to use
 
           if (res && res.section) {
             setActiveSection(res.section.id);

@@ -168,7 +168,7 @@
     // Landing-page rules and section add/replace (scripts/builder/landing.js)
     const rt = { playedPreloaderId: null, preloaderForceReplay: false, forceFullPreviewReload: false }; // preloader and preview state shared by several modules
     const landing = (window.BuilderLanding || require('./scripts/builder/landing.js')).createLandingSections({ catalogLib, featuresMap, stackManager, rt });
-    const { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection } = landing;
+    const { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection, addWithTemplateGuard } = landing;
     let activeTargetSectionId = null;
 
     // Styling Tab Elements
@@ -228,7 +228,7 @@
     // Freeform canvas: overlay widgets, context menu, edit toolbar, selection (scripts/builder/canvas.js)
     const canvas = (window.BuilderCanvas || require('./scripts/builder/canvas.js')).createCanvasController({
       stackManager, previewFrame, canvasContextMenu, elementEditToolbar,
-      addOrReplaceLandingSection, getActiveSection, setActiveSection,
+      addOrReplaceLandingSection, addWithTemplateGuard, getActiveSection, setActiveSection,
       handleHistoryKeydown, pushHistorySnapshot
     });
     const { closeToolbarPopup, clearElementSelection, selectCanvasElement, updateToolbarPosition, ensureResizeHandles } = canvas;
@@ -303,7 +303,7 @@
 
     // Elements sidebar catalogue (scripts/builder/elements-catalog.js)
     const elementsCatalog = (window.BuilderElements || require('./scripts/builder/elements-catalog.js')).createElementsCatalog({
-      addOrReplaceLandingSection, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
+      addOrReplaceLandingSection, addWithTemplateGuard, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
       previewFrame, registry, setActiveSection, stackManager, updateActiveSectionUI
     });
     const { renderElementsCatalog } = elementsCatalog;
@@ -440,7 +440,7 @@
 
     // 5. Component drawer (scripts/builder/drawer.js)
     const drawer = (window.BuilderDrawer || require('./scripts/builder/drawer.js')).createDrawerController({
-      LANDING_PAGE_SINGLETONS, addOrReplaceLandingSection, catalogSearch, elementsFilters, featuresMap,
+      LANDING_PAGE_SINGLETONS, addOrReplaceLandingSection, addWithTemplateGuard, catalogSearch, elementsFilters, featuresMap,
       findExistingSingleton, getSingletonType, registry, setActiveSection
     });
     const { openDrawer, renderDrawerFeatures } = drawer;
