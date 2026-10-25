@@ -57,6 +57,26 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert.strictEqual((await page.evaluate(() => document.getElementById('accentColor').value)).toLowerCase(), '#ff0000');
   console.log('  ✓ a custom colour reaches the header');
 
+  // a project saved with custom colours and a tablet preview comes back with its controls showing the same
+  await page.evaluate(() => { const sm = window.builderPreview.stackManager; sm.setCustomColors({ bg: '#102030', text: '#f0f0f0', accent: '#ff8800' }); sm.setTheme('custom'); });
+  await page.click('#viewportTabletBtn');
+  await page.waitForTimeout(2500);
+  await page.reload();
+  await page.waitForFunction(() => window.builderPreview && document.querySelector('iframe'));
+  await page.waitForTimeout(2500);
+  v = await view();
+  assert.strictEqual(v.select, 'custom', 'reload keeps the custom theme in the select');
+  assert.strictEqual(v.sideBg.toLowerCase(), '#102030', 'reload shows the custom background in the palette');
+  assert.notStrictEqual(await page.evaluate(() => getComputedStyle(document.getElementById('customColorsControls')).display), 'none', 'the custom colour pickers are shown for a custom theme');
+  assert.strictEqual(await page.getAttribute('#viewportTabletBtn', 'aria-pressed'), 'true', 'the tablet button is pressed after reload');
+  console.log('  ✓ reload: custom colours and viewport shown');
+
+  // the viewport buttons follow the project when it is changed from code (a loaded project, an API call)
+  await page.evaluate(() => window.builderPreview.stackManager.setViewport('mobile'));
+  await page.waitForTimeout(500);
+  assert.strictEqual(await page.getAttribute('#viewportMobileBtn', 'aria-pressed'), 'true', 'the mobile button follows the project viewport');
+  console.log('  ✓ viewport buttons follow the project');
+
   assert.deepStrictEqual(errors, [], 'no page errors: ' + errors.join(' | '));
   await browser.close();
   await srv.close();

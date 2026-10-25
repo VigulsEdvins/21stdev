@@ -348,6 +348,18 @@
       if (themePresetCards) themePresetCards.querySelectorAll('.theme-card-btn').forEach(b => b.classList.toggle('is-active', b.dataset.theme === theme));
       const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
       const colors = theme === 'custom' ? (st.customColors || {}) : (presets[theme] || {});
+      // a project saved with custom colours shows the colour pickers when it is opened
+      if (theme === 'custom') {
+        if (customColorsControls && customColorsControls.style.display === 'none') customColorsControls.style.display = 'inline-flex';
+        if (customThemeToggle) customThemeToggle.classList.add('is-active');
+      }
+      // the preview width buttons follow the project's viewport (loaded project, API, undo)
+      const stage = document.getElementById('viewportStage');
+      const vp = st.viewport;
+      if (stage && ['desktop', 'tablet', 'mobile'].includes(vp) && stage.getAttribute('data-active-viewport') !== vp) {
+        const btn = document.getElementById('viewport' + vp.charAt(0).toUpperCase() + vp.slice(1) + 'Btn');
+        if (btn) btn.click();
+      }
       [[colors.bg, bgColorInput, sidebarBgColor], [colors.text, textColorInput, sidebarTextColor], [colors.accent, accentColorInput, sidebarAccentColor]].forEach(([value, ...inputs]) => {
         if (typeof value !== 'string' || !/^#[0-9a-f]{6}$/i.test(value)) return;
         inputs.forEach(input => { if (input && input.value.toLowerCase() !== value.toLowerCase()) input.value = value; });
