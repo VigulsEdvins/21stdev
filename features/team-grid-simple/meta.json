@@ -1,0 +1,109 @@
+{
+  "name": "Team Grid",
+  "slug": "team-grid-simple",
+  "title": "Team Grid",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "A team section with four member cards: initials avatar, name, role and a profile link, in a grid that stacks on phones.",
+  "tags": [
+    "team",
+    "people",
+    "about",
+    "grid",
+    "cards"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "agency",
+    "saas",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .tgs-title"
+    },
+    {
+      "id": "intro",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .tgs-sub"
+    },
+    {
+      "id": "name-1",
+      "label": "Person 1 name",
+      "type": "text",
+      "selector": ":scope .tgs-card:nth-child(1) .tgs-name"
+    },
+    {
+      "id": "role-1",
+      "label": "Person 1 role",
+      "type": "text",
+      "selector": ":scope .tgs-card:nth-child(1) .tgs-role"
+    },
+    {
+      "id": "name-2",
+      "label": "Person 2 name",
+      "type": "text",
+      "selector": ":scope .tgs-card:nth-child(2) .tgs-name"
+    },
+    {
+      "id": "role-2",
+      "label": "Person 2 role",
+      "type": "text",
+      "selector": ":scope .tgs-card:nth-child(2) .tgs-role"
+    },
+    {
+      "id": "name-3",
+      "label": "Person 3 name",
+      "type": "text",
+      "selector": ":scope .tgs-card:nth-child(3) .tgs-name"
+    },
+    {
+      "id": "role-3",
+      "label": "Person 3 role",
+      "type": "text",
+      "selector": ":scope .tgs-card:nth-child(3) .tgs-role"
+    },
+    {
+      "id": "name-4",
+      "label": "Person 4 name",
+      "type": "text",
+      "selector": ":scope .tgs-card:nth-child(4) .tgs-name"
+    },
+    {
+      "id": "role-4",
+      "label": "Person 4 role",
+      "type": "text",
+      "selector": ":scope .tgs-card:nth-child(4) .tgs-role"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .tgs-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

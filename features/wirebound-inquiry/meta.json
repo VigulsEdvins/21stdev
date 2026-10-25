@@ -119,5 +119,6 @@
     "canvas2d": true
   },
   "ownPalette": true,
-  "themeReviewed": "Flagged text is on the notebook cover/pages, which keep their own palette; white-on-blue copy is readable. Checked both themes 2026-10-24."
+  "themeReviewed": "Flagged text is on the notebook cover/pages, which keep their own palette; white-on-blue copy is readable. Checked both themes 2026-10-24.",
+  "reserveHeight": 801
 }

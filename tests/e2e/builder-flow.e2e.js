@@ -108,7 +108,9 @@ async function main() {
   const indexHtml = await zip.file('index.html').async('string');
   const scriptJs = await zip.file('script.js').async('string');
   assert(/<title>Acme Studio<\/title>/.test(indexHtml), 'ZIP index.html has the page title');
-  assert(indexHtml.includes('Playfair+Display'), 'ZIP index.html loads the chosen font');
+  const styleCss = await zip.file('style.css').async('string');
+  // fonts are self-hosted when Google Fonts is reachable, otherwise the page keeps the Google link
+  assert(indexHtml.includes('Playfair+Display') || (/Playfair Display/.test(styleCss) && names.some(n => n.startsWith('assets/fonts/'))), 'ZIP loads the chosen font');
   assert(scriptJs.includes('Hello from the builder'), 'ZIP script.js carries the content override');
   assert(!/["'(]\/(vivmgmt|betteroff|mom|carousel-gallery-play|assets\/library)\//.test(indexHtml + scriptJs), 'no root-relative asset paths left in the export');
   assert(names.some(n => n.startsWith('assets/')), 'ZIP contains an assets folder');

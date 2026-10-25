@@ -51,3 +51,20 @@ mem['web_builder_favourites_v1'] = '{bad json';
 assert.deepStrictEqual(lib.favourites(), [], 'corrupted storage is tolerated');
 
 console.log('✅ Catalog search tests passed!');
+
+// synonyms: people search with other words than the component's own
+{
+  const { searchItems } = require('../scripts/catalog-search.js');
+  const items = [
+    { slug: 'pricing-table-switch', title: 'Pricing Table', tags: ['pricing'], category: 'Cards & Tiles' },
+    { slug: 'sticky-shrink-header', title: 'Sticky Header', tags: ['header'], category: 'Headers & Nav' },
+    { slug: 'cookie-notice-bar', title: 'Cookie Notice Bar', tags: ['cookies'], category: 'Buttons & UI' },
+    { slug: 'other', title: 'Something else', tags: ['x'], category: 'Heroes' }
+  ];
+  assert.strictEqual(searchItems(items, 'plans')[0].slug, 'pricing-table-switch', 'plans finds pricing');
+  assert.strictEqual(searchItems(items, 'navbar')[0].slug, 'sticky-shrink-header', 'navbar finds header');
+  assert.strictEqual(searchItems(items, 'gdpr')[0].slug, 'cookie-notice-bar', 'gdpr finds the cookie bar');
+  assert.strictEqual(searchItems(items, 'nonsense').length, 0, 'unrelated words still find nothing');
+  assert.strictEqual(searchItems(items, 'pricing')[0].slug, 'pricing-table-switch');
+  console.log('✅ Synonym search tests passed!');
+}

@@ -234,6 +234,32 @@ function isolateSectionScript(js, sectionId) {
   return isolated;
 }
 
+/** One section's script as the preview runs it (also used to start a section added to a loaded preview). */
+function previewSectionScript(slug, id, isolatedJs, suppressed) {
+  if (suppressed) return `        // Section: ${slug} (${id}) [PRELOADER SUPPRESSED IN PREVIEW - WILL RUN ON REPLAY OR EXPORT]`;
+  return `        // Section: ${slug} (${id})
+        try {
+          window.__activeSectionRegisteringId = ${JSON.stringify(id)};
+          (function () {
+${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
+          })();
+        } catch (err) {
+          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);
+        } finally {
+          window.__activeSectionRegisteringId = null;
+        }`;
+}
+
+/** Scripts for the given sections only, ready to run in an already loaded preview. */
+function renderPreviewSectionScripts(sections, featuresData = {}) {
+  return sections.map((section) => {
+    const slug = section.slug;
+    const rawJs = section.js !== undefined ? section.js : (featuresData[slug] && featuresData[slug].js) || '';
+    const js = isolateSectionScript(rawJs, section.id);
+    return js.trim() ? previewSectionScript(slug, section.id, js, false) : '';
+  }).filter(Boolean).join('\n\n');
+}
+
 /**
  * Extracts non-local head links (e.g., Google Fonts, external CDN stylesheets).
  */
@@ -1276,6 +1302,83 @@ function computeSectionSizingStyles(sizing) {
 }
 
 /**
+ * Sizing plus the space a script-rendered section will fill (`reserveHeight` in meta.json, measured by
+ * scripts/measure-reserve.js). Reserving it before the script runs stops the sections below from jumping down.
+ */
+function sectionSizingStyle(section, reserveHeight) {
+  let style = computeSectionSizingStyles(section.sizing);
+  const reserve = Number(reserveHeight) || 0;
+  const mode = section.sizing && section.sizing.heightMode;
+  if (reserve > 0 && mode !== 'screen' && mode !== 'custom') style += `min-height: min(${reserve}px, 100svh);`;
+  return style;
+}
+
+/**
+ * Runtime for sections that start late: `__lazySection(id, slug, run)` runs a section's script when the section is
+ * within one screen of the viewport. Listeners for DOMContentLoaded / load that the script adds after the page has
+ * loaded are called straight away, so scripts written for page load still start.
+ */
+const LAZY_SECTION_RUNTIME = `  // Lazy start for heavy sections
+  window.__lazySection = function (id, slug, run) {
+    var el = document.getElementById(id);
+    var start = function () {
+      var addDoc = document.addEventListener, addWin = window.addEventListener;
+      var late = function (add, target) {
+        return function (type, fn) {
+          if ((type === 'DOMContentLoaded' || type === 'load') && document.readyState === 'complete' && typeof fn === 'function') {
+            setTimeout(function () { try { fn.call(target, new Event(type)); } catch (err) { console.error(err); } }, 0);
+            return;
+          }
+          return add.apply(this, arguments);
+        };
+      };
+      document.addEventListener = late(addDoc, document);
+      window.addEventListener = late(addWin, window);
+      window.__activeSectionRegisteringId = id;
+      try { run(); } catch (err) { console.error('Error executing ' + slug + ':', err); }
+      finally {
+        window.__activeSectionRegisteringId = null;
+        document.addEventListener = addDoc;
+        window.addEventListener = addWin;
+      }
+    };
+    if (!el || !('IntersectionObserver' in window)) { start(); return; }
+    var io = new IntersectionObserver(function (entries) {
+      if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); }
+    }, { rootMargin: '100% 0px' });
+    io.observe(el);
+  };`;
+
+const BREAKPOINT_QUERIES = {
+  mobile: '(max-width: 767px)',
+  tablet: '(min-width: 768px) and (max-width: 1023px)',
+  desktop: '(min-width: 1024px)'
+};
+const PADDING_PX = { none: 0, compact: 32, medium: 64, large: 120 };
+
+/**
+ * Per-breakpoint rules for sections: "hide on mobile / tablet / desktop" and a different top/bottom padding on tablet
+ * and phone (`sizing.paddingYTablet`, `sizing.paddingYMobile`). Written as media queries so the preview (whose
+ * Tablet/Mobile buttons resize the frame) and the export behave the same.
+ */
+function renderResponsiveCss(sections) {
+  const rules = { mobile: [], tablet: [], desktop: [] };
+  (Array.isArray(sections) ? sections : []).forEach(sec => {
+    const id = String(sec.id || '').replace(/[^A-Za-z0-9_-]/g, '');
+    if (!id) return;
+    (Array.isArray(sec.hideOn) ? sec.hideOn : []).forEach(bp => {
+      if (rules[bp]) rules[bp].push(`#${id} { display: none !important; }`);
+    });
+    const z = sec.sizing || {};
+    [['tablet', z.paddingYTablet], ['mobile', z.paddingYMobile]].forEach(([bp, pad]) => {
+      if (pad in PADDING_PX) rules[bp].push(`#${id} { padding-top: ${PADDING_PX[pad]}px !important; padding-bottom: ${PADDING_PX[pad]}px !important; }`);
+    });
+  });
+  const blocks = Object.keys(rules).filter(bp => rules[bp].length).map(bp => `@media ${BREAKPOINT_QUERIES[bp]} {\n  ${rules[bp].join('\n  ')}\n}`);
+  return blocks.length ? `/* Responsive section settings */\n${blocks.join('\n')}` : '';
+}
+
+/**
  * Generates universal CSS rules ensuring the active theme propagates
  * to all sections, component containers, and utilities on the page.
  */
@@ -1944,6 +2047,7 @@ function applyThemeToDocument(doc, themeConfig) {
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
 function assemblePreviewDocument(sections, themeConfig, featuresData = {}, options = {}) {
+  if (Array.isArray(sections)) sections = mapPageLinks(sections.filter(s => !s.hidden), options.pageLinks);
   const pageHead = renderPageHead(options.page, 'Page Preview');
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);
@@ -1955,6 +2059,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
   const scopedStyleBlocks = [];
   const sectionHtmlBlocks = [];
   const scriptBlocks = [];
+  let usesLazy = false;
 
   sections.forEach((section, index) => {
     const id = section.id || `sec-${index + 1}`;
@@ -1978,7 +2083,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     const preloaderClass = isPreloader ? (' is-preloader' + (isSuppressed ? ' is-dismissed is-suppressed' : '')) : '';
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
+    const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     let styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
     if (isPreloader && isSuppressed) {
       styleAttr = ' style="display: none !important; pointer-events: none !important;"';
@@ -1991,21 +2096,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      if (isPreloader && isSuppressed) {
-        scriptBlocks.push(`        // Section: ${slug} (${id}) [PRELOADER SUPPRESSED IN PREVIEW - WILL RUN ON REPLAY OR EXPORT]`);
-      } else {
-        scriptBlocks.push(`        // Section: ${slug} (${id})
-        try {
-          window.__activeSectionRegisteringId = ${JSON.stringify(id)};
-          (function () {
-${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
-          })();
-        } catch (err) {
-          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);
-        } finally {
-          window.__activeSectionRegisteringId = null;
-        }`);
-      }
+      scriptBlocks.push(previewSectionScript(slug, id, isolatedJs, isPreloader && isSuppressed));
     }
   });
 
@@ -2056,6 +2147,8 @@ ${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
   }
 
   const externalLinksHtml = Array.from(headLinks).join('\n  ');
+  const responsiveCss = renderResponsiveCss(sections);
+  if (responsiveCss) scopedStyleBlocks.push(responsiveCss);
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
   const allHtml = sectionHtmlBlocks.join('\n\n');
   const allScripts = scriptBlocks.join('\n\n');
@@ -2065,6 +2158,7 @@ ${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>${OFFSCREEN_RUNTIME}</script>
   ${pageHead.headTags}
   ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style id="universal-theme-styles">
 ${generateUniversalThemeStyles(theme)}
@@ -2364,12 +2458,185 @@ function renderNativePaletteCss(sections, nativeMap) {
  * @param {object} [page]
  * @param {string} [fallbackTitle]
  */
-function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
+/** Organization / LocalBusiness data for search engines; '' when the page has no business type or name. */
+function renderJsonLd(page = {}, title = '') {
+  if (page.bizType !== 'Organization' && page.bizType !== 'LocalBusiness') return '';
+  const name = String(page.bizName || '').trim();
+  if (!name) return '';
+  const absolute = (v) => { const s = String(v || '').trim(); return /^https?:\/\/[^\s"'<>]+$/i.test(s) ? s : ''; };
+  const data = { '@context': 'https://schema.org', '@type': page.bizType, name };
+  if (absolute(page.canonical)) data.url = absolute(page.canonical);
+  if (absolute(page.shareImage)) data.image = absolute(page.shareImage);
+  if (String(page.description || '').trim()) data.description = String(page.description).trim();
+  if (String(page.bizPhone || '').trim()) data.telephone = String(page.bizPhone).trim();
+  if (String(page.bizAddress || '').trim()) data.address = String(page.bizAddress).trim();
+  // '<' is escaped so no value can close the script tag
+  return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
+}
+
+/**
+ * Content-Security-Policy for the ZIP export. Scripts may only come from the page itself and the CDNs the page really
+ * uses; inline event handlers, inline scripts or eval need a weaker rule and are named in `reasons` so the README can say so.
+ */
+function renderCsp(indexHtml = '', scriptJs = '') {
+  const reasons = [];
+  const hosts = new Set();
+  const scriptSrcRe = /<script\b[^>]*\bsrc\s*=\s*["'](?:https?:)?\/\/([^/"']+)/gi;
+  let m;
+  while ((m = scriptSrcRe.exec(indexHtml))) hosts.add(m[1].toLowerCase());
+  const importRe = /\bimport\s*\(\s*["'`]https?:\/\/([^/"'`]+)/g;
+  while ((m = importRe.exec(scriptJs))) hosts.add(m[1].toLowerCase());
+  const body = String(indexHtml).replace(/<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi, '');
+  const scriptSrc = ["'self'", ...hosts];
+  if (/\son[a-z]+\s*=\s*["']/i.test(body) || /<script\b(?![^>]*\bsrc=)[^>]*>[\s\S]*?\S[\s\S]*?<\/script>/i.test(body)) {
+    scriptSrc.push("'unsafe-inline'");
+    reasons.push('inline scripts or event handlers in a section');
+  }
+  if (/\beval\s*\(|\bnew\s+Function\s*\(/.test(scriptJs)) {
+    scriptSrc.push("'unsafe-eval'");
+    reasons.push('eval() in a section script');
+  }
+  const policy = [
+    "default-src 'self'",
+    'script-src ' + scriptSrc.join(' '),
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "img-src 'self' data: blob: https:",
+    "font-src 'self' data: https://fonts.gstatic.com",
+    "media-src 'self' data: blob: https:",
+    "connect-src 'self' https: data: blob:",
+    "worker-src 'self' blob:",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self' https:"
+  ].join('; ');
+  return { policy, strict: reasons.length === 0, reasons };
+}
+
+/**
+ * Links to other pages of a multi-page site are stored as "page:<id>". `links` maps a page id to its file name
+ * ("about.html"); without a match (the preview, or a deleted page) the link becomes "#".
+ */
+function resolvePageLink(value, links = {}) {
+  const m = /^page:([A-Za-z0-9_-]+)$/.exec(String(value || '').trim());
+  return m ? (links[m[1]] || '#') : value;
+}
+
+/** A copy of the sections with every "page:<id>" link (Content-tab links and widget buttons) resolved. */
+function mapPageLinks(sections, links = {}) {
+  const LINK_KEYS = ['link', 'ctaLink'];
+  return (Array.isArray(sections) ? sections : []).map(sec => {
+    let changed = false;
+    const out = { ...sec };
+    if (sec.overrides) {
+      out.overrides = {};
+      Object.entries(sec.overrides).forEach(([k, o]) => {
+        if (o && o.type === 'link' && /^page:/.test(String(o.value || ''))) { out.overrides[k] = { ...o, value: resolvePageLink(o.value, links) }; changed = true; }
+        else out.overrides[k] = o;
+      });
+    }
+    if (Array.isArray(sec.elements)) {
+      out.elements = sec.elements.map(el => {
+        const fix = {};
+        LINK_KEYS.forEach(k => { if (typeof el[k] === 'string' && /^page:/.test(el[k])) { fix[k] = resolvePageLink(el[k], links); changed = true; } });
+        return Object.keys(fix).length ? { ...el, ...fix } : el;
+      });
+    }
+    return changed ? out : sec;
+  });
+}
+
+/** Host helper files: cache and security headers for Netlify / Cloudflare Pages, and plain deploy steps. */
+function renderDeployFiles() {
+  const headers = `/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+`;
+  const deploy = `# Putting the site online
+
+These files are ready to upload as they are. Nothing needs to be built.
+
+## Netlify
+1. Open https://app.netlify.com/drop
+2. Drag the unzipped folder onto the page. You get a web address in a few seconds.
+3. \`_headers\` is picked up automatically (caching and basic security headers).
+
+## Cloudflare Pages
+1. Workers & Pages > Create > Pages > Upload assets.
+2. Upload the unzipped folder. \`_headers\` works here too.
+
+## Any ordinary web host
+Upload everything (keep the \`assets\` folder next to \`index.html\`) to the folder your host serves, usually \`public_html\`.
+\`_headers\` is ignored by hosts that do not know it; that is harmless.
+
+## After it is online
+- Set "Live page address" in the builder's Page Settings and export again so \`sitemap.xml\` and the canonical link carry the real address.
+- Submit \`https://your-address/sitemap.xml\` in Google Search Console.
+`;
+  return { '_headers': headers, 'DEPLOY.md': deploy };
+}
+
+/** robots.txt and sitemap.xml for a single-page export. The sitemap needs the live address, so it is skipped without one. */
+function renderSiteFiles(page = {}, pageFiles = null) {
+  const canonical = String(page.canonical || '').trim();
+  const url = /^https?:\/\/[^\s"'<>]+$/i.test(canonical) ? canonical : '';
+  const files = {};
+  const icon = emojiFavicon(page);
+  if (icon) {
+    const name = (page.title || '').trim() || 'My site';
+    files['favicon.svg'] = icon + '\n';
+    files['site.webmanifest'] = JSON.stringify({ name, short_name: name.slice(0, 12), icons: [{ src: 'favicon.svg', sizes: 'any', type: 'image/svg+xml' }, { src: 'icon-192.png', sizes: '192x192', type: 'image/png' }, { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }], display: 'browser' }, null, 2) + '\n';
+  }
+  if (page.robots === 'noindex') {
+    files['robots.txt'] = 'User-agent: *\nDisallow: /\n';
+    return files;
+  }
+  const origin = url ? url.replace(/^(https?:\/\/[^/]+).*$/i, '$1') : '';
+  files['robots.txt'] = 'User-agent: *\nAllow: /\n' + (origin ? `\nSitemap: ${origin}/sitemap.xml\n` : '');
+  if (url) {
+    // one address per page: the home page is the live address itself, the others sit next to it
+    const dir = url.replace(/[^/]*$/, '');
+    const locs = Array.isArray(pageFiles) && pageFiles.length > 1
+      ? pageFiles.map(f => (f === 'index.html' ? (/\.html?$/i.test(url) ? url : dir) : dir + f))
+      : [url];
+    files['sitemap.xml'] = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${locs.map(l => `  <url><loc>${escapeHtml(l)}</loc></url>`).join('\n')}\n</urlset>\n`;
+  }
+  return files;
+}
+
+/** An emoji favicon becomes a real favicon.svg (and a web manifest) in an export; an image URL stays as it is. */
+function emojiFavicon(page = {}) {
+  const fav = (page.favicon || '').trim();
+  if (!fav || /^(https?:|data:|\/|\.\/|[\w-]+\/)/i.test(fav) && !/^\p{Extended_Pictographic}/u.test(fav)) return '';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${escapeHtml(fav)}</text></svg>`;
+}
+
+function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page', opts = {}) {
   const title = (page.title || '').trim() || fallbackTitle;
   const tags = [`<title>${escapeHtml(title)}</title>`];
   if ((page.description || '').trim()) {
     tags.push(`<meta name="description" content="${escapeHtml(page.description.trim())}">`);
   }
+
+  // Sharing and search tags. Only absolute https:// (or http://) addresses are written: a relative share image
+  // or canonical link is ignored by every crawler.
+  const absolute = (v) => { const s = String(v || '').trim(); return /^https?:\/\/[^\s"'<>]+$/i.test(s) ? s : ''; };
+  const description = (page.description || '').trim();
+  tags.push(`<meta property="og:type" content="website">`, `<meta property="og:title" content="${escapeHtml(title)}">`);
+  if (description) tags.push(`<meta property="og:description" content="${escapeHtml(description)}">`);
+  const shareImage = absolute(page.shareImage);
+  if (shareImage) tags.push(`<meta property="og:image" content="${escapeHtml(shareImage)}">`, '<meta name="twitter:card" content="summary_large_image">');
+  const canonical = absolute(page.canonical);
+  if (canonical) tags.push(`<link rel="canonical" href="${escapeHtml(canonical)}">`, `<meta property="og:url" content="${escapeHtml(canonical)}">`);
+  if (page.robots === 'noindex') tags.push('<meta name="robots" content="noindex, nofollow">');
+  const jsonLd = renderJsonLd(page, title);
+  if (jsonLd) tags.push(jsonLd);
 
   const fav = (page.favicon || '').trim();
   if (fav) {
@@ -2377,7 +2644,14 @@ function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page') {
     const href = isUrl
       ? fav
       : 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${escapeHtml(fav)}</text></svg>`);
-    tags.push(`<link rel="icon" href="${escapeHtml(href)}">`);
+    if (opts.siteFiles && emojiFavicon(page)) {
+      tags.push('<link rel="icon" href="favicon.svg" type="image/svg+xml">', '<link rel="apple-touch-icon" href="apple-touch-icon.png">', '<link rel="manifest" href="site.webmanifest">');
+    } else {
+      tags.push(`<link rel="icon" href="${escapeHtml(href)}">`);
+    }
+  } else if (opts.siteFiles) {
+    // no favicon chosen: an empty icon keeps browsers from requesting /favicon.ico and logging a 404
+    tags.push('<link rel="icon" href="data:,">');
   }
 
   const families = [];
@@ -2420,26 +2694,309 @@ function collectOverrides(sections) {
   return out;
 }
 
+
+/**
+ * Runtime shared by preview and export: WebGL canvases that are on the page but scrolled out of view skip their
+ * draw calls. A page with many WebGL sections otherwise paints all of them every frame (3 fps with six on a
+ * software renderer). Canvases that are hidden or have no size keep drawing, because they may be used as a texture.
+ */
+const OFFSCREEN_RUNTIME = `(function () {
+  if (typeof IntersectionObserver === 'undefined') return;
+  var visible = new WeakMap();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { visible.set(e.target, e.isIntersecting); });
+  }, { rootMargin: '300px 0px' });
+  // A section's canvas is judged by its section: a full-screen position:fixed background belongs to the section
+  // it came from, so it pauses while that section is out of view.
+  function skip(canvas) {
+    if (!canvas || !canvas.isConnected) return false;
+    var target = (canvas.closest && canvas.closest('.page-section')) || canvas;
+    if (!visible.has(target)) { visible.set(target, true); io.observe(target); return false; }
+    if (visible.get(target) !== false) return false;
+    var r = target.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+  }
+  ['WebGLRenderingContext', 'WebGL2RenderingContext'].forEach(function (name) {
+    var proto = window[name] && window[name].prototype;
+    if (!proto) return;
+    ['drawArrays', 'drawElements', 'drawArraysInstanced', 'drawElementsInstanced', 'drawRangeElements'].forEach(function (fn) {
+      var orig = proto[fn];
+      if (typeof orig !== 'function') return;
+      proto[fn] = function () { if (skip(this.canvas)) return; return orig.apply(this, arguments); };
+    });
+  });
+})();`;
+
+
+/**
+ * Review overlay for "review copies": a client opens the exported page, switches on Review, clicks anything to
+ * leave a comment, and downloads the comments as a JSON file to send back. No server: comments live in the
+ * browser (localStorage) until downloaded. The builder loads that file to jump to each comment.
+ */
+const REVIEW_RUNTIME = `(function () {
+  if (window.__reviewOverlay) return;
+  window.__reviewOverlay = true;
+  var KEY = 'review-comments:' + location.pathname;
+  var NAME_KEY = 'review-author';
+  var comments = [];
+  var on = false;
+  var hovered = null;
+
+  function store(read, value) {
+    try { if (read) return localStorage.getItem(KEY); localStorage.setItem(KEY, value); } catch (e) { return null; }
+  }
+  try { comments = JSON.parse(store(true) || '[]') || []; } catch (e) { comments = []; }
+
+  var css = document.createElement('style');
+  css.textContent = '#rv-root,#rv-root *{box-sizing:border-box;font-family:system-ui,sans-serif}'
+    + '#rv-root{position:absolute;left:0;top:0;width:0;height:0;z-index:2147483000}'
+    + '.rv-fab{position:fixed;left:16px;bottom:16px;display:flex;gap:8px;align-items:center;padding:10px 16px;border:0;border-radius:999px;background:#111;color:#fff;font:600 14px system-ui;box-shadow:0 8px 24px rgba(0,0,0,.35);cursor:pointer}'
+    + '.rv-fab[aria-pressed=true]{background:#2563eb}'
+    + '.rv-fab b{background:#fff;color:#111;border-radius:999px;padding:0 7px;font-size:12px}'
+    + '.rv-hover{outline:2px solid #2563eb!important;outline-offset:2px;cursor:crosshair!important}'
+    + '.rv-pin{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:#2563eb;color:#fff;font:700 12px system-ui;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.4);cursor:pointer;padding:0}'
+    + '.rv-pop,.rv-list{position:fixed;background:#fff;color:#111;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.45);padding:14px;font-size:14px}'
+    + '.rv-pop{width:300px}.rv-pop textarea,.rv-pop input{width:100%;margin:6px 0;padding:8px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;color:#111;background:#fff}'
+    + '.rv-pop textarea{min-height:84px;resize:vertical}'
+    + '.rv-row{display:flex;gap:8px;justify-content:flex-end}.rv-btn{padding:8px 14px;border:0;border-radius:8px;background:#2563eb;color:#fff;font:600 13px system-ui;cursor:pointer}.rv-btn.rv-ghost{background:#e2e8f0;color:#111}'
+    + '.rv-list{left:16px;bottom:68px;width:340px;max-height:60vh;overflow:auto}.rv-list h2{margin:0 0 8px;font-size:15px}.rv-list ol{margin:0;padding:0;list-style:none}'
+    + '.rv-item{border-top:1px solid #e2e8f0;padding:8px 0;display:grid;gap:4px}.rv-item small{color:#64748b}.rv-item button{justify-self:start;border:0;background:none;color:#2563eb;font:600 12px system-ui;cursor:pointer;padding:0}'
+    + '.rv-empty{color:#64748b;margin:6px 0 10px}';
+  document.head.appendChild(css);
+
+  var root = document.createElement('div');
+  root.id = 'rv-root';
+  document.body.appendChild(root);
+  var fab = document.createElement('button');
+  fab.type = 'button'; fab.className = 'rv-fab'; fab.setAttribute('aria-pressed', 'false');
+  root.appendChild(fab);
+  var pins = [];
+  var pop = null;
+  var list = null;
+
+  function inRoot(el) { return !!(el && el.closest && el.closest('#rv-root')); }
+  function sectionOf(el) { return el && el.closest ? el.closest('.page-section') : null; }
+  function pathWithin(section, el) {
+    var parts = [];
+    while (el && el !== section && parts.length < 10) {
+      var tag = el.tagName.toLowerCase();
+      var idx = 1, sib = el;
+      while ((sib = sib.previousElementSibling)) if (sib.tagName === el.tagName) idx++;
+      parts.unshift(tag + ':nth-of-type(' + idx + ')');
+      el = el.parentElement;
+    }
+    return parts.join(' > ');
+  }
+  function findEl(c) {
+    var s = document.getElementById(c.section.id);
+    if (!s) return null;
+    if (!c.path) return s;
+    try { return s.querySelector(':scope > ' + c.path) || s; } catch (e) { return s; }
+  }
+  function save() { store(false, JSON.stringify(comments)); }
+  function label() { fab.innerHTML = (on ? 'Reviewing' : 'Review') + ' <b>' + comments.length + '</b>'; fab.setAttribute('aria-pressed', String(on)); }
+
+  function placePins() {
+    pins.forEach(function (p) { p.remove(); });
+    pins = [];
+    comments.forEach(function (c, i) {
+      var el = findEl(c);
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      if (!r.width && !r.height) return;
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'rv-pin'; b.textContent = String(i + 1);
+      b.title = c.comment;
+      b.style.left = Math.round(r.right + window.pageXOffset - 6) + 'px';
+      b.style.top = Math.round(r.top + window.pageYOffset + 6) + 'px';
+      b.addEventListener('click', function (e) { e.stopPropagation(); e.preventDefault(); openList(); });
+      root.appendChild(b);
+      pins.push(b);
+    });
+  }
+  var raf = 0;
+  function schedule() { if (raf) return; raf = requestAnimationFrame(function () { raf = 0; placePins(); }); }
+  window.addEventListener('resize', schedule);
+  window.addEventListener('scroll', schedule, { passive: true });
+  setInterval(schedule, 1500);
+
+  function closePop() { if (pop) { pop.remove(); pop = null; } }
+  function openPop(el, x, y) {
+    closePop();
+    var section = sectionOf(el);
+    if (!section) return;
+    pop = document.createElement('div');
+    pop.className = 'rv-pop';
+    pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Add a comment');
+    pop.innerHTML = '<strong>Comment</strong><textarea placeholder="What should change here?" aria-label="Comment"></textarea><input type="text" placeholder="Your name" aria-label="Your name"><div class="rv-row"><button type="button" class="rv-btn rv-ghost">Cancel</button><button type="button" class="rv-btn">Save</button></div>';
+    pop.style.left = Math.max(8, Math.min(x, window.innerWidth - 316)) + 'px';
+    pop.style.top = Math.max(8, Math.min(y, window.innerHeight - 250)) + 'px';
+    root.appendChild(pop);
+    var ta = pop.querySelector('textarea'), nm = pop.querySelector('input'), btns = pop.querySelectorAll('button');
+    try { nm.value = localStorage.getItem(NAME_KEY) || ''; } catch (e) {}
+    ta.focus();
+    btns[0].addEventListener('click', closePop);
+    btns[1].addEventListener('click', function () {
+      var text = ta.value.trim();
+      if (!text) { ta.focus(); return; }
+      try { localStorage.setItem(NAME_KEY, nm.value.trim()); } catch (e) {}
+      comments.push({
+        id: 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
+        section: { id: section.id, slug: section.getAttribute('data-section-slug') || '' },
+        path: pathWithin(section, el),
+        text: (el.innerText || el.alt || '').trim().slice(0, 80),
+        comment: text, author: nm.value.trim(), at: new Date().toISOString()
+      });
+      save(); label(); closePop(); placePins();
+    });
+    pop.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); closePop(); } });
+  }
+
+  function exportJson() {
+    return JSON.stringify({ format: 'web-builder-review', version: 1, page: document.title, url: location.href.split('#')[0], exportedAt: new Date().toISOString(), comments: comments }, null, 2);
+  }
+  function exportText() {
+    return document.title + ' - review comments\\n\\n' + comments.map(function (c, i) { return (i + 1) + '. [' + (c.section.slug || 'page') + '] ' + c.comment + (c.author ? ' (' + c.author + ')' : '') + (c.text ? '\\n   on: "' + c.text + '"' : ''); }).join('\\n');
+  }
+  function closeList() { if (list) { list.remove(); list = null; } }
+  function openList() {
+    closeList();
+    list = document.createElement('div');
+    list.className = 'rv-list';
+    list.setAttribute('role', 'dialog'); list.setAttribute('aria-label', 'Comments');
+    var html = '<h2>Comments (' + comments.length + ')</h2>' + (comments.length ? '<ol>' : '<p class="rv-empty">Switch on Review, then click anything on the page to comment on it.</p>');
+    comments.forEach(function (c, i) {
+      html += '<li class="rv-item"><span><b>' + (i + 1) + '.</b> <span data-t></span></span><small>' + (c.section.slug || 'page') + (c.author ? ' &middot; ' + c.author : '') + '</small><button type="button" data-del="' + i + '">Delete</button></li>';
+    });
+    html += comments.length ? '</ol>' : '';
+    html += '<div class="rv-row" style="margin-top:10px"><button type="button" class="rv-btn rv-ghost" data-act="copy">Copy text</button><button type="button" class="rv-btn" data-act="download">Download comments</button></div>';
+    html += '<p class="rv-note" style="margin:8px 0 0;font-size:11px;opacity:.7">Comments are saved only in this browser until you download them. Nothing is sent anywhere.</p>';
+    list.innerHTML = html;
+    var spans = list.querySelectorAll('[data-t]');
+    comments.forEach(function (c, i) { spans[i].textContent = c.comment; });
+    list.addEventListener('click', function (e) {
+      var d = e.target.getAttribute && e.target.getAttribute('data-del');
+      if (d !== null && d !== undefined) { comments.splice(Number(d), 1); save(); label(); placePins(); openList(); return; }
+      var act = e.target.getAttribute && e.target.getAttribute('data-act');
+      if (act === 'download') {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([exportJson()], { type: 'application/json' }));
+        a.download = 'review-comments.json'; document.body.appendChild(a); a.click(); a.remove();
+      } else if (act === 'copy') {
+        var text = exportText();
+        if (navigator.clipboard) navigator.clipboard.writeText(text).catch(function () {});
+      }
+    });
+    list.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeList(); });
+    root.appendChild(list);
+  }
+
+  function setOn(v) {
+    on = v; label();
+    document.body.classList.toggle('rv-on', on);
+    if (!on) { if (hovered) hovered.classList.remove('rv-hover'); hovered = null; closePop(); }
+  }
+  fab.addEventListener('click', function () { if (list) { closeList(); } else { openList(); } });
+  fab.addEventListener('dblclick', function () { setOn(!on); });
+  fab.addEventListener('keydown', function (e) { if (e.key === 'r' || e.key === 'R') setOn(!on); });
+  document.addEventListener('mouseover', function (e) {
+    if (!on || inRoot(e.target) || !sectionOf(e.target)) return;
+    if (hovered) hovered.classList.remove('rv-hover');
+    hovered = e.target; hovered.classList.add('rv-hover');
+  });
+  document.addEventListener('click', function (e) {
+    if (!on || inRoot(e.target) || !sectionOf(e.target)) return;
+    e.preventDefault(); e.stopPropagation();
+    openPop(e.target, e.clientX + 12, e.clientY + 12);
+  }, true);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePop(); closeList(); if (on) setOn(false); } });
+  label();
+  // a first-time hint: the button toggles the list, and a toggle for review mode sits next to it
+  var toggle = document.createElement('button');
+  toggle.type = 'button'; toggle.className = 'rv-fab'; toggle.style.left = '130px'; toggle.textContent = 'Comment mode';
+  toggle.setAttribute('aria-pressed', 'false');
+  toggle.addEventListener('click', function () { setOn(!on); toggle.setAttribute('aria-pressed', String(on)); toggle.textContent = on ? 'Stop commenting' : 'Comment mode'; });
+  root.appendChild(toggle);
+  placePins();
+})();`;
+
 /** Runtime shared by preview and export: defines window.__setOverrides(list). */
 const OVERRIDES_RUNTIME = `(function () {
   var list = [];
+  // What each element held before an override touched it, so removing the override (Reset, undo) puts it back.
+  var originals = [];
+  function original(el) {
+    for (var i = 0; i < originals.length; i++) if (originals[i].el === el) return originals[i];
+    var rec = { el: el, saved: {} };
+    originals.push(rec);
+    return rec;
+  }
+  function remember(el, key, read) {
+    var rec = original(el);
+    if (!(key in rec.saved)) rec.saved[key] = read();
+    return key;
+  }
+  function restore(el, key, value) {
+    if (key === 'html') el.innerHTML = value;
+    else if (key === 'src') { if (value === null) el.removeAttribute('src'); else el.setAttribute('src', value); }
+    else if (key === 'alt' || key === 'aria-label' || key === 'role') { if (value === null) el.removeAttribute(key); else el.setAttribute(key, value); }
+    else if (key === 'srcset') { if (value === null) el.removeAttribute('srcset'); else el.setAttribute('srcset', value); }
+    else if (key === 'href') { if (value === null) el.removeAttribute('href'); else el.setAttribute('href', value); }
+    else if (key.indexOf('style:') === 0) { if (value) el.style.setProperty(key.slice(6), value); else el.style.removeProperty(key.slice(6)); }
+  }
   function apply() {
+    var active = [];
     list.forEach(function (o) {
       var root = document.getElementById(o.section);
       if (!root) return;
       var el;
       try { el = root.querySelector(o.selector); } catch (e) { return; }
       if (!el) return;
+      var key;
       if (o.type === 'image') {
-        if (el.tagName === 'IMG') { el.removeAttribute('srcset'); el.src = o.value; }
-        else el.style.backgroundImage = 'url("' + o.value.replace(/"/g, '%22') + '")';
+        if (el.tagName === 'IMG') {
+          remember(el, 'srcset', function () { return el.getAttribute('srcset'); });
+          remember(el, 'src', function () { return el.getAttribute('src'); });
+          active.push([el, 'srcset'], [el, 'src']);
+          el.removeAttribute('srcset'); el.src = o.value;
+        } else {
+          key = remember(el, 'style:background-image', function () { return el.style.getPropertyValue('background-image'); });
+          active.push([el, key]);
+          el.style.backgroundImage = 'url("' + o.value.replace(/"/g, '%22') + '")';
+        }
+      } else if (o.type === 'alt') {
+        // the picture's description: alt on an <img>, aria-label on anything painted with a background image
+        if (el.tagName === 'IMG') {
+          remember(el, 'alt', function () { return el.getAttribute('alt'); });
+          active.push([el, 'alt']);
+          el.setAttribute('alt', o.value);
+        } else {
+          remember(el, 'aria-label', function () { return el.getAttribute('aria-label'); });
+          remember(el, 'role', function () { return el.getAttribute('role'); });
+          active.push([el, 'aria-label'], [el, 'role']);
+          el.setAttribute('aria-label', o.value); el.setAttribute('role', 'img');
+        }
       } else if (o.type === 'link') {
+        key = remember(el, 'href', function () { return el.getAttribute('href'); });
+        active.push([el, key]);
         el.setAttribute('href', o.value);
       } else if (o.type === 'color') {
+        key = remember(el, 'style:' + (o.attr || 'color'), function () { return el.style.getPropertyValue(o.attr || 'color'); });
+        active.push([el, key]);
         el.style.setProperty(o.attr || 'color', o.value);
       } else {
+        key = remember(el, 'html', function () { return el.innerHTML; });
+        active.push([el, key]);
         el.textContent = o.value;
       }
+    });
+    // anything an override changed earlier but no longer asks for goes back to what it was
+    originals = originals.filter(function (rec) {
+      Object.keys(rec.saved).forEach(function (key) {
+        var still = active.some(function (a) { return a[0] === rec.el && a[1] === key; });
+        if (!still) { restore(rec.el, key, rec.saved[key]); delete rec.saved[key]; }
+      });
+      return Object.keys(rec.saved).length > 0;
     });
   }
   window.__setOverrides = function (next) { list = next || []; apply(); };
@@ -2452,7 +3009,8 @@ const OVERRIDES_RUNTIME = `(function () {
  * Generates an export bundle containing index.html, style.css, script.js, and README.md.
  */
 function generateExportBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const pageHead = renderPageHead(options.page);
+  if (Array.isArray(sections)) sections = mapPageLinks(sections.filter(s => !s.hidden), options.pageLinks);
+  const pageHead = renderPageHead(options.page, undefined, { siteFiles: true });
   const theme = resolveTheme(themeConfig);
   const isDark = isDarkTheme(theme);
   const safeSections = Array.isArray(sections) ? sections : [];
@@ -2461,6 +3019,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
   const scopedStyleBlocks = [];
   const sectionHtmlBlocks = [];
   const scriptBlocks = [];
+  let usesLazy = false;
   const sectionInfoList = [];
   const contentOverrides = collectOverrides(safeSections);
   const pageOpts = options.page || {};
@@ -2489,7 +3048,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     const preloaderClass = isPreloader ? ' is-preloader' : '';
     const isolatedHtml = isolateSectionMarkup(rawHtml, id);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
-    const sizingStyle = isPreloader ? '' : computeSectionSizingStyles(section.sizing);
+    const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
     const nativeList = nativePolarities(options.nativeMap, slug);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
@@ -2498,7 +3057,14 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      scriptBlocks.push(`  // Section: ${slug}\n  try {\n    window.__activeSectionRegisteringId = ${JSON.stringify(id)};\n    (function () {\n${isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n')}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  } finally {\n    window.__activeSectionRegisteringId = null;\n  }`);
+      const body = isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n');
+      if ((options.lazyMap || {})[slug] && !isPreloader) {
+        // heavy one-screen section: start it when it is about to scroll into view
+        usesLazy = true;
+        scriptBlocks.push(`  // Section: ${slug} (starts when it is close to the screen)\n  window.__lazySection(${JSON.stringify(id)}, ${JSON.stringify(slug)}, function () {\n    (function () {\n${body}\n    })();\n  });`);
+      } else {
+        scriptBlocks.push(`  // Section: ${slug}\n  try {\n    window.__activeSectionRegisteringId = ${JSON.stringify(id)};\n    (function () {\n${body}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  } finally {\n    window.__activeSectionRegisteringId = null;\n  }`);
+      }
     }
   });
 
@@ -2540,8 +3106,11 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
   } catch (e) {}`);
 
   const externalLinksHtml = Array.from(headLinks).join('\n  ');
+  const responsiveCss = renderResponsiveCss(safeSections);
+  if (responsiveCss) scopedStyleBlocks.push(responsiveCss);
   const allScopedStyles = scopedStyleBlocks.join('\n\n');
   const allHtml = sectionHtmlBlocks.join('\n\n');
+  if (usesLazy) scriptBlocks.unshift(LAZY_SECTION_RUNTIME);
   const allScripts = scriptBlocks.join('\n\n');
 
   // 1. index.html
@@ -2632,6 +3201,9 @@ ${renderNativePaletteCss(safeSections, options.nativeMap)}`;
   };
 })();
 
+// Skip WebGL drawing for canvases scrolled out of view
+${OFFSCREEN_RUNTIME}
+
 // Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
 (function () {
   var origAdd = EventTarget.prototype.addEventListener;
@@ -2679,7 +3251,7 @@ ${allScripts || '  // No section scripts'}
 // Client content edits made in the builder (headlines, images, links). Change a value here and reload.
 ${OVERRIDES_RUNTIME}
 window.__setOverrides(${JSON.stringify(collectOverrides(safeSections), null, 2)});
-`;
+${options.review ? '\n// Review copy: lets a reviewer leave comments on the page and send them back as a file\n' + REVIEW_RUNTIME + '\n' : ''}`;
 
   // 4. README.md
   const unverifiedLicences = sectionInfoList.filter(sec => (options.licenseMap || {})[sec.slug] === 'unverified');
@@ -2709,6 +3281,10 @@ Change the title, description and favicon in the \`<head>\` of \`index.html\`. F
 ## Client Content Edits
 
 ${contentOverrides.length ? contentOverrides.map(o => `- \`#${o.section}\` → \`${o.selector}\` (${o.type}): ${o.value.length > 80 ? o.value.slice(0, 77) + '...' : o.value}`).join('\n') + '\n\nThese were edited in the builder and are applied by the `window.__setOverrides([...])` list at the bottom of `script.js`. Edit the values there, or change the markup in `index.html` and delete the matching entry.' : 'No content was overridden in the builder; edit text directly in `index.html`.'}
+
+## Libraries
+
+Some sections bundle GSAP (animation). Its licence (https://gsap.com/standard-license) allows normal website use; read it if you plan to resell the page as part of a design tool.
 
 ## Assets
 
@@ -2765,19 +3341,26 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
 \`\`\`
 `;
 
-  return {
-    'index.html': indexHtml,
+  let finalIndex = indexHtml;
+  let cspNote = '';
+  if (options.csp) {
+    const csp = renderCsp(indexHtml, scriptJs);
+    finalIndex = indexHtml.replace('<meta charset="UTF-8">', `<meta charset="UTF-8">\n  <meta http-equiv="Content-Security-Policy" content="${escapeHtml(csp.policy)}">`);
+    cspNote = `\n## Security policy\n\nindex.html carries a Content-Security-Policy that only lets scripts run from this site${csp.strict ? '' : ' (relaxed because of: ' + csp.reasons.join(', ') + ')'} and from the CDNs this page uses. If you add a new third-party script, add its address to \`script-src\` in the \`<meta http-equiv="Content-Security-Policy">\` tag.\n`;
+  }
+  return Object.assign({
+    'index.html': finalIndex,
     'style.css': styleCss,
     'script.js': scriptJs,
-    'README.md': readmeMd
-  };
+    'README.md': readmeMd + cspNote
+  }, renderSiteFiles(pageOpts, options.pageFiles), renderDeployFiles());
 }
 
 /**
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, ownPalette: options.ownPalette });
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette });
   return doc
     .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }
@@ -2979,9 +3562,18 @@ if (typeof module !== 'undefined' && module.exports) {
     generateExportBundle,
     generateSingleFileBundle,
     renderPageHead,
+    renderJsonLd,
+    renderSiteFiles,
+    renderPreviewSectionScripts,
+    renderDeployFiles,
+    resolvePageLink,
+    mapPageLinks,
+    renderCsp,
     renderNativePaletteCss,
     collectOverrides,
+    REVIEW_RUNTIME,
     computeSectionSizingStyles,
+    renderResponsiveCss,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,
     createZipArchive
@@ -3005,9 +3597,13 @@ if (typeof window !== 'undefined') {
     generateExportBundle,
     generateSingleFileBundle,
     renderPageHead,
+    renderJsonLd,
+    renderSiteFiles,
+    renderPreviewSectionScripts,
     renderNativePaletteCss,
     collectOverrides,
     computeSectionSizingStyles,
+    renderResponsiveCss,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,
     createZipArchive

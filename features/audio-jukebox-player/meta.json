@@ -19,7 +19,7 @@
   "order": 12,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "light",
+  "weight": "medium",
   "mood": [
     "minimal",
     "dark"
@@ -88,7 +88,5 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "light"
-  ]
+  "nativeWhen": []
 }

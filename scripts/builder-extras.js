@@ -61,6 +61,27 @@
    * `explicit` is the feature's meta.json `customizable` list; when present it wins over discovery.
    * @returns {Array<{id,label,type,selector,attr?,current,auto}>}
    */
+  /**
+   * The colour an element shows for a property or custom property, as #rrggbb (what <input type=color> needs).
+   * Reads the computed value, so a colour set by the component's own stylesheet is found, not just inline ones.
+   */
+  function currentColor(el, attr) {
+    let raw = '';
+    try {
+      raw = (el.style.getPropertyValue(attr) || (el.ownerDocument.defaultView || window).getComputedStyle(el).getPropertyValue(attr) || '').trim();
+    } catch (_) { return ''; }
+    if (!raw) return '';
+    // let the browser resolve names, rgb() and var() references to rgb
+    const probe = el.ownerDocument.createElement('span');
+    probe.style.color = raw;
+    if (!probe.style.color) return '';
+    el.ownerDocument.body.appendChild(probe);
+    const rgb = (el.ownerDocument.defaultView || window).getComputedStyle(probe).color;
+    probe.remove();
+    const m = rgb.match(/rgba?\(\s*(\d+)[ ,]+(\d+)[ ,]+(\d+)/);
+    return m ? '#' + [m[1], m[2], m[3]].map(n => Number(n).toString(16).padStart(2, '0')).join('') : '';
+  }
+
   function discoverFields(sectionEl, explicit, opts = {}) {
     if (!sectionEl) return [];
     const maxText = opts.limit || MAX_TEXT_FIELDS;
@@ -74,7 +95,7 @@
         try { el = sectionEl.querySelector(def.selector); } catch (_) { /* bad selector in meta */ }
         if (!el) return;
         const type = def.type || 'text';
-        const current = type === 'image' ? (el.getAttribute('src') || '') : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? (el.style.getPropertyValue(def.attr || 'color') || '') : el.textContent.trim();
+        const current = type === 'image' ? (el.getAttribute('src') || '') : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? currentColor(el, def.attr || 'color') : el.textContent.trim();
         fields.push({ id: def.id, label: def.label || def.id, type, selector: def.selector, attr: def.attr, current, auto: false });
       });
       return fields;
@@ -158,6 +179,8 @@
       const active = activeProject();
       const list = store.list();
       const snaps = active ? store.snapshots(active.id) : [];
+      const starters = root.BuilderStarters ? root.BuilderStarters.listStarters(ctx.getRegistry()) : [];
+      const kits = root.BuilderKits ? root.BuilderKits.listKits(ctx.getRegistry()) : [];
       modalBody.innerHTML = `
         ${active ? `
         <section class="proj-section">
@@ -172,6 +195,10 @@
           <button type="button" class="builder-btn-primary" id="projSnapshotBtn">Save snapshot</button>
           <button type="button" class="builder-btn-subtle" id="projCopyBtn">Save as new project</button>
           <button type="button" class="builder-btn-subtle" id="projBlankBtn">New blank page</button>
+          ${starters.length ? `<select id="projStarterSelect" class="builder-select" aria-label="Starter page">${starters.map(s => `<option value="${escapeHtml(s.industry)}">${escapeHtml(s.label)} starter (${s.sections.length} sections)</option>`).join('')}</select>
+          <button type="button" class="builder-btn-subtle" id="projStarterBtn">New from starter</button>` : ''}
+          ${kits.length ? `<select id="projKitSelect" class="builder-select" aria-label="Kit">${kits.map(k => `<option value="${escapeHtml(k.id)}">${escapeHtml(k.label)} (${k.sections.length} sections)</option>`).join('')}</select>
+          <button type="button" class="builder-btn-subtle" id="projKitBtn">New from kit</button>` : ''}
           <button type="button" class="builder-btn-subtle" id="projExportBtn">Export file</button>
           <button type="button" class="builder-btn-subtle" id="projImportBtn">Import file</button>
           <input type="file" id="projImportInput" accept="application/json,.json" hidden />
@@ -249,6 +276,37 @@
           refreshLabel(); renderProjects(); ctx.showToast(`Created “${name}”`);
         } catch (e) { ctx.showToast(e.message); }
       });
+      const kitBtn = q('#projKitBtn');
+      if (kitBtn) kitBtn.addEventListener('click', () => {
+        const kit = (root.BuilderKits ? root.BuilderKits.listKits(ctx.getRegistry()) : []).find(k => k.id === q('#projKitSelect').value);
+        if (!kit) return;
+        const name = root.prompt(`Name for the new ${kit.label.toLowerCase()} project`, 'New client');
+        if (!name) return;
+        try {
+          saveCurrentIntoStore();
+          const blank = { stack: [], theme: kit.theme || 'midnight-dark', customColors: {}, page: { ...(root.StackManager && root.StackManager.DEFAULT_PAGE), title: kit.title }, viewport: 'desktop' };
+          store.create({ name, state: blank });
+          ctx.applyState(blank);
+          kit.sections.forEach(s => sm.addSection(s.slug, { title: s.title, category: s.category }));
+          refreshLabel(); renderProjects(); ctx.showToast(`Started “${name}” from the ${kit.label.toLowerCase()} kit`);
+        } catch (e) { ctx.showToast(e.message); }
+      });
+      const starterBtn = q('#projStarterBtn');
+      if (starterBtn) starterBtn.addEventListener('click', () => {
+        const industry = q('#projStarterSelect').value;
+        const starter = (root.BuilderStarters ? root.BuilderStarters.listStarters(ctx.getRegistry()) : []).find(s => s.industry === industry);
+        if (!starter) return;
+        const name = root.prompt(`Name for the new ${starter.label.toLowerCase()} project`, 'New client');
+        if (!name) return;
+        try {
+          saveCurrentIntoStore();
+          const blank = { stack: [], theme: 'midnight-dark', customColors: {}, page: { ...(root.StackManager && root.StackManager.DEFAULT_PAGE) }, viewport: 'desktop' };
+          store.create({ name, state: blank });
+          ctx.applyState(blank);
+          starter.sections.forEach(s => sm.addSection(s.slug, { title: s.title, category: s.category }));
+          refreshLabel(); renderProjects(); ctx.showToast(`Started “${name}” from the ${starter.label.toLowerCase()} starter`);
+        } catch (e) { ctx.showToast(e.message); }
+      });
       q('#projBlankBtn').addEventListener('click', () => {
         const name = root.prompt('Name for the blank project', 'New client');
         if (!name) return;
@@ -283,7 +341,7 @@
           const p = store.importProject(await file.text());
           const added = ctx.mergeFavourites(p.extras && p.extras.favourites);
           ctx.applyState(p.state);
-          refreshLabel(); renderProjects(); ctx.showToast(`Imported “${p.name}”${added ? ` and ${added} starred component${added === 1 ? '' : 's'}` : ''}`);
+          refreshLabel(); renderProjects(); ctx.showToast(`Imported “${p.name}”${p.sanitizedCount ? ` (${p.sanitizedCount} unsafe or invalid item${p.sanitizedCount === 1 ? '' : 's'} removed)` : ''}${added ? ` and ${added} starred component${added === 1 ? '' : 's'}` : ''}`);
         } catch (e) { ctx.showToast(e.message); }
       });
 
@@ -338,7 +396,14 @@
       favicon: doc.getElementById('pageFaviconInput'),
       fontDisplay: doc.getElementById('pageFontDisplayInput'),
       fontBody: doc.getElementById('pageFontBodyInput'),
-      lang: doc.getElementById('pageLangInput')
+      lang: doc.getElementById('pageLangInput'),
+      shareImage: doc.getElementById('pageShareImageInput'),
+      canonical: doc.getElementById('pageCanonicalInput'),
+      robots: doc.getElementById('pageRobotsInput'),
+      bizType: doc.getElementById('pageBizTypeInput'),
+      bizName: doc.getElementById('pageBizNameInput'),
+      bizPhone: doc.getElementById('pageBizPhoneInput'),
+      bizAddress: doc.getElementById('pageBizAddressInput')
     };
     let pageTimer = null;
     let pendingPage = {};
@@ -419,6 +484,8 @@
       } catch (_) { return 0; }
     }
 
+    const customizableCache = {}; // slug -> named fields from meta.json (null while loading)
+
     function renderContentFields() {
       if (!fieldsEl) return;
       populateSectionSelect();
@@ -435,7 +502,22 @@
       }
       renderRetries = 0;
       const feature = ctx.getRegistry().find(f => f.slug === section.slug);
-      const fields = discoverFields(sectionEl, feature && feature.customizable);
+      let explicit = feature && feature.customizable;
+      if (explicit === undefined && feature && feature.customizableCount) {
+        // registry.js only carries the number of named fields; the list comes from the feature's meta.json (fetched once)
+        if (!(section.slug in customizableCache)) {
+          customizableCache[section.slug] = null;
+          fetch(`features/${encodeURIComponent(section.slug)}/meta.json`).then(r => (r.ok ? r.json() : {})).then(m => { customizableCache[section.slug] = Array.isArray(m.customizable) ? m.customizable : []; })
+            .catch(() => { customizableCache[section.slug] = []; })
+            .then(() => { if (contentTabVisible()) renderContentFields(); });
+        }
+        if (customizableCache[section.slug] === null) {
+          fieldsEl.innerHTML = '<p class="content-empty">Loading the editable fields…</p>';
+          return;
+        }
+        explicit = customizableCache[section.slug];
+      }
+      const fields = discoverFields(sectionEl, explicit);
       if (!fields.length) {
         fieldsEl.innerHTML = '<p class="content-empty">No editable text, images or links were found in this section.</p>';
         return;
@@ -455,18 +537,60 @@
             <span>${escapeHtml(f.label)}${ov ? ' <em class="content-edited-dot" title="Edited">●</em>' : ''}</span>
             ${long ? `<textarea rows="3"></textarea>` : `<input type="${f.type === 'image' || f.type === 'link' ? 'text' : f.type === 'color' ? 'color' : 'text'}" autocomplete="off" />`}
           </label>
-          ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}" /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above.</p>` : ''}
+          ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}" /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><label class="ps-field content-alt"><span>Picture description (alt text)</span><input type="text" class="content-alt-input" autocomplete="off" maxlength="200" placeholder="Describe what the picture shows" /></label><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above. The description is read by screen readers and search engines.</p>` : ''}
           ${ov ? '<button type="button" class="content-reset">Reset to original</button>' : ''}`;
         const input = wrap.querySelector('textarea, input:not([type=file])');
         input.value = isData ? '(uploaded image)' : value;
+        // links can point at another page of a multi-page site (stored as "page:<id>", resolved to a file name on export)
+        const sitePages = f.type === 'link' ? sm.getPages() : [];
+        if (sitePages.length > 1) {
+          const linked = /^page:(.+)$/.exec(value);
+          const sel = doc.createElement('select');
+          sel.className = 'builder-select content-page-link';
+          sel.setAttribute('aria-label', `${f.label}: link to a page of this site`);
+          sel.innerHTML = '<option value="">Or link to a page…</option>' + sitePages.map(p => `<option value="page:${escapeHtml(p.id)}">${escapeHtml(p.title)}</option>`).join('');
+          if (linked) { sel.value = value; input.value = ''; input.placeholder = 'Linked to a page'; }
+          sel.addEventListener('change', () => {
+            if (!sel.value) return;
+            input.value = '';
+            input.placeholder = 'Linked to a page';
+            sm.setSectionOverride(section.id, f.id, sel.value, { selector: f.selector, type: 'link' });
+            addReset();
+          });
+          input.addEventListener('input', () => { sel.value = ''; input.placeholder = ''; });
+          wrap.querySelector('label.ps-field').after(sel);
+        }
         if (isData) input.readOnly = true;
         let timer = null;
+        const addReset = () => {
+          // first edit of this field: offer "Reset to original" now, without re-rendering (that would drop focus)
+          if (wrap.querySelector('.content-reset')) return;
+          wrap.classList.add('is-edited');
+          const label = wrap.querySelector('label.ps-field > span');
+          if (label && !label.querySelector('.content-edited-dot')) label.insertAdjacentHTML('beforeend', ' <em class="content-edited-dot" title="Edited">●</em>');
+          const b = doc.createElement('button');
+          b.type = 'button';
+          b.className = 'content-reset';
+          b.textContent = 'Reset to original';
+          b.addEventListener('click', () => { sm.setSectionOverride(section.id, f.id, ''); setTimeout(renderContentFields, 50); });
+          wrap.appendChild(b);
+        };
         input.addEventListener('input', () => {
           clearTimeout(timer);
-          timer = setTimeout(() => sm.setSectionOverride(section.id, f.id, input.value, { selector: f.selector, type: f.type, attr: f.attr }), 250);
+          timer = setTimeout(() => { sm.setSectionOverride(section.id, f.id, input.value, { selector: f.selector, type: f.type, attr: f.attr }); addReset(); }, 250);
         });
         const reset = wrap.querySelector('.content-reset');
         if (reset) reset.addEventListener('click', () => { sm.setSectionOverride(section.id, f.id, ''); setTimeout(renderContentFields, 50); });
+        const altInput = wrap.querySelector('.content-alt-input');
+        if (altInput) {
+          const altId = f.id + '__alt';
+          altInput.value = (overrides[altId] && overrides[altId].value) || '';
+          let altTimer = null;
+          altInput.addEventListener('input', () => {
+            clearTimeout(altTimer);
+            altTimer = setTimeout(() => sm.setSectionOverride(section.id, altId, altInput.value.trim(), { selector: f.selector, type: 'alt' }), 250);
+          });
+        }
         const upload = wrap.querySelector('.content-upload');
         if (upload) {
           const fileInput = wrap.querySelector('input[type=file]');
@@ -476,7 +600,9 @@
             try {
               const uri = await readImageAsDataUri(fileInput.files[0]);
               sm.setSectionOverride(section.id, f.id, uri, { selector: f.selector, type: 'image' });
+              const kb = Math.round(uri.length * 0.75 / 1024);
               const used = storageUsedBytes();
+              if (kb > 500) ctx.showToast(`That picture is about ${kb} KB after shrinking. Pictures over 500 KB slow the page down; a smaller or more compressed file is better.`, 6000);
               ctx.showToast(used > 3.5 * 1024 * 1024
                 ? `Image replaced, but browser storage is ${(used / 1048576).toFixed(1)} MB of about 5 MB. Export the project file and host big photos instead.`
                 : 'Image replaced', used > 3.5 * 1024 * 1024 ? 6000 : undefined);

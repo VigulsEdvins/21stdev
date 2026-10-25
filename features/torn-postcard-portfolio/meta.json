@@ -103,5 +103,6 @@
     "canvas2d": true
   },
   "ownPalette": true,
-  "themeReviewed": "Flagged text sits on photographic/paper textures the audit reads as flat colour; checked both themes by eye 2026-10-24, readable."
+  "themeReviewed": "Flagged text sits on photographic/paper textures the audit reads as flat colour; checked both themes by eye 2026-10-24, readable.",
+  "reserveHeight": 4000
 }

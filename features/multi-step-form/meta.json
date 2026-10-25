@@ -1,0 +1,55 @@
+{
+  "name": "Multi-Step Form",
+  "slug": "multi-step-form",
+  "title": "Multi-Step Form",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "A three-step form (about you, your project, review) with a progress bar, per-step validation, back and next buttons and a final summary. Keyboard friendly; nothing is sent.",
+  "tags": [
+    "form",
+    "wizard",
+    "steps",
+    "onboarding",
+    "quote"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "agency",
+    "saas",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .msf-title"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .msf-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

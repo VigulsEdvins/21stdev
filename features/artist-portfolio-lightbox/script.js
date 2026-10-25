@@ -40,6 +40,7 @@
 
     const mini = document.createElement('button');
     mini.className = 'mini-thumb';
+    mini.setAttribute('aria-label', 'Show image ' + (idx + 1));
     mini.style.background = `url('${p.img}') center/cover no-repeat`;
     mini.addEventListener('click', () => setPlate(idx));
     thumbs.appendChild(mini);

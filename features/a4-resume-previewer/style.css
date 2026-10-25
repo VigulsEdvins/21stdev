@@ -57,6 +57,7 @@ body {
 .toolbar-controls {
   display: flex;
   align-items: center;
+  flex-wrap: wrap; /* the buttons wrap on a phone instead of pushing the page sideways */
   gap: 8px;
 }
 

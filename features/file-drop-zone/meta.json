@@ -1,0 +1,61 @@
+{
+  "name": "File Drop Zone",
+  "slug": "file-drop-zone",
+  "title": "File Drop Zone",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "A drop area for files with a browse button, a size and type check, a list of the chosen files with remove buttons and live announcements. Files stay in the browser; nothing is uploaded.",
+  "tags": [
+    "upload",
+    "file",
+    "dropzone",
+    "drag and drop",
+    "form"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "saas",
+    "education"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .fdz-title"
+    },
+    {
+      "id": "hint",
+      "label": "Hint text",
+      "type": "text",
+      "selector": ":scope .fdz-hint"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .fdz-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

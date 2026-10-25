@@ -62,5 +62,6 @@
     "luma": 0.06,
     "webgl": false,
     "canvas2d": true
-  }
+  },
+  "ownPalette": true
 }

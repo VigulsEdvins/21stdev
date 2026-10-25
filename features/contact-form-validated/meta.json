@@ -1,0 +1,73 @@
+{
+  "name": "Contact Form With Validation",
+  "slug": "contact-form-validated",
+  "title": "Contact Form With Validation",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "A contact form with name, email and message fields, inline error messages tied to each field, and a success message; it never sends anything until you add an address in the form action.",
+  "tags": [
+    "form",
+    "contact",
+    "validation",
+    "input",
+    "accessible"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "agency",
+    "saas"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .cfv-title"
+    },
+    {
+      "id": "intro",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .cfv-sub"
+    },
+    {
+      "id": "button",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .cfv-btn"
+    },
+    {
+      "id": "success",
+      "label": "Success message",
+      "type": "text",
+      "selector": ":scope .cfv-success-text"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .cfv-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

@@ -7,6 +7,30 @@
   const KEY = 'web_builder_projects_v1';
   const FORMAT = 'web-builder-project';
   const MAX_SNAPSHOTS = 20;
+  // Version of the project file format. Bump it when the shape of a saved page changes and add a step to MIGRATIONS.
+  const CURRENT_VERSION = 4;
+  const PAGE_DEFAULTS = { title: 'Assembled Web Page', description: '', favicon: '', fontDisplay: '', fontBody: '', lang: 'en', shareImage: '', canonical: '', robots: '', bizType: '', bizName: '', bizPhone: '', bizAddress: '' };
+
+  /**
+   * Steps that bring a page state saved by an older version up to the next one, keyed by the version they start from.
+   * 1 -> 2: page settings gained share image, canonical address and robots; every key is now always present.
+   * 2 -> 3: page settings gained the business fields used for JSON-LD.
+   * 3 -> 4: projects can have several pages (`pages`, `activePageId`); older ones are single-page.
+   */
+  const MIGRATIONS = {
+    1: (state) => ({ ...state, page: { ...PAGE_DEFAULTS, ...(state.page || {}) } }),
+    2: (state) => ({ ...state, page: { ...PAGE_DEFAULTS, ...(state.page || {}) } }),
+    3: (state) => ({ ...state, pages: Array.isArray(state.pages) ? state.pages : [], activePageId: state.activePageId || null })
+  };
+
+  /** Brings a page state from `fromVersion` to the current format (a copy; the input is not changed). */
+  function migrateState(state, fromVersion) {
+    let out = clone(state);
+    for (let v = Number(fromVersion) || 1; v < CURRENT_VERSION; v++) {
+      if (MIGRATIONS[v]) out = MIGRATIONS[v](out);
+    }
+    return out;
+  }
 
   function uid(prefix) {
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
@@ -19,6 +43,9 @@
   function validState(state) {
     return !!state && typeof state === 'object' && Array.isArray(state.stack);
   }
+
+  const Sanitize = (typeof require === 'function' && typeof module !== 'undefined' && module.exports) ? require('./project-sanitize.js') : root.ProjectSanitize;
+  const MAX_IMPORT_BYTES = 20 * 1024 * 1024;
 
   function createProjectStore(storage, options = {}) {
     const key = options.key || KEY;
@@ -127,14 +154,28 @@
         const p = load().projects[id];
         if (!p) return null;
         const { name, client, notes, state, snapshots, createdAt, updatedAt } = p;
-        return JSON.stringify({ format: FORMAT, version: 1, exportedAt: new Date().toISOString(), project: { name, client, notes, createdAt, updatedAt, state, snapshots }, extras: extras || {} }, null, 2);
+        return JSON.stringify({ format: FORMAT, version: CURRENT_VERSION, exportedAt: new Date().toISOString(), project: { name, client, notes, createdAt, updatedAt, state, snapshots }, extras: extras || {} }, null, 2);
       },
       importProject(json) {
+        if (typeof json === 'string' && json.length > MAX_IMPORT_BYTES) throw new Error('That file is too large to be a project (over 20 MB)');
         let parsed;
         try { parsed = JSON.parse(json); } catch (_) { throw new Error('That file is not valid JSON'); }
         if (!parsed || parsed.format !== FORMAT || !parsed.project) throw new Error('That file is not a Web Builder project export');
+        const fileVersion = Number(parsed.version) || 1;
+        if (fileVersion > CURRENT_VERSION) throw new Error(`That project file was saved by a newer version of the builder (file version ${fileVersion}, this one reads up to ${CURRENT_VERSION}). Update the builder to open it.`);
         const src = parsed.project;
         if (!validState(src.state)) throw new Error('The project file has no page content');
+        // older files are brought up to date, saved snapshots included
+        src.state = migrateState(src.state, fileVersion);
+        if (Array.isArray(src.snapshots)) src.snapshots = src.snapshots.map(s => (s && validState(s.state) ? { ...s, state: migrateState(s.state, fileVersion) } : s));
+        // anything that could carry code is stripped; the page keeps what the builder itself would have written
+        let removed = 0;
+        if (Sanitize) {
+          const cleaned = Sanitize.sanitizeState(src.state);
+          src.state = cleaned.state;
+          removed += cleaned.removed;
+          if (Array.isArray(src.snapshots)) src.snapshots = src.snapshots.map(s => { if (!s || !validState(s.state)) return s; const c = Sanitize.sanitizeState(s.state); removed += c.removed; return { ...s, state: c.state }; });
+        }
         const d = load();
         const now = new Date().toISOString();
         const p = {
@@ -152,6 +193,7 @@
         d.activeId = p.id;
         if (!persist(d)) throw new Error('Could not save: browser storage is full');
         const out = clone(p);
+        out.sanitizedCount = removed;
         // Per-user extras that travel with the file (starred components); the caller decides what to merge
         const ex = parsed.extras && typeof parsed.extras === 'object' ? parsed.extras : {};
         out.extras = { favourites: (Array.isArray(ex.favourites) ? ex.favourites : []).filter(x => typeof x === 'string').slice(0, 500) };
@@ -160,7 +202,7 @@
     };
   }
 
-  const api = { createProjectStore, FORMAT, MAX_SNAPSHOTS };
+  const api = { createProjectStore, migrateState, FORMAT, MAX_SNAPSHOTS, CURRENT_VERSION };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.ProjectStore = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -38,6 +38,16 @@ server.listen(0, '127.0.0.1', async () => {
     const bad = await get(port, url, { Range: `bytes=${whole.body.length + 10}-` });
     assert.strictEqual(bad.status, 416);
     console.log('✅ HTTP Range tests passed!');
+
+    // repository internals and local data are never served
+    for (const blocked of ['/.git/config', '/.github/workflows/ci.yml', '/%2e%2e/package.json', '/../package.json', '/ruvector.db', '/agentdb.rvf', '/features/%2e%2e/%2e%2e/etc/passwd', '/a%00b']) {
+      const res = await get(port, blocked);
+      assert.strictEqual(res.status, 404, blocked + ' must be refused, got ' + res.status);
+    }
+    const dir = await get(port, '/features/');
+    assert(!/Index of|<li><a/.test(dir.body.toString()), 'no directory listing');
+    assert.strictEqual((await get(port, '/builder.html')).status, 200, 'normal pages still load');
+    console.log('✅ Server path guard tests passed!');
   } catch (e) {
     console.error(e);
     process.exitCode = 1;

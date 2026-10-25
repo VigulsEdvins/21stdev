@@ -113,6 +113,13 @@
       "label": "Footer link",
       "type": "link",
       "selector": ":scope a.aa-toggle"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .aa-root",
+      "attr": "--aa-accent"
     }
   ],
   "measured": {

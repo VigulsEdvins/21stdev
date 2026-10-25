@@ -1,0 +1,68 @@
+{
+  "name": "Sticky Shrinking Header",
+  "slug": "sticky-shrink-header",
+  "title": "Sticky Shrinking Header",
+  "category": "Headers & Nav",
+  "source": "custom",
+  "type": "component",
+  "description": "A header that sticks to the top, then shrinks and gains a frosted background after you scroll, with a call-to-action button and a mobile menu button.",
+  "tags": [
+    "header",
+    "sticky",
+    "navigation",
+    "blur",
+    "cta"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "saas",
+    "agency",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "logo-text",
+      "label": "Logo text",
+      "type": "text",
+      "selector": ":scope .ssh-logo"
+    },
+    {
+      "id": "cta-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .ssh-cta"
+    },
+    {
+      "id": "cta-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .ssh-cta"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .ssh-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

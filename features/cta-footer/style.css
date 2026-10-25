@@ -1,0 +1,20 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.ctf-demo { background: color-mix(in srgb, var(--text, #f3f4f6) 5%, var(--bg, #0b0f19)); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); padding: 5rem 1.5rem 2rem; }
+.ctf-cta { max-width: 640px; margin: 0 auto 4rem; text-align: center; }
+.ctf-title { font-family: var(--font-display, inherit); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: 0 0 .9rem; }
+.ctf-text { margin: 0 0 1.75rem; color: color-mix(in srgb, var(--text, #f3f4f6) 72%, transparent); line-height: 1.6; }
+.ctf-form { display: flex; gap: .6rem; max-width: 460px; margin: 0 auto; }
+.ctf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.ctf-input { flex: 1; min-width: 0; font: inherit; color: inherit; padding: 13px 18px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 28%, transparent); background: var(--bg, #0b0f19); }
+.ctf-input:focus { outline: none; border-color: var(--accent, #6366f1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #6366f1) 28%, transparent); }
+.ctf-input[aria-invalid="true"] { border-color: #f87171; }
+.ctf-btn { font: inherit; font-weight: 600; padding: 13px 22px; border: 0; border-radius: 999px; background: var(--accent, #6366f1); color: #fff; cursor: pointer; white-space: nowrap; }
+.ctf-btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent, #6366f1) 60%, #fff); outline-offset: 3px; }
+.ctf-msg { margin: .8rem 0 0; min-height: 1.3em; font-size: .9rem; color: color-mix(in srgb, var(--text, #f3f4f6) 78%, transparent); }
+.ctf-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 860px; margin: 0 auto; padding: 2.5rem 0; border-top: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); }
+.ctf-links nav { display: grid; gap: .6rem; align-content: start; }
+.ctf-links h3 { margin: 0 0 .4rem; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: color-mix(in srgb, var(--text, #f3f4f6) 58%, transparent); }
+.ctf-links a { color: color-mix(in srgb, var(--text, #f3f4f6) 82%, transparent); text-decoration: none; font-size: .95rem; }
+.ctf-links a:hover, .ctf-links a:focus-visible { color: var(--accent, #6366f1); outline: none; text-decoration: underline; }
+.ctf-copy { max-width: 860px; margin: 0 auto; font-size: .85rem; color: color-mix(in srgb, var(--text, #f3f4f6) 55%, transparent); text-align: center; }
+@media (max-width: 560px) { .ctf-form { flex-direction: column; } .ctf-links { grid-template-columns: 1fr 1fr; } }

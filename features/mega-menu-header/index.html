@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mega Menu Header</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="mmh-demo">
+    <header class="mmh-header">
+      <div class="mmh-bar">
+        <a class="mmh-logo" href="#top">Northwind</a>
+        <nav class="mmh-nav" aria-label="Main">
+          <ul class="mmh-list">
+            <li class="mmh-item">
+              <button class="mmh-trigger" type="button" aria-expanded="false" aria-controls="mmhPanelProduct">Product <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+              <div class="mmh-panel" id="mmhPanelProduct" hidden>
+                <div class="mmh-col"><h3>Build</h3>
+                  <a href="#editor"><strong>Editor</strong><span>Write and preview in one place</span></a>
+                  <a href="#components"><strong>Components</strong><span>Ready-made sections to start from</span></a></div>
+                <div class="mmh-col"><h3>Launch</h3>
+                  <a href="#hosting"><strong>Hosting</strong><span>Fast sites on a global network</span></a>
+                  <a href="#domains"><strong>Domains</strong><span>Connect your own address</span></a></div>
+                <div class="mmh-col mmh-feature"><h3>New</h3><a href="#release"><strong>Release notes</strong><span>See what shipped this month</span></a></div>
+              </div>
+            </li>
+            <li class="mmh-item">
+              <button class="mmh-trigger" type="button" aria-expanded="false" aria-controls="mmhPanelResources">Resources <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+              <div class="mmh-panel mmh-narrow" id="mmhPanelResources" hidden>
+                <div class="mmh-col"><h3>Learn</h3>
+                  <a href="#guides"><strong>Guides</strong><span>Step by step walkthroughs</span></a>
+                  <a href="#blog"><strong>Blog</strong><span>Ideas from the team</span></a>
+                  <a href="#help"><strong>Help centre</strong><span>Answers and contact</span></a></div>
+              </div>
+            </li>
+            <li class="mmh-item"><a class="mmh-link" href="#pricing">Pricing</a></li>
+            <li class="mmh-item"><a class="mmh-link" href="#about">About</a></li>
+          </ul>
+        </nav>
+        <a class="mmh-cta" href="#start">Get started</a>
+      </div>
+    </header>
+    <main class="mmh-page"><h1>Open a menu</h1><p>Hover a top-level item, or Tab to it and press Enter. Arrow keys move between items in an open panel.</p></main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

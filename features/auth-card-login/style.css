@@ -1,0 +1,27 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.acl-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); padding: 5rem 1.5rem; }
+.acl-card { max-width: 420px; margin: 0 auto; padding: clamp(1.5rem, 4vw, 2.25rem); border-radius: calc(var(--radius, 16px) * 1.4); background: color-mix(in srgb, var(--text, #f3f4f6) 6%, var(--bg, #0b0f19)); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 18%, transparent); box-shadow: 0 30px 80px rgba(0,0,0,.25); }
+.acl-title { font-family: var(--font-display, inherit); font-size: 1.8rem; margin: 0 0 .4rem; }
+.acl-sub { margin: 0 0 1.5rem; color: color-mix(in srgb, var(--text, #f3f4f6) 70%, transparent); }
+
+.acl-field { display: grid; gap: .4rem; margin-bottom: 1rem; }
+.acl-field label { font-size: .9rem; font-weight: 600; }
+.acl-input { width: 100%; font: inherit; color: inherit; padding: 12px 14px; border-radius: calc(var(--radius, 12px) * .8); background: color-mix(in srgb, var(--text, #f3f4f6) 5%, var(--bg, #0b0f19)); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 28%, transparent); transition: border-color .2s, box-shadow .2s; }
+.acl-input:focus { outline: none; border-color: var(--accent, #6366f1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, #6366f1) 30%, transparent); }
+.acl-input[aria-invalid="true"] { border-color: #f87171; }
+.acl-error { margin: 0; min-height: 1.2em; font-size: .85rem; color: #fca5a5; }
+.acl-btn { font: inherit; font-weight: 600; padding: 13px 22px; border: 0; border-radius: 999px; background: var(--accent, #6366f1); color: #fff; cursor: pointer; transition: transform .2s, opacity .2s; }
+.acl-btn:hover { transform: translateY(-1px); }
+.acl-btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent, #6366f1) 60%, #fff); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .acl-input, .acl-btn { transition: none; } .acl-btn:hover { transform: none; } }
+.acl-pass { position: relative; }
+.acl-pass .acl-input { padding-right: 70px; }
+.acl-eye { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: var(--accent, #6366f1); font: inherit; font-size: .85rem; font-weight: 600; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+.acl-eye:focus-visible, .acl-link:focus-visible, .acl-forgot:focus-visible { outline: 2px solid var(--accent, #6366f1); outline-offset: 2px; }
+.acl-row { display: flex; justify-content: flex-end; margin: -.25rem 0 1rem; }
+.acl-forgot { font-size: .88rem; color: var(--accent, #6366f1); text-decoration: none; }
+.acl-forgot:hover { text-decoration: underline; }
+.acl-btn { width: 100%; }
+.acl-status { margin: .9rem 0 0; min-height: 1.2em; font-size: .9rem; text-align: center; color: color-mix(in srgb, var(--text, #f3f4f6) 80%, transparent); }
+.acl-switch { margin: 1.25rem 0 0; text-align: center; font-size: .92rem; color: color-mix(in srgb, var(--text, #f3f4f6) 72%, transparent); }
+.acl-link { border: 0; background: transparent; color: var(--accent, #6366f1); font: inherit; font-weight: 600; cursor: pointer; padding: 2px 4px; }

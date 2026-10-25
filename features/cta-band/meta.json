@@ -1,0 +1,86 @@
+{
+  "name": "Call-To-Action Band",
+  "slug": "cta-band",
+  "title": "Call-To-Action Band",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "A full-width banner with a short headline, one line of supporting text and a primary and a secondary button, placed above a footer.",
+  "tags": [
+    "cta",
+    "banner",
+    "call to action",
+    "conversion",
+    "band"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "saas",
+    "agency",
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .cta-title"
+    },
+    {
+      "id": "text",
+      "label": "Supporting text",
+      "type": "text",
+      "selector": ":scope .cta-text"
+    },
+    {
+      "id": "primary",
+      "label": "Primary button",
+      "type": "text",
+      "selector": ":scope .cta-primary"
+    },
+    {
+      "id": "primary-link",
+      "label": "Primary button link",
+      "type": "link",
+      "selector": ":scope .cta-primary"
+    },
+    {
+      "id": "secondary",
+      "label": "Secondary button",
+      "type": "text",
+      "selector": ":scope .cta-secondary"
+    },
+    {
+      "id": "secondary-link",
+      "label": "Secondary button link",
+      "type": "link",
+      "selector": ":scope .cta-secondary"
+    },
+    {
+      "id": "accent",
+      "label": "Band colour",
+      "type": "color",
+      "selector": ":scope .cta-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

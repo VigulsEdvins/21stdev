@@ -85,12 +85,6 @@
       "selector": ":scope p.ppk-kicker"
     },
     {
-      "id": "section-heading-2",
-      "label": "Section heading 2",
-      "type": "text",
-      "selector": ":scope h2.ppk-pre"
-    },
-    {
       "id": "section-heading-3",
       "label": "Section heading 3",
       "type": "text",

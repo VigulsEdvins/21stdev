@@ -66,5 +66,6 @@
     "webgl": false,
     "canvas2d": true
   },
-  "themeReviewed": "Coordinate readout is decorative drafting text (2.6:1). Checked 2026-10-24."
+  "themeReviewed": "Coordinate readout is decorative drafting text (2.6:1). Checked 2026-10-24.",
+  "reserveHeight": 800
 }

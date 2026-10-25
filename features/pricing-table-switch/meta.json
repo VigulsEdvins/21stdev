@@ -1,0 +1,102 @@
+{
+  "name": "Pricing Table With Billing Switch",
+  "slug": "pricing-table-switch",
+  "title": "Pricing Table With Billing Switch",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "Three plain pricing cards with a monthly / yearly switch that updates the prices, a highlighted plan and a feature list per plan.",
+  "tags": [
+    "pricing",
+    "plans",
+    "switch",
+    "cards",
+    "saas"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "saas",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .ptw-title"
+    },
+    {
+      "id": "intro",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .ptw-sub"
+    },
+    {
+      "id": "plan-1",
+      "label": "Plan 1 name",
+      "type": "text",
+      "selector": ":scope .ptw-card:nth-child(1) .ptw-name"
+    },
+    {
+      "id": "plan-2",
+      "label": "Plan 2 name",
+      "type": "text",
+      "selector": ":scope .ptw-card:nth-child(2) .ptw-name"
+    },
+    {
+      "id": "plan-3",
+      "label": "Plan 3 name",
+      "type": "text",
+      "selector": ":scope .ptw-card:nth-child(3) .ptw-name"
+    },
+    {
+      "id": "cta-1",
+      "label": "Plan 1 button",
+      "type": "text",
+      "selector": ":scope .ptw-card:nth-child(1) .ptw-cta"
+    },
+    {
+      "id": "cta-2",
+      "label": "Plan 2 button",
+      "type": "text",
+      "selector": ":scope .ptw-card:nth-child(2) .ptw-cta"
+    },
+    {
+      "id": "cta-3",
+      "label": "Plan 3 button",
+      "type": "text",
+      "selector": ":scope .ptw-card:nth-child(3) .ptw-cta"
+    },
+    {
+      "id": "link-2",
+      "label": "Plan 2 button link",
+      "type": "link",
+      "selector": ":scope .ptw-card:nth-child(2) .ptw-cta"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .ptw-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

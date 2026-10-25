@@ -11,7 +11,14 @@ const DEFAULT_PAGE = {
   favicon: '', // emoji, image URL or data URI
   fontDisplay: '', // Google Fonts family name, empty = leave section fonts alone
   fontBody: '',
-  lang: 'en'
+  lang: 'en',
+  shareImage: '', // full https:// URL of the picture shown when the page is shared (og:image)
+  canonical: '', // full https:// URL of the live page
+  robots: '', // '' = let search engines index the page, 'noindex' = ask them not to
+  bizType: '', // '' | 'Organization' | 'LocalBusiness': writes JSON-LD for search engines
+  bizName: '',
+  bizPhone: '',
+  bizAddress: ''
 };
 
 function createStackManager(initialConfig = {}) {
@@ -27,7 +34,11 @@ function createStackManager(initialConfig = {}) {
     theme: initialConfig.theme || 'midnight-dark',
     customColors: initialConfig.customColors ? { ...initialConfig.customColors } : {},
     viewport: initialConfig.viewport || 'desktop',
-    page: { ...DEFAULT_PAGE, ...(initialConfig.page || {}) }
+    page: { ...DEFAULT_PAGE, ...(initialConfig.page || {}) },
+    // Multi-page sites: empty = a single page (the stack above). Otherwise every page is listed here; the active
+    // page's own stack is `state.stack` (kept live) and is copied back into its entry when you switch or save.
+    pages: [],
+    activePageId: null
   };
 
   const listeners = new Set();
@@ -48,8 +59,132 @@ function createStackManager(initialConfig = {}) {
       ...state,
       stack: [...state.stack],
       customColors: { ...state.customColors },
-      page: { ...state.page }
+      page: { ...state.page },
+      pages: getPages(),
+      activePageId: state.activePageId
     };
+  }
+
+  // ---- pages ---------------------------------------------------------------------------------------------
+  const cloneJson = (v) => JSON.parse(JSON.stringify(v));
+
+  /** All pages with the active one's live stack filled in; [] for a single-page project. */
+  function getPages() {
+    return state.pages.map(p => ({ ...p, stack: cloneJson(p.id === state.activePageId ? state.stack : p.stack) }));
+  }
+
+  function getActivePageId() {
+    return state.activePageId;
+  }
+
+  function slugify(text) {
+    return String(text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'page';
+  }
+
+  function uniqueSlug(base, exceptId) {
+    const taken = new Set(state.pages.filter(p => p.id !== exceptId).map(p => p.slug));
+    let slug = base === 'index' ? 'page' : base; // "index" belongs to the home page
+    let n = 2;
+    while (taken.has(slug)) slug = `${base}-${n++}`;
+    return slug;
+  }
+
+  function syncActivePage() {
+    const active = state.pages.find(p => p.id === state.activePageId);
+    if (active) active.stack = cloneJson(state.stack);
+  }
+
+  /** Turns a single-page project into a multi-page one: the current stack becomes the Home page. */
+  function ensurePages() {
+    if (state.pages.length) return;
+    state.pages = [{ id: generateId('page'), title: 'Home', slug: 'index', description: '', stack: cloneJson(state.stack) }];
+    state.activePageId = state.pages[0].id;
+  }
+
+  function addPage(title = 'New page') {
+    ensurePages();
+    syncActivePage();
+    const clean = String(title || '').trim().slice(0, 60) || 'New page';
+    const page = { id: generateId('page'), title: clean, slug: uniqueSlug(slugify(clean)), description: '', stack: [] };
+    state.pages.push(page);
+    state.activePageId = page.id;
+    state.stack = [];
+    notify();
+    return { ...page };
+  }
+
+  function switchPage(id) {
+    const target = state.pages.find(p => p.id === id);
+    if (!target || id === state.activePageId) return null;
+    syncActivePage();
+    state.activePageId = id;
+    state.stack = cloneJson(target.stack);
+    notify();
+    return { ...target };
+  }
+
+  function renamePage(id, title) {
+    const page = state.pages.find(p => p.id === id);
+    const clean = String(title || '').trim().slice(0, 60);
+    if (!page || !clean) return null;
+    page.title = clean;
+    if (page.slug !== 'index') page.slug = uniqueSlug(slugify(clean), id);
+    notify();
+    return { ...page, stack: [] };
+  }
+
+  function setPageMeta(id, updates = {}) {
+    const page = state.pages.find(p => p.id === id);
+    if (!page) return null;
+    if (typeof updates.description === 'string') page.description = updates.description.slice(0, 300);
+    notify();
+    return { ...page, stack: [] };
+  }
+
+  function duplicatePage(id) {
+    const source = state.pages.find(p => p.id === id);
+    if (!source) return null;
+    syncActivePage();
+    const stack = cloneJson(source.stack).map(s => ({ ...s, id: generateId() }));
+    const title = `${source.title} copy`.slice(0, 60);
+    const page = { id: generateId('page'), title, slug: uniqueSlug(slugify(title)), description: source.description, stack };
+    state.pages.splice(state.pages.indexOf(source) + 1, 0, page);
+    state.activePageId = page.id;
+    state.stack = cloneJson(stack);
+    notify();
+    return { ...page, stack: [] };
+  }
+
+  function removePage(id) {
+    if (state.pages.length <= 1) return false;
+    const index = state.pages.findIndex(p => p.id === id);
+    if (index === -1) return false;
+    syncActivePage();
+    const wasActive = id === state.activePageId;
+    state.pages.splice(index, 1);
+    if (state.pages.length === 1) {
+      // back to a single page: its stack is the project's stack
+      state.stack = cloneJson(state.pages[0].stack);
+      state.pages = [];
+      state.activePageId = null;
+    } else if (wasActive) {
+      const next = state.pages[Math.max(0, index - 1)];
+      state.activePageId = next.id;
+      state.stack = cloneJson(next.stack);
+    }
+    notify();
+    return true;
+  }
+
+  /** Restores pages from a saved project or a history step. `pages` of [] means a single-page project. */
+  function setPages(pages, activeId) {
+    const list = Array.isArray(pages) ? cloneJson(pages) : [];
+    state.pages = list;
+    if (!list.length) { state.activePageId = null; return; }
+    const active = list.find(p => p.id === activeId) || list[0];
+    state.activePageId = active.id;
+    state.stack = cloneJson(active.stack || []);
+    notify();
   }
 
   function getStack() {
@@ -97,6 +232,7 @@ function createStackManager(initialConfig = {}) {
   }
 
   function updateSectionSizing(sectionId, sizingUpdates = {}) {
+    if (isLocked(sectionId)) return null;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section) return null;
     if (!section.sizing) {
@@ -111,9 +247,35 @@ function createStackManager(initialConfig = {}) {
     return section.sizing;
   }
 
+  /** Sets the breakpoints a section is hidden on: any of 'mobile', 'tablet', 'desktop'. */
+  function setSectionHideOn(id, list) {
+    if (isLocked(id)) return null;
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    const clean = Array.from(new Set((Array.isArray(list) ? list : []).filter(b => b === 'mobile' || b === 'tablet' || b === 'desktop')));
+    if (clean.length) section.hideOn = clean; else delete section.hideOn;
+    notify();
+    return section;
+  }
+
+  function isLocked(id) {
+    const section = state.stack.find(s => s.id === id);
+    return !!(section && section.locked);
+  }
+
+  /** Locks or hides a section. A locked section cannot be moved, replaced, edited or removed; a hidden one stays in the project but is left out of the preview and exports. */
+  function setSectionFlag(id, flag, value) {
+    if (flag !== 'locked' && flag !== 'hidden') return null;
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    if (value) section[flag] = true; else delete section[flag];
+    notify();
+    return section;
+  }
+
   function removeSection(id) {
     const index = state.stack.findIndex(s => s.id === id);
-    if (index === -1) return false;
+    if (index === -1 || state.stack[index].locked) return false;
 
     state.stack.splice(index, 1);
     notify();
@@ -122,7 +284,7 @@ function createStackManager(initialConfig = {}) {
 
   function moveSection(id, delta) {
     const index = state.stack.findIndex(s => s.id === id);
-    if (index === -1) return state.stack;
+    if (index === -1 || state.stack[index].locked) return state.stack;
 
     const targetIndex = index + delta;
     if (targetIndex < 0 || targetIndex >= state.stack.length) {
@@ -144,6 +306,7 @@ function createStackManager(initialConfig = {}) {
       ...original,
       id: generateId()
     };
+    delete duplicate.locked;
 
     state.stack.splice(index + 1, 0, duplicate);
     notify();
@@ -152,7 +315,7 @@ function createStackManager(initialConfig = {}) {
 
   function replaceSection(id, slugOrSection, extraProps = {}) {
     const index = state.stack.findIndex(s => s.id === id);
-    if (index === -1) return null;
+    if (index === -1 || state.stack[index].locked) return null;
 
     const defaultSizing = {
       heightMode: 'auto',
@@ -194,6 +357,7 @@ function createStackManager(initialConfig = {}) {
     ) {
       return state.stack;
     }
+    if (state.stack[startIndex].locked) return state.stack;
 
     const [item] = state.stack.splice(startIndex, 1);
     state.stack.splice(endIndex, 0, item);
@@ -248,6 +412,7 @@ function createStackManager(initialConfig = {}) {
    * `def` ({ selector, type, attr? }) is required the first time a field is set and is kept afterwards.
    */
   function setSectionOverride(sectionId, fieldId, value, def = null) {
+    if (isLocked(sectionId)) return null;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section || !fieldId) return false;
     const overrides = { ...(section.overrides || {}) };
@@ -282,6 +447,7 @@ function createStackManager(initialConfig = {}) {
   }
 
   function addElement(sectionId, elementData = {}) {
+    if (isLocked(sectionId)) return null;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section) return null;
     if (!Array.isArray(section.elements)) {
@@ -315,6 +481,7 @@ function createStackManager(initialConfig = {}) {
   }
 
   function updateElement(sectionId, elementId, updates = {}, silent = false) {
+    if (isLocked(sectionId)) return null;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section || !Array.isArray(section.elements)) return null;
 
@@ -334,6 +501,7 @@ function createStackManager(initialConfig = {}) {
   }
 
   function removeElement(sectionId, elementId) {
+    if (isLocked(sectionId)) return false;
     const section = state.stack.find(s => s.id === sectionId);
     if (!section || !Array.isArray(section.elements)) return false;
 
@@ -361,6 +529,9 @@ function createStackManager(initialConfig = {}) {
     addSection,
     insertSection,
     removeSection,
+    isLocked,
+    setSectionFlag,
+    setSectionHideOn,
     moveSection,
     duplicateSection,
     replaceSection,
@@ -376,6 +547,15 @@ function createStackManager(initialConfig = {}) {
     setCustomColors,
     setViewport,
     setPage,
+    getPages,
+    getActivePageId,
+    addPage,
+    switchPage,
+    renamePage,
+    setPageMeta,
+    duplicatePage,
+    removePage,
+    setPages,
     setSectionOverride,
     subscribe
   };

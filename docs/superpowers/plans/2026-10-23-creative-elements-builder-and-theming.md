@@ -1,5 +1,7 @@
 # Creative Elements Visual Builder, Section Sizing & Universal Theming Plan
 
+> **Status (2026-10-24): implemented.** This plan was carried out and the work is in git history; its checkboxes were not kept up to date. Open work now lives in `docs/BACKLOG.md`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 This plan upgrades the 21st.local Page Preview Builder into an Elementor / Creative Elements visual site-building workflow, solves universal color theming across all 209 vault sections, adds section height/padding sizing controls with live drag handles, and introduces a rich widget library (Tables, Stylized Buttons, Media Cards, Badges, Vault Sub-Components).

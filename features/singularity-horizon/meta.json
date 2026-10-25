@@ -91,5 +91,7 @@
   },
   "nativeWhen": [
     "light"
-  ]
+  ],
+  "reserveHeight": 800,
+  "lazy": true
 }

@@ -7,8 +7,8 @@
 body, html {
   width: 100%;
   min-height: 100%;
-  background: #f6f4ef;
-  color: #151514;
+  background: var(--bg, #f6f4ef);
+  color: var(--text, #151514);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -26,7 +26,7 @@ body, html {
   gap: 16px;
   margin-bottom: 28px;
   padding-bottom: 18px;
-  border-bottom: 1px solid rgba(21, 21, 20, 0.12);
+  border-bottom: 1px solid color-mix(in srgb, var(--text, #151514) 12%, transparent);
 }
 
 .kicker {
@@ -34,7 +34,7 @@ body, html {
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(21, 21, 20, 0.55);
+  color: color-mix(in srgb, var(--text, #151514) 55%, transparent);
   margin-bottom: 6px;
 }
 
@@ -57,8 +57,8 @@ body, html {
 
 .filter-chip {
   background: transparent;
-  color: #151514;
-  border: 1px solid rgba(21, 21, 20, 0.2);
+  color: var(--text, #151514);
+  border: 1px solid color-mix(in srgb, var(--text, #151514) 20%, transparent);
   padding: 7px 14px;
   border-radius: 999px;
   font-size: 11px;
@@ -70,8 +70,8 @@ body, html {
 
 .filter-chip.is-active,
 .filter-chip:hover {
-  background: #151514;
-  color: #f6f4ef;
+  background: var(--text, #151514);
+  color: var(--bg, #f6f4ef);
 }
 
 .masonry-grid {
@@ -86,8 +86,8 @@ body, html {
 .masonry-card {
   break-inside: avoid;
   margin-bottom: 22px;
-  background: #ffffff;
-  border: 1px solid rgba(21, 21, 20, 0.08);
+  background: color-mix(in srgb, var(--text, #151514) 4%, var(--bg, #f6f4ef));
+  border: 1px solid color-mix(in srgb, var(--text, #151514) 8%, transparent);
   border-radius: 4px;
   overflow: hidden;
   opacity: 0;
@@ -113,7 +113,7 @@ body, html {
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #8c6d46;
+  color: var(--accent, #8c6d46);
   margin-bottom: 6px;
   display: block;
 }
@@ -127,5 +127,5 @@ body, html {
 
 .card-date {
   font-size: 11px;
-  color: rgba(21, 21, 20, 0.5);
+  color: color-mix(in srgb, var(--text, #151514) 50%, transparent);
 }

@@ -1,0 +1,61 @@
+{
+  "name": "Toast Notification Stack",
+  "slug": "toast-notification-stack",
+  "title": "Toast Notification Stack",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "Stacked toast notifications that slide in, pause their timer on hover, dismiss on click or Escape, and are announced to screen readers. Buttons trigger success, info and error examples.",
+  "tags": [
+    "toast",
+    "notification",
+    "feedback",
+    "stack",
+    "aria-live"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "saas",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .tns-title"
+    },
+    {
+      "id": "intro",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .tns-sub"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .tns-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

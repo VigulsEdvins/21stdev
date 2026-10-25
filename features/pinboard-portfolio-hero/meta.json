@@ -83,5 +83,8 @@
     "luma": 0.47,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "reserveHeight": 800,
+  "palette": "designed",
+  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
 }

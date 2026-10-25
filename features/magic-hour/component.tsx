@@ -14,6 +14,12 @@ import * as React from "react"
  * (GOP 1) MP4 to scrub something else.
  */
 
+/** Browsers without VP8 WebM support (older Safari) get the MP4 that sits next to it. */
+function playableSrc(src: string): string {
+  if (typeof document === "undefined" || !/\.webm$/.test(src)) return src
+  return document.createElement("video").canPlayType('video/webm; codecs="vp8"') === "" ? src.replace(/\.webm$/, ".mp4") : src
+}
+
 const DEFAULT_VIDEO = "/assets/library/magic-hour-scrub-882598d5.webm"
 const DEFAULT_POSTER = "/assets/library/magic-hour-poster-1106c16d.jpg"
 
@@ -371,7 +377,7 @@ export default function MagicHour({
                 {src && (
                   <video
                     ref={videoRef}
-                    src={src}
+                    src={playableSrc(src)}
                     poster={poster}
                     muted
                     playsInline

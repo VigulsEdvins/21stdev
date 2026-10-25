@@ -1,0 +1,14 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.fgi-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); padding: 5rem 1.5rem; }
+.fgi-head { max-width: 640px; margin: 0 auto 3rem; text-align: center; }
+.fgi-title { font-family: var(--font-display, inherit); font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 .75rem; }
+.fgi-sub { margin: 0; color: color-mix(in srgb, var(--text, #f3f4f6) 72%, transparent); line-height: 1.6; }
+.fgi-grid { list-style: none; margin: 0 auto; padding: 0; max-width: 1080px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.fgi-card { padding: 1.5rem; border-radius: var(--radius, 16px); background: color-mix(in srgb, var(--text, #f3f4f6) 6%, var(--bg, #0b0f19)); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 14%, transparent); transition: transform .25s, border-color .25s; }
+.fgi-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--accent, #6366f1) 60%, transparent); }
+.fgi-icon { display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 1rem; border-radius: 12px; background: color-mix(in srgb, var(--accent, #6366f1) 18%, transparent); color: var(--accent, #6366f1); }
+.fgi-h { font-family: var(--font-display, inherit); font-size: 1.1rem; margin: 0 0 .4rem; }
+.fgi-p { margin: 0; line-height: 1.6; color: color-mix(in srgb, var(--text, #f3f4f6) 72%, transparent); }
+@media (max-width: 900px) { .fgi-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .fgi-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .fgi-card { transition: none; } .fgi-card:hover { transform: none; } }

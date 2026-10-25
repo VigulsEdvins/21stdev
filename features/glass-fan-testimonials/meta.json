@@ -83,6 +83,13 @@
       "label": "Paragraph 2",
       "type": "text",
       "selector": ":scope p.gft-sr"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .gft",
+      "attr": "--gft-accent"
     }
   ],
   "measured": {
@@ -90,7 +97,6 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "dark"
-  ]
+  "nativeWhen": [],
+  "reserveHeight": 813
 }

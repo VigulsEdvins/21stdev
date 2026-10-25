@@ -104,5 +104,8 @@
   },
   "nativeWhen": [
     "light"
-  ]
+  ],
+  "reserveHeight": 800,
+  "palette": "designed",
+  "paletteNote": "A4 resume paper: a white printed page with print colours, on purpose"
 }

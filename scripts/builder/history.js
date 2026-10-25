@@ -6,6 +6,7 @@
   'use strict';
 
   const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
+  const { createAutosave } = (typeof window !== 'undefined' && window.BuilderAutosave) || require('./autosave.js');
 
   function createHistory(ctx) {
     const {
@@ -22,6 +23,35 @@
     // State shared with builder.js (read and written through `state`)
     const state = { stack: [], index: -1, applying: false, viewport: 'desktop', extras: null };
     let autoSaveTimer = null;
+    // label and time of each snapshot, kept beside the snapshot (not inside it, so duplicate detection is unchanged)
+    const entryInfo = new WeakMap();
+    const Labels = (typeof window !== 'undefined' && window.HistoryLabels) || require('./history-labels.js');
+
+    /** Entries for the History panel, oldest first: { index, label, at, current }. */
+    function listHistory() {
+      return state.stack.map((snap, index) => {
+        const info = entryInfo.get(snap) || { label: index === 0 ? 'Start' : 'Change', at: null };
+        return { index, label: info.label, at: info.at, current: index === state.index };
+      });
+    }
+
+    function jumpToHistory(index) {
+      if (index < 0 || index >= state.stack.length || index === state.index) return;
+      state.index = index;
+      applyHistoryState(state.stack[state.index]);
+      saveStateToStorage();
+      updateHistoryUI();
+    }
+
+    /** Forgets every earlier state; the page as it is now stays (Undo has nothing left to go back to). */
+    function clearHistory() {
+      const keep = state.stack[state.index];
+      if (!keep) return;
+      entryInfo.set(keep, { label: 'Start', at: Date.now() });
+      state.stack = [keep];
+      state.index = 0;
+      updateHistoryUI();
+    }
 
     function updateHistoryUI() {
       const currentUndoBtn = document.getElementById('undoBtn') || undoBtn;
@@ -42,7 +72,9 @@
         theme: st.theme || 'midnight-dark',
         customColors: { ...(st.customColors || {}) },
         page: { ...st.page },
-        viewport: state.viewport
+        viewport: state.viewport,
+        pages: st.pages || [],
+        activePageId: st.activePageId || null
       };
     }
 
@@ -53,15 +85,52 @@
       saveStateToStorage();
     }
 
-    function saveStateToStorage() {
-      if (typeof localStorage === 'undefined') return;
-      try {
-        const currentState = serializeState();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState));
-        if (state.extras) state.extras.onStateSaved(currentState);
-      } catch (err) {
-        console.warn('Failed to save builder state to localStorage:', err);
+    // A failed autosave must not pass unnoticed: show a banner until a save works again.
+    function showStorageWarning(status) {
+      if (typeof document === 'undefined') return;
+      let bar = document.getElementById('storageWarning');
+      if (status.ok) { if (bar) bar.remove(); return; }
+      const why = status.reason === 'full'
+        ? 'The browser storage is full, so your latest changes are not being saved.'
+        : 'This browser is not letting the builder save, so your latest changes are not being kept (a private window?).';
+      if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'storageWarning';
+        bar.setAttribute('role', 'alert');
+        bar.style.cssText = 'position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:9999;max-width:min(680px,92vw);padding:10px 14px;border-radius:10px;background:#7a1f1f;color:#fff;font:13px/1.4 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.5);display:flex;gap:12px;align-items:center';
+        document.body.appendChild(bar);
       }
+      bar.innerHTML = '';
+      const text = document.createElement('span');
+      text.textContent = why + ' Download a copy of your work now.';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'Download backup';
+      btn.style.cssText = 'flex:none;padding:6px 10px;border-radius:8px;border:0;background:#fff;color:#7a1f1f;font-weight:600;cursor:pointer';
+      btn.addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(serializeState(), null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'page-backup.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      });
+      bar.append(text, btn);
+    }
+
+    const storage = (() => { try { return typeof localStorage !== 'undefined' ? localStorage : null; } catch (_) { return null; } })();
+    const autosave = createAutosave({
+      storage: storage || { getItem: () => null, setItem: () => { throw new Error('no storage'); }, removeItem: () => {} },
+      key: STORAGE_KEY,
+      onStatus: showStorageWarning
+    });
+
+    function saveStateToStorage() {
+      const currentState = serializeState();
+      autosave.save(currentState);
+      try { if (state.extras) state.extras.onStateSaved(currentState); } catch (err) { console.warn('Project bookkeeping after autosave failed:', err); }
     }
 
     function scheduleAutoSave() {
@@ -93,7 +162,9 @@
         theme: stackManager.getState().theme || 'midnight-dark',
         customColors: { ...(stackManager.getState().customColors || {}) },
         page: { ...stackManager.getState().page },
-        viewport: state.viewport
+        viewport: state.viewport,
+        pages: JSON.parse(JSON.stringify(stackManager.getState().pages || [])),
+        activePageId: stackManager.getState().activePageId || null
       };
 
       // If current state matches last snapshot, skip duplicate
@@ -103,6 +174,9 @@
           return;
         }
       }
+
+      const previous = state.index >= 0 ? state.stack[state.index] : null;
+      entryInfo.set(currentSnapshot, { label: Labels.describeChange(previous, currentSnapshot), at: Date.now() });
 
       // Discards future redo states
       state.stack = state.stack.slice(0, state.index + 1);
@@ -121,8 +195,11 @@
       state.applying = true;
 
       try {
-        // Restore stack
-        if (typeof stackManager.setStack === 'function') {
+        // Restore pages (multi-page sites), or the single stack
+        if (snapshot.pages && snapshot.pages.length && typeof stackManager.setPages === 'function') {
+          stackManager.setPages(snapshot.pages, snapshot.activePageId);
+        } else if (typeof stackManager.setStack === 'function') {
+          if (typeof stackManager.setPages === 'function') stackManager.setPages([], null);
           stackManager.setStack(snapshot.stack || []);
         } else {
           stackManager.clearStack();
@@ -228,8 +305,11 @@
     return {
       state,
       MAX_HISTORY,
-      STORAGE_KEY,
+      STORAGE_KEY, autosave,
       updateHistoryUI,
+      listHistory,
+      jumpToHistory,
+      clearHistory,
       serializeState,
       applyState,
       saveStateToStorage,

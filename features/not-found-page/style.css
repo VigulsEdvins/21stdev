@@ -1,0 +1,12 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.nfp-demo { min-height: 80vh; display: grid; place-content: center; justify-items: center; gap: .9rem; padding: 4rem 1.5rem; text-align: center; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.nfp-code { margin: 0; font-family: var(--font-display, inherit); font-weight: 800; font-size: clamp(6rem, 22vw, 14rem); line-height: .9; letter-spacing: -.04em; background: linear-gradient(135deg, var(--accent, #6366f1), color-mix(in srgb, var(--accent, #6366f1) 40%, #ec4899)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.nfp-title { margin: 0; font-family: var(--font-display, inherit); font-size: clamp(1.6rem, 4vw, 2.4rem); }
+.nfp-text { margin: 0; max-width: 460px; line-height: 1.6; color: color-mix(in srgb, var(--text, #f3f4f6) 72%, transparent); }
+.nfp-home { margin-top: .75rem; padding: 13px 26px; border-radius: 999px; background: var(--accent, #6366f1); color: #fff; font-weight: 600; text-decoration: none; transition: transform .2s; }
+.nfp-home:hover { transform: translateY(-2px); }
+.nfp-home:focus-visible, .nfp-links a:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent, #6366f1) 60%, #fff); outline-offset: 3px; }
+.nfp-links { display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center; margin-top: 1rem; }
+.nfp-links a { color: color-mix(in srgb, var(--text, #f3f4f6) 78%, transparent); text-decoration: none; font-size: .95rem; }
+.nfp-links a:hover { color: var(--accent, #6366f1); text-decoration: underline; }
+@media (prefers-reduced-motion: reduce) { .nfp-home { transition: none; } .nfp-home:hover { transform: none; } }

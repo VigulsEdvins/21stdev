@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign-In Card</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="acl-demo" aria-labelledby="aclTitle">
+  <div class="acl-card">
+    <h2 class="acl-title" id="aclTitle">Welcome back</h2>
+    <p class="acl-sub" id="aclSub">Sign in to continue to your dashboard.</p>
+    <form class="acl-form" id="aclForm" novalidate>
+      <div class="acl-field"><label for="aclEmail">Email</label><input class="acl-input" id="aclEmail" type="email" autocomplete="email" required aria-describedby="aclEmailErr"><p class="acl-error" id="aclEmailErr" role="alert"></p></div>
+      <div class="acl-field"><label for="aclPass">Password</label>
+        <div class="acl-pass"><input class="acl-input" id="aclPass" type="password" autocomplete="current-password" required minlength="8" aria-describedby="aclPassErr"><button class="acl-eye" id="aclEye" type="button" aria-pressed="false" aria-label="Show password">Show</button></div>
+        <p class="acl-error" id="aclPassErr" role="alert"></p></div>
+      <div class="acl-row"><a class="acl-forgot" href="#forgot">Forgot password?</a></div>
+      <button class="acl-btn" id="aclSubmit" type="submit">Sign in</button>
+      <p class="acl-status" id="aclStatus" role="status"></p>
+    </form>
+    <p class="acl-switch"><span id="aclSwitchText">New here?</span> <button class="acl-link" id="aclSwitch" type="button">Create an account</button></p>
+  </div>
+</section>
+  <script src="script.js"></script>
+</body>
+</html>

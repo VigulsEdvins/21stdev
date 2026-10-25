@@ -1,0 +1,79 @@
+{
+  "name": "Not Found (404) Page",
+  "slug": "not-found-page",
+  "title": "Not Found (404) Page",
+  "category": "Heroes",
+  "source": "custom",
+  "type": "component",
+  "description": "A friendly 404 screen with a large status number, a short explanation, a button back home and a few useful links.",
+  "tags": [
+    "404",
+    "error",
+    "not found",
+    "page",
+    "hero"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "saas",
+    "ecommerce"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "code",
+      "label": "Status number",
+      "type": "text",
+      "selector": ":scope .nfp-code"
+    },
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .nfp-title"
+    },
+    {
+      "id": "text",
+      "label": "Explanation",
+      "type": "text",
+      "selector": ":scope .nfp-text"
+    },
+    {
+      "id": "button",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .nfp-home"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .nfp-home"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .nfp-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

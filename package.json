@@ -25,7 +25,25 @@
     "set-license": "node scripts/set-license.js",
     "build-tailwind": "node scripts/build-tailwind.js",
     "check-blank": "node scripts/check-blank.js",
-    "check-exports": "node scripts/check-exports.js"
+    "check-exports": "node scripts/check-exports.js",
+    "check-fields": "node scripts/check-fields.js",
+    "check-visual": "node scripts/check-visual.js",
+    "check-responsive": "node scripts/check-responsive.js",
+    "check-starters": "node scripts/check-starters.js",
+    "ci": "node scripts/ci.js",
+    "rank-token-work": "node scripts/rank-token-work.js",
+    "measure-weight": "node scripts/measure-weight.js",
+    "find-duplicates": "node scripts/find-duplicates.js",
+    "check-cross-browser": "node scripts/check-cross-browser.js",
+    "size-report": "node scripts/size-report.js",
+    "find-unused-assets": "node scripts/find-unused-assets.js",
+    "check-code-safety": "node scripts/check-code-safety.js",
+    "declare-assets": "node scripts/declare-assets.js",
+    "localize-remote": "node scripts/localize-remote.js",
+    "check-lighthouse": "node scripts/check-lighthouse.js",
+    "encode-video-fallback": "node scripts/encode-video-fallback.js",
+    "setup-webkit-libs": "node scripts/setup-webkit-libs.js",
+    "measure-frames": "node scripts/measure-frames.js"
   },
   "keywords": [],
   "author": "",
@@ -40,10 +58,12 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "acorn": "^8.19.0",
     "esbuild": "^0.28.2",
     "eslint-scope": "^9.1.2",
     "jszip": "^3.10.2",
+    "lighthouse": "^13.5.0",
     "playwright-core": "^1.64.1",
     "tailwindcss": "^3.4.19"
   }

@@ -64,5 +64,7 @@
     "luma": 0.6,
     "webgl": true,
     "canvas2d": true
-  }
+  },
+  "reserveHeight": 800,
+  "lazy": true
 }

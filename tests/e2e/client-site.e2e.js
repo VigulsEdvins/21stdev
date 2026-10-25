@@ -80,6 +80,11 @@ async function main() {
     fs.mkdirSync(path.dirname(path.join(dir, name)), { recursive: true });
     fs.writeFileSync(path.join(dir, name), await entry.async('nodebuffer'));
   }
+  assert(zip.file('favicon.svg') && zip.file('site.webmanifest'), 'an emoji favicon ships as favicon.svg with a manifest');
+  for (const [n, size] of [['apple-touch-icon.png', 180], ['icon-192.png', 192], ['icon-512.png', 512]]) {
+    const png = await zip.file(n).async('nodebuffer');
+    assert(png.slice(1, 4).toString() === 'PNG' && png.readUInt32BE(16) === size, n + ' is a ' + size + 'px PNG');
+  }
   const fileCount = Object.keys(zip.files).filter(n => !n.endsWith('/')).length;
   assert(Object.keys(zip.files).some(n => n.startsWith('assets/library/')), 'image-heavy sections bring their assets into the ZIP');
   step(`ZIP unpacked (${fileCount} files)`);

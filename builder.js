@@ -34,10 +34,18 @@
     // Components that keep their own palette under some page themes (meta.json "nativeWhen")
     const nativeMap = {};
     const licenseMap = {};
+    const weightMap = {};
+    const exportAssets = {}; // files a component loads at run time (paths built in code), declared in meta.json "exportAssets"
+    const lazyMap = {}; // heavy one-screen sections an export starts only when they are about to be seen
+    const reserveMap = {}; // space a script-rendered section will fill, reserved in exports so nothing jumps
     const ownPalette = {}; // components whose own colours must not be overridden by the theme engine's heading/text rules
     registry.forEach(feature => {
       if (Array.isArray(feature.nativeWhen) && feature.nativeWhen.length) nativeMap[feature.slug] = feature.nativeWhen;
       if (feature.ownPalette) ownPalette[feature.slug] = true;
+      if (feature.reserveHeight) reserveMap[feature.slug] = feature.reserveHeight;
+      if (feature.lazy) lazyMap[feature.slug] = true;
+      if (feature.weight) weightMap[feature.slug] = feature.weight;
+      if (Array.isArray(feature.exportAssets) && feature.exportAssets.length) exportAssets[feature.slug] = feature.exportAssets;
       if (feature.origin && feature.origin.license) licenseMap[feature.slug] = feature.origin.license;
     });
 
@@ -204,7 +212,7 @@
     // 3. Active sections list (scripts/builder/stack-list.js)
     const stackListController = (window.BuilderStackList || require('./scripts/builder/stack-list.js')).createStackList({
       LANDING_PAGE_SINGLETONS, featuresMap, getSingletonType, pageStackList, previewFrame, setActiveSection,
-      stackManager, updateActiveSectionUI, updatePreview: () => updatePreview(),
+      stackManager, updateActiveSectionUI, updatePreview: () => updatePreview(), getActiveSection,
       requestPreloaderReplay: () => { rt.preloaderForceReplay = true; rt.forceFullPreviewReload = true; updatePreview(); }
     });
     const { renderStackList } = stackListController;
@@ -418,18 +426,20 @@
 
     // 9. Export modal & project ZIP generator (scripts/builder/export-panel.js)
     const exportController = (window.BuilderExport || require('./scripts/builder/export-panel.js')).createExportController({
-      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap
+      stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, exportAssets, weightMap
     });
     const { prepareExportData, setActiveExportTab, setActiveCodeSubtab, openExportModal, closeExportModal, handleDownloadZip } = exportController;
 
     // Check localStorage for saved builder state
     let hasLoadedSavedState = false;
-    if (typeof localStorage !== 'undefined') {
+    {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (parsed && Array.isArray(parsed.stack) && parsed.stack.length > 0) {
+        const loaded = historyCtl.autosave.load();
+        if (loaded.status === 'recovered') showToast('Your last save could not be read, so the one before it was restored.', 6000);
+        if (loaded.status === 'corrupt') showToast('Your saved work could not be read. A copy was kept in this browser; starting a new page.', 7000);
+        const parsed = loaded.state;
+        {
+          if (parsed && Array.isArray(parsed.stack) && (parsed.stack.length > 0 || (Array.isArray(parsed.pages) && parsed.pages.length > 1))) {
             const prevApplying = historyCtl.state.applying;
             historyCtl.state.applying = true;
             if (typeof stackManager.setStack === 'function') {
@@ -437,6 +447,9 @@
             } else {
               stackManager.clearStack();
               parsed.stack.forEach(sec => stackManager.insertSection(stackManager.getStack().length, sec));
+            }
+            if (Array.isArray(parsed.pages) && parsed.pages.length > 1 && typeof stackManager.setPages === 'function') {
+              stackManager.setPages(parsed.pages, parsed.activePageId);
             }
             if (parsed.theme) {
               stackManager.setTheme(parsed.theme);
@@ -558,6 +571,12 @@
       getHistoryStack: () => [...historyCtl.state.stack],
       getHistoryIndex: () => historyCtl.state.index
     };
+
+    if (window.BuilderPageTabs) window.BuilderPageTabs.init({ stackManager, featuresMap, showToast });
+    if (window.BuilderHistoryPanel) window.BuilderHistoryPanel.init({ history: historyCtl });
+    const emptyStarterBtn = document.getElementById('emptyStarterBtn');
+    if (emptyStarterBtn && loadStarterBtn) emptyStarterBtn.addEventListener('click', () => loadStarterBtn.click());
+    if (typeof window !== 'undefined' && window.BuilderTour) window.BuilderTour.start(document); // first visit only
 
     if (typeof window !== 'undefined') {
       window.builderPreview = controller;

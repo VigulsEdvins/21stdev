@@ -1,0 +1,80 @@
+{
+  "name": "Magnetic Call-To-Action Button",
+  "slug": "magnetic-cta-button",
+  "title": "Magnetic Call-To-Action Button",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "A large button that leans toward the pointer as it gets close, with a soft click ripple and a label that slides on hover. Touch and keyboard users get a plain, steady button.",
+  "tags": [
+    "button",
+    "cta",
+    "magnetic",
+    "hover",
+    "ripple"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "playful"
+  ],
+  "industry": [
+    "saas",
+    "agency",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "eyebrow",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .mcb-eyebrow"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .mcb-title"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .mcb-label-a"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .mcb-button"
+    },
+    {
+      "id": "note",
+      "label": "Small print",
+      "type": "text",
+      "selector": ":scope .mcb-note"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Button colour",
+      "type": "color",
+      "selector": ":scope .mcb-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

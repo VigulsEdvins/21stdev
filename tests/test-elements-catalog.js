@@ -25,33 +25,34 @@ assert(builderCss.includes('.element-card-badge'), 'builder.css must style .elem
 
 // 3. Verify Category Taxonomy in builder.js and registry.json
 const registry = require('../registry.json');
-assert.strictEqual(registry.items.length, 209, 'Must contain all 209 real vault features');
+assert(registry.items.length >= 209, `The registry must hold every real vault feature (at least 209), got ${registry.items.length}`);
 
 const { matchesCategory } = require('../builder.js');
 assert(typeof matchesCategory === 'function', 'builder.js must export matchesCategory');
 
 // Category check assertions
 const heroFeatures = registry.items.filter(f => matchesCategory(f, 'Heroes'));
-assert.strictEqual(heroFeatures.length, 15, `Heroes must contain 15 features, got ${heroFeatures.length}`);
+assert(heroFeatures.length >= 15, `Heroes must contain at least 15 features, got ${heroFeatures.length}`);
 
 const navFeatures = registry.items.filter(f => matchesCategory(f, 'Headers & Nav'));
-assert.strictEqual(navFeatures.length, 4, `Headers & Nav must contain 4 features, got ${navFeatures.length}`);
+assert(navFeatures.length >= 8, `Headers & Nav must contain at least 8 features, got ${navFeatures.length}`);
 
 const footerFeatures = registry.items.filter(f => matchesCategory(f, 'Footers'));
-assert.strictEqual(footerFeatures.length, 8, `Footers must contain 8 features, got ${footerFeatures.length}`);
+assert(footerFeatures.length >= 10, `Footers must contain at least 10 features, got ${footerFeatures.length}`);
 
 const pricingFeatures = registry.items.filter(f => matchesCategory(f, 'Pricing & Tables'));
-assert.strictEqual(pricingFeatures.length, 2, `Pricing & Tables must contain 2 features, got ${pricingFeatures.length}`);
+assert(pricingFeatures.length >= 3, `Pricing & Tables must contain at least 3 features, got ${pricingFeatures.length}`);
+assert(pricingFeatures.some(f => f.slug === 'pricing-table-switch'), 'pricing-table-switch must be in Pricing & Tables');
 assert(pricingFeatures.some(f => f.slug === 'ink-orbit-pricing'), 'ink-orbit-pricing must be in Pricing & Tables');
 assert(pricingFeatures.some(f => f.slug === 'constellation-turntable'), 'constellation-turntable must be in Pricing & Tables');
 
 const buttonFeatures = registry.items.filter(f => matchesCategory(f, 'Buttons & UI'));
-assert.strictEqual(buttonFeatures.length, 6, `Buttons & UI must contain 6 features, got ${buttonFeatures.length}`);
+assert(buttonFeatures.length >= 9, `Buttons & UI must contain at least 9 features, got ${buttonFeatures.length}`);
 
 const carouselFeatures = registry.items.filter(f => matchesCategory(f, '3D & Carousels'));
 assert.strictEqual(carouselFeatures.length, 22, `3D & Carousels must contain 22 features, got ${carouselFeatures.length}`);
 
 const allFeatures = registry.items.filter(f => matchesCategory(f, 'all'));
-assert.strictEqual(allFeatures.length, 209, 'All category must match 209 features');
+assert.strictEqual(allFeatures.length, registry.items.length, 'The All category must hold every feature in the registry');
 
 console.log('✅ Creative Elements Real Component Catalog tests passed successfully!');

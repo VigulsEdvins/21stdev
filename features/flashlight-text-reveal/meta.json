@@ -62,5 +62,6 @@
   },
   "nativeWhen": [
     "light"
-  ]
+  ],
+  "lazy": true
 }

@@ -1,0 +1,73 @@
+{
+  "name": "Call-To-Action Footer",
+  "slug": "cta-footer",
+  "title": "Call-To-Action Footer",
+  "category": "Footers & Endings",
+  "source": "custom",
+  "type": "component",
+  "description": "A closing section with a big headline, an email sign-up with inline validation, and a slim footer with link columns and a copyright line.",
+  "tags": [
+    "footer",
+    "cta",
+    "newsletter",
+    "links",
+    "closing"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "saas",
+    "agency",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .ctf-title"
+    },
+    {
+      "id": "text",
+      "label": "Supporting text",
+      "type": "text",
+      "selector": ":scope .ctf-text"
+    },
+    {
+      "id": "button",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .ctf-btn"
+    },
+    {
+      "id": "copy",
+      "label": "Copyright line",
+      "type": "text",
+      "selector": ":scope .ctf-copy"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .ctf-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

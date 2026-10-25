@@ -120,5 +120,8 @@
     "canvas2d": false
   },
   "ownPalette": true,
-  "themeReviewed": "Brand orange on cream (2.9:1, large/nav text); intentional palette, same in both themes. Checked 2026-10-24."
+  "themeReviewed": "Brand orange on cream (2.9:1, large/nav text); intentional palette, same in both themes. Checked 2026-10-24.",
+  "reserveHeight": 4158,
+  "palette": "designed",
+  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it"
 }

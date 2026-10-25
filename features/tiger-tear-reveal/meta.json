@@ -54,5 +54,8 @@
   },
   "nativeWhen": [
     "dark"
-  ]
+  ],
+  "reserveHeight": 2080,
+  "palette": "designed",
+  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it"
 }

@@ -1,0 +1,9 @@
+# Generated and binary files: keep them out of text diffs and merges
+*.jpg binary
+*.png binary
+*.webp binary
+*.webm binary
+*.woff2 binary
+registry.js -diff linguist-generated
+registry.json -diff linguist-generated
+tests/visual/baseline.json -diff linguist-generated

@@ -29,6 +29,7 @@
   "sourceFolder": "/home/edvins/features-for-web/betteroff",
   "order": 24,
   "legacyCategory": "Full Templates",
+  "ownPalette": true,
   "status": "stable",
   "weight": "light",
   "mood": [

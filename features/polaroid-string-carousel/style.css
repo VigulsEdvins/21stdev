@@ -8,20 +8,20 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #141413;
+  background: var(--bg, #141413);
 }
 
 .pl-root {
-  --pl-bg: #161514;
-  --pl-ink: #f4f1ea;
-  --pl-muted: rgba(244, 241, 234, 0.58);
-  --pl-line: rgba(244, 241, 234, 0.18);
+  --pl-bg: var(--bg, #161514);
+  --pl-ink: var(--text, #f4f1ea);
+  --pl-muted: color-mix(in srgb, var(--text, #f4f1ea) 58%, transparent);
+  --pl-line: color-mix(in srgb, var(--text, #f4f1ea) 18%, transparent);
   --pl-cw: 260px;
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 25%, rgba(239, 141, 96, 0.08), transparent 65%), var(--pl-bg);
+  background: radial-gradient(circle at 50% 25%, color-mix(in srgb, var(--accent, #ef8d60) 8%, transparent), transparent 65%), var(--pl-bg);
   color: var(--pl-ink);
   user-select: none;
   -webkit-user-select: none;
@@ -172,7 +172,7 @@ html, body {
   height: 40px;
   border-radius: 50%;
   border: 1px solid var(--pl-line);
-  background: rgba(255, 255, 255, 0.03);
+  background: color-mix(in srgb, var(--text, #f4f1ea) 3%, transparent);
   color: inherit;
   display: grid;
   place-items: center;

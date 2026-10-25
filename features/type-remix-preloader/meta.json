@@ -28,7 +28,7 @@
   "order": 242,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "light",
+  "weight": "medium",
   "mood": [
     "editorial",
     "dark"
@@ -52,5 +52,6 @@
     "luma": 0.14,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "reserveHeight": 800
 }

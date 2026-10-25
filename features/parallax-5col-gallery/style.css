@@ -7,8 +7,8 @@
 body, html {
   width: 100%;
   height: 100%;
-  background: #f4f1ea;
-  color: #141413;
+  background: var(--bg, #f4f1ea);
+  color: var(--text, #141413);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow: hidden;
   user-select: none;
@@ -31,7 +31,7 @@ body, html {
   justify-content: space-between;
   align-items: center;
   padding: 18px 28px;
-  background: linear-gradient(180deg, rgba(244,241,234,0.92) 0%, rgba(244,241,234,0) 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg, #f4f1ea) 92%, transparent) 0%, color-mix(in srgb, var(--bg, #f4f1ea) 0%, transparent) 100%);
   pointer-events: none;
 }
 
@@ -44,7 +44,7 @@ body, html {
 
 .viv-hint {
   font-size: 11px;
-  color: rgba(20, 20, 19, 0.55);
+  color: color-mix(in srgb, var(--text, #141413) 55%, transparent);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -72,7 +72,7 @@ body, html {
 }
 
 .viv-card {
-  background: #e9e4da;
+  background: color-mix(in srgb, var(--text, #141413) 7%, var(--bg, #f4f1ea));
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -116,7 +116,7 @@ body, html {
   justify-content: space-between;
   align-items: baseline;
   padding: 12px 4px 4px;
-  background: #f4f1ea;
+  background: var(--bg, #f4f1ea);
 }
 
 .viv-artist-name {
@@ -129,7 +129,7 @@ body, html {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: rgba(20, 20, 19, 0.52);
+  color: color-mix(in srgb, var(--text, #141413) 52%, transparent);
 }
 
 .viv-cycle-badge {
@@ -139,8 +139,8 @@ body, html {
   z-index: 3;
   padding: 3px 8px;
   border-radius: 999px;
-  background: rgba(20, 20, 19, 0.72);
-  color: #f4f1ea;
+  background: color-mix(in srgb, var(--text, #141413) 72%, transparent);
+  color: var(--bg, #f4f1ea);
   font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;

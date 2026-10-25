@@ -1,0 +1,26 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.clh-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.clh-header { border-bottom: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); position: relative; }
+.clh-bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; height: 84px; }
+.clh-logo { font-family: var(--font-display, inherit); font-size: 1.7rem; font-weight: 700; letter-spacing: .02em; color: inherit; text-decoration: none; padding: 0 2rem; }
+.clh-nav { display: flex; gap: 1.75rem; }
+.clh-right { justify-content: flex-end; }
+.clh-nav a, .clh-mobile a { color: inherit; opacity: .75; text-decoration: none; font-size: .95rem; padding: 6px 0; border-bottom: 2px solid transparent; transition: opacity .2s, border-color .2s; }
+.clh-nav a:hover, .clh-nav a:focus-visible, .clh-mobile a:hover, .clh-mobile a:focus-visible { opacity: 1; border-color: var(--accent, #6366f1); outline: none; }
+.clh-logo:focus-visible, .clh-burger:focus-visible { outline: 2px solid var(--accent, #6366f1); outline-offset: 3px; }
+.clh-burger { display: none; width: 44px; height: 44px; border: 0; background: transparent; color: inherit; position: relative; cursor: pointer; justify-self: end; }
+.clh-burger span { position: absolute; left: 10px; right: 10px; height: 2px; background: currentColor; transition: transform .25s, top .25s; }
+.clh-burger span:first-child { top: 17px; } .clh-burger span:last-child { top: 25px; }
+.clh-burger[aria-expanded="true"] span:first-child { top: 21px; transform: rotate(45deg); }
+.clh-burger[aria-expanded="true"] span:last-child { top: 21px; transform: rotate(-45deg); }
+.clh-mobile { display: grid; padding: .5rem 1.5rem 1.25rem; border-top: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); }
+.clh-mobile[hidden] { display: none; }
+.clh-mobile a { padding: 12px 0; font-size: 1.05rem; }
+@media (max-width: 760px) {
+  .clh-bar { grid-template-columns: 44px 1fr 44px; }
+  .clh-nav { display: none; }
+  .clh-logo { grid-column: 2; justify-self: center; padding: 0; }
+  .clh-burger { display: block; grid-column: 3; }
+}
+@media (min-width: 761px) { .clh-mobile { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .clh-nav a, .clh-mobile a, .clh-burger span { transition: none; } }

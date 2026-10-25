@@ -1,0 +1,8 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.scu-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); padding: 5rem 1.5rem; text-align: center; }
+.scu-title { font-family: var(--font-display, inherit); font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 3rem; }
+.scu-row { list-style: none; margin: 0 auto; padding: 0; max-width: 1000px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem 1rem; }
+.scu-item { padding: 0 .5rem; }
+.scu-num { margin: 0; font-family: var(--font-display, inherit); font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.1; color: var(--accent, #6366f1); font-variant-numeric: tabular-nums; }
+.scu-label { margin: .5rem 0 0; color: color-mix(in srgb, var(--text, #f3f4f6) 70%, transparent); }
+@media (max-width: 760px) { .scu-row { grid-template-columns: repeat(2, 1fr); } }

@@ -7,8 +7,8 @@
 html, body {
   width: 100%;
   height: 100%;
-  background: #090a0f;
-  color: #ffffff;
+  background: var(--bg, #090a0f);
+  color: var(--text, #ffffff);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
 }
@@ -20,7 +20,7 @@ html, body {
   align-items: center;
   justify-content: center;
   padding: 3rem 1.5rem;
-  background: radial-gradient(circle at center, #131520 0%, #08090d 100%);
+  background: radial-gradient(circle at center, color-mix(in srgb, var(--text, #ffffff) 6%, var(--bg, #090a0f)) 0%, var(--bg, #090a0f) 100%);
 }
 
 /* Toolbar */
@@ -30,8 +30,8 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: color-mix(in srgb, var(--text, #ffffff) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text, #ffffff) 10%, transparent);
   padding: 0.6rem 1.25rem;
   border-radius: 9999px;
   backdrop-filter: blur(12px);
@@ -49,13 +49,13 @@ html, body {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #94a3b8;
+  color: color-mix(in srgb, var(--text, #ffffff) 60%, transparent);
 }
 
 .tool-btn {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #cbd5e1;
+  border: 1px solid color-mix(in srgb, var(--text, #ffffff) 12%, transparent);
+  color: color-mix(in srgb, var(--text, #ffffff) 80%, transparent);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 11px;
   padding: 0.3rem 0.65rem;
@@ -65,14 +65,14 @@ html, body {
 }
 
 .tool-btn:hover {
-  border-color: #ffffff;
-  color: #ffffff;
+  border-color: var(--text, #ffffff);
+  color: var(--text, #ffffff);
 }
 
 .tool-btn.active {
-  background: #ffffff;
-  color: #090a0f;
-  border-color: #ffffff;
+  background: var(--text, #ffffff);
+  color: var(--bg, #090a0f);
+  border-color: var(--text, #ffffff);
   font-weight: 600;
 }
 
@@ -88,7 +88,7 @@ html, body {
 
 .color-btn.active {
   transform: scale(1.25);
-  border-color: #ffffff;
+  border-color: var(--text, #ffffff);
 }
 
 /* Main Card */
@@ -97,8 +97,8 @@ html, body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: rgba(20, 22, 32, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: color-mix(in srgb, var(--text, #ffffff) 6%, var(--bg, #090a0f));
+  border: 1px solid color-mix(in srgb, var(--text, #ffffff) 12%, transparent);
   border-radius: 2rem;
   overflow: hidden;
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
@@ -106,9 +106,9 @@ html, body {
 
 .wipe-nav {
   display: flex;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--text, #ffffff) 10%, transparent);
   padding: 0.5rem 1.5rem;
-  background: rgba(10, 11, 16, 0.5);
+  background: color-mix(in srgb, var(--bg, #090a0f) 50%, transparent);
   gap: 0.5rem;
   overflow-x: auto;
 }
@@ -116,7 +116,7 @@ html, body {
 .nav-tab {
   background: transparent;
   border: none;
-  color: #94a3b8;
+  color: color-mix(in srgb, var(--text, #ffffff) 60%, transparent);
   font-size: 13.5px;
   font-weight: 500;
   padding: 0.75rem 1.25rem;
@@ -126,12 +126,12 @@ html, body {
 }
 
 .nav-tab:hover {
-  color: #ffffff;
+  color: var(--text, #ffffff);
 }
 
 .nav-tab.active {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: color-mix(in srgb, var(--text, #ffffff) 10%, transparent);
+  color: var(--text, #ffffff);
 }
 
 /* Wipe Container */
@@ -145,7 +145,7 @@ html, body {
 .wipe-shutter {
   position: absolute;
   inset: 0;
-  background: #6366f1;
+  background: var(--accent, #6366f1);
   z-index: 20;
   transform: translate3d(-100%, 0, 0);
   pointer-events: none;
@@ -172,7 +172,7 @@ html, body {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #818cf8;
+  color: var(--accent, #818cf8);
 }
 
 .panel-title {
@@ -186,7 +186,7 @@ html, body {
 .panel-text {
   font-size: 1.05rem;
   line-height: 1.6;
-  color: #94a3b8;
+  color: color-mix(in srgb, var(--text, #ffffff) 60%, transparent);
   font-weight: 300;
   max-width: 580px;
   margin-bottom: 2rem;
@@ -196,7 +196,7 @@ html, body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--text, #ffffff) 8%, transparent);
   padding-top: 1.5rem;
 }
 
@@ -204,7 +204,7 @@ html, body {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 1.6rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text, #ffffff);
   margin-bottom: 0.25rem;
 }
 
@@ -212,5 +212,5 @@ html, body {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #64748b;
+  color: color-mix(in srgb, var(--text, #ffffff) 45%, transparent);
 }

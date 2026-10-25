@@ -1,0 +1,84 @@
+{
+  "name": "Logo Cloud Grid",
+  "slug": "logo-cloud-grid",
+  "title": "Logo Cloud Grid",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "A \"trusted by\" strip with six client wordmarks in a quiet grid that gain colour on hover; drop in real logos by replacing the text marks.",
+  "tags": [
+    "logos",
+    "clients",
+    "trust",
+    "social proof",
+    "partners"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "saas",
+    "agency",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .lcg-title"
+    },
+    {
+      "id": "logo-1",
+      "label": "Client 1 name",
+      "type": "text",
+      "selector": ":scope .lcg-item:nth-child(1) .lcg-mark"
+    },
+    {
+      "id": "logo-2",
+      "label": "Client 2 name",
+      "type": "text",
+      "selector": ":scope .lcg-item:nth-child(2) .lcg-mark"
+    },
+    {
+      "id": "logo-3",
+      "label": "Client 3 name",
+      "type": "text",
+      "selector": ":scope .lcg-item:nth-child(3) .lcg-mark"
+    },
+    {
+      "id": "logo-4",
+      "label": "Client 4 name",
+      "type": "text",
+      "selector": ":scope .lcg-item:nth-child(4) .lcg-mark"
+    },
+    {
+      "id": "logo-5",
+      "label": "Client 5 name",
+      "type": "text",
+      "selector": ":scope .lcg-item:nth-child(5) .lcg-mark"
+    },
+    {
+      "id": "logo-6",
+      "label": "Client 6 name",
+      "type": "text",
+      "selector": ":scope .lcg-item:nth-child(6) .lcg-mark"
+    }
+  ],
+  "order": 900
+}

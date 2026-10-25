@@ -6,6 +6,18 @@
 (function (root) {
   const FIELD_WEIGHTS = { title: 5, slug: 4, tags: 3, category: 2, attrs: 2, description: 1 };
 
+  // Words people use for the same thing; a query word also finds its group (a synonym match counts a little less than the word itself)
+  const SYNONYM_GROUPS = [
+    ['pricing', 'plans', 'price', 'prices', 'tiers'], ['nav', 'navbar', 'navigation', 'menu', 'header'], ['hero', 'banner', 'intro'],
+    ['footer', 'ending', 'closing'], ['faq', 'questions', 'accordion'], ['testimonial', 'testimonials', 'reviews', 'quotes'],
+    ['form', 'forms', 'input', 'contact'], ['login', 'signin', 'auth', 'account', 'password'], ['cookie', 'cookies', 'consent', 'gdpr', 'privacy'],
+    ['stats', 'numbers', 'metrics', 'counter', 'statistics'], ['team', 'people', 'staff', 'members'], ['404', 'notfound', 'error'],
+    ['cta', 'callout', 'conversion', 'banner'], ['logos', 'logo', 'clients', 'partners', 'brands'], ['gallery', 'photos', 'images', 'portfolio'],
+    ['upload', 'dropzone', 'files', 'attach'], ['search', 'find', 'autocomplete', 'suggestions'], ['newsletter', 'subscribe', 'signup', 'email']
+  ];
+  const SYNONYMS = new Map();
+  SYNONYM_GROUPS.forEach(group => group.forEach(w => { SYNONYMS.set(w, group.filter(x => x !== w)); }));
+
   function normalize(s) {
     return String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   }
@@ -86,7 +98,8 @@
       let total = 0;
       let ok = true;
       for (const t of tokens) {
-        const s = scoreToken(t, fields);
+        let s = scoreToken(t, fields);
+        (SYNONYMS.get(t) || []).forEach(alt => { s = Math.max(s, scoreToken(alt, fields) * 0.7); });
         if (s === 0) { ok = false; break; }
         total += s;
       }

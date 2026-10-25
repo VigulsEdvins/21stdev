@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form With Validation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="cfv-demo" aria-labelledby="cfvTitle">
+  <div class="cfv-card">
+    <h2 class="cfv-title" id="cfvTitle">Get in touch</h2>
+    <p class="cfv-sub">Tell us a little about your project and we will reply within one working day.</p>
+    <form class="cfv-form" id="cfvForm" action="" method="post" novalidate>
+      <div class="cfv-field"><label for="cfvName">Your name</label><input class="cfv-input" id="cfvName" name="name" type="text" autocomplete="name" required aria-describedby="cfvNameErr"><p class="cfv-error" id="cfvNameErr" role="alert"></p></div>
+      <div class="cfv-field"><label for="cfvEmail">Email address</label><input class="cfv-input" id="cfvEmail" name="email" type="email" autocomplete="email" required aria-describedby="cfvEmailErr"><p class="cfv-error" id="cfvEmailErr" role="alert"></p></div>
+      <div class="cfv-field"><label for="cfvMsg">Message</label><textarea class="cfv-input" id="cfvMsg" name="message" rows="5" required minlength="10" aria-describedby="cfvMsgErr"></textarea><p class="cfv-error" id="cfvMsgErr" role="alert"></p></div>
+      <button class="cfv-btn" type="submit">Send message</button>
+    </form>
+    <div class="cfv-success" id="cfvSuccess" role="status" hidden><p class="cfv-success-text">Thank you! Your message is on its way.</p></div>
+  </div>
+</section>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -73,18 +73,6 @@
       "selector": ":scope p.lml-herosub"
     },
     {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > a:nth-of-type(1)"
-    },
-    {
-      "id": "button-link-2",
-      "label": "Button link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > a:nth-of-type(1)"
-    },
-    {
       "id": "section-heading-1",
       "label": "Section heading 1",
       "type": "text",
@@ -120,5 +108,6 @@
     "webgl": false,
     "canvas2d": true
   },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
+  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
+  "reserveHeight": 4440
 }

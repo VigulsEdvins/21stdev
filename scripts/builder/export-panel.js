@@ -8,7 +8,7 @@
   const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function createExportController(ctx) {
-    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, licenseMap } = ctx;
+    const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, exportAssets = {}, weightMap = {} } = ctx;
 
     // 9. Export Modal & Project ZIP Generator Controller
     const exportModal = document.getElementById('exportModal');
@@ -122,7 +122,7 @@
     /**
      * Generates export bundle & single file bundle from current stack and theme.
      */
-    async function prepareExportData() {
+    async function prepareExportData(exportOptions = {}) {
       const state = stackManager.getState();
       const currentStack = state.stack;
 
@@ -145,7 +145,7 @@
       const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
 
       if (window.Assembler && typeof window.Assembler.generateExportBundle === 'function') {
-        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, licenseMap });
+        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: state.page, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked });
       }
 
       if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
@@ -159,7 +159,8 @@
       return { bundle: currentExportBundle, singleHtml: currentSingleHtml, assets: currentExportAssets };
     }
 
-    const assetBundler = (window.ExportAssets || require('./export-assets.js')).createAssetBundler({
+    const ExportAssetsApi = window.ExportAssets || require('./export-assets.js');
+    const assetBundler = ExportAssetsApi.createAssetBundler({
       assembler: window.Assembler,
       fetchFn: (url) => fetch(url)
     });
@@ -169,11 +170,36 @@
      * Copies them into the ZIP under assets/ and inlines them as data URIs in the single-file HTML.
      * Assets that cannot be fetched are left untouched and reported in a toast.
      */
+    /** PNG versions of an emoji favicon (apple-touch icon and manifest icons); {} for an image address or none. */
+    async function iconFiles(page) {
+      const fp = window.FaviconPng;
+      if (!fp) return {};
+      try { return await fp.renderEmojiIcons(fp.emojiOf(page)); } catch (_) { return {}; }
+    }
+
     async function bundleLocalAssets() {
       currentExportAssets = {};
       if (!window.Assembler || !window.Assembler.findLocalAssetUrls) return;
-      const result = await assetBundler.bundle({ files: currentExportBundle, singleHtml: currentSingleHtml });
+      const extraAssets = Array.from(new Set(stackManager.getStack().flatMap(s => exportAssets[s.slug] || [])));
+      const result = await assetBundler.bundle({ files: currentExportBundle, singleHtml: currentSingleHtml, extraAssets });
       currentExportAssets = result.assets;
+      Object.assign(currentExportAssets, await iconFiles(stackManager.getState().page));
+      if (currentExportBundle && window.FontHost && window.FontHost.cssUrl(stackManager.getState().page)) {
+        const fonts = await window.FontHost.hostFonts({ files: currentExportBundle, page: stackManager.getState().page, fetchFn: (u) => fetch(u) });
+        if (fonts.hosted) {
+          Object.assign(currentExportAssets, fonts.assets);
+          currentExportBundle['README.md'] = currentExportBundle['README.md'].replace(/Fonts load from Google Fonts via the `<link>` tag there and are applied/, 'Fonts are self-hosted in `assets/fonts/` (declared at the end of `style.css`) and are applied');
+        } else {
+          showToast('Page fonts could not be downloaded; the ZIP still loads them from Google Fonts', 4000);
+        }
+      }
+      if (currentExportBundle && typeof currentExportBundle['README.md'] === 'string' && ExportAssetsApi.renderWeightReport) {
+        const sections = stackManager.getStack().map(s => ({ slug: s.slug, title: (featuresData[s.slug] && featuresData[s.slug].title) || s.slug }));
+        currentExportBundle['README.md'] += '\n' + ExportAssetsApi.renderWeightReport({ files: currentExportBundle, assets: result.assets, sections, weightMap });
+      }
+      if (currentExportBundle && typeof currentExportBundle['README.md'] === 'string' && ExportAssetsApi.renderExternalHostsReport) {
+        currentExportBundle['README.md'] += '\n' + ExportAssetsApi.renderExternalHostsReport(currentExportBundle);
+      }
       currentSingleHtml = result.singleHtml;
       if (result.missing.length) {
         console.warn('Export: assets not found and left as-is:', result.missing);
@@ -264,9 +290,7 @@
       updateCodeView();
     }
 
-    /**
-     * Opens the Export Modal with zero-section guard check.
-     */
+    /** Opens the Export Modal with zero-section guard check. */
     async function openExportModal() {
       if (!exportModal) return;
 
@@ -282,11 +306,15 @@
         if (exportPanelsWrapper) exportPanelsWrapper.style.display = 'block';
         await prepareExportData();
         updateCodeView();
+        renderPageChecks();
       }
 
       exportModal.classList.add('is-open');
       exportModal.setAttribute('aria-hidden', 'false');
     }
+
+    const cspToggle = document.getElementById('exportCspToggle');
+    if (cspToggle) cspToggle.addEventListener('change', async () => { await prepareExportData(); updateCodeView(); renderPageChecks(); });
 
     function closeExportModal() {
       if (!exportModal) return;
@@ -383,11 +411,50 @@
     }
 
     /**
+     * Multi-page sites: one HTML page (with its own CSS and JS) per page, shared assets and fonts once, and a sitemap that lists
+     * every page. The home page keeps the standard names (index.html, style.css, script.js); the others use their slug.
+     * Returns { files: {name: text}, assets: {name: bytes} }.
+     */
+    async function buildMultiPageFiles(exportOptions = {}) {
+      const state = stackManager.getState();
+      const pages = state.pages;
+      const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
+      const fileOf = (p) => (p.slug === 'index' ? 'index.html' : `${p.slug}.html`);
+      const pageLinks = Object.fromEntries(pages.map(p => [p.id, fileOf(p)]));
+      const pageFiles = pages.map(fileOf);
+      const out = { files: {}, assets: {} };
+      for (const p of pages) {
+        const home = p.slug === 'index';
+        const missing = p.stack.map(s => s.slug).filter(slug => slug && !featureCache.has(slug));
+        if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
+        const settings = { ...state.page, title: home ? state.page.title : `${p.title} | ${state.page.title}`, description: p.description || state.page.description };
+        const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles });
+        const extraAssets = Array.from(new Set(p.stack.flatMap(s => exportAssets[s.slug] || [])));
+        const bundled = await assetBundler.bundle({ files: bundle, singleHtml: '', extraAssets });
+        Object.assign(out.assets, bundled.assets);
+        if (home) Object.assign(out.assets, await iconFiles(settings));
+        if (window.FontHost && window.FontHost.cssUrl(settings)) {
+          const fonts = await window.FontHost.hostFonts({ files: bundle, page: settings, fetchFn: (u) => fetch(u) });
+          if (fonts.hosted) Object.assign(out.assets, fonts.assets);
+        }
+        if (home) {
+          ['index.html', 'style.css', 'script.js', 'README.md', 'robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md'].forEach(n => { if (bundle[n] !== undefined) out.files[n] = bundle[n]; });
+          out.files['README.md'] += `\n## Pages\n\n${pages.map(p2 => `- **${p2.title}**: \`${fileOf(p2)}\``).join('\n')}\n\nEach page has its own stylesheet and script (\`<page>.css\`, \`<page>.js\`); shared images and fonts are in \`assets/\`.\n`;
+        } else {
+          out.files[`${p.slug}.html`] = bundle['index.html'].replace('href="style.css"', `href="${p.slug}.css"`).replace('src="script.js"', `src="${p.slug}.js"`);
+          out.files[`${p.slug}.css`] = bundle['style.css'];
+          out.files[`${p.slug}.js`] = bundle['script.js'];
+        }
+      }
+      return out;
+    }
+
+    /**
      * Download Project ZIP generator.
      * Generates a clean archive with index.html, style.css, script.js, and README.md.
      * Uses window.JSZip if available, otherwise uses native pure-JS zip creator.
      */
-    async function handleDownloadZip() {
+    async function handleDownloadZip(exportOptions = {}) {
       const stack = stackManager.getStack();
       if (!Array.isArray(stack) || stack.length === 0) {
         showToast('Please add at least one section before downloading ZIP.');
@@ -413,20 +480,36 @@
       }
 
       try {
-        await prepareExportData();
+        await prepareExportData(exportOptions);
         if (!currentExportBundle) {
           throw new Error('Could not generate export bundle');
         }
 
-        const zipFilename = 'my-assembled-page.zip';
+        const zipFilename = exportOptions.review ? 'my-review-copy.zip' : 'my-assembled-page.zip';
+        if (exportOptions.review) {
+          currentExportBundle['README.md'] += '\n## Review copy\n\nThis copy has a Review button (bottom left). Open `index.html`, press **Comment mode**, click anything on the page and write what should change. Press **Review** to see the list and **Download comments** to send the file back. Comments stay in the browser until downloaded. Remove the review code before the final launch by exporting a normal copy.\n';
+        }
 
-        if (typeof window.JSZip !== 'undefined') {
+        const multi = stackManager.getState().pages.length > 1;
+        if (multi) {
+          const site = await buildMultiPageFiles(exportOptions);
+          if (exportOptions.review) site.files['README.md'] += '\n## Review copy\n\nOpen `index.html`, press **Comment mode**, click anything and write what should change; **Download comments** sends the file back. Remove the review code before launch by exporting a normal copy.\n';
+          if (typeof window.JSZip !== 'undefined') {
+            const zip = new window.JSZip();
+            Object.entries(site.files).forEach(([name, text]) => zip.file(name, text));
+            Object.entries(site.assets).forEach(([name, bytes]) => zip.file(name, bytes));
+            triggerDownload(await zip.generateAsync({ type: 'blob' }), zipFilename, 'application/zip');
+          } else {
+            triggerDownload(new Blob([window.Assembler.createZipArchive(Object.assign({}, site.files, site.assets))], { type: 'application/zip' }), zipFilename, 'application/zip');
+          }
+        } else if (typeof window.JSZip !== 'undefined') {
           // 1. Client-side JSZip
           const zip = new window.JSZip();
           zip.file('index.html', currentExportBundle['index.html']);
           zip.file('style.css', currentExportBundle['style.css']);
           zip.file('script.js', currentExportBundle['script.js']);
           zip.file('README.md', currentExportBundle['README.md']);
+          ['robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md'].forEach(n => { if (currentExportBundle[n]) zip.file(n, currentExportBundle[n]); });
           Object.entries(currentExportAssets).forEach(([name, bytes]) => zip.file(name, bytes));
           const blob = await zip.generateAsync({ type: 'blob' });
           triggerDownload(blob, zipFilename, 'application/zip');
@@ -463,8 +546,14 @@
     }
 
     if (downloadZipBtn) {
-      downloadZipBtn.addEventListener('click', handleDownloadZip);
+      downloadZipBtn.addEventListener('click', () => handleDownloadZip());
     }
+    const downloadReviewBtn = document.getElementById('downloadReviewBtn');
+    if (downloadReviewBtn) downloadReviewBtn.addEventListener('click', () => handleDownloadZip({ review: true }));
+
+    const notes = (window.BuilderExportNotes || require('./export-notes.js')).createExportNotes(ctx, { closeExportModal, getBundle: () => currentExportBundle });
+    const { renderPageChecks, renderReviewComments } = notes;
+    (window.BuilderExportReact || require('./export-react-download.js')).createReactDownload(ctx, { triggerDownload });
 
     return {
       prepareExportData,
@@ -472,7 +561,8 @@
       setActiveCodeSubtab,
       openExportModal,
       closeExportModal,
-      handleDownloadZip
+      handleDownloadZip,
+      renderReviewComments
     };
   }
 

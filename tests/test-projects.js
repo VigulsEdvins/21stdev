@@ -16,7 +16,7 @@ assert.strictEqual(store.activeId(), p1.id);
 assert.throws(() => store.create({ name: 'x', state: {} }), /needs a state/);
 
 // state is copied, not shared
-state.stack.push({ id: 'b' });
+state.stack.push({ id: 'b', slug: 'footer' });
 assert.strictEqual(store.get(p1.id).state.stack.length, 1);
 
 assert.strictEqual(store.saveState(p1.id, state), true);
@@ -74,3 +74,28 @@ assert.deepStrictEqual(m.getStack()[0].overrides, {});
 assert.strictEqual(m.setSectionOverride('nope', 'x', 'y', { selector: 'p' }), false);
 
 console.log('✅ Project store tests passed!');
+
+// ---- file format versions
+const { migrateState, CURRENT_VERSION } = require('../scripts/projects.js');
+assert.strictEqual(CURRENT_VERSION, 4);
+assert.strictEqual(migrateState({ stack: [], page: { title: "V2" } }, 2).page.bizType, "", "a version 2 page gains the business fields");
+const migrated = migrateState({ stack: [], theme: 'x', page: { title: 'Old', lang: 'lv' } }, 1);
+assert.strictEqual(migrated.page.title, 'Old');
+assert.strictEqual(migrated.page.lang, 'lv');
+assert.strictEqual(migrated.page.shareImage, '');
+assert.strictEqual(migrated.page.robots, '');
+assert.deepStrictEqual(migrateState({ stack: [] }, 1).page.canonical, '', 'a file with no page gets the defaults');
+assert.deepStrictEqual(migrateState(migrated, 2), migrated, 'a current state is left as it is');
+
+const mem2 = {};
+const store2 = createProjectStore({ getItem: k => (k in mem2 ? mem2[k] : null), setItem: (k, v) => { mem2[k] = v; } });
+const v1File = JSON.stringify({ format: 'web-builder-project', version: 1, project: { name: 'Old client', state: { stack: [{ id: 'a', slug: 'hero' }], theme: 'midnight-dark', page: { title: 'Old' } }, snapshots: [{ label: 'v1', state: { stack: [], page: { title: 'Older' } } }] } });
+const importedV1 = store2.importProject(v1File);
+assert.strictEqual(importedV1.state.page.title, 'Old');
+assert.strictEqual(importedV1.state.page.shareImage, '', 'a version 1 file is migrated on import');
+assert.strictEqual(store2.get(importedV1.id).snapshots[0].state.page.robots, '', 'its snapshots too');
+assert.strictEqual(JSON.parse(store2.exportProject(importedV1.id)).version, CURRENT_VERSION, 'new exports carry the current version');
+assert.throws(() => store2.importProject(JSON.stringify({ format: 'web-builder-project', version: 99, project: { state: { stack: [] } } })), /newer version/);
+assert.doesNotThrow(() => store2.importProject(JSON.stringify({ format: 'web-builder-project', project: { name: 'No version', state: { stack: [] } } })), 'a file without a version is treated as version 1');
+console.log('✅ Project file version tests passed!');
+

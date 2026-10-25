@@ -92,7 +92,5 @@
     "webgl": false,
     "canvas2d": false
   },
-  "nativeWhen": [
-    "light"
-  ]
+  "nativeWhen": []
 }

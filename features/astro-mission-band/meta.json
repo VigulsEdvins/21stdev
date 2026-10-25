@@ -95,6 +95,13 @@
       "label": "Text 6",
       "type": "text",
       "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > dl:nth-of-type(1) > div:nth-of-type(2) > dd:nth-of-type(1)"
+    },
+    {
+      "id": "accent-colour",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .aa-root",
+      "attr": "--aa-accent"
     }
   ],
   "measured": {
@@ -102,5 +109,6 @@
     "webgl": false,
     "canvas2d": true
   },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
+  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
+  "reserveHeight": 874
 }

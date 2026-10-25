@@ -1,0 +1,73 @@
+{
+  "name": "Sign-In Card",
+  "slug": "auth-card-login",
+  "title": "Sign-In Card",
+  "category": "Buttons & UI",
+  "source": "custom",
+  "type": "component",
+  "description": "A sign-in card with email and password, a show/hide password button, inline validation, a link to switch to creating an account and a forgot-password link. Nothing is sent anywhere.",
+  "tags": [
+    "login",
+    "sign in",
+    "auth",
+    "password",
+    "form"
+  ],
+  "tech": [
+    "Vanilla JS",
+    "CSS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "dark"
+  ],
+  "industry": [
+    "saas",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-24",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .acl-title"
+    },
+    {
+      "id": "button",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .acl-btn"
+    },
+    {
+      "id": "forgot",
+      "label": "Forgot-password text",
+      "type": "text",
+      "selector": ":scope .acl-forgot"
+    },
+    {
+      "id": "forgot-link",
+      "label": "Forgot-password link",
+      "type": "link",
+      "selector": ":scope .acl-forgot"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .acl-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 900
+}

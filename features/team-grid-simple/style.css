@@ -1,0 +1,14 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.tgs-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); padding: 5rem 1.5rem; }
+.tgs-head { max-width: 600px; margin: 0 auto 3rem; text-align: center; }
+.tgs-title { font-family: var(--font-display, inherit); font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 .75rem; }
+.tgs-sub { margin: 0; color: color-mix(in srgb, var(--text, #f3f4f6) 72%, transparent); line-height: 1.6; }
+.tgs-grid { list-style: none; margin: 0 auto; padding: 0; max-width: 1040px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+.tgs-card { text-align: center; padding: 1.75rem 1rem; border-radius: var(--radius, 16px); background: color-mix(in srgb, var(--text, #f3f4f6) 6%, var(--bg, #0b0f19)); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 14%, transparent); }
+.tgs-avatar { display: grid; place-items: center; width: 84px; height: 84px; margin: 0 auto 1rem; border-radius: 50%; font-family: var(--font-display, inherit); font-weight: 700; font-size: 1.5rem; color: #fff; background: linear-gradient(135deg, var(--accent, #6366f1), color-mix(in srgb, var(--accent, #6366f1) 40%, #ec4899)); }
+.tgs-name { font-family: var(--font-display, inherit); font-size: 1.05rem; margin: 0 0 .25rem; }
+.tgs-role { margin: 0 0 .9rem; color: color-mix(in srgb, var(--text, #f3f4f6) 66%, transparent); font-size: .92rem; }
+.tgs-link { color: var(--accent, #6366f1); font-size: .9rem; font-weight: 600; text-decoration: none; }
+.tgs-link:hover, .tgs-link:focus-visible { text-decoration: underline; outline: none; }
+@media (max-width: 900px) { .tgs-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .tgs-grid { grid-template-columns: 1fr; } }
