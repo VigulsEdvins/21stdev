@@ -3,14 +3,13 @@
   "title": "Flatlay Resume Board",
   "slug": "flatlay-resume-board",
   "category": "Interactions & Physics",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A CV as a desk flat-lay, photographed from above: a creased perforated sheet, a pinned photo card, a smart-watch \"about me\", a crumpled receipt of experience with dotted leaders and a coffee ring, torn-paper education on a ruled page, a lolly-stick label over grid paper, a handwritten list, layered ",
   "tags": [
     "flatlay",
     "resume",
     "board",
-    "21st.dev",
     "galleries",
     "react"
   ],
@@ -38,10 +37,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

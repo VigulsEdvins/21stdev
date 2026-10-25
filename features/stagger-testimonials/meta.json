@@ -3,7 +3,7 @@
   "title": "Stagger Testimonials",
   "slug": "stagger-testimonials",
   "category": "Cards & Tiles",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "Testimonial review cards layout layered with alternating column offset, glowing active state, star ratings, category filtering, and zero heavy motion library overhead.",
   "tags": [
@@ -11,8 +11,7 @@
     "stagger",
     "reviews",
     "social-proof",
-    "cards",
-    "21st.dev"
+    "cards"
   ],
   "tech": [
     "CSS Grid Stagger",
@@ -37,10 +36,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "permission",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
   },

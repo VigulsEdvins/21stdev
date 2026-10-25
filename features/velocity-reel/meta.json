@@ -3,13 +3,12 @@
   "title": "Velocity Reel",
   "slug": "velocity-reel",
   "category": "Scroll & Parallax",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A scroll-scrubbed cinematic title sequence. Ten shots on one canvas: a rim-lit face, an archer drawing, an arrow through glass, a blade through what is left of it, a fly-through of the shards, then a jet, a supercar and a formula car tearing out of the debris on red light, a burst, and an emblem.",
   "tags": [
     "velocity",
     "reel",
-    "21st.dev",
     "scroll",
     "react"
   ],
@@ -36,10 +35,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

@@ -2,15 +2,14 @@
   "name": "Iridescent Liquid-Metal Shader Card",
   "slug": "liquid-metal-shader-card",
   "category": "Audio & Shaders",
-  "source": "21st-crafted",
+  "source": "edvlabs",
   "type": "component",
   "description": "Interactive HTML5 Canvas iridescent liquid-chrome shader card with pointer ripple waves and 3D perspective tilt.",
   "tags": [
     "shader",
     "canvas",
     "liquid-metal",
-    "iridescent",
-    "21st-dev"
+    "iridescent"
   ],
   "tech": [
     "Canvas 2D Shader",
@@ -34,7 +33,7 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st-crafted",
+    "source": "edvlabs",
     "license": "own"
   },
   "updatedAt": "2026-10-22",

@@ -3,14 +3,13 @@
   "title": "Quiet Portfolio Template",
   "slug": "quiet-portfolio-template",
   "category": "Landing Pages",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A complete, minimal personal site in one component: calm type, generous whitespace, one accent colour, and a lot of small interactions that only show up when you reach for them.",
   "tags": [
     "quiet",
     "portfolio",
     "template",
-    "21st.dev",
     "full",
     "react"
   ],
@@ -39,10 +38,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

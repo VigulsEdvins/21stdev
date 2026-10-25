@@ -3,14 +3,13 @@
   "title": "Checker Quilt Testimonials",
   "slug": "checker-quilt-testimonials",
   "category": "Cards & Tiles",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A testimonials section laid out as a full-bleed checkerboard. Each row pairs a quote, set large on a solid colour field, with a portrait of the person who said it. Two rows sit diagonally, so the fields and faces alternate like a quilt.",
   "tags": [
     "checker",
     "quilt",
     "testimonials",
-    "21st.dev",
     "cards",
     "react"
   ],
@@ -37,13 +36,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
   "customizable": [

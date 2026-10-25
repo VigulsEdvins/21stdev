@@ -3,14 +3,13 @@
   "title": "Cobalt Toile Landing",
   "slug": "cobalt-toile-landing",
   "category": "Landing Pages",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A complete landing-page template drawn as a copperplate engraving: cobalt ink on cream paper. Under a night sky with two moons, a carved arch frames the headline, statues stand on pedestals either side and a garden of hatched foliage fills the plate. The page continues in the same hand: a client mar",
   "tags": [
     "cobalt",
     "toile",
     "landing",
-    "21st.dev",
     "full",
     "react"
   ],
@@ -37,10 +36,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

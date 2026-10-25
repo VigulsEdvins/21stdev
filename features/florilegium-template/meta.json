@@ -3,13 +3,12 @@
   "title": "Florilegium Template",
   "slug": "florilegium-template",
   "category": "Landing Pages",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A full landing page for a botanical journal and atelier, built around **one flower that never cuts**. It blooms out of the preloader, settles into the editorial hero, and every scroll step after that morphs the same mesh into the next species. Nothing is swapped or cross-faded, so the flower stays u",
   "tags": [
     "florilegium",
     "template",
-    "21st.dev",
     "full",
     "react"
   ],
@@ -37,10 +36,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

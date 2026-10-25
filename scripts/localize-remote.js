@@ -3,7 +3,7 @@
  * Makes features independent of other websites: downloads the images and Google Fonts they hot-link, stores
  * them in assets/library/ (named <name>-<content hash>.<ext>, identical files kept once) and rewrites the
  * references to /assets/library/<file>, which the exporter already bundles into the ZIP.
- *   node scripts/localize-remote.js [--dry] [--slug a,b] [--hosts images.unsplash.com,cdn.21st.dev,...]
+ *   node scripts/localize-remote.js [--dry] [--slug a,b] [--hosts images.unsplash.com,...]
  * Handles: images from the listed hosts, and fonts.googleapis.com CSS (the woff2 files are downloaded and a
  * local stylesheet with relative font URLs is written next to them). URLs with ${...} (built at run time),
  * video and live embeds (Unicorn Studio, jsDelivr scripts) are left alone and reported.
@@ -15,7 +15,7 @@ const crypto = require('crypto');
 const ROOT = path.resolve(__dirname, '..');
 const LIB = path.join(ROOT, 'assets', 'library');
 const TEXT_FILES = ['index.html', 'style.css', 'script.js', 'component.tsx', 'demo.tsx'];
-const DEFAULT_HOSTS = ['images.unsplash.com', 'cdn.21st.dev', 'pub-940ccf6255b54fa799a9b01050e6c227.r2.dev'];
+const DEFAULT_HOSTS = ['images.unsplash.com', 'pub-940ccf6255b54fa799a9b01050e6c227.r2.dev'];
 const IMAGE_TYPES = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/gif': '.gif', 'image/svg+xml': '.svg', 'image/avif': '.avif' };
 const CHROME_UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
 const URL_RE = /https:\/\/[A-Za-z0-9._~:\/?#@!$&*+,;=%\-]+/g;

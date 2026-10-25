@@ -1411,7 +1411,7 @@ function generateUniversalThemeStyles(theme) {
       --preview-card-bg: ${cardBg};
       --preview-border: ${border};
 
-      /* Universal design system tokens (Tailwind, 21st.dev, shadcn) */
+      /* Universal design system tokens (Tailwind, shadcn) */
       --background: ${theme.bg};
       --foreground: ${theme.text};
       --color-background: ${theme.bg};
@@ -3337,7 +3337,7 @@ ${sectionInfoList.map((s, idx) => `${idx + 1}. **${s.title}** (\`${s.slug}\`) â€
 
 ${unverifiedLicences.length ? `## Licences to check before delivery
 
-These components come from 21st.dev, whose Terms (https://21st.dev/terms) say community components stay the property of their authors, may be used only through the 21st.dev platform, and may not be redistributed. Unless a component's own page shows an open licence such as MIT, get the author's written permission before shipping it to a client, or replace it:
+These components were imported from third-party sources and their licence is not verified. Unless a component's own page shows an open licence such as MIT, get the author's written permission before shipping it to a client, or replace it:
 
 ${unverifiedLicences.map(s => `- ${s.title} (\`${s.slug}\`)`).join('\n')}
 

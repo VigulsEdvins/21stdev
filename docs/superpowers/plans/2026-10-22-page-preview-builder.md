@@ -153,7 +153,7 @@ Expected: FAIL ("no such file or directory, open 'builder.html'")
   </a>
   ```
 - Create `builder.html`:
-  - Ambient aurora background matching the 21st.local theme.
+  - Ambient aurora background matching the edvlabs theme.
   - Header: Brand logo, navigation tabs (Catalog Grid, IDE Workbench, Page Builder [active]), Theme presets dropdown/chips, "Custom Theme" toggle with 3 color inputs (`#bgColor`, `#textColor`, `#accentColor`), Viewport mode pills (Desktop, Tablet, Mobile), "Open in Tab" button, and "Export Project" primary button.
   - Workspace: Split layout with `.builder-sidebar` (Stack Manager) and `.builder-viewport` (Live Preview iframe container).
   - Component Picker Drawer markup (`#componentDrawer`) with search input, category filter buttons, and feature grid.

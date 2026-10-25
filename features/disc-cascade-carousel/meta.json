@@ -3,14 +3,13 @@
   "title": "Disc Cascade Carousel",
   "slug": "disc-cascade-carousel",
   "category": "3D & Carousels",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A film catalogue told in printed discs. The discs sit on a slanted line that climbs out of the page toward you. The chosen film is in the middle. The ones before it shrink away down to the left, and the next one looms large, half off the top right. When you move, the line slides, every disc rolls li",
   "tags": [
     "disc",
     "cascade",
     "carousel",
-    "21st.dev",
     "3d",
     "react"
   ],
@@ -38,13 +37,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
   "customizable": [

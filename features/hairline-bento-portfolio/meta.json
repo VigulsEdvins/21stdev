@@ -3,14 +3,13 @@
   "title": "Hairline Bento Portfolio",
   "slug": "hairline-bento-portfolio",
   "category": "Galleries & Bento",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A whole link-in-bio portfolio on one sheet. Cells sit on warm paper, divided by one-pixel rules, with a stretched black display name and one inverted panel for the thing you're launching. It's minimal, but every cell does something.",
   "tags": [
     "hairline",
     "bento",
     "portfolio",
-    "21st.dev",
     "galleries",
     "react"
   ],
@@ -38,10 +37,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

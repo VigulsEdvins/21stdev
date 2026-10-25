@@ -229,7 +229,7 @@ const server = http.createServer((req, res) => {
 
 if (require.main === module) {
   server.listen(PORT, '127.0.0.1', () => {
-    console.log(`21st.local Vault Server running at http://localhost:${PORT}`);
+    console.log(`edvlabs Vault Server running at http://localhost:${PORT}`);
     console.log(`Graphify Interactive Map at http://localhost:${PORT}/graphify-out/graph.html`);
   });
 }

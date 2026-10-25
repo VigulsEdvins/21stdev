@@ -3,14 +3,13 @@
   "title": "Stepped Morph Slider",
   "slug": "stepped-morph-slider",
   "category": "Interactions & Physics",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "An image slider whose window is a stepped, skyline-like mask. Each slide has its own blocky shape; moving to the next one morphs the mask column by column — a left-to-right stagger — while the picture cross-fades and drifts. Hover lifts the column under the pointer.",
   "tags": [
     "stepped",
     "morph",
     "slider",
-    "21st.dev",
     "interactions",
     "react"
   ],
@@ -38,13 +37,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
   "customizable": [

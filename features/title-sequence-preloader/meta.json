@@ -3,14 +3,13 @@
   "title": "Title Sequence Preloader",
   "slug": "title-sequence-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A page gate cut like the opening titles of a design conference. While your page loads, a monochrome reel plays shot after shot, and every shot credits your people on leader lines, each in its own typographic voice. When the load hits 100, a rocket lifts off through the clouds. The clouds rise over t",
   "tags": [
     "title",
     "sequence",
     "preloader",
-    "21st.dev",
     "scroll",
     "react"
   ],
@@ -39,10 +38,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

@@ -3,7 +3,7 @@
   "title": "WebGL Chromatic Wave Distortion",
   "slug": "web-gl-shader",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "Fullscreen interactive WebGL fluid chromatic wave distortion shader with mouse movement tracking.",
   "tags": [
@@ -11,8 +11,7 @@
     "shader",
     "chromatic",
     "distortion",
-    "waves",
-    "21st.dev"
+    "waves"
   ],
   "tech": [
     "WebGL",
@@ -35,10 +34,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "permission",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
   },

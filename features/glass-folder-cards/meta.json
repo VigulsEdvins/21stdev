@@ -3,14 +3,13 @@
   "title": "Glass Folder Cards",
   "slug": "glass-folder-cards",
   "category": "Cards & Tiles",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A folder you can use, drawn as a physical object. It has three layers: a back panel holding a piece of artwork, the files inside, and a frosted-glass front panel that blurs whatever sits behind it. The files are real elements between real panels, so the glass frosts them as they move.",
   "tags": [
     "glass",
     "folder",
     "cards",
-    "21st.dev",
     "react"
   ],
   "tech": [
@@ -37,13 +36,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
   "customizable": [

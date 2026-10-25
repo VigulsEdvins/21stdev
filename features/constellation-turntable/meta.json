@@ -3,13 +3,12 @@
   "title": "Constellation Turntable",
   "slug": "constellation-turntable",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A star-chart record on a flat, illustrated deck. The vinyl is a night sky: a starfield and a Milky Way lane pressed between the grooves, the planets on a spiral, and one constellation per track with its name set along its groove band. A white tonearm with a perforated headshell rests on it.",
   "tags": [
     "constellation",
     "turntable",
-    "21st.dev",
     "audio",
     "react"
   ],
@@ -37,10 +36,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

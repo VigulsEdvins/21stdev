@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Local 21st.dev Feature & Design Registry Sync Utility
+ * edvlabs Feature & Design Registry Sync Utility
  * Scans features/<slug>/ directories and generates:
  *  - registry.json (Machine-readable index for AI agents & tooling)
  *  - registry.js   (window.FEATURE_REGISTRY with embedded source files for zero-CORS UI & instant copy)

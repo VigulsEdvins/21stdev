@@ -3,14 +3,13 @@
   "title": "Torn Postcard Portfolio",
   "slug": "torn-postcard-portfolio",
   "category": "Galleries & Bento",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A whole personal site told as a winter travel journal. Five full-screen chapters sit in one pinned stage, and scrolling **tears the page open**: the chapter you're on rips along a ragged paper seam, the top half lifts away, the bottom half drops, and the next chapter pops up out of the gap with its ",
   "tags": [
     "torn",
     "postcard",
     "portfolio",
-    "21st.dev",
     "galleries",
     "react"
   ],
@@ -38,10 +37,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

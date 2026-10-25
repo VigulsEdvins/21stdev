@@ -3,7 +3,7 @@
   "title": "Ink Orbit SaaS Template",
   "slug": "ink-orbit-saas-template",
   "category": "Landing Pages",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A complete monochrome landing page for an AI product. White panels sit on a hatched page, held together by thin corner brackets. In the hero is a generative ink sculpture: stippled loops caged around a glass sphere.",
   "tags": [
@@ -11,7 +11,6 @@
     "orbit",
     "saas",
     "template",
-    "21st.dev",
     "full",
     "react"
   ],
@@ -41,10 +40,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

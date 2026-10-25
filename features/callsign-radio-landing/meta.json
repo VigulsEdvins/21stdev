@@ -3,14 +3,13 @@
   "title": "Callsign Radio Landing",
   "slug": "callsign-radio-landing",
   "category": "Landing Pages",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A complete homepage for an independent radio station, laid out like a live front page. The station's call sign runs up the left edge as a giant masthead, and that masthead is the level meter: press play and the letters drain, then fill segment by segment with the signal (two channels, a peak tick, a",
   "tags": [
     "callsign",
     "radio",
     "landing",
-    "21st.dev",
     "react"
   ],
   "tech": [
@@ -37,10 +36,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

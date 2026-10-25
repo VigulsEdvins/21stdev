@@ -3,14 +3,13 @@
   "title": "Onward Summit Template",
   "slug": "onward-summit-template",
   "category": "Landing Pages",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A complete one-day event page in one component. The hero runs from navy down to white and is filled with tiny arrows that lean away from the pointer, ripple out from a click and shimmer on their own, clearing a space around the event's name. Below it, on white, come seven sections: what to expect, a",
   "tags": [
     "onward",
     "summit",
     "template",
-    "21st.dev",
     "full",
     "react"
   ],
@@ -37,10 +36,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

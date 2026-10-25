@@ -3,14 +3,13 @@
   "title": "Alice Scroll Story",
   "slug": "alice-scroll-story",
   "category": "Scroll & Parallax",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
-  "description": "A scroll-driven story page: an intro heading, then Alice illustrations and text panels that pin, scale and slide in as you scroll, choreographed with GSAP ScrollTrigger. Published on 21st.dev as [Alice Scroll Story](https://21st.dev/@kedhareswer/components/alice-scroll-story).",
+  "description": "A scroll-driven story page: an intro heading, then Alice illustrations and text panels that pin, scale and slide in as you scroll, choreographed with GSAP ScrollTrigger.",
   "tags": [
     "alice",
     "scroll",
     "story",
-    "21st.dev",
     "react"
   ],
   "tech": [
@@ -37,10 +36,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "own",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "note": "Recorded as own by the project owner 2026-10-24"
   },

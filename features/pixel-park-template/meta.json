@@ -3,14 +3,13 @@
   "title": "Pixel Park Template",
   "slug": "pixel-park-template",
   "category": "Landing Pages",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A complete one-page site for a small New York company, told in pixel art. A moonlit park meadow sits under a floating glass nav, with the company name and a frosted mission card over it. Below that come a manifesto, a signed letter with a postage stamp, a careers card over a skyline and lake, contac",
   "tags": [
     "pixel",
     "park",
     "template",
-    "21st.dev",
     "full",
     "react"
   ],
@@ -38,10 +37,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

@@ -4,7 +4,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-This plan upgrades the 21st.local Page Preview Builder into an Elementor / Creative Elements visual site-building workflow, solves universal color theming across all 209 vault sections, adds section height/padding sizing controls with live drag handles, and introduces a rich widget library (Tables, Stylized Buttons, Media Cards, Badges, Vault Sub-Components).
+This plan upgrades the edvlabs Page Preview Builder into an Elementor / Creative Elements visual site-building workflow, solves universal color theming across all 209 vault sections, adds section height/padding sizing controls with live drag handles, and introduces a rich widget library (Tables, Stylized Buttons, Media Cards, Badges, Vault Sub-Components).
 
 ---
 
@@ -12,7 +12,7 @@ This plan upgrades the 21st.local Page Preview Builder into an Elementor / Creat
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 21st.local Page Builder                                │
+│                                 edvlabs Page Builder                                │
 ├───────────────────────────────────────────────────────────┬────────────────────────────┤
 │ Left Sidebar: Creative Elements Panel (Tabs)              │ Live Preview Stage (Iframe)│
 │                                                           │                            │

@@ -2,13 +2,12 @@
   "name": "Cursor-Tracked Spotlight Bento Grid",
   "slug": "spotlight-bento-grid",
   "category": "Galleries & Bento",
-  "source": "21st-crafted",
+  "source": "edvlabs",
   "type": "component",
   "description": "Multi-card bento grid with shared mouse-tracking radial border illumination and inner surface spotlight.",
   "tags": [
     "bento",
     "spotlight",
-    "21st-dev",
     "cursor-glow",
     "grid"
   ],
@@ -32,7 +31,7 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st-crafted",
+    "source": "edvlabs",
     "license": "own"
   },
   "updatedAt": "2026-10-22",

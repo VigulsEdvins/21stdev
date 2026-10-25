@@ -3,14 +3,13 @@
   "title": "Weight Sweep Preloader",
   "slug": "weight-sweep-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A type-specimen loading gate. The whole page is one giant counter set in a variable grotesk, and as the load climbs from `000` to `100` the numerals thicken from hairline to black. The weight axis is the progress bar. A specimen HUD reads out the live weight, a tick rail fills under the top rule, an",
   "tags": [
     "weight",
     "sweep",
     "preloader",
-    "21st.dev",
     "scroll",
     "react"
   ],
@@ -39,13 +38,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
   "customizable": [],

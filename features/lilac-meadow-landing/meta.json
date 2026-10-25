@@ -3,14 +3,13 @@
   "title": "Lilac Meadow Landing",
   "slug": "lilac-meadow-landing",
   "category": "Landing Pages",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A complete landing-page template for a yield-bearing stablecoin, in a soft \"money grows\" art direction: chrome coins half buried in a meadow of tiny lilac flowers under a pale lavender sky. The page continues in the same hand: a \"what is it\" statement, three feature cards (a coneflower growing besid",
   "tags": [
     "lilac",
     "meadow",
     "landing",
-    "21st.dev",
     "full",
     "react"
   ],
@@ -38,10 +37,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
     "url": "docs/licence-audit/kedhareswer-permission.md",
     "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"

@@ -78,7 +78,7 @@ for (const slug of betteroffSlugs) {
 
 console.log('Task 4 betteroff feature checks passed.');
 
-// Test 5: Verify vivmgmt (6), 21st-crafted (4), mom (4+1), cvmaker (4+1), and full website templates (5) -> Total 36 items
+// Test 5: Verify vivmgmt (6), edvlabs (4), mom (4+1), cvmaker (4+1), and full website templates (5) -> Total 36 items
 const task5Slugs = [
   'parallax-5col-gallery',
   'split-screen-entrance',
@@ -117,7 +117,7 @@ for (const item of synced.items) {
 
 console.log(`Task 5 all ${synced.count} features & templates verified.`);
 
-// Test 6: Verify main 21st.local Web Application (index.html, styles.css, app.js)
+// Test 6: Verify main edvlabs Web Application (index.html, styles.css, app.js)
 for (const appFile of ['index.html', 'styles.css', 'app.js']) {
   const p = path.join(ROOT, appFile);
   assert(fs.existsSync(p), `Missing main application file: ${appFile}`);
@@ -146,7 +146,7 @@ for (const it of loadedItems) {
   assert(it.name && it.title && it.slug, `Missing name/title/slug on registry item ${it.slug}`);
 }
 
-console.log('Task 6 main 21st.local web application verified.');
+console.log('Task 6 main edvlabs web application verified.');
 
 // Test 7: every meta.json conforms to the schema (fixed categories, required filter attributes)
 const { validateMeta, CATEGORIES } = require('../scripts/schema.js');

@@ -3,14 +3,13 @@
   "title": "Slit Type FAQ",
   "slug": "slit-type-faq",
   "category": "Scroll & Parallax",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "A frequently-asked-questions section set in one ink on one paper. The display headline is cut by a hard horizontal slit: its capitals rise into the slit as the section scrolls in and rest there, cut through, like a stencil pulled before the print is finished. Hovering the headline lifts the letters ",
   "tags": [
     "slit",
     "type",
     "faq",
-    "21st.dev",
     "scroll",
     "react"
   ],
@@ -37,13 +36,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
+    "source": "imported",
     "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
     "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
   },
   "updatedAt": "2026-10-22",
   "customizable": [
