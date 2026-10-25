@@ -234,6 +234,32 @@ function isolateSectionScript(js, sectionId) {
   return isolated;
 }
 
+/** One section's script as the preview runs it (also used to start a section added to a loaded preview). */
+function previewSectionScript(slug, id, isolatedJs, suppressed) {
+  if (suppressed) return `        // Section: ${slug} (${id}) [PRELOADER SUPPRESSED IN PREVIEW - WILL RUN ON REPLAY OR EXPORT]`;
+  return `        // Section: ${slug} (${id})
+        try {
+          window.__activeSectionRegisteringId = ${JSON.stringify(id)};
+          (function () {
+${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
+          })();
+        } catch (err) {
+          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);
+        } finally {
+          window.__activeSectionRegisteringId = null;
+        }`;
+}
+
+/** Scripts for the given sections only, ready to run in an already loaded preview. */
+function renderPreviewSectionScripts(sections, featuresData = {}) {
+  return sections.map((section) => {
+    const slug = section.slug;
+    const rawJs = section.js !== undefined ? section.js : (featuresData[slug] && featuresData[slug].js) || '';
+    const js = isolateSectionScript(rawJs, section.id);
+    return js.trim() ? previewSectionScript(slug, section.id, js, false) : '';
+  }).filter(Boolean).join('\n\n');
+}
+
 /**
  * Extracts non-local head links (e.g., Google Fonts, external CDN stylesheets).
  */
@@ -2070,21 +2096,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      if (isPreloader && isSuppressed) {
-        scriptBlocks.push(`        // Section: ${slug} (${id}) [PRELOADER SUPPRESSED IN PREVIEW - WILL RUN ON REPLAY OR EXPORT]`);
-      } else {
-        scriptBlocks.push(`        // Section: ${slug} (${id})
-        try {
-          window.__activeSectionRegisteringId = ${JSON.stringify(id)};
-          (function () {
-${isolatedJs.trim().split('\n').map(l => '            ' + l).join('\n')}
-          })();
-        } catch (err) {
-          console.error('Error in section ' + ${JSON.stringify(slug)} + ':', err);
-        } finally {
-          window.__activeSectionRegisteringId = null;
-        }`);
-      }
+      scriptBlocks.push(previewSectionScript(slug, id, isolatedJs, isPreloader && isSuppressed));
     }
   });
 
@@ -3552,6 +3564,7 @@ if (typeof module !== 'undefined' && module.exports) {
     renderPageHead,
     renderJsonLd,
     renderSiteFiles,
+    renderPreviewSectionScripts,
     renderDeployFiles,
     resolvePageLink,
     mapPageLinks,
@@ -3586,6 +3599,7 @@ if (typeof window !== 'undefined') {
     renderPageHead,
     renderJsonLd,
     renderSiteFiles,
+    renderPreviewSectionScripts,
     renderNativePaletteCss,
     collectOverrides,
     computeSectionSizingStyles,

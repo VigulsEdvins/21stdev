@@ -154,11 +154,47 @@
         { suppressPreloader, page: latestState.page, nativeMap, ownPalette }
       );
 
+      // A section added to a loaded page is inserted and started on its own: reloading would restart all the others
+      const insertionOnly = !rt.forceFullPreviewReload && lastPreviewRest && restOfKey(structureKey) === lastPreviewRest && PP().isInsertionOnly(lastPreviewStack, latestState.stack);
       lastPreviewStructureKey = structureKey;
+      lastPreviewRest = restOfKey(structureKey);
+      const prevStack = lastPreviewStack;
+      lastPreviewStack = latestState.stack.map(s => JSON.parse(JSON.stringify(s)));
+      if (insertionOnly && addSectionsInPlace(prevStack, latestState.stack, assembledHtml)) return;
       previewFrame.srcdoc = assembledHtml;
     }
 
     let lastPreviewStructureKey = null;
+    let lastPreviewRest = null;
+    let lastPreviewStack = null;
+    const PP = () => window.PreviewPatch || require('./scripts/builder/preview-patch.js');
+    /** The structure key without its section list: theme, page and preloader state must not have changed for an in-place add. */
+    function restOfKey(key) {
+      const k = JSON.parse(key);
+      return JSON.stringify({ theme: k.theme, suppressPreloader: k.suppressPreloader, page: k.page });
+    }
+
+    /** Inserts the new sections into the loaded preview (see PreviewPatch.addSections) and keeps the canvas state in step. */
+    function addSectionsInPlace(prevStack, stack, html) {
+      let doc;
+      try { doc = previewFrame.contentDocument; } catch (_) { return false; }
+      const known = new Set(prevStack.map(s => s.id));
+      const scripts = window.Assembler.renderPreviewSectionScripts(stack.filter(s => !known.has(s.id)), featuresData);
+      if (!PP().addSections({ doc, win: previewFrame.contentWindow, prevStack, stack, html, scripts, assembler: window.Assembler })) return false;
+      patchPreviewInPlace(stack);
+      const cs = getCanvas().state;
+      if (cs.pendingSection) {
+        const sec = doc.getElementById(cs.pendingSection);
+        if (sec) {
+          sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          sec.style.transition = 'box-shadow 0.4s ease';
+          sec.style.boxShadow = '0 0 0 3px #a855f7, 0 0 24px rgba(168, 85, 247, 0.5)';
+          setTimeout(() => { sec.style.boxShadow = ''; }, 2000);
+        }
+        cs.pendingSection = null;
+      }
+      return true;
+    }
     /**
      * Patches the loaded preview in place (see scripts/builder/preview-patch.js), then restores the
      * canvas selection on the rebuilt overlay the way the iframe load handler does.
