@@ -17,7 +17,7 @@
 .ssh-burger span:first-child { top: 17px; } .ssh-burger span:last-child { top: 25px; }
 .ssh-burger[aria-expanded="true"] span:first-child { top: 21px; transform: rotate(45deg); }
 .ssh-burger[aria-expanded="true"] span:last-child { top: 21px; transform: rotate(-45deg); }
-.ssh-spacer { height: 640px; background: repeating-linear-gradient(180deg, transparent 0 79px, color-mix(in srgb, var(--text, #fff) 7%, transparent) 79px 80px); }
+.ssh-spacer { height: 640px; }
 @media (max-width: 760px) {
   .ssh-bar { gap: 12px; height: 72px; }
   .ssh-header.is-scrolled .ssh-bar { height: 56px; }
