@@ -1,5 +1,5 @@
 /* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
-.sfh-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.sfh-demo { min-height: 320px; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
 .sfh-header { border-bottom: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); }
 .sfh-top { display: flex; align-items: center; gap: 1.5rem; max-width: 1240px; margin: 0 auto; padding: 14px 1.5rem; }
 .sfh-logo { font-family: var(--font-display, inherit); font-weight: 800; font-size: 1.4rem; color: var(--accent, #6366f1); text-decoration: none; letter-spacing: -.02em; }
@@ -18,3 +18,4 @@
 .sfh-cats a { color: inherit; opacity: .75; text-decoration: none; font-size: .92rem; padding: 6px 0; white-space: nowrap; border-bottom: 2px solid transparent; }
 .sfh-cats a:hover { opacity: 1; border-color: var(--accent, #6366f1); }
 @media (max-width: 640px) { .sfh-top { flex-wrap: wrap; gap: .75rem 1rem; } .sfh-search { order: 3; flex: 1 0 100%; } .sfh-icons { margin-left: auto; } }
+html, body { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); }

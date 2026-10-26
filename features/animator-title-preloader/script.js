@@ -28,9 +28,16 @@
     var eased = p < .5 ? p * 1.15 : .575 + (p - .5) * .85;
     render(Math.min(1, eased));
     if (p < 1) raf = requestAnimationFrame(frame);
-    else { render(1); btn.hidden = false; }
+    else { render(1); finish(); }
   }
-  function run() { btn.hidden = true; cancelAnimationFrame(raf); start = performance.now(); raf = requestAnimationFrame(frame); }
+  var tm = 0;
+  function finish() {
+    tm = setTimeout(function () {
+      card.classList.add('is-exiting');
+      tm = setTimeout(function () { card.setAttribute('data-phase', 'done'); card.setAttribute('data-completed', 'true'); btn.hidden = false; }, reduce ? 150 : 650);
+    }, reduce ? 100 : 900);
+  }
+  function run() { btn.hidden = true; clearTimeout(tm); card.classList.remove('is-exiting'); card.removeAttribute('data-completed'); card.removeAttribute('data-phase'); cancelAnimationFrame(raf); start = performance.now(); raf = requestAnimationFrame(frame); }
   btn.addEventListener('click', run);
   run();
 })();

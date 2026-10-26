@@ -9,3 +9,5 @@
 @media (max-width: 860px) { .lcg-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 480px) { .lcg-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .lcg-item, .lcg-mark { transition: none; } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

@@ -3,7 +3,7 @@ html, body { background: #f7d9bd; color: #3a1740; }
 body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
 
 .dp-root {
-  --p: 0; position: relative; min-height: 100vh; overflow: hidden; background: linear-gradient(180deg, #f9e3cc, #f2b38a);
+  --p: 0; position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: linear-gradient(180deg, #f9e3cc, #f2b38a);
   display: grid; place-items: center;
 }
 .dp-sun {
@@ -16,7 +16,8 @@ body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-
   background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, .28) 0 4deg, transparent 4deg 12deg);
   opacity: calc(var(--p) * 1); animation: dp-spin 60s linear infinite; -webkit-mask: radial-gradient(circle, #000, transparent 40%); mask: radial-gradient(circle, #000, transparent 40%);
 }
-.dp-root { }
+.dp-root { transition: opacity .6s ease; }
+.dp-root.is-exiting { opacity: 0; pointer-events: none; }
 @keyframes dp-spin { to { rotate: 360deg; } }
 
 .dp-word {
@@ -36,9 +37,9 @@ body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-
 .dp-status span:first-child { font: 800 28px var(--font-display, Impact, system-ui, sans-serif); letter-spacing: 0; }
 .dp-status b { font-size: 16px; }
 .dp-replay {
-  position: absolute; top: 18px; right: 18px; z-index: 4; padding: 8px 16px; border-radius: 999px; border: 2px solid #3a1740;
+  position: fixed; top: 18px; right: 18px; z-index: 4; padding: 8px 16px; border-radius: 999px; border: 2px solid #3a1740;
   background: transparent; color: #3a1740; font: 700 12px var(--font-body, system-ui, sans-serif); letter-spacing: .12em; text-transform: uppercase; cursor: pointer;
 }
 .dp-replay:hover { background: #3a1740; color: #f9e3cc; }
 .dp-replay:focus-visible { outline: 3px solid #3a1740; outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) { .dp-rays { animation: none; } .dp-ch { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .dp-rays { animation: none; } .dp-ch { transition: none; } .dp-root { transition-duration: .15s; } }

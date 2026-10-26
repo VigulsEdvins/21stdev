@@ -1,57 +1,31 @@
-/**
- * Editorial Smooth-Height FAQ Accordion
- * ARIA accordion with grid-template-rows height transition
- */
+/* Smooth-height FAQ accordion. Scoped to each .faq-wrap; set data-single="false" to allow several open at once. */
 (function () {
-  const FAQS = [
-    {
-      q: 'How are these features structured for fast re-use in new projects?',
-      a: 'Every feature is isolated in its own standalone folder with clean HTML, scoped CSS, and zero-dependency JavaScript so you or an agent can drop it straight into any codebase.'
-    },
-    {
-      q: 'Can I use these components in both Vanilla JS and React / Next.js?',
-      a: 'Yes. Every component includes standalone HTML/CSS/JS that runs directly in the browser, and React components also include their full TypeScript .tsx source.'
-    },
-    {
-      q: 'How does the CSS Grid 0fr to 1fr height transition work?',
-      a: 'Instead of animating max-height with magic pixel values, the panel uses display: grid with grid-template-rows: 0fr collapsed and 1fr expanded, giving hardware-smooth height interpolation.'
-    },
-    {
-      q: 'How do I instruct an AI agent to add a new design to this library?',
-      a: 'Simply tell the agent to create a new folder under features/<slug>/ and run node scripts/sync-registry.js, or use the + Add Feature button right in the top bar.'
+  Array.prototype.forEach.call(document.querySelectorAll('.faq-wrap'), function (root, w) {
+    if (root.getAttribute('data-faq-ready')) return;
+    root.setAttribute('data-faq-ready', '1');
+    var triggers = Array.prototype.slice.call(root.querySelectorAll('.faq-trigger'));
+    function panelOf(t) { return t.closest('.faq-item').querySelector('.faq-panel'); }
+    function set(t, open) {
+      t.setAttribute('aria-expanded', String(open));
+      panelOf(t).classList.toggle('is-open', open);
     }
-  ];
-
-  const container = document.getElementById('faq-container');
-  if (!container) return;
-
-  container.innerHTML = FAQS.map((item, idx) => {
-    const isFirst = idx === 0;
-    return `
-      <div class="faq-item">
-        <h3>
-          <button class="faq-trigger" type="button" aria-expanded="${isFirst ? 'true' : 'false'}" aria-controls="faq-panel-${idx}">
-            <span>${item.q}</span>
-            <svg class="faq-trigger__icon" viewBox="0 0 448 512" aria-hidden="true">
-              <path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
-            </svg>
-          </button>
-        </h3>
-        <div id="faq-panel-${idx}" class="faq-panel${isFirst ? ' is-open' : ''}">
-          <div class="faq-panel__inner">
-            <p>${item.a}</p>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
-
-  container.querySelectorAll('.faq-trigger').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-      const panelId = trigger.getAttribute('aria-controls');
-      const panel = document.getElementById(panelId);
-      trigger.setAttribute('aria-expanded', String(!isExpanded));
-      if (panel) panel.classList.toggle('is-open', !isExpanded);
+    triggers.forEach(function (t, i) {
+      var p = panelOf(t), uid = 'faq' + w + '-' + i;
+      t.id = uid + '-q'; p.id = uid + '-p';
+      t.setAttribute('aria-controls', p.id); p.setAttribute('aria-labelledby', t.id);
+      t.addEventListener('click', function () {
+        var open = t.getAttribute('aria-expanded') !== 'true';
+        if (open && root.getAttribute('data-single') !== 'false') triggers.forEach(function (o) { if (o !== t) set(o, false); });
+        set(t, open);
+      });
+      t.addEventListener('keydown', function (e) {
+        var n = null;
+        if (e.key === 'ArrowDown') n = triggers[(i + 1) % triggers.length];
+        else if (e.key === 'ArrowUp') n = triggers[(i - 1 + triggers.length) % triggers.length];
+        else if (e.key === 'Home') n = triggers[0];
+        else if (e.key === 'End') n = triggers[triggers.length - 1];
+        if (n) { e.preventDefault(); n.focus(); }
+      });
     });
   });
 })();

@@ -20,5 +20,11 @@
   addEventListener('resize', function () { size(); if (reduce) draw(0); });
   size(); requestAnimationFrame(loop);
   steps.forEach(function (li, i) { setTimeout(function () { li.classList.add('is-on'); if (i === steps.length - 1) { btn.disabled = false; stage.classList.add('is-done'); } }, (reduce ? 100 : 900) * (i + 1)); });
-  btn.addEventListener('click', function () { btn.textContent = 'Now playing'; });
+  btn.addEventListener('click', function () {
+    btn.textContent = 'Now playing'; btn.disabled = true;
+    setTimeout(function () {
+      stage.classList.add('is-exiting');
+      setTimeout(function () { stage.setAttribute('data-phase', 'done'); stage.setAttribute('data-completed', 'true'); }, reduce ? 150 : 650);
+    }, reduce ? 100 : 400);
+  });
 })();

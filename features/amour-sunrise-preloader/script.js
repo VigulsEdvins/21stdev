@@ -16,7 +16,7 @@
     word.appendChild(s); letters.push(s);
   });
   var msgs = ['warming up', 'lifting the sun', 'colouring the sky', 'almost there', 'good morning'];
-  var raf, t0;
+  var raf, t0, tm;
   function set(p) {
     root.style.setProperty('--p', p.toFixed(3));
     pct.textContent = Math.round(p * 100);
@@ -24,7 +24,7 @@
     letters.forEach(function (l, i) { l.style.setProperty('--in', p * letters.length > i + 0.2 ? 1 : 0); });
   }
   function run() {
-    cancelAnimationFrame(raf); btn.hidden = true; root.setAttribute('aria-busy', 'true');
+    cancelAnimationFrame(raf); btn.hidden = true; clearTimeout(tm); root.classList.remove('is-exiting'); root.removeAttribute('data-completed'); root.removeAttribute('data-phase'); root.setAttribute('aria-busy', 'true');
     if (reduce) { set(1); done(); return; }
     var dur = 4200; t0 = performance.now(); set(0);
     (function step(t) {
@@ -33,7 +33,13 @@
       if (k < 1) raf = requestAnimationFrame(step); else done();
     })(t0);
   }
-  function done() { root.setAttribute('aria-busy', 'false'); btn.hidden = false; }
+  function done() {
+    root.setAttribute('aria-busy', 'false');
+    tm = setTimeout(function () {
+      root.classList.add('is-exiting');
+      tm = setTimeout(function () { root.setAttribute('data-phase', 'done'); root.setAttribute('data-completed', 'true'); btn.hidden = false; }, reduce ? 150 : 650);
+    }, reduce ? 100 : 700);
+  }
   btn.addEventListener('click', run);
   run();
 })();

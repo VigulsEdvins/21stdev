@@ -18,17 +18,17 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 
   // sticky shrink header
   let p = await open('sticky-shrink-header');
-  assert(!(await p.evaluate(() => document.getElementById('sshHeader').classList.contains('is-scrolled'))));
-  await p.evaluate(() => window.scrollTo(0, 300));
-  await p.waitForFunction(() => document.getElementById('sshHeader').classList.contains('is-scrolled'));
+  assert(!(await p.evaluate(() => document.querySelector('.ssh-demo .ssh-header').classList.contains('is-scrolled'))));
+  await p.evaluate(() => document.querySelector('.ssh-demo').scrollTop = 300);
+  await p.waitForFunction(() => document.querySelector('.ssh-demo .ssh-header').classList.contains('is-scrolled'));
   const h = await p.evaluate(() => Math.round(document.querySelector('.ssh-bar').getBoundingClientRect().height));
   await p.waitForTimeout(500);
   assert((await p.evaluate(() => Math.round(document.querySelector('.ssh-bar').getBoundingClientRect().height))) < h, 'bar shrinks');
   await p.setViewportSize({ width: 420, height: 800 });
-  await p.click('#sshBurger');
-  assert.strictEqual(await p.getAttribute('#sshBurger', 'aria-expanded'), 'true');
+  await p.click('.ssh-demo .ssh-burger');
+  assert.strictEqual(await p.getAttribute('.ssh-demo .ssh-burger', 'aria-expanded'), 'true');
   await p.keyboard.press('Escape');
-  assert.strictEqual(await p.getAttribute('#sshBurger', 'aria-expanded'), 'false');
+  assert.strictEqual(await p.getAttribute('.ssh-demo .ssh-burger', 'aria-expanded'), 'false');
   step('sticky header shrinks; mobile menu opens and Escape closes it');
   await p.close();
 
@@ -37,12 +37,12 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const trigger = p.locator('.mmh-trigger').first();
   await trigger.click();
   assert.strictEqual(await trigger.getAttribute('aria-expanded'), 'true');
-  assert(await p.isVisible('#mmhPanelProduct'));
+  assert(await p.isVisible('.mmh-demo .mmh-panel >> nth=0'));
   await p.keyboard.press('ArrowDown');
   assert.strictEqual(await p.evaluate(() => document.activeElement.tagName), 'A', 'arrow down moves into the panel');
   await p.keyboard.press('Escape');
   assert.strictEqual(await trigger.getAttribute('aria-expanded'), 'false');
-  assert(!(await p.isVisible('#mmhPanelProduct')));
+  assert(!(await p.isVisible('.mmh-demo .mmh-panel >> nth=0')));
   assert.strictEqual(await p.evaluate(() => document.activeElement.className), 'mmh-trigger', 'focus returns to the trigger');
   step('mega menu opens, arrow keys enter it, Escape closes and returns focus');
   await p.close();
@@ -51,29 +51,29 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   p = await open('bottom-tab-bar');
   await p.focus('.btb-tab.is-active');
   await p.keyboard.press('ArrowRight');
-  assert.strictEqual(await p.textContent('#btbTitle'), 'Search');
+  assert.strictEqual(await p.textContent('.btb-demo .btb-title'), 'Search');
   await p.keyboard.press('End');
-  assert.strictEqual(await p.textContent('#btbTitle'), 'Profile');
+  assert.strictEqual(await p.textContent('.btb-demo .btb-title'), 'Profile');
   assert.strictEqual(await p.getAttribute('.btb-tab.is-active', 'aria-selected'), 'true');
   step('tab bar follows arrow keys and updates the title');
   await p.close();
 
   // announcement bar
   p = await open('split-nav-announcement');
-  await p.click('#snaClose');
-  await p.waitForFunction(() => document.getElementById('snaAnnounce').hidden);
-  assert(!(await p.isVisible('#snaAnnounce')));
+  await p.click('.sna-demo .sna-close');
+  await p.waitForFunction(() => document.querySelector('.sna-demo .sna-announce').hidden);
+  assert(!(await p.isVisible('.sna-demo .sna-announce')));
   step('announcement bar dismisses');
   await p.close();
 
   // magnetic button: leans toward the pointer, ripple on click
   p = await open('magnetic-cta-button');
-  const box = await p.locator('#mcbButton').boundingBox();
+  const box = await p.locator('.mcb-demo .mcb-button').boundingBox();
   await p.mouse.move(box.x + box.width / 2 - 60, box.y + box.height / 2 - 30);
   await p.mouse.move(box.x + box.width / 2 + 120, box.y + box.height / 2 + 40);
   await p.waitForTimeout(200);
-  assert(await p.evaluate(() => parseFloat(document.getElementById('mcbButton').style.getPropertyValue('--x')) > 5), 'button leans right');
-  await p.locator('#mcbButton').evaluate(el => el.addEventListener('click', e => e.preventDefault()));
+  assert(await p.evaluate(() => parseFloat(document.querySelector('.mcb-demo .mcb-button').style.getPropertyValue('--x')) > 5), 'button leans right');
+  await p.locator('.mcb-demo .mcb-button').evaluate(el => el.addEventListener('click', e => e.preventDefault()));
   await p.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
   assert(await p.locator('.mcb-ripple').count() >= 1, 'ripple appears');
   step('magnetic button leans and ripples');
@@ -81,10 +81,10 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 
   // switches and segmented control
   p = await open('toggle-switch-set');
-  assert.strictEqual(await p.textContent('#tswStatus'), '2 of 3 notifications on');
-  await p.locator('.tsw-switch').nth(1).click();
+  assert.strictEqual(await p.textContent('.tsw-demo .tsw-status'), '2 of 3 notifications on');
+  await p.locator('.tsw-demo .tsw-switch').nth(1).click();
   assert.strictEqual(await p.getAttribute('.tsw-switch >> nth=1', 'aria-checked'), 'true');
-  assert.strictEqual(await p.textContent('#tswStatus'), '3 of 3 notifications on');
+  assert.strictEqual(await p.textContent('.tsw-demo .tsw-status'), '3 of 3 notifications on');
   await p.locator('.tsw-seg [role=radio]').first().focus();
   await p.keyboard.press('ArrowRight');
   assert.strictEqual(await p.getAttribute('.tsw-seg [role=radio] >> nth=1', 'aria-checked'), 'true');
@@ -100,6 +100,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const before = await p.locator('.tns-toast').count();
   await p.locator('.tns-x').first().click();
   await p.waitForFunction(n => document.querySelectorAll('.tns-toast').length < n, before);
+  // Escape is handled inside the component, so focus is within it (the dismissed toast's button is gone)
   await p.keyboard.press('Escape');
   await p.waitForFunction(() => document.querySelectorAll('.tns-toast').length === 0);
   step('toasts stack, dismiss and clear with Escape');
@@ -108,26 +109,26 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   // newsletter footer
   p = await open('sitemap-newsletter-footer');
   await p.click('.snf-submit');
-  assert.match(await p.textContent('#snfMsg'), /enter your email/i);
-  await p.fill('#snfEmail', 'not-an-email');
+  assert.match(await p.textContent('.snf-demo .snf-msg'), /enter your email/i);
+  await p.fill('.snf-demo .snf-input', 'not-an-email');
   await p.click('.snf-submit');
-  assert.match(await p.textContent('#snfMsg'), /does not look like/i);
-  assert.strictEqual(await p.getAttribute('#snfEmail', 'aria-invalid'), 'true');
-  await p.fill('#snfEmail', 'jo@example.com');
+  assert.match(await p.textContent('.snf-demo .snf-msg'), /does not look like/i);
+  assert.strictEqual(await p.getAttribute('.snf-demo .snf-input', 'aria-invalid'), 'true');
+  await p.fill('.snf-demo .snf-input', 'jo@example.com');
   await p.click('.snf-submit');
   assert(await p.isDisabled('.snf-submit'), 'button disabled while sending');
-  await p.waitForFunction(() => /Thanks/.test(document.getElementById('snfMsg').textContent));
-  assert.strictEqual(await p.inputValue('#snfEmail'), '');
+  await p.waitForFunction(() => /Thanks/.test(document.querySelector('.snf-demo .snf-msg').textContent));
+  assert.strictEqual(await p.inputValue('.snf-demo .snf-input'), '');
   step('newsletter form validates, disables while sending and confirms');
   await p.close();
 
   // credits footer: back-to-top
   p = await open('minimal-credits-footer');
   await p.setViewportSize({ width: 1200, height: 360 }); // short window so the page can scroll
-  assert(!(await p.isVisible('#mcfTop')), 'hidden at the top');
+  assert(!(await p.isVisible('.mcf-demo .mcf-top')), 'hidden at the top');
   await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  await p.waitForSelector('#mcfTop', { state: 'visible' });
-  await p.click('#mcfTop');
+  await p.waitForSelector('.mcf-demo .mcf-top', { state: 'visible' });
+  await p.click('.mcf-demo .mcf-top');
   await p.waitForFunction(() => window.pageYOffset < 10, null, { timeout: 5000 });
   step('back-to-top appears after scrolling and returns to the top');
   await p.close();

@@ -3,15 +3,15 @@ html, body { background: var(--bg, #ececea); color: var(--text, #17181b); font-f
 
 .ff-wrap { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.6rem; padding: 2rem 0; overflow: hidden; }
 .ff-label { font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: color-mix(in srgb, var(--text, #17181b) 55%, transparent); }
-.ff-stage { --w: clamp(150px, 26vw, 240px); position: relative; width: 100%; height: calc(var(--w) * 1.25); perspective: 1000px; touch-action: pan-y; cursor: grab; user-select: none; outline-offset: 8px; }
+.ff-stage { --ff-w: clamp(150px, 26vw, 240px); position: relative; width: 100%; height: calc(var(--ff-w)*1.25); perspective: 1000px; touch-action: pan-y; cursor: grab; user-select: none; outline-offset: 8px; }
 .ff-stage:focus-visible { outline: 2px solid var(--accent, #e0502d); }
 .ff-strip { list-style: none; position: absolute; inset: 0; transform-style: preserve-3d; }
-.ff-card { position: absolute; left: 50%; top: 0; width: var(--w); height: 100%; margin-left: calc(var(--w) / -2); border-radius: 6px; overflow: hidden; will-change: transform; backface-visibility: hidden; background:
-  radial-gradient(70% 55% at 30% 25%, var(--a), transparent 70%),
-  radial-gradient(80% 70% at 75% 85%, var(--b), transparent 70%),
-  var(--c); }
+.ff-card { box-shadow: 0 18px 40px -18px rgba(0,0,0,.6); position: absolute; left: 50%; top: 0; width: var(--ff-w); height: 100%; margin-left: calc(var(--ff-w)/-2); border-radius: 6px; overflow: hidden; will-change: transform; background:
+  radial-gradient(70% 55% at 30% 25%, var(--ff-a), transparent 70%),
+  radial-gradient(80% 70% at 75% 85%, var(--ff-b), transparent 70%),
+  var(--ff-c); }
 .ff-card.is-c::after { content: attr(data-n); position: absolute; left: 0.6rem; bottom: 0.5rem; font: 700 0.7rem ui-monospace, Menlo, Consolas, monospace; color: rgba(255,255,255,0.85); letter-spacing: 0.1em; }
-.ff-reticle { position: absolute; left: 50%; top: 50%; width: calc(var(--w) + 28px); height: calc(var(--w) * 1.25 + 28px); transform: translate(-50%, -50%); pointer-events: none; z-index: 5; }
+.ff-reticle { position: absolute; left: 50%; top: 50%; width: calc(var(--ff-w) + 28px); height: calc(var(--ff-w)*1.25 + 28px); transform: translate(-50%, -50%); pointer-events: none; z-index: 5; }
 .ff-reticle i { position: absolute; width: 18px; height: 18px; border: 0 solid var(--text, #17181b); }
 .ff-reticle i:nth-child(1) { left: 0; top: 0; border-width: 2px 0 0 2px; } .ff-reticle i:nth-child(2) { right: 0; top: 0; border-width: 2px 2px 0 0; }
 .ff-reticle i:nth-child(3) { left: 0; bottom: 0; border-width: 0 0 2px 2px; } .ff-reticle i:nth-child(4) { right: 0; bottom: 0; border-width: 0 2px 2px 0; }

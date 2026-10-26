@@ -12,3 +12,5 @@
 .ssb-opt[aria-selected="true"], .ssb-opt:hover { background: color-mix(in srgb, var(--accent, #6366f1) 28%, transparent); }
 .ssb-opt mark { background: transparent; color: var(--accent, #6366f1); font-weight: 700; }
 .ssb-picked { margin: 1rem 0 0; min-height: 1.4em; text-align: center; color: color-mix(in srgb, var(--text, #f3f4f6) 72%, transparent); }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

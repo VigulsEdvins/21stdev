@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<section class="ptw-demo" aria-labelledby="ptwTitle">
+<section class="ptw-demo" aria-label="Pricing">
   <header class="ptw-head">
-    <h2 class="ptw-title" id="ptwTitle">Simple, honest pricing</h2>
+    <h2 class="ptw-title">Simple, honest pricing</h2>
     <p class="ptw-sub">Start free. Upgrade when your team grows. Cancel any time.</p>
     <div class="ptw-switch" role="group" aria-label="Billing period">
       <button type="button" class="ptw-opt is-on" data-period="monthly" aria-pressed="true">Monthly</button>
@@ -20,6 +20,7 @@
     <article class="ptw-card">
       <h3 class="ptw-name">Starter</h3>
       <p class="ptw-price"><span class="ptw-amount" data-monthly="0" data-yearly="0">0</span><span class="ptw-per">/ month</span></p>
+      <p class="ptw-note" aria-live="polite"></p>
       <ul class="ptw-list"><li>1 project</li><li>Community support</li><li>Basic analytics</li></ul>
       <a class="ptw-cta" href="#starter">Get started</a>
     </article>
@@ -27,12 +28,14 @@
       <p class="ptw-badge">Most popular</p>
       <h3 class="ptw-name">Pro</h3>
       <p class="ptw-price"><span class="ptw-amount" data-monthly="19" data-yearly="15">19</span><span class="ptw-per">/ month</span></p>
+      <p class="ptw-note" aria-live="polite"></p>
       <ul class="ptw-list"><li>Unlimited projects</li><li>Priority support</li><li>Advanced analytics</li><li>Custom domains</li></ul>
       <a class="ptw-cta" href="#pro">Start Pro</a>
     </article>
     <article class="ptw-card">
       <h3 class="ptw-name">Team</h3>
       <p class="ptw-price"><span class="ptw-amount" data-monthly="49" data-yearly="39">49</span><span class="ptw-per">/ month</span></p>
+      <p class="ptw-note" aria-live="polite"></p>
       <ul class="ptw-list"><li>Everything in Pro</li><li>10 team seats</li><li>Roles and permissions</li><li>Audit log</li></ul>
       <a class="ptw-cta" href="#team">Contact sales</a>
     </article>

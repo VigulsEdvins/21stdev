@@ -11,13 +11,13 @@
   if (!ribbon || !container) return;
 
   const COVERS = [
-    { title: 'Harbour Campaign', img: '/assets/library/edv-art-01.svg' },
+    { title: 'Client 01 Campaign', img: '/assets/library/edv-art-01.svg' },
     { title: 'Studio Notes 01', img: '/assets/library/edv-art-02.svg' },
     { title: 'Coastline Edition', img: '/assets/library/edv-art-03.svg' },
     { title: 'Wave Study 04', img: '/assets/library/edv-art-04.svg' },
     { title: 'Capsule Drop 02', img: '/assets/library/edv-art-05.svg' },
     { title: 'Archive Vol. 1', img: '/assets/library/edv-art-06.svg' },
-    { title: 'Northport Capsule', img: '/assets/library/edv-art-07.svg' },
+    { title: 'Client 02 Capsule', img: '/assets/library/edv-art-07.svg' },
     { title: 'Season Retrospective', img: '/assets/library/edv-art-08.svg' },
     { title: 'Winter Collection', img: '/assets/library/edv-art-09.svg' },
     { title: 'Runner Series 933', img: '/assets/library/edv-art-10.svg' },

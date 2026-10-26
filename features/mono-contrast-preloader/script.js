@@ -40,7 +40,12 @@
     ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
     var n = Math.round(p * 100);
     num.textContent = n; cnt.setAttribute('aria-valuenow', n); bar.style.width = n + '%';
-    if (p >= 1 && !done) { done = true; stage.classList.add('mc-done'); title.textContent = 'Ready'; }
+    if (p >= 1 && !done) { done = true; stage.classList.add('mc-done'); title.textContent = 'Ready';
+      setTimeout(function () {
+        stage.classList.add('is-exiting');
+        setTimeout(function () { stage.setAttribute('data-phase', 'done'); stage.setAttribute('data-completed', 'true'); }, reduce ? 150 : 650);
+      }, reduce ? 200 : 1400);
+    }
     if (visible) requestAnimationFrame(frame);
   }
   window.addEventListener('resize', size);

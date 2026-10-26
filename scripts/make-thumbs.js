@@ -123,8 +123,10 @@ async function main() {
           await page.waitForTimeout(Math.max(waitMs, 4000));
           shot = await composeSiteThumb(judge, await page.screenshot({ type: 'png' }), (siteUrls[slug].split('/')[1] || slug) + '.example');
         } else {
+          // a preloader finishes and hides itself (quickly under reduced motion): play it normally and catch it mid-way
+          if (/preloader/.test(slug)) await page.emulateMedia({ reducedMotion: 'no-preference' });
           await page.goto(`${srv.url}/features/${slug}/index.html`, { waitUntil: 'load', timeout: 20000 });
-          await page.waitForTimeout(waitMs);
+          await page.waitForTimeout(/preloader/.test(slug) ? 1300 : waitMs);
           shot = await toWebp(judge, await page.screenshot({ type: 'png' }));
         }
         const file = path.join(OUT, `${slug}.webp`);

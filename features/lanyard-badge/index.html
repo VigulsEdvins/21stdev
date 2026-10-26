@@ -7,26 +7,37 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <section class="lb-stage" id="lbStage">
+  <section class="lb-stage" id="lbStage" aria-label="Event badge on a lanyard">
     <svg class="lb-strap" id="lbStrap" aria-hidden="true">
+      <path id="lbLs" class="lb-edge" d=""/><path id="lbRs" class="lb-edge" d=""/>
       <path id="lbL" class="lb-band" d=""/><path id="lbR" class="lb-band" d=""/>
-      <path id="lbS" class="lb-band lb-short" d=""/>
-      <rect id="lbBuckle" class="lb-buckle" width="26" height="16" rx="4"/>
+      <path id="lbLt" class="lb-stitch" d=""/><path id="lbRt" class="lb-stitch" d=""/>
     </svg>
-    <div class="lb-card" id="lbCard" tabindex="0" role="button" aria-pressed="false" aria-label="Event badge. Drag to swing, press Enter to flip.">
-      <span class="lb-hole" aria-hidden="true"></span>
-      <div class="lb-flip" id="lbFlip">
-        <div class="lb-face lb-front">
-          <p class="lb-event">Meridian Dev Days</p>
-          <div class="lb-avatar" aria-hidden="true">RA</div>
-          <h2 class="lb-name">Rosa Almeida</h2>
-          <p class="lb-role">Speaker</p>
-          <p class="lb-id">No. 0427 &middot; 12&ndash;14 June</p>
-        </div>
-        <div class="lb-face lb-back">
-          <p class="lb-event">Schedule</p>
-          <ul><li><b>09:00</b> Doors open</li><li><b>10:30</b> Opening talk</li><li><b>13:00</b> Lunch</li><li><b>16:00</b> Workshops</li></ul>
-          <div class="lb-bars" aria-hidden="true"></div>
+    <div class="lb-card" id="lbCard" tabindex="0" role="button" aria-pressed="false" aria-label="Event badge. Drag to swing it, press Enter to flip it.">
+      <div class="lb-tilt" id="lbTilt">
+        <div class="lb-clip" aria-hidden="true"><i class="lb-crimp"></i><i class="lb-ring"></i><i class="lb-jaw"></i></div>
+        <div class="lb-flip" id="lbFlip">
+          <div class="lb-face lb-front">
+            <span class="lb-slot" aria-hidden="true"></span>
+            <p class="lb-event">Meridian Dev Days</p>
+            <div class="lb-avatar" aria-hidden="true">RA</div>
+            <h2 class="lb-name">Rosa Almeida</h2>
+            <p class="lb-role">Speaker</p>
+            <div class="lb-foot">
+              <p class="lb-id">No. 0427<br />12&ndash;14 June</p>
+              <svg class="lb-qr" data-qr viewBox="0 0 21 21" aria-hidden="true"></svg>
+            </div>
+            <div class="lb-holo" aria-hidden="true"></div>
+            <span class="lb-sheen" aria-hidden="true"></span>
+          </div>
+          <div class="lb-face lb-back">
+            <span class="lb-slot" aria-hidden="true"></span>
+            <p class="lb-event lb-bevent">Schedule</p>
+            <ul class="lb-list"><li><b>09:00</b> Doors open</li><li><b>10:30</b> Opening talk</li><li><b>13:00</b> Lunch</li><li><b>16:00</b> Workshops</li></ul>
+            <svg class="lb-qr lb-qr-big" data-qr viewBox="0 0 21 21" aria-hidden="true"></svg>
+            <div class="lb-bars" aria-hidden="true"></div>
+            <span class="lb-sheen" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
     </div>

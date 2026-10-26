@@ -21,3 +21,5 @@
 .tsw-seg em { font-style: normal; font-size: .72rem; color: var(--accent, #6366f1); margin-left: 4px; }
 .tsw-thumb { position: absolute; z-index: 0; top: 4px; bottom: 4px; left: 4px; width: calc((100% - 8px) / 3); border-radius: 9px; background: color-mix(in srgb, var(--bg, #0b0f19) 70%, var(--text, #fff) 30%); box-shadow: 0 2px 8px rgba(0,0,0,.25); transform: translateX(calc(var(--i, 0) * 100%)); transition: transform .3s cubic-bezier(.3,1.2,.5,1); }
 @media (prefers-reduced-motion: reduce) { .tsw-switch, .tsw-knob, .tsw-thumb { transition: none; } }
+.tsw-plan { margin: 14px 0 0; font-size: .84rem; opacity: .6; }
+html, body { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); }

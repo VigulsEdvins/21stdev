@@ -5,7 +5,7 @@
   "category": "Audio & Shaders",
   "source": "edvlabs",
   "type": "component",
-  "description": "A WebGL hero backdrop of a dark core ringed by thin orbital ember lines and film grain, with hero copy on top.",
+  "description": "A WebGL black-hole backdrop: a glowing amber accretion disc with etched concentric lines, lensed starlight, film grain and pointer parallax.",
   "tags": [
     "webgl",
     "shader",

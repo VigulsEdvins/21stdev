@@ -1,70 +1,112 @@
 (function () {
-  var stage = document.getElementById('lbStage'), card = document.getElementById('lbCard'), btn = document.getElementById('lbBtn');
-  var pathL = document.getElementById('lbL'), pathR = document.getElementById('lbR'), pathS = document.getElementById('lbS'), buckle = document.getElementById('lbBuckle');
+  var stage = document.getElementById('lbStage'), card = document.getElementById('lbCard'), tilt = document.getElementById('lbTilt');
+  var btn = document.getElementById('lbBtn');
+  var P = { L: document.getElementById('lbL'), R: document.getElementById('lbR'), Ls: document.getElementById('lbLs'), Rs: document.getElementById('lbRs'), Lt: document.getElementById('lbLt'), Rt: document.getElementById('lbRt') };
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W = 0, cw = 0, ringY = 0, p = { x: 0, y: 0 }, v = { x: 0, y: 0 };
-  var drag = false, off = { x: 0, y: 0 }, moved = 0, run = false, vis = true, lastT = 0;
 
-  function layout() {
-    var r = stage.getBoundingClientRect(); W = r.width; cw = card.offsetWidth;
-    ringY = Math.max(130, r.height * 0.3);
-    render();
+  // QR-like patterns drawn from a tiny seeded generator
+  function qr(svg, seed) {
+    var s = seed, rects = '';
+    function rnd() { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }
+    function finder(ox, oy) { rects += '<rect x="' + ox + '" y="' + oy + '" width="7" height="7"/><rect x="' + (ox + 1) + '" y="' + (oy + 1) + '" width="5" height="5" style="fill:rgb(250,250,252)"/><rect x="' + (ox + 2) + '" y="' + (oy + 2) + '" width="3" height="3"/>'; }
+    for (var y = 0; y < 21; y++) for (var x = 0; x < 21; x++) {
+      if ((x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12)) continue;
+      if (rnd() > 0.52) rects += '<rect x="' + x + '" y="' + y + '" width="1" height="1"/>';
+    }
+    finder(0, 0); finder(14, 0); finder(0, 14);
+    svg.innerHTML = rects;
+  }
+  var qrs = stage.querySelectorAll('[data-qr]');
+  for (var q = 0; q < qrs.length; q++) qr(qrs[q], 4021 + q * 77);
+
+  var N = 8, SEG = 0, W = 0, H = 0, CW = 0, CH = 0, ROD = 0, dt = 1 / 60, G = 2400;
+  var pts = [], cons = [], C, B, ancL, ancR, strandL = [], strandR = [];
+  function pt(x, y, w) { var p = { x: x, y: y, px: x, py: y, w: w }; pts.push(p); return p; }
+  function build() {
+    var r = stage.getBoundingClientRect(); W = r.width; H = r.height; CW = card.offsetWidth; CH = card.offsetHeight;
+    var cx = W / 2, half = Math.min(78, W * 0.17), clipY = Math.min(H * 0.34, 190);
+    ROD = CH * 0.46; SEG = (Math.hypot(half, clipY) * 1.02) / N;
+    pts = []; cons = []; strandL = []; strandR = [];
+    ancL = pt(cx - half, -14, 0); ancR = pt(cx + half, -14, 0);
+    C = pt(cx, clipY, 0.55); B = pt(cx, clipY + ROD, 0.2);
+    function strand(a, list) {
+      var prev = a; list.push(a);
+      for (var i = 1; i < N; i++) { var t = i / N, p = pt(a.x + (cx - a.x) * t, a.y + (clipY - a.y) * t, 1); cons.push([prev, p, SEG, 0]); list.push(p); prev = p; }
+      cons.push([prev, C, SEG, 0]); list.push(C);
+    }
+    strand(ancL, strandL); strand(ancR, strandR);
+    cons.push([C, B, ROD, 1]);
+    if (!reduce) { B.px -= 9; B.py -= 3; }
+  }
+  var drag = false, grab = { x: 0, y: 0 }, tx = 0, ty = 0, lastX = 0, lastY = 0, mvx = 0, mvy = 0, moved = 0, running = false, vis = true, last = 0, acc = 0, sleepT = 0;
+  var tiltY = 0, tiltS = 0, back = false;
+
+  function step() {
+    var i, p;
+    for (i = 0; i < pts.length; i++) {
+      p = pts[i]; if (!p.w) continue;
+      var vx = (p.x - p.px) * 0.995, vy = (p.y - p.py) * 0.995;
+      p.px = p.x; p.py = p.y; p.x += vx; p.y += vy + G * dt * dt * (p === B ? 1.2 : 1);
+    }
+    for (var it = 0; it < 14; it++) {
+      for (i = 0; i < cons.length; i++) {
+        var c = cons[i], a = c[0], b = c[1], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-6;
+        if (!c[3] && d <= c[2]) continue;
+        var ws = a.w + b.w; if (!ws) continue;
+        var k = (d - c[2]) / d / ws;
+        a.x += dx * k * a.w; a.y += dy * k * a.w; b.x -= dx * k * b.w; b.y -= dy * k * b.w;
+      }
+      if (drag) { B.x = tx + grab.x; B.y = ty + grab.y; }
+    }
+    if (drag) { B.px = B.x - mvx * dt * 0.9; B.py = B.y - mvy * dt * 0.9; }
+    // keep inside the stage
+    for (i = 0; i < pts.length; i++) { p = pts[i]; if (p.w) { p.x = Math.max(20, Math.min(W - 20, p.x)); p.y = Math.min(H - 20, p.y); } }
+  }
+  function smooth(list) {
+    var d = 'M' + list[0].x.toFixed(1) + ' ' + list[0].y.toFixed(1);
+    for (var i = 1; i < list.length - 1; i++) { var m = { x: (list[i].x + list[i + 1].x) / 2, y: (list[i].y + list[i + 1].y) / 2 }; d += 'Q' + list[i].x.toFixed(1) + ' ' + list[i].y.toFixed(1) + ' ' + m.x.toFixed(1) + ' ' + m.y.toFixed(1); }
+    var e = list[list.length - 1]; return d + 'L' + e.x.toFixed(1) + ' ' + e.y.toFixed(1);
   }
   function render() {
-    var cx = W / 2, tx = cx + p.x, ty = ringY + p.y;
-    var ang = Math.max(-35, Math.min(35, p.x * 0.22));
-    card.style.transform = 'translate(' + (tx - cw / 2).toFixed(1) + 'px,' + ty.toFixed(1) + 'px) rotate(' + ang.toFixed(2) + 'deg)';
-    var bx = cx + p.x * 0.35, by = ringY * 0.62 + p.y * 0.35;
-    var sw = Math.min(70, W * 0.12);
-    pathL.setAttribute('d', 'M' + (cx - sw) + ' -10 Q' + (cx - sw * 0.6 + p.x * 0.1) + ' ' + (by * 0.5) + ' ' + (bx - 5) + ' ' + by);
-    pathR.setAttribute('d', 'M' + (cx + sw) + ' -10 Q' + (cx + sw * 0.6 + p.x * 0.1) + ' ' + (by * 0.5) + ' ' + (bx + 5) + ' ' + by);
-    buckle.setAttribute('x', bx - 13); buckle.setAttribute('y', by - 2);
-    pathS.setAttribute('d', 'M' + bx + ' ' + (by + 12) + ' L' + tx + ' ' + (ty + 14));
+    var dL = smooth(strandL), dR = smooth(strandR);
+    P.L.setAttribute('d', dL); P.R.setAttribute('d', dR); P.Ls.setAttribute('d', dL); P.Rs.setAttribute('d', dR); P.Lt.setAttribute('d', dL); P.Rt.setAttribute('d', dR);
+    var ang = Math.atan2(B.x - C.x, B.y - C.y);
+    var vxs = (B.x - B.px) / dt;
+    tiltY += (Math.max(-28, Math.min(28, vxs * 0.035)) - tiltY) * 0.15;
+    tiltS += (ang - tiltS) * 0.2;
+    card.style.transform = 'translate(' + (C.x - CW / 2).toFixed(1) + 'px,' + C.y.toFixed(1) + 'px) rotate(' + (-ang).toFixed(4) + 'rad)';
+    tilt.style.transform = 'rotateY(' + tiltY.toFixed(2) + 'deg) rotateX(' + (Math.min(8, Math.abs(tiltY) * 0.15)).toFixed(2) + 'deg)';
+    card.style.setProperty('--lb-hx', (50 + ang * 160 + tiltY * 2.2).toFixed(1) + '%');
+    card.style.setProperty('--lb-sx', (50 - ang * 220 - tiltY * 3).toFixed(1) + '%');
   }
-  function loop(t) {
-    var dt = Math.min(2, (t - lastT) / 16.7 || 1); lastT = t;
-    if (!drag) {
-      v.x += -p.x * 0.045 * dt; v.y += -p.y * 0.045 * dt;
-      v.x *= Math.pow(0.95, dt); v.y *= Math.pow(0.95, dt);
-      p.x += v.x * dt; p.y += v.y * dt;
-      p.y = Math.min(p.y, 40);
-    }
+  function frame(now) {
+    raf = 0; if (!vis) { running = false; return; }
+    var el = Math.min(0.05, (now - last) / 1000); last = now; acc += el;
+    while (acc >= dt) { step(); acc -= dt; }
     render();
-    if (drag || Math.abs(p.x) + Math.abs(p.y) + Math.abs(v.x) + Math.abs(v.y) > 0.05) requestAnimationFrame(loop);
-    else { p.x = p.y = 0; render(); run = false; }
+    var e = Math.abs(B.x - B.px) + Math.abs(B.y - B.py) + Math.abs(C.x - C.px) + Math.abs(tiltY) * 0.1;
+    sleepT = (e < 0.02 && !drag) ? sleepT + el : 0;
+    if (sleepT > 1.2) { running = false; return; }
+    raf = requestAnimationFrame(frame);
   }
-  function kick() { if (!run && vis) { run = true; lastT = performance.now(); requestAnimationFrame(loop); } }
+  var raf = 0;
+  function wake() { sleepT = 0; if (!running && vis) { running = true; last = performance.now(); acc = 0; raf = requestAnimationFrame(frame); } }
 
-  function flip(on) {
-    var b = on === undefined ? !card.classList.contains('is-back') : on;
-    card.classList.toggle('is-back', b);
-    card.setAttribute('aria-pressed', String(b));
-    btn.textContent = b ? 'Show front' : 'Show back';
-  }
+  function flip(v) { back = typeof v === 'boolean' ? v : !back; card.classList.toggle('is-back', back); card.setAttribute('aria-pressed', back ? 'true' : 'false'); btn.textContent = back ? 'Show front' : 'Show back'; if (!reduce) { B.px += back ? 6 : -6; wake(); } }
   card.addEventListener('pointerdown', function (e) {
-    drag = true; moved = 0; card.classList.add('is-drag'); card.setPointerCapture(e.pointerId);
-    off.x = e.clientX - p.x; off.y = e.clientY - p.y; v.x = v.y = 0; kick();
+    var r = stage.getBoundingClientRect(); drag = true; moved = 0; card.classList.add('is-drag'); card.setPointerCapture(e.pointerId);
+    tx = e.clientX - r.left; ty = e.clientY - r.top; grab.x = B.x - tx; grab.y = B.y - ty; lastX = tx; lastY = ty; mvx = mvy = 0; wake();
   });
   card.addEventListener('pointermove', function (e) {
-    if (!drag) return;
-    var nx = e.clientX - off.x, ny = Math.min(e.clientY - off.y, 120);
-    moved += Math.abs(nx - p.x) + Math.abs(ny - p.y);
-    // the strap stops the card from going further than its length
-    var len = Math.hypot(nx, ny), max = 190;
-    if (len > max) { nx *= max / len; ny *= max / len; }
-    v.x = nx - p.x; v.y = ny - p.y; p.x = nx; p.y = ny;
+    if (!drag) return; var r = stage.getBoundingClientRect();
+    tx = e.clientX - r.left; ty = e.clientY - r.top; moved += Math.abs(tx - lastX) + Math.abs(ty - lastY);
+    mvx = mvx * 0.5 + ((tx - lastX) * 60) * 0.5; mvy = mvy * 0.5 + ((ty - lastY) * 60) * 0.5; lastX = tx; lastY = ty;
   });
-  function up() { if (!drag) return; drag = false; card.classList.remove('is-drag'); if (moved < 6) flip(); kick(); }
+  function up() { if (!drag) return; drag = false; card.classList.remove('is-drag'); if (moved < 6) flip(); wake(); }
   card.addEventListener('pointerup', up); card.addEventListener('pointercancel', up);
-  card.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
-    var d = { ArrowLeft: -60, ArrowRight: 60 }[e.key];
-    if (d) { e.preventDefault(); v.x += d * 0.12; kick(); }
-  });
+  card.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
   btn.addEventListener('click', function () { flip(); });
-
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis) kick(); }).observe(stage);
-  window.addEventListener('resize', layout);
-  layout();
-  if (!reduce) { v.x = 14; kick(); } // small welcome swing
+  window.addEventListener('resize', function () { build(); render(); wake(); });
+  new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis) wake(); }).observe(stage);
+  build(); render(); wake();
 })();

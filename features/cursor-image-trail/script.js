@@ -7,16 +7,16 @@
   if (!container) return;
 
   const TRAIL_CARDS = [
-    { label: '01 // HARBOUR 125', img: '/assets/library/edv-art-03.svg' },
-    { label: '02 // NORTHPORT REDS', img: '/assets/library/edv-art-04.svg' },
-    { label: '03 // LAKESIDE FC', img: '/assets/library/edv-art-05.svg' },
+    { label: '01 // CLIENT 01', img: '/assets/library/edv-art-03.svg' },
+    { label: '02 // CLUB A', img: '/assets/library/edv-art-04.svg' },
+    { label: '03 // CLUB B', img: '/assets/library/edv-art-05.svg' },
     { label: '04 // GRAND PRIX', img: '/assets/library/edv-art-06.svg' },
     { label: '05 // CHAMPIONS NIGHT', img: '/assets/library/edv-art-07.svg' },
     { label: '06 // BACKSTREET CAMPAIGN', img: '/assets/library/edv-art-08.svg' },
-    { label: '07 // ARENA LEAGUE', img: '/assets/library/edv-art-09.svg' },
-    { label: '08 // RIVERSIDE DERBY', img: '/assets/library/edv-art-10.svg' },
+    { label: '07 // LEAGUE 01', img: '/assets/library/edv-art-09.svg' },
+    { label: '08 // CITY DERBY', img: '/assets/library/edv-art-10.svg' },
     { label: '09 // DESERT LAUNCH', img: '/assets/library/edv-art-11.svg' },
-    { label: '10 // EASTGATE UNITED', img: '/assets/library/edv-art-12.svg' }
+    { label: '10 // CLUB C', img: '/assets/library/edv-art-12.svg' }
   ];
 
   const images = TRAIL_CARDS.map((card) => {

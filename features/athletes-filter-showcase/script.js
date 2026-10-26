@@ -4,14 +4,14 @@
  */
 (function () {
   const ROSTER = [
-    { name: 'Marlo Vance', role: 'Northport FC // Forward', category: 'exclusive', img: '/assets/library/edv-art-01.svg' },
-    { name: 'Teodor Halm', role: 'Eastvale United // Striker', category: 'exclusive', img: '/assets/library/edv-art-02.svg' },
-    { name: 'Idris Calloway', role: 'Lakeside Rovers // Winger', category: 'all', img: '/assets/library/edv-art-03.svg' },
-    { name: 'Bastien Orlo', role: 'Ironbridge SC // Center Back', category: 'exclusive', img: '/assets/library/edv-art-04.svg' },
-    { name: 'Ivo Lindqvist', role: 'Harbourside Athletic // Fullback', category: 'all', img: '/assets/library/edv-art-05.svg' },
-    { name: 'Tomas Adeyemi', role: 'Redmoor Town // Striker', category: 'exclusive', img: '/assets/library/edv-art-06.svg' },
-    { name: 'Stefan Brandt', role: 'Eastvale United // Creative Midfielder', category: 'creative', img: '/assets/library/edv-art-07.svg' },
-    { name: 'Juno Laverne', role: 'Visual Director & Photographer', category: 'creative', img: '/assets/library/edv-art-08.svg' }
+    { name: 'Athlete 01', role: 'Club A // Forward', category: 'exclusive', img: '/assets/library/edv-art-01.svg' },
+    { name: 'Athlete 02', role: 'Club B // Striker', category: 'exclusive', img: '/assets/library/edv-art-02.svg' },
+    { name: 'Athlete 03', role: 'Club C // Winger', category: 'all', img: '/assets/library/edv-art-03.svg' },
+    { name: 'Athlete 04', role: 'Club D // Center Back', category: 'exclusive', img: '/assets/library/edv-art-04.svg' },
+    { name: 'Athlete 05', role: 'Club E // Fullback', category: 'all', img: '/assets/library/edv-art-05.svg' },
+    { name: 'Athlete 06', role: 'Club F // Striker', category: 'exclusive', img: '/assets/library/edv-art-06.svg' },
+    { name: 'Athlete 07', role: 'Club B // Creative Midfielder', category: 'creative', img: '/assets/library/edv-art-07.svg' },
+    { name: 'Team Member 01', role: 'Visual Director & Photographer', category: 'creative', img: '/assets/library/edv-art-08.svg' }
   ];
 
   const rail = document.getElementById('athletes-rail');

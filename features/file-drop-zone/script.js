@@ -1,10 +1,16 @@
 (function () {
-  var zone = document.getElementById('fdzZone');
-  var input = document.getElementById('fdzInput');
-  var browse = document.getElementById('fdzBrowse');
-  var list = document.getElementById('fdzFiles');
-  var msg = document.getElementById('fdzMsg');
+  window.__edvUid = window.__edvUid || 0;
+  Array.prototype.forEach.call(document.querySelectorAll('.fdz-demo'), function (root) {
+  if (root.__fdzInit) return;
+  root.__fdzInit = true;
+  var zone = root.querySelector('.fdz-zone');
+  var input = root.querySelector('.fdz-native');
+  var browse = root.querySelector('.fdz-browse');
+  var list = root.querySelector('.fdz-files');
+  var msg = root.querySelector('.fdz-msg');
   if (!zone || !input) return;
+  var title = root.querySelector('.fdz-title');
+  if (title) { title.id = 'fdz' + (++window.__edvUid) + 'T'; root.setAttribute('aria-labelledby', title.id); }
   var files = [];
   var MAX = 5 * 1024 * 1024;
   function size(n) { return n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB'; }
@@ -39,4 +45,5 @@
   ['dragenter', 'dragover'].forEach(function (t) { zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.add('is-over'); }); });
   ['dragleave', 'drop'].forEach(function (t) { zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.remove('is-over'); }); });
   zone.addEventListener('drop', function (e) { if (e.dataTransfer && e.dataTransfer.files) add(e.dataTransfer.files); });
+  });
 })();

@@ -1,7 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: #050505; color: #f2f2f2; }
 body { font-family: var(--font-body, ui-monospace, "SF Mono", Menlo, Consolas, monospace); }
-.dc-stage { position: relative; width: 100%; min-height: 100vh; overflow: hidden; background: #050505; }
+.dc-stage { position: relative; width: 100%; transition: opacity .6s ease; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: #050505; }
 .dc-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .dc-hud { position: absolute; left: clamp(16px, 4vw, 40px); right: clamp(16px, 4vw, 40px); bottom: clamp(16px, 4vw, 36px); display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .dc-count { font-size: clamp(44px, 9vw, 96px); line-height: 1; font-weight: 700; letter-spacing: -.04em; font-variant-numeric: tabular-nums; mix-blend-mode: difference; }
@@ -11,3 +11,5 @@ body { font-family: var(--font-body, ui-monospace, "SF Mono", Menlo, Consolas, m
 .dc-enter:focus-visible { outline: 2px solid #f2f2f2; outline-offset: 4px; }
 .dc-enter[hidden] { display: none; }
 .dc-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.dc-stage.is-exiting { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .dc-stage { transition-duration: .15s; } }

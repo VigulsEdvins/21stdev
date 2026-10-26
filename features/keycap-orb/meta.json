@@ -5,7 +5,7 @@
   "category": "Interactions & Physics",
   "source": "edvlabs",
   "type": "component",
-  "description": "A draggable canvas sphere built from hundreds of mechanical keycaps in plastic and glass finishes, floating over a blue floor glow.",
+  "description": "A draggable 3D sphere of keycaps with perspective, depth-sorted shading, specular highlights, drag inertia and slow auto-rotation, drawn on canvas.",
   "tags": [
     "keycap",
     "sphere",

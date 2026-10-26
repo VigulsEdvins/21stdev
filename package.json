@@ -44,7 +44,8 @@
     "check-lighthouse": "node scripts/check-lighthouse.js",
     "encode-video-fallback": "node scripts/encode-video-fallback.js",
     "setup-webkit-libs": "node scripts/setup-webkit-libs.js",
-    "measure-frames": "node scripts/measure-frames.js"
+    "measure-frames": "node scripts/measure-frames.js",
+    "check-contrast": "node scripts/check-contrast.js"
   },
   "keywords": [],
   "author": "",

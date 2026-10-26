@@ -17,7 +17,7 @@
   const RAW_MEDIA_LIBRARY = [
   {
     "path": "./assets/images/art-01.svg",
-    "label": "Harbour Derby",
+    "label": "City Derby",
     "category": "Projects"
   },
   {
@@ -107,67 +107,67 @@
   },
   {
     "path": "./assets/images/client-1.svg",
-    "label": "Northport FC Logo",
+    "label": "Client 01 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-2.svg",
-    "label": "Classic Kits Logo",
+    "label": "Client 02 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-3.svg",
-    "label": "Lumen Sport Logo",
+    "label": "Client 03 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-4.svg",
-    "label": "Broadcast One Logo",
+    "label": "Client 04 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-5.svg",
-    "label": "Media Group Logo",
+    "label": "Client 05 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-6.svg",
-    "label": "Stride Logo",
+    "label": "Client 06 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-7.svg",
-    "label": "Atelier J Logo",
+    "label": "Client 07 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-8.svg",
-    "label": "Kappa Group Logo",
+    "label": "Client 08 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-9.svg",
-    "label": "Rivermouth Logo",
+    "label": "Client 09 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-10.svg",
-    "label": "Nova Labs Logo",
+    "label": "Client 10 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-11.svg",
-    "label": "Pennant Logo",
+    "label": "Client 11 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-12.svg",
-    "label": "Harbour United Logo",
+    "label": "Client 12 Logo",
     "category": "Logos"
   },
   {
     "path": "./assets/images/client-13.svg",
-    "label": "Fieldwork Logo",
+    "label": "Client 13 Logo",
     "category": "Logos"
   }
 ];
@@ -189,67 +189,67 @@
   "clients": [
     {
       "id": "c1",
-      "name": "Northport FC",
+      "name": "Client 01",
       "logo": "./assets/images/client-1.svg"
     },
     {
       "id": "c2",
-      "name": "Classic Kits",
+      "name": "Client 02",
       "logo": "./assets/images/client-2.svg"
     },
     {
       "id": "c3",
-      "name": "Lumen Sport",
+      "name": "Client 03",
       "logo": "./assets/images/client-3.svg"
     },
     {
       "id": "c4",
-      "name": "Broadcast One",
+      "name": "Client 04",
       "logo": "./assets/images/client-4.svg"
     },
     {
       "id": "c5",
-      "name": "Media Group",
+      "name": "Client 05",
       "logo": "./assets/images/client-5.svg"
     },
     {
       "id": "c6",
-      "name": "Stride",
+      "name": "Client 06",
       "logo": "./assets/images/client-6.svg"
     },
     {
       "id": "c7",
-      "name": "Atelier J",
+      "name": "Client 07",
       "logo": "./assets/images/client-7.svg"
     },
     {
       "id": "c8",
-      "name": "Kappa Group",
+      "name": "Client 08",
       "logo": "./assets/images/client-8.svg"
     },
     {
       "id": "c9",
-      "name": "Rivermouth",
+      "name": "Client 09",
       "logo": "./assets/images/client-9.svg"
     },
     {
       "id": "c10",
-      "name": "Nova Labs",
+      "name": "Client 10",
       "logo": "./assets/images/client-10.svg"
     },
     {
       "id": "c11",
-      "name": "Pennant",
+      "name": "Client 11",
       "logo": "./assets/images/client-11.svg"
     },
     {
       "id": "c12",
-      "name": "Harbour United",
+      "name": "Client 12",
       "logo": "./assets/images/client-12.svg"
     },
     {
       "id": "c13",
-      "name": "Fieldwork",
+      "name": "Client 13",
       "logo": "./assets/images/client-13.svg"
     }
   ],
@@ -272,7 +272,7 @@
   "carouselProjects": [
     {
       "id": "p1",
-      "title": "Harbour Derby",
+      "title": "City Derby",
       "image": "./assets/images/art-01.svg",
       "ctaLabel": "LEARN MORE",
       "link": "#contact"
@@ -445,99 +445,99 @@
     "athletes": [
       {
         "id": "a1",
-        "name": "Luca Ferrand",
-        "role": "Northport FC",
+        "name": "Athlete 01",
+        "role": "Club A",
         "category": "exclusive",
         "image": "./assets/images/art-04.svg"
       },
       {
         "id": "a2",
-        "name": "Jonas Weller",
-        "role": "Kestrel United",
+        "name": "Athlete 02",
+        "role": "Club B",
         "category": "all",
         "image": "./assets/images/art-05.svg"
       },
       {
         "id": "a3",
-        "name": "Mateo Brandt",
-        "role": "Harbour United",
+        "name": "Athlete 03",
+        "role": "Club C",
         "category": "all",
         "image": "./assets/images/art-06.svg"
       },
       {
         "id": "a4",
-        "name": "Sam Okoro",
-        "role": "Rivermouth FC",
+        "name": "Athlete 04",
+        "role": "Club D",
         "category": "all",
         "image": "./assets/images/art-07.svg"
       },
       {
         "id": "a5",
-        "name": "Tobias Lind",
-        "role": "Eastgate SC",
+        "name": "Athlete 05",
+        "role": "Club E",
         "category": "all",
         "image": "./assets/images/art-08.svg"
       },
       {
         "id": "a6",
-        "name": "Marcus Hale",
-        "role": "Summit Hoops",
+        "name": "Athlete 06",
+        "role": "Club F",
         "category": "all",
         "image": "./assets/images/art-09.svg"
       },
       {
         "id": "a7",
-        "name": "Noah Verbeek",
-        "role": "Westfield FC",
+        "name": "Athlete 07",
+        "role": "Club G",
         "category": "all",
         "image": "./assets/images/art-10.svg"
       },
       {
         "id": "a8",
-        "name": "Elias Marten",
-        "role": "Dunmore Town",
+        "name": "Athlete 08",
+        "role": "Club H",
         "category": "all",
         "image": "./assets/images/art-11.svg"
       },
       {
         "id": "a9",
-        "name": "Dries Hollander",
-        "role": "Lakeside FC",
+        "name": "Athlete 09",
+        "role": "Club I",
         "category": "exclusive",
         "image": "./assets/images/art-12.svg"
       },
       {
         "id": "a10",
-        "name": "Rafael Costa",
-        "role": "Northport FC",
+        "name": "Athlete 10",
+        "role": "Club A",
         "category": "exclusive",
         "image": "./assets/images/art-13.svg"
       },
       {
         "id": "a11",
-        "name": "Remy Dalton",
-        "role": "Pennant City",
+        "name": "Athlete 11",
+        "role": "Club J",
         "category": "exclusive",
         "image": "./assets/images/art-14.svg"
       },
       {
         "id": "a12",
-        "name": "Tristan Voss",
-        "role": "Eastgate SC",
+        "name": "Athlete 12",
+        "role": "Club E",
         "category": "exclusive",
         "image": "./assets/images/art-15.svg"
       },
       {
         "id": "a13",
-        "name": "Theo Vandermeer",
-        "role": "Old Mill FC",
+        "name": "Athlete 13",
+        "role": "Club K",
         "category": "all",
         "image": "./assets/images/art-16.svg"
       },
       {
         "id": "a14",
-        "name": "Kaan Ferro",
-        "role": "Northport FC",
+        "name": "Athlete 14",
+        "role": "Club A",
         "category": "all",
         "image": "./assets/images/art-17.svg"
       }
@@ -567,17 +567,17 @@
     "members": [
       {
         "id": "t1",
-        "name": "Alex Marlowe",
+        "name": "Team Member 01",
         "role": "Creative Director",
-        "email": "alex@edvlabs.example",
+        "email": "team01@edvlabs.example",
         "phone": "+00 000 00 00 00",
         "image": "./assets/images/art-06.svg"
       },
       {
         "id": "t2",
-        "name": "Sky Rourke",
+        "name": "Team Member 02",
         "role": "Content Creator",
-        "email": "sky@edvlabs.example",
+        "email": "team02@edvlabs.example",
         "phone": "+00 000 00 00 01",
         "image": "./assets/images/art-11.svg"
       }

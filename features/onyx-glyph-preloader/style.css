@@ -1,10 +1,13 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #0a0a0b); color: var(--text, #e9e7e2); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
-.og-stage { position: relative; min-height: 640px; height: 100vh; overflow: hidden; background: radial-gradient(circle at 50% 40%, #1b1b1f, #09090a 70%); color: #e9e7e2; }
+.og-stage { position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; transition: opacity .6s ease; background: radial-gradient(circle at 50% 40%, #1b1b1f, #09090a 70%); color: #e9e7e2; }
+.og-stage.is-exiting { opacity: 0; pointer-events: none; }
 .og-after { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 0.9rem; text-align: center; padding: 1.5rem; }
 .og-small { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: #8d8a83; }
 .og-h { font-family: var(--font-display, Georgia, serif); font-weight: 500; font-size: clamp(2rem, 7vw, 4.5rem); letter-spacing: -0.02em; }
 .og-p { color: #a9a69e; max-width: 28rem; line-height: 1.55; }
+.og-replay { position: fixed; top: 16px; right: 16px; z-index: 9; padding: 0.5rem 1rem; }
+.og-replay[hidden] { display: none; }
 .og-btn { margin-top: 0.6rem; font: inherit; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #e9e7e2; background: transparent; border: 1px solid #55524c; padding: 0.8rem 1.6rem; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
 .og-btn:hover { background: #1f1f23; border-color: #c9a45c; }
 .og-btn:focus-visible { outline: 2px solid #c9a45c; outline-offset: 3px; }
@@ -25,4 +28,4 @@ html, body { background: var(--bg, #0a0a0b); color: var(--text, #e9e7e2); font-f
 .og-gate.is-open .og-right { transform: translateX(101%); }
 .og-gate.is-open .og-hud { opacity: 0; }
 .og-gate.is-gone { visibility: hidden; }
-@media (prefers-reduced-motion: reduce) { .og-grain { animation: none; } .og-leaf { transition-duration: 0.01s; } }
+@media (prefers-reduced-motion: reduce) { .og-grain { animation: none; } .og-leaf { transition-duration: 0.01s; } .og-stage { transition-duration: .15s; } }

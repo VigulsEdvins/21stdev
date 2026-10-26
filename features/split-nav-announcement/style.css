@@ -1,5 +1,5 @@
 /* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
-.sna-demo { min-height: 100%; background: var(--bg, #fbf8f3); color: var(--text, #292524); font-family: var(--font-body, system-ui, sans-serif); }
+.sna-demo { min-height: 320px; background: var(--bg, #fbf8f3); color: var(--text, #292524); font-family: var(--font-body, system-ui, sans-serif); }
 .sna-announce { display: flex; align-items: center; justify-content: center; position: relative; padding: 10px 48px; background: var(--accent, #292524); color: #fff; font-size: .82rem; letter-spacing: .02em; overflow: hidden; max-height: 80px; transition: max-height .35s ease, padding .35s ease, opacity .25s; }
 .sna-announce[hidden] { display: none; }
 .sna-announce.is-hidden { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; }
@@ -16,13 +16,12 @@
 .sna-side a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .3s cubic-bezier(.2,.8,.2,1); }
 .sna-side a:hover::after, .sna-side a:focus-visible::after { transform: scaleX(1); }
 .sna-wordmark { font-family: var(--font-display, Georgia, serif); font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 500; letter-spacing: .04em; color: inherit; text-decoration: none; white-space: nowrap; }
-.sna-page { max-width: 720px; margin: 0 auto; padding: 96px 24px 120px; text-align: center; }
-.sna-page h1 { font-family: var(--font-display, Georgia, serif); font-weight: 400; font-size: clamp(2.2rem, 6vw, 4rem); margin: 0 0 16px; }
-.sna-page p { opacity: .7; line-height: 1.6; }
 @media (max-width: 720px) {
-  .sna-header { grid-template-columns: 1fr; justify-items: center; gap: 10px; padding: 16px; }
+  .sna-header { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px 8px; padding: 14px 12px; }
+  .sna-wordmark { grid-column: 1 / -1; text-align: center; font-size: 1.3rem; white-space: normal; }
+  .sna-left { justify-content: flex-start; } 
   .sna-wordmark { order: -1; }
-  .sna-side { gap: 18px; font-size: .78rem; }
-  .sna-right { justify-content: center; }
+  .sna-side { gap: 10px; font-size: .7rem; letter-spacing: .03em; flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) { .sna-announce, .sna-side a::after { transition: none; } }
+html, body { background: var(--bg, #fbf8f3); color: var(--text, #292524); }

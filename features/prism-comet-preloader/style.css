@@ -1,7 +1,8 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #050609); color: var(--text, #f4f6ff); }
 body { font-family: var(--font-body, system-ui, sans-serif); }
-.pm-stage { position: relative; height: 100vh; min-height: 460px; overflow: hidden; background: radial-gradient(circle at 50% 50%, #1a1f3a, #050609 70%); color: #f4f6ff; }
+.pm-stage { position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; transition: opacity .6s ease; background: radial-gradient(circle at 50% 50%, #1a1f3a, #050609 70%); color: #f4f6ff; }
+.pm-stage.is-exiting { opacity: 0; pointer-events: none; }
 .pm-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .pm-tag { position: absolute; top: 24px; left: 24px; font-size: .72rem; letter-spacing: .25em; text-transform: uppercase; opacity: .7; }
 .pm-center { position: absolute; left: 24px; bottom: 56px; }
@@ -9,6 +10,8 @@ body { font-family: var(--font-body, system-ui, sans-serif); }
 .pm-stage-name { margin-top: 10px; font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; opacity: .75; }
 .pm-track { position: absolute; left: 24px; right: 24px; bottom: 28px; height: 2px; background: rgba(255,255,255,.18); }
 .pm-track i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #ff4d6d, #ffd166, #5ee7a0, #4cc9f0, #9d7bff); }
-.pm-replay { position: absolute; top: 18px; right: 20px; background: transparent; color: inherit; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; padding: 8px 16px; cursor: pointer; font-size: .8rem; }
+.pm-replay[hidden] { display: none; }
+.pm-replay { position: fixed; z-index: 5; top: 18px; right: 20px; background: transparent; color: inherit; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; padding: 8px 16px; cursor: pointer; font-size: .8rem; }
 .pm-replay:hover { background: rgba(255,255,255,.1); }
 .pm-replay:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .pm-stage { transition-duration: .15s; } }

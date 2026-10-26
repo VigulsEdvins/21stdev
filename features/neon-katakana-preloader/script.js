@@ -32,16 +32,24 @@
   addEventListener('resize', size);
   size(); if (reduce) { for (var k = 0; k < 40; k++) rain(k * 100); } else rafRain = requestAnimationFrame(rain);
 
-  var DUR = reduce ? 800 : 3800, t0 = 0, raf = 0;
+  var DUR = reduce ? 800 : 3800, t0 = 0, raf = 0, tm = 0;
   function step(now) {
     var p = Math.min(1, (now - t0) / DUR), e = 1 - Math.pow(1 - p, 2.2), v = Math.round(e * 100);
     count.textContent = String(v).padStart(2, '0');
     bar.style.width = v + '%'; root.setAttribute('aria-valuenow', v);
     if (p < 1) raf = requestAnimationFrame(step);
-    else { setTimeout(function () { root.classList.add('is-open'); again.tabIndex = 0; }, 300); }
+    else {
+      tm = setTimeout(function () {
+        root.classList.add('is-open');
+        tm = setTimeout(function () {
+          root.classList.add('is-exiting');
+          tm = setTimeout(function () { root.setAttribute('data-phase', 'done'); root.setAttribute('data-completed', 'true'); again.hidden = false; }, reduce ? 150 : 650);
+        }, reduce ? 200 : 1900);
+      }, 300);
+    }
   }
   function run() {
-    root.classList.remove('is-open'); again.tabIndex = -1; count.textContent = '00'; bar.style.width = '0';
+    clearTimeout(tm); root.classList.remove('is-open', 'is-exiting'); root.removeAttribute('data-completed'); root.removeAttribute('data-phase'); again.hidden = true; count.textContent = '00'; bar.style.width = '0';
     cancelAnimationFrame(raf); t0 = performance.now(); raf = requestAnimationFrame(step);
   }
   again.addEventListener('click', run);

@@ -1,5 +1,5 @@
 /* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
-.clh-demo { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.clh-demo { min-height: 320px; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
 .clh-header { border-bottom: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); position: relative; }
 .clh-bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; height: 84px; }
 .clh-logo { font-family: var(--font-display, inherit); font-size: 1.7rem; font-weight: 700; letter-spacing: .02em; color: inherit; text-decoration: none; padding: 0 2rem; }
@@ -13,7 +13,7 @@
 .clh-burger span:first-child { top: 17px; } .clh-burger span:last-child { top: 25px; }
 .clh-burger[aria-expanded="true"] span:first-child { top: 21px; transform: rotate(45deg); }
 .clh-burger[aria-expanded="true"] span:last-child { top: 21px; transform: rotate(-45deg); }
-.clh-mobile { display: grid; padding: .5rem 1.5rem 1.25rem; border-top: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); }
+.clh-mobile { position: absolute; left: 0; right: 0; top: 100%; z-index: 10; background: var(--bg, #0b0f19); display: grid; padding: .5rem 1.5rem 1.25rem; border-top: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); }
 .clh-mobile[hidden] { display: none; }
 .clh-mobile a { padding: 12px 0; font-size: 1.05rem; }
 @media (max-width: 760px) {
@@ -24,3 +24,4 @@
 }
 @media (min-width: 761px) { .clh-mobile { display: none !important; } }
 @media (prefers-reduced-motion: reduce) { .clh-nav a, .clh-mobile a, .clh-burger span { transition: none; } }
+html, body { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); }

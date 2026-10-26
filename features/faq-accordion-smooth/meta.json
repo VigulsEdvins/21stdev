@@ -38,49 +38,91 @@
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
+      "selector": ":scope .faq-eyebrow"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "text-1",
-      "label": "Text 1",
-      "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+      "selector": ":scope .faq-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .faq-intro"
     },
     {
-      "id": "text-2",
-      "label": "Text 2",
+      "id": "question-1",
+      "label": "Question 1",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+      "selector": ":scope .faq-item:nth-child(1) .faq-q"
     },
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "answer-1",
+      "label": "Answer 1",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .faq-item:nth-child(1) .faq-a"
     },
     {
-      "id": "text-3",
-      "label": "Text 3",
+      "id": "question-2",
+      "label": "Question 2",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+      "selector": ":scope .faq-item:nth-child(2) .faq-q"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
+      "id": "answer-2",
+      "label": "Answer 2",
       "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .faq-item:nth-child(2) .faq-a"
+    },
+    {
+      "id": "question-3",
+      "label": "Question 3",
+      "type": "text",
+      "selector": ":scope .faq-item:nth-child(3) .faq-q"
+    },
+    {
+      "id": "answer-3",
+      "label": "Answer 3",
+      "type": "text",
+      "selector": ":scope .faq-item:nth-child(3) .faq-a"
+    },
+    {
+      "id": "question-4",
+      "label": "Question 4",
+      "type": "text",
+      "selector": ":scope .faq-item:nth-child(4) .faq-q"
+    },
+    {
+      "id": "answer-4",
+      "label": "Answer 4",
+      "type": "text",
+      "selector": ":scope .faq-item:nth-child(4) .faq-a"
+    },
+    {
+      "id": "question-5",
+      "label": "Question 5",
+      "type": "text",
+      "selector": ":scope .faq-item:nth-child(5) .faq-q"
+    },
+    {
+      "id": "answer-5",
+      "label": "Answer 5",
+      "type": "text",
+      "selector": ":scope .faq-item:nth-child(5) .faq-a"
+    },
+    {
+      "id": "question-6",
+      "label": "Question 6",
+      "type": "text",
+      "selector": ":scope .faq-item:nth-child(6) .faq-q"
+    },
+    {
+      "id": "answer-6",
+      "label": "Answer 6",
+      "type": "text",
+      "selector": ":scope .faq-item:nth-child(6) .faq-a"
     }
   ],
   "measured": {

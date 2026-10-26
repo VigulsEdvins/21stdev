@@ -40,5 +40,9 @@
   }
   new IntersectionObserver(function (e) { var v = e[0].isIntersecting; if (v && !vis) { vis = true; requestAnimationFrame(frame); } vis = v; }).observe(stage);
   addEventListener('resize', size); size(); requestAnimationFrame(frame);
-  btn.addEventListener('click', function () { status.textContent = 'Welcome in'; btn.textContent = 'Entered'; });
+  btn.addEventListener('click', function () {
+    status.textContent = 'Welcome in'; btn.textContent = 'Entered'; btn.disabled = true;
+    stage.classList.add('is-exiting');
+    setTimeout(function () { stage.setAttribute('data-phase', 'done'); stage.setAttribute('data-completed', 'true'); }, reduce ? 150 : 650);
+  });
 })();

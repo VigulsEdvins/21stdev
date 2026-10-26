@@ -25,3 +25,5 @@
 .ptw-cta:hover { transform: translateY(-1px); }
 @media (max-width: 860px) { .ptw-grid { grid-template-columns: 1fr; max-width: 440px; } .ptw-card.is-featured { margin-top: 12px; } }
 @media (prefers-reduced-motion: reduce) { .ptw-opt, .ptw-cta { transition: none; } .ptw-cta:hover { transform: none; } }
+.ptw-note { margin: -.6rem 0 1.1rem; min-height: 1.3em; font-size: .85rem; color: var(--accent, #6366f1); }
+html, body { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); }

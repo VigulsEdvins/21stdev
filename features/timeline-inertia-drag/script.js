@@ -4,8 +4,8 @@
  */
 (function () {
   const ITEMS = [
-    { title: 'Harbour Campaign', group: "OCTOBER '26", tag: 'SHOWCASE', aspect: 1.15, img: '/assets/library/edv-art-01.svg' },
-    { title: 'Northport Lookbook', group: "OCTOBER '26", tag: 'INSPIRE', aspect: 1.35, img: '/assets/library/edv-art-04.svg' },
+    { title: 'Client 01 Campaign', group: "OCTOBER '26", tag: 'SHOWCASE', aspect: 1.15, img: '/assets/library/edv-art-01.svg' },
+    { title: 'Client 02 Lookbook', group: "OCTOBER '26", tag: 'INSPIRE', aspect: 1.35, img: '/assets/library/edv-art-04.svg' },
     { title: 'Gallery Pop-up', group: "OCTOBER '26", tag: 'EXPERIMENT', aspect: 1.0, img: '/assets/library/edv-art-07.svg' },
     { title: 'Studio Collab Drop', group: "SEPTEMBER '26", tag: 'ARCHIVE', aspect: 1.25, img: '/assets/library/edv-art-10.svg' },
     { title: 'Coastal Waves', group: "SEPTEMBER '26", tag: 'SHOWCASE', aspect: 1.1, img: '/assets/library/edv-art-13.svg' },

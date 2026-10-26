@@ -22,5 +22,11 @@
     else { stage.classList.add('is-ready'); btn.disabled = false; btn.focus({ preventScroll: true }); }
   }
   requestAnimationFrame(frame);
-  btn.addEventListener('click', function () { stage.classList.add('is-open'); btn.textContent = 'Seal broken'; });
+  btn.addEventListener('click', function () {
+    stage.classList.add('is-open'); btn.textContent = 'Seal broken'; btn.disabled = true;
+    setTimeout(function () {
+      stage.classList.add('is-exiting');
+      setTimeout(function () { stage.setAttribute('data-phase', 'done'); stage.setAttribute('data-completed', 'true'); }, reduce ? 150 : 650);
+    }, reduce ? 100 : 500);
+  });
 })();

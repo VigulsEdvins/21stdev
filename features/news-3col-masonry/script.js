@@ -1,7 +1,7 @@
 (function () {
   const ITEMS = [
     {
-      title: 'Harbour Campaign Autumn Monograph',
+      title: 'Client 01 Campaign Autumn Monograph',
       tag: 'Campaign',
       date: 'Oct 2026',
       height: 220,

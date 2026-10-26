@@ -1,7 +1,8 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #0d0b12); color: var(--text, #f3f1f7); min-height: 100%; }
 body { font-family: var(--font-body, system-ui, sans-serif); }
-.cf-page { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; display: grid; place-items: center; }
+.cf-page { position: relative; width: 100%; background: var(--bg, #0d0b12); transition: opacity .6s ease; min-height: 100vh; min-height: 100dvh; overflow: hidden; display: grid; place-items: center; }
+.cf-page.is-exiting { opacity: 0; pointer-events: none; }
 .cf-content { text-align: center; padding: 24px; max-width: 520px; opacity: 0; transform: translateY(18px); transition: opacity .8s .3s, transform .8s .3s; }
 .cf-kicker { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--accent, #e0a84a); margin-bottom: 14px; }
 .cf-title { font-family: var(--font-display, Georgia, serif); font-size: clamp(30px, 7vw, 54px); font-weight: 600; line-height: 1.05; margin-bottom: 14px; }
@@ -27,4 +28,5 @@ body { font-family: var(--font-body, system-ui, sans-serif); }
 @media (prefers-reduced-motion: reduce) {
   .cf-card { animation: none; opacity: 1; transform: rotate(calc((var(--i) - 2.5) * 13deg)); }
   .cf-loader, .cf-content { transition-duration: .01s; transition-delay: 0s; }
+  .cf-page { transition-duration: .15s; }
 }

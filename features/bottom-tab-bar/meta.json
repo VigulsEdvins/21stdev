@@ -42,7 +42,7 @@
       "id": "title",
       "label": "Screen title",
       "type": "text",
-      "selector": ":scope .btb-screen h1"
+      "selector": ":scope .btb-title"
     },
     {
       "id": "accent-colour",

@@ -20,9 +20,15 @@
     var v = Math.round(p * 100);
     countEl.textContent = (v < 10 ? "00" : v < 100 ? "0" : "") + v; bar.style.width = v + "%";
   }
-  function finish() { tag.textContent = "Ready"; replay.hidden = false; setCount(1); }
+  function finish() {
+    tag.textContent = "Ready"; setCount(1);
+    timers.push(setTimeout(function () {
+      stage.classList.add("is-exiting");
+      timers.push(setTimeout(function () { stage.setAttribute("data-phase", "done"); stage.setAttribute("data-completed", "true"); replay.hidden = false; }, reduce ? 150 : 650));
+    }, reduce ? 200 : 900));
+  }
   function run() {
-    timers.forEach(clearTimeout); cancelAnimationFrame(raf); replay.hidden = true; tag.textContent = "Loading";
+    timers.forEach(clearTimeout); cancelAnimationFrame(raf); replay.hidden = true; stage.classList.remove("is-exiting"); stage.removeAttribute("data-completed"); stage.removeAttribute("data-phase"); tag.textContent = "Loading";
     build();
     if (reduce) { slides.forEach(function (s, i) { s.classList.toggle("is-in", i === N - 1); }); finish(); return; }
     var t0 = performance.now(), total = STEP * N;

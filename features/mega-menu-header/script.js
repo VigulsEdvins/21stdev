@@ -1,8 +1,15 @@
 (function () {
-  var items = Array.prototype.slice.call(document.querySelectorAll('.mmh-item'));
+  Array.prototype.forEach.call(document.querySelectorAll('.mmh-demo'), function (root, rn) {
+  if (root.getAttribute('data-mmh-ready')) return;
+  root.setAttribute('data-mmh-ready', '1');
+  var items = Array.prototype.slice.call(root.querySelectorAll('.mmh-item'));
+  root.querySelectorAll('.mmh-item').forEach(function (li, n) {
+    var t = li.querySelector('.mmh-trigger'), p = li.querySelector('.mmh-panel');
+    if (t && p) { p.id = 'mmh' + rn + '-' + n; t.setAttribute('aria-controls', p.id); }
+  });
   var triggers = items.map(function (li) { return li.querySelector('.mmh-trigger'); }).filter(Boolean);
   var closeTimer = null;
-  function panelOf(t) { return document.getElementById(t.getAttribute('aria-controls')); }
+  function panelOf(t) { return t.closest('.mmh-item').querySelector('.mmh-panel'); }
   function closeAll(except) {
     triggers.forEach(function (t) {
       if (t === except) return;
@@ -37,16 +44,17 @@
     var expanded = triggers.filter(function (t) { return t.getAttribute('aria-expanded') === 'true'; })[0];
     if (expanded) { closeAll(); expanded.focus(); }
   });
-  document.addEventListener('click', function (e) { if (!e.target.closest('.mmh-item')) closeAll(); });
-  document.querySelectorAll('.mmh-panel').forEach(function (panel) {
+  document.addEventListener('click', function (e) { if (!e.target.closest || !e.target.closest('.mmh-item') || !root.contains(e.target)) closeAll(); });
+  root.querySelectorAll('.mmh-panel').forEach(function (panel) {
     panel.addEventListener('keydown', function (e) {
       var links = Array.prototype.slice.call(panel.querySelectorAll('a'));
       var i = links.indexOf(document.activeElement);
       if (e.key === 'ArrowDown' && i < links.length - 1) { e.preventDefault(); links[i + 1].focus(); }
-      if (e.key === 'ArrowUp') { e.preventDefault(); if (i > 0) links[i - 1].focus(); else { var t = document.querySelector('[aria-controls="' + panel.id + '"]'); if (t) t.focus(); } }
+      if (e.key === 'ArrowUp') { e.preventDefault(); if (i > 0) links[i - 1].focus(); else { var t = panel.closest('.mmh-item').querySelector('.mmh-trigger'); if (t) t.focus(); } }
     });
     panel.addEventListener('focusout', function (e) {
       if (!panel.contains(e.relatedTarget) && !(e.relatedTarget && e.relatedTarget.getAttribute && e.relatedTarget.getAttribute('aria-controls') === panel.id)) closeAll();
     });
+  });
   });
 })();

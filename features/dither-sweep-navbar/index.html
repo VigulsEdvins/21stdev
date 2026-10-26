@@ -7,14 +7,15 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="dn-head" id="dnHead">
+<div class="dn-demo">
+  <header class="dn-head">
     <div class="dn-bar">
       <a class="dn-brand" href="#" aria-label="Tessel home">
         <svg class="dn-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9" opacity=".45"/><rect x="2" y="13" width="9" height="9" opacity=".45"/><rect x="13" y="13" width="9" height="9"/></svg>
         <span class="dn-word">Tessel<small>tiny tile studio</small></span>
       </a>
-      <button class="dn-burger" id="dnBurger" type="button" aria-expanded="false" aria-controls="dnNav" aria-label="Toggle menu"><i></i><i></i></button>
-      <nav class="dn-nav" id="dnNav" aria-label="Main">
+      <button class="dn-burger" type="button" aria-expanded="false" aria-label="Toggle menu"><i></i><i></i></button>
+      <nav class="dn-nav"  aria-label="Main">
         <a class="dn-link" href="#"><canvas aria-hidden="true"></canvas><span>Studio</span></a>
         <a class="dn-link" href="#"><canvas aria-hidden="true"></canvas><span>Journal</span></a>
         <a class="dn-link" href="#"><canvas aria-hidden="true"></canvas><span>Shop</span></a>
@@ -22,11 +23,8 @@
       </nav>
     </div>
   </header>
-  <main class="dn-main">
-    <h1 class="dn-h1">Hover the links. Scroll the page.</h1>
-    <p>Each link fills with a chunky left-to-right pixel dissolve and empties the same way. After a short scroll the bar tightens and drops its tagline.</p>
-    <div class="dn-blocks"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  </main>
+  <div class="dn-blocks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</div>
   <script src="script.js"></script>
 </body>
 </html>

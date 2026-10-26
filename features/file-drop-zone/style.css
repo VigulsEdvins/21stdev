@@ -16,3 +16,5 @@
 .fdz-size { color: color-mix(in srgb, var(--text, #f3f4f6) 60%, transparent); font-size: .85rem; margin-left: .5rem; white-space: nowrap; }
 .fdz-remove { border: 0; background: transparent; color: #fca5a5; font: inherit; font-size: .88rem; font-weight: 600; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
 @media (prefers-reduced-motion: reduce) { .fdz-zone { transition: none; } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

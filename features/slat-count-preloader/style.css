@@ -1,10 +1,12 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #0f2a22); color: var(--text, #f3ecd8); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
-.sc-stage { --sc-a: #0f2a22; --sc-b: #f3ecd8; --sc-c: #ff9d2e; position: relative; height: 100vh; min-height: 24rem; overflow: hidden; background: var(--sc-a); color: var(--sc-b); }
+.sc-stage { --sc-a: #0f2a22; --sc-b: #f3ecd8; --sc-c: #ff9d2e; position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; transition: opacity .6s ease; background: var(--sc-a); color: var(--sc-b); }
 .sc-ready { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 1rem; }
 .sc-ready-label { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sc-c); }
 .sc-ready-title { font-family: var(--font-display, system-ui, sans-serif); font-size: clamp(3rem, 12vw, 8rem); letter-spacing: -0.04em; line-height: 1; }
-.sc-replay { justify-self: center; padding: 0.7rem 1.4rem; border: 1px solid var(--sc-b); background: transparent; color: inherit; font: 600 0.85rem inherit; cursor: pointer; border-radius: 99px; }
+.sc-stage.is-exiting { opacity: 0; pointer-events: none; }
+.sc-replay[hidden] { display: none; }
+.sc-replay { position: fixed; top: 16px; right: 16px; z-index: 5; padding: 0.7rem 1.4rem; border: 1px solid var(--sc-b); background: transparent; color: inherit; font: 600 0.85rem inherit; cursor: pointer; border-radius: 99px; }
 .sc-replay:hover { background: var(--sc-b); color: var(--sc-a); }
 .sc-slats { position: absolute; inset: 0; display: flex; }
 .sc-slat { flex: 1; position: relative; border-right: 1px solid rgba(0, 0, 0, 0.35); background: var(--sc-b); transform-origin: bottom; transform: scaleY(var(--f, 0)); transition: transform 0.25s linear; }
@@ -17,4 +19,4 @@ html, body { background: var(--bg, #0f2a22); color: var(--text, #f3ecd8); font-f
 .sc-count small { font-size: 0.3em; letter-spacing: 0; }
 .sc-skip { position: absolute; right: clamp(1rem, 4vw, 2.5rem); bottom: 1.2rem; pointer-events: auto; background: none; border: 0; color: #fff; text-decoration: underline; font: 600 0.9rem inherit; cursor: pointer; }
 .sc-skip:focus-visible, .sc-replay:focus-visible { outline: 2px solid var(--sc-c); outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) { .sc-slat, .sc-stage[data-state="done"] .sc-slat { transition-duration: 0.01s; transition-delay: 0s; } }
+@media (prefers-reduced-motion: reduce) { .sc-stage { transition-duration: .15s; } .sc-slat, .sc-stage[data-state="done"] .sc-slat { transition-duration: 0.01s; transition-delay: 0s; } }

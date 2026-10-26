@@ -1,5 +1,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.dn-demo { height: 360px; overflow-y: auto; overflow-x: hidden; position: relative; }
 .dn-head { position: sticky; top: 0; z-index: 10; padding: 0.9rem clamp(0.6rem, 3vw, 2rem); transition: padding 0.3s; }
 .dn-bar { --dn-hot: var(--accent, #c6f432); position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: 1000px; margin: 0 auto; padding: 0.7rem 0.8rem 0.7rem 1.1rem; border-radius: calc(var(--radius, 14px) * 1.6); background: color-mix(in srgb, var(--bg, #0b0c10) 82%, var(--text, #f3f4f6) 8%); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); backdrop-filter: blur(10px); transition: padding 0.3s; }
 .dn-brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: inherit; }
@@ -20,9 +21,7 @@ html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); font-f
 .dn-burger i:first-child { top: 1rem; } .dn-burger i:last-child { top: 1.5rem; }
 .dn-burger[aria-expanded="true"] i:first-child { top: 1.25rem; transform: rotate(45deg); }
 .dn-burger[aria-expanded="true"] i:last-child { top: 1.25rem; transform: rotate(-45deg); }
-.dn-main { max-width: 640px; margin: 0 auto; padding: 3rem 1.2rem 6rem; color: color-mix(in srgb, var(--text, #f3f4f6) 65%, transparent); line-height: 1.6; }
-.dn-h1 { font: 800 clamp(1.8rem, 5vw, 3rem)/1.05 var(--font-display, var(--font-body, system-ui, sans-serif)); letter-spacing: -0.03em; color: var(--text, #f3f4f6); margin-bottom: 1rem; }
-.dn-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.dn-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 2rem 1.2rem 3rem; max-width: 640px; margin: 0 auto; }
 .dn-blocks i { height: 9rem; border-radius: var(--radius, 14px); background: color-mix(in srgb, var(--text, #f3f4f6) 7%, transparent); }
 @media (max-width: 720px) {
   .dn-burger { display: block; }

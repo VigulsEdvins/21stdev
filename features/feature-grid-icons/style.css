@@ -12,3 +12,5 @@
 @media (max-width: 900px) { .fgi-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .fgi-grid { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .fgi-card { transition: none; } .fgi-card:hover { transform: none; } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

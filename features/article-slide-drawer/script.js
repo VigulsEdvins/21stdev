@@ -6,18 +6,18 @@
   const ARTICLES = [
     {
       slug: 'defective-units',
-      title: 'Harbour Campaign — Tactile Industrial Synthesis',
+      title: 'Client 01 Campaign — Tactile Industrial Synthesis',
       tag: 'SHOWCASE',
       month: "OCTOBER '26",
       img: '/assets/library/edv-art-02.svg',
       body: [
-        'Designed as an exploration into imperfect hardware surfaces, Harbour Campaign combines physical rotary encoders with real-time WebGL shaders.',
+        'Designed as an exploration into imperfect hardware surfaces, Client 01 Campaign combines physical rotary encoders with real-time WebGL shaders.',
         'Every transition uses critically damped spring curves so the interface responds with mechanical weight rather than linear CSS keyframes.'
       ]
     },
     {
       slug: 'kinetic-monograph',
-      title: 'Northport Lookbook — Optical Campaign & Grid Systems',
+      title: 'Client 02 Lookbook — Optical Campaign & Grid Systems',
       tag: 'INSPIRE',
       month: "SEPTEMBER '26",
       img: '/assets/library/edv-art-07.svg',

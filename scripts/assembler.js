@@ -104,7 +104,7 @@ function isDarkTheme(theme) {
  * - Replaces viewport locking 100vh with min-height: auto
  * - Scopes #root selectors to #root-${sectionId}
  */
-function scopeSectionStyles(css, sectionId) {
+function scopeSectionStyles(css, sectionId, keepPalette) {
   if (!css || typeof css !== 'string') return '';
   let scoped = css;
 
@@ -132,6 +132,10 @@ function scopeSectionStyles(css, sectionId) {
 
   // 7. Clean up viewport-locking rules on .page-section container inherited from html, body
   scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*(?:100%|100vh|100svh|100dvh)(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
+
+  // A component with its own fixed palette keeps every colour it declares: the normalizer below would turn its
+  // inks and dark backgrounds into the page theme's text and background colours and make its text unreadable.
+  if (keepPalette) return scoped;
 
   // 8. Universal color normalizer: replace hardcoded dark backgrounds on container with var(--preview-bg)
   scoped = scoped.replace(
@@ -2111,7 +2115,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     extractHeadLinks(rawHtml).forEach(link => headLinks.add(link));
 
     // Scoped CSS
-    const scopedCss = scopeSectionStyles(rawCss, id);
+    const scopedCss = scopeSectionStyles(rawCss, id, !!(options.ownPalette || {})[slug]);
     if (scopedCss.trim()) {
       scopedStyleBlocks.push(`    /* Section: ${slug} (${id}) */\n    ${scopedCss.trim()}`);
     }
@@ -3104,7 +3108,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     extractHeadLinks(rawHtml).forEach(link => headLinks.add(link));
 
     // Scoped CSS
-    const scopedCss = scopeSectionStyles(rawCss, id);
+    const scopedCss = scopeSectionStyles(rawCss, id, !!(options.ownPalette || {})[slug]);
     if (scopedCss.trim()) {
       scopedStyleBlocks.push(`/* Section: ${slug} */\n${scopedCss.trim()}`);
     }

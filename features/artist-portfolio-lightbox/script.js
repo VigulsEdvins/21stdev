@@ -1,19 +1,19 @@
 (function () {
   const PLATES = [
     {
-      title: 'Plate I — Chromatic Study, Northport',
+      title: 'Plate I — Chromatic Study, City A',
       img: '/assets/library/edv-art-01.svg'
     },
     {
-      title: 'Plate II — Desert Light Editorial, Eastvale',
+      title: 'Plate II — Desert Light Editorial, City B',
       img: '/assets/library/edv-art-05.svg'
     },
     {
-      title: 'Plate III — Studio Portrait Series, Lakeside',
+      title: 'Plate III — Studio Portrait Series, City C',
       img: '/assets/library/edv-art-09.svg'
     },
     {
-      title: 'Plate IV — Stable Yard Editorial, Harbourside',
+      title: 'Plate IV — Stable Yard Editorial, City D',
       img: '/assets/library/edv-art-13.svg'
     }
   ];

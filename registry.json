@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-26T08:43:31.173Z",
+  "generatedAt": "2026-10-26T11:08:39.961Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 234,
+  "totalFeatures": 235,
   "categories": [
     "Heroes",
     "Headers & Nav",
@@ -2801,49 +2801,91 @@
           "id": "small-label",
           "label": "Small label",
           "type": "text",
-          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
+          "selector": ":scope .faq-eyebrow"
         },
         {
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
-        },
-        {
-          "id": "text-1",
-          "label": "Text 1",
-          "type": "text",
-          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+          "selector": ":scope .faq-title"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+          "selector": ":scope .faq-intro"
         },
         {
-          "id": "text-2",
-          "label": "Text 2",
+          "id": "question-1",
+          "label": "Question 1",
           "type": "text",
-          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+          "selector": ":scope .faq-item:nth-child(1) .faq-q"
         },
         {
-          "id": "paragraph-1",
-          "label": "Paragraph 1",
+          "id": "answer-1",
+          "label": "Answer 1",
           "type": "text",
-          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+          "selector": ":scope .faq-item:nth-child(1) .faq-a"
         },
         {
-          "id": "text-3",
-          "label": "Text 3",
+          "id": "question-2",
+          "label": "Question 2",
           "type": "text",
-          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > h3:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+          "selector": ":scope .faq-item:nth-child(2) .faq-q"
         },
         {
-          "id": "paragraph-2",
-          "label": "Paragraph 2",
+          "id": "answer-2",
+          "label": "Answer 2",
           "type": "text",
-          "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+          "selector": ":scope .faq-item:nth-child(2) .faq-a"
+        },
+        {
+          "id": "question-3",
+          "label": "Question 3",
+          "type": "text",
+          "selector": ":scope .faq-item:nth-child(3) .faq-q"
+        },
+        {
+          "id": "answer-3",
+          "label": "Answer 3",
+          "type": "text",
+          "selector": ":scope .faq-item:nth-child(3) .faq-a"
+        },
+        {
+          "id": "question-4",
+          "label": "Question 4",
+          "type": "text",
+          "selector": ":scope .faq-item:nth-child(4) .faq-q"
+        },
+        {
+          "id": "answer-4",
+          "label": "Answer 4",
+          "type": "text",
+          "selector": ":scope .faq-item:nth-child(4) .faq-a"
+        },
+        {
+          "id": "question-5",
+          "label": "Question 5",
+          "type": "text",
+          "selector": ":scope .faq-item:nth-child(5) .faq-q"
+        },
+        {
+          "id": "answer-5",
+          "label": "Answer 5",
+          "type": "text",
+          "selector": ":scope .faq-item:nth-child(5) .faq-a"
+        },
+        {
+          "id": "question-6",
+          "label": "Question 6",
+          "type": "text",
+          "selector": ":scope .faq-item:nth-child(6) .faq-q"
+        },
+        {
+          "id": "answer-6",
+          "label": "Answer 6",
+          "type": "text",
+          "selector": ":scope .faq-item:nth-child(6) .faq-a"
         }
       ],
       "nativeWhen": [],
@@ -3000,12 +3042,6 @@
       },
       "updatedAt": "2026-10-25",
       "customizable": [
-        {
-          "id": "intro-text",
-          "label": "Intro text",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
-        },
         {
           "id": "button-text",
           "label": "Button text",
@@ -4119,7 +4155,7 @@
     },
     {
       "slug": "multilingual-lang-switcher",
-      "title": "Multilingual Language Switcher & Reactive Translator",
+      "title": "Language Switcher Header",
       "category": "Headers & Nav",
       "legacyCategory": "Navigation & Headers",
       "status": "stable",
@@ -4133,76 +4169,51 @@
       "weight": "light",
       "needsAssets": false,
       "origin": {
-        "source": "mom",
+        "source": "edvlabs",
         "license": "own"
       },
-      "updatedAt": "2026-10-22",
+      "updatedAt": "2026-10-26",
       "customizable": [
         {
-          "id": "button-text-1",
-          "label": "Button text 1",
+          "id": "small-label",
+          "label": "Brand",
           "type": "text",
-          "selector": ":scope button.active"
+          "selector": ":scope .lsw-brand-text"
+        },
+        {
+          "id": "button-text-1",
+          "label": "Link 1",
+          "type": "text",
+          "selector": ":scope .lsw-nav a:nth-child(1)"
         },
         {
           "id": "button-text-2",
-          "label": "Button text 2",
+          "label": "Link 2",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(2)"
+          "selector": ":scope .lsw-nav a:nth-child(2)"
         },
         {
           "id": "button-text-3",
-          "label": "Button text 3",
+          "label": "Link 3",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(3)"
-        },
-        {
-          "id": "small-label",
-          "label": "Small label",
-          "type": "text",
-          "selector": ":scope div.brand"
-        },
-        {
-          "id": "headline",
-          "label": "Headline",
-          "type": "text",
-          "selector": ":scope h2.headline"
-        },
-        {
-          "id": "intro-text",
-          "label": "Intro text",
-          "type": "text",
-          "selector": ":scope p.description"
-        },
-        {
-          "id": "button-text-4",
-          "label": "Button text 4",
-          "type": "text",
-          "selector": ":scope button.primary"
-        },
-        {
-          "id": "button-text-5",
-          "label": "Button text 5",
-          "type": "text",
-          "selector": ":scope button.secondary"
+          "selector": ":scope .lsw-nav a:nth-child(3)"
         }
       ],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
-      "source": "mom",
+      "source": "edvlabs",
       "type": "component",
-      "description": "Minimal studio language switcher supporting instant reactive translation, cross-fade text transitions, persistent locale caching, and data-i18n bindings.",
+      "description": "A compact header bar with a language dropdown that instantly translates the navigation labels.",
       "tags": [
         "i18n",
-        "multilingual",
-        "language-switcher",
-        "mom",
-        "ui",
-        "reactive"
+        "language",
+        "switcher",
+        "header",
+        "dropdown"
       ],
       "dependencies": [
-        "vanilla-js"
+        "Vanilla HTML/CSS/JS"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/multilingual-lang-switcher",
       "relativePath": "features/multilingual-lang-switcher",
@@ -4215,8 +4226,7 @@
         "combined",
         "html",
         "css",
-        "js",
-        "tsx"
+        "js"
       ]
     },
     {
@@ -7159,7 +7169,7 @@
       "industry": [
         "media"
       ],
-      "weight": "medium",
+      "weight": "heavy",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7174,6 +7184,12 @@
           "selector": ":scope .cw-label"
         },
         {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope .cw-title"
+        },
+        {
           "id": "button-text",
           "label": "Button text",
           "type": "text",
@@ -7185,16 +7201,16 @@
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
-      "description": "A canvas water surface with a live wave simulation and focused-light caustics; drag to stir it, or let it ripple with falling drops.",
+      "description": "A WebGL pool floor of rippling caustic light webs on blue-turquoise water; drag to stir ripples that spread and fade, with a CSS gradient fallback.",
       "tags": [
         "water",
-        "canvas",
-        "simulation",
-        "interactive",
+        "webgl",
+        "shader",
+        "caustics",
         "ripple"
       ],
       "dependencies": [
-        "HTML5 Canvas"
+        "WebGL"
       ],
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/caustic-pool",
       "relativePath": "features/caustic-pool",
@@ -8557,12 +8573,6 @@
       "updatedAt": "2026-10-25",
       "customizable": [
         {
-          "id": "headline",
-          "label": "Page heading",
-          "type": "text",
-          "selector": ":scope .dn-h1"
-        },
-        {
           "id": "button-text-1",
           "label": "Link 1",
           "type": "text",
@@ -9120,7 +9130,7 @@
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
-      "description": "A WebGL hero backdrop of a dark core ringed by thin orbital ember lines and film grain, with hero copy on top.",
+      "description": "A WebGL black-hole backdrop: a glowing amber accretion disc with etched concentric lines, lensed starlight, film grain and pointer parallax.",
       "tags": [
         "webgl",
         "shader",
@@ -11829,7 +11839,7 @@
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
-      "description": "A draggable canvas sphere built from hundreds of mechanical keycaps in plastic and glass finishes, floating over a blue floor glow.",
+      "description": "A draggable 3D sphere of keycaps with perspective, depth-sorted shading, specular highlights, drag inertia and slow auto-rotation, drawn on canvas.",
       "tags": [
         "keycap",
         "sphere",
@@ -11955,7 +11965,7 @@
       "industry": [
         "general"
       ],
-      "weight": "light",
+      "weight": "medium",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11999,7 +12009,7 @@
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
-      "description": "An event badge hanging from a strap that swings and pulls taut as you drag it; tap or press Enter to flip it to its back.",
+      "description": "A premium event badge on a lanyard with a metal clip and verlet pendulum physics: drag and throw it, click or press Enter to flip it to its back.",
       "tags": [
         "badge",
         "card",
@@ -16377,7 +16387,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": false,
+      "ownPalette": true,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -17577,6 +17587,70 @@
       ]
     },
     {
+      "slug": "plan-comparison-matrix",
+      "title": "Plan Comparison Matrix",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal"
+      ],
+      "industry": [
+        "saas",
+        "general"
+      ],
+      "weight": "light",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-26",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ":scope .pm-title"
+        },
+        {
+          "id": "intro-text",
+          "label": "Intro text",
+          "type": "text",
+          "selector": ":scope .pm-sub"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "A comparison table of three plans with feature rows and yes/no cells; click a plan header to highlight its column.",
+      "tags": [
+        "pricing",
+        "plans",
+        "comparison",
+        "table",
+        "matrix"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/plan-comparison-matrix",
+      "relativePath": "features/plan-comparison-matrix",
+      "previewUrl": "features/plan-comparison-matrix/index.html",
+      "thumb": "thumbs/plan-comparison-matrix.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "bottom-tab-bar",
       "title": "Bottom Tab Bar",
       "category": "Headers & Nav",
@@ -17603,7 +17677,7 @@
           "id": "title",
           "label": "Screen title",
           "type": "text",
-          "selector": ":scope .btb-screen h1"
+          "selector": ":scope .btb-title"
         },
         {
           "id": "accent-colour",

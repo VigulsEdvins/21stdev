@@ -44,7 +44,8 @@ const pricingFeatures = registry.items.filter(f => matchesCategory(f, 'Pricing &
 assert(pricingFeatures.length >= 3, `Pricing & Tables must contain at least 3 features, got ${pricingFeatures.length}`);
 assert(pricingFeatures.some(f => f.slug === 'pricing-table-switch'), 'pricing-table-switch must be in Pricing & Tables');
 assert(pricingFeatures.some(f => f.slug === 'ink-orbit-pricing'), 'ink-orbit-pricing must be in Pricing & Tables');
-assert(pricingFeatures.some(f => f.slug === 'constellation-turntable'), 'constellation-turntable must be in Pricing & Tables');
+assert(pricingFeatures.some(f => f.slug === 'plan-comparison-matrix'), 'plan-comparison-matrix must be in Pricing & Tables');
+assert(!pricingFeatures.some(f => f.slug === 'constellation-turntable'), 'the record player is not a pricing component');
 
 const buttonFeatures = registry.items.filter(f => matchesCategory(f, 'Buttons & UI'));
 assert(buttonFeatures.length >= 9, `Buttons & UI must contain at least 9 features, got ${buttonFeatures.length}`);

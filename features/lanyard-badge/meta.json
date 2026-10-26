@@ -5,7 +5,7 @@
   "category": "Cards & Tiles",
   "source": "edvlabs",
   "type": "component",
-  "description": "An event badge hanging from a strap that swings and pulls taut as you drag it; tap or press Enter to flip it to its back.",
+  "description": "A premium event badge on a lanyard with a metal clip and verlet pendulum physics: drag and throw it, click or press Enter to flip it to its back.",
   "tags": [
     "badge",
     "card",
@@ -24,7 +24,7 @@
   "order": 180,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
-  "weight": "light",
+  "weight": "medium",
   "mood": [
     "minimal",
     "light"

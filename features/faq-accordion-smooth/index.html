@@ -7,12 +7,50 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <section class="faq-wrap">
+  <section class="faq-wrap" data-single="true">
     <div class="faq-header">
-      <span>Questions &amp; Architecture</span>
-      <h2>Frequently Asked</h2>
+      <span class="faq-eyebrow">Questions &amp; answers</span>
+      <h2 class="faq-title">Frequently asked questions</h2>
+      <p class="faq-intro">Everything you need to know before you start.</p>
     </div>
-    <div class="faq-list" id="faq-container"></div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3><button class="faq-trigger" type="button" id="faq-q-0" aria-expanded="true" aria-controls="faq-panel-0"><span class="faq-q">How do I get started?</span><span class="faq-trigger__icon" aria-hidden="true"></span></button></h3>
+        <div id="faq-panel-0" class="faq-panel is-open" role="region" aria-labelledby="faq-q-0">
+          <div class="faq-panel__inner"><p class="faq-a">Create a free account, pick a template and publish your first page in a few minutes. No card is needed.</p></div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-trigger" type="button" id="faq-q-1" aria-expanded="false" aria-controls="faq-panel-1"><span class="faq-q">Can I change my plan later?</span><span class="faq-trigger__icon" aria-hidden="true"></span></button></h3>
+        <div id="faq-panel-1" class="faq-panel" role="region" aria-labelledby="faq-q-1">
+          <div class="faq-panel__inner"><p class="faq-a">Yes. Upgrade, downgrade or pause whenever you like. Changes apply from the next billing date.</p></div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-trigger" type="button" id="faq-q-2" aria-expanded="false" aria-controls="faq-panel-2"><span class="faq-q">Is my data private?</span><span class="faq-trigger__icon" aria-hidden="true"></span></button></h3>
+        <div id="faq-panel-2" class="faq-panel" role="region" aria-labelledby="faq-q-2">
+          <div class="faq-panel__inner"><p class="faq-a">Your content stays yours. Everything is encrypted in transit and at rest, and you can export or delete it at any time.</p></div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-trigger" type="button" id="faq-q-3" aria-expanded="false" aria-controls="faq-panel-3"><span class="faq-q">Do you offer support?</span><span class="faq-trigger__icon" aria-hidden="true"></span></button></h3>
+        <div id="faq-panel-3" class="faq-panel" role="region" aria-labelledby="faq-q-3">
+          <div class="faq-panel__inner"><p class="faq-a">Our team answers email within one working day, and paid plans include priority chat during business hours.</p></div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-trigger" type="button" id="faq-q-4" aria-expanded="false" aria-controls="faq-panel-4"><span class="faq-q">Can I invite my team?</span><span class="faq-trigger__icon" aria-hidden="true"></span></button></h3>
+        <div id="faq-panel-4" class="faq-panel" role="region" aria-labelledby="faq-q-4">
+          <div class="faq-panel__inner"><p class="faq-a">Add as many teammates as your plan allows and give each of them view, edit or admin access.</p></div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3><button class="faq-trigger" type="button" id="faq-q-5" aria-expanded="false" aria-controls="faq-panel-5"><span class="faq-q">What happens if I cancel?</span><span class="faq-trigger__icon" aria-hidden="true"></span></button></h3>
+        <div id="faq-panel-5" class="faq-panel" role="region" aria-labelledby="faq-q-5">
+          <div class="faq-panel__inner"><p class="faq-a">You keep access until the end of the paid period, then your workspace turns read-only for 30 days so you can export it.</p></div>
+        </div>
+      </div>
+    </div>
   </section>
   <script src="script.js"></script>
 </body>

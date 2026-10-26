@@ -1,5 +1,7 @@
 (function () {
-  var head = document.getElementById("dnHead"), burger = document.getElementById("dnBurger"), nav = document.getElementById("dnNav");
+  Array.prototype.forEach.call(document.querySelectorAll(".dn-demo"), function (root, rn) {
+  var head = root.querySelector(".dn-head"), burger = root.querySelector(".dn-burger"), nav = root.querySelector(".dn-nav");
+  nav.id = "dn-nav-" + rn; burger.setAttribute("aria-controls", nav.id);
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5], CELL = 6;
 
@@ -33,10 +35,11 @@
   }
   Array.prototype.forEach.call(nav.querySelectorAll(".dn-link"), Sweep);
 
-  function onScroll() { head.classList.toggle("is-compact", window.scrollY > 40); }
-  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  function onScroll() { head.classList.toggle("is-compact", root.scrollTop > 40); }
+  root.addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
   function set(open) { burger.setAttribute("aria-expanded", open ? "true" : "false"); nav.classList.toggle("is-open", open); }
   burger.addEventListener("click", function () { set(burger.getAttribute("aria-expanded") !== "true"); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
+  root.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
+  });
 })();

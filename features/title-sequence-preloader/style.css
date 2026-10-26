@@ -3,7 +3,7 @@ html, body { background: var(--bg, #0b0b0c); color: var(--text, #ececec); min-he
 body { font-family: var(--font-body, system-ui, sans-serif); overflow: hidden; }
 :focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
-.sq-stage { position: relative; width: 100%; height: 100vh; min-height: 480px; overflow: hidden; background: #0b0b0c; color: #ececec; }
+.sq-stage { position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; transition: opacity .6s ease; background: #0b0b0c; color: #ececec; }
 .sq-shot { position: absolute; inset: 0; filter: grayscale(1) contrast(1.2); }
 .sq-shape { position: absolute; left: 50%; top: 50%; width: 46vmin; height: 46vmin; transform: translate(-50%, -50%); background: #eee; transition: border-radius .6s, transform 1.2s cubic-bezier(.2,.8,.2,1), background .6s, clip-path .6s; }
 .sq-shot[data-s="0"] .sq-shape { border-radius: 50%; }
@@ -36,3 +36,5 @@ body { font-family: var(--font-body, system-ui, sans-serif); overflow: hidden; }
 
 @media (max-width: 520px) { .sq-hint { display: none; } .sq-credits { gap: 16vh; } .sq-role { display: none; } }
 @media (prefers-reduced-motion: reduce) { .sq-grain { animation: none; } .sq-end, .sq-shape, .sq-rule { transition: none; } }
+.sq-stage.is-exiting { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .sq-stage { transition-duration: .15s; } }

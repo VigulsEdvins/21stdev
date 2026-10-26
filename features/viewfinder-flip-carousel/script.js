@@ -9,19 +9,18 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   data.forEach(function (d, i) {
     var li = document.createElement('li'); li.className = 'ff-card';
-    li.style.setProperty('--a', d[0]); li.style.setProperty('--b', d[1]); li.style.setProperty('--c', d[2]);
+    li.style.setProperty('--ff-a', d[0]); li.style.setProperty('--ff-b', d[1]); li.style.setProperty('--ff-c', d[2]);
     li.dataset.n = ('0' + (i + 1)).slice(-2); strip.appendChild(li); cards.push(li);
-    li.addEventListener('click', function () { if (Math.abs(sx - lx) < 6) set(i); });
   });
   function layout() {
     var w = cards[0].offsetWidth, gap = 14, step = 22;
     cards.forEach(function (c, i) {
       var d = i - pos, ad = Math.abs(d), s = d < 0 ? -1 : 1, f = Math.min(ad, 1);
       var x = s * (f * (w * 0.5 + gap) + Math.max(0, ad - 1) * step);
-      var ry = -s * f * 80, z = -f * 60;
+      var ry = -s * f * 58, z = -f * 80;
       c.style.transform = 'translateX(' + x.toFixed(1) + 'px) translateZ(' + z.toFixed(1) + 'px) rotateY(' + ry.toFixed(1) + 'deg)';
       c.style.zIndex = String(100 - Math.round(ad * 10));
-      c.style.opacity = ad > 6 ? 0 : 1; c.classList.toggle('is-c', ad < 0.5);
+      c.style.opacity = ad > 5 ? 0 : 1 - Math.max(0, ad - 2) * 0.25; c.classList.toggle('is-c', ad < 0.5);
     });
   }
   function tick() {
@@ -36,7 +35,12 @@
   stage.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { set(goal + 1); e.preventDefault(); } if (e.key === 'ArrowLeft') { set(goal - 1); e.preventDefault(); } });
   stage.addEventListener('pointerdown', function (e) { drag = true; sx = lx = e.clientX; });
   stage.addEventListener('pointermove', function (e) { if (!drag) return; lx = e.clientX; });
-  function up() { if (!drag) return; drag = false; var dx = lx - sx; if (Math.abs(dx) > 40) set(goal + (dx < 0 ? 1 : -1)); }
+  function pick(x, y) {
+    var best = -1, bz = -1;
+    cards.forEach(function (c, i) { var r = c.getBoundingClientRect(), z = +c.style.zIndex || 0; if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom && z > bz) { bz = z; best = i; } });
+    if (best >= 0) set(best);
+  }
+  function up(e) { if (!drag) return; drag = false; var dx = lx - sx; if (Math.abs(dx) < 6 && e && e.type === 'pointerup') { pick(e.clientX, e.clientY); return; } if (Math.abs(dx) > 40) set(goal + (dx < 0 ? 1 : -1)); }
   stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
   window.addEventListener('resize', layout);
   new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(tick); }).observe(stage);

@@ -1,45 +1,16 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #06343f; color: #effcff; }
-
-.cw-pool {
-  position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
-  overflow: hidden;
-  background: #0b6f80;
+html, body { background: rgb(4, 40, 56); color: rgb(238, 252, 255); }
+.cw-pool { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; touch-action: pan-y; color: rgb(238, 252, 255);
   font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif);
-  touch-action: pan-y;
-}
-.cw-canvas {
-  position: absolute;
-  left: -14px; top: -14px;
-  width: calc(100% + 28px);
-  height: calc(100% + 28px);
-  display: block;
-  cursor: crosshair;
-}
-.cw-label {
-  position: absolute;
-  left: 24px; top: 22px;
-  font-size: 0.8rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(239, 252, 255, 0.85);
-  text-shadow: 0 1px 8px rgba(3, 40, 52, 0.6);
-  pointer-events: none;
-}
-.cw-drop {
-  position: absolute;
-  right: 20px; bottom: 20px;
-  padding: 9px 18px;
-  border: 1px solid rgba(239, 252, 255, 0.5);
-  border-radius: 999px;
-  background: rgba(6, 52, 63, 0.35);
-  color: inherit;
-  font: inherit;
-  font-size: 0.82rem;
-  cursor: pointer;
-  backdrop-filter: blur(6px);
-}
-.cw-drop:hover { background: rgba(6, 52, 63, 0.6); }
-.cw-drop:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  background: radial-gradient(40% 30% at 25% 30%, rgba(160, 255, 240, 0.35), transparent 70%), radial-gradient(50% 35% at 75% 65%, rgba(120, 230, 255, 0.3), transparent 70%), linear-gradient(160deg, rgb(8, 92, 128), rgb(6, 140, 156) 55%, rgb(4, 70, 104));
+  background-size: 140% 140%, 150% 150%, 100% 100%; animation: cw-drift 14s ease-in-out infinite alternate; }
+@keyframes cw-drift { to { background-position: 40% 30%, 60% 70%, 0 0; } }
+.cw-pool.cw-gl { animation: none; }
+.cw-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+.cw-copy { position: absolute; left: clamp(20px, 5vw, 64px); right: 20px; bottom: clamp(24px, 8vh, 80px); pointer-events: none; max-width: 38rem; }
+.cw-label { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(238, 252, 255, 0.88); text-shadow: 0 1px 10px rgba(2, 36, 52, 0.7); }
+.cw-title { margin-top: 0.6rem; font-family: var(--font-display, Georgia, "Times New Roman", serif); font-weight: 500; font-size: clamp(2rem, 6vw, 4.2rem); line-height: 1.04; letter-spacing: -0.02em; color: rgb(244, 254, 255); text-shadow: 0 2px 24px rgba(2, 40, 60, 0.7); }
+.cw-drop { position: absolute; right: 20px; top: 20px; padding: 9px 18px; border: 1px solid rgba(238, 252, 255, 0.55); border-radius: 999px; background: rgba(4, 52, 72, 0.4); color: rgb(238, 252, 255); font: inherit; font-size: 0.82rem; cursor: pointer; backdrop-filter: blur(6px); }
+.cw-drop:hover { background: rgba(4, 52, 72, 0.65); }
+.cw-drop:focus-visible { outline: 2px solid rgb(255, 255, 255); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .cw-pool { animation: none; } }

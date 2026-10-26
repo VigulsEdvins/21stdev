@@ -1,12 +1,14 @@
 // Into The Ether - Kinetic Concentric Wave Harmonic System
-(() => {
-  const canvas = document.getElementById('etherCanvas');
+Array.prototype.forEach.call(document.querySelectorAll('.ether-viewport'), (root) => {
+  if (root.dataset.etherReady) return;
+  root.dataset.etherReady = '1';
+  const canvas = root.querySelector('.ether-canvas');
   const ctx = canvas.getContext('2d');
-  const btnPulse = document.getElementById('btnPulse');
-  const btnTheme = document.getElementById('btnTheme');
-  const themeLabel = document.getElementById('themeLabel');
-  const statFps = document.getElementById('statFps');
-  const statRipples = document.getElementById('statRipples');
+  const btnPulse = root.querySelector('.ether-btn.primary');
+  const btnTheme = root.querySelector('.ether-btn.secondary');
+  const themeLabel = root.querySelector('.ether-theme-label');
+  const statFps = root.querySelector('.stat-fps');
+  const statRipples = root.querySelector('.stat-ripples');
 
   let width = 0;
   let height = 0;
@@ -130,8 +132,9 @@
 
   if (btnTheme) {
     btnTheme.addEventListener('click', () => {
-      const isDark = document.body.classList.toggle('theme-dark');
-      document.body.classList.toggle('theme-light', !isDark);
+      const isDark = root.classList.toggle('theme-dark');
+      root.classList.toggle('theme-light', !isDark);
+      btnTheme.setAttribute('aria-pressed', String(isDark));
       themeLabel.textContent = isDark ? 'Light Theme' : 'Dark Theme';
     });
   }
@@ -164,7 +167,7 @@
 
     ctx.clearRect(0, 0, width, height);
 
-    const isDark = document.body.classList.contains('theme-dark');
+    const isDark = root.classList.contains('theme-dark');
     const centerX = width / 2;
     const centerY = height / 2;
 
@@ -261,4 +264,4 @@
   }
 
   requestAnimationFrame(render);
-})();
+});

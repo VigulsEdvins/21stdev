@@ -5,24 +5,25 @@
   "category": "Audio & Shaders",
   "source": "edvlabs",
   "type": "component",
-  "description": "A canvas water surface with a live wave simulation and focused-light caustics; drag to stir it, or let it ripple with falling drops.",
+  "description": "A WebGL pool floor of rippling caustic light webs on blue-turquoise water; drag to stir ripples that spread and fade, with a CSS gradient fallback.",
   "tags": [
     "water",
-    "canvas",
-    "simulation",
-    "interactive",
+    "webgl",
+    "shader",
+    "caustics",
     "ripple"
   ],
   "tech": [
-    "Canvas 2D"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "HTML5 Canvas"
+    "WebGL"
   ],
   "order": 119,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "medium",
+  "weight": "heavy",
   "mood": [
     "minimal",
     "light"
@@ -42,6 +43,12 @@
       "label": "Small label",
       "type": "text",
       "selector": ":scope .cw-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .cw-title"
     },
     {
       "id": "button-text",

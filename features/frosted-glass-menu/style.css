@@ -3,7 +3,7 @@ html, body { background: var(--bg, #e9e4da); color: var(--text, #1c1a17); min-he
 body { font-family: var(--font-body, system-ui, sans-serif); }
 ul { list-style: none; }
 a { color: inherit; text-decoration: none; }
-.fm-scene { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; padding: 18px 16px; background: linear-gradient(160deg, color-mix(in srgb, var(--accent, #c9663d) 25%, var(--bg, #e9e4da)), var(--bg, #e9e4da)); }
+.fm-scene { position: relative; min-height: 360px; overflow: hidden; padding: 18px 16px; background: linear-gradient(160deg, color-mix(in srgb, var(--accent, #c9663d) 25%, var(--bg, #e9e4da)), var(--bg, #e9e4da)); }
 .fm-blob { position: absolute; border-radius: 50%; filter: blur(8px); }
 .fm-b1 { width: 340px; height: 340px; left: -60px; top: 120px; background: var(--accent, #c9663d); opacity: .7; }
 .fm-b2 { width: 260px; height: 260px; right: 8%; top: 40%; background: #3f6b5a; opacity: .75; }

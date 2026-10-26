@@ -1,7 +1,7 @@
 (function () {
   const ARTISTS = [
     {
-      name: 'Mira Okonjo',
+      name: 'Artist 01',
       role: 'Fashion & Motion',
       images: [
         '/assets/library/edv-art-01.svg',
@@ -10,7 +10,7 @@
       ]
     },
     {
-      name: 'Daria Voss',
+      name: 'Artist 02',
       role: 'Editorial',
       images: [
         '/assets/library/edv-art-02.svg',
@@ -19,7 +19,7 @@
       ]
     },
     {
-      name: 'Quill Hartman',
+      name: 'Artist 03',
       role: 'Portraiture',
       images: [
         '/assets/library/edv-art-03.svg',
@@ -28,7 +28,7 @@
       ]
     },
     {
-      name: 'Cera Lindqvist',
+      name: 'Artist 04',
       role: 'Still Life',
       images: [
         '/assets/library/edv-art-04.svg',
@@ -37,7 +37,7 @@
       ]
     },
     {
-      name: 'Tomas Reyes Studio',
+      name: 'Artist 05',
       role: 'Campaign',
       images: [
         '/assets/library/edv-art-05.svg',
@@ -46,7 +46,7 @@
       ]
     },
     {
-      name: 'Northport Archive',
+      name: 'Artist 06',
       role: 'Sport & Studio',
       images: [
         '/assets/library/edv-art-06.svg',
@@ -55,7 +55,7 @@
       ]
     },
     {
-      name: 'Hana Brecht',
+      name: 'Artist 07',
       role: 'Monograph',
       images: [
         '/assets/library/edv-art-07.svg',
@@ -64,7 +64,7 @@
       ]
     },
     {
-      name: 'Ilya Marlow',
+      name: 'Artist 08',
       role: 'Documentary',
       images: [
         '/assets/library/edv-art-08.svg',
@@ -73,7 +73,7 @@
       ]
     },
     {
-      name: 'Sable Quarry',
+      name: 'Artist 09',
       role: 'Fashion & Motion',
       images: [
         '/assets/library/edv-art-09.svg',
@@ -82,7 +82,7 @@
       ]
     },
     {
-      name: 'Orla Finch',
+      name: 'Artist 10',
       role: 'Editorial',
       images: [
         '/assets/library/edv-art-10.svg',

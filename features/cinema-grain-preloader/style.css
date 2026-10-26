@@ -1,6 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #0d0b09); color: var(--text, #f2e8d5); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
-.cg-stage { position: relative; min-height: 600px; height: 100vh; overflow: hidden; background: #0d0b09; display: grid; place-items: center; }
+.cg-stage { position: relative; width: 100%; transition: opacity .6s ease; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: #0d0b09; display: grid; place-items: center; }
+.cg-stage.is-exiting { opacity: 0; pointer-events: none; }
 .cg-fallback, .cg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .cg-fallback { background: radial-gradient(circle at 30% 40%, #5c3a1c, transparent 55%), radial-gradient(circle at 75% 65%, #1e3a46, transparent 55%), #0d0b09; }
 .cg-canvas { z-index: 1; }
@@ -13,4 +14,5 @@ html, body { background: var(--bg, #0d0b09); color: var(--text, #f2e8d5); font-f
 .cg-btn { justify-self: center; margin-top: 0.4rem; font: inherit; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #0d0b09; background: #e5b36a; border: 0; padding: 0.8rem 1.8rem; cursor: pointer; transition: transform 0.2s; }
 .cg-btn:hover { transform: scale(1.05); }
 .cg-btn:focus-visible { outline: 2px solid #f2e8d5; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .cg-stage { transition-duration: .15s; } }
 .cg-btn[hidden] { display: none; }

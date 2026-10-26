@@ -4,7 +4,7 @@
   var pct = stage.querySelector('.pm-pct');
   var nameEl = stage.querySelector('.pm-stage-name');
   var fill = stage.querySelector('.pm-track i');
-  var again = stage.querySelector('.pm-replay');
+  var again = document.querySelector('.pm-replay'), tm = 0;
   var names = ['Gathering light', 'Bending the beam', 'Splitting colour', 'Settling'];
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var DUR = reduce ? 900 : 6000, t0 = performance.now(), visible = true, loaded = 0;
@@ -76,9 +76,18 @@
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
     if (p < 1 && visible) requestAnimationFrame(frame);
-    else if (p >= 1) loaded = 1;
+    else if (p >= 1 && !loaded) {
+      loaded = 1;
+      tm = setTimeout(function () {
+        stage.classList.add('is-exiting');
+        tm = setTimeout(function () { stage.setAttribute('data-phase', 'done'); stage.setAttribute('data-completed', 'true'); again.hidden = false; }, reduce ? 150 : 650);
+      }, reduce ? 200 : 1000);
+    }
   }
-  again.addEventListener('click', function () { t0 = performance.now(); loaded = 0; requestAnimationFrame(frame); });
+  again.addEventListener('click', function () {
+    clearTimeout(tm); stage.classList.remove('is-exiting'); stage.removeAttribute('data-completed'); stage.removeAttribute('data-phase'); again.hidden = true;
+    t0 = performance.now(); loaded = 0; requestAnimationFrame(frame);
+  });
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) {
     var was = visible; visible = e[0].isIntersecting;
     if (visible && !was && !loaded) { requestAnimationFrame(frame); }

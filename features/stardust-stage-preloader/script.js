@@ -84,9 +84,9 @@
     new IntersectionObserver(function (e) { visible = e[0].isIntersecting; kick(); }).observe(stage);
   }
   enter.addEventListener("click", function () {
-    start = performance.now(); finished = false; enter.hidden = true; cap.textContent = notes[0][1];
-    stage.querySelector(".dc-sr").textContent = "Loading";
-    kick();
+    enter.hidden = true; cap.textContent = "Curtain up";
+    stage.classList.add("is-exiting");
+    setTimeout(function () { stage.setAttribute("data-phase", "done"); stage.setAttribute("data-completed", "true"); }, reduce ? 150 : 650);
   });
   window.addEventListener("resize", resize);
   resize(); kick();

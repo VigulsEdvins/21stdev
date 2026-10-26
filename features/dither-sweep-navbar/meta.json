@@ -40,12 +40,6 @@
   "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "headline",
-      "label": "Page heading",
-      "type": "text",
-      "selector": ":scope .dn-h1"
-    },
-    {
       "id": "button-text-1",
       "label": "Link 1",
       "type": "text",

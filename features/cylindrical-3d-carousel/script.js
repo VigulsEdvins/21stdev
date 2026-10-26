@@ -4,22 +4,22 @@
  */
 (function () {
   const PROJECTS = [
-    { title: 'Harbour Campaign', tag: 'Heritage Documentary', img: '/assets/library/edv-art-01.svg' },
-    { title: 'Northport Reds', tag: 'National Campaign', img: '/assets/library/edv-art-02.svg' },
-    { title: 'Arena League Media', tag: 'Arena Production', img: '/assets/library/edv-art-03.svg' },
-    { title: 'Lakeside FC', tag: 'Club Identity', img: '/assets/library/edv-art-04.svg' },
+    { title: 'Client 01 Campaign', tag: 'Heritage Documentary', img: '/assets/library/edv-art-01.svg' },
+    { title: 'Club A Campaign', tag: 'National Campaign', img: '/assets/library/edv-art-02.svg' },
+    { title: 'League Media', tag: 'Arena Production', img: '/assets/library/edv-art-03.svg' },
+    { title: 'Club B', tag: 'Club Identity', img: '/assets/library/edv-art-04.svg' },
     { title: 'Grand Prix Visuals', tag: 'Motorsport Visuals', img: '/assets/library/edv-art-05.svg' },
     { title: 'Champions Night', tag: 'Matchday Visuals', img: '/assets/library/edv-art-06.svg' },
-    { title: 'Riverside Derby', tag: 'Endurance Series', img: '/assets/library/edv-art-07.svg' },
-    { title: 'Eastgate United', tag: 'Live Motion Kit', img: '/assets/library/edv-art-08.svg' },
+    { title: 'City Derby', tag: 'Endurance Series', img: '/assets/library/edv-art-07.svg' },
+    { title: 'Club C', tag: 'Live Motion Kit', img: '/assets/library/edv-art-08.svg' },
     { title: 'Desert Launch', tag: 'Global Launch', img: '/assets/library/edv-art-09.svg' },
-    { title: 'Stride Football', tag: 'Athlete Commercial', img: '/assets/library/edv-art-10.svg' },
-    { title: 'Wolfden FC', tag: 'Tunnel Lighting', img: '/assets/library/edv-art-11.svg' },
+    { title: 'Client 02 Football', tag: 'Athlete Commercial', img: '/assets/library/edv-art-10.svg' },
+    { title: 'Club D', tag: 'Tunnel Lighting', img: '/assets/library/edv-art-11.svg' },
     { title: 'Backstreet Studio', tag: 'Editorial Lookbook', img: '/assets/library/edv-art-12.svg' },
     { title: 'Island Off-Season', tag: 'Studio Reveal', img: '/assets/library/edv-art-13.svg' },
     { title: 'Portrait Series 04', tag: 'Portrait Series', img: '/assets/library/edv-art-14.svg' },
     { title: 'Soft Landing', tag: 'Title Sequence', img: '/assets/library/edv-art-15.svg' },
-    { title: 'Harbour FC', tag: 'Editorial Archive', img: '/assets/library/edv-art-16.svg' }
+    { title: 'Club E', tag: 'Editorial Archive', img: '/assets/library/edv-art-16.svg' }
   ];
 
   const listEl = document.getElementById('carousel-3d-list');

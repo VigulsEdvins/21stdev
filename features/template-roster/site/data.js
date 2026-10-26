@@ -184,8 +184,8 @@
   "galleryColumns": [
     {
       "id": "col-1",
-      "name": "Alex Marlowe",
-      "href": "#artist-alex-marlowe",
+      "name": "Artist 01",
+      "href": "#artist-artist-01",
       "media": [
         {
           "id": "col-1-m-1",
@@ -250,8 +250,8 @@
     },
     {
       "id": "col-2",
-      "name": "Bea Sandoval",
-      "href": "#artist-bea-sandoval",
+      "name": "Artist 02",
+      "href": "#artist-artist-02",
       "media": [
         {
           "id": "col-2-m-1",
@@ -316,8 +316,8 @@
     },
     {
       "id": "col-3",
-      "name": "Cleo Hartman",
-      "href": "#artist-cleo-hartman",
+      "name": "Artist 03",
+      "href": "#artist-artist-03",
       "media": [
         {
           "id": "col-3-m-1",
@@ -382,8 +382,8 @@
     },
     {
       "id": "col-4",
-      "name": "Eli Rourke",
-      "href": "#artist-eli-rourke",
+      "name": "Artist 04",
+      "href": "#artist-artist-04",
       "media": [
         {
           "id": "col-4-m-1",
@@ -448,8 +448,8 @@
     },
     {
       "id": "col-5",
-      "name": "Gus Calloway",
-      "href": "#artist-gus-calloway",
+      "name": "Artist 05",
+      "href": "#artist-artist-05",
       "media": [
         {
           "id": "col-5-m-1",
@@ -514,8 +514,8 @@
     },
     {
       "id": "col-6",
-      "name": "Jules Kemper",
-      "href": "#artist-jules-kemper",
+      "name": "Artist 06",
+      "href": "#artist-artist-06",
       "media": [
         {
           "id": "col-6-m-1",
@@ -580,8 +580,8 @@
     },
     {
       "id": "col-7",
-      "name": "Jon Mercer",
-      "href": "#artist-jon-mercer",
+      "name": "Artist 07",
+      "href": "#artist-artist-07",
       "media": [
         {
           "id": "col-7-m-1",
@@ -646,8 +646,8 @@
     },
     {
       "id": "col-8",
-      "name": "Quincy Vale",
-      "href": "#artist-quincy-vale",
+      "name": "Artist 08",
+      "href": "#artist-artist-08",
       "media": [
         {
           "id": "col-8-m-1",
@@ -712,8 +712,8 @@
     },
     {
       "id": "col-9",
-      "name": "Dani Ashworth",
-      "href": "#artist-dani-ashworth",
+      "name": "Artist 09",
+      "href": "#artist-artist-09",
       "media": [
         {
           "id": "col-9-m-1",
@@ -788,7 +788,7 @@
     "items": [
       {
         "id": "news-1",
-        "title": "ALEX MARLOWE x NORTHWIND",
+        "title": "ARTIST 01 x CLIENT 01",
         "href": "#news-1",
         "type": "img",
         "src": "./assets/images/art-02.svg",
@@ -799,7 +799,7 @@
       },
       {
         "id": "news-2",
-        "title": "CLEO HARTMAN x LUMEN CO",
+        "title": "ARTIST 03 x CLIENT 02",
         "href": "#news-2",
         "type": "img",
         "src": "./assets/images/art-05.svg",
@@ -810,7 +810,7 @@
       },
       {
         "id": "news-3",
-        "title": "ELI ROURKE x PAPERLANE",
+        "title": "ARTIST 04 x CLIENT 03",
         "href": "#news-3",
         "type": "img",
         "src": "./assets/images/art-06.svg",
@@ -821,7 +821,7 @@
       },
       {
         "id": "news-4",
-        "title": "JULES KEMPER x HARBOUR",
+        "title": "ARTIST 06 x CLIENT 04",
         "href": "#news-4",
         "type": "img",
         "src": "./assets/images/art-07.svg",
@@ -832,7 +832,7 @@
       },
       {
         "id": "news-5",
-        "title": "QUINCY VALE x FIELD & FERN",
+        "title": "ARTIST 08 x CLIENT 05",
         "href": "#news-5",
         "type": "img",
         "src": "./assets/images/art-08.svg",
@@ -843,7 +843,7 @@
       },
       {
         "id": "news-6",
-        "title": "BEA SANDOVAL x BRIGHTWELL",
+        "title": "ARTIST 02 x CLIENT 06",
         "href": "#news-6",
         "type": "img",
         "src": "./assets/images/art-09.svg",
@@ -865,8 +865,8 @@
     "artists": [
       {
         "id": "fa-1",
-        "name": "Alex Marlowe",
-        "href": "#artist-alex-marlowe",
+        "name": "Artist 01",
+        "href": "#artist-artist-01",
         "color": "#D3B6AA",
         "type": "img",
         "image": "./assets/images/art-10.svg",
@@ -874,8 +874,8 @@
       },
       {
         "id": "fa-2",
-        "name": "Bea Sandoval",
-        "href": "#artist-bea-sandoval",
+        "name": "Artist 02",
+        "href": "#artist-artist-02",
         "color": "#B1BDCA",
         "type": "img",
         "image": "./assets/images/art-11.svg",
@@ -883,8 +883,8 @@
       },
       {
         "id": "fa-3",
-        "name": "Cleo Hartman",
-        "href": "#artist-cleo-hartman",
+        "name": "Artist 03",
+        "href": "#artist-artist-03",
         "color": "#CE8EAC",
         "type": "img",
         "image": "./assets/images/art-12.svg",
@@ -892,8 +892,8 @@
       },
       {
         "id": "fa-4",
-        "name": "Dani Ashworth",
-        "href": "#director-dani-ashworth",
+        "name": "Artist 09",
+        "href": "#artist-artist-09",
         "color": "#D3C4AD",
         "type": "img",
         "image": "./assets/images/art-13.svg",
@@ -901,8 +901,8 @@
       },
       {
         "id": "fa-5",
-        "name": "Eli Rourke",
-        "href": "#artist-eli-rourke",
+        "name": "Artist 04",
+        "href": "#artist-artist-04",
         "color": "#C2C6CC",
         "type": "img",
         "image": "./assets/images/art-14.svg",
@@ -910,8 +910,8 @@
       },
       {
         "id": "fa-6",
-        "name": "Gus Calloway",
-        "href": "#artist-gus-calloway",
+        "name": "Artist 05",
+        "href": "#artist-artist-05",
         "color": "#B4D0A7",
         "type": "img",
         "image": "./assets/images/art-15.svg",
@@ -919,8 +919,8 @@
       },
       {
         "id": "fa-7",
-        "name": "Jules Kemper",
-        "href": "#artist-jules-kemper",
+        "name": "Artist 06",
+        "href": "#artist-artist-06",
         "color": "#CEB5AC",
         "type": "img",
         "image": "./assets/images/art-16.svg",
@@ -928,8 +928,8 @@
       },
       {
         "id": "fa-8",
-        "name": "Jon Mercer",
-        "href": "#artist-jon-mercer",
+        "name": "Artist 07",
+        "href": "#artist-artist-07",
         "color": "#B1C3CE",
         "type": "img",
         "image": "./assets/images/art-01.svg",
@@ -937,8 +937,8 @@
       },
       {
         "id": "fa-9",
-        "name": "Quincy Vale",
-        "href": "#artist-quincy-vale",
+        "name": "Artist 08",
+        "href": "#artist-artist-08",
         "color": "#CDB398",
         "type": "img",
         "image": "./assets/images/art-02.svg",

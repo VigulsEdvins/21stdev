@@ -60,7 +60,11 @@
     draw(t); requestAnimationFrame(loop);
   }
   size(); window.addEventListener('resize', function () { size(); draw(3000); });
-  go.addEventListener('click', function () { if (reduce) return; done = false; start = performance.now(); st.textContent = 'Loading frames'; go.hidden = true; });
+  go.addEventListener('click', function () {
+    go.hidden = true; st.textContent = 'Rolling';
+    stage.classList.add('is-exiting');
+    setTimeout(function () { stage.setAttribute('data-phase', 'done'); stage.setAttribute('data-completed', 'true'); }, reduce ? 150 : 650);
+  });
   if (reduce) { done = true; progress = 1; ui(); st.textContent = 'Ready'; go.hidden = false; draw(3000); return; }
   new IntersectionObserver(function (es) { var vis = es[0].isIntersecting; if (vis && !run) { run = true; requestAnimationFrame(loop); } else if (!vis) run = false; }).observe(stage);
   requestAnimationFrame(loop);

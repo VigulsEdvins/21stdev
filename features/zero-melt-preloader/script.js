@@ -29,6 +29,7 @@
   // stage 1: counter 0 -> 100
   function startCount() {
     cancelAnimationFrame(raf);
+    root.classList.remove("is-exiting"); root.removeAttribute("data-completed"); replay.hidden = true;
     setPhase("count");
     root.style.setProperty("--tg-r", "0px");
     site.setAttribute("aria-hidden", "true");
@@ -98,7 +99,13 @@
       var k = Math.min(1, (now - t0) / dur), e = k * k * (3 - 2 * k);
       root.style.setProperty("--tg-r", e * far + "px");
       ctx.clearRect(0, 0, W, H);
-      if (k < 1) raf = requestAnimationFrame(tick); else setPhase("done");
+      if (k < 1) raf = requestAnimationFrame(tick); else {
+        setPhase("shown");
+        setTimeout(function () {
+          root.classList.add("is-exiting");
+          setTimeout(function () { setPhase("done"); root.setAttribute("data-completed", "true"); replay.hidden = false; }, reduce ? 150 : 650);
+        }, reduce ? 100 : 800);
+      }
     })(t0);
   }
 

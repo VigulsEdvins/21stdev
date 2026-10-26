@@ -36,8 +36,8 @@
   }
   skip.addEventListener('click', finish);
   enter.addEventListener('click', function () {
-    done = false; stage.classList.remove('sq-done'); end.setAttribute('aria-hidden', 'true'); enter.tabIndex = -1;
-    start = null; shotIdx = -1; raf = requestAnimationFrame(tick);
+    stage.classList.add('is-exiting');
+    setTimeout(function () { stage.setAttribute('data-phase', 'done'); stage.setAttribute('data-completed', 'true'); }, reduce ? 150 : 650);
   });
   raf = requestAnimationFrame(tick);
 })();

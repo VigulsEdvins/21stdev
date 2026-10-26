@@ -2,7 +2,12 @@
   var cv = document.getElementById('rpCanvas'), ctx = cv.getContext('2d'), pct = document.getElementById('rpPct');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var S = 0, vis = true, t0 = performance.now();
-  var POUR = 9000, HOLD = 3200, FADE = 900, FOLD = 8;
+  var POUR = 6000, HOLD = 1200, FADE = 700, FOLD = 8, ended = false, floor = document.getElementById('rpFloor');
+  function complete() {
+    if (ended) return; ended = true;
+    floor.classList.add('is-exiting');
+    setTimeout(function () { floor.setAttribute('data-phase', 'done'); floor.setAttribute('data-completed', 'true'); }, reduce ? 150 : 650);
+  }
 
   function size() {
     var d = Math.min(window.devicePixelRatio || 1, 2);
@@ -85,7 +90,9 @@
   }
 
   function frame(now) {
-    var e = (now - t0) % (POUR + HOLD + FADE), p = Math.min(1, e / POUR), a = 1;
+    var e = now - t0;
+    if (e >= POUR + HOLD + FADE) { cv.style.opacity = 0; draw(1); complete(); return; }
+    var p = Math.min(1, e / POUR), a = 1;
     if (e > POUR + HOLD) a = 1 - (e - POUR - HOLD) / FADE;
     cv.style.opacity = a.toFixed(3);
     draw(p);
@@ -95,7 +102,7 @@
   function start() { if (!reduce) { requestAnimationFrame(frame); } }
 
   size();
-  if (reduce) { draw(1); pct.textContent = '100%'; }
+  if (reduce) { draw(1); pct.textContent = '100%'; setTimeout(complete, 500); }
   else start();
   window.addEventListener('resize', function () { size(); if (reduce) draw(1); });
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {

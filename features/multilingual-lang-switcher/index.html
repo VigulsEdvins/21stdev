@@ -3,47 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multilingual Language Switcher</title>
-  <link rel="stylesheet" href="./style.css">
+  <title>Language Switcher Header</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="lang-showcase-card">
-    <div class="header-row">
-      <div class="brand">
-        <span class="status-dot"></span>
-        <span class="brand-text">Margarita Vigule</span>
-      </div>
-
-      <!-- Reactive Language Switcher -->
-      <nav class="lang-switcher" role="group" aria-label="Language Selector">
-        <button type="button" class="lang-btn active" data-lang="lv">LV</button>
-        <span class="lang-sep">/</span>
-        <button type="button" class="lang-btn" data-lang="en">EN</button>
-        <span class="lang-sep">/</span>
-        <button type="button" class="lang-btn" data-lang="ru">RU</button>
+<div class="lsw-demo">
+  <header class="lsw-header">
+    <div class="lsw-bar">
+      <a class="lsw-brand" href="#"><span class="lsw-dot" aria-hidden="true"></span><span class="lsw-brand-text">edvlabs</span></a>
+      <nav class="lsw-nav" aria-label="Main">
+        <a href="#" data-i18n="work">Work</a>
+        <a href="#" data-i18n="about">About</a>
+        <a href="#" data-i18n="contact">Contact</a>
       </nav>
-    </div>
-
-    <!-- Live Content Demo that reacts to language changes -->
-    <div class="card-content-body">
-      <span class="tag-badge" data-i18n="hero.tag">PORTFOLIO &bull; 2026</span>
-      <h2 class="headline" data-i18n="hero.title">Tverot patiesus mirkļus, sporta dinamiku un kultūras notikumus.</h2>
-      <p class="description" data-i18n="hero.desc">
-        Profesionāla fotogrāfe no Daugavpils. Specializējos sporta reportāžās, komerciālajā fotogrāfijā un ekspresīvos portretos visā Latvijā un Eiropā.
-      </p>
-
-      <div class="actions-row">
-        <button type="button" class="btn primary" data-i18n="actions.viewWork">Skatīt visus darbus</button>
-        <button type="button" class="btn secondary" data-i18n="actions.contact">Sazināties ar studiju</button>
+      <div class="lsw-lang">
+        <button type="button" class="lsw-current" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+          <span class="lsw-code">EN</span>
+          <svg class="lsw-caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <ul class="lsw-menu" role="listbox" aria-label="Choose language" hidden>
+          <li role="option" tabindex="-1" data-lang="en" aria-selected="true">English</li>
+          <li role="option" tabindex="-1" data-lang="de" aria-selected="false">Deutsch</li>
+          <li role="option" tabindex="-1" data-lang="es" aria-selected="false">Español</li>
+        </ul>
       </div>
     </div>
-
-    <div class="card-footer">
-      <span class="locale-debug" id="localeDebug">ACTIVE LOCALE: <strong>LV</strong> (Saved in localStorage)</span>
-      <span class="copy-note">Pure client-side zero-dependency i18n</span>
-    </div>
-  </div>
-
-  <script src="./script.js"></script>
+  </header>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
