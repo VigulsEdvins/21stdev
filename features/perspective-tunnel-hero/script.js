@@ -1,270 +1,73 @@
-/**
- * Perspective Tunnel Hero — 3D Spatial Fly-Through Controller
- * Author: Daiwiik Harihar (@daiwiikharihar)
- * 3D Z-axis spatial fly-through where cards burst out of a golden-angle tunnel
- * toward the camera as you scroll.
- */
 (function () {
-  const IMAGES = [
-    { src: "/assets/library/photo-1618005182384-a83a8bd57fbe-077a01fd.jpg", title: "Chroma I", color: "#6366f1" },
-    { src: "/assets/library/photo-1634017839464-5c339ebe3cb4-647c947c.jpg", title: "Prism III", color: "#ec4899" },
-    { src: "/assets/library/photo-1618172193622-ae2d025f4032-656fdbec.jpg", title: "Ether IV", color: "#8b5cf6" },
-    { src: "/assets/library/photo-1635070041078-e363dbe005cb-bf117738.jpg", title: "Quantum V", color: "#06b6d4" },
-    { src: "/assets/library/photo-1614728263952-84ea256f9679-af306b6f.jpg", title: "Nebula VI", color: "#3b82f6" },
-    { src: "/assets/library/photo-1550751827-4bd374c3f58b-eed9f788.jpg", title: "Cyber VII", color: "#10b981" },
-    { src: "/assets/library/photo-1541701494587-cb58502866ab-3ddeb83b.jpg", title: "Flux VIII", color: "#f59e0b" },
-    { src: "/assets/library/photo-1508739773434-c26b3d09e071-8451f283.jpg", title: "Aether IX", color: "#f43f5e" },
-    { src: "/assets/library/photo-1579783900882-c0d3dad7b119-d8b38a3d.jpg", title: "Chroma X", color: "#a855f7" }
-  ];
-
-  const stageEl = document.getElementById("tunnelStage");
-  const planeEl = document.getElementById("tunnelPlane");
-  const anchorEl = document.getElementById("tunnelAnchor");
-  const promptEl = document.getElementById("scrollPrompt");
-  const rangeEl = document.getElementById("progressRange");
-  const resetBtn = document.getElementById("btnReset");
-  const autoPlayBtn = document.getElementById("btnAutoPlay");
-
-  let stage = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-    isMobile: window.innerWidth < 768
-  };
-
-  let targetProgress = 0;
-  let currentProgress = 0;
-  let targetPointerX = 0;
-  let targetPointerY = 0;
-  let currentPointerX = 0;
-  let currentPointerY = 0;
-  let isAutoPlaying = false;
-  let isDragging = false;
-  let dragStartY = 0;
-  let dragStartProgress = 0;
-
-  function clamp(val, min, max) {
-    return Math.max(min, Math.min(max, val));
+  var hero = document.getElementById("wcHero"), scene = document.getElementById("wcScene");
+  var copy = hero.querySelector(".wc-copy"), meter = document.getElementById("wcMeter");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var N = 16, DEPTH = 3200, GOLD = 2.399963;
+  var names = ["Atlas", "Ember", "Field", "Bloom", "Drift", "Prism", "Tide", "Quartz", "Halo", "Mesa", "Orbit", "Wisp", "Cedar", "Pulse", "Lumen", "Vale"];
+  var cards = [];
+  for (var i = 0; i < N; i++) {
+    var el = document.createElement("div");
+    el.className = "wc-card";
+    var hue = (i * 47) % 360;
+    el.style.background = "linear-gradient(150deg, hsl(" + hue + ",70%,55%), hsl(" + ((hue + 60) % 360) + ",70%,32%))";
+    el.innerHTML = "<span>" + names[i] + "</span>";
+    scene.appendChild(el);
+    var a = i * GOLD, rad = 0.26 + ((i * 0.37) % 0.5);
+    cards.push({ el: el, z0: (i / N) * DEPTH, x: Math.cos(a) * rad, y: Math.sin(a) * rad * 0.8, rot: ((i * 13) % 20) - 10 });
   }
+  var pr = 0, sp = 0, mx = 0, my = 0, tx = 0, ty = 0, visible = true, raf = 0, drift = 0, last = performance.now();
 
-  function lerp(a, b, t) {
-    return a + (b - a) * t;
+  // The hero holds the page (data-scroll-pin): wheel and touch drag move the corridor first, and only once it has
+  // reached either end does the page scroll on to the next section (or back up).
+  var goal = 0;
+  function progress() { return goal; }
+  function push(dy, e) {
+    var next = Math.max(0, Math.min(1, goal + dy / 1800));
+    if ((dy > 0 && goal < 1) || (dy < 0 && goal > 0)) { if (e.cancelable) e.preventDefault(); goal = next; kick(); }
   }
-
-  function makeFallbackSvg(title, color) {
-    return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" viewBox="0 0 400 500"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231e1b4b"/><stop offset="50%" stop-color="${encodeURIComponent(color)}"/><stop offset="100%" stop-color="%230f172a"/></linearGradient></defs><rect width="400" height="500" fill="url(%23g)"/><circle cx="200" cy="200" r="100" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/><text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="monospace" font-size="20" letter-spacing="4">${encodeURIComponent(title)}</text></svg>`;
-  }
-
-  // Precompute Golden-Angle Tunnel distribution
-  const cards = IMAGES.map((item, i) => {
-    const goldenAngle = i * 137.5 * (Math.PI / 180);
-    const radiusFactorX = 0.28 + (i % 3) * 0.08;
-    const radiusFactorY = 0.26 + (i % 2) * 0.09;
-    const rotationZ = (i % 2 === 0 ? 1 : -1) * (3 + (i % 5) * 2);
-
-    const cardEl = document.createElement("div");
-    cardEl.className = "tunnel-card";
-    cardEl.style.zIndex = String(i + 1);
-
-    const fallbackSrc = makeFallbackSvg(item.title, item.color);
-    cardEl.innerHTML = `
-      <div class="card-inner">
-        <img class="card-img" src="${item.src}" alt="${item.title}" draggable="false" onerror="this.onerror=null; this.src='${fallbackSrc}';" />
-        <div class="card-scrim">
-          <span class="card-title">${item.title}</span>
-        </div>
-      </div>
-    `;
-
-    cardEl.addEventListener("click", () => {
-      // Focus this card in tunnel
-      const staggerSpan = 0.55;
-      const start = (i / IMAGES.length) * (1 - staggerSpan);
-      targetProgress = clamp(start + staggerSpan * 0.5, 0, 1);
-    });
-
-    planeEl.appendChild(cardEl);
-
-    return {
-      el: cardEl,
-      item,
-      angleCos: Math.cos(goldenAngle),
-      angleSin: Math.sin(goldenAngle),
-      radiusFactorX,
-      radiusFactorY,
-      rotationZ,
-      index: i
-    };
-  });
-
-  function updateDimensions() {
-    stage.width = window.innerWidth;
-    stage.height = window.innerHeight;
-    stage.isMobile = window.innerWidth < 768;
-  }
-  window.addEventListener("resize", updateDimensions);
-
-  // Wheel interaction on stage. The stage holds the page while the tunnel plays: the wheel flies the camera, and once
-  // it has reached the far end (or the start again) the page is released to scroll on to the next (or previous) section.
-  stageEl.addEventListener("wheel", (e) => {
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-    const forward = e.deltaY > 0;
-    if ((forward && targetProgress >= 1) || (!forward && targetProgress <= 0)) return;
-    // arriving from above or below, the stage is not yet filling the screen: let the page finish scrolling, then
-    // line the stage up with the top of the screen before it takes over
-    const top = stageEl.getBoundingClientRect().top;
-    if (Math.abs(top) > 80) return;
-    if (top !== 0) window.scrollBy(0, top);
-    e.preventDefault();
-    isAutoPlaying = false;
-    updateAutoPlayBtn();
-    const delta = e.deltaY * 0.00085;
-    targetProgress = clamp(targetProgress + delta, 0, 1);
+  hero.addEventListener("wheel", function (e) { push(e.deltaY, e); }, { passive: false });
+  var ty0 = null;
+  hero.addEventListener("touchstart", function (e) { ty0 = e.touches[0].clientY; }, { passive: true });
+  hero.addEventListener("touchmove", function (e) {
+    if (ty0 === null) return;
+    var y = e.touches[0].clientY; push((ty0 - y) * 2, e); ty0 = y;
   }, { passive: false });
-
-  // Pointer move parallax
-  window.addEventListener("pointermove", (e) => {
-    targetPointerX = (e.clientX / window.innerWidth - 0.5) * 2;
-    targetPointerY = (e.clientY / window.innerHeight - 0.5) * 2;
-  }, { passive: true });
-
-  // Drag interaction
-  stageEl.addEventListener("pointerdown", (e) => {
-    if (e.target.closest(".tunnel-controls")) return;
-    isDragging = true;
-    dragStartY = e.clientY;
-    dragStartProgress = targetProgress;
-    isAutoPlaying = false;
-    updateAutoPlayBtn();
-    try { stageEl.setPointerCapture(e.pointerId); } catch (_) {}
+  hero.tabIndex = 0;
+  hero.addEventListener("keydown", function (e) {
+    var d = e.key === "ArrowDown" || e.key === "PageDown" ? 360 : e.key === "ArrowUp" || e.key === "PageUp" ? -360 : 0;
+    if (d) push(d, e);
   });
-
-  stageEl.addEventListener("pointermove", (e) => {
-    if (!isDragging) return;
-    const dy = dragStartY - e.clientY;
-    targetProgress = clamp(dragStartProgress + dy * 0.002, 0, 1);
+  function render(now) {
+    raf = 0; if (!visible) return;
+    var dt = Math.min(50, now - last); last = now;
+    var target = progress();
+    sp += (target - sp) * 0.09;
+    mx += (tx - mx) * 0.06; my += (ty - my) * 0.06;
+    drift += reduce ? 0 : dt * 0.05;
+    var w = hero.firstElementChild.clientWidth, h = hero.firstElementChild.clientHeight;
+    var travel = sp * DEPTH * 2.2 + drift;
+    cards.forEach(function (c) {
+      var z = ((c.z0 + travel) % DEPTH);           // 0 = far, DEPTH = at camera
+      var depthZ = z - DEPTH + 300;                // translateZ negative = away
+      var t = z / DEPTH;
+      var spread = 0.55 + t * 1.2;
+      var op = Math.min(1, t * 6) * Math.min(1, (1 - t) * 5);
+      c.el.style.opacity = op.toFixed(3);
+      c.el.style.transform = "translate3d(" + (c.x * w * spread).toFixed(1) + "px," + (c.y * h * spread).toFixed(1) + "px," + depthZ.toFixed(0) + "px) rotateZ(" + (c.rot + t * 18).toFixed(1) + "deg)";
+    });
+    scene.style.transform = "rotateY(" + (mx * 7).toFixed(2) + "deg) rotateX(" + (-my * 5).toFixed(2) + "deg) translate3d(" + (-mx * 20).toFixed(1) + "px," + (-my * 14).toFixed(1) + "px,0)";
+    copy.style.transform = "translateZ(0) scale(" + (1 + sp * 0.12).toFixed(3) + ")";
+    copy.style.opacity = (1 - Math.max(0, sp - 0.82) * 5).toFixed(3);
+    meter.style.width = (sp * 100).toFixed(1) + "%";
+    if (!reduce || Math.abs(target - sp) > 0.001) raf = requestAnimationFrame(render);
+  }
+  function kick() { if (!raf && visible) { last = performance.now(); raf = requestAnimationFrame(render); } }
+  window.addEventListener("scroll", kick, { passive: true });
+  window.addEventListener("resize", kick);
+  hero.addEventListener("pointermove", function (e) {
+    var r = hero.firstElementChild.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width) * 2 - 1; ty = ((e.clientY - r.top) / r.height) * 2 - 1; kick();
   });
-
-  const stopDrag = (e) => {
-    if (isDragging) {
-      isDragging = false;
-      try { stageEl.releasePointerCapture(e.pointerId); } catch (_) {}
-    }
-  };
-  stageEl.addEventListener("pointerup", stopDrag);
-  stageEl.addEventListener("pointercancel", stopDrag);
-
-  // Controls
-  if (rangeEl) {
-    rangeEl.addEventListener("input", (e) => {
-      isAutoPlaying = false;
-      updateAutoPlayBtn();
-      targetProgress = parseFloat(e.target.value) / 100;
-    });
-  }
-
-  if (resetBtn) {
-    resetBtn.addEventListener("click", () => {
-      targetProgress = 0;
-      isAutoPlaying = false;
-      updateAutoPlayBtn();
-    });
-  }
-
-  function updateAutoPlayBtn() {
-    if (!autoPlayBtn) return;
-    autoPlayBtn.textContent = isAutoPlaying ? "Pause" : "Auto Fly";
-    autoPlayBtn.style.borderColor = isAutoPlaying ? "rgba(99, 102, 241, 0.8)" : "";
-    autoPlayBtn.style.color = isAutoPlaying ? "#818cf8" : "";
-  }
-
-  if (autoPlayBtn) {
-    autoPlayBtn.addEventListener("click", () => {
-      isAutoPlaying = !isAutoPlaying;
-      if (isAutoPlaying && targetProgress >= 0.99) {
-        targetProgress = 0;
-        currentProgress = 0;
-      }
-      updateAutoPlayBtn();
-    });
-  }
-
-  // Animation Loop
-  function tick() {
-    if (isAutoPlaying) {
-      targetProgress += 0.0018;
-      if (targetProgress > 1) {
-        targetProgress = 0;
-        currentProgress = 0;
-      }
-    }
-
-    currentProgress = lerp(currentProgress, targetProgress, 0.08);
-    currentPointerX = lerp(currentPointerX, targetPointerX, 0.06);
-    currentPointerY = lerp(currentPointerY, targetPointerY, 0.06);
-
-    if (rangeEl && !isDragging) {
-      rangeEl.value = (currentProgress * 100).toFixed(1);
-    }
-
-    // Anchor Typography Animation
-    if (anchorEl) {
-      const titleScale = 0.7 + currentProgress * 0.65;
-      let titleOpacity = 1;
-      if (currentProgress < 0.12) {
-        titleOpacity = lerp(0.25, 1, currentProgress / 0.12);
-      } else if (currentProgress > 0.85) {
-        titleOpacity = lerp(1, 0, (currentProgress - 0.85) / 0.15);
-      }
-      anchorEl.style.transform = `scale(${titleScale.toFixed(3)})`;
-      anchorEl.style.opacity = Math.max(0, titleOpacity).toFixed(3);
-    }
-
-    // Scroll Prompt Animation
-    if (promptEl) {
-      const promptOpacity = currentProgress < 0.12 ? (1 - currentProgress / 0.12) : 0;
-      promptEl.style.opacity = Math.max(0, promptOpacity).toFixed(3);
-    }
-
-    // Cards Flight in 3D Space
-    const total = cards.length;
-    const staggerSpan = 0.55;
-    const farZ = stage.isMobile ? -1200 : -1700;
-    const nearZ = stage.isMobile ? 350 : 500;
-    const cardWidth = stage.isMobile
-      ? Math.max(130, Math.min(180, stage.width * 0.38))
-      : Math.max(180, Math.min(270, stage.width * 0.18));
-    const panStrength = stage.isMobile ? 20 : 45;
-
-    for (let i = 0; i < total; i++) {
-      const card = cards[i];
-      const start = (card.index / total) * (1 - staggerSpan);
-      const end = start + staggerSpan;
-
-      const localProgress = clamp((currentProgress - start) / (end - start), 0, 1);
-      const z = farZ + (nearZ - farZ) * localProgress;
-
-      // Opacity envelope: [0, 0.18, 0.82, 0.98] -> [0, 1, 1, 0]
-      let opacity = 0;
-      if (localProgress <= 0.18) {
-        opacity = localProgress / 0.18;
-      } else if (localProgress <= 0.82) {
-        opacity = 1;
-      } else if (localProgress <= 0.98) {
-        opacity = 1 - (localProgress - 0.82) / 0.16;
-      }
-
-      const baseX = card.angleCos * (stage.width * card.radiusFactorX);
-      const baseY = card.angleSin * (stage.height * card.radiusFactorY);
-      const offsetX = baseX - currentPointerX * panStrength;
-      const offsetY = baseY - currentPointerY * panStrength;
-
-      card.el.style.width = `${cardWidth}px`;
-      card.el.style.opacity = opacity.toFixed(3);
-      card.el.style.transform = `translate3d(calc(-50% + ${offsetX.toFixed(1)}px), calc(-50% + ${offsetY.toFixed(1)}px), ${z.toFixed(1)}px) rotateZ(${card.rotationZ}deg)`;
-    }
-
-    requestAnimationFrame(tick);
-  }
-
-  requestAnimationFrame(tick);
+  if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; kick(); }).observe(hero);
+  kick();
 })();

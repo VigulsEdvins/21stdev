@@ -1,29 +1,25 @@
 {
-  "name": "Card Fan Preloader",
-  "title": "Card Fan Preloader",
+  "name": "Dealt Cards Loader",
+  "title": "Dealt Cards Loader",
   "slug": "card-fan-preloader",
   "category": "Preloaders & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A pixel-perfect, zero-dependency loading sequence. Six playing cards fan continuously through an arched deal in a seamless 0.5s cycle, floating upward and fading away to reveal your page content.",
+  "description": "Six playing cards deal into an arched fan in a loop with a percentage counter, then lift away to reveal the page.",
   "tags": [
-    "card",
-    "fan",
     "preloader",
     "cards",
-    "react"
+    "fan",
+    "loop",
+    "intro"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 118,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
@@ -37,17 +33,42 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .cf-kicker"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .cf-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .cf-text"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .cf-btn"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .cf-btn"
+    }
+  ],
+  "reserveHeight": 800,
+  "ownPalette": true
 }

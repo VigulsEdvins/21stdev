@@ -1,29 +1,25 @@
 {
-  "name": "Disc Cascade Carousel",
-  "title": "Disc Cascade Carousel",
+  "name": "Vinyl Slope Carousel",
+  "title": "Vinyl Slope Carousel",
   "slug": "disc-cascade-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A film catalogue told in printed discs. The discs sit on a slanted line that climbs out of the page toward you. The chosen film is in the middle. The ones before it shrink away down to the left, and the next one looms large, half off the top right. When you move, the line slides, every disc rolls li",
+  "description": "A record browser where vinyl discs climb a diagonal slope, with the chosen record in the middle and drag, wheel, key and button navigation.",
   "tags": [
-    "disc",
-    "cascade",
     "carousel",
-    "3d",
-    "react"
+    "vinyl",
+    "records",
+    "slider",
+    "3d"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 135,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
@@ -37,67 +33,22 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(5) > span:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(4) > span:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
       "id": "small-label",
-      "label": "Small label",
+      "label": "Brand",
       "type": "text",
-      "selector": ":scope div.dcc-sr"
+      "selector": ":scope .vs-brand"
     },
     {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "menu-item-1",
-      "label": "Menu item 1",
+      "id": "intro-text",
+      "label": "Hint",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > span:nth-of-type(2)"
-    },
-    {
-      "id": "menu-item-2",
-      "label": "Menu item 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > span:nth-of-type(3)"
-    },
-    {
-      "id": "menu-item-3",
-      "label": "Menu item 3",
-      "type": "text",
-      "selector": ":scope span.dcc-brand"
-    },
-    {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2) > span:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
+      "selector": ":scope .vs-hint"
     }
-  ],
-  "measured": {
-    "luma": 0.31,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
-  "reserveHeight": 800
+  ]
 }

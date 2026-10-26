@@ -1,121 +1,80 @@
 {
-  "name": "Kiln Wordmark Footer",
-  "title": "Kiln Wordmark Footer",
+  "name": "Moss Wordmark Footer",
+  "title": "Moss Wordmark Footer",
   "slug": "kiln-wordmark-footer",
   "category": "Footers & Endings",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A brick-red closing panel for a manufacturer with a sense of its own history. A two-line uppercase motto sits top left, a dark back-to-top key top right, then three columns (address, navigation, follow), a giant lowercase wordmark, and a legal bar in an outlined pill.",
+  "description": "A deep green closing panel with a motto, a back-to-top key, link columns, a giant lowercase wordmark whose letters hop on hover, and a pill legal bar.",
   "tags": [
-    "kiln",
-    "wordmark",
     "footer",
-    "react"
+    "wordmark",
+    "columns",
+    "green",
+    "back-to-top"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 179,
   "legacyCategory": "Footers & Endings",
   "status": "stable",
   "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "editorial"
   ],
   "industry": [
     "general"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "footer-heading-1",
-      "label": "Footer heading 1",
+      "label": "Motto",
       "type": "text",
-      "selector": ":scope h2.kwf-motto"
+      "selector": ":scope .kf-motto"
     },
     {
       "id": "footer-heading-2",
-      "label": "Footer heading 2",
+      "label": "Address heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1)"
+      "selector": ":scope .kf-col:nth-child(1) h3"
+    },
+    {
+      "id": "footer-text-1",
+      "label": "Address",
+      "type": "text",
+      "selector": ":scope .kf-col address"
     },
     {
       "id": "footer-heading-3",
-      "label": "Footer heading 3",
+      "label": "Explore heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > h3:nth-of-type(1)"
+      "selector": ":scope .kf-cols nav:nth-child(2) h3"
     },
     {
       "id": "footer-heading-4",
-      "label": "Footer heading 4",
+      "label": "Follow heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > h3:nth-of-type(1)"
+      "selector": ":scope .kf-cols nav:nth-child(3) h3"
     },
     {
-      "id": "footer-link-1",
-      "label": "Footer link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-2",
-      "label": "Footer link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(2) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-text",
-      "label": "Footer text",
+      "id": "small-label",
+      "label": "Legal line",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-text-1",
-      "label": "Footer link text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-text-2",
-      "label": "Footer link text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(2) > li:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-text-3",
-      "label": "Footer link text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(3) > li:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-3",
-      "label": "Footer link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
+      "selector": ":scope .kf-legal span"
     }
   ],
-  "measured": {
-    "luma": 0.33,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
-  "reserveHeight": 800,
-  "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "ownPalette": true,
+  "reserveHeight": 800
 }

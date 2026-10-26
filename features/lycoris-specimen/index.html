@@ -3,11 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lycoris Specimen</title>
+  <title>Bloom Scroll Specimen</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="bs-track" id="bsTrack">
+    <div class="bs-sticky">
+      <canvas class="bs-canvas" id="bsCanvas" aria-label="A procedurally drawn flower that opens as you scroll" role="img"></canvas>
+      <header class="bs-head"><span>Specimen No. 07</span><span id="bsPct">00%</span></header>
+      <div class="bs-frames" id="bsFrames">
+        <article class="bs-frame"><p class="bs-tag">Frame 1 / Seed</p><h2 class="bs-title">Red Starburst</h2><p class="bs-text">A flower drawn from nothing but curves. Scroll to wake it.</p></article>
+        <article class="bs-frame"><p class="bs-tag">Frame 2 / Stem</p><h2 class="bs-title">Rise</h2><p class="bs-text">One thin line climbs the page and the buds begin to swell.</p></article>
+        <article class="bs-frame"><p class="bs-tag">Frame 3 / Unfold</p><h2 class="bs-title">Open</h2><p class="bs-text">Petals peel back one by one, each at its own angle.</p></article>
+        <article class="bs-frame"><p class="bs-tag">Frame 4 / Reach</p><h2 class="bs-title">Stamens</h2><p class="bs-text">Long filaments arc past the petals and curl at the tips.</p></article>
+        <article class="bs-frame"><p class="bs-tag">Frame 5 / Turn</p><h2 class="bs-title">Rotate</h2><p class="bs-text">The whole bloom slowly turns to show the other side.</p></article>
+        <article class="bs-frame"><p class="bs-tag">Frame 6 / Rest</p><h2 class="bs-title">Still life</h2><p class="bs-text">Full bloom, held in place.</p><a class="bs-link" href="#">Read the notes</a></article>
+      </div>
+      <div class="bs-dots" id="bsDots" aria-hidden="true"></div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

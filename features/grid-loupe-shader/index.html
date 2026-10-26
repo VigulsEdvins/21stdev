@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grid Loupe Shader</title>
+  <title>Mosaic Lens Gallery</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ml-wrap">
+    <div class="ml-frame" id="mlFrame">
+      <canvas class="ml-canvas" id="mlCanvas" role="img" aria-label="Abstract artwork that breaks into a magnifying mosaic under the pointer"></canvas>
+      <span class="ml-cap">Hover to open the lens</span>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

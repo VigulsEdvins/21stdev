@@ -1,13 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Callsign Radio Landing</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Night Signal Radio</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<div class="rl-page">
+  <header class="rl-nav">
+    <a class="rl-logo" href="#">KJLM <span>91.7 FM</span></a>
+    <nav class="rl-links" aria-label="Main">
+      <a href="#">Schedule</a><a href="#">Shows</a><a href="#">Support</a>
+    </nav>
+    <a class="rl-btn rl-btn-sm" href="#">Donate</a>
+  </header>
+
+  <section class="rl-hero">
+    <p class="rl-kicker">Independent radio, live from the hill</p>
+    <h1 class="rl-title" aria-label="KJLM">
+      <span class="rl-letter" data-i="0">K</span><span class="rl-letter" data-i="1">J</span><span class="rl-letter" data-i="2">L</span><span class="rl-letter" data-i="3">M</span>
+    </h1>
+    <div class="rl-meter" aria-hidden="true"></div>
+    <div class="rl-deck">
+      <button class="rl-play" type="button" aria-pressed="false"><span class="rl-play-icon"></span><span class="rl-play-text">Listen live</span></button>
+      <p class="rl-now"><b>On air</b> <span class="rl-now-text">Slow Hours with Mara Voss</span></p>
+    </div>
+  </section>
+
+  <section class="rl-sec">
+    <h2 class="rl-h2 rl-sched-h">Today on the dial</h2>
+    <ul class="rl-sched">
+      <li><time>06:00</time><span>Early Static</span><em>Ambient &amp; field recordings</em></li>
+      <li><time>09:00</time><span>Kitchen Table</span><em>Talk, tea and listener calls</em></li>
+      <li><time>13:00</time><span>Slow Hours</span><em>Deep cuts, no hurry</em></li>
+      <li><time>18:00</time><span>Local Wire</span><em>News from the valley</em></li>
+      <li><time>21:00</time><span>Night Signal</span><em>Live sets until midnight</em></li>
+    </ul>
+  </section>
+
+  <section class="rl-sec rl-cta">
+    <h2 class="rl-h2">Listener supported</h2>
+    <p class="rl-text">No ads, no algorithm. Just a transmitter, a few hundred volunteers and you.</p>
+    <a class="rl-btn" href="#">Become a member</a>
+  </section>
+
+  <footer class="rl-foot"><span>KJLM Community Radio</span><span>Studio line 555-0142</span><a href="#">Contact</a></footer>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

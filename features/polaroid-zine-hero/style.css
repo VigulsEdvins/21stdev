@@ -1,9 +1,31 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #efe6d2); color: var(--text, #2b2118); }
+.sz-hero { min-height: 100vh; min-height: 100svh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 24px; padding: 48px clamp(20px, 6vw, 80px); overflow: hidden; font-family: var(--font-body, "Courier New", monospace); background-image: radial-gradient(color-mix(in srgb, var(--text, #2b2118) 8%, transparent) 1px, transparent 1px); background-size: 18px 18px; }
+.sz-note { display: inline-block; padding: 6px 14px; background: color-mix(in srgb, var(--accent, #f2b705) 70%, #fff); transform: rotate(-3deg); font-size: .8rem; box-shadow: 0 2px 0 rgba(0,0,0,.15); position: relative; }
+.sz-title { font-family: var(--font-display, Georgia, serif); font-size: clamp(2.6rem, 8vw, 5.4rem); line-height: .95; margin: 22px 0 16px; letter-spacing: -.02em; }
+.sz-title em { color: var(--accent, #d9480f); font-style: italic; }
+.sz-intro { max-width: 440px; line-height: 1.6; }
+.sz-actions { display: flex; align-items: center; gap: 22px; margin-top: 26px; flex-wrap: wrap; }
+.sz-btn { padding: 12px 22px; background: var(--text, #2b2118); color: var(--bg, #efe6d2); text-decoration: none; box-shadow: 4px 4px 0 var(--accent, #d9480f); transition: transform .15s, box-shadow .15s; }
+.sz-btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--accent, #d9480f); }
+.sz-link { color: inherit; }
+.sz-btn:focus-visible, .sz-link:focus-visible, .sz-arrow:focus-visible, .sz-dots button:focus-visible { outline: 2px solid var(--accent, #d9480f); outline-offset: 3px; }
+.sz-board { display: grid; justify-items: center; gap: 56px; }
+.sz-stack { position: relative; width: min(300px, 70vw); aspect-ratio: 4 / 5; }
+.sz-snap { position: absolute; inset: 0; background: #fffdf6; padding: 12px 12px 0; box-shadow: 0 10px 24px rgba(40,25,10,.28); transition: transform .6s cubic-bezier(.3,.9,.3,1), opacity .5s; display: flex; flex-direction: column; }
+.sz-snap::before { content: ""; position: absolute; top: -10px; left: 50%; width: 70px; height: 20px; margin-left: -35px; background: rgba(255,255,255,.55); border: 1px solid rgba(0,0,0,.08); transform: rotate(-4deg); }
+.sz-pic { flex: 1; background: linear-gradient(160deg, var(--c1), var(--c2)); display: grid; place-items: end center; overflow: hidden; }
+.sz-pic svg { width: 100%; fill: rgba(255,255,255,.55); }
+.sz-snap figcaption { font-family: "Brush Script MT", cursive; font-size: 1.5rem; text-align: center; padding: 10px 0 12px; }
+.sz-snap[data-pos="0"] { transform: rotate(-2deg); z-index: 4; }
+.sz-snap[data-pos="1"] { transform: translate(46px, 8px) rotate(5deg); z-index: 3; }
+.sz-snap[data-pos="2"] { transform: translate(-44px, 14px) rotate(-7deg); z-index: 2; }
+.sz-snap[data-pos="3"] { transform: translate(18px, 24px) rotate(9deg); z-index: 1; }
+.sz-ctrl { display: flex; align-items: center; gap: 18px; }
+.sz-arrow { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--text, #2b2118); background: transparent; color: inherit; font-size: 1.2rem; cursor: pointer; }
+.sz-arrow:hover { background: var(--text, #2b2118); color: var(--bg, #efe6d2); }
+.sz-dots { display: flex; gap: 6px; }
+.sz-dots button { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--text, #2b2118); background: transparent; cursor: pointer; padding: 0; }
+.sz-dots button.is-on { background: var(--accent, #d9480f); border-color: var(--accent, #d9480f); }
+@media (max-width: 760px) { .sz-hero { grid-template-columns: 1fr; padding-top: 32px; } .sz-board { padding: 12px 0 24px; } }
+@media (prefers-reduced-motion: reduce) { .sz-snap, .sz-btn { transition: none; } }

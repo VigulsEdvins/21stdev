@@ -1,36 +1,25 @@
 {
-  "name": "Perspective Tunnel Hero",
-  "title": "Perspective Tunnel Hero",
+  "name": "Warp Corridor Hero",
+  "title": "Warp Corridor Hero",
   "slug": "perspective-tunnel-hero",
   "category": "Heroes",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A 3D Z-axis spatial fly-through hero component where cards burst out of a golden-angle tunnel toward the camera as you scroll. Features smooth spring physics, pointer parallax, depth rings, and reactive typography.",
+  "description": "A hero where gradient cards spiral out of a deep corridor toward the camera as you scroll, with pointer lean and a progress bar.",
   "tags": [
-    "3d",
-    "tunnel",
-    "perspective",
     "hero",
+    "3d",
     "scroll",
-    "golden-angle",
-    "warp",
-    "parallax",
-    "cards"
+    "tunnel",
+    "parallax"
   ],
   "tech": [
-    "3D CSS",
-    "Perspective Tunnel",
-    "Golden Angle",
-    "Parallax",
-    "Spring Physics",
-    "Vanilla JS",
-    "React Framer Motion"
+    "CSS 3D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "Vanilla HTML/CSS/JS",
-    "React (.tsx included)"
+    "Vanilla HTML/CSS/JS"
   ],
-  "author": "daiwiikharihar",
   "order": 1,
   "legacyCategory": "Heroes",
   "status": "stable",
@@ -45,89 +34,53 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-24",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(8) > div:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "small-label-1",
-      "label": "Small label 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(8) > div:nth-of-type(1) > rect:nth-of-type(1) > circle:nth-of-type(1) > div:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(3) > div:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "small-label-2",
-      "label": "Small label 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(3) > div:nth-of-type(1) > rect:nth-of-type(1) > circle:nth-of-type(1) > div:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(6) > div:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "small-label-3",
-      "label": "Small label 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(6) > div:nth-of-type(1) > rect:nth-of-type(1) > circle:nth-of-type(1) > div:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph",
-      "label": "Paragraph",
-      "type": "text",
-      "selector": ":scope p.warp-label"
-    },
-    {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(7) > div:nth-of-type(5) > div:nth-of-type(1) > img:nth-of-type(1)"
+      "selector": ":scope .wc-label"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.warp-title"
+      "selector": ":scope .wc-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.warp-sub"
+      "selector": ":scope .wc-sub"
     },
     {
       "id": "button-text-1",
       "label": "Button text 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(8) > button:nth-of-type(1)"
+      "selector": ":scope .wc-solid"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .wc-solid"
     },
     {
       "id": "button-text-2",
       "label": "Button text 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(8) > button:nth-of-type(2)"
+      "selector": ":scope .wc-line"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope .wc-line"
     }
   ],
-  "measured": {
-    "luma": 0.06,
-    "webgl": false,
-    "canvas2d": false
-  }
+  "ownPalette": true
 }

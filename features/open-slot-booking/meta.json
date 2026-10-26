@@ -1,29 +1,25 @@
 {
-  "name": "Open Slot Booking",
-  "title": "Open Slot Booking",
+  "name": "Slot Picker Card",
+  "title": "Slot Picker Card",
   "slug": "open-slot-booking",
   "category": "Cards & Tiles",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A \"book a call\" section that does the booking itself. A heavy two-tone headline sits over a quiet scheduler window on a tilted colour slab. Inside the window are the host's stamp, a choice of call lengths, and a timezone-aware week of open slots. Picking a slot grows it into a confirm card (name, em",
+  "description": "A booking section with a call-length switch, a week of days and open time slots that opens a confirm form and a success state.",
   "tags": [
-    "open",
-    "slot",
     "booking",
-    "cards",
-    "react"
+    "scheduler",
+    "calendar",
+    "form",
+    "slots"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 201,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
@@ -36,74 +32,41 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .sp-label"
+    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h2.osb-h"
+      "selector": ":scope .sp-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.osb-sub"
+      "selector": ":scope .sp-text"
     },
     {
       "id": "link",
       "label": "Link",
       "type": "link",
-      "selector": ":scope a.osb-alt"
+      "selector": ":scope .sp-link"
     },
     {
       "id": "button-text-1",
-      "label": "Button text 1",
+      "label": "Link text",
       "type": "text",
-      "selector": ":scope button.osb-copy"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph",
-      "label": "Paragraph",
-      "type": "text",
-      "selector": ":scope p.osb-agenda"
-    },
-    {
-      "id": "button-text-3",
-      "label": "Button text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-5",
-      "label": "Button text 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)"
+      "selector": ":scope .sp-link"
     }
   ],
-  "measured": {
-    "luma": 0.58,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "nativeWhen": [],
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
-  "reserveHeight": 1038
+  "nativeWhen": []
 }

@@ -3,11 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Constellation Turntable</title>
+  <title>Star Chart Record Player</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="sk-deck" id="skDeck">
+    <div class="sk-plinth">
+      <div class="sk-platter">
+        <svg class="sk-disc" id="skDisc" viewBox="-100 -100 200 200" role="img" aria-label="Record pressed with a star map"></svg>
+      </div>
+      <div class="sk-arm" id="skArm" aria-hidden="true"><span class="sk-pivot"></span><span class="sk-rod"></span><span class="sk-head"></span></div>
+    </div>
+    <aside class="sk-panel">
+      <p class="sk-small">Now spinning</p>
+      <h1 class="sk-now" id="skNow">Orion's Belt</h1>
+      <p class="sk-sub" id="skSub">Side A, track 1</p>
+      <div class="sk-ctl">
+        <button class="sk-btn" id="skPlay" type="button" aria-pressed="false">Play</button>
+      </div>
+      <ul class="sk-tracks" id="skTracks"></ul>
+    </aside>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

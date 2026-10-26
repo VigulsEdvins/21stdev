@@ -1,161 +1,81 @@
 {
-  "name": "Beam Wordmark Footer",
-  "title": "Beam Wordmark Footer",
+  "name": "Light Beam Footer",
+  "title": "Light Beam Footer",
   "slug": "beam-wordmark-footer",
   "category": "Footers & Endings",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A midnight-navy closing section with a slow diagonal shaft of light running across it, and the brand set as a giant wordmark cropped by the bottom edge.",
+  "description": "A midnight-navy footer with a slow diagonal beam of light, link columns and a giant gradient wordmark cropped by the bottom edge.",
   "tags": [
-    "beam",
-    "wordmark",
     "footer",
-    "react"
+    "wordmark",
+    "beam",
+    "navy",
+    "closing",
+    "gradient"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 110,
   "legacyCategory": "Footers & Endings",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "dark"
+    "dark",
+    "minimal"
   ],
   "industry": [
     "agency"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "footer-link-1",
-      "label": "Social link 1",
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .bw-small"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .bw-head"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .bw-btn"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
       "type": "link",
-      "selector": ":scope .bwf-socials > li:nth-child(1) > a"
+      "selector": ":scope .bw-btn"
     },
     {
-      "id": "footer-link-2",
-      "label": "Social link 2",
-      "type": "link",
-      "selector": ":scope .bwf-socials > li:nth-child(2) > a"
-    },
-    {
-      "id": "footer-link-3",
-      "label": "Social link 3",
-      "type": "link",
-      "selector": ":scope .bwf-socials > li:nth-child(3) > a"
-    },
-    {
-      "id": "footer-text-1",
-      "label": "Column 1 link 1",
+      "id": "text-1",
+      "label": "Copyright",
       "type": "text",
-      "selector": ":scope nav.bwf-col:nth-of-type(1) .bwf-links > li:nth-child(1) .bwf-link-t"
+      "selector": ":scope .bw-copy"
     },
     {
-      "id": "footer-text-2",
-      "label": "Column 2 link 1",
+      "id": "text-2",
+      "label": "Wordmark",
       "type": "text",
-      "selector": ":scope nav.bwf-col:nth-of-type(2) .bwf-links > li:nth-child(1) .bwf-link-t"
-    },
-    {
-      "id": "footer-text-3",
-      "label": "Column 1 link 2",
-      "type": "text",
-      "selector": ":scope nav.bwf-col:nth-of-type(1) .bwf-links > li:nth-child(2) .bwf-link-t"
-    },
-    {
-      "id": "footer-text-4",
-      "label": "Column 2 link 2",
-      "type": "text",
-      "selector": ":scope nav.bwf-col:nth-of-type(2) .bwf-links > li:nth-child(2) .bwf-link-t"
-    },
-    {
-      "id": "footer-text-5",
-      "label": "Column 1 link 3",
-      "type": "text",
-      "selector": ":scope nav.bwf-col:nth-of-type(1) .bwf-links > li:nth-child(3) .bwf-link-t"
-    },
-    {
-      "id": "footer-text-6",
-      "label": "Column 2 link 3",
-      "type": "text",
-      "selector": ":scope nav.bwf-col:nth-of-type(2) .bwf-links > li:nth-child(3) .bwf-link-t"
-    },
-    {
-      "id": "footer-text-7",
-      "label": "Column 1 link 4",
-      "type": "text",
-      "selector": ":scope nav.bwf-col:nth-of-type(1) .bwf-links > li:nth-child(4) .bwf-link-t"
-    },
-    {
-      "id": "footer-text-8",
-      "label": "Column 2 link 4",
-      "type": "text",
-      "selector": ":scope nav.bwf-col:nth-of-type(2) .bwf-links > li:nth-child(4) .bwf-link-t"
-    },
-    {
-      "id": "copyright",
-      "label": "Copyright line",
-      "type": "text",
-      "selector": ":scope .bwf-inner > .bwf-col:first-child > .bwf-label"
-    },
-    {
-      "id": "column-1-title",
-      "label": "Column 1 title",
-      "type": "text",
-      "selector": ":scope .bwf-inner > nav.bwf-col:nth-of-type(1) > .bwf-label"
-    },
-    {
-      "id": "column-2-title",
-      "label": "Column 2 title",
-      "type": "text",
-      "selector": ":scope .bwf-inner > nav.bwf-col:nth-of-type(2) > .bwf-label"
-    },
-    {
-      "id": "credit-1-text",
-      "label": "Credit line 1 text",
-      "type": "text",
-      "selector": ":scope .bwf-credits p:nth-child(1)"
-    },
-    {
-      "id": "credit-1-link",
-      "label": "Credit line 1 link text",
-      "type": "text",
-      "selector": ":scope .bwf-credits p:nth-child(1) > a"
-    },
-    {
-      "id": "credit-2-text",
-      "label": "Credit line 2 text",
-      "type": "text",
-      "selector": ":scope .bwf-credits p:nth-child(2)"
-    },
-    {
-      "id": "credit-2-name",
-      "label": "Credit line 2 highlighted word",
-      "type": "text",
-      "selector": ":scope .bwf-credits p:nth-child(2) > b"
+      "selector": ":scope .bw-mark"
     }
   ],
-  "measured": {
-    "luma": 0.22,
-    "webgl": false,
-    "canvas2d": true
-  },
   "nativeWhen": [],
-  "reserveHeight": 800
+  "ownPalette": false
 }

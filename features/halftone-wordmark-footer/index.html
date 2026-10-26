@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Halftone Wordmark Footer</title>
+  <title>Dotprint Wordmark Footer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <footer class="hp-foot" id="hpFoot">
+    <div class="hp-top">
+      <p class="hp-line">A small studio for printed things and the screens that borrow from them.</p>
+      <div class="hp-cols">
+        <nav aria-label="Studio"><h3>Studio</h3><a href="#">Projects</a><a href="#">Process</a><a href="#">Contact</a></nav>
+        <nav aria-label="Elsewhere"><h3>Elsewhere</h3><a href="#">Newsletter</a><a href="#">Archive</a><a href="#">Colophon</a></nav>
+      </div>
+      <a class="hp-up" href="#">Back to top &uarr;</a>
+    </div>
+    <div class="hp-mark">
+      <canvas id="hpCanvas" role="img" aria-label="plotter"></canvas>
+    </div>
+  </footer>
   <script src="script.js"></script>
 </body>
 </html>

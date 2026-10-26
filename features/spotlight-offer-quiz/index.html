@@ -7,7 +7,33 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sq-wrap">
+    <div class="sq-modal">
+      <div class="sq-left">
+        <span class="sq-label">Welcome gift</span>
+        <p class="sq-offer">15% <small>off</small></p>
+        <h2 class="sq-q" id="sqQ">What brings you in today?</h2>
+        <div class="sq-answers" id="sqAnswers" role="group" aria-labelledby="sqQ">
+          <button type="button" class="sq-pill" data-i="0">A gift for someone</button>
+          <button type="button" class="sq-pill" data-i="1">Something for my desk</button>
+          <button type="button" class="sq-pill" data-i="2">Just browsing</button>
+          <button type="button" class="sq-pill" data-i="3">Refreshing my home</button>
+        </div>
+        <div class="sq-done" id="sqDone" hidden>
+          <p class="sq-thanks">Great choice. Your code:</p>
+          <p class="sq-code">WELCOME15</p>
+          <a class="sq-cta" href="#">Start shopping</a>
+        </div>
+      </div>
+      <div class="sq-stage" aria-hidden="true">
+        <div class="sq-beam"></div>
+        <div class="sq-line" id="sqLine">
+          <span class="sq-obj sq-o0"></span><span class="sq-obj sq-o1"></span><span class="sq-obj sq-o2"></span><span class="sq-obj sq-o3"></span>
+        </div>
+        <div class="sq-floor"></div>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

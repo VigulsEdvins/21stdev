@@ -1,33 +1,29 @@
 {
-  "name": "Pixel Park Template",
-  "title": "Pixel Park Template",
+  "name": "Pixel Meadow Studio Page",
+  "title": "Pixel Meadow Studio Page",
   "slug": "pixel-park-template",
   "category": "Landing Pages",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A complete one-page site for a small New York company, told in pixel art. A moonlit park meadow sits under a floating glass nav, with the company name and a frosted mission card over it. Below that come a manifesto, a signed letter with a postage stamp, a careers card over a skyline and lake, contac",
+  "description": "A one-page studio site with a canvas pixel-art night meadow hero, manifesto, letter, jobs card, contact and footer.",
   "tags": [
-    "pixel",
-    "park",
-    "template",
-    "full",
-    "react"
+    "landing",
+    "pixel-art",
+    "canvas",
+    "studio",
+    "night"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 208,
   "legacyCategory": "Full Templates",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "minimal",
     "dark"
@@ -37,80 +33,71 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-link",
-      "label": "Button link",
-      "type": "link",
-      "selector": ":scope a.ppk-cta"
-    },
-    {
-      "id": "button-text",
-      "label": "Button text",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope span.ppk-ctalabel"
+      "selector": ":scope .lm-kicker"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.ppk-h1"
-    },
-    {
-      "id": "section-heading-1",
-      "label": "Section heading 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .lm-h1"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .lm-card p"
     },
     {
-      "id": "paragraph",
-      "label": "Paragraph",
+      "id": "button-text",
+      "label": "Button text",
       "type": "text",
-      "selector": ":scope p.ppk-kicker"
+      "selector": ":scope .lm-ctalabel"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .lm-cta"
+    },
+    {
+      "id": "section-heading-1",
+      "label": "Section heading 1",
+      "type": "text",
+      "selector": ":scope .lm-manifesto .lm-h2"
+    },
+    {
+      "id": "section-heading-2",
+      "label": "Section heading 2",
+      "type": "text",
+      "selector": ":scope .lm-letter .lm-h2"
     },
     {
       "id": "section-heading-3",
       "label": "Section heading 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h2:nth-of-type(1)"
+      "selector": ":scope .lm-jobcard .lm-h2"
     },
     {
       "id": "link-1",
-      "label": "Link 1",
+      "label": "Link",
       "type": "link",
-      "selector": ":scope a.ppk-arrowlink"
-    },
-    {
-      "id": "link-2",
-      "label": "Link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > dl:nth-of-type(1) > div:nth-of-type(2) > dd:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope .lm-arrowlink"
     },
     {
       "id": "section-heading-4",
       "label": "Section heading 4",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .lm-contact .lm-h2"
     }
   ],
-  "measured": {
-    "luma": 0.21,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "ownPalette": true,
-  "themeReviewed": "Nav links sit on a frosted panel over the pixel-art image; readable in both themes. Checked 2026-10-24."
+  "ownPalette": true
 }

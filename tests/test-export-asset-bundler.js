@@ -38,9 +38,9 @@ const { createAssetBundler, bytesToDataUri, renderWeightReport } = require('../s
   // no assets -> no work
   // paths outside /assets/ are moved under assets/
   const other = await createAssetBundler({ assembler, fetchFn: async () => ({ ok: true, arrayBuffer: async () => png.buffer }) })
-    .bundle({ files: { 'index.html': '<img src="/vivmgmt/a.jpg">' }, singleHtml: '' });
-  assert(other.files['index.html'].includes('src="assets/vivmgmt/a.jpg"'));
-  assert(Object.keys(other.assets).includes('assets/vivmgmt/a.jpg'));
+    .bundle({ files: { 'index.html': '<img src="/site-b/a.jpg">' }, singleHtml: '' });
+  assert(other.files['index.html'].includes('src="assets/site-b/a.jpg"'));
+  assert(Object.keys(other.assets).includes('assets/site-b/a.jpg'));
 
   // a stylesheet brings its fonts along: shipped beside it in the ZIP, inlined for the single file
   const woff = new Uint8Array([119, 79, 70, 50]);

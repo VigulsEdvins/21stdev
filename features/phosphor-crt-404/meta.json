@@ -1,33 +1,29 @@
 {
-  "name": "Phosphor CRT 404",
-  "title": "Phosphor CRT 404",
+  "name": "Green Screen 404",
+  "title": "Green Screen 404",
   "slug": "phosphor-crt-404",
   "category": "Audio & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-screen \"page not found\" on a pink-phosphor tube. The whole component is the glass: an eyebrow between double rules, a chunky extruded error code ringed by bobbing music notes, a message between two beating hearts, and a pyramid between palm trees and drifting clouds, lit as round phosphor dot",
+  "description": "A full-screen not-found page on a green phosphor monitor with static, scanlines, a rolling bar and a glitching error code.",
   "tags": [
-    "phosphor",
-    "crt",
     "404",
-    "audio",
-    "react"
+    "crt",
+    "terminal",
+    "glitch",
+    "canvas"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 205,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "retro",
     "dark"
@@ -38,51 +34,38 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "headline",
-      "label": "Headline",
+      "id": "small-label",
+      "label": "Status line",
       "type": "text",
-      "selector": ":scope h1.sr-only"
+      "selector": ":scope .ph-status"
     },
     {
       "id": "intro-text",
-      "label": "Intro text",
+      "label": "Message",
       "type": "text",
-      "selector": ":scope p.sr-only"
-    },
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope span.pointer-events-none"
+      "selector": ":scope .ph-msg"
     },
     {
       "id": "link",
       "label": "Link",
       "type": "link",
-      "selector": ":scope a.p4c-link"
+      "selector": ":scope .ph-link"
     },
     {
       "id": "link-text",
       "label": "Link text",
       "type": "text",
-      "selector": ":scope a.p4c-link"
+      "selector": ":scope .ph-link"
     }
   ],
-  "measured": {
-    "luma": 0.12,
-    "webgl": false,
-    "canvas2d": true
-  },
   "nativeWhen": [
     "light"
   ],
-  "reserveHeight": 800
+  "ownPalette": true
 }

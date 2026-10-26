@@ -1,51 +1,61 @@
 {
-  "name": "Cinema Grain Preloader",
-  "title": "Cinema Grain Preloader",
+  "name": "Reel Grain Loader",
+  "title": "Reel Grain Loader",
   "slug": "cinema-grain-preloader",
   "category": "Preloaders & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Film grain, soft CRT scanlines and a gentle 1.4x contrast lift over a cinematic reel.",
+  "description": "A film-style loading screen with a shader of flickering light leaks, grain, scanlines and vignette that fills a progress bar and then holds a ready state.",
   "tags": [
-    "cinema",
-    "grain",
     "preloader",
-    "scroll",
-    "react"
+    "grain",
+    "film",
+    "webgl",
+    "shader"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 122,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
-    "retro"
+    "retro",
+    "dark"
   ],
   "industry": [
     "media"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.39,
-    "webgl": true,
-    "canvas2d": false
-  }
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .cg-small"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .cg-title"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .cg-btn"
+    }
+  ],
+  "ownPalette": true
 }

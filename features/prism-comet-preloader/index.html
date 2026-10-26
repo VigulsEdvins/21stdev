@@ -1,13 +1,22 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prism Comet Preloader</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spectrum Comet Loader</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="pm-stage" aria-label="Loading">
+  <canvas class="pm-canvas" aria-hidden="true"></canvas>
+  <p class="pm-tag">Light study 04</p>
+  <div class="pm-center">
+    <div class="pm-pct" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0</div>
+    <p class="pm-stage-name">Gathering light</p>
+  </div>
+  <div class="pm-track" aria-hidden="true"><i></i></div>
+  <button class="pm-replay" type="button">Replay</button>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,28 +1,25 @@
 {
-  "name": "Magic Hour",
-  "title": "Magic Hour",
+  "name": "Scroll Dusk Scene",
+  "title": "Scroll Dusk Scene",
   "slug": "magic-hour",
   "category": "Scroll & Parallax",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A scroll-scrubbed video. Scroll owns the timeline — nothing autoplays. Scroll progress maps to a target frame, a critically-damped chase with a speed cap follows it, and the integer frame is written to `video.currentTime` with seeks serialized so fast flicks skim instead of queueing a backlog of dec",
+  "description": "A scroll-scrubbed canvas scene where scrolling moves the sun down through a sunset sky into a starry night with a running clock.",
   "tags": [
-    "magic",
-    "hour",
     "scroll",
-    "react"
+    "canvas",
+    "sunset",
+    "scrub",
+    "parallax"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 189,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
@@ -34,21 +31,25 @@
   "industry": [
     "general"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 1,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "exportAssets": [
-    "/assets/library/magic-hour-scrub-882598d5.mp4"
-  ]
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .mh-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .mh-title"
+    }
+  ],
+  "ownPalette": true
 }

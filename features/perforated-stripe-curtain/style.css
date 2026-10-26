@@ -1,9 +1,17 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0e0f12); color: var(--text, #eceef2); min-height: 100%; }
+body { font-family: var(--font-body, system-ui, sans-serif); }
+.ps-stage { position: relative; height: 100vh; height: 100svh; min-height: 420px; overflow: hidden; background: #0e0f12; }
+.ps-pic { position: absolute; inset: 0; background: linear-gradient(180deg, #2a2f55, #e08a5c 75%); filter: grayscale(1) brightness(.4); transition: filter 1.2s; }
+.ps-stage.is-on .ps-pic { filter: none; }
+.ps-sun { position: absolute; left: 62%; top: 30%; width: 18vmin; height: 18vmin; border-radius: 50%; background: #ffe3a3; box-shadow: 0 0 80px #ffc977; }
+.ps-hill { position: absolute; bottom: -10%; border-radius: 50% 50% 0 0; }
+.ps-h1 { left: -10%; width: 70%; height: 45%; background: #2b2442; }
+.ps-h2 { right: -15%; width: 80%; height: 36%; background: #181328; }
+.ps-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ps-play { position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; margin: -36px 0 0 -36px; border-radius: 50%; border: 0; background: var(--text, #eceef2); color: #111; cursor: pointer; display: grid; place-items: center; box-shadow: 0 6px 30px rgba(0,0,0,.45); transition: transform .2s; }
+.ps-play:hover { transform: scale(1.06); }
+.ps-play:focus-visible { outline: 3px solid var(--accent, #ff7a59); outline-offset: 4px; }
+.ps-icon { width: 0; height: 0; border-left: 20px solid currentColor; border-top: 13px solid transparent; border-bottom: 13px solid transparent; margin-left: 5px; }
+.ps-play[aria-pressed="true"] .ps-icon { width: 20px; height: 24px; border: 0; margin: 0; background: linear-gradient(90deg, currentColor 0 36%, transparent 36% 64%, currentColor 64%); }
+.ps-foot { position: absolute; left: 0; right: 0; bottom: 16px; text-align: center; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); padding: 0 16px; }

@@ -1,9 +1,16 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f1ede4); color: var(--text, #1d1b18); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.hp-foot { --hp-ink: var(--text, #1d1b18); --hp-dot: var(--accent, #e0452f); max-width: 1200px; margin: 0 auto; padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem) 0; overflow: hidden; }
+.hp-top { display: grid; grid-template-columns: 1.4fr 1.2fr auto; gap: 2rem; align-items: start; }
+.hp-line { font-family: var(--font-display, Georgia, serif); font-size: clamp(1.1rem, 2.2vw, 1.5rem); line-height: 1.35; max-width: 26rem; }
+.hp-cols { display: flex; gap: 3rem; }
+.hp-cols nav { display: grid; gap: 0.45rem; align-content: start; }
+.hp-cols h3 { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.3rem; font-weight: 600; }
+.hp-foot a { color: inherit; text-decoration: none; font-size: 0.92rem; }
+.hp-cols a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hp-dot); }
+.hp-up { border: 1.5px solid currentColor; border-radius: 999px; padding: 0.5rem 1rem; white-space: nowrap; transition: background 0.2s, color 0.2s; }
+.hp-up:hover { background: var(--hp-ink); color: var(--bg, #f1ede4); }
+.hp-foot a:focus-visible { outline: 2px solid var(--hp-dot); outline-offset: 3px; }
+.hp-mark { margin-top: clamp(2rem, 6vw, 4rem); height: clamp(150px, 26vw, 300px); overflow: hidden; }
+.hp-mark canvas { display: block; width: 100%; height: 170%; }
+@media (max-width: 760px) { .hp-top { grid-template-columns: 1fr; } .hp-cols { gap: 2rem; } .hp-up { justify-self: start; } }

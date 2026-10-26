@@ -1,33 +1,30 @@
 {
-  "name": "Prism Comet Preloader",
-  "title": "Prism Comet Preloader",
+  "name": "Spectrum Comet Loader",
+  "title": "Spectrum Comet Loader",
   "slug": "prism-comet-preloader",
   "category": "Preloaders & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A cinematic loading gate built like a motion designer's effects stack, with the load progress as the interpolation slider. Every frame is one WebGL shader, and each stage is the same light bent into a new shape. Nothing cross-fades between pictures.",
+  "description": "A WebGL loading gate where a comet of light hits a glass prism and fans into a spectrum while the load percentage drives the whole shader.",
   "tags": [
-    "prism",
-    "comet",
     "preloader",
-    "scroll",
-    "react"
+    "webgl",
+    "shader",
+    "light",
+    "prism",
+    "progress"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 214,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic",
     "dark"
@@ -37,24 +34,29 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope span.pcp-sr"
+      "selector": ":scope .pm-tag"
+    },
+    {
+      "id": "text-1",
+      "label": "Stage name",
+      "type": "text",
+      "selector": ":scope .pm-stage-name"
+    },
+    {
+      "id": "button-text",
+      "label": "Replay button",
+      "type": "text",
+      "selector": ":scope .pm-replay"
     }
   ],
-  "measured": {
-    "luma": 0.05,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "ownPalette": true
 }

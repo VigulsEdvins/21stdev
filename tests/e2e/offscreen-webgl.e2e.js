@@ -24,8 +24,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.goto(srv.url + '/builder.html');
   await page.waitForFunction(() => window.builderPreview && document.querySelector('iframe'));
   await page.evaluate(() => window.builderPreview.stackManager.setStack([
-    { id: 'top', slug: 'engraved-ticket', sizing: { heightMode: 'custom', customHeight: 2000, paddingY: 'none' } },
-    { id: 'gl', slug: 'caustic-pool', sizing: { heightMode: 'custom', customHeight: 700, paddingY: 'none' } }
+    { id: 'top', slug: 'responsive-burger-menu', sizing: { heightMode: 'custom', customHeight: 2000, paddingY: 'none' } },
+    { id: 'gl', slug: 'velvet-haze', sizing: { heightMode: 'custom', customHeight: 700, paddingY: 'none' } }
   ]));
   await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; return d && d.getElementById('gl') && d.querySelector('#gl canvas'); }, null, { timeout: 20000 });
   const frame = () => page.frames().find(f => f !== page.mainFrame());

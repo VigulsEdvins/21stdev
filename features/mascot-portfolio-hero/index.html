@@ -3,11 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mascot Portfolio Hero</title>
+  <title>Blobby Studio Hero</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="mp-hero" id="mpHero">
+    <div class="mp-room" aria-hidden="true"><div class="mp-floor"></div><div class="mp-wall"></div></div>
+
+    <div class="mp-copy">
+      <p class="mp-tag">Open for work / 2026</p>
+      <h1 class="mp-title">
+        <span>Hi, I make</span>
+        <span class="mp-big">playful</span>
+        <span class="mp-big mp-alt">interfaces</span>
+      </h1>
+      <p class="mp-intro">Freelance illustrator and front-end designer turning loud ideas into friendly screens.</p>
+      <div class="mp-pill"><span>Seeking</span><b>Brand &middot; Web</b></div>
+      <a class="mp-btn" href="#">View projects</a>
+    </div>
+
+    <svg class="mp-mascot" id="mpMascot" viewBox="0 0 240 280" role="img" aria-label="A round purple mascot with big eyes that follow the cursor">
+      <ellipse cx="120" cy="262" rx="70" ry="10" fill="#000" opacity=".15"/>
+      <path d="M40 240c-10-90 10-200 80-200s90 110 80 200c-30 16-130 16-160 0z" fill="#7b5cff"/>
+      <path d="M62 80c10-22 30-34 58-34" fill="none" stroke="#a592ff" stroke-width="8" stroke-linecap="round" opacity=".7"/>
+      <g id="mpEyes">
+        <circle cx="90" cy="120" r="24" fill="#fff"/><circle cx="150" cy="120" r="24" fill="#fff"/>
+        <circle class="mp-pupil" cx="90" cy="120" r="10" fill="#1a1230"/><circle class="mp-pupil" cx="150" cy="120" r="10" fill="#1a1230"/>
+      </g>
+      <path d="M96 170q24 22 48 0" fill="none" stroke="#1a1230" stroke-width="6" stroke-linecap="round"/>
+      <path d="M42 170q-26 10-24 40M198 170q26 10 24 40" fill="none" stroke="#7b5cff" stroke-width="14" stroke-linecap="round"/>
+    </svg>
+
+    <ul class="mp-services"><li>Illustration</li><li>Motion</li><li>Web design</li><li>Branding</li></ul>
+    <svg class="mp-doodle" viewBox="0 0 80 80" aria-hidden="true"><g fill="none" stroke="#ff5a7a" stroke-width="3" stroke-linecap="round"><circle cx="40" cy="40" r="8"/><path d="M40 8v14M40 58v14M8 40h14M58 40h14M18 18l10 10M52 52l10 10M62 18L52 28M28 52L18 62"/></g></svg>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,32 +1,29 @@
 {
-  "name": "Dither Cumulus",
-  "title": "Dither Cumulus",
+  "name": "Dithered Night Clouds",
+  "title": "Dithered Night Clouds",
   "slug": "dither-cumulus",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A sky of pixel-art cumulus clouds, printed with an ordered (Bayer) dither in six colours: cream billows over a deep navy night, with a dithered moon that is also the light. Built as a **background**: drop content in as children and it sits on top.",
+  "description": "A WebGL night sky of drifting clouds printed with an ordered dither in six colours, with a moon that follows the pointer.",
   "tags": [
     "dither",
-    "cumulus",
-    "interactions",
-    "react"
+    "clouds",
+    "webgl",
+    "background",
+    "pixel"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 137,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "dark"
   ],
@@ -35,17 +32,42 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.08,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .dc-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .dc-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .dc-text"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .dc-btn"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .dc-btn"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

@@ -3,11 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dragon Seal Preloader</title>
+  <title>Ink Seal Title Card</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="ds-stage" id="dsStage">
+    <div class="ds-top"><span class="ds-kicker">Reel one</span><span class="ds-count" id="dsCount" aria-live="off">000</span></div>
+    <svg class="ds-seal" viewBox="-200 -200 400 400" role="img" aria-label="Inked seal with turning rings and a coiled serpent">
+      <circle class="ds-ring ds-r1" r="170" />
+      <g class="ds-spin-a"><circle class="ds-ring" r="140" stroke-dasharray="3 9" /><g id="dsTicks"></g></g>
+      <g class="ds-spin-b"><circle class="ds-ring" r="108" /><path class="ds-arm" d="M-108 0H108M0-108V108" /></g>
+      <path class="ds-snake" id="dsSnake" d="M0 -78 C60 -78 78 -20 40 20 C10 52 -50 40 -62 0 C-72 -40 -28 -62 6 -44 C34 -28 30 8 8 14 C-8 18 -16 4 -6 -4" pathLength="100" />
+      <circle class="ds-eye" cx="-6" cy="-4" r="4" />
+      <circle class="ds-core" r="18" />
+    </svg>
+    <h1 class="ds-title">The Ember Archive</h1>
+    <p class="ds-sub">A silent picture in seven chapters</p>
+    <div class="ds-bar"><span id="dsBar"></span></div>
+    <button type="button" class="ds-btn" id="dsEnter" disabled>Break the seal</button>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

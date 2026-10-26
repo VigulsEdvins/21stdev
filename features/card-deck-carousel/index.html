@@ -3,11 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>card-deck-carousel</title>
+  <title>Card Deck Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="dk-stage">
+    <p class="dk-hint">Drag the top card away, or use the arrows</p>
+    <div class="dk-deck" id="dkDeck" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Postcard deck">
+      <article class="dk-card" style="--h1:18;--h2:48"><span class="dk-tag">No. 01</span><div class="dk-art"></div><h2>Dune light</h2></article>
+      <article class="dk-card" style="--h1:200;--h2:240"><span class="dk-tag">No. 02</span><div class="dk-art"></div><h2>Harbour blue</h2></article>
+      <article class="dk-card" style="--h1:140;--h2:170"><span class="dk-tag">No. 03</span><div class="dk-art"></div><h2>Pine hours</h2></article>
+      <article class="dk-card" style="--h1:300;--h2:340"><span class="dk-tag">No. 04</span><div class="dk-art"></div><h2>Violet dusk</h2></article>
+      <article class="dk-card" style="--h1:340;--h2:20"><span class="dk-tag">No. 05</span><div class="dk-art"></div><h2>Ember road</h2></article>
+    </div>
+    <div class="dk-controls">
+      <button type="button" class="dk-btn" id="dkPrev" aria-label="Previous card">&larr;</button>
+      <button type="button" class="dk-btn dk-auto" id="dkAuto" aria-pressed="false">Autoplay</button>
+      <button type="button" class="dk-btn" id="dkNext" aria-label="Next card">&rarr;</button>
+    </div>
+    <div class="dk-sr" id="dkLive" aria-live="polite">Card 1 of 5</div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

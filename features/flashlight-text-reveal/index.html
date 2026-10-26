@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flashlight Text Reveal</title>
+  <title>Torchlight Wall</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="tw-room" id="twRoom">
+    <canvas class="tw-wall" id="twWall" aria-hidden="true"></canvas>
+    <div class="tw-text" id="twText">
+      <p class="tw-tag">Found on the cellar wall</p>
+      <p class="tw-words">Some things are only written for the ones who keep looking. Hold the light still, and the wall will tell you.</p>
+      <p class="tw-sign">Move the pointer to search</p>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

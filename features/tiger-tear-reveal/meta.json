@@ -1,28 +1,26 @@
 {
-  "name": "Tiger Tear Reveal",
-  "title": "Tiger Tear Reveal",
+  "name": "Paper Tear Reveal",
+  "title": "Paper Tear Reveal",
   "slug": "tiger-tear-reveal",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A scroll-driven poster hero. The page starts as a plain slogan: a small tagline over one huge red word. Scroll, and a crack runs out from the middle of the word, the sheet rips in two along it, and the halves pull apart: the top lifts, the bottom drops, each tipping like real paper, with white torn ",
+  "description": "A scroll-driven poster hero: one huge red word on paper rips along a jagged line and the two halves pull apart to reveal the content underneath.",
   "tags": [
-    "tiger",
-    "tear",
+    "scroll",
     "reveal",
-    "react"
+    "poster",
+    "tear",
+    "hero",
+    "paper"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 237,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
@@ -36,22 +34,46 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.89,
-    "webgl": false,
-    "canvas2d": false
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .tr-small"
+    },
+    {
+      "id": "headline",
+      "label": "Revealed headline",
+      "type": "text",
+      "selector": ":scope .tr-reveal"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .tr-btn"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .tr-btn"
+    },
+    {
+      "id": "text-1",
+      "label": "Scroll cue",
+      "type": "text",
+      "selector": ":scope .tr-cue"
+    }
+  ],
   "nativeWhen": [
     "dark"
   ],
-  "reserveHeight": 2080,
   "palette": "designed",
-  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it"
+  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it",
+  "ownPalette": true
 }

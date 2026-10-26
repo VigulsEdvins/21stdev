@@ -1,33 +1,29 @@
 {
-  "name": "Noise Dissolve Reveal",
-  "title": "Noise Dissolve Reveal",
+  "name": "Ink Bleed Reveal",
+  "title": "Ink Bleed Reveal",
   "slug": "noise-dissolve-reveal",
   "category": "Scroll & Parallax",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A sheet of colour covering your content, which dissolves along a fractal-noise threshold. Holes nucleate, spread into ragged islands, and merge until the page underneath is bare. The edges are fibrous rather than clean, so it reads as paper tearing or ink bleeding, not as a wipe or a fade.",
+  "description": "A WebGL sheet of colour that wears away along a fractal-noise threshold as you scroll, opening ragged holes until the page beneath is bare.",
   "tags": [
-    "noise",
-    "dissolve",
-    "reveal",
     "scroll",
-    "react"
+    "reveal",
+    "noise",
+    "webgl",
+    "dissolve"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 197,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "light"
   ],
@@ -36,17 +32,41 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 1,
-    "webgl": true,
-    "canvas2d": false
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .nr-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope h1.nr-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .nr-text"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .nr-btn"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .nr-btn"
+    }
+  ],
   "lazy": true
 }

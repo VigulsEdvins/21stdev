@@ -7,7 +7,25 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="cf-page">
+    <section class="cf-content" aria-hidden="true" id="cfContent">
+      <p class="cf-kicker">Table ready</p>
+      <h1 class="cf-title">Welcome to the lounge</h1>
+      <p class="cf-text">The deck has been dealt and the page is yours.</p>
+      <a class="cf-btn" href="#">Take a seat</a>
+    </section>
+    <div class="cf-loader" id="cfLoader" role="status" aria-live="polite">
+      <div class="cf-fan" aria-hidden="true">
+        <span class="cf-card" style="--i:0"><b>A</b><i>&spades;</i></span>
+        <span class="cf-card cf-red" style="--i:1"><b>K</b><i>&hearts;</i></span>
+        <span class="cf-card" style="--i:2"><b>Q</b><i>&clubs;</i></span>
+        <span class="cf-card cf-red" style="--i:3"><b>J</b><i>&diams;</i></span>
+        <span class="cf-card" style="--i:4"><b>10</b><i>&spades;</i></span>
+        <span class="cf-card cf-red" style="--i:5"><b>9</b><i>&hearts;</i></span>
+      </div>
+      <p class="cf-label"><span id="cfLabel">Dealing</span> <span class="cf-pct" id="cfPct">0%</span></p>
+    </div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,29 +1,25 @@
 {
-  "name": "Spotlight Offer Quiz",
-  "title": "Spotlight Offer Quiz",
+  "name": "Offer Quiz Popup",
+  "title": "Offer Quiz Popup",
   "slug": "spotlight-offer-quiz",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "The discount popup that asks one good question first. A spotlit studio stage on the right, a huge offer, one personal question and a stack of answer pills. At rest the stage shows the line-up: every answer that has a photo stands side by side in a tall column under one beam. Pointing at an answer pu",
+  "description": "A discount popup that asks one question first; answer pills light up matching shapes on a spotlit stage and unlock a discount code.",
   "tags": [
-    "spotlight",
-    "offer",
+    "popup",
     "quiz",
-    "interactions",
-    "react"
+    "offer",
+    "spotlight",
+    "hover"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 228,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
@@ -36,17 +32,59 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 1,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .sq-label"
+    },
+    {
+      "id": "headline",
+      "label": "Question",
+      "type": "text",
+      "selector": ":scope .sq-q"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Answer 1",
+      "type": "text",
+      "selector": ":scope .sq-pill:nth-child(1)"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Answer 2",
+      "type": "text",
+      "selector": ":scope .sq-pill:nth-child(2)"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Answer 3",
+      "type": "text",
+      "selector": ":scope .sq-pill:nth-child(3)"
+    },
+    {
+      "id": "button-text-4",
+      "label": "Answer 4",
+      "type": "text",
+      "selector": ":scope .sq-pill:nth-child(4)"
+    },
+    {
+      "id": "button-text-5",
+      "label": "Final button",
+      "type": "text",
+      "selector": ":scope .sq-cta"
+    },
+    {
+      "id": "button-link",
+      "label": "Final link",
+      "type": "link",
+      "selector": ":scope .sq-cta"
+    }
+  ],
+  "ownPalette": true
 }

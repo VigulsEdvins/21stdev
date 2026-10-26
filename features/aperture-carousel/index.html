@@ -1,13 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aperture Carousel</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iris Slide Carousel</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="ap-car" aria-roledescription="carousel" aria-label="Featured scenes">
+  <div class="ap-slides">
+    <article class="ap-slide ap-cur" style="--a:#1b2a4a;--b:#e8845c;--c:#f6d6a8" aria-label="1 of 4"><div class="ap-art"></div><div class="ap-text"><p>Chapter one</p><h2>Salt &amp; Dusk</h2></div></article>
+    <article class="ap-slide" style="--a:#0f3b33;--b:#6fcf97;--c:#d8f3dc" aria-label="2 of 4" aria-hidden="true"><div class="ap-art"></div><div class="ap-text"><p>Chapter two</p><h2>Green Hours</h2></div></article>
+    <article class="ap-slide" style="--a:#3a1c4d;--b:#ff6fb5;--c:#ffd1e8" aria-label="3 of 4" aria-hidden="true"><div class="ap-art"></div><div class="ap-text"><p>Chapter three</p><h2>Neon Orchard</h2></div></article>
+    <article class="ap-slide" style="--a:#2a2a2e;--b:#8ab4f8;--c:#eef3ff" aria-label="4 of 4" aria-hidden="true"><div class="ap-art"></div><div class="ap-text"><p>Chapter four</p><h2>Quiet Static</h2></div></article>
+  </div>
+  <div class="ap-ring" aria-hidden="true"></div>
+  <div class="ap-ui">
+    <button class="ap-prev" type="button">Prev</button>
+    <div class="ap-line" aria-hidden="true"><i></i></div>
+    <span class="ap-n" aria-live="polite">01 / 04</span>
+    <button class="ap-next" type="button">Next</button>
+  </div>
+  <div class="ap-lens" aria-hidden="true">Next</div>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

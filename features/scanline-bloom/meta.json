@@ -1,32 +1,29 @@
 {
-  "name": "Scanline Bloom",
-  "title": "Scanline Bloom",
+  "name": "Red Print Bouquet",
+  "title": "Red Print Bouquet",
   "slug": "scanline-bloom",
   "category": "Audio & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A bouquet of lilies and roses printed in red on black paper, the way a cheap risograph or a dying CRT would do it: ragged horizontal scanlines that thicken with the light, a stipple dither that takes over toward the bottom, paper grain, and a thin frame behind it all.",
+  "description": "A procedural bouquet drawn by a small fragment shader as red ragged scanlines that turn into stipple dots toward the bottom of a black sheet.",
   "tags": [
-    "scanline",
-    "bloom",
-    "audio",
-    "react"
+    "shader",
+    "scanlines",
+    "halftone",
+    "flowers",
+    "print"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 219,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "retro",
     "dark"
@@ -36,17 +33,18 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.04,
-    "webgl": true,
-    "canvas2d": true
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Caption",
+      "type": "text",
+      "selector": ":scope .sb-cap"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

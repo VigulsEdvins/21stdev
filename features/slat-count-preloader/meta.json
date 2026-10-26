@@ -1,29 +1,25 @@
 {
-  "name": "Slat Count Preloader",
-  "title": "Slat Count Preloader",
+  "name": "Rising Slats Loader",
+  "title": "Rising Slats Loader",
   "slug": "slat-count-preloader",
   "category": "Preloaders & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A Swiss-poster loading gate built out of black slats on vermilion.",
+  "description": "A full-screen preloader where a percentage counter fills a row of vertical slats, which then drop away to reveal the page.",
   "tags": [
-    "slat",
-    "count",
     "preloader",
-    "scroll",
-    "react"
+    "counter",
+    "slats",
+    "loading",
+    "poster"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 226,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
@@ -36,55 +32,35 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label-1",
-      "label": "Small label 1",
+      "label": "Brand",
       "type": "text",
-      "selector": ":scope div.scp-tl"
-    },
-    {
-      "id": "small-label-2",
-      "label": "Small label 2",
-      "type": "text",
-      "selector": ":scope div.scp-hint"
+      "selector": ":scope .sc-brand"
     },
     {
       "id": "small-label-3",
-      "label": "Small label 3",
+      "label": "Status",
       "type": "text",
-      "selector": ":scope span.scp-status"
+      "selector": ":scope .sc-status"
     },
     {
-      "id": "small-label-4",
-      "label": "Small label 4",
+      "id": "headline",
+      "label": "Ready headline",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1)"
-    },
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope div.scp-bl"
+      "selector": ":scope .sc-ready-title"
     },
     {
       "id": "button-text",
-      "label": "Button text",
+      "label": "Skip button",
       "type": "text",
-      "selector": ":scope button.scp-skip"
+      "selector": ":scope .sc-skip"
     }
   ],
-  "measured": {
-    "luma": 0.33,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
-  "reserveHeight": 800
+  "ownPalette": true
 }

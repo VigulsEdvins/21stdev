@@ -1,13 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noise Dissolve Reveal</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ink Bleed Reveal</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<div class="nr-track" data-nr-track>
+  <div class="nr-stage">
+    <article class="nr-page">
+      <p class="nr-label">Underneath</p>
+      <h1 class="nr-title">The page was here all along</h1>
+      <p class="nr-text">Scroll and the cover wears away in ragged patches, the way ink bleeds through paper. Nothing wipes, nothing fades: holes open, spread and join until your content is bare.</p>
+      <a class="nr-btn" href="#">Read on</a>
+    </article>
+    <canvas class="nr-sheet" data-nr-sheet aria-hidden="true"></canvas>
+    <div class="nr-cover" data-nr-cover aria-hidden="true">
+      <p class="nr-cover-t">Scroll to dissolve</p>
+      <span class="nr-arrow"></span>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Code Curtain</title>
+  <title>Hanging Code Cloth</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="cc-stage" id="ccStage">
+    <div class="cc-rod" aria-hidden="true"></div>
+    <canvas class="cc-canvas" id="ccCanvas" role="img" aria-label="A sheet of code hanging like cloth, moved by the pointer"></canvas>
+    <button class="cc-btn" id="ccGust" type="button">Blow a gust</button>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

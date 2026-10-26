@@ -1,13 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Magic Hour</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scroll Dusk</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<div class="mh-track">
+  <div class="mh-sticky">
+    <canvas class="mh-canvas" aria-hidden="true"></canvas>
+    <div class="mh-copy">
+      <p class="mh-label">Scroll to move the clock</p>
+      <h1 class="mh-title">Golden hour to nightfall</h1>
+      <p class="mh-time" aria-live="off"><span class="mh-clock">17:30</span></p>
+    </div>
+    <div class="mh-bar" aria-hidden="true"><i></i></div>
+  </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

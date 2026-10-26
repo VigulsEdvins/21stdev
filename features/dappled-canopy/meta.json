@@ -1,32 +1,29 @@
 {
-  "name": "Dappled Canopy",
-  "title": "Dappled Canopy",
+  "name": "Leaf Shadow Wall",
+  "title": "Leaf Shadow Wall",
   "slug": "dappled-canopy",
   "category": "Audio & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Late sun through a tree, thrown soft and warm across a plaster wall. Two layers of out-of-focus leaves sway on a slow breeze, flutter on their own and swing when a gust comes through, while the light pools in one corner and fades out across the wall. Film grain over everything. There's no text on it",
+  "description": "A WebGL shader of warm sunlight and drifting leaf shadows on a plaster wall that sway harder when the pointer moves.",
   "tags": [
-    "dappled",
-    "canopy",
-    "audio",
-    "react"
+    "shader",
+    "light",
+    "shadow",
+    "leaves",
+    "background"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 133,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "retro"
   ],
@@ -36,18 +33,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [],
-  "measured": {
-    "luma": 0.59,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "ownPalette": true
 }

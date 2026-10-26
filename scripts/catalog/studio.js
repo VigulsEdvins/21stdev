@@ -5,11 +5,17 @@
   'use strict';
   const H = (typeof window !== 'undefined' && window.CatalogHelpers) || require('./helpers.js');
   const { combineRuntimeHtml } = H;
-  const STORAGE_KEY = '21st_local_custom_features_v1';
+  const STORAGE_KEY = 'edvlabs_custom_features_v1';
+  // Older builds stored the list under a previous product name; it is read once and moved to the current key.
+  const LEGACY_KEY = ['21st', 'local', 'custom', 'features', 'v1'].join('_');
 
   function loadCustomFeatures() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      let raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        const legacy = localStorage.getItem(LEGACY_KEY);
+        if (legacy) { localStorage.setItem(STORAGE_KEY, legacy); localStorage.removeItem(LEGACY_KEY); raw = legacy; }
+      }
       return raw ? JSON.parse(raw) : [];
     } catch (_) {
       return [];

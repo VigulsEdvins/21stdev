@@ -1,13 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Slat Count Preloader</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slat Counter</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<div class="sc-stage" data-state="loading">
+  <main class="sc-ready">
+    <p class="sc-ready-label">Loaded</p>
+    <h1 class="sc-ready-title">Welcome in.</h1>
+    <button class="sc-replay" type="button">Replay</button>
+  </main>
+  <div class="sc-slats" aria-hidden="true"></div>
+  <div class="sc-ui">
+    <div class="sc-top"><span class="sc-brand">Studio 12</span><span class="sc-status">Loading</span></div>
+    <div class="sc-count" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="sc-num">0</span><small>%</small></div>
+    <button class="sc-skip" type="button">Skip</button>
+  </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

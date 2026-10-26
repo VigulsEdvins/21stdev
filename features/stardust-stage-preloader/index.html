@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stardust Stage Preloader</title>
+  <title>Dot Curtain Preloader</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="dc-stage" id="dcStage" role="status" aria-live="polite">
+    <canvas class="dc-canvas" id="dcCanvas" aria-hidden="true"></canvas>
+    <div class="dc-hud">
+      <span class="dc-count" id="dcCount">000</span>
+      <span class="dc-caption" id="dcCaption">Lighting the first star</span>
+      <button class="dc-enter" id="dcEnter" type="button" hidden>Enter the show</button>
+    </div>
+    <span class="dc-sr">Loading</span>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,29 +1,25 @@
 {
-  "name": "Bento Portfolio Template",
-  "title": "Bento Portfolio Template",
+  "name": "Pebble Bento Portfolio",
+  "title": "Pebble Bento Portfolio",
   "slug": "bento-portfolio-template",
   "category": "Landing Pages",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A complete personal site in one component: a soft, warm-gray bento where every card does something small when you reach for it.",
+  "description": "A one-section personal site built as a soft bento grid where each card reacts a little to hover and touch.",
   "tags": [
     "bento",
     "portfolio",
-    "template",
-    "full",
-    "react"
+    "landing",
+    "cards",
+    "tilt"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 111,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -37,86 +33,59 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
-    {
-      "id": "button-text-1",
-      "label": "Button text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
-    },
-    {
-      "id": "button-text-3",
-      "label": "Button text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
-    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.bpt-h1"
+      "selector": ":scope .bn-title"
+    },
+    {
+      "id": "small-label",
+      "label": "Role label",
+      "type": "text",
+      "selector": ":scope .bn-intro .bn-label"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.bpt-bio"
+      "selector": ":scope .bn-intro .bn-text"
     },
     {
-      "id": "button-text-4",
-      "label": "Button text 4",
+      "id": "button-text",
+      "label": "Main button",
       "type": "text",
-      "selector": ":scope button.bpt-avail"
-    },
-    {
-      "id": "link-1",
-      "label": "Link 1",
-      "type": "link",
-      "selector": ":scope a.bpt-xp-name"
-    },
-    {
-      "id": "section-heading-1",
-      "label": "Section heading 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-2",
-      "label": "Section heading 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "link-2",
-      "label": "Link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(10) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope .bn-intro .bn-btn"
     },
     {
       "id": "button-link",
-      "label": "Button link",
+      "label": "Main button link",
       "type": "link",
-      "selector": ":scope a.bpt-btn"
+      "selector": ":scope .bn-intro .bn-btn"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Nav button",
+      "type": "text",
+      "selector": ":scope .bn-pill"
+    },
+    {
+      "id": "contact-heading",
+      "label": "Contact heading",
+      "type": "text",
+      "selector": ":scope .bn-contact .bn-h2"
+    },
+    {
+      "id": "email",
+      "label": "Email",
+      "type": "text",
+      "selector": ":scope .bn-mail"
     }
   ],
-  "measured": {
-    "luma": 0.9,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "ownPalette": true,
-  "themeReviewed": "Muted secondary labels (Previously at, years, timestamps) are intentionally soft; headline and body are fine. Checked 2026-10-24."
+  "ownPalette": true
 }

@@ -3,11 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stepped Morph Slider</title>
+  <title>Skyline Mask Slider</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sk-wrap">
+    <div class="sk-stage">
+      <canvas class="sk-canvas" id="skCanvas" role="img" aria-label="Illustrated landscape inside a stepped mask"></canvas>
+    </div>
+    <div class="sk-bar">
+      <div class="sk-text" aria-live="polite">
+        <span class="sk-num" id="skNum">01</span>
+        <h3 class="sk-title" id="skTitle"></h3>
+        <p class="sk-caption" id="skCap"></p>
+      </div>
+      <div class="sk-ctrl">
+        <button type="button" class="sk-btn" id="skPrev" aria-label="Previous slide">&larr;</button>
+        <div class="sk-dots" id="skDots"></div>
+        <button type="button" class="sk-btn" id="skNext" aria-label="Next slide">&rarr;</button>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

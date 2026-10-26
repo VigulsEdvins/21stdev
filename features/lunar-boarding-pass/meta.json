@@ -1,33 +1,29 @@
 {
-  "name": "Lunar Boarding Pass",
-  "title": "Lunar Boarding Pass",
+  "name": "Moon Ticket Flip",
+  "title": "Moon Ticket Flip",
   "slug": "lunar-boarding-pass",
   "category": "Cards & Tiles",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A two-sided ticket to the Moon: a black **VIP pass** on the front, a silver **boarding pass** with a perforated stub on the back.",
+  "description": "A two-sided ticket that flips in 3D between a dark VIP pass and a silver boarding pass with a perforated tear-off stub.",
   "tags": [
-    "lunar",
-    "boarding",
-    "pass",
-    "cards",
-    "react"
+    "ticket",
+    "card",
+    "flip",
+    "3d",
+    "pass"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 187,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "retro",
     "light"
@@ -37,66 +33,41 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "small-label-1",
-      "label": "Small label 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5)"
+      "selector": ":scope .bp-front .bp-small"
     },
     {
-      "id": "small-label-2",
-      "label": "Small label 2",
+      "id": "headline",
+      "label": "Headline",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(6)"
-    },
-    {
-      "id": "small-label-3",
-      "label": "Small label 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(7)"
-    },
-    {
-      "id": "small-label-4",
-      "label": "Small label 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(8)"
-    },
-    {
-      "id": "small-label-5",
-      "label": "Small label 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(9)"
+      "selector": ":scope .bp-title"
     },
     {
       "id": "button-text-1",
       "label": "Button text 1",
       "type": "text",
-      "selector": ":scope button.text-foreground"
+      "selector": ":scope .bp-tab:nth-child(1)"
     },
     {
       "id": "button-text-2",
       "label": "Button text 2",
       "type": "text",
-      "selector": ":scope button.text-muted-foreground"
+      "selector": ":scope .bp-tab:nth-child(2)"
     },
     {
       "id": "intro-text",
-      "label": "Intro text",
+      "label": "Description",
       "type": "text",
-      "selector": ":scope p.sr-only"
+      "selector": ":scope .bp-sr"
     }
   ],
-  "measured": {
-    "luma": 0.76,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "ownPalette": true
 }

@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiln Wordmark Footer</title>
+  <title>Moss Wordmark Footer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <footer class="kf-foot">
+    <div class="kf-top">
+      <p class="kf-motto">Made slowly.<br />Built to outlast us.</p>
+      <button class="kf-up" id="kfUp" type="button" aria-label="Back to top">&uarr;</button>
+    </div>
+    <div class="kf-cols">
+      <div class="kf-col"><h3>Find us</h3><address>14 Orchard Lane<br />Fernwell, FW1 2AB</address></div>
+      <nav class="kf-col" aria-label="Footer"><h3>Explore</h3><ul><li><a href="#">Workshop</a></li><li><a href="#">Collections</a></li><li><a href="#">Journal</a></li></ul></nav>
+      <nav class="kf-col" aria-label="Social"><h3>Follow</h3><ul><li><a href="#">Newsletter</a></li><li><a href="#">Photo diary</a></li><li><a href="#">Video notes</a></li></ul></nav>
+    </div>
+    <div class="kf-mark" aria-hidden="true" id="kfMark"></div>
+    <div class="kf-legal"><span>&copy; 2026 Fernwell Works</span><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </footer>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,32 +1,29 @@
 {
-  "name": "Halftone Nebula",
-  "title": "Halftone Nebula",
+  "name": "Dot Print Nebula",
+  "title": "Dot Print Nebula",
   "slug": "halftone-nebula",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A pixel-art night sky printed in halftone dots — crimson gas, needle-spiked sparkle stars and a dotted planet. Built as a **background**: drop content in as children and it sits on top.",
+  "description": "A WebGL night sky printed as one-colour halftone dots: drifting gas, spiked stars and a dotted planet behind your content.",
   "tags": [
     "halftone",
     "nebula",
-    "interactions",
-    "react"
+    "webgl",
+    "background",
+    "print"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 159,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "retro",
     "light"
@@ -36,17 +33,42 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.96,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .hn-tag"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .hn-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .hn-text"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .hn-btn"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .hn-btn"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

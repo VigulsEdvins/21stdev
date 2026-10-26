@@ -1,9 +1,20 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f2efe9); color: var(--text, #1d1b19); min-height: 100%; }
+body { font-family: var(--font-body, system-ui, sans-serif); }
+.dk-stage { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; padding: 24px 16px; overflow: hidden; }
+.dk-hint { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--text, #1d1b19) 55%, transparent); text-align: center; }
+.dk-deck { position: relative; width: min(280px, 72vw); aspect-ratio: 3 / 4; touch-action: none; outline: none; }
+.dk-deck:focus-visible { outline: 2px solid var(--accent, #d4572f); outline-offset: 14px; border-radius: 20px; }
+.dk-card { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 12px; padding: 14px; border-radius: var(--radius, 16px); background: #fffdf8; box-shadow: 0 14px 30px rgba(30,20,10,.18), 0 2px 4px rgba(30,20,10,.1); user-select: none; -webkit-user-select: none; will-change: transform; transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .4s; cursor: default; }
+.dk-card.is-top { cursor: grab; }
+.dk-card.is-drag { cursor: grabbing; transition: none; }
+.dk-tag { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: color-mix(in srgb, #1d1b19 55%, transparent); }
+.dk-art { flex: 1; border-radius: calc(var(--radius, 16px) - 6px); background: radial-gradient(circle at 70% 25%, hsl(var(--h2) 90% 75%) 0 14%, transparent 15%), linear-gradient(165deg, hsl(var(--h1) 75% 62%), hsl(var(--h2) 65% 38%)); }
+.dk-card h2 { font-family: var(--font-display, Georgia, serif); font-size: 20px; font-weight: 600; color: #1d1b19; }
+.dk-controls { display: flex; gap: 12px; align-items: center; }
+.dk-btn { font: inherit; font-size: 14px; min-width: 44px; height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--text, #1d1b19) 25%, transparent); background: transparent; color: inherit; cursor: pointer; }
+.dk-btn:hover { background: color-mix(in srgb, var(--text, #1d1b19) 8%, transparent); }
+.dk-btn:focus-visible { outline: 2px solid var(--accent, #d4572f); outline-offset: 3px; }
+.dk-btn[aria-pressed="true"] { background: var(--accent, #d4572f); border-color: transparent; color: #fff; }
+.dk-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .dk-card { transition-duration: .01s; } }

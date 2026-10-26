@@ -51,14 +51,14 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.fill('#newFeatureJs', 'console.log(1)');
   await page.click('#addFeatureForm button[type=submit]');
   await page.waitForFunction(() => document.getElementById('addFeatureModal').classList.contains('is-hidden'));
-  assert(await page.evaluate(() => (JSON.parse(localStorage.getItem('21st_local_custom_features_v1') || '[]')).some(f => f.slug === 'test-banner')), 'custom feature stored');
+  assert(await page.evaluate(() => (JSON.parse(localStorage.getItem('edvlabs_custom_features_v1') || '[]')).some(f => f.slug === 'test-banner')), 'custom feature stored');
   await page.reload();
   await page.waitForSelector('#wbTree, .vault-card');
   assert((await page.textContent('#totalCountBadge')).includes(String(total + 1)), 'count badge includes the custom feature');
-  assert(await page.evaluate(() => JSON.parse(localStorage.getItem('21st_local_custom_features_v1') || '[]').length === 1));
+  assert(await page.evaluate(() => JSON.parse(localStorage.getItem('edvlabs_custom_features_v1') || '[]').length === 1));
   await page.click('#openAddModalBtn');
   await page.click('#clearCustomFeaturesBtn');
-  assert.strictEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('21st_local_custom_features_v1') || '[]').length), 0, 'clear removes it');
+  assert.strictEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('edvlabs_custom_features_v1') || '[]').length), 0, 'clear removes it');
   step('custom feature added and kept across a reload');
 
   assert.deepStrictEqual(errors, [], errors.join('; '));

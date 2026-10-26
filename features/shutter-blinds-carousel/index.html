@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shutter Blinds Carousel</title>
+  <title>Slat Flip Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sf-stage" id="sfStage" aria-roledescription="carousel" aria-label="Scenes">
+    <div class="sf-base" id="sfBase"></div>
+    <div class="sf-slats" id="sfSlats" aria-hidden="true"></div>
+    <div class="sf-cap">
+      <p class="sf-count" id="sfCount">01 / 04</p>
+      <h2 class="sf-title" id="sfTitle">Harbour at dawn</h2>
+      <p class="sf-text" id="sfText">Cold light on still water and a single boat leaving early.</p>
+    </div>
+    <div class="sf-nav">
+      <button type="button" class="sf-btn" id="sfPrev" aria-label="Previous scene">&larr;</button>
+      <button type="button" class="sf-btn" id="sfNext" aria-label="Next scene">&rarr;</button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

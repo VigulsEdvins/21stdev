@@ -1,9 +1,19 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0a0b12); color: var(--text, #f3f4f6); }
+body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+
+.ko-root {
+  position: relative; min-height: 100vh; overflow: hidden; display: grid; place-items: center;
+  background:
+    radial-gradient(60% 40% at 50% 92%, color-mix(in srgb, var(--accent, #3a6bff) 55%, transparent), transparent 70%),
+    var(--bg, #0a0b12);
 }
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
+.ko-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+.ko-canvas:active { cursor: grabbing; }
+.ko-copy { position: absolute; top: clamp(20px, 6vh, 56px); left: 0; right: 0; text-align: center; pointer-events: none; padding: 0 20px; }
+.ko-label { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; opacity: .6; }
+.ko-title {
+  margin-top: 8px; font-family: var(--font-display, system-ui, sans-serif); font-weight: 700;
+  font-size: clamp(26px, 5vw, 54px); letter-spacing: -.02em;
 }
+.ko-hint { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; opacity: .5; }

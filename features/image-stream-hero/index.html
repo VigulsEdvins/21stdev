@@ -3,43 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Stream Hero — 3D Continuous Vanishing Point Corridor</title>
+  <title>Card Corridor Hero</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="stream-hero-stage">
-    <!-- Ambient Glow & Vignette -->
-    <div class="ambient-glow" aria-hidden="true"></div>
-    <div class="stage-vignette" aria-hidden="true"></div>
-
-    <!-- 3D Corridor Container -->
-    <div class="stream-corridor" id="streamCorridor">
-      <div class="corridor-viewport" id="corridorViewport">
-        <!-- Injected dynamic rails -->
-        <div class="rail rail-left" id="railLeft"></div>
-        <div class="rail rail-right" id="railRight"></div>
+  <section class="cc-hero" id="ccHero">
+    <div class="cc-field" id="ccField" aria-hidden="true"></div>
+    <div class="cc-copy">
+      <span class="cc-pill">New: live boards</span>
+      <h1 class="cc-title">Ideas move faster when they can be seen.</h1>
+      <p class="cc-text">Collect references, drop them on a shared wall and watch the whole project flow past you.</p>
+      <div class="cc-actions">
+        <button type="button" class="cc-btn cc-ghost">Watch a demo</button>
+        <button type="button" class="cc-btn cc-solid">Start a board</button>
       </div>
     </div>
-
-    <!-- Central Hero Headline & Actions -->
-    <div class="hero-content">
-      <div class="hero-pill">
-        <span class="pill-dot"></span>
-        <span>Next-Gen Visual Motion</span>
-      </div>
-      <h1 class="hero-title">
-        Infinite Visual<br />Corridor
-      </h1>
-      <p class="hero-description">
-        Two streams of curved 3D cards ride out of the central vanishing point and sweep toward the edges with cinematic perspective projection.
-      </p>
-      <div class="hero-actions">
-        <button type="button" class="btn-primary" id="btnExplore">Explore Gallery</button>
-        <button type="button" class="btn-secondary" id="btnToggleSpeed">Faster Flow</button>
-      </div>
-    </div>
-  </div>
-
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

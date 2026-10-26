@@ -3,11 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>frosted-glass-menu</title>
+  <title>Frosted Glass Menu</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="fm-scene">
+    <div class="fm-blob fm-b1"></div><div class="fm-blob fm-b2"></div><div class="fm-blob fm-b3"></div>
+    <nav class="fm-nav" id="fmNav" aria-label="Main">
+      <div class="fm-bar">
+        <a class="fm-logo" href="#">Cedar &amp; Lark</a>
+        <button type="button" class="fm-toggle" id="fmToggle" aria-expanded="false" aria-controls="fmPanel">Menu</button>
+      </div>
+      <div class="fm-panel" id="fmPanel">
+        <div class="fm-inner">
+          <div class="fm-cols">
+            <div class="fm-col">
+              <h2 class="fm-head">The club</h2>
+              <ul><li><a href="#">Membership</a></li><li><a href="#">Rooms</a></li><li><a href="#">Events</a></li></ul>
+            </div>
+            <div class="fm-col">
+              <h2 class="fm-head">Visit</h2>
+              <ul><li><a href="#">Dining</a></li><li><a href="#">Guest passes</a></li><li><a href="#">Find us</a></li></ul>
+            </div>
+            <div class="fm-col">
+              <h2 class="fm-head">Journal</h2>
+              <ul><li><a href="#">Stories</a></li><li><a href="#">Newsletter</a></li></ul>
+              <a class="fm-cta" href="#">Request an invite</a>
+            </div>
+          </div>
+          <div class="fm-foot">
+            <span class="fm-note">Open daily, 8am to late</span>
+            <span class="fm-rule"><svg class="fm-walker" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

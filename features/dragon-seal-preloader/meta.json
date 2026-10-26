@@ -1,32 +1,30 @@
 {
-  "name": "Dragon Seal Preloader",
-  "title": "Dragon Seal Preloader",
+  "name": "Ink Seal Title Card",
+  "title": "Ink Seal Title Card",
   "slug": "dragon-seal-preloader",
   "category": "Preloaders & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A film title card that loads, then stays on as the landing screen. Sepia paper, a lace of cloud scrolls, a bronze astrolabe, a dragon coiled round it and two hands rising out from behind the seal.",
+  "description": "A sepia film title card whose inked serpent draws itself around turning brass rings while loading, then waits on a button.",
   "tags": [
-    "dragon",
-    "seal",
     "preloader",
-    "react"
+    "title-card",
+    "svg",
+    "sepia",
+    "seal"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "SVG",
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 139,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "retro",
     "dark"
@@ -36,43 +34,36 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope div.dsp-top"
+      "selector": ":scope .ds-kicker"
     },
     {
-      "id": "text-1",
-      "label": "Text 1",
+      "id": "headline",
+      "label": "Headline",
       "type": "text",
-      "selector": ":scope span.dsp-kicker"
+      "selector": ":scope .ds-title"
     },
     {
-      "id": "text-2",
-      "label": "Text 2",
+      "id": "intro-text",
+      "label": "Intro text",
       "type": "text",
-      "selector": ":scope span.dsp-count"
+      "selector": ":scope .ds-sub"
     },
     {
       "id": "button-text",
       "label": "Button text",
       "type": "text",
-      "selector": ":scope button.dsp-btn"
+      "selector": ":scope .ds-btn"
     }
   ],
-  "measured": {
-    "luma": 0.09,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "ownPalette": true
 }

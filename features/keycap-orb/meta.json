@@ -1,32 +1,29 @@
 {
-  "name": "Keycap Orb",
-  "title": "Keycap Orb",
+  "name": "Keycap Sphere",
+  "title": "Keycap Sphere",
   "slug": "keycap-orb",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A ball of mechanical keycaps floating over a cobalt floor glow. Ink, ash, cobalt and lime caps in plastic, clear glass caps with the stem showing through, engraved legends, and the whole thing mirrored in the floor.",
+  "description": "A draggable canvas sphere built from hundreds of mechanical keycaps in plastic and glass finishes, floating over a blue floor glow.",
   "tags": [
     "keycap",
-    "orb",
-    "interactions",
-    "react"
+    "sphere",
+    "canvas",
+    "drag",
+    "3d"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 178,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "luxury",
     "dark"
@@ -36,17 +33,30 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.07,
-    "webgl": true,
-    "canvas2d": true
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .ko-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .ko-title"
+    },
+    {
+      "id": "small-label-2",
+      "label": "Hint",
+      "type": "text",
+      "selector": ":scope .ko-hint"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

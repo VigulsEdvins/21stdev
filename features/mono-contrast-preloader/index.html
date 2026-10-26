@@ -1,13 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mono Contrast Preloader</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crushed Mono Loader</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="mc-stage" aria-label="Loading">
+  <canvas class="mc-canvas" aria-hidden="true"></canvas>
+  <div class="mc-vignette" aria-hidden="true"></div>
+  <p class="mc-label">Archive reel</p>
+  <h1 class="mc-title">Developing</h1>
+  <div class="mc-count" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span>0</span>%</div>
+  <div class="mc-bar" aria-hidden="true"><i></i></div>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

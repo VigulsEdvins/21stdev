@@ -1,13 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Velocity Reel</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scroll Scrubbed Reel</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<div class="vr-track">
+  <div class="vr-sticky">
+    <canvas class="vr-canvas" aria-hidden="true"></canvas>
+    <p class="vr-label">Scene <span class="vr-num">1</span> / 5</p>
+    <h1 class="vr-title" aria-live="polite">Still water</h1>
+    <p class="vr-sub">Scroll to run the reel</p>
+    <div class="vr-bar" aria-hidden="true"><i></i></div>
+  </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

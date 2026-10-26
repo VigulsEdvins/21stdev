@@ -1,0 +1,111 @@
+{
+  "name": "Cargo Bike Landing",
+  "title": "Cargo Bike Landing",
+  "slug": "cargo-freight-landing",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "A full landing page for an electric cargo bike with an interactive line drawing that highlights four mounts, a specs grid and a reservation section.",
+  "tags": [
+    "landing",
+    "cargo",
+    "bike",
+    "ecommerce",
+    "svg"
+  ],
+  "tech": [
+    "CSS",
+    "Vanilla JS",
+    "Inline SVG"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 161,
+  "legacyCategory": "Full Templates",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "ecommerce"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .hc-kicker"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .hc-h1"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .hc-intro"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Button text 1",
+      "type": "text",
+      "selector": ":scope .hc-cta .hc-btn:not(.hc-ghost)"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .hc-cta .hc-btn:not(.hc-ghost)"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope .hc-ghost"
+    },
+    {
+      "id": "section-heading-1",
+      "label": "Section heading 1",
+      "type": "text",
+      "selector": ":scope #build .hc-h2"
+    },
+    {
+      "id": "section-heading-2",
+      "label": "Section heading 2",
+      "type": "text",
+      "selector": ":scope #order .hc-h2"
+    },
+    {
+      "id": "paragraph-1",
+      "label": "Price line",
+      "type": "text",
+      "selector": ":scope .hc-price"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Order button",
+      "type": "text",
+      "selector": ":scope #order .hc-btn"
+    },
+    {
+      "id": "button-link-3",
+      "label": "Order link",
+      "type": "link",
+      "selector": ":scope #order .hc-btn"
+    }
+  ],
+  "nativeWhen": [],
+  "ownPalette": true
+}

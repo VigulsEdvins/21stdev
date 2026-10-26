@@ -1,33 +1,29 @@
 {
-  "name": "Ink Orbit Hero",
-  "title": "Ink Orbit Hero",
+  "name": "Orbiting Ink Hero",
+  "title": "Orbiting Ink Hero",
   "slug": "ink-orbit-hero",
   "category": "Heroes",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Interactive component.",
+  "description": "A paper-toned hero where ink dots orbit around the headline on canvas, leaving fading trails that lean toward the pointer.",
   "tags": [
+    "hero",
     "ink",
     "orbit",
-    "hero",
-    "navigation",
-    "react"
+    "canvas",
+    "minimal"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 170,
   "legacyCategory": "Heroes",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "minimal",
     "light"
@@ -37,36 +33,53 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .io-tag"
+    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.ih-h1"
+      "selector": ":scope .io-h1"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.ih-lede"
+      "selector": ":scope .io-lede"
     },
     {
-      "id": "text",
-      "label": "Text",
+      "id": "button-text-1",
+      "label": "Button text 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(2)"
+      "selector": ":scope .io-btn"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .io-btn"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope .io-ghost"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope .io-ghost"
     }
   ],
-  "measured": {
-    "luma": 0.91,
-    "webgl": false,
-    "canvas2d": true
-  },
   "reserveHeight": 800
 }

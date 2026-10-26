@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cloth Peel Reveal</title>
+  <title>Linen Peel Reveal</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="cp-stage" id="cpStage">
+    <div class="cp-under">
+      <p class="cp-small">Tonight's table</p>
+      <h1 class="cp-title">Supper under the linen</h1>
+      <p class="cp-text">Roasted roots, warm bread and a small glass of something cold. Slide the cloth away to see the menu.</p>
+      <ul class="cp-menu"><li><span>Fennel and orange</span><i>8</i></li><li><span>Charred leeks, hazelnut</span><i>11</i></li><li><span>Barley risotto</span><i>16</i></li><li><span>Pear and thyme tart</span><i>7</i></li></ul>
+    </div>
+    <div class="cp-cloth" id="cpCloth" aria-hidden="true"><span class="cp-hint">Drag me aside</span></div>
+    <label class="cp-ctl"><span>Peel the cloth</span><input id="cpRange" type="range" min="0" max="100" value="0" /></label>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

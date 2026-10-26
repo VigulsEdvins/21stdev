@@ -31,6 +31,8 @@ async function main() {
       const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
       const page = await ctx.newPage();
       const row = { slug: item.slug, lum: {}, clash: [], exempt: null };
+      // A page that crashes or never settles must not stall the whole run: closing its context rejects what it is waiting on.
+      const watchdog = setTimeout(() => { ctx.close().catch(() => {}); }, 150000);
       try {
         await page.goto(srv.url + '/builder.html');
         await page.waitForFunction(() => window.builderPreview && document.querySelector('iframe'));
@@ -90,7 +92,8 @@ async function main() {
       } catch (e) {
         row.error = e.message.split('\n')[0];
       } finally {
-        await ctx.close();
+        clearTimeout(watchdog);
+        await ctx.close().catch(() => {});
       }
       rows.push(row);
     }

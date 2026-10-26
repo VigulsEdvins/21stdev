@@ -1,35 +1,32 @@
 {
-  "name": "Blossom Dusk Template",
-  "title": "Blossom Dusk Template",
+  "name": "Twilight Garden Landing",
+  "title": "Twilight Garden Landing",
   "slug": "blossom-dusk-template",
   "category": "Landing Pages",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A complete landing page for an integrations product, opening under cherry boughs against a periwinkle dusk sky. Big quiet type bottom-left, a glass nav with frosted dropdowns, and the brand mark — eight spokes, two of them joined through the middle — hanging faintly in the sky behind it all.",
+  "description": "A complete landing page for an automation product with a dusk sky hero, falling petals, feature cards, app chips, steps, FAQ and footer.",
   "tags": [
-    "blossom",
-    "dusk",
-    "template",
-    "full",
-    "react"
+    "landing",
+    "twilight",
+    "petals",
+    "automation",
+    "full-page"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 112,
   "legacyCategory": "Full Templates",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "minimal"
+    "minimal",
+    "dark"
   ],
   "industry": [
     "agency",
@@ -37,87 +34,68 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-link-1",
-      "label": "Button link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > a:nth-of-type(1)"
-    },
-    {
-      "id": "button-link-2",
-      "label": "Button link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(5) > a:nth-of-type(2)"
-    },
-    {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope a.bdt-btn-sm"
-    },
-    {
-      "id": "button-link-3",
-      "label": "Button link 3",
-      "type": "link",
-      "selector": ":scope a.bdt-btn-sm"
-    },
-    {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .tg-kicker"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.bdt-h1"
+      "selector": ":scope .tg-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .tg-lead"
     },
     {
-      "id": "section-heading-1",
-      "label": "Section heading 1",
+      "id": "button-text-1",
+      "label": "Button text 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .tg-actions .tg-btn-primary"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)"
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .tg-actions .tg-btn-primary"
     },
     {
       "id": "button-text-2",
       "label": "Button text 2",
       "type": "text",
-      "selector": ":scope button.bdt-btn-sm"
+      "selector": ":scope .tg-actions .tg-btn-ghost"
+    },
+    {
+      "id": "section-heading-1",
+      "label": "Section heading 1",
+      "type": "text",
+      "selector": ":scope #tg-features .tg-h2"
     },
     {
       "id": "section-heading-2",
-      "label": "Section heading 2",
+      "label": "Closing heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .tg-cta-title"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Closing button",
+      "type": "text",
+      "selector": ":scope .tg-cta-btn"
     }
   ],
-  "measured": {
-    "luma": 0.53,
-    "webgl": false,
-    "canvas2d": true
-  },
   "nativeWhen": [
-    "light"
-  ]
+    "dark"
+  ],
+  "ownPalette": true
 }

@@ -1,13 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Long Exposure Agency Template</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soft Haze Agency Page</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<div class="ha-page">
+  <header class="ha-nav">
+    <a class="ha-logo" href="#"><span class="ha-logo-dot"></span>Dune&amp;Co</a>
+    <button class="ha-burger" aria-expanded="false" aria-controls="ha-menu" aria-label="Menu"><span></span><span></span></button>
+    <nav id="ha-menu" class="ha-links" aria-label="Main">
+      <a href="#ha-work">Work</a>
+      <a href="#ha-method">Method</a>
+      <a href="#ha-plans">Plans</a>
+      <a class="ha-btn ha-btn-sm" href="#">Book a call</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="ha-hero">
+      <div class="ha-art ha-art-a" aria-hidden="true"></div>
+      <p class="ha-kicker">Workflow studio</p>
+      <h1 class="ha-title">Quiet systems that run while you sleep</h1>
+      <p class="ha-lede">We map the repetitive parts of your week, then build calm automations around them. No dashboards to babysit.</p>
+      <div class="ha-actions">
+        <a class="ha-btn" href="#">Start a project</a>
+        <a class="ha-ghost" href="#ha-work">See the work</a>
+      </div>
+    </section>
+
+    <section class="ha-clients" aria-label="Clients">
+      <p class="ha-clients-title">Trusted by small teams at</p>
+      <ul>
+        <li>Northwind Co</li><li>Pebble Labs</li><li>Orchard &amp; Vale</li><li>Kiln Works</li><li>Moss Ledger</li>
+      </ul>
+    </section>
+
+    <section id="ha-work" class="ha-section">
+      <h2 class="ha-h2">Selected work</h2>
+      <div class="ha-grid">
+        <article class="ha-card"><div class="ha-art ha-art-b" aria-hidden="true"></div><h3>Invoice autopilot</h3><p>Receipts sorted, matched and filed in under a minute.</p></article>
+        <article class="ha-card"><div class="ha-art ha-art-c" aria-hidden="true"></div><h3>Lead concierge</h3><p>Every enquiry answered and routed before coffee.</p></article>
+        <article class="ha-card"><div class="ha-art ha-art-d" aria-hidden="true"></div><h3>Weekly digest</h3><p>One short report replaces six status meetings.</p></article>
+      </div>
+    </section>
+
+    <section id="ha-method" class="ha-section ha-method">
+      <h2 class="ha-h2">How we work</h2>
+      <ol class="ha-steps">
+        <li><b>Listen</b><span>A two hour walkthrough of your real week.</span></li>
+        <li><b>Sketch</b><span>A one page map of what to automate first.</span></li>
+        <li><b>Build</b><span>Small releases, shipped every few days.</span></li>
+        <li><b>Hand over</b><span>Plain notes and a short training call.</span></li>
+      </ol>
+    </section>
+
+    <section id="ha-plans" class="ha-section">
+      <h2 class="ha-h2">Simple plans</h2>
+      <div class="ha-grid ha-plans">
+        <article class="ha-card"><h3>Spark</h3><p class="ha-price">$900</p><p>One workflow, built and documented.</p></article>
+        <article class="ha-card ha-card-ink"><h3>Flow</h3><p class="ha-price">$2,400</p><p>Up to four workflows and a month of care.</p></article>
+        <article class="ha-card"><h3>Studio</h3><p class="ha-price">Custom</p><p>An ongoing partner for growing teams.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ha-foot">
+    <p>Dune&amp;Co is a fictional studio.</p>
+    <p><a href="#">Hello</a> &middot; <a href="#">Journal</a> &middot; <a href="#">Privacy</a></p>
+  </footer>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,34 +1,31 @@
 {
-  "name": "Amour Sunrise Preloader",
-  "title": "Amour Sunrise Preloader",
+  "name": "Dawn Poster Loader",
+  "title": "Dawn Poster Loader",
   "slug": "amour-sunrise-preloader",
   "category": "Preloaders & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A loading gate styled like a mid-century poster. Fat, wobbly marker letters arch over a cobalt sun rising from the bottom edge. The outer letters run long, as they do on a hand-lettered print.",
+  "description": "A poster-style loading gate where chunky arched letters rise over a sun climbing from the bottom edge, then hold the finished scene.",
   "tags": [
-    "amour",
-    "sunrise",
     "preloader",
-    "scroll",
-    "react"
+    "sunrise",
+    "poster",
+    "loader",
+    "retro"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 103,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
   "weight": "light",
   "mood": [
+    "retro",
     "editorial"
   ],
   "industry": [
@@ -36,17 +33,11 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [],
-  "measured": {
-    "luma": 0.57,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "ownPalette": true
 }

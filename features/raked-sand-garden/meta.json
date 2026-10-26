@@ -1,33 +1,29 @@
 {
-  "name": "Raked Sand Garden",
-  "title": "Raked Sand Garden",
+  "name": "Raked Gravel Garden",
+  "title": "Raked Gravel Garden",
   "slug": "raked-sand-garden",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed karesansui gravel bed seen from above under a low sun. The gravel is a real heightfield. Parallel furrows run across the bed, concentric rings go round each group of stones, and moss sits at the stones' feet. Every furrow is lit per pixel and casts its own shadow, so the pattern shows u",
+  "description": "A top-down gravel bed in a fragment shader: lit furrows ring around mossy stones and bend into a new ring wherever the pointer rakes.",
   "tags": [
-    "raked",
-    "sand",
+    "webgl",
     "garden",
-    "interactions",
-    "react"
+    "gravel",
+    "shader",
+    "interactive"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 216,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "minimal",
     "light"
@@ -37,17 +33,11 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [],
-  "measured": {
-    "luma": 0.73,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Makes features self-contained: copies root-relative assets that live outside the vault
- * (e.g. /vivmgmt/assets/images/a.jpg served from the parent directory) into
+ * (e.g. /site-b/assets/images/a.jpg served from the parent directory) into
  * assets/library/ (named <name>-<content hash>.<ext>, so identical files are stored once) and
  * rewrites references to /assets/library/<file>.
  *   node scripts/localize-assets.js [--dry] [--slug a,b]

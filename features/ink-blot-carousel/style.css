@@ -1,9 +1,14 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0e1116); color: #f4f1ea; font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.ib-stage { position: relative; height: 100vh; height: 100svh; min-height: 420px; overflow: hidden; cursor: pointer; background: #14181f; }
+.ib-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ib-cap { position: absolute; left: clamp(1rem, 5vw, 4rem); bottom: 5.5rem; max-width: 30rem; pointer-events: none; text-shadow: 0 2px 18px rgba(0,0,0,0.45); }
+.ib-small { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.85; }
+.ib-title { margin-top: 0.4rem; font-family: var(--font-display, Georgia, serif); font-weight: 500; font-size: clamp(1.8rem, 5.5vw, 3.6rem); line-height: 1.05; letter-spacing: -0.02em; }
+.ib-ctl { position: absolute; left: 50%; bottom: 1.2rem; transform: translateX(-50%); display: flex; align-items: center; gap: 0.9rem; padding: 0.45rem 0.7rem; border-radius: 999px; background: rgba(10,12,18,0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.ib-btn { width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: inherit; font-size: 1.1rem; cursor: pointer; }
+.ib-btn:hover { background: rgba(255,255,255,0.15); }
+.ib-dots { display: flex; gap: 0.5rem; }
+.ib-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; border: 0; background: rgba(255,255,255,0.35); cursor: pointer; padding: 0; }
+.ib-dot[aria-current="true"] { background: #fff; transform: scale(1.25); }
+.ib-btn:focus-visible, .ib-dot:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }

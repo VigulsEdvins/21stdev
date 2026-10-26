@@ -1,104 +1,65 @@
 {
-  "name": "Velocity Reel",
-  "title": "Velocity Reel",
+  "name": "Scroll Scrubbed Reel",
+  "title": "Scroll Scrubbed Reel",
   "slug": "velocity-reel",
   "category": "Scroll & Parallax",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A scroll-scrubbed cinematic title sequence. Ten shots on one canvas: a rim-lit face, an archer drawing, an arrow through glass, a blade through what is left of it, a fly-through of the shards, then a jet, a supercar and a formula car tearing out of the debris on red light, a burst, and an emblem.",
+  "description": "A scroll-scrubbed title sequence on one canvas that moves through five generated scenes, from ripples and speed lines to shards, a burn and an emblem.",
   "tags": [
-    "velocity",
-    "reel",
     "scroll",
-    "react"
+    "canvas",
+    "sequence",
+    "cinematic",
+    "reel",
+    "scrub"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 243,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "dark"
+    "dark",
+    "futuristic"
   ],
   "industry": [
     "media"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "headline",
-      "label": "Headline",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope h2.m-0"
+      "selector": ":scope .vr-label"
+    },
+    {
+      "id": "headline",
+      "label": "Scene title",
+      "type": "text",
+      "selector": ":scope .vr-title"
     },
     {
       "id": "intro-text",
-      "label": "Intro text",
+      "label": "Hint",
       "type": "text",
-      "selector": ":scope p.m-0"
-    },
-    {
-      "id": "button-text-1",
-      "label": "Button text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > button:nth-of-type(2)"
-    },
-    {
-      "id": "button-text-3",
-      "label": "Button text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > button:nth-of-type(3)"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > button:nth-of-type(4)"
-    },
-    {
-      "id": "button-text-5",
-      "label": "Button text 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > button:nth-of-type(5)"
-    },
-    {
-      "id": "button-text-6",
-      "label": "Button text 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > nav:nth-of-type(1) > button:nth-of-type(6)"
+      "selector": ":scope .vr-sub"
     }
   ],
-  "measured": {
-    "luma": 0.02,
-    "webgl": false,
-    "canvas2d": true
-  },
   "nativeWhen": [
     "light"
   ],
-  "reserveHeight": 8800
+  "ownPalette": true
 }

@@ -47,7 +47,7 @@ verifyFeatureFolder(
 
 console.log('Task 2 photo-caroulsel feature checks passed.');
 
-// Test 3: Verify carousel-gallery-play extracted features (6 items)
+// Test 3: Verify arena-source extracted features (6 items)
 const carouselPlaySlugs = [
   'cylindrical-3d-carousel',
   'cursor-image-trail',
@@ -61,10 +61,10 @@ for (const slug of carouselPlaySlugs) {
   verifyFeatureFolder(slug, ['meta.json', 'index.html', 'style.css', 'script.js']);
 }
 
-console.log('Task 3 carousel-gallery-play feature checks passed.');
+console.log('Task 3 arena-source feature checks passed.');
 
-// Test 4: Verify betteroff (The Lookback) extracted features (5 items)
-const betteroffSlugs = [
+// Test 4: Verify yearbook-source extracted features (5 items)
+const yearbookSlugs = [
   'surf-3d-ribbon',
   'timeline-inertia-drag',
   'conveyor-scroll-loop',
@@ -72,13 +72,13 @@ const betteroffSlugs = [
   'article-slide-drawer'
 ];
 
-for (const slug of betteroffSlugs) {
+for (const slug of yearbookSlugs) {
   verifyFeatureFolder(slug, ['meta.json', 'index.html', 'style.css', 'script.js']);
 }
 
-console.log('Task 4 betteroff feature checks passed.');
+console.log('Task 4 yearbook-source feature checks passed.');
 
-// Test 5: Verify vivmgmt (6), edvlabs (4), mom (4+1), cvmaker (4+1), and full website templates (5) -> Total 36 items
+// Test 5: Verify roster-source (6), edvlabs (4), mom (4+1), cvmaker (4+1), and full website templates (5) -> Total 36 items
 const task5Slugs = [
   'parallax-5col-gallery',
   'split-screen-entrance',

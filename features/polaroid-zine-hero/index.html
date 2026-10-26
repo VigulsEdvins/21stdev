@@ -3,11 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Polaroid Zine Hero</title>
+  <title>Scrapbook Snapshot Hero</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sz-hero">
+    <div class="sz-copy">
+      <span class="sz-note">Issue no. 12, free to take</span>
+      <h1 class="sz-title">Small trips, <em>big</em> mess.</h1>
+      <p class="sz-intro">A pocket zine of road snacks, wrong turns and film we should not have developed. Flip through the snapshots on the right.</p>
+      <div class="sz-actions"><a class="sz-btn" href="#">Read the issue</a><a class="sz-link" href="#">Back issues</a></div>
+    </div>
+    <div class="sz-board">
+      <div class="sz-stack" id="szStack" aria-live="polite">
+        <figure class="sz-snap" style="--c1:#f4a259;--c2:#f25c54"><div class="sz-pic"><svg viewBox="0 0 100 70" aria-hidden="true"><circle cx="70" cy="22" r="11"/><path d="M0 70 L30 36 L52 56 L72 40 L100 70Z"/></svg></div><figcaption>sunset detour</figcaption></figure>
+        <figure class="sz-snap" style="--c1:#8ecae6;--c2:#219ebc"><div class="sz-pic"><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M0 46 Q25 30 50 46 T100 46 V70 H0Z"/><circle cx="26" cy="20" r="8"/></svg></div><figcaption>lake, no swimming</figcaption></figure>
+        <figure class="sz-snap" style="--c1:#b7e4c7;--c2:#52b788"><div class="sz-pic"><svg viewBox="0 0 100 70" aria-hidden="true"><path d="M20 70 V40 L35 18 L50 40 V70Z M52 70 V48 L66 28 L80 48 V70Z"/></svg></div><figcaption>pine hotel</figcaption></figure>
+        <figure class="sz-snap" style="--c1:#cdb4db;--c2:#9d4edd"><div class="sz-pic"><svg viewBox="0 0 100 70" aria-hidden="true"><rect x="14" y="30" width="72" height="26" rx="10"/><circle cx="32" cy="58" r="8"/><circle cx="68" cy="58" r="8"/></svg></div><figcaption>the van, again</figcaption></figure>
+      </div>
+      <div class="sz-ctrl">
+        <button type="button" class="sz-arrow" id="szNext" aria-label="Next snapshot">&rarr;</button>
+        <div class="sz-dots" id="szDots"></div>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

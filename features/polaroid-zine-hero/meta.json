@@ -1,29 +1,25 @@
 {
-  "name": "Polaroid Zine Hero",
-  "title": "Polaroid Zine Hero",
+  "name": "Scrapbook Snapshot Hero",
+  "title": "Scrapbook Snapshot Hero",
   "slug": "polaroid-zine-hero",
   "category": "Heroes",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "An editorial zine page as a hero: a cream sheet with a taped typewritten slip, a centre print whose subject is cut out of its own frame, five pinned snapshots, a handwritten line running over the print, and a justified typewriter column. The page dots and the edge arrow are real carousel controls, n",
+  "description": "A cream scrapbook hero with a taped note, a typewriter intro and a stack of tilted snapshots you flip through with arrows or dots.",
   "tags": [
-    "polaroid",
-    "zine",
     "hero",
-    "3d",
-    "react"
+    "scrapbook",
+    "zine",
+    "carousel",
+    "playful"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 212,
   "legacyCategory": "Heroes",
   "status": "stable",
@@ -37,48 +33,56 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .sz-note"
+    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)"
+      "selector": ":scope .sz-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .sz-intro"
     },
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "button-text-1",
+      "label": "Button text 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)"
+      "selector": ":scope .sz-btn"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .sz-btn"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(4)"
+      "selector": ":scope .sz-link"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope .sz-link"
     }
   ],
-  "measured": {
-    "luma": 0.84,
-    "webgl": false,
-    "canvas2d": false
-  },
   "nativeWhen": [
     "dark"
   ],
-  "reserveHeight": 800,
-  "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "reserveHeight": 800
 }

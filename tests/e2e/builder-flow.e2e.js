@@ -25,7 +25,7 @@ async function main() {
   await page.click('.scope-pill[data-scope=sections]');
   await page.fill('#elementsSearchInput', 'carosel disc');
   await page.waitForFunction(() => document.getElementById('elementsTotalCount').textContent.trim() === '1 items');
-  assert.strictEqual(await page.textContent('.element-card-title'), 'Disc Cascade Carousel');
+  assert.strictEqual(await page.textContent('.element-card-title'), 'Vinyl Slope Carousel');
   step('typo-tolerant search finds the component');
   await page.fill('#elementsSearchInput', '');
   await page.selectOption('#filterWeight', 'heavy');
@@ -65,7 +65,7 @@ async function main() {
   const input = textField.locator('input[type=text], textarea').first();
   await page.evaluate(() => { document.querySelector('iframe').contentWindow.__marker = 'alive2'; });
   await input.fill('Hello from the builder');
-  await page.waitForFunction(() => document.querySelector('iframe').contentDocument.body.innerText.includes('Hello from the builder'), null, { timeout: 8000 });
+  await page.waitForFunction(() => document.querySelector('iframe').contentDocument.body.innerText.toLowerCase().includes('hello from the builder'), null, { timeout: 8000 });
   assert.strictEqual(await page.evaluate(() => document.querySelector('iframe').contentWindow.__marker), 'alive2', 'content edit must not reload the preview');
   step(`content edit (“${firstLabel.trim()}”) shows in the preview in place`);
 
@@ -112,7 +112,7 @@ async function main() {
   // fonts are self-hosted when Google Fonts is reachable, otherwise the page keeps the Google link
   assert(indexHtml.includes('Playfair+Display') || (/Playfair Display/.test(styleCss) && names.some(n => n.startsWith('assets/fonts/'))), 'ZIP loads the chosen font');
   assert(scriptJs.includes('Hello from the builder'), 'ZIP script.js carries the content override');
-  assert(!/["'(]\/(vivmgmt|betteroff|mom|carousel-gallery-play|assets\/library)\//.test(indexHtml + scriptJs), 'no root-relative asset paths left in the export');
+  assert(!/["'(]\/(edv-roster|edv-yearbook|mom|edv-arena|assets\/library)\//.test(indexHtml + scriptJs), 'no root-relative asset paths left in the export');
   assert(names.some(n => n.startsWith('assets/')), 'ZIP contains an assets folder');
   step(`ZIP export is complete (${names.filter(n => !n.endsWith('/')).length} files)`);
 

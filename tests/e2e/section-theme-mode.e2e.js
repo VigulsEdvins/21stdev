@@ -16,8 +16,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
     sm.setTheme('clean-minimal');
     sm.setStack([{ id: 'tm-1', slug: 'beam-wordmark-footer', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }]);
   });
-  await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; return d && d.querySelector('#tm-1 .bwf'); }, null, { timeout: 20000 });
-  const bg = () => page.evaluate(() => { const m = getComputedStyle(document.querySelector('iframe').contentDocument.querySelector('#tm-1 .bwf')).backgroundColor.match(/\d+/g).map(Number); return m[0] * 0.299 + m[1] * 0.587 + m[2] * 0.114; });
+  await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; return d && d.querySelector('#tm-1 .bw-foot'); }, null, { timeout: 20000 });
+  const bg = () => page.evaluate(() => { const m = getComputedStyle(document.querySelector('iframe').contentDocument.querySelector('#tm-1 .bw-foot')).backgroundColor.match(/\d+/g).map(Number); return m[0] * 0.299 + m[1] * 0.587 + m[2] * 0.114; });
   await page.waitForTimeout(800);
   assert(await bg() > 200, 'by default the footer follows the light page');
 

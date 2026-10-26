@@ -1,9 +1,20 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0a0d18); color: var(--text, #e8ecf8); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.ma-band { --ma-line: color-mix(in srgb, var(--text, #e8ecf8) 16%, transparent); display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem; align-items: center; max-width: 64rem; margin: 0 auto; min-height: 100vh; padding: 2rem clamp(1rem, 4vw, 2.5rem); }
+.ma-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent, #5fd0ff); }
+.ma-title { font-family: var(--font-display, system-ui, sans-serif); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.05; margin: 0.6rem 0; letter-spacing: -0.03em; }
+.ma-meta { color: color-mix(in srgb, var(--text, #e8ecf8) 65%, transparent); line-height: 1.5; max-width: 24rem; }
+.ma-data { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 1.5rem; margin: 1.6rem 0; padding: 1rem 0; border-block: 1px solid var(--ma-line); }
+.ma-data dt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: color-mix(in srgb, var(--text, #e8ecf8) 55%, transparent); }
+.ma-data dd { font-size: 1.3rem; font-variant-numeric: tabular-nums; margin-top: 0.2rem; }
+.ma-lab { display: block; font-size: 0.8rem; margin-bottom: 0.5rem; }
+.ma-range { width: 100%; accent-color: var(--accent, #5fd0ff); }
+.ma-range:focus-visible { outline: 2px solid var(--accent, #5fd0ff); outline-offset: 4px; }
+.ma-view { width: 100%; height: auto; touch-action: none; }
+.ma-path { fill: none; stroke: var(--ma-line); stroke-width: 1.5; stroke-dasharray: 3 6; }
+.ma-probe { cursor: grab; }
+.ma-probe:active { cursor: grabbing; }
+.ma-halo { fill: color-mix(in srgb, var(--accent, #5fd0ff) 25%, transparent); }
+.ma-body { fill: #fff; }
+.ma-wing { stroke: var(--accent, #5fd0ff); stroke-width: 3; stroke-linecap: round; }
+@media (max-width: 720px) { .ma-band { grid-template-columns: 1fr; min-height: 0; } .ma-data { gap: 1rem; } }

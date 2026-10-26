@@ -3484,7 +3484,7 @@ function putU32(buffer, offset, val) {
 }
 
 /**
- * Root-relative local asset references (e.g. "/vivmgmt/assets/images/a.jpg") only resolve on the
+ * Root-relative local asset references (e.g. "/site-b/assets/images/a.jpg") only resolve on the
  * builder's dev server. These helpers find them so export can bundle or inline the files.
  */
 const LOCAL_ASSET_RE = /(["'(=,\s])(\/(?!\/)[A-Za-z0-9_\-.%~@+\/]+\.(?:png|jpe?g|webp|gif|svg|avif|ico|mp4|webm|mp3|wav|ogg|woff2?|ttf|otf|css))(?=[?#"')\s>,]|$)/gi;

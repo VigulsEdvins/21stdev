@@ -70,5 +70,6 @@
       "selector": ":scope .sk-note"
     }
   ],
-  "reserveHeight": 2300
+  "reserveHeight": 2300,
+  "ownPalette": true
 }

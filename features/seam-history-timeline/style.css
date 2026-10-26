@@ -1,9 +1,26 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f6f5f2); color: var(--text, #1b1e27); }
+.sm-section { padding: 56px 0 56px 24px; font-family: var(--font-body, system-ui, sans-serif); overflow: hidden; }
+.sm-head { max-width: 640px; padding-right: 24px; }
+.sm-label { font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent, #0e8a7d); font-weight: 700; }
+.sm-title { font-family: var(--font-display, system-ui, sans-serif); font-size: clamp(1.8rem, 4.5vw, 3rem); line-height: 1.08; margin: 10px 0 12px; }
+.sm-intro { opacity: .72; }
+.sm-years { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.sm-years button { font: inherit; font-size: .85rem; padding: 7px 15px; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--text, #1b1e27) 22%, transparent); background: transparent; color: inherit; cursor: pointer; transition: background .2s, color .2s; }
+.sm-years button.is-on { background: var(--text, #1b1e27); color: var(--bg, #f6f5f2); }
+.sm-years button:focus-visible, .sm-rail:focus-visible, .sm-more:focus-visible { outline: 2px solid var(--accent, #0e8a7d); outline-offset: 3px; }
+.sm-rail { display: flex; margin-top: 36px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 14px; scrollbar-width: thin; }
+.sm-card { --skew: 48px; flex: 0 0 min(420px, 78vw); height: 340px; margin-right: calc(var(--skew) * -1 + 6px); position: relative; display: flex; flex-direction: column; scroll-snap-align: start; background: hsl(var(--h) 38% 90%); color: #1b1e27; clip-path: polygon(var(--skew) 0, 100% 0, calc(100% - var(--skew)) 100%, 0 100%); border-radius: 0; transition: transform .3s; }
+.sm-card:first-child { clip-path: polygon(0 0, 100% 0, calc(100% - var(--skew)) 100%, 0 100%); }
+.sm-card:hover { transform: translateY(-6px); }
+.sm-art { height: 46%; background: hsl(var(--h) 55% 48%); display: grid; place-items: center; }
+.sm-art svg { width: 56%; max-height: 80%; fill: hsl(var(--h) 55% 62%); stroke: hsl(var(--h) 80% 94%); stroke-width: 2; stroke-linejoin: round; }
+.sm-body { padding: 18px 64px 18px 66px; display: flex; flex-direction: column; gap: 6px; }
+.sm-card:first-child .sm-body { padding-left: 24px; }
+.sm-year { font-family: ui-monospace, monospace; font-size: .8rem; color: hsl(var(--h) 60% 30%); }
+.sm-body h3 { font-family: var(--font-display, system-ui, sans-serif); font-size: 1.3rem; line-height: 1.15; }
+.sm-body p { font-size: .9rem; opacity: .8; }
+.sm-more { color: hsl(var(--h) 60% 26%); font-weight: 600; font-size: .9rem; margin-top: 4px; }
+.sm-card:last-child { margin-right: 24px; clip-path: polygon(var(--skew) 0, 100% 0, 100% 100%, 0 100%); }
+@media (max-width: 480px) { .sm-card { --skew: 28px; height: 360px; } .sm-body { padding-left: 40px; padding-right: 40px; } }
+@media (prefers-reduced-motion: reduce) { .sm-card, .sm-years button { transition: none; } .sm-card:hover { transform: none; } }

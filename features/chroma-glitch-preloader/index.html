@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chroma Glitch Preloader</title>
+  <title>RGB Split Loader</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="cg-stage" id="cgStage">
+    <canvas class="cg-canvas" id="cgCanvas" aria-hidden="true"></canvas>
+    <div class="cg-ui">
+      <p class="cg-label">Signal check</p>
+      <div class="cg-num" id="cgNum" aria-live="off">000</div>
+      <div class="cg-bar"><i id="cgBar"></i></div>
+      <p class="cg-status" id="cgStatus" role="status">Tuning channels</p>
+      <button type="button" class="cg-btn" id="cgGo" disabled>Enter</button>
+    </div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

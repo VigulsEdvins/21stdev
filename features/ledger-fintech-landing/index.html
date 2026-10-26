@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maroon Fintech Landing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ft-page">
+    <header class="ft-nav">
+      <a class="ft-logo" href="#"><span class="ft-mark"></span>Ledgerly</a>
+      <nav class="ft-links" aria-label="Main"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#">Help</a></nav>
+      <a class="ft-btn ft-btn-sm" href="#pricing">Get started</a>
+    </header>
+
+    <section class="ft-hero">
+      <p class="ft-kicker">Money, without the spreadsheet</p>
+      <h1 class="ft-h1">See where every coin goes</h1>
+      <p class="ft-sub">Ledgerly sorts your spending as it happens and shows a calm, honest picture of the month.</p>
+      <div class="ft-cta"><a class="ft-btn" href="#pricing">Try it free</a><a class="ft-link" href="#features">How it works</a></div>
+
+      <div class="ft-stage">
+        <div class="ft-card ft-card-l"><span class="ft-lbl">Income</span><b class="ft-count" data-to="4820" data-prefix="+">0</b></div>
+        <div class="ft-phone" aria-hidden="true">
+          <div class="ft-screen">
+            <span class="ft-lbl">Balance</span>
+            <b class="ft-bal">12,480</b>
+            <div class="ft-bars"><i style="--h:40%"></i><i style="--h:70%"></i><i style="--h:55%"></i><i style="--h:90%"></i><i style="--h:62%"></i><i style="--h:78%"></i></div>
+          </div>
+        </div>
+        <div class="ft-card ft-card-r"><span class="ft-lbl">Expenses</span><b class="ft-count" data-to="2135" data-prefix="-">0</b></div>
+      </div>
+    </section>
+
+    <section class="ft-band">
+      <p class="ft-statement">Budgets should feel like a <em>conversation</em>, not a lecture.</p>
+    </section>
+
+    <section class="ft-sec" id="features">
+      <h2 class="ft-h2">Built for a clear head</h2>
+      <div class="ft-grid">
+        <article class="ft-feat"><span class="ft-ico">1</span><h3>Auto-sorting</h3><p>Every payment lands in a category the moment it clears.</p></article>
+        <article class="ft-feat"><span class="ft-ico">2</span><h3>Gentle limits</h3><p>Set a ceiling and get a nudge at 80 percent, not a scolding.</p></article>
+        <article class="ft-feat"><span class="ft-ico">3</span><h3>Shared pots</h3><p>Split rent and bills with housemates, settled in one tap.</p></article>
+      </div>
+    </section>
+
+    <section class="ft-sec ft-price" id="pricing">
+      <h2 class="ft-h2">Simple pricing</h2>
+      <div class="ft-toggle" role="group" aria-label="Billing period">
+        <button type="button" class="ft-tg is-on" data-p="9" data-l="month" aria-pressed="true">Monthly</button>
+        <button type="button" class="ft-tg" data-p="7" data-l="month, billed yearly" aria-pressed="false">Yearly</button>
+      </div>
+      <p class="ft-amount"><b id="ftAmt">9</b> <span id="ftPer">per month</span></p>
+      <a class="ft-btn" href="#">Start free trial</a>
+    </section>
+
+    <footer class="ft-foot"><span>&copy; Ledgerly, a fictional app</span><span><a href="#">Privacy</a> &middot; <a href="#">Terms</a></span></footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

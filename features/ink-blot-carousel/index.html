@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ink Blot Carousel</title>
+  <title>Bleeding Slide Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ib-stage" id="ibStage" aria-roledescription="carousel" aria-label="Scenes">
+    <svg class="ib-svg" id="ibSvg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <filter id="ibF" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="3" seed="4" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="190" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <mask id="ibM" maskUnits="userSpaceOnUse" x="-400" y="-400" width="2400" height="1700"><g filter="url(#ibF)" id="ibBlots" fill="#fff"></g></mask>
+      </defs>
+      <g id="ibBase"></g>
+      <g id="ibNext" mask="url(#ibM)"></g>
+    </svg>
+    <div class="ib-cap"><p class="ib-small" id="ibLabel" aria-live="polite">Scene 1 of 4</p><h1 class="ib-title" id="ibTitle"></h1></div>
+    <div class="ib-ctl">
+      <button class="ib-btn" id="ibPrev" type="button" aria-label="Previous scene">&larr;</button>
+      <div class="ib-dots" id="ibDots"></div>
+      <button class="ib-btn" id="ibNextBtn" type="button" aria-label="Next scene">&rarr;</button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

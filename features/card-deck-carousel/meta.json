@@ -1,33 +1,29 @@
 {
-  "name": "Card Deck Carousel",
-  "title": "Card Deck Carousel",
+  "name": "Throwable Card Stack",
+  "title": "Throwable Card Stack",
   "slug": "card-deck-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Photos stacked like a loose deck of prints. Throw the top card in any direction (drag and let go, or flick) and it flies off, then slides back in at the bottom of the pile while the next one waits on top. The buttons, ←/→ and autoplay throw it for you; \"previous\" pulls the last card back on top.",
+  "description": "A pile of postcards where the top card can be dragged and thrown away, then slides back under the pile, with buttons, arrow keys and autoplay.",
   "tags": [
-    "card",
-    "deck",
     "carousel",
-    "3d",
-    "react"
+    "cards",
+    "stack",
+    "drag",
+    "gallery"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 117,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "futuristic",
     "light"
@@ -37,30 +33,22 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+      "id": "small-label",
+      "label": "Hint",
+      "type": "text",
+      "selector": ":scope .dk-hint"
     },
     {
-      "id": "text",
-      "label": "Text",
+      "id": "button-text-1",
+      "label": "Autoplay text",
       "type": "text",
-      "selector": ":scope div.cd-sr"
+      "selector": ":scope .dk-auto"
     }
-  ],
-  "measured": {
-    "luma": 0.86,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  ]
 }

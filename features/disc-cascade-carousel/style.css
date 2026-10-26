@@ -1,9 +1,32 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #14100e); color: var(--text, #f6efe8); }
+body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent, #ff9a5c); outline-offset: 3px; }
+
+.vs-wrap { --d: min(54vmin, 340px); position: relative; min-height: 100vh; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto auto; padding: 22px clamp(16px, 4vw, 48px) 28px; background: radial-gradient(ellipse at 70% 20%, color-mix(in srgb, var(--accent, #ff9a5c) 18%, transparent), transparent 60%), var(--bg, #14100e); }
+.vs-top { position: relative; z-index: 30; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+.vs-brand { font-family: var(--font-display, Georgia, serif); font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+.vs-hint { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; opacity: .55; }
+
+.vs-stage { position: relative; min-height: calc(var(--d) * 1.9); touch-action: pan-y; cursor: grab; user-select: none; }
+.vs-stage:active { cursor: grabbing; }
+.vs-disc { position: absolute; left: 50%; top: 50%; width: var(--d); height: var(--d); margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2); border-radius: 50%; border: 0; padding: 0; cursor: pointer; transition: transform .7s cubic-bezier(.2,.8,.2,1), opacity .5s; will-change: transform; background:
+  radial-gradient(circle, var(--bg, #14100e) 0 3%, transparent 3.5%),
+  radial-gradient(circle, var(--c1) 0 30%, transparent 30.5%),
+  repeating-radial-gradient(circle, #1c1917 0 2px, #0e0c0b 2px 4px);
+  box-shadow: 0 24px 50px -14px rgba(0,0,0,.7); }
+.vs-disc::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from var(--spin, 0deg), transparent 0 18%, rgba(255,255,255,.14) 25%, transparent 32% 68%, rgba(255,255,255,.1) 75%, transparent 82%); pointer-events: none; }
+.vs-label { position: absolute; left: 50%; top: 50%; width: 60%; height: 60%; transform: translate(-50%, -50%); border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display, Georgia, serif); font-size: calc(var(--d) * .06); font-weight: 700; line-height: 1.1; text-align: center; color: #1b1411; padding: 14%; pointer-events: none; background: radial-gradient(circle, var(--bg, #14100e) 0 6%, var(--c1) 7% 100%); }
+
+.vs-info { text-align: center; padding: 10px 0 6px; min-height: 108px; }
+.vs-year { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent, #ff9a5c); }
+.vs-name { font-family: var(--font-display, Georgia, serif); font-size: clamp(26px, 5vw, 44px); line-height: 1.1; margin: 6px 0 4px; }
+.vs-artist { opacity: .65; }
+
+.vs-ctrl { display: flex; justify-content: center; align-items: center; gap: 18px; }
+.vs-arrow { width: 48px; height: 48px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--text, #f6efe8) 28%, transparent); background: transparent; cursor: pointer; font-size: 20px; transition: background .2s, color .2s; }
+.vs-arrow:hover { background: var(--accent, #ff9a5c); color: var(--bg, #14100e); }
+.vs-count { font-variant-numeric: tabular-nums; opacity: .7; min-width: 54px; text-align: center; }
+
+@media (prefers-reduced-motion: reduce) { .vs-disc { transition: none; } }

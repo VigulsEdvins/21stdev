@@ -1,29 +1,26 @@
 {
-  "name": "Flashlight Text Reveal",
-  "title": "Flashlight Text Reveal",
+  "name": "Torchlight Wall",
+  "title": "Torchlight Wall",
   "slug": "flashlight-text-reveal",
   "category": "Scroll & Parallax",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Words written on a dark wall that you can only read where your light falls. The wall is a drifting, grainy WebGL shader. The cursor is a flashlight, and the lit patch of wall and the writing under it come up together. Take the pointer away and the light keeps searching the wall on its own.",
+  "description": "Words hidden on a dark plaster wall that appear only inside a pointer-driven torch beam, which wanders by itself when idle.",
   "tags": [
-    "flashlight",
-    "text",
     "reveal",
-    "scroll",
-    "react"
+    "torch",
+    "text",
+    "webgl",
+    "spotlight"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL",
+    "CSS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 146,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
@@ -37,27 +34,33 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .tw-tag"
+    },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.m-0"
+      "selector": ":scope .tw-words"
+    },
+    {
+      "id": "paragraph",
+      "label": "Hint",
+      "type": "text",
+      "selector": ":scope .tw-sign"
     }
   ],
-  "measured": {
-    "luma": 0.06,
-    "webgl": true,
-    "canvas2d": false
-  },
   "nativeWhen": [
-    "light"
+    "dark"
   ],
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }
