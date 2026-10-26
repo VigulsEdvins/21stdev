@@ -39,12 +39,6 @@
   "updatedAt": "2026-10-24",
   "customizable": [
     {
-      "id": "title",
-      "label": "Screen title",
-      "type": "text",
-      "selector": ":scope .btb-title"
-    },
-    {
       "id": "accent-colour",
       "label": "Accent colour",
       "type": "color",
