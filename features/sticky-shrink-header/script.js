@@ -5,7 +5,9 @@
     var nav = root.querySelector('.ssh-nav');
     if (!header || !burger || !nav) return;
     nav.id = 'ssh-nav-' + rn; burger.setAttribute('aria-controls', nav.id);
-    function update() { header.classList.toggle('is-scrolled', root.scrollTop > 40); }
+    function update() { header.classList.toggle('is-scrolled', (window.scrollY || document.documentElement.scrollTop || 0) > 40 || root.scrollTop > 40); }
+    // the header sticks to the top of the page, so it is the page scroll that shrinks it
+    window.addEventListener('scroll', update, { passive: true });
     root.addEventListener('scroll', update, { passive: true });
     update();
     function setOpen(open) {

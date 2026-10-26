@@ -19,7 +19,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   // sticky shrink header
   let p = await open('sticky-shrink-header');
   assert(!(await p.evaluate(() => document.querySelector('.ssh-demo .ssh-header').classList.contains('is-scrolled'))));
-  await p.evaluate(() => document.querySelector('.ssh-demo').scrollTop = 300);
+  // a header sticks to the page, so give the page some length and scroll it
+  await p.evaluate(() => { document.body.style.minHeight = '2000px'; window.scrollTo(0, 300); });
   await p.waitForFunction(() => document.querySelector('.ssh-demo .ssh-header').classList.contains('is-scrolled'));
   const h = await p.evaluate(() => Math.round(document.querySelector('.ssh-bar').getBoundingClientRect().height));
   await p.waitForTimeout(500);
