@@ -71,22 +71,25 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert.strictEqual(await page.locator('.confirm-dialog').count(), 0, 'no dialog on an empty page');
   console.log('  ✓ an empty page just gets the template');
 
-  // 6. A landing page (a whole page in one section) is just a section: no question
-  await page.fill('#elementsSearchInput', 'Quiet Portfolio Template');
-  const landing = page.locator('.element-feature-card', { hasText: 'Quiet Portfolio' }).first();
+  // 6. A landing page is a whole page: with something on the page it asks too, and replaces the page
+  await page.fill('#elementsSearchInput', 'Plain Folio');
+  const landing = page.locator('.element-feature-card', { hasText: 'Plain Folio' }).first();
   await landing.waitFor({ timeout: 10000 });
   assert(/landing page/i.test(await landing.textContent()), 'the card says it is a landing page');
   await landing.locator('.element-add-btn').click();
-  await page.waitForFunction(() => window.builderPreview.stackManager.getStack().length === 2, null, { timeout: 10000 });
-  assert.strictEqual(await page.locator('.confirm-dialog').count(), 0, 'no dialog for a landing page');
-  console.log('  ✓ a landing page is added like any section');
+  await page.waitForSelector('.confirm-dialog');
+  assert(/landing page/i.test(await page.textContent('.confirm-dialog')), 'the question names a landing page');
+  await page.click('#confirmOkBtn');
+  await page.waitForSelector('.confirm-dialog', { state: 'detached' });
+  await page.waitForFunction(() => window.builderPreview.stackManager.getStack().length === 1, null, { timeout: 10000 });
+  console.log('  ✓ a landing page asks first and then replaces the page');
 
   // 7. An ordinary component never asks
   await page.fill('#elementsSearchInput', 'Client Logo Marquee');
   const plain = page.locator('.element-feature-card', { hasText: 'Partner Logo Marquee' }).first();
   await plain.waitFor({ timeout: 10000 });
   await plain.locator('.element-add-btn').click();
-  await page.waitForFunction(() => window.builderPreview.stackManager.getStack().length === 3, null, { timeout: 10000 });
+  await page.waitForFunction(() => window.builderPreview.stackManager.getStack().length === 2, null, { timeout: 10000 });
   assert.strictEqual(await page.locator('.confirm-dialog').count(), 0, 'no dialog for a normal component');
   console.log('  ✓ normal components are added without a question');
 

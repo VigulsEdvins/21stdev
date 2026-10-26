@@ -194,10 +194,14 @@
       return { section: newSec, replaced: false, singletonType: null };
     }
 
-    /** A full website (own pages and CMS) is a whole site: adding one replaces everything else on the page. */
+    /** A full website (own pages and CMS) or a landing page (a whole page in one section) replaces everything else on the page. */
     function isFullWebsite(slug) {
       const f = (featuresMap && featuresMap.get && featuresMap.get(slug)) || {};
-      return !!f.liveSiteUrl || f.category === 'Full Websites';
+      return !!f.liveSiteUrl || f.category === 'Full Websites' || f.category === 'Landing Pages';
+    }
+    function isLandingPageSlug(slug) {
+      const f = (featuresMap && featuresMap.get && featuresMap.get(slug)) || {};
+      return !f.liveSiteUrl && f.category === 'Landing Pages';
     }
 
     /**
@@ -211,9 +215,10 @@
       }
       const title = extraProps.title || (featuresMap.get(slug) || {}).title || slug;
       const locked = existing.filter(sec => sec.locked).length;
+      const kind = isLandingPageSlug(slug) ? 'landing page' : 'full website';
       const ok = await window.BuilderConfirm.ask({
-        title: `Use the full website “${title}”?`,
-        message: 'A full website is a complete site, not one section. Using it replaces the page you have built so far.',
+        title: `Use the ${kind} “${title}”?`,
+        message: `A ${kind} is a complete ${kind === 'landing page' ? 'page' : 'site'}, not one section. Using it replaces the page you have built so far.`,
         details: [
           `All ${existing.length} section${existing.length === 1 ? '' : 's'} on this page will be discarded${locked ? ` (including ${locked} locked)` : ''}, whether you added them or came from a template.`,
           'Edits to their content and sizing go with them.',

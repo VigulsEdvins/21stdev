@@ -22,7 +22,7 @@
     }
 
     // 2. Pricing & Tables
-    if (slug.includes('pricing') || title.includes('pricing') || slug.includes('turntable') || title.includes('turntable') || slug.includes('matrix')) {
+    if (slug.includes('pricing') || title.includes('pricing') || slug.includes('matrix')) {
       return 'Pricing & Tables';
     }
 
