@@ -104,7 +104,7 @@ function isDarkTheme(theme) {
  * - Replaces viewport locking 100vh with min-height: auto
  * - Scopes #root selectors to #root-${sectionId}
  */
-function scopeSectionStyles(css, sectionId, keepPalette) {
+function scopeSectionStyles(css, sectionId, keepPalette, keepViewport) {
   if (!css || typeof css !== 'string') return '';
   let scoped = css;
 
@@ -127,8 +127,11 @@ function scopeSectionStyles(css, sectionId, keepPalette) {
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])#root(?![a-zA-Z0-9_-])/g, `#root-${sectionId}`);
 
   // 6. Replace viewport locking 100vh on height with responsive section height that never collapses
+  // (a preloader overlay is meant to fill the whole viewport, so its 100vh rules stay as they are)
+  if (!keepViewport) {
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(680px, 90vh, 1000px)$1; height: auto$1');
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: clamp(680px, 90vh, 1000px)$1');
+  }
 
   // 7. Clean up viewport-locking rules on .page-section container inherited from html, body
   scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*(?:100%|100vh|100svh|100dvh)(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
@@ -2115,7 +2118,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     extractHeadLinks(rawHtml).forEach(link => headLinks.add(link));
 
     // Scoped CSS
-    const scopedCss = scopeSectionStyles(rawCss, id, !!(options.ownPalette || {})[slug]);
+    const scopedCss = scopeSectionStyles(rawCss, id, !!(options.ownPalette || {})[slug], /preloader/i.test(slug));
     if (scopedCss.trim()) {
       scopedStyleBlocks.push(`    /* Section: ${slug} (${id}) */\n    ${scopedCss.trim()}`);
     }
@@ -3108,7 +3111,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     extractHeadLinks(rawHtml).forEach(link => headLinks.add(link));
 
     // Scoped CSS
-    const scopedCss = scopeSectionStyles(rawCss, id, !!(options.ownPalette || {})[slug]);
+    const scopedCss = scopeSectionStyles(rawCss, id, !!(options.ownPalette || {})[slug], /preloader/i.test(slug));
     if (scopedCss.trim()) {
       scopedStyleBlocks.push(`/* Section: ${slug} */\n${scopedCss.trim()}`);
     }
