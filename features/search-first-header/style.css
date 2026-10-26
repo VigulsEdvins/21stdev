@@ -1,5 +1,5 @@
 /* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
-.sfh-demo { min-height: 320px; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
+.sfh-demo { min-height: 0; background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, sans-serif); }
 .sfh-header { border-bottom: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); }
 .sfh-top { display: flex; align-items: center; gap: 1.5rem; max-width: 1240px; margin: 0 auto; padding: 14px 1.5rem; }
 .sfh-logo { font-family: var(--font-display, inherit); font-weight: 800; font-size: 1.4rem; color: var(--accent, #6366f1); text-decoration: none; letter-spacing: -.02em; }

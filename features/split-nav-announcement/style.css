@@ -1,5 +1,5 @@
 /* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
-.sna-demo { min-height: 320px; background: var(--bg, #fbf8f3); color: var(--text, #292524); font-family: var(--font-body, system-ui, sans-serif); }
+.sna-demo { min-height: 0; background: var(--bg, #fbf8f3); color: var(--text, #292524); font-family: var(--font-body, system-ui, sans-serif); }
 .sna-announce { display: flex; align-items: center; justify-content: center; position: relative; padding: 10px 48px; background: var(--accent, #292524); color: #fff; font-size: .82rem; letter-spacing: .02em; overflow: hidden; max-height: 80px; transition: max-height .35s ease, padding .35s ease, opacity .25s; }
 .sna-announce[hidden] { display: none; }
 .sna-announce.is-hidden { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; }
