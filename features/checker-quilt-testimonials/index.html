@@ -3,11 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checker Quilt Testimonials</title>
+  <title>Quilt Testimonials</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="cq-sec" id="cqSec" aria-label="Customer quotes">
+    <header class="cq-bar">
+      <h2 class="cq-title">Kind words</h2>
+      <div class="cq-ctl">
+        <span class="cq-pos" id="cqPos" aria-live="polite">1 / 3</span>
+        <button class="cq-btn" id="cqPrev" type="button" aria-label="Previous quotes">&larr;</button>
+        <button class="cq-btn" id="cqNext" type="button" aria-label="Next quotes">&rarr;</button>
+      </div>
+    </header>
+    <div class="cq-grid" id="cqGrid">
+      <figure class="cq-cell cq-q" data-r="0"><blockquote id="cqQ0"></blockquote><figcaption id="cqC0"></figcaption></figure>
+      <div class="cq-cell cq-p" data-r="0" role="img" aria-hidden="true"><div class="cq-face"><span id="cqI0"></span></div></div>
+      <div class="cq-cell cq-p" data-r="1" role="img" aria-hidden="true"><div class="cq-face"><span id="cqI1"></span></div></div>
+      <figure class="cq-cell cq-q" data-r="1"><blockquote id="cqQ1"></blockquote><figcaption id="cqC1"></figcaption></figure>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

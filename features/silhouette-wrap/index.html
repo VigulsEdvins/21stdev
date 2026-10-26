@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Silhouette Wrap</title>
+  <title>Shape Flow Text</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sw-track" id="swTrack">
+    <div class="sw-sticky">
+      <p class="sw-label">Scroll to drop the bulb</p>
+      <div class="sw-col" id="swCol">
+        <p class="sw-text" id="swText">The lamp-maker kept one rule above her workbench: never fight the glass. When a bulb came off the pipe it was soft and slow, and the whole job was to listen to it. She would turn it, breathe into it, and let the weight of the molten drop pull the neck long and thin. People who watched her thought she was shaping the glass, but she insisted the glass was shaping her hands. By evening the shelves were full of small clear moons, each with a quiet seam where it had been cut loose, and the shop smelled of warm sand. A customer once asked how she knew when a bulb was finished. She held one to the window and the street came through it upside down, tiny and perfectly sharp. That, she said, is the whole test. If the world can pass through without losing its edges, the glass is honest, and honest glass is the only kind worth lighting.</p>
+        <div class="sw-lines" id="swLines" aria-hidden="true"></div>
+        <svg class="sw-shape" id="swShape" aria-hidden="true"></svg>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

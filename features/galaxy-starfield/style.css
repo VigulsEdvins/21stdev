@@ -1,9 +1,47 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #04050d; color: #eef0ff; }
+
+.ns-sky {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #04050d;
+  font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif);
 }
-html, body, #root {
+.ns-canvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  display: block;
+}
+.ns-copy {
+  position: relative;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 720px;
+  pointer-events: none;
+}
+.ns-kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #8fe9d8;
+  margin-bottom: 18px;
+}
+.ns-title {
+  font-family: var(--font-display, Georgia, "Times New Roman", serif);
+  font-size: clamp(2rem, 6.4vw, 4.2rem);
+  font-weight: 500;
+  line-height: 1.08;
+  text-shadow: 0 2px 30px rgba(4, 5, 13, 0.9);
+}
+.ns-lead {
+  margin-top: 18px;
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  line-height: 1.55;
+  color: rgba(238, 240, 255, 0.72);
 }

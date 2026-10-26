@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shutter Glyph Footer</title>
+  <title>Watching Eyes Footer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <footer class="we-foot" id="weFoot">
+    <div class="we-top">
+      <form class="we-sign" id="weForm" novalidate>
+        <label for="weMail" class="we-lab">Get one short note when we ship something new</label>
+        <div class="we-field"><input id="weMail" type="email" placeholder="Email address" autocomplete="email" /><button type="submit" aria-label="Subscribe">&rarr;</button></div>
+        <p class="we-msg" id="weMsg" role="status"></p>
+      </form>
+      <nav class="we-col" aria-label="Elsewhere"><a href="#">Notebook</a><a href="#">Pinboard</a><a href="#">Playlist</a></nav>
+      <nav class="we-col" aria-label="Legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></nav>
+    </div>
+
+    <div class="we-mark" role="img" aria-label="Look">
+      <span class="we-l">L</span>
+      <span class="we-eye"><span class="we-pupil"></span></span>
+      <span class="we-eye"><span class="we-pupil"></span></span>
+      <span class="we-l">K</span>
+    </div>
+    <p class="we-legal"><span>&copy; 2026 Look Collective</span><span>Made by a small team of watchers</span></p>
+  </footer>
   <script src="script.js"></script>
 </body>
 </html>

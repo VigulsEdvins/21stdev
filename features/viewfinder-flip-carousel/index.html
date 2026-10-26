@@ -3,11 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Viewfinder Flip Carousel</title>
+  <title>Folding Frame Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ff-wrap" aria-label="Folding frame carousel">
+    <p class="ff-label">Contact sheet</p>
+    <div class="ff-stage" id="ffStage" tabindex="0" aria-roledescription="carousel" aria-label="Colour studies, use arrow keys">
+      <div class="ff-reticle" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <ul class="ff-strip" id="ffStrip"></ul>
+    </div>
+    <div class="ff-bar">
+      <button type="button" class="ff-btn" id="ffPrev" aria-label="Previous frame">&#8592;</button>
+      <p class="ff-text" id="ffText" aria-live="polite">Frame 01</p>
+      <button type="button" class="ff-btn" id="ffNext" aria-label="Next frame">&#8594;</button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

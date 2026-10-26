@@ -3,11 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Astro Bubble Hero</title>
+  <title>Popping Bubble Hero</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="bh-hero" id="bhHero">
+    <p class="bh-eyebrow">Soda Lab / Issue 14</p>
+    <div class="bh-stage" id="bhStage">
+      <h1 class="bh-word" id="bhWord">Fizz</h1>
+      <canvas class="bh-canvas" id="bhCanvas" aria-hidden="true"></canvas>
+    </div>
+    <div class="bh-row">
+      <p class="bh-lead">A tiny studio brewing playful web experiments. The headline is full of bubbles, and they are all yours to pop.</p>
+      <div class="bh-actions">
+        <a class="bh-btn" href="#">Join the club</a>
+        <a class="bh-btn bh-alt" href="#">Browse the lab</a>
+      </div>
+    </div>
+    <p class="bh-count" aria-live="polite"><span class="bh-dot"></span><span id="bhCount">Pop the bubbles: 0 so far</span></p>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

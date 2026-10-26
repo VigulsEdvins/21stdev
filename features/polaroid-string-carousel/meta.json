@@ -2,7 +2,7 @@
   "slug": "polaroid-string-carousel",
   "title": "Polaroid Sagging String & Breeze Physics Carousel",
   "category": "3D & Carousels",
-  "source": "photo-caroulsel",
+  "source": "edvlabs",
   "type": "component",
   "description": "Instant photo prints pegged to a sagging catenary string. Drag the line or use arrows/clicks to slide prints with critically damped spring physics, velocity-driven pendulum swing, ambient breeze sway, and procedural painted landscapes.",
   "tags": [
@@ -31,12 +31,12 @@
   "industry": [
     "general"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "photo-caroulsel",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "hero-photo-1",

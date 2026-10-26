@@ -3,11 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crimson Confessional</title>
+  <title>Noir Scroll Chapters</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="nc-track" id="ncTrack">
+    <div class="nc-stage">
+      <canvas class="nc-canvas" id="ncCanvas" aria-hidden="true"></canvas>
+      <div class="nc-grain" aria-hidden="true"></div>
+      <header class="nc-head"><span class="nc-brand">The Long Hush</span><span class="nc-num" id="ncNum">I / IV</span></header>
+      <div class="nc-chapters">
+        <article class="nc-ch"><h2 class="nc-word">Vow</h2><p class="nc-line">Say it once, and the room remembers.</p></article>
+        <article class="nc-ch"><h2 class="nc-word">Ash</h2><p class="nc-line">What burns quietly leaves the longest shadow.</p></article>
+        <article class="nc-ch"><h2 class="nc-word">Veil</h2><p class="nc-line">Behind the screen, someone is listening.</p></article>
+        <article class="nc-ch"><h2 class="nc-word">Mercy</h2><p class="nc-line">Nobody asked. It came anyway.</p></article>
+      </div>
+      <p class="nc-hint" id="ncHint">Scroll</p>
+      <div class="nc-bar" aria-hidden="true"><i id="ncBar"></i></div>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

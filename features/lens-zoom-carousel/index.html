@@ -3,11 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lens Zoom Carousel</title>
+  <title>Zoom Pull Slider</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="zp-wrap" id="zpWrap" aria-roledescription="carousel" aria-label="Scenery slideshow">
+    <div class="zp-stage" id="zpStage">
+      <figure class="zp-slide zp-s1 is-current" data-title="Dune light"><i class="zp-sun"></i><i class="zp-hill zp-h1"></i><i class="zp-hill zp-h2"></i></figure>
+      <figure class="zp-slide zp-s2" data-title="Harbour hour"><i class="zp-sun"></i><i class="zp-hill zp-h1"></i><i class="zp-hill zp-h2"></i></figure>
+      <figure class="zp-slide zp-s3" data-title="Pine ridge"><i class="zp-sun"></i><i class="zp-hill zp-h1"></i><i class="zp-hill zp-h2"></i></figure>
+      <figure class="zp-slide zp-s4" data-title="Night plain"><i class="zp-sun"></i><i class="zp-hill zp-h1"></i><i class="zp-hill zp-h2"></i></figure>
+    </div>
+    <div class="zp-bar">
+      <p class="zp-caption"><span class="zp-num" id="zpNum">01</span><span class="zp-title" id="zpTitle">Dune light</span></p>
+      <div class="zp-ctrl">
+        <button class="zp-btn" id="zpPrev" type="button" aria-label="Previous slide">&larr;</button>
+        <button class="zp-btn" id="zpNext" type="button" aria-label="Next slide">&rarr;</button>
+      </div>
+    </div>
+    <p class="zp-live" id="zpLive" aria-live="polite"></p>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

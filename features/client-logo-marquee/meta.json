@@ -2,7 +2,7 @@
   "slug": "client-logo-marquee",
   "title": "Infinite Dual-Direction Partner Logo Marquee",
   "category": "Galleries & Bento",
-  "source": "carousel-gallery-play",
+  "source": "edvlabs",
   "type": "component",
   "description": "Seamless hardware-accelerated infinite dual-track partner logo marquee with soft gradient edge masks, hover speed modulation, and direction reversal toggle.",
   "tags": [
@@ -29,10 +29,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "carousel-gallery-play",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "button-text",

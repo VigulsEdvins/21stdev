@@ -3,11 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coquette Desktop Portfolio</title>
+  <title>Sunroom Desktop</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="sr-desk" id="srDesk">
+    <div class="sr-bar"><span class="sr-bar-name">&#9728; sunroom</span><span class="sr-bar-clock" id="srClock">9:41</span></div>
+
+    <div class="sr-hero">
+      <p class="sr-eyebrow">hi, I'm Juno Alder</p>
+      <h1 class="sr-title">a tiny desk of <em>things I made</em></h1>
+      <p class="sr-intro">Open a folder to browse projects. Drag the windows wherever you like.</p>
+    </div>
+
+    <ul class="sr-icons">
+      <li><button class="sr-icon sr-folder" data-win="web" style="--tint:#f6c978"><span class="sr-art"></span><span class="sr-label">web apps</span></button></li>
+      <li><button class="sr-icon sr-folder" data-win="brand" style="--tint:#a9d6b8"><span class="sr-art"></span><span class="sr-label">brand work</span></button></li>
+      <li><button class="sr-icon sr-folder" data-win="print" style="--tint:#f2a99a"><span class="sr-art"></span><span class="sr-label">print</span></button></li>
+      <li><button class="sr-icon sr-doc" data-win="about"><span class="sr-art"></span><span class="sr-label">read me.txt</span></button></li>
+      <li><button class="sr-icon sr-doc sr-doc-alt" data-win="hello"><span class="sr-art"></span><span class="sr-label">say hello.txt</span></button></li>
+    </ul>
+
+    <div class="sr-windows" id="srWindows"></div>
+
+    <nav class="sr-dock" aria-label="Dock">
+      <button class="sr-app" data-win="web" style="--c:#f6c978" aria-label="Open web apps">W</button>
+      <button class="sr-app" data-win="brand" style="--c:#a9d6b8" aria-label="Open brand work">B</button>
+      <button class="sr-app" data-win="print" style="--c:#f2a99a" aria-label="Open print">P</button>
+      <span class="sr-sep"></span>
+      <button class="sr-app" data-win="about" style="--c:#c9c0ea" aria-label="Open read me">i</button>
+      <button class="sr-app" data-win="hello" style="--c:#9fcbe8" aria-label="Open say hello">@</button>
+    </nav>
+  </div>
+
+  <template id="srData">
+    <section data-id="web" data-title="web apps"><ul class="sr-proj"><li><b>Tidepool</b><span>A tide-table app for small harbours</span></li><li><b>Pocket Ledger</b><span>Shared household budgets, no sign-up</span></li><li><b>Fieldnote</b><span>Offline-first notes for gardeners</span></li></ul></section>
+    <section data-id="brand" data-title="brand work"><ul class="sr-proj"><li><b>Marrow Bakery</b><span>Identity, signage and packaging</span></li><li><b>Kite &amp; Cove</b><span>Logo and shop interior colours</span></li><li><b>Plum Radio</b><span>Station branding and tote bags</span></li></ul></section>
+    <section data-id="print" data-title="print"><ul class="sr-proj"><li><b>Seasons Zine</b><span>Risograph, four issues</span></li><li><b>Moth Calendar</b><span>Twelve linocut moths</span></li></ul></section>
+    <section data-id="about" data-title="read me.txt"><div class="sr-text"><p>I design and build small, friendly websites for people who make things.</p><p>Most days I'm in a sunny room with a pot of tea, sketching layouts on scrap paper before touching a screen.</p></div></section>
+    <section data-id="hello" data-title="say hello.txt"><div class="sr-text"><p>Open for new projects from next month.</p><p><a href="#">hello@example.com</a></p></div></section>
+  </template>
   <script src="script.js"></script>
 </body>
 </html>

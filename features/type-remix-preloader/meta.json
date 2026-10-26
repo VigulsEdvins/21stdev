@@ -1,33 +1,29 @@
 {
-  "name": "Type Remix Preloader",
-  "title": "Type Remix Preloader",
+  "name": "Word Cycle Preloader",
+  "title": "Word Cycle Preloader",
   "slug": "type-remix-preloader",
   "category": "Preloaders & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A loading gate for a designer's portfolio. While the page loads, one word (`PORTFOLIO` by default) is re-typeset through seven cover treatments, each wiping over the last as the count climbs:",
+  "description": "A full-screen loader that sets one word in seven different type styles, each wiping over the last while a counter climbs to 100.",
   "tags": [
-    "type",
-    "remix",
     "preloader",
-    "galleries",
-    "react"
+    "typography",
+    "loading",
+    "counter",
+    "wipe"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 242,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "editorial",
     "dark"
@@ -37,17 +33,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.14,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Status label",
+      "type": "text",
+      "selector": ":scope .wc-tag"
+    },
+    {
+      "id": "button-text",
+      "label": "Replay button",
+      "type": "text",
+      "selector": ":scope .wc-replay"
+    }
+  ],
+  "reserveHeight": 800,
+  "ownPalette": true
 }

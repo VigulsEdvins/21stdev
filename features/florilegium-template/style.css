@@ -1,9 +1,46 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f3efe6); color: var(--text, #1d2a1f); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+a { color: inherit; }
+
+.mg-page { --mg-ink: #1d2a1f; --mg-dim: #55624f; --mg-line: rgba(29,42,31,.16); --mg-moss: #3f6b45; --mg-paper: #f3efe6; background: var(--mg-paper); color: var(--mg-ink); min-height: 100vh; overflow-x: clip; }
+.mg-nav { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: .9rem clamp(1rem, 4vw, 3rem); background: color-mix(in srgb, var(--mg-paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--mg-line); }
+.mg-logo { display: flex; align-items: center; gap: .5rem; text-decoration: none; font-family: var(--font-display, Georgia, "Times New Roman", serif); font-size: 1.2rem; font-weight: 600; }
+.mg-links { display: flex; align-items: center; gap: 1.2rem; font-size: .9rem; }
+.mg-links a { text-decoration: none; }
+.mg-links a:not(.mg-btn):hover { color: var(--mg-moss); }
+.mg-btn { display: inline-block; padding: .55rem 1.1rem; border-radius: 999px; border: 1px solid var(--mg-ink); background: transparent; color: var(--mg-ink); font: inherit; font-size: .9rem; cursor: pointer; text-decoration: none; transition: background .2s, color .2s; }
+.mg-btn:hover, .mg-solid { background: var(--mg-ink); color: var(--mg-paper); }
+.mg-solid:hover { background: var(--mg-moss); border-color: var(--mg-moss); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--mg-moss); outline-offset: 3px; }
+
+.mg-split { display: grid; grid-template-columns: 1.05fr 1fr; gap: 2rem; padding: 0 clamp(1rem, 4vw, 3rem); max-width: 1240px; margin: 0 auto; }
+.mg-sticky { position: sticky; top: 64px; height: calc(100vh - 64px); display: flex; flex-direction: column; align-items: center; justify-content: center; order: 1; }
+.mg-copy { order: 2; }
+.mg-sticky canvas { width: min(100%, 460px); aspect-ratio: 640 / 760; max-height: 74vh; }
+.mg-caption { margin-top: .6rem; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mg-dim); }
+.mg-caption em { font-family: var(--font-display, Georgia, serif); text-transform: none; letter-spacing: 0; font-size: 1rem; margin-left: .5rem; color: var(--mg-ink); }
+
+.mg-chapter { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; max-width: 30rem; padding: 3rem 0; }
+.mg-kicker { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--mg-moss); margin-bottom: 1rem; }
+.mg-h1, .mg-h2 { font-family: var(--font-display, Georgia, "Times New Roman", serif); font-weight: 500; line-height: 1.08; letter-spacing: -.02em; }
+.mg-h1 { font-size: clamp(2.3rem, 5vw, 3.8rem); }
+.mg-h2 { font-size: clamp(1.9rem, 4vw, 2.9rem); }
+.mg-h1 em { color: var(--mg-moss); }
+.mg-lead { margin-top: 1.2rem; line-height: 1.65; color: var(--mg-dim); font-size: 1.05rem; }
+.mg-actions { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
+.mg-ghost { padding: .5rem .2rem; border-bottom: 1px solid var(--mg-ink); text-decoration: none; font-size: .95rem; }
+.mg-list { margin-top: 1.6rem; list-style: none; display: flex; flex-wrap: wrap; gap: 1.4rem; font-size: .85rem; color: var(--mg-dim); }
+.mg-list b { display: block; font-family: var(--font-display, Georgia, serif); font-size: 2rem; font-weight: 500; color: var(--mg-ink); }
+.mg-form { margin-top: 1.6rem; display: flex; gap: .6rem; flex-wrap: wrap; }
+.mg-form input { flex: 1 1 12rem; padding: .65rem 1rem; border-radius: 999px; border: 1px solid var(--mg-line); background: #fff8; font: inherit; color: inherit; }
+.mg-note { margin-top: .8rem; min-height: 1.2em; font-size: .9rem; color: var(--mg-moss); }
+.mg-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.mg-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .6rem; padding: 1.6rem clamp(1rem, 4vw, 3rem); border-top: 1px solid var(--mg-line); font-size: .85rem; color: var(--mg-dim); }
+
+@media (max-width: 800px) {
+  .mg-links a:not(.mg-btn) { display: none; }
+  .mg-split { display: block; padding: 0 1rem; }
+  .mg-sticky { top: 58px; height: 42vh; background: var(--mg-paper); z-index: 2; }
+  .mg-sticky canvas { max-height: 34vh; }
+  .mg-chapter { min-height: 70vh; padding: 2rem 0; }
 }

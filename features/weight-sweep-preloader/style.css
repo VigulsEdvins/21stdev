@@ -1,9 +1,15 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f1efe8); color: var(--text, #111); }
+
+.hc-gate { --hc-ink: #111; --hc-paper: #f1efe8; --hc-stroke: 0px; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; padding: 1.2rem clamp(1rem, 4vw, 2.4rem); background: var(--hc-paper); color: var(--hc-ink); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.hc-top, .hc-hud { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; }
+.hc-rail { display: flex; gap: 3px; height: 14px; margin-top: .7rem; border-top: 2px solid var(--hc-ink); padding-top: 6px; }
+.hc-rail i { flex: 1; background: rgba(17,17,17,.14); transition: background .2s; }
+.hc-rail i.is-on { background: var(--hc-ink); }
+.hc-num { flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--font-display, "Helvetica Neue", Helvetica, Arial, sans-serif); font-size: clamp(7rem, 34vw, 26rem); line-height: .9; font-weight: 200; font-variant-numeric: tabular-nums; letter-spacing: -.04em; -webkit-text-stroke: var(--hc-stroke) var(--hc-ink); paint-order: stroke fill; user-select: none; }
+.hc-hud b { font-variant-numeric: tabular-nums; margin-left: .4rem; }
+.hc-btn { font: inherit; letter-spacing: inherit; text-transform: inherit; background: var(--hc-ink); color: var(--hc-paper); border: 0; padding: .5rem 1.1rem; border-radius: 99px; cursor: pointer; }
+.hc-btn:focus-visible { outline: 2px solid var(--hc-ink); outline-offset: 3px; }
+.hc-gate.is-done .hc-num { animation: hc-settle .8s ease-out; }
+@keyframes hc-settle { 0% { transform: scale(1.04); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .hc-gate.is-done .hc-num { animation: none; } }

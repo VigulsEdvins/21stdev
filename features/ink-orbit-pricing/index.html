@@ -3,11 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ink Orbit Pricing</title>
+  <title>Glow Pricing Cards</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="op-wrap">
+    <header class="op-head">
+      <p class="op-eyebrow">Plans</p>
+      <h1 class="op-title">Pick a plan that fits the crew</h1>
+      <p class="op-lead">Try everything free for 30 days. Switch or stop whenever you like, no phone calls required.</p>
+      <div class="op-switch" id="opSwitch" role="group" aria-label="Billing period">
+        <i class="op-thumb" aria-hidden="true"></i>
+        <button type="button" data-per="month" aria-pressed="true">Monthly</button>
+        <button type="button" data-per="year" aria-pressed="false">Yearly <em>save 25%</em></button>
+      </div>
+    </header>
+    <div class="op-grid" id="opGrid">
+      <article class="op-card" data-m="9" data-y="7">
+        <h2 class="op-name">Solo</h2>
+        <p class="op-desc">One maker, one calm dashboard.</p>
+        <p class="op-price"><span class="op-cur">$</span><span class="op-num">9</span><span class="op-per">/ month</span></p>
+        <ul class="op-list"><li>1 seat</li><li>5 active projects</li><li>Basic reports</li><li>Email support</li></ul>
+        <a class="op-btn" href="#">Start free</a>
+      </article>
+      <article class="op-card op-top" data-m="24" data-y="18">
+        <span class="op-badge">Most chosen</span>
+        <h2 class="op-name">Crew</h2>
+        <p class="op-desc">For small teams that ship weekly.</p>
+        <p class="op-price"><span class="op-cur">$</span><span class="op-num">24</span><span class="op-per">/ month</span></p>
+        <ul class="op-list"><li>Up to 8 seats</li><li>Unlimited projects</li><li>Shared timelines</li><li>Priority chat support</li><li>Custom domains</li></ul>
+        <a class="op-btn" href="#">Start free</a>
+      </article>
+      <article class="op-card" data-m="59" data-y="44">
+        <h2 class="op-name">Studio</h2>
+        <p class="op-desc">Bigger groups with extra guardrails.</p>
+        <p class="op-price"><span class="op-cur">$</span><span class="op-num">59</span><span class="op-per">/ month</span></p>
+        <ul class="op-list"><li>Unlimited seats</li><li>Roles and approvals</li><li>Audit history</li><li>Onboarding session</li></ul>
+        <a class="op-btn" href="#">Talk to us</a>
+      </article>
+    </div>
+    <p class="op-note" id="opNote">Billed monthly. Prices in US dollars.</p>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,121 +1,49 @@
 {
-  "name": "Index List Carousel",
-  "title": "Index List Carousel",
+  "name": "Poster Index List",
+  "title": "Poster Index List",
   "slug": "index-list-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A typographic index: big numbered titles on one side, one picture on the other. Hover or tap a title and its picture wipes in over the last one — from the right going down the list, from the left going up — and the active row opens to show its caption. Stacks on small screens. Page colours follow th",
+  "description": "A typographic index of numbered titles beside one picture panel: hovering or focusing a row wipes its artwork in from below or above and opens the row caption.",
   "tags": [
     "index",
     "list",
-    "carousel",
-    "3d",
-    "react"
+    "hover",
+    "gallery",
+    "typography"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS",
+    "SVG"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 166,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "editorial",
-    "futuristic",
     "light"
   ],
   "industry": [
-    "general"
+    "media"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope div.il-sr"
-    },
-    {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > img:nth-of-type(2)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > img:nth-of-type(3)"
-    },
-    {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > img:nth-of-type(4)"
-    },
-    {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > img:nth-of-type(5)"
-    },
-    {
-      "id": "button-text-1",
-      "label": "Button text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
-    },
-    {
-      "id": "button-text-3",
-      "label": "Button text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)"
-    },
-    {
-      "id": "button-text-5",
-      "label": "Button text 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(5)"
-    },
-    {
-      "id": "button-text-6",
-      "label": "Button text 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(6)"
+      "selector": ":scope .pi-small"
     }
-  ],
-  "measured": {
-    "luma": 0.78,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  ]
 }

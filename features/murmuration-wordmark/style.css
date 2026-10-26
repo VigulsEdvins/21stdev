@@ -1,9 +1,7 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #070a18); color: var(--text, #dff3ff); }
+
+.sw-sky { position: relative; height: 100vh; min-height: 24rem; overflow: hidden; background: linear-gradient(180deg, #050716 0%, #101a3d 62%, #2a3a6e 100%); }
+.sw-sky::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 12%; background: linear-gradient(180deg, transparent, #03040c); pointer-events: none; }
+.sw-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sw-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

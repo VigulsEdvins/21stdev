@@ -14,14 +14,14 @@ body, html {
   user-select: none;
 }
 
-.viv-gallery {
+.edv-gallery {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
 }
 
-.viv-hud {
+.edv-hud {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,28 +35,28 @@ body, html {
   pointer-events: none;
 }
 
-.viv-brand {
+.edv-brand {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
-.viv-hint {
+.edv-hint {
   font-size: 11px;
   color: color-mix(in srgb, var(--text, #141413) 55%, transparent);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.viv-pan-stage {
+.edv-pan-stage {
   width: 124%;
   height: 100%;
   margin-left: -12%;
   will-change: transform;
 }
 
-.viv-columns {
+.edv-columns {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 22px;
@@ -64,14 +64,14 @@ body, html {
   height: 100%;
 }
 
-.viv-col {
+.edv-col {
   display: flex;
   flex-direction: column;
   gap: 26px;
   will-change: transform;
 }
 
-.viv-card {
+.edv-card {
   background: color-mix(in srgb, var(--text, #141413) 7%, var(--bg, #f4f1ea));
   border-radius: 4px;
   overflow: hidden;
@@ -80,19 +80,19 @@ body, html {
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
 }
 
-.viv-card:hover {
+.edv-card:hover {
   transform: translateY(-4px) scale(1.015);
   box-shadow: 0 22px 44px rgba(0, 0, 0, 0.14);
 }
 
-.viv-card-media {
+.edv-card-media {
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
 }
 
-.viv-card-layer {
+.edv-card-layer {
   position: absolute;
   inset: 0;
   opacity: 0;
@@ -103,15 +103,15 @@ body, html {
   padding: 18px;
 }
 
-.viv-card-layer.is-active {
+.edv-card-layer.is-active {
   opacity: 1;
 }
 
-.viv-card:hover .viv-card-layer.is-active {
+.edv-card:hover .edv-card-layer.is-active {
   transform: scale(1.05);
 }
 
-.viv-card-meta {
+.edv-card-meta {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -119,20 +119,20 @@ body, html {
   background: var(--bg, #f4f1ea);
 }
 
-.viv-artist-name {
+.edv-artist-name {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
-.viv-artist-role {
+.edv-artist-role {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: color-mix(in srgb, var(--text, #141413) 52%, transparent);
 }
 
-.viv-cycle-badge {
+.edv-cycle-badge {
   position: absolute;
   top: 10px;
   right: 10px;

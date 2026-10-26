@@ -1,29 +1,25 @@
 {
-  "name": "Quiet Portfolio Template",
-  "title": "Quiet Portfolio Template",
+  "name": "Plain Folio",
+  "title": "Plain Folio",
   "slug": "quiet-portfolio-template",
   "category": "Landing Pages",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A complete, minimal personal site in one component: calm type, generous whitespace, one accent colour, and a lot of small interactions that only show up when you reach for them.",
+  "description": "A minimal personal portfolio page with a sticky side menu that follows the scroll, hover-lift project rows, collapsible notes, a local dark switch and a copy-email button.",
   "tags": [
-    "quiet",
     "portfolio",
-    "template",
-    "full",
-    "react"
+    "minimal",
+    "personal",
+    "sticky-nav",
+    "landing"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 215,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -38,85 +34,64 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
-    {
-      "id": "button-text-1",
-      "label": "Button text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(2)"
-    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.qpt-sr"
+      "selector": ":scope .pf-title"
     },
     {
-      "id": "button-text-3",
-      "label": "Button text 3",
+      "id": "intro-text",
+      "label": "Intro text",
       "type": "text",
-      "selector": ":scope button.qpt-hello-btn"
+      "selector": ":scope #pf-about .pf-intro"
     },
     {
-      "id": "section-heading-1",
-      "label": "Section heading 1",
+      "id": "small-label",
+      "label": "Status label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(2) > h2:nth-of-type(1)"
+      "selector": ":scope .pf-st"
     },
     {
-      "id": "section-heading-2",
-      "label": "Section heading 2",
+      "id": "person-name",
+      "label": "Name",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(3) > h2:nth-of-type(1)"
+      "selector": ":scope .pf-name"
     },
     {
-      "id": "section-heading-3",
-      "label": "Section heading 3",
+      "id": "person-role",
+      "label": "Role",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(4) > h2:nth-of-type(1)"
+      "selector": ":scope .pf-role"
     },
     {
-      "id": "footer-link-1",
-      "label": "Footer link 1",
+      "id": "work-title",
+      "label": "Work heading",
+      "type": "text",
+      "selector": ":scope #pf-work .pf-h2"
+    },
+    {
+      "id": "contact-title",
+      "label": "Contact heading",
+      "type": "text",
+      "selector": ":scope #pf-contact .pf-h2"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Copy button text",
+      "type": "text",
+      "selector": ":scope .pf-copy"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Email link",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-2",
-      "label": "Footer link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(2)"
-    },
-    {
-      "id": "footer-link-3",
-      "label": "Footer link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > footer:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(3)"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > footer:nth-of-type(1) > span:nth-of-type(3) > button:nth-of-type(1)"
+      "selector": ":scope .pf-addr"
     }
-  ],
-  "measured": {
-    "luma": 0.98,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
+  ]
 }

@@ -1,9 +1,38 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f6f3ee); color: var(--text, #17151a); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.cl-wrap { max-width: 62rem; margin: 0 auto; padding: 4rem 1.5rem 5rem; --cl-line: color-mix(in srgb, var(--text, #17151a) 16%, transparent); --cl-mute: color-mix(in srgb, var(--text, #17151a) 58%, transparent); }
+.cl-small { font: 600 0.72rem/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cl-mute); }
+.cl-title { margin: 0.9rem 0; font-family: var(--font-display, Georgia, "Times New Roman", serif); font-weight: 500; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -0.02em; }
+.cl-intro { max-width: 30rem; color: var(--cl-mute); }
+.cl-rows { margin-top: 3rem; border-top: 1px solid var(--cl-line); }
+.cl-row { position: relative; border-bottom: 1px solid var(--cl-line); overflow: hidden; --mx: 50%; --my: 50%; }
+.cl-row::before { content: ""; position: absolute; inset: 0; background: radial-gradient(22rem circle at var(--mx) var(--my), hsl(var(--h) 90% 66% / 0.55), hsl(calc(var(--h) + 30) 90% 62% / 0.2) 45%, transparent 70%); opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+.cl-row:hover::before, .cl-row.is-open::before, .cl-row:focus-within::before { opacity: 1; }
+.cl-row.is-open::before { opacity: 0.55; }
+.cl-row:hover::before { opacity: 1; }
+.cl-btn { position: relative; width: 100%; display: grid; grid-template-columns: 3rem 1fr auto 2rem; gap: 1rem; align-items: center; padding: 1.6rem 0.4rem; background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.cl-btn:focus-visible { outline: 2px solid var(--accent, #7c5cff); outline-offset: -2px; }
+.cl-no { font: 0.78rem/1 ui-monospace, Menlo, Consolas, monospace; color: var(--cl-mute); }
+.cl-name { font-family: var(--font-display, Georgia, serif); font-size: clamp(1.9rem, 6vw, 4.2rem); line-height: 1; letter-spacing: -0.03em; transition: transform 0.4s; }
+.cl-btn:hover .cl-name { transform: translateX(0.6rem); }
+.cl-yrs { font: italic 0.95rem/1 var(--font-display, Georgia, serif); color: var(--cl-mute); white-space: nowrap; }
+.cl-plus { position: relative; width: 1.2rem; height: 1.2rem; justify-self: end; }
+.cl-plus::before, .cl-plus::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: currentColor; transition: transform 0.35s; }
+.cl-plus::after { transform: rotate(90deg); }
+.cl-btn[aria-expanded="true"] .cl-plus::after { transform: rotate(0); }
+.cl-panel { position: relative; display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s ease; }
+.cl-row.is-open .cl-panel { grid-template-rows: 1fr; }
+.cl-inner { overflow: hidden; display: grid; grid-template-columns: 1fr 1.6fr; gap: 2rem; padding: 0 0.4rem 0 4rem; min-height: 0; }
+.cl-row.is-open .cl-inner { padding-bottom: 2rem; }
+.cl-row:not(.is-open) .cl-panel { visibility: hidden; transition: grid-template-rows 0.45s ease, visibility 0s 0.45s; }
+dl { display: grid; grid-template-columns: 5rem 1fr; gap: 0.5rem 1rem; font-size: 0.92rem; }
+dt { color: var(--cl-mute); } dd { font-weight: 600; }
+.cl-inner p { max-width: 32rem; line-height: 1.6; }
+.cl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; list-style: none; }
+.cl-tags li { padding: 0.3rem 0.8rem; border: 1px solid currentColor; border-radius: 99px; font-size: 0.78rem; background: color-mix(in srgb, var(--bg, #f6f3ee) 60%, transparent); }
+@media (max-width: 640px) {
+  .cl-btn { grid-template-columns: 1fr auto; gap: 0.3rem 1rem; padding: 1.2rem 0; }
+  .cl-no { display: none; } .cl-name { grid-column: 1; } .cl-yrs { grid-column: 1; grid-row: 2; } .cl-plus { grid-column: 2; grid-row: 1 / span 2; }
+  .cl-inner { grid-template-columns: 1fr; gap: 1.2rem; padding-left: 0; }
 }
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+@media (prefers-reduced-motion: reduce) { .cl-panel, .cl-row::before, .cl-name, .cl-plus::before, .cl-plus::after { transition: none !important; } }

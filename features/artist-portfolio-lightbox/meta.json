@@ -2,15 +2,14 @@
   "name": "Artist Portfolio Modal Lightbox",
   "slug": "artist-portfolio-lightbox",
   "category": "Galleries & Bento",
-  "source": "vivmgmt",
+  "source": "edvlabs",
   "type": "component",
-  "description": "High-fashion portfolio lightbox with keyboard arrow navigation, plate counter, metadata drawer, and interactive thumbnail strip.",
+  "description": "Portfolio lightbox with keyboard arrow navigation, plate counter, metadata drawer, and interactive thumbnail strip.",
   "tags": [
     "lightbox",
     "portfolio",
     "modal",
-    "keyboard-nav",
-    "vivmgmt"
+    "keyboard-nav"
   ],
   "tech": [
     "Vanilla JS",
@@ -31,12 +30,12 @@
   "industry": [
     "portfolio"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "vivmgmt",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "button-text",

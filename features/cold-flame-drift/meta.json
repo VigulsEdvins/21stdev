@@ -1,33 +1,29 @@
 {
-  "name": "Cold Flame Drift",
-  "title": "Cold Flame Drift",
+  "name": "Stipple Flame Field",
+  "title": "Stipple Flame Field",
   "slug": "cold-flame-drift",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A field of grainy, hand-printed flames sliding along a diagonal. Every tongue has a blunt base and a pointed tip. Some split into two prongs, and some throw a lick off one side. A slow noise current bends the rows into S-curves as they travel. Two inks stipple into each other like a risograph pull, ",
+  "description": "A WebGL shader field of grainy, two-ink flame shapes sliding along a diagonal on a slow wave, bending around the pointer.",
   "tags": [
-    "cold",
-    "flame",
-    "drift",
-    "interactions",
-    "react"
+    "shader",
+    "flames",
+    "webgl",
+    "background",
+    "risograph"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 126,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "retro",
     "dark"
@@ -37,17 +33,11 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [],
-  "measured": {
-    "luma": 0.13,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

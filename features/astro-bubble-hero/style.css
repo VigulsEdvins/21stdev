@@ -1,9 +1,17 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.bh-hero { --bh-mute: color-mix(in srgb, var(--text, #f3f4f6) 64%, transparent); min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 1.4rem; padding: clamp(1.2rem, 4vw, 3rem); overflow: hidden; }
+.bh-eyebrow { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bh-mute); }
+.bh-stage { position: relative; display: grid; place-items: center; }
+.bh-word { font: 800 clamp(6rem, 34vw, 26rem)/0.9 var(--font-display, var(--font-body, system-ui, sans-serif)); letter-spacing: -0.05em; color: transparent; user-select: none; padding: 0 0.04em; }
+.bh-canvas { position: absolute; inset: -5% 0; width: 100%; height: 110%; cursor: crosshair; touch-action: manipulation; }
+.bh-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.2rem; }
+.bh-lead { max-width: 31rem; color: var(--bh-mute); line-height: 1.55; }
+.bh-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+.bh-btn { display: inline-block; padding: 0.85rem 1.5rem; border-radius: 999px; background: var(--accent, #7c8cff); color: #0b0c10; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: transform 0.2s; }
+.bh-btn:hover { transform: translateY(-2px); }
+.bh-alt { background: none; color: var(--text, #f3f4f6); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--text, #f3f4f6) 40%, transparent); }
+.bh-btn:focus-visible { outline: 2px solid var(--accent, #7c8cff); outline-offset: 3px; }
+.bh-count { display: flex; align-items: center; gap: 0.6rem; font: 0.78rem ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bh-mute); }
+.bh-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--accent, #7c8cff); }
+@media (prefers-reduced-motion: reduce) { .bh-btn { transition: none; } }

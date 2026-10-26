@@ -1,32 +1,28 @@
 {
-  "name": "Caustic Pool",
-  "title": "Caustic Pool",
+  "name": "Stirred Water",
+  "title": "Stirred Water",
   "slug": "caustic-pool",
   "category": "Audio & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Shallow water you can stir, lit from above. Drag across it and the wake spreads, reflects off the walls and interferes with itself; leave it alone and it keeps moving without you.",
+  "description": "A canvas water surface with a live wave simulation and focused-light caustics; drag to stir it, or let it ripple with falling drops.",
   "tags": [
-    "caustic",
-    "pool",
-    "audio",
-    "react"
+    "water",
+    "canvas",
+    "simulation",
+    "interactive",
+    "ripple"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 119,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "minimal",
     "light"
@@ -36,17 +32,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.98,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .cw-label"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .cw-drop"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

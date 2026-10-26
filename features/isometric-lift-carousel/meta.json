@@ -1,29 +1,25 @@
 {
-  "name": "Isometric Lift Carousel",
-  "title": "Isometric Lift Carousel",
+  "name": "Lift Row Carousel",
+  "title": "Lift Row Carousel",
   "slug": "isometric-lift-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A minimal 3D photo carousel. Portrait photos stand on edge in a tilted row, seen from above and to the side like cards in a file box. The chosen photo widens and lifts out of the row on a spring. A small glass pill underneath holds prev, the dots and next.",
+  "description": "A 3D carousel of colour cards standing on edge in a tilted row; the chosen card widens and lifts out of the row on a springy ease.",
   "tags": [
-    "isometric",
-    "lift",
     "carousel",
     "3d",
-    "react"
+    "cards",
+    "tilt",
+    "gallery"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS 3D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 176,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
@@ -38,48 +34,19 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(8) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(7) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(6) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "text",
-      "label": "Text",
+      "id": "headline",
+      "label": "Active title",
       "type": "text",
-      "selector": ":scope div.ilc-sr"
+      "selector": ":scope .ic-title"
     }
   ],
-  "measured": {
-    "luma": 0.85,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "ownPalette": false,
+  "nativeWhen": []
 }

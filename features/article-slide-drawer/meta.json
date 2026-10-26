@@ -2,7 +2,7 @@
   "slug": "article-slide-drawer",
   "title": "Slide-Over Editorial Article Reader Drawer",
   "category": "Buttons & UI",
-  "source": "betteroff",
+  "source": "edvlabs",
   "type": "component",
   "description": "Backdrop-blurred slide-over editorial reading drawer with rich typography, tag/month metadata badges, gallery blocks, next/prev article navigation, and Esc/backdrop dismissal.",
   "tags": [
@@ -28,12 +28,12 @@
     "portfolio",
     "media"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "betteroff",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "button-text",

@@ -1,29 +1,25 @@
 {
-  "name": "Checker Quilt Testimonials",
-  "title": "Checker Quilt Testimonials",
+  "name": "Quilt Testimonials",
+  "title": "Quilt Testimonials",
   "slug": "checker-quilt-testimonials",
   "category": "Cards & Tiles",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A testimonials section laid out as a full-bleed checkerboard. Each row pairs a quote, set large on a solid colour field, with a portrait of the person who said it. Two rows sit diagonally, so the fields and faces alternate like a quilt.",
+  "description": "A full-width checkerboard of large quotes on solid colour fields paired with drawn portraits, with buttons to swap in new colour sets.",
   "tags": [
-    "checker",
-    "quilt",
     "testimonials",
+    "checkerboard",
+    "quotes",
     "cards",
-    "react"
+    "colour"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 120,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
@@ -36,66 +32,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",
-      "label": "Headline",
+      "label": "Heading",
       "type": "text",
-      "selector": ":scope h2.cqt-heading"
-    },
-    {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "intro-text",
-      "label": "Intro text",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > figure:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > blockquote:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "text-1",
-      "label": "Text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > figure:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > figcaption:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph",
-      "label": "Paragraph",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > figure:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > blockquote:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "text-2",
-      "label": "Text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > figure:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > figcaption:nth-of-type(1)"
+      "selector": ":scope .cq-title"
     }
   ],
-  "measured": {
-    "luma": 0.43,
-    "webgl": false,
-    "canvas2d": false
-  },
   "nativeWhen": [
     "light"
   ],
   "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
   "reserveHeight": 865,
   "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine",
+  "ownPalette": true
 }

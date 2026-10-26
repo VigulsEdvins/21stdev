@@ -1,25 +1,25 @@
 /**
  * 3D Cylindrical Image Carousel — With Scroll Velocity & Drag-to-Spin Inertia
- * Extracted & adapted from carousel-gallery-play/app.js (with real default photography)
+ * edvlabs component with placeholder art
  */
 (function () {
   const PROJECTS = [
-    { title: '125 Years AFC Ajax', tag: 'Heritage Documentary', img: '/assets/library/20250328_Pieter-Slembrouck-AJAX-Dolberg-115-01265321.webp' },
-    { title: 'Belgian Red Devils', tag: 'National Campaign', img: '/assets/library/20260603_Pieter-Slembrouck_BRD-101-1-26f0b7ca.webp' },
-    { title: 'BNXT League Media', tag: 'Arena Production', img: '/assets/library/20240903_Pieter-Slembrouck-Donar-101-fc0c2249.webp' },
-    { title: 'Como 1907 Lake', tag: 'Club Identity', img: '/assets/library/20250125_Pieter-Slembrouck-COMO1907-104-ff37252c.webp' },
-    { title: 'Formula 1 Spa GP', tag: 'Motorsport Visuals', img: '/assets/library/20240726-Pieter-Slembrouck-SPA-GP-131-39be5b71.webp' },
-    { title: 'PSG Champions League', tag: 'Matchday Visuals', img: '/assets/library/20250219_Pieter-Slembrouck-PSG-148-1c72f705.webp' },
-    { title: 'Hamburger Derby HSV', tag: 'Endurance Series', img: '/assets/library/20240421_HSV-Pieter-Slembrouck-106-bd8cd58b.webp' },
-    { title: 'Legia Warsaw', tag: 'Live Motion Kit', img: '/assets/library/20241103_Pieter-Slembrouck-LEGIA-131-a11d1f17.webp' },
-    { title: 'Al Qadsiah FC', tag: 'Global Launch', img: '/assets/library/20240609_pieter-Slembrouck-AL-QADSIAH-118-39bee346.webp' },
-    { title: 'Skechers Football', tag: 'Athlete Commercial', img: '/assets/library/20250728_Pieter-Slembrouck-Skechers-Steven-Berghuis-PR-Retouches-106-8afed694.webp' },
-    { title: 'VfL Wolfsburg', tag: 'Tunnel Lighting', img: '/assets/library/20250630_Pieter-Slembrouck-Sebastiaan-Bornauw-323-64ad2d52.webp' },
-    { title: 'LIMBXL Street', tag: 'Editorial Lookbook', img: '/assets/library/20251003_Pieter-Slembrouck-LIMBXL-106-scaled-346c180d.jpg' },
-    { title: 'Ibiza Off-Season', tag: 'Studio Reveal', img: '/assets/library/20240806-Pieter-Slembrouck-IBZ-Woodwork-110-4d7b9cb4.webp' },
-    { title: 'Tolu Arokodare', tag: 'Portrait Series', img: '/assets/library/20250226_Pieter-Slembrouck-Tolu-100-096ae4f0.webp' },
-    { title: 'Jouer – à L’aise', tag: 'Title Sequence', img: '/assets/library/20250226_Pieter-Slembrouck-JOUER-135-8e22f110.webp' },
-    { title: 'Rosemary FC', tag: 'Editorial Archive', img: '/assets/library/20230318_Rosemary_Pieter.Slembrouck-56-ff5dbbc7.webp' }
+    { title: 'Harbour Campaign', tag: 'Heritage Documentary', img: '/assets/library/edv-art-01.svg' },
+    { title: 'Northport Reds', tag: 'National Campaign', img: '/assets/library/edv-art-02.svg' },
+    { title: 'Arena League Media', tag: 'Arena Production', img: '/assets/library/edv-art-03.svg' },
+    { title: 'Lakeside FC', tag: 'Club Identity', img: '/assets/library/edv-art-04.svg' },
+    { title: 'Grand Prix Visuals', tag: 'Motorsport Visuals', img: '/assets/library/edv-art-05.svg' },
+    { title: 'Champions Night', tag: 'Matchday Visuals', img: '/assets/library/edv-art-06.svg' },
+    { title: 'Riverside Derby', tag: 'Endurance Series', img: '/assets/library/edv-art-07.svg' },
+    { title: 'Eastgate United', tag: 'Live Motion Kit', img: '/assets/library/edv-art-08.svg' },
+    { title: 'Desert Launch', tag: 'Global Launch', img: '/assets/library/edv-art-09.svg' },
+    { title: 'Stride Football', tag: 'Athlete Commercial', img: '/assets/library/edv-art-10.svg' },
+    { title: 'Wolfden FC', tag: 'Tunnel Lighting', img: '/assets/library/edv-art-11.svg' },
+    { title: 'Backstreet Studio', tag: 'Editorial Lookbook', img: '/assets/library/edv-art-12.svg' },
+    { title: 'Island Off-Season', tag: 'Studio Reveal', img: '/assets/library/edv-art-13.svg' },
+    { title: 'Portrait Series 04', tag: 'Portrait Series', img: '/assets/library/edv-art-14.svg' },
+    { title: 'Soft Landing', tag: 'Title Sequence', img: '/assets/library/edv-art-15.svg' },
+    { title: 'Harbour FC', tag: 'Editorial Archive', img: '/assets/library/edv-art-16.svg' }
   ];
 
   const listEl = document.getElementById('carousel-3d-list');

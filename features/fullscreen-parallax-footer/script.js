@@ -1,15 +1,15 @@
 (function () {
-  const footer = document.getElementById('vivFooter');
+  const footer = document.getElementById('edvFooter');
   const links = document.querySelectorAll('.footer-link');
   const card = document.getElementById('floatingCard');
   const art = document.getElementById('floatingArt');
   const caption = document.getElementById('floatingCaption');
 
   const STUDIO_IMAGES = [
-    '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg',
-    '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg',
-    '/assets/library/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26-2e04fbf6.jpg',
-    '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg'
+    '/assets/library/edv-art-01.svg',
+    '/assets/library/edv-art-05.svg',
+    '/assets/library/edv-art-09.svg',
+    '/assets/library/edv-art-13.svg'
   ];
 
   // Show default studio preview card immediately so preview is visually rich

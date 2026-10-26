@@ -1,10 +1,10 @@
 /**
  * WebAudio Synth Jukebox Pill & Sound Gate Modal
- * Extracted from betteroff/app.js (initAudioPlayer, initSoundGate, playClick)
+ * edvlabs component (audio player, sound gate, click sfx)
  */
 (function () {
   const TRACKS = [
-    { title: 'Subzero Drift', artist: 'Better Off® Lab', notes: [220, 277.18, 329.63, 440] },
+    { title: 'Subzero Drift', artist: 'EDVLABS Lab', notes: [220, 277.18, 329.63, 440] },
     { title: 'Velvet Horizon', artist: 'Archive Synth', notes: [196, 246.94, 293.66, 392] },
     { title: 'Obsidian Pulse', artist: 'Modular 03', notes: [164.81, 220, 261.63, 329.63] },
     { title: 'Solaris Arpeggio', artist: 'Design Engineer', notes: [261.63, 329.63, 392, 523.25] }

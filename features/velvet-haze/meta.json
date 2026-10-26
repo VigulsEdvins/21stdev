@@ -1,52 +1,50 @@
 {
-  "name": "Velvet Haze",
-  "title": "Velvet Haze",
+  "name": "Dusk Fog Shader",
+  "title": "Dusk Fog Shader",
   "slug": "velvet-haze",
   "category": "Audio & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "An out-of-focus light leak on grainy black film: a silver haze high on the left, violet bleeding in at the top right, a warm ember between them, and two shadows cutting it — a silk fold that sweeps the light off the bottom of the frame and a dark mass curling in from the right. Film grain re-rolls a",
+  "description": "A full-bleed WebGL backdrop of slowly churning indigo, teal and amber fog with film grain that leans gently toward the pointer.",
   "tags": [
-    "velvet",
-    "haze",
-    "audio",
-    "react"
+    "shader",
+    "webgl",
+    "fog",
+    "background",
+    "grain"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 244,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
-    "retro",
-    "dark"
+    "dark",
+    "futuristic"
   ],
   "industry": [
     "media"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.08,
-    "webgl": true,
-    "canvas2d": false
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .df-label"
+    }
+  ],
+  "ownPalette": true,
   "lazy": true
 }

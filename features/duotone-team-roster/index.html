@@ -3,11 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Duotone Team Roster</title>
+  <title>Tinted Crew Rows</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="tc-section" id="tcSection">
+    <header class="tc-head">
+      <p class="tc-kicker">The crew</p>
+      <h2 class="tc-title">Twelve people, one loud colour.</h2>
+      <p class="tc-intro">Designers, builders and one very patient producer. Every portrait gets the same three-tone treatment so the team looks like a team.</p>
+      <div class="tc-actions">
+        <a class="tc-cta" href="#">See open roles</a>
+        <button class="tc-pause" id="tcPause" type="button" aria-pressed="false">Pause drift</button>
+      </div>
+    </header>
+
+    <div class="tc-rows" id="tcRows" aria-label="Team members">
+      <div class="tc-row" data-dir="1">
+        <ul class="tc-track" data-people="Ada Lund|Design lead|0;Boris Keel|Motion|1;Cleo Marsh|Strategy|2;Dov Tamar|Frontend|3;Esi Warren|Producer|4;Finn Arlo|Illustration|5"></ul>
+      </div>
+      <div class="tc-row" data-dir="-1">
+        <ul class="tc-track" data-people="Gia Novak|Brand|3;Hugo Sand|Backend|5;Ines Vale|Research|1;Jonas Pike|Sound|0;Kira Holt|Type|2;Leo Brandt|3D|4"></ul>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

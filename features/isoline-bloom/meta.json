@@ -1,32 +1,29 @@
 {
-  "name": "Isoline Bloom",
-  "title": "Isoline Bloom",
+  "name": "Contour Bloom",
+  "title": "Contour Bloom",
   "slug": "isoline-bloom",
   "category": "Audio & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A living, lobed shape drawn only by its contour lines — neon hairlines flowing outward from an indigo core, violet on one side, magenta through the middle, ember red on the other. Move over it and the lines bulge around your pointer and the whole figure leans toward you; move fast and the rings pump",
+  "description": "A living lobed shape drawn only with glowing contour lines that bulge around the pointer, lean toward it and pump when you move fast.",
   "tags": [
-    "isoline",
-    "bloom",
-    "audio",
-    "react"
+    "webgl",
+    "contour",
+    "shader",
+    "generative",
+    "dark"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 175,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "minimal",
     "dark"
@@ -37,17 +34,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Title",
+      "type": "text",
+      "selector": ":scope .ib-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Caption",
+      "type": "text",
+      "selector": ":scope .ib-sub"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

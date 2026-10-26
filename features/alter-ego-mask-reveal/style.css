@@ -1,9 +1,88 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #17181c; color: #ecebe6; }
+
+.ae-stage {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #1b1c21;
+  font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif);
+  cursor: crosshair;
 }
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
+.ae-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: end center;
+}
+.ae-fig {
+  display: block;
+  height: min(88%, 760px);
+  width: auto;
+  max-width: 90%;
+  margin-bottom: 0;
+}
+
+/* civilian: flat greys */
+.ae-civil {
+  background: radial-gradient(70% 70% at 50% 60%, #2a2c33, #17181c);
+  --ae-cape: transparent; --ae-body: #5b6070; --ae-emblem: transparent;
+  --ae-skin: #b9a898; --ae-hair: #3a3633; --ae-mask: transparent;
+  --ae-eye: #23252b; --ae-mouth: #6b5a52;
+}
+/* hero: loud colour, revealed through a mask */
+.ae-hero {
+  --ae-cape: #d62839; --ae-body: #1d3fbf; --ae-emblem: #ffd23f;
+  --ae-skin: #e9b48c; --ae-hair: #1a1226; --ae-mask: #121018;
+  --ae-eye: #ffffff; --ae-mouth: #8a3b2b;
+  background: radial-gradient(60% 60% at 50% 55%, #ff9f1c 0%, #e4572e 45%, #5b1239 100%);
+  -webkit-mask-image: radial-gradient(circle at -200px -200px, #000 0, #000 1px, transparent 2px);
+  mask-image: radial-gradient(circle at -200px -200px, #000 0, #000 1px, transparent 2px);
+}
+.ae-burst {
+  position: absolute;
+  inset: -20%;
+  background: repeating-conic-gradient(from 0deg at 50% 60%, rgba(255, 255, 255, 0.14) 0 7deg, transparent 7deg 18deg);
+}
+.ae-hero .ae-fig { position: relative; }
+
+.ae-cape { fill: var(--ae-cape); }
+.ae-body { fill: var(--ae-body); }
+.ae-emblem { fill: var(--ae-emblem); }
+.ae-skin { fill: var(--ae-skin); }
+.ae-hair { fill: var(--ae-hair); }
+.ae-mask { fill: var(--ae-mask); }
+.ae-eye { fill: var(--ae-eye); }
+.ae-mouth { fill: none; stroke: var(--ae-mouth); stroke-width: 5; stroke-linecap: round; }
+
+.ae-copy {
+  position: absolute;
+  left: clamp(18px, 4vw, 48px);
+  top: clamp(22px, 5vh, 48px);
+  max-width: min(420px, calc(100% - 36px));
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+.ae-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #e9a23b;
+  margin-bottom: 12px;
+}
+.ae-title {
+  font-family: var(--font-display, Georgia, "Times New Roman", serif);
+  font-size: clamp(1.6rem, 4.6vw, 3rem);
+  line-height: 1.08;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+}
+.ae-hint {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
 }

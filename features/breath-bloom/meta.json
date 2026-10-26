@@ -1,28 +1,25 @@
 {
-  "name": "Breath Bloom",
-  "title": "Breath Bloom",
+  "name": "Breathing Orbs",
+  "title": "Breathing Orbs",
   "slug": "breath-bloom",
   "category": "Audio & Shaders",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Six luminous petals orbiting one centre, breathing on a slow eased loop — **in, hold, out** — with a quiet cue in the middle. Built as a **background**: drop content in as children and it sits on top.",
+  "description": "A calm background of eight glowing orbs that swell and drift outward on a slow in, hold, out breathing loop with a text cue and countdown.",
   "tags": [
-    "breath",
-    "bloom",
-    "audio",
-    "react"
+    "breathing",
+    "calm",
+    "background",
+    "orbs",
+    "wellness"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 114,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
@@ -36,34 +33,25 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope div.grid"
-    },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.pointer-events-none"
+      "selector": ":scope .bb-hint"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .bb-toggle"
     }
   ],
-  "measured": {
-    "luma": 0.08,
-    "webgl": false,
-    "canvas2d": false
-  },
   "nativeWhen": [],
   "reserveHeight": 800,
-  "palette": "designed",
-  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it",
-  "themeReviewed": "light pages get the light solstice bloom, dark pages the abyss bloom; small captions are the bloom's own ink on its own background, checked by eye in both"
+  "ownPalette": true
 }

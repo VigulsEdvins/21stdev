@@ -1,124 +1,62 @@
 {
-  "name": "Exploded Assembly Scroll",
-  "title": "Exploded Assembly Scroll",
+  "name": "Blueprint Assembly Scroll",
+  "title": "Blueprint Assembly Scroll",
   "slug": "exploded-assembly-scroll",
   "category": "Scroll & Parallax",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "An engineering-services page whose drawing builds itself as you scroll.",
+  "description": "A blueprint page whose exploded pump drawing closes up part by part as you scroll, with a step list that follows along.",
   "tags": [
-    "exploded",
-    "assembly",
     "scroll",
-    "react"
+    "blueprint",
+    "engineering",
+    "svg",
+    "sticky"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "SVG",
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 145,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
   "weight": "light",
   "mood": [
-    "minimal",
-    "light"
+    "minimal"
   ],
   "industry": [
     "general"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "menu-link",
-      "label": "Menu link",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "link-1",
-      "label": "Link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "link-2",
-      "label": "Link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
+      "id": "small-label",
+      "label": "Sheet label",
+      "type": "text",
+      "selector": ":scope .ba-tag"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.m-0"
+      "selector": ":scope .ba-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.mt-7"
-    },
-    {
-      "id": "subheading-1",
-      "label": "Subheading 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "subheading-2",
-      "label": "Subheading 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > p:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > p:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-4",
-      "label": "Paragraph 4",
-      "type": "text",
-      "selector": ":scope p.eas-detail-p"
+      "selector": ":scope .ba-lead"
     }
   ],
-  "measured": {
-    "luma": 0.75,
-    "webgl": false,
-    "canvas2d": false
-  },
   "ownPalette": true,
-  "themeReviewed": "Brand orange on cream (2.9:1, large/nav text); intentional palette, same in both themes. Checked 2026-10-24.",
-  "reserveHeight": 4158,
-  "palette": "designed",
-  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it"
+  "reserveHeight": 3200
 }

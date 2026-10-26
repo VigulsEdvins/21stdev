@@ -1,29 +1,24 @@
 {
-  "name": "Blueprint Ink Reveal",
-  "title": "Blueprint Ink Reveal",
+  "name": "Drafting Plate Reveal",
+  "title": "Drafting Plate Reveal",
   "slug": "blueprint-ink-reveal",
   "category": "Scroll & Parallax",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A drafting plate: a word drawn as a hairline outline with registration ticks, ruled on all four edges. Moving the pointer across it reveals the solid letters underneath through an organic ink blot.",
+  "description": "A blueprint-style plate with a big word drawn as a hairline outline; moving the pointer lays down ink blots that fill the letters in and slowly fade.",
   "tags": [
     "blueprint",
     "ink",
     "reveal",
-    "scroll",
-    "react"
+    "canvas",
+    "typography"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 113,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
@@ -37,31 +32,38 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "small-label-1",
-      "label": "Small label 1",
+      "id": "headline",
+      "label": "Word",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(9)"
+      "selector": ":scope .dp-word"
+    },
+    {
+      "id": "small-label",
+      "label": "Plate label",
+      "type": "text",
+      "selector": ":scope .dp-m1"
     },
     {
       "id": "small-label-2",
-      "label": "Small label 2",
+      "label": "Hint",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(10)"
+      "selector": ":scope .dp-m2"
+    },
+    {
+      "id": "small-label-3",
+      "label": "Footer label",
+      "type": "text",
+      "selector": ":scope .dp-m3"
     }
   ],
-  "measured": {
-    "luma": 0.99,
-    "webgl": false,
-    "canvas2d": true
-  },
   "themeReviewed": "Coordinate readout is decorative drafting text (2.6:1). Checked 2026-10-24.",
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "ownPalette": true,
+  "nativeWhen": []
 }

@@ -3,11 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brushstroke Portfolio Hero</title>
+  <title>Painted Folio Hero</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="bh-hero" id="bhHero">
+    <svg class="bh-defs" width="0" height="0" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="bhRough" x="-5%" y="-10%" width="110%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="4" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G" result="d" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9" result="g" />
+          <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.7 1.5" result="ga" />
+          <feComposite in="d" in2="ga" operator="in" />
+        </filter>
+        <filter id="bhPaper">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="2" />
+          <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0" />
+        </filter>
+      </defs>
+    </svg>
+    <svg class="bh-grain" aria-hidden="true"><rect width="100%" height="100%" filter="url(#bhPaper)" /></svg>
+
+    <header class="bh-bar bh-top">
+      <span class="bh-role"><b>Illustrator</b> &amp; maker</span>
+      <span class="bh-years"><b>Selected work</b><small>Autumn collection</small></span>
+      <span class="bh-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    </header>
+
+    <div class="bh-center">
+      <p class="bh-hello">The <b>studio</b> of Rae Example</p>
+      <h1 class="bh-word" id="bhWord" aria-label="Folio">
+        <svg viewBox="0 0 760 250" role="img" aria-hidden="true">
+          <text class="bh-ghost" x="380" y="90" text-anchor="middle">SELECT</text>
+          <text class="bh-ghost" x="380" y="200" text-anchor="middle">WORKS</text>
+          <g filter="url(#bhRough)">
+            <text class="bh-paint" x="380" y="195" text-anchor="middle">Folio</text>
+          </g>
+        </svg>
+      </h1>
+      <svg class="bh-swash" viewBox="0 0 760 60" aria-hidden="true">
+        <g filter="url(#bhRough)"><path id="bhSwash" d="M20 36 C 150 14, 330 46, 520 28 S 700 20, 742 30 C 700 34, 640 44, 560 42 C 380 50, 200 34, 20 36 Z" /></g>
+      </svg>
+      <button type="button" class="bh-replay" id="bhReplay">Paint it again</button>
+    </div>
+
+    <footer class="bh-bar bh-bottom">
+      <a href="#" class="bh-mail">hello@example.test</a>
+      <span class="bh-phone">000 000 0000</span>
+    </footer>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

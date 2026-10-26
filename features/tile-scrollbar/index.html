@@ -3,11 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tile Scrollbar</title>
+  <title>Stepping Stones Scrollbar</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <nav class="ss-rail" id="ssRail" aria-label="Page position"><div class="ss-tray" id="ssTray"></div><span class="ss-tip" id="ssTip"></span></nav>
+
+  <article class="ss-article" id="ssArticle">
+    <p class="ss-hint">Scroll, click a stone on the right, or drag along the rail.</p>
+    <section data-title="Arrival">
+      <h1>A field guide to slow cities</h1>
+      <p>Some places reward the walker who stops. This guide collects short notes from ten towns where the pace is set by tides, markets and the angle of the afternoon light.</p>
+      <p>Read it in order or hop around. The stones at the edge of the page keep track of where you are, and each one stands for an equal slice of the whole guide.</p>
+      <p>We kept the entries short on purpose. A good note fits on a postcard and leaves room for you to add the rest when you arrive.</p>
+    </section>
+    <section data-title="Harbour mornings">
+      <h2>Harbour mornings</h2>
+      <p>The fish market opens before dawn, but the cafes do not. Walk the sea wall first, then follow the smell of bread up the hill.</p>
+      <p>Nobody here hurries a coffee. Pull up a crate, nod at the neighbours and let the gulls argue about the weather.</p>
+      <p>By nine the boats are back, nets draped across the quay like laundry, and the whole waterfront smells of salt and woodsmoke.</p>
+    </section>
+    <section data-title="Hill villages">
+      <h2>Hill villages</h2>
+      <p>Take the single-carriage train that climbs through olive terraces. Each station is a name on a blue tile and a bench in the shade.</p>
+      <p>The paths between villages are older than the roads. They follow springs, ridgelines and the memory of mules.</p>
+      <p>Carry cash, a hat and a little patience. Lunch happens at its own hour and is worth the wait.</p>
+    </section>
+    <section data-title="River towns">
+      <h2>River towns</h2>
+      <p>Where the water slows, the towns thicken. Stone bridges, floating bathhouses and a market that moves a little each season.</p>
+      <p>Rent a flat-bottomed boat for an evening and drift under the arches while lamps come on one by one.</p>
+      <p>Ask for the small-batch cider. It is made in cellars below the square and rarely leaves the valley.</p>
+    </section>
+    <section data-title="Night trains">
+      <h2>Night trains</h2>
+      <p>A sleeper berth is a tiny room that arrives somewhere new. Pack light, bring a book and leave the blind half open.</p>
+      <p>Morning comes in strips of orange across the ceiling. Breakfast is a paper bag, a boiled egg and a view.</p>
+      <p>When the guide ends, the road does not. Fold down the corner of this page and keep walking.</p>
+    </section>
+  </article>
   <script src="script.js"></script>
 </body>
 </html>

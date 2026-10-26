@@ -1,33 +1,29 @@
 {
-  "name": "Paper Curl Carousel",
-  "title": "Paper Curl Carousel",
+  "name": "Peeling Print Slider",
+  "title": "Peeling Print Slider",
   "slug": "paper-curl-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "An image carousel where every slide is a printed sheet. Drag its edge, click, or press an arrow and the sheet rolls over a cylinder, shows the paper stock on its back, and lays a shadow across the sheet underneath.",
+  "description": "A slider of printed sheets where each one peels away from the corner, showing its paper back and a shadow on the next sheet; drag, click or use arrows.",
   "tags": [
-    "paper",
-    "curl",
     "carousel",
-    "3d",
-    "react"
+    "paper",
+    "peel",
+    "drag",
+    "slider"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 202,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
     "futuristic"
   ],
@@ -36,31 +32,12 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [
-    {
-      "id": "intro-text",
-      "label": "Intro text",
-      "type": "text",
-      "selector": ":scope p.pcc-sr"
-    },
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope div.pcc-caption"
-    }
-  ],
-  "measured": {
-    "luma": 0.6,
-    "webgl": true,
-    "canvas2d": true
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [],
   "reserveHeight": 800,
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

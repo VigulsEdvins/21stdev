@@ -3,11 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stencil Labs Template</title>
+  <title>Hairline Studio Page</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="hl-page">
+    <header class="hl-nav">
+      <a class="hl-brand" href="#"><span class="hl-mark" aria-hidden="true"></span>Kiln&nbsp;Works</a>
+      <nav class="hl-links" aria-label="Main">
+        <a href="#hl-programs">Programs</a>
+        <a href="#hl-numbers">Numbers</a>
+        <a href="#hl-cohort">Cohort</a>
+      </nav>
+      <a class="hl-cta hl-nav-cta" href="#">Apply now</a>
+    </header>
+
+    <section class="hl-hero">
+      <p class="hl-tag">// small-batch product studio</p>
+      <h1 class="hl-h1"><span>We help ideas</span><span>get built.</span></h1>
+      <div class="hl-hero-foot">
+        <p class="hl-lead">Kiln Works pairs early teams with designers and engineers for twelve focused weeks. Ship a real thing, then decide what it becomes.</p>
+        <div class="hl-btns">
+          <a class="hl-cta" href="#">Start a project</a>
+          <a class="hl-ghost" href="#hl-programs">See programs &darr;</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="hl-sec" id="hl-programs">
+      <h2 class="hl-h2"><small>01</small> Programs</h2>
+      <div class="hl-cols">
+        <article class="hl-card"><span class="hl-no">A</span><h3>Sprint</h3><p>Two weeks to turn a hunch into a clickable prototype and a clear next step.</p></article>
+        <article class="hl-card"><span class="hl-no">B</span><h3>Build</h3><p>Twelve weeks of shared design and engineering to ship a first working version.</p></article>
+        <article class="hl-card"><span class="hl-no">C</span><h3>Residency</h3><p>A desk, a mentor and a small budget while you find your first customers.</p></article>
+      </div>
+    </section>
+
+    <section class="hl-sec" id="hl-numbers">
+      <h2 class="hl-h2"><small>02</small> Numbers</h2>
+      <dl class="hl-stats">
+        <div><dt>Teams supported</dt><dd data-count="48">48</dd></div>
+        <div><dt>Products shipped</dt><dd data-count="31">31</dd></div>
+        <div><dt>Weeks per build</dt><dd data-count="12">12</dd></div>
+        <div><dt>Mentors on call</dt><dd data-count="20">20</dd></div>
+      </dl>
+    </section>
+
+    <section class="hl-sec" id="hl-cohort">
+      <h2 class="hl-h2"><small>03</small> Current cohort</h2>
+      <ul class="hl-list">
+        <li><span>Plantwise</span><em>Garden planning</em><b>Week 7</b></li>
+        <li><span>Ledgerly</span><em>Small-shop accounting</em><b>Week 4</b></li>
+        <li><span>Quiet Hours</span><em>Focus scheduling</em><b>Week 10</b></li>
+        <li><span>Paperboat</span><em>Shared travel notes</em><b>Week 2</b></li>
+      </ul>
+    </section>
+
+    <section class="hl-close">
+      <h2 class="hl-h2">Next cohort opens in January.</h2>
+      <a class="hl-cta" href="#">Join the waitlist</a>
+    </section>
+
+    <footer class="hl-foot">
+      <span>&copy; 2026 Kiln Works. Sample content.</span>
+      <span>hello@example.test</span>
+    </footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,29 +1,25 @@
 {
-  "name": "Flatlay Resume Board",
-  "title": "Flatlay Resume Board",
+  "name": "Desk Flatlay CV",
+  "title": "Desk Flatlay CV",
   "slug": "flatlay-resume-board",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A CV as a desk flat-lay, photographed from above: a creased perforated sheet, a pinned photo card, a smart-watch \"about me\", a crumpled receipt of experience with dotted leaders and a coffee ring, torn-paper education on a ruled page, a lolly-stick label over grid paper, a handwritten list, layered ",
+  "description": "A resume laid out as a desk flat-lay of paper pieces (photo card, receipt, ruled page, sticky note) that you can drag around.",
   "tags": [
-    "flatlay",
     "resume",
-    "board",
-    "galleries",
-    "react"
+    "flatlay",
+    "drag",
+    "paper",
+    "portfolio"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 147,
   "legacyCategory": "Galleries & Portfolios",
   "status": "stable",
@@ -37,72 +33,57 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",
-      "label": "Headline",
+      "label": "Name",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)"
+      "selector": ":scope .fl-name"
+    },
+    {
+      "id": "small-label",
+      "label": "Role",
+      "type": "text",
+      "selector": ":scope .fl-role"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .fl-blurb"
     },
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "heading-2",
+      "label": "Experience heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)"
+      "selector": ":scope .fl-receipt .fl-h"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
+      "id": "heading-3",
+      "label": "Education heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)"
+      "selector": ":scope .fl-ruled .fl-h"
     },
     {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
+      "id": "heading-4",
+      "label": "Skills heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(4)"
+      "selector": ":scope .fl-sticky .fl-h"
     },
     {
-      "id": "paragraph-4",
-      "label": "Paragraph 4",
+      "id": "small-label-2",
+      "label": "Contact label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(5)"
-    },
-    {
-      "id": "paragraph-5",
-      "label": "Paragraph 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(6)"
-    },
-    {
-      "id": "paragraph-6",
-      "label": "Paragraph 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(7)"
+      "selector": ":scope .fl-lolly"
     }
   ],
-  "measured": {
-    "luma": 0.27,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "nativeWhen": [
-    "light"
-  ],
+  "nativeWhen": [],
   "reserveHeight": 800,
   "palette": "designed",
-  "paletteNote": "A4 resume paper: a white printed page with print colours, on purpose"
+  "paletteNote": "A4 resume paper: a white printed page with print colours, on purpose",
+  "ownPalette": true
 }

@@ -1,6 +1,6 @@
 /**
  * Surf 3D Sine-Wave Ribbon & Physics Engine
- * Extracted from betteroff/app.js (with real Lookback cover photography)
+ * Infinite 3D card ribbon with placeholder artwork
  */
 (function () {
   const ribbon = document.getElementById('surf-ribbon');
@@ -11,20 +11,20 @@
   if (!ribbon || !container) return;
 
   const COVERS = [
-    { title: 'A$AP × Ray-Ban', img: '/assets/library/asap-x-rayban-b0252755.webp' },
-    { title: '99 Cents Only Exhibition', img: '/assets/library/99-cents-only-store-gallery-exhibition-095f12c1.webp' },
-    { title: 'Broncho Jams', img: '/assets/library/broncho-jams-1165a14b.webp' },
-    { title: 'Ch. 11 Waves Hawaii', img: '/assets/library/ch-11-shit-waves-hawaii-f95e8577.webp' },
-    { title: 'Converse × Works Studio', img: '/assets/library/converse-shoe-drop-by-works-studio-5e6ce881.webp' },
-    { title: 'Defective Units Vol. 1', img: '/assets/library/defective-units-vol-1-ee41dd19.webp' },
-    { title: 'Helge Tscharn Capsule', img: '/assets/library/helge-tscharn-capsule-69ab1fe5.webp' },
-    { title: 'Kelly Slater Retires', img: '/assets/library/kelly-slater-retires-71a71a99.webp' },
-    { title: 'Super Bowl Halftime', img: '/assets/library/kendrick-lamar-taps-willy-chavarria-for-super-bowl-halftime-collection-4ea2e98f.webp' },
-    { title: 'New Balance 933', img: '/assets/library/new-balance-933-andrew-reynolds-5ef3de7f.webp' },
-    { title: 'Nigo & Pharrell Advisors', img: '/assets/library/nigo-and-pharrell-williams-appointed-as-creative-advisors-for-not-a-hotel-fd8f5a4d.webp' },
-    { title: 'Off-White Resistance', img: '/assets/library/off-white-state-of-resistance-d1387472.webp' },
-    { title: 'Pocket Vol. 12', img: '/assets/library/pocket-vol-12-dc21015a.webp' },
-    { title: 'Wild Horses Festival', img: '/assets/library/post-malone-at-wild-horses-festival-in-san-diego-0c0fefc0.webp', fallback: '/assets/library/mascot-book-fb049bad.webp' }
+    { title: 'Harbour Campaign', img: '/assets/library/edv-art-01.svg' },
+    { title: 'Studio Notes 01', img: '/assets/library/edv-art-02.svg' },
+    { title: 'Coastline Edition', img: '/assets/library/edv-art-03.svg' },
+    { title: 'Wave Study 04', img: '/assets/library/edv-art-04.svg' },
+    { title: 'Capsule Drop 02', img: '/assets/library/edv-art-05.svg' },
+    { title: 'Archive Vol. 1', img: '/assets/library/edv-art-06.svg' },
+    { title: 'Northport Capsule', img: '/assets/library/edv-art-07.svg' },
+    { title: 'Season Retrospective', img: '/assets/library/edv-art-08.svg' },
+    { title: 'Winter Collection', img: '/assets/library/edv-art-09.svg' },
+    { title: 'Runner Series 933', img: '/assets/library/edv-art-10.svg' },
+    { title: 'Creative Advisors Brief', img: '/assets/library/edv-art-11.svg' },
+    { title: 'Open Studio Day', img: '/assets/library/edv-art-12.svg' },
+    { title: 'Pocket Vol. 12', img: '/assets/library/edv-art-13.svg' },
+    { title: 'Festival Weekend', img: '/assets/library/edv-art-14.svg' }
   ];
 
   const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -33,7 +33,7 @@
   const TOTAL_CARDS = 28;
   const cardsData = Array.from({ length: TOTAL_CARDS }, (_, i) => {
     const cov = COVERS[i % COVERS.length];
-    const imgUrl = cov.fallback || cov.img;
+    const imgUrl = cov.img;
     return {
       index: i,
       title: cov.title,

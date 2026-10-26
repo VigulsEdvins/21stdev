@@ -2,7 +2,7 @@
   "slug": "faq-accordion-smooth",
   "title": "Editorial Smooth-Height FAQ Accordion",
   "category": "Buttons & UI",
-  "source": "carousel-gallery-play",
+  "source": "edvlabs",
   "type": "component",
   "description": "Accessible ARIA-compliant editorial FAQ accordion using CSS grid-template-rows 0fr->1fr smooth height interpolation and rotating plus/cross indicators.",
   "tags": [
@@ -29,10 +29,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "carousel-gallery-play",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",

@@ -1,9 +1,15 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0a0b14); color: var(--text, #f2f4ff); }
+.gh-hero { position: relative; min-height: 100vh; overflow: hidden; display: grid; align-items: center; font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif);
+  background: radial-gradient(circle at 25% 30%, #3b2a8c, transparent 55%), radial-gradient(circle at 80% 70%, #c2417a, transparent 50%), #0a0b14; color: #f2f4ff; }
+.gh-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.gh-inner { position: relative; padding: clamp(24px, 6vw, 80px); max-width: 1200px; margin: 0 auto; width: 100%; pointer-events: none; }
+.gh-eyebrow { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; opacity: .8; margin-bottom: 18px; }
+.gh-title { font-family: var(--font-display, system-ui, "Helvetica Neue", Arial, sans-serif); font-weight: 900; font-size: clamp(64px, 17vw, 230px); line-height: 1; letter-spacing: -.03em; margin-bottom: 26px; }
+.gh-l { display: block; width: max-content; max-width: 100%; }
+.gh-hero.is-gl .gh-title { color: transparent; }
+.gh-hero:not(.is-gl) .gh-title { background: linear-gradient(120deg, #fff, #9fb4ff 45%, #ff9ccb); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.gh-lead { max-width: 440px; line-height: 1.55; opacity: .85; margin-bottom: 28px; }
+.gh-btn { pointer-events: auto; display: inline-block; text-decoration: none; color: #0a0b14; background: #f2f4ff; padding: 14px 28px; border-radius: 99px; font-weight: 700; font-size: 14px; transition: transform .2s, background .2s; }
+.gh-btn:hover { transform: translateY(-2px); background: #fff; }
+.gh-btn:focus-visible { outline: 3px solid #ffd2ec; outline-offset: 3px; }

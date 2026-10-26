@@ -3,11 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iris Folio Template</title>
+  <title>Arch Folio Page</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="ar-page">
+    <header class="ar-nav">
+      <a class="ar-logo" href="#">N.Ellery</a>
+      <nav class="ar-links" aria-label="Main">
+        <a href="#ar-work">Work</a>
+        <a href="#ar-about">About</a>
+        <a href="#ar-contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="ar-hero">
+      <div class="ar-hero-text">
+        <p class="ar-eyebrow">Graphic designer &middot; Available this autumn</p>
+        <h1 class="ar-name">Nora<br />Ellery</h1>
+        <p class="ar-intro">I shape identities, posters and printed things with a soft hand and a sharp grid. This is a small selection of recent projects.</p>
+        <div class="ar-cta">
+          <a class="ar-btn" href="#ar-work">View projects</a>
+          <a class="ar-ghost" href="#ar-contact">Get in touch</a>
+        </div>
+      </div>
+      <div class="ar-arch" aria-hidden="true">
+        <div class="ar-sun"></div>
+        <div class="ar-wave ar-w1"></div>
+        <div class="ar-wave ar-w2"></div>
+        <div class="ar-stalk"></div>
+        <div class="ar-bloom"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+    <section class="ar-work" id="ar-work">
+      <h2 class="ar-h2">Selected work</h2>
+      <div class="ar-grid">
+        <a class="ar-tile ar-t1" href="#"><span>Salt &amp; Linen</span><small>Identity</small></a>
+        <a class="ar-tile ar-t2" href="#"><span>Little Orchard</span><small>Packaging</small></a>
+        <a class="ar-tile ar-t3" href="#"><span>Tide Tables</span><small>Poster series</small></a>
+        <a class="ar-tile ar-t4" href="#"><span>Fern Quarterly</span><small>Editorial</small></a>
+      </div>
+    </section>
+
+    <section class="ar-about" id="ar-about">
+      <h2 class="ar-h2">About</h2>
+      <div class="ar-about-grid">
+        <p class="ar-about-copy">Eight years of studio and freelance work for small food, craft and culture brands. I like a good paper stock, a limited palette, and clients who answer emails.</p>
+        <ul class="ar-skills">
+          <li>Brand identity</li><li>Packaging</li><li>Editorial layout</li><li>Illustration</li><li>Lettering</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="ar-foot" id="ar-contact">
+      <p class="ar-foot-big">Let&rsquo;s make something quietly good.</p>
+      <a class="ar-btn" href="#">hello@example.test</a>
+      <p class="ar-copy">&copy; 2026 Nora Ellery. Sample content.</p>
+    </footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

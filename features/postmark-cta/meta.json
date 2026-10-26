@@ -1,31 +1,29 @@
 {
-  "name": "Postmark CTA",
-  "title": "Postmark CTA",
+  "name": "Luggage Tag CTA",
+  "title": "Luggage Tag CTA",
   "slug": "postmark-cta",
   "category": "Buttons & UI",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "The closing call to action of a landing page: the last block before the footer. A heavy two-line headline, one primary button and a quiet secondary link sit on a halftone field, with a loose collection of postage stamps scattered around them.",
+  "description": "A closing call-to-action block with a bold headline and button, surrounded by luggage tags that float and drift away from the pointer.",
   "tags": [
-    "postmark",
     "cta",
-    "react"
+    "button",
+    "parallax",
+    "travel",
+    "tags"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 213,
   "legacyCategory": "Buttons & UI",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "retro",
     "minimal",
@@ -36,51 +34,48 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h2.pm-h"
+      "selector": ":scope .lt-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.pm-p"
+      "selector": ":scope .lt-text"
     },
     {
       "id": "button-text",
       "label": "Button text",
       "type": "text",
-      "selector": ":scope button.pm-link"
+      "selector": ":scope .lt-btn span"
     },
     {
-      "id": "text",
-      "label": "Text",
+      "id": "button-text-2",
+      "label": "Link text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1)"
+      "selector": ":scope .lt-link"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Link",
+      "type": "link",
+      "selector": ":scope .lt-link"
     },
     {
       "id": "paragraph",
-      "label": "Paragraph",
+      "label": "Small note",
       "type": "text",
-      "selector": ":scope p.pm-note"
+      "selector": ":scope .lt-note"
     }
   ],
-  "measured": {
-    "luma": 0.85,
-    "webgl": false,
-    "canvas2d": true
-  },
   "nativeWhen": [],
-  "reserveHeight": 800,
-  "ownPalette": true,
-  "themeReviewed": "stamp lettering sits on stamp paper, not on the page background; checked by eye in dark and light"
+  "ownPalette": true
 }

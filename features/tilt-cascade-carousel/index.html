@@ -3,11 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tilt Cascade Carousel</title>
+  <title>Wheel Tile Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="wt-stage" aria-roledescription="carousel" aria-label="Postcard wheel">
+    <div class="wt-wheel" id="wtWheel" tabindex="0" aria-live="polite">
+      <button class="wt-tile" aria-label="Show dune postcard"><span class="wt-art" style="background:linear-gradient(180deg,#ffb36b 0 45%,#e2753d 45% 70%,#8a3d2b 70%)"><i class="wt-sun"></i></span></button>
+      <button class="wt-tile" aria-label="Show lagoon postcard"><span class="wt-art" style="background:linear-gradient(180deg,#bdf1ff 0 35%,#38b6d8 35% 75%,#0f6a8f 75%)"><i class="wt-sun"></i></span></button>
+      <button class="wt-tile" aria-label="Show pine postcard"><span class="wt-art" style="background:linear-gradient(180deg,#e4f5d0 0 40%,#6fb36a 40% 70%,#245a3a 70%)"><i class="wt-sun"></i></span></button>
+      <button class="wt-tile" aria-label="Show plum dusk postcard"><span class="wt-art" style="background:linear-gradient(180deg,#f6c1e8 0 38%,#a45bd1 38% 72%,#42206d 72%)"><i class="wt-sun"></i></span></button>
+      <button class="wt-tile" aria-label="Show glacier postcard"><span class="wt-art" style="background:linear-gradient(180deg,#e6f1ff 0 30%,#9cc2ee 30% 68%,#4d77b3 68%)"><i class="wt-sun"></i></span></button>
+      <button class="wt-tile" aria-label="Show ember postcard"><span class="wt-art" style="background:linear-gradient(180deg,#ffd0a6 0 42%,#ff6f59 42% 74%,#6b1f35 74%)"><i class="wt-sun"></i></span></button>
+    </div>
+    <div class="wt-info">
+      <p class="wt-count" id="wtCount">01 / 06</p>
+      <h1 class="wt-title" id="wtTitle">Dune</h1>
+      <div class="wt-btns"><button class="wt-btn" id="wtPrev" aria-label="Previous postcard">&larr;</button><button class="wt-btn" id="wtNext" aria-label="Next postcard">&rarr;</button></div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

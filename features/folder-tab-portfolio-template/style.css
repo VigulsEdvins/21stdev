@@ -1,9 +1,71 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f6f3ee); color: var(--text, #1d1a22); }
+body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); overflow-x: hidden; }
+a, button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent, #5b2a86); outline-offset: 3px; }
+
+.fb-page { --plum: #5b2a86; --teal: #12a095; --coral: #ff6b57; --sand: #efdfb7;
+  --fb-ink: var(--text, #1d1a22); --fb-mute: color-mix(in srgb, var(--text, #1d1a22) 60%, transparent);
+  max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px) 48px; }
+.fb-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 22px 0; }
+.fb-mark { text-decoration: none; font-family: var(--font-display, inherit); font-weight: 800; font-size: 22px; letter-spacing: -.02em; }
+.fb-mark b { color: var(--coral); margin: 0 2px; }
+.fb-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.fb-nav a { text-decoration: none; font-size: 13px; padding: 7px 14px; border-radius: 99px; transition: background .2s; }
+.fb-nav a:hover { background: color-mix(in srgb, var(--text, #1d1a22) 8%, transparent); }
+
+.fb-hero { padding: 28px 0 36px; }
+.fb-kicker { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--fb-mute); }
+.fb-big { font-family: var(--font-display, Impact, "Arial Narrow", sans-serif); font-size: clamp(76px, 22vw, 260px); line-height: .9; font-weight: 900; letter-spacing: -.02em;
+  color: transparent; -webkit-text-stroke: 2px var(--plum); text-stroke: 2px var(--plum); margin: 10px 0 18px; text-transform: uppercase; }
+.fb-hero-row { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: flex-end; }
+.fb-name { font-family: var(--font-display, inherit); font-size: clamp(24px, 3.4vw, 34px); font-weight: 800; position: relative; padding-right: 150px; }
+.fb-name span { display: block; font-size: 14px; font-weight: 500; color: var(--fb-mute); }
+.fb-sign { position: absolute; right: 0; bottom: -6px; width: 140px; fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 520; stroke-dashoffset: 520; animation: fb-draw 2.4s .4s ease forwards; }
+@keyframes fb-draw { to { stroke-dashoffset: 0; } }
+.fb-intro { max-width: 360px; font-size: 15px; line-height: 1.55; color: var(--fb-mute); }
+
+.fb-stack { display: flex; flex-direction: column; }
+.fb-folder { position: relative; margin-top: -14px; --c: var(--plum); --t: #fff; }
+.fb-folder:first-child { margin-top: 0; }
+.fb-folder[data-c="teal"] { --c: var(--teal); }
+.fb-folder[data-c="coral"] { --c: var(--coral); }
+.fb-folder[data-c="sand"] { --c: var(--sand); --t: #3b3220; }
+.fb-folder:nth-child(2) .fb-tabrow { margin-left: 22%; }
+.fb-folder:nth-child(3) .fb-tabrow { margin-left: 44%; }
+.fb-folder:nth-child(4) .fb-tabrow { margin-left: 8%; }
+.fb-tabrow { display: block; width: max-content; font-size: inherit; }
+.fb-tab { display: flex; align-items: center; gap: 10px; border: 0; cursor: pointer; background: var(--c); color: var(--t);
+  padding: 11px 20px 9px; border-radius: 14px 14px 0 0; font-weight: 700; font-size: 14px; letter-spacing: .02em; }
+.fb-tab i { font-style: normal; font-size: 11px; border: 1px solid currentColor; border-radius: 99px; padding: 1px 7px; opacity: .8; }
+.fb-body { background: var(--c); color: var(--t); border-radius: 0 var(--radius, 18px) 0 0; padding: 18px 20px 26px; }
+.fb-body[hidden] { display: block; padding-top: 0; padding-bottom: 0; height: 26px; overflow: hidden; }
+.fb-body[hidden] .fb-inner { visibility: hidden; }
+.fb-inner { animation: fb-flip .4s ease both; }
+.fb-body[hidden] .fb-inner { animation: none; }
+@keyframes fb-flip { from { opacity: 0; transform: translateY(10px); } }
+.fb-cap { font-weight: 600; margin-bottom: 14px; }
+.fb-works { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.fb-works li { aspect-ratio: 4 / 3; border-radius: 10px; position: relative; overflow: hidden; background: #fff3; transition: transform .25s; }
+.fb-works li:hover { transform: translateY(-4px) rotate(-1deg); }
+.fb-works span { position: absolute; left: 8px; bottom: 8px; font-size: 12px; font-weight: 700; background: #fffd; color: #1d1a22; padding: 3px 9px; border-radius: 99px; }
+.fb-works .w1 { background: radial-gradient(circle at 70% 30%, #ffd166 0 22%, transparent 23%), linear-gradient(135deg, #2b1b4d, #5b2a86); }
+.fb-works .w2 { background: repeating-linear-gradient(45deg, #fff 0 8px, #1d1a22 8px 16px); }
+.fb-works .w3 { background: conic-gradient(from 90deg at 30% 60%, #ff6b57, #ffd166, #12a095, #ff6b57); }
+.fb-works .w4 { background: linear-gradient(90deg, #fff 50%, #1d1a22 50%), #fff; background-blend-mode: difference; background-image: radial-gradient(circle at 40% 50%, #12a095 0 30%, transparent 31%), linear-gradient(#f6f3ee, #d9cfe6); }
+
+.fb-about { margin-top: 56px; display: grid; grid-template-columns: 160px 1fr; gap: 20px; }
+.fb-about h2 { font-family: var(--font-display, inherit); font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--coral); }
+.fb-about p { font-size: clamp(18px, 2.4vw, 24px); line-height: 1.4; max-width: 640px; }
+.fb-foot { margin-top: 56px; padding-top: 28px; border-top: 2px solid var(--fb-ink); display: grid; gap: 8px; }
+.fb-foot-t { font-size: 14px; color: var(--fb-mute); }
+.fb-mail { font-family: var(--font-display, inherit); font-weight: 800; font-size: clamp(26px, 6vw, 56px); text-decoration: none; letter-spacing: -.02em; width: max-content; max-width: 100%; overflow-wrap: anywhere; }
+.fb-mail:hover { color: var(--coral); }
+.fb-foot small { color: var(--fb-mute); }
+
+@media (max-width: 640px) {
+  .fb-name { padding-right: 0; } .fb-sign { position: static; display: block; margin-top: 6px; }
+  .fb-folder:nth-child(n) .fb-tabrow { margin-left: 0; }
+  .fb-about { grid-template-columns: 1fr; }
 }
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+@media (prefers-reduced-motion: reduce) { .fb-sign { animation: none; stroke-dashoffset: 0; } .fb-inner { animation: none; } * { transition: none !important; } }

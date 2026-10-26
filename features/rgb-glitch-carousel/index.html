@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RGB Glitch Carousel</title>
+  <title>Channel Split Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="cs-stage" id="csStage" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Scenes">
+    <canvas class="cs-canvas" id="csCanvas" aria-hidden="true"></canvas>
+    <div class="cs-scan" aria-hidden="true"></div>
+    <div class="cs-ui">
+      <div class="cs-cap" aria-live="polite"><h2 class="cs-title" id="csTitle">Neon Harbour</h2><p class="cs-sub" id="csSub">Midnight reflections along the quay.</p></div>
+      <div class="cs-ctl">
+        <span class="cs-count" id="csCount">01 / 05</span>
+        <button class="cs-btn" id="csPrev" type="button" aria-label="Previous scene">&#8592;</button>
+        <button class="cs-btn" id="csNext" type="button" aria-label="Next scene">&#8594;</button>
+      </div>
+    </div>
+    <div class="cs-prog" aria-hidden="true"><i id="csProg"></i></div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

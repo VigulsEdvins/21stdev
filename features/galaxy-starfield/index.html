@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galaxy Starfield</title>
+  <title>Night Sky Canvas</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ns-sky" id="nsSky">
+    <canvas class="ns-canvas" id="nsCanvas" aria-hidden="true"></canvas>
+    <div class="ns-copy">
+      <p class="ns-kicker">Deep field</p>
+      <h1 class="ns-title">Look up. The sky is still turning.</h1>
+      <p class="ns-lead">A drifting dome of twinkling stars that leans toward your pointer.</p>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,9 +1,32 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.dn-head { position: sticky; top: 0; z-index: 10; padding: 0.9rem clamp(0.6rem, 3vw, 2rem); transition: padding 0.3s; }
+.dn-bar { --dn-hot: var(--accent, #c6f432); position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: 1000px; margin: 0 auto; padding: 0.7rem 0.8rem 0.7rem 1.1rem; border-radius: calc(var(--radius, 14px) * 1.6); background: color-mix(in srgb, var(--bg, #0b0c10) 82%, var(--text, #f3f4f6) 8%); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); backdrop-filter: blur(10px); transition: padding 0.3s; }
+.dn-brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: inherit; }
+.dn-brand:focus-visible, .dn-link:focus-visible, .dn-burger:focus-visible { outline: 2px solid var(--dn-hot); outline-offset: 3px; }
+.dn-mark { width: 1.7rem; fill: var(--dn-hot); }
+.dn-word { display: flex; flex-direction: column; font: 800 1.15rem/1 var(--font-display, var(--font-body, system-ui, sans-serif)); letter-spacing: -0.02em; }
+.dn-word small { font: 500 0.66rem/1 ui-monospace, Menlo, monospace; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--text, #f3f4f6) 55%, transparent); max-height: 1rem; margin-top: 0.3rem; overflow: hidden; transition: max-height 0.3s, margin 0.3s, opacity 0.3s; }
+.dn-head.is-compact { padding-block: 0.4rem; }
+.dn-head.is-compact .dn-bar { padding-block: 0.35rem; }
+.dn-head.is-compact .dn-word small { max-height: 0; margin-top: 0; opacity: 0; }
+.dn-nav { display: flex; gap: 0.25rem; }
+.dn-link { position: relative; isolation: isolate; display: block; padding: 0.65rem 1.1rem; border-radius: calc(var(--radius, 14px) * 0.8); text-decoration: none; color: inherit; font-size: 0.9rem; font-weight: 600; overflow: hidden; transition: color 0.12s; }
+.dn-link canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; image-rendering: pixelated; }
+.dn-link.is-full { color: #0b0c10; }
+.dn-cta { box-shadow: inset 0 0 0 1.5px var(--dn-hot); }
+.dn-burger { display: none; width: 2.6rem; height: 2.6rem; border: 0; border-radius: 10px; background: none; color: inherit; cursor: pointer; position: relative; }
+.dn-burger i { position: absolute; left: 0.7rem; right: 0.7rem; height: 2px; background: currentColor; transition: transform 0.25s, top 0.25s; }
+.dn-burger i:first-child { top: 1rem; } .dn-burger i:last-child { top: 1.5rem; }
+.dn-burger[aria-expanded="true"] i:first-child { top: 1.25rem; transform: rotate(45deg); }
+.dn-burger[aria-expanded="true"] i:last-child { top: 1.25rem; transform: rotate(-45deg); }
+.dn-main { max-width: 640px; margin: 0 auto; padding: 3rem 1.2rem 6rem; color: color-mix(in srgb, var(--text, #f3f4f6) 65%, transparent); line-height: 1.6; }
+.dn-h1 { font: 800 clamp(1.8rem, 5vw, 3rem)/1.05 var(--font-display, var(--font-body, system-ui, sans-serif)); letter-spacing: -0.03em; color: var(--text, #f3f4f6); margin-bottom: 1rem; }
+.dn-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.dn-blocks i { height: 9rem; border-radius: var(--radius, 14px); background: color-mix(in srgb, var(--text, #f3f4f6) 7%, transparent); }
+@media (max-width: 720px) {
+  .dn-burger { display: block; }
+  .dn-nav { position: absolute; left: 0; right: 0; top: calc(100% + 0.5rem); flex-direction: column; padding: 0.5rem; border-radius: calc(var(--radius, 14px) * 1.4); background: color-mix(in srgb, var(--bg, #0b0c10) 92%, var(--text, #f3f4f6) 8%); border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 16%, transparent); opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.2s, transform 0.2s, visibility 0.2s; }
+  .dn-nav.is-open { opacity: 1; visibility: visible; transform: none; }
 }
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+@media (prefers-reduced-motion: reduce) { .dn-head, .dn-bar, .dn-word small, .dn-nav, .dn-burger i { transition: none; } }

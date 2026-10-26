@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pinboard Portfolio Hero</title>
+  <title>Pinned Wall Hero</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="pw-hero" id="pwHero">
+    <svg class="pw-strings" id="pwStrings" aria-hidden="true"></svg>
+
+    <article class="pw-card pw-c1" style="--r:-5deg"><i class="pw-pin"></i><div class="pw-art pw-art1"></div><span>Poster 3</span></article>
+    <article class="pw-card pw-c2" style="--r:3deg"><i class="pw-pin"></i><div class="pw-art pw-art2"></div><span>Type study</span></article>
+    <article class="pw-card pw-c3" style="--r:-3deg"><i class="pw-pin"></i><div class="pw-art pw-art3"></div><span>Packaging</span></article>
+    <article class="pw-card pw-c4" style="--r:6deg"><i class="pw-pin"></i><div class="pw-art pw-art4"></div><span>Sketch 12</span></article>
+    <article class="pw-card pw-c5" style="--r:-6deg"><i class="pw-pin"></i><div class="pw-art pw-art5"></div><span>Logo set</span></article>
+
+    <div class="pw-inner">
+      <p class="pw-label">Visual design &middot; Print &middot; Identity</p>
+      <h1 class="pw-title">Ideas pinned<br />to the wall</h1>
+      <p class="pw-lead">A small studio wall of posters, type tests and rough sketches, lit from above and tied together with red thread.</p>
+      <div class="pw-actions">
+        <a class="pw-btn" href="#">See the wall</a>
+        <a class="pw-link" href="#">Say hello</a>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

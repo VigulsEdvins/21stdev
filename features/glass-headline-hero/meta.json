@@ -1,33 +1,30 @@
 {
-  "name": "Glass Headline Hero",
-  "title": "Glass Headline Hero",
+  "name": "Glass Type Hero",
+  "title": "Glass Type Hero",
   "slug": "glass-headline-hero",
   "category": "Heroes",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A hero section whose headline is thick refractive glass. A slow colour field flows behind it and bends through the letters, with prism fringes at the edges. The light follows the pointer, so the bevels catch sliding highlights and cast a short contact shadow. When nobody is pointing, the light drift",
+  "description": "A hero with a headline made of thick refracting glass that bends a flowing colour field, with prism edges and highlights that follow the pointer.",
   "tags": [
-    "glass",
-    "headline",
     "hero",
-    "navigation",
-    "react"
+    "glass",
+    "webgl",
+    "headline",
+    "refraction"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL",
+    "Canvas 2D"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 156,
   "legacyCategory": "Heroes",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "minimal"
   ],
@@ -36,55 +33,37 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
-      "label": "Small label",
+      "label": "Eyebrow",
       "type": "text",
-      "selector": ":scope span.ghr-eyebrow"
-    },
-    {
-      "id": "headline",
-      "label": "Headline",
-      "type": "text",
-      "selector": ":scope h1.ghr-title"
+      "selector": ":scope .gh-eyebrow"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.ghr-desc"
+      "selector": ":scope .gh-lead"
     },
     {
       "id": "button-text",
       "label": "Button text",
       "type": "text",
-      "selector": ":scope a.ghr-secondary"
+      "selector": ":scope .gh-btn"
     },
     {
-      "id": "button-link-1",
-      "label": "Button link 1",
+      "id": "button-link",
+      "label": "Button link",
       "type": "link",
-      "selector": ":scope a.ghr-primary"
-    },
-    {
-      "id": "button-link-2",
-      "label": "Button link 2",
-      "type": "link",
-      "selector": ":scope a.ghr-secondary"
+      "selector": ":scope .gh-btn"
     }
   ],
-  "measured": {
-    "luma": 0.37,
-    "webgl": true,
-    "canvas2d": true
-  },
   "reserveHeight": 800,
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

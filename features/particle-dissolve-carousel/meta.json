@@ -1,29 +1,25 @@
 {
-  "name": "Particle Dissolve Carousel",
-  "title": "Particle Dissolve Carousel",
+  "name": "Pixel Dust Carousel",
+  "title": "Pixel Dust Carousel",
   "slug": "particle-dissolve-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "An image carousel made of dust. Change slides and the picture comes apart: a wave crosses it, every grain lifts off carrying its own colour, rides a drifting flow field, then turns and settles back into place as a grain of the next picture. At rest the picture keeps shedding a little dust, and a fli",
+  "description": "A full-width carousel where each picture crumbles into coloured pixels that drift on a wave and settle into the next scene.",
   "tags": [
-    "particle",
-    "dissolve",
     "carousel",
-    "3d",
-    "react"
+    "particles",
+    "canvas",
+    "slider",
+    "transition"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 203,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
@@ -37,64 +33,21 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
-      "type": "text",
-      "selector": ":scope p.pdc-sr"
-    },
-    {
       "id": "small-label",
-      "label": "Small label",
+      "label": "Slide counter",
       "type": "text",
-      "selector": ":scope span.pdc-count"
-    },
-    {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope p.pdc-eyebrow"
-    },
-    {
-      "id": "headline",
-      "label": "Headline",
-      "type": "text",
-      "selector": ":scope h2.pdc-title"
-    },
-    {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(2) > span:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "intro-text",
-      "label": "Intro text",
-      "type": "text",
-      "selector": ":scope p.pdc-caption"
-    },
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope span.pdc-nextTitle"
+      "selector": ":scope .dz-count"
     }
   ],
-  "measured": {
-    "luma": 0.44,
-    "webgl": true,
-    "canvas2d": true
-  },
   "nativeWhen": [
     "light"
   ],
-  "reserveHeight": 800,
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

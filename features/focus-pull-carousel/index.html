@@ -3,11 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Focus Pull Carousel</title>
+  <title>Lens Rack Strip</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="lr-stage">
+    <header class="lr-head"><p class="lr-kicker">Rack focus</p><h1 class="lr-title">Whatever is centred comes into focus</h1></header>
+    <div class="lr-view">
+      <div class="lr-strip" id="lrStrip" tabindex="0" role="group" aria-label="Frames, scroll sideways">
+        <figure class="lr-frame"><div class="lr-art lr-a1"></div><figcaption>Frame 01 &middot; Rings</figcaption></figure>
+        <figure class="lr-frame"><div class="lr-art lr-a2"></div><figcaption>Frame 02 &middot; Blinds</figcaption></figure>
+        <figure class="lr-frame"><div class="lr-art lr-a3"></div><figcaption>Frame 03 &middot; Dots</figcaption></figure>
+        <figure class="lr-frame"><div class="lr-art lr-a4"></div><figcaption>Frame 04 &middot; Horizon</figcaption></figure>
+        <figure class="lr-frame"><div class="lr-art lr-a5"></div><figcaption>Frame 05 &middot; Prism</figcaption></figure>
+        <figure class="lr-frame"><div class="lr-art lr-a6"></div><figcaption>Frame 06 &middot; Grid</figcaption></figure>
+        <figure class="lr-frame"><div class="lr-art lr-a7"></div><figcaption>Frame 07 &middot; Bloom</figcaption></figure>
+      </div>
+      <div class="lr-finder" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <p class="lr-readout" id="lrRead" aria-live="polite">Frame 01 &middot; Rings</p>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Morph Gallery</title>
+  <title>Noise Dissolve Gallery</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="mg-gal" id="mgGal" tabindex="0" aria-roledescription="carousel" aria-label="Painted landscapes">
+    <canvas class="mg-canvas" id="mgCanvas" width="960" height="540"></canvas>
+    <div class="mg-cap" aria-live="polite"><span class="mg-num" id="mgNum">01 / 06</span><h1 class="mg-title" id="mgTitle">Amber Ridge</h1></div>
+    <button class="mg-arrow mg-prev" id="mgPrev" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="mg-arrow mg-next" id="mgNext" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="mg-thumbs" id="mgThumbs"></div>
+    <div class="mg-timer" aria-hidden="true"><i id="mgTimer"></i></div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

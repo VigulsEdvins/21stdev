@@ -1,103 +1,79 @@
 {
-  "name": "Ink Orbit Pricing",
-  "title": "Ink Orbit Pricing",
+  "name": "Glow Pricing Cards",
+  "title": "Glow Pricing Cards",
   "slug": "ink-orbit-pricing",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Interactive component.",
+  "description": "Three pricing cards with a sliding monthly or yearly switch, counting prices and a spotlight that follows the pointer.",
   "tags": [
-    "ink",
-    "orbit",
     "pricing",
-    "interactions",
-    "react"
+    "cards",
+    "toggle",
+    "spotlight",
+    "saas"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 171,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
   "weight": "light",
   "mood": [
-    "minimal",
-    "light"
+    "minimal"
   ],
   "industry": [
     "ecommerce"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope span.ip-tag"
+      "selector": ":scope .op-eyebrow"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h2.ip-h2"
+      "selector": ":scope .op-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.ip-sub"
+      "selector": ":scope .op-lead"
     },
     {
       "id": "button-text-1",
-      "label": "Button text 1",
+      "label": "Plan 1 button",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
+      "selector": ":scope .op-card:nth-child(1) .op-btn"
     },
     {
       "id": "button-text-2",
-      "label": "Button text 2",
+      "label": "Plan 2 button",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
+      "selector": ":scope .op-card:nth-child(2) .op-btn"
     },
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "button-text-3",
+      "label": "Plan 3 button",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > article:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > article:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .op-card:nth-child(3) .op-btn"
     }
   ],
-  "measured": {
-    "luma": 0.84,
-    "webgl": false,
-    "canvas2d": false
-  },
   "nativeWhen": [],
-  "reserveHeight": 932
+  "reserveHeight": 900
 }

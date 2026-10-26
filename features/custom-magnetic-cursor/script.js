@@ -1,6 +1,6 @@
 /**
  * Custom Glassmorphic & Magnetic Target Cursor
- * Extracted & enhanced from carousel-gallery-play/app.js (initCustomCursor)
+ * Lerp-driven dual-ring cursor with magnetic buttons
  */
 (function () {
   const cursor = document.getElementById('custom-cursor');

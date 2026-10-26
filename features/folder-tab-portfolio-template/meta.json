@@ -1,30 +1,25 @@
 {
-  "name": "Folder Tab Portfolio Template",
-  "title": "Folder Tab Portfolio Template",
+  "name": "Binder Portfolio",
+  "title": "Binder Portfolio",
   "slug": "folder-tab-portfolio-template",
   "category": "Landing Pages",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A complete designer portfolio built from file folders: saturated blue, green, orange and pale-yellow tabs, frosted glass bodies, a wide monoline wordmark with a pill-shaped `OO`, crosshair marks and a handwritten signature. It reads like the pages of a printed portfolio deck, one rounded \"sheet\" per",
+  "description": "A designer portfolio page where project groups are coloured folders with staggered tabs that open to show their work.",
   "tags": [
-    "folder",
-    "tab",
     "portfolio",
-    "template",
-    "full",
-    "react"
+    "folders",
+    "tabs",
+    "landing",
+    "designer"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 150,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -38,85 +33,41 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "small-label",
+      "label": "Kicker",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
+      "selector": ":scope .fb-kicker"
     },
     {
-      "id": "button-text-2",
-      "label": "Button text 2",
+      "id": "headline",
+      "label": "Big title",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
+      "selector": ":scope .fb-big"
     },
     {
-      "id": "button-text-3",
-      "label": "Button text 3",
+      "id": "intro-text",
+      "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
+      "selector": ":scope .fb-intro"
     },
     {
-      "id": "button-text-4",
-      "label": "Button text 4",
+      "id": "button-text",
+      "label": "Email address",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)"
-    },
-    {
-      "id": "button-text-5",
-      "label": "Button text 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(5)"
-    },
-    {
-      "id": "button-text-6",
-      "label": "Button text 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(6)"
-    },
-    {
-      "id": "button-text-7",
-      "label": "Button text 7",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(7)"
-    },
-    {
-      "id": "button-text-8",
-      "label": "Button text 8",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)"
-    },
-    {
-      "id": "link-1",
-      "label": "Link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(3) > a:nth-of-type(1)"
-    },
-    {
-      "id": "link-2",
-      "label": "Link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(3) > a:nth-of-type(2)"
+      "selector": ":scope .fb-mail"
     },
     {
       "id": "button-link",
-      "label": "Button link",
+      "label": "Email link",
       "type": "link",
-      "selector": ":scope a.ftp-btn"
+      "selector": ":scope .fb-mail"
     }
   ],
-  "measured": {
-    "luma": 0.86,
-    "webgl": false,
-    "canvas2d": false
-  },
   "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
 }

@@ -3,11 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Longhand Notes Landing</title>
+  <title>Handwritten Notes Landing</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="nb-page">
+    <header class="nb-nav">
+      <a class="nb-logo" href="#"><span class="nb-logo-mark" aria-hidden="true">n</span> Nibworks</a>
+      <nav class="nb-links" aria-label="Main">
+        <a href="#nb-how">How it works</a>
+        <a href="#nb-cards">Sample cards</a>
+        <a href="#nb-price">Pricing</a>
+      </nav>
+      <a class="nb-btn nb-btn-sm" href="#">Order a note</a>
+    </header>
+
+    <main>
+      <section class="nb-hero">
+        <div class="nb-hero-copy">
+          <p class="nb-eyebrow">Real ink. Real paper. Real mail.</p>
+          <h1 class="nb-title">Your words, <em>written</em> by hand and posted for you.</h1>
+          <p class="nb-lead">Type a message once. A patient little arm picks up a fountain pen, writes it on heavy card stock and sends it off with a stamp.</p>
+          <div class="nb-cta">
+            <a class="nb-btn" href="#">Write a note</a>
+            <a class="nb-ghost" href="#nb-how">See how it works</a>
+          </div>
+        </div>
+        <div class="nb-desk" aria-hidden="true">
+          <svg class="nb-card-svg" viewBox="0 0 400 300" id="nbCard">
+            <rect x="8" y="8" width="384" height="284" rx="6" class="nb-paper" />
+            <rect x="22" y="22" width="356" height="256" rx="3" class="nb-frame" />
+            <path id="nbInk" class="nb-ink" d="" />
+            <g id="nbPen" class="nb-pen">
+              <path d="M0 0 L8 -34 L12 -33 L5 2 Z" class="nb-pen-body" />
+              <path d="M8 -34 L40 -120 L52 -116 L12 -33 Z" class="nb-pen-arm" />
+              <circle cx="46" cy="-118" r="8" class="nb-pen-joint" />
+            </g>
+          </svg>
+          <span class="nb-stamp">1st class</span>
+        </div>
+      </section>
+
+      <section class="nb-sec" id="nb-how">
+        <h2 class="nb-h2">Three steps, no stationery drawer</h2>
+        <ol class="nb-steps">
+          <li><span class="nb-num">1</span><h3>Type it</h3><p>Write your message and pick a card, a pen colour and a handwriting style.</p></li>
+          <li><span class="nb-num">2</span><h3>We write it</h3><p>Our arm copies every letter slowly, with the small wobbles a person would leave.</p></li>
+          <li><span class="nb-num">3</span><h3>We post it</h3><p>The card is sealed, addressed by hand and stamped. It leaves the same day.</p></li>
+        </ol>
+      </section>
+
+      <section class="nb-sec nb-sec-alt" id="nb-cards">
+        <h2 class="nb-h2">A few cards that went out this week</h2>
+        <div class="nb-cards">
+          <article class="nb-sample" style="--tilt:-2deg;--ink:#1f3a8a"><p class="nb-script">Thank you for the loan of the ladder. The shelves are up!</p><span>Thank-you card</span></article>
+          <article class="nb-sample" style="--tilt:1.5deg;--ink:#0f6a52"><p class="nb-script">Happy birthday, Mara. Cake is on me when you are back.</p><span>Birthday card</span></article>
+          <article class="nb-sample" style="--tilt:-1deg;--ink:#8a2c1f"><p class="nb-script">So sorry to hear the news. Thinking of you all.</p><span>Sympathy card</span></article>
+        </div>
+      </section>
+
+      <section class="nb-sec" id="nb-price">
+        <h2 class="nb-h2">Pay per note</h2>
+        <div class="nb-plans">
+          <div class="nb-plan"><h3>Single</h3><p class="nb-cost">$3<small>/note</small></p><p>One card, one stamp, one pen colour.</p><a class="nb-btn nb-btn-line" href="#">Choose</a></div>
+          <div class="nb-plan nb-plan-main"><h3>Bundle of ten</h3><p class="nb-cost">$2.40<small>/note</small></p><p>Ten cards sent whenever you like in a year.</p><a class="nb-btn" href="#">Choose</a></div>
+          <div class="nb-plan"><h3>Studio</h3><p class="nb-cost">$1.90<small>/note</small></p><p>Bulk lists, mail-merge names and a custom letterhead.</p><a class="nb-btn nb-btn-line" href="#">Choose</a></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="nb-foot">
+      <span class="nb-logo"><span class="nb-logo-mark" aria-hidden="true">n</span> Nibworks</span>
+      <span>Placeholder studio, 12 Example Lane</span>
+      <a href="#">Terms</a> <a href="#">Privacy</a>
+    </footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

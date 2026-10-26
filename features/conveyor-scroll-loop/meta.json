@@ -2,7 +2,7 @@
   "slug": "conveyor-scroll-loop",
   "title": "Infinite Vertical Conveyor Scroll & 3D Trajectory Loop",
   "category": "Scroll & Parallax",
-  "source": "betteroff",
+  "source": "edvlabs",
   "type": "component",
   "description": "Endless wrapping vertical virtual scroll engine using modulo wrap(-(totalHeight - item.end), item.end, scroll) math, paired with a central 3D orbital sculpture that travels along a multi-stage sine trajectory.",
   "tags": [
@@ -31,10 +31,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "betteroff",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-24",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",

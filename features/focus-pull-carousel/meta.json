@@ -1,84 +1,55 @@
 {
-  "name": "Focus Pull Carousel",
-  "title": "Focus Pull Carousel",
+  "name": "Lens Rack Strip",
+  "title": "Lens Rack Strip",
   "slug": "focus-pull-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A horizontal image strip that racks focus like a camera lens. The centre picture is sharp and full size; its neighbours soften, shrink and fade by how far they sit from the middle, updating continuously as you scroll, swipe or drag.",
+  "description": "Horizontal strip of frames that sharpen at the centre and blur, shrink and fade toward the edges as you scroll, drag or use arrow keys.",
   "tags": [
-    "focus",
-    "pull",
     "carousel",
-    "3d",
-    "react"
+    "blur",
+    "focus",
+    "scroll-snap",
+    "gallery"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 149,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
-    "futuristic",
-    "light"
+    "dark",
+    "futuristic"
   ],
   "industry": [
-    "general"
+    "portfolio"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4) > img:nth-of-type(1)"
-    },
-    {
-      "id": "text",
-      "label": "Text",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope div.fp-sr"
+      "selector": ":scope .lr-kicker"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .lr-title"
     }
   ],
-  "measured": {
-    "luma": 0.76,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "ownPalette": true
 }

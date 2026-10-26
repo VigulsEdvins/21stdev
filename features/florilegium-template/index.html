@@ -3,11 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Florilegium Template</title>
+  <title>Mossgrove Journal</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="mg-page" id="mgPage">
+    <header class="mg-nav">
+      <a class="mg-logo" href="#"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 22V10M12 10C8 10 6 7 6 3c4 0 6 3 6 7zm0 0c4 0 6-3 6-7-4 0-6 3-6 7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Mossgrove</a>
+      <nav class="mg-links" aria-label="Main"><a href="#">Journal</a><a href="#">Atelier</a><a href="#">Seeds</a><a class="mg-btn" href="#">Subscribe</a></nav>
+    </header>
+
+    <div class="mg-split">
+      <aside class="mg-sticky" aria-hidden="true">
+        <canvas id="mgCanvas" width="640" height="760"></canvas>
+        <p class="mg-caption"><span id="mgIdx">01</span> / 03 <em id="mgSpecies">Meadow poppy</em></p>
+      </aside>
+
+      <main class="mg-copy">
+        <section class="mg-chapter" data-species="0">
+          <p class="mg-kicker">A quarterly of flowers</p>
+          <h1 class="mg-h1">One bloom, drawn slowly, <em>season by season.</em></h1>
+          <p class="mg-lead">Mossgrove is a small journal and pressing atelier. We follow a single flower from bud to seed and print what we learn on heavy cotton paper.</p>
+          <div class="mg-actions"><a class="mg-btn mg-solid" href="#">Read issue nine</a><a class="mg-ghost" href="#">Visit the atelier</a></div>
+        </section>
+        <section class="mg-chapter" data-species="1">
+          <p class="mg-kicker">Chapter two</p>
+          <h2 class="mg-h2">Many petals, one patient hand</h2>
+          <p class="mg-lead">Our illustrators sit in the field with a loupe and a notebook. Each plate takes weeks, because a petal count is only the beginning of a portrait.</p>
+          <ul class="mg-list"><li><b>48</b> hand-pressed plates</li><li><b>12</b> field notebooks</li><li><b>4</b> issues each year</li></ul>
+        </section>
+        <section class="mg-chapter" data-species="2">
+          <p class="mg-kicker">Chapter three</p>
+          <h2 class="mg-h2">Pressed, framed, posted</h2>
+          <p class="mg-lead">Members receive a framed pressing with every issue, plus a packet of seeds to grow the subject at home.</p>
+          <form class="mg-form" id="mgForm"><label for="mgMail" class="mg-sr">Email address</label><input id="mgMail" type="email" placeholder="you@example.com" required /><button class="mg-btn mg-solid" type="submit">Join the list</button></form>
+          <p class="mg-note" id="mgNote" role="status"></p>
+        </section>
+      </main>
+    </div>
+
+    <footer class="mg-foot"><span>&copy; Mossgrove Journal</span><span><a href="#">Privacy</a> &middot; <a href="#">Shipping</a> &middot; <a href="#">Contact</a></span></footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

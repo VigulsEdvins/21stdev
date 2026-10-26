@@ -3,11 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Slit Type FAQ</title>
+  <title>Split Headline FAQ</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sf-sec" id="sfSec">
+    <p class="sf-eyebrow">Help centre</p>
+    <h2 class="sf-head" id="sfHead" aria-label="Asked often">
+      <span class="sf-word" aria-hidden="true"></span>
+    </h2>
+    <p class="sf-lead">Short answers to the things people ask before they start. Tap a question to open it.</p>
+
+    <ul class="sf-list" id="sfList">
+      <li class="sf-item">
+        <h3><button class="sf-q" type="button" aria-expanded="false" aria-controls="sfA1" id="sfQ1"><span class="sf-n">01</span><span class="sf-qt">How long does setup take?</span><span class="sf-ic" aria-hidden="true"></span></button></h3>
+        <div class="sf-a" id="sfA1" role="region" aria-labelledby="sfQ1"><div><p>Most teams are running within an afternoon. Import your data, pick a template and invite people.</p></div></div>
+      </li>
+      <li class="sf-item">
+        <h3><button class="sf-q" type="button" aria-expanded="false" aria-controls="sfA2" id="sfQ2"><span class="sf-n">02</span><span class="sf-qt">Can I change my plan later?</span><span class="sf-ic" aria-hidden="true"></span></button></h3>
+        <div class="sf-a" id="sfA2" role="region" aria-labelledby="sfQ2"><div><p>Yes. Upgrades apply at once and downgrades start from the next billing day. Nothing is locked in.</p></div></div>
+      </li>
+      <li class="sf-item">
+        <h3><button class="sf-q" type="button" aria-expanded="false" aria-controls="sfA3" id="sfQ3"><span class="sf-n">03</span><span class="sf-qt">Where is my data stored?</span><span class="sf-ic" aria-hidden="true"></span></button></h3>
+        <div class="sf-a" id="sfA3" role="region" aria-labelledby="sfQ3"><div><p>In regional data centres of your choice, encrypted at rest and in transit. You can export it at any time.</p></div></div>
+      </li>
+      <li class="sf-item">
+        <h3><button class="sf-q" type="button" aria-expanded="false" aria-controls="sfA4" id="sfQ4"><span class="sf-n">04</span><span class="sf-qt">Do you offer team discounts?</span><span class="sf-ic" aria-hidden="true"></span></button></h3>
+        <div class="sf-a" id="sfA4" role="region" aria-labelledby="sfQ4"><div><p>Groups of ten or more get a lower per-seat price. Schools and non-profits get a further reduction.</p></div></div>
+      </li>
+    </ul>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

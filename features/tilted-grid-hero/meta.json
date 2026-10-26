@@ -1,26 +1,24 @@
 {
-  "name": "Tilted Grid Hero",
-  "title": "Tilted Grid Hero",
+  "name": "Curved Gallery Hero",
+  "title": "Curved Gallery Hero",
   "slug": "tilted-grid-hero",
   "category": "Heroes",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Every frame, brought into focus. Images curve in from one edge, flatten out at the centre, then fade away round the other with 3D perspective distortion.",
+  "description": "A hero with a row of colour cards that drifts along a shallow arc, sits flat at the centre and tilts away at the edges; drag to scrub.",
   "tags": [
     "hero",
     "3d",
-    "curved",
+    "gallery",
     "perspective",
-    "carousel"
+    "drag"
   ],
   "tech": [
-    "React",
-    "Three.js / CSS 3D",
-    "Tailwind CSS"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React",
-    "Tailwind CSS"
+    "Vanilla HTML/CSS/JS"
   ],
   "order": 3,
   "legacyCategory": "Heroes",
@@ -34,30 +32,29 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .cg-kicker"
+    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.text-balance"
+      "selector": ":scope .cg-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.max-w-md"
+      "selector": ":scope .cg-intro"
     }
   ],
-  "measured": {
-    "luma": 0.53,
-    "webgl": false,
-    "canvas2d": false
-  },
   "reserveHeight": 800
 }

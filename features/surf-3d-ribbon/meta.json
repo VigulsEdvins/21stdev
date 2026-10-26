@@ -1,8 +1,8 @@
 {
   "slug": "surf-3d-ribbon",
-  "title": "Surf 3D Sine-Wave Ribbon & Physics Stream",
+  "title": "3D Sine-Wave Ribbon & Physics Stream",
   "category": "3D & Carousels",
-  "source": "betteroff",
+  "source": "edvlabs",
   "type": "component",
   "description": "Infinite wrapping 3D perspective card stream moving along a diagonal sine-wave ribbon trajectory. Velocity amplifies wave amplitude while cards rotate on the Y-axis (-70° to -85°) and elevate on hover.",
   "tags": [
@@ -28,12 +28,12 @@
   "industry": [
     "saas"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "betteroff",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-24",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",

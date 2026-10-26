@@ -1,123 +1,74 @@
 {
-  "name": "Dither Sweep Navbar",
-  "title": "Dither Sweep Navbar",
+  "name": "Pixel Sweep Header",
+  "title": "Pixel Sweep Header",
   "slug": "dither-sweep-navbar",
   "category": "Headers & Nav",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "An editorial, blueprint-styled header. Hairline-ruled cells, monospace caps, a wordmark that retracts behind its mark once the page scrolls, and a nav hover that fills each cell with a chunky left-to-right pixel dissolve.",
+  "description": "A floating header whose links fill with a chunky left-to-right ordered-dither sweep on hover and which tightens when the page scrolls.",
   "tags": [
-    "dither",
-    "sweep",
+    "header",
     "navbar",
-    "navigation",
-    "react"
+    "dither",
+    "hover",
+    "pixel"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 138,
   "legacyCategory": "Navigation & Headers",
   "status": "stable",
   "weight": "light",
   "mood": [
     "editorial",
-    "minimal",
-    "light"
+    "minimal"
   ],
   "industry": [
     "general"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text",
-      "label": "Button text",
+      "id": "headline",
+      "label": "Page heading",
       "type": "text",
-      "selector": ":scope button.dsn-burger"
+      "selector": ":scope .dn-h1"
     },
     {
-      "id": "menu-item-1",
-      "label": "Menu item 1",
+      "id": "button-text-1",
+      "label": "Link 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
+      "selector": ":scope .dn-link:nth-child(1) span"
     },
     {
-      "id": "menu-item-2",
-      "label": "Menu item 2",
+      "id": "button-text-2",
+      "label": "Link 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4)"
+      "selector": ":scope .dn-link:nth-child(2) span"
     },
     {
-      "id": "menu-link-1",
-      "label": "Menu link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > a:nth-of-type(1)"
-    },
-    {
-      "id": "menu-link-2",
-      "label": "Menu link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > a:nth-of-type(1)"
-    },
-    {
-      "id": "menu-link-3",
-      "label": "Menu link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > a:nth-of-type(1)"
-    },
-    {
-      "id": "menu-item-3",
-      "label": "Menu item 3",
+      "id": "button-text-3",
+      "label": "Link 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(2)"
+      "selector": ":scope .dn-link:nth-child(3) span"
     },
     {
-      "id": "menu-item-4",
-      "label": "Menu item 4",
+      "id": "button-text-4",
+      "label": "Link 4",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1) > span:nth-of-type(2)"
-    },
-    {
-      "id": "menu-item-5",
-      "label": "Menu item 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(5) > a:nth-of-type(1) > span:nth-of-type(2)"
-    },
-    {
-      "id": "menu-item-6",
-      "label": "Menu item 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
-    },
-    {
-      "id": "menu-item-7",
-      "label": "Menu item 7",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1)"
+      "selector": ":scope .dn-cta span"
     }
   ],
-  "measured": {
-    "luma": 1,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800,
-  "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "reserveHeight": 800
 }

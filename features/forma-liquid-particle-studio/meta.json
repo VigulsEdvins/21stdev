@@ -37,12 +37,10 @@
     "agency",
     "media"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
     "source": "imported",
-    "license": "own",
-    "verifiedAt": "2026-10-24",
-    "note": "Recorded as own by the project owner 2026-10-24"
+    "license": "own"
   },
   "updatedAt": "2026-10-22",
   "customizable": [

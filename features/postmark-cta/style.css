@@ -1,9 +1,32 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0e1a2b); color: var(--text, #f4f1ea); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+
+.lt-cta { position: relative; min-height: 34rem; display: grid; place-items: center; padding: 4rem 1.5rem; overflow: hidden; color: #f4f1ea; background-color: #0e1a2b; background-image: radial-gradient(circle, rgba(244, 241, 234, 0.13) 1.2px, transparent 1.6px), radial-gradient(ellipse at 50% 120%, rgba(127, 214, 194, 0.22), transparent 60%); background-size: 22px 22px, 100% 100%; }
+
+.lt-body { position: relative; z-index: 2; max-width: 34rem; text-align: center; }
+.lt-title { font-family: var(--font-display, Georgia, "Times New Roman", serif); font-size: clamp(2.4rem, 7vw, 4.4rem); line-height: 1.02; letter-spacing: -0.03em; font-weight: 700; }
+.lt-title em { font-style: italic; color: #f6c453; }
+.lt-text { margin: 1.2rem auto 0; max-width: 26rem; line-height: 1.6; color: rgba(244, 241, 234, 0.75); }
+.lt-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem 1.6rem; margin-top: 1.8rem; }
+.lt-btn { display: inline-flex; align-items: center; gap: 0.7rem; border: 0; border-radius: 99px; padding: 0.95rem 1.5rem; background: #7fd6c2; color: #0e1a2b; font: 700 1rem/1 var(--font-body, system-ui, sans-serif); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 8px 24px rgba(127, 214, 194, 0.3); }
+.lt-btn svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
+.lt-btn:hover { transform: translateY(-2px); } .lt-btn:hover svg { transform: translateX(4px); }
+.lt-link { color: #f4f1ea; font-weight: 600; text-underline-offset: 5px; }
+.lt-btn:focus-visible, .lt-link:focus-visible { outline: 2px solid #f6c453; outline-offset: 4px; }
+.lt-note { margin-top: 1.2rem; min-height: 1.3rem; font-size: 0.82rem; color: rgba(244, 241, 234, 0.55); }
+
+.lt-tags { position: absolute; inset: 0; pointer-events: none; }
+.lt-tag { position: absolute; left: var(--x); top: var(--y); width: 8.4rem; padding: 1.7rem 0.8rem 0.9rem; border-radius: 10px 10px 14px 14px; background: var(--c); color: #1a2232; text-align: center; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35); transform: translate(var(--mx, 0), var(--my, 0)) rotate(var(--r)); animation: lt-float calc(var(--d) * 1.4s) ease-in-out infinite alternate; }
+.lt-tag i { position: absolute; top: 0.55rem; left: 50%; width: 0.9rem; height: 0.9rem; margin-left: -0.45rem; border-radius: 50%; background: #0e1a2b; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45); }
+.lt-tag::before { content: ""; position: absolute; top: -1.4rem; left: 50%; width: 2px; height: 2rem; background: rgba(244, 241, 234, 0.5); transform-origin: bottom; }
+.lt-tag b { display: block; font: 800 1.7rem/1 var(--font-display, Georgia, serif); letter-spacing: 0.04em; }
+.lt-tag span { display: block; margin: 0.15rem 0; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; }
+.lt-tag small { display: block; margin-top: 0.7rem; padding-top: 0.5rem; border-top: 1.5px dashed rgba(26, 34, 50, 0.4); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+@keyframes lt-float { from { margin-top: -5px; } to { margin-top: 7px; } }
+
+@media (max-width: 760px) {
+  .lt-tag { width: 6rem; padding-top: 1.4rem; opacity: 0.55; }
+  .lt-tag b { font-size: 1.15rem; }
+  .lt-tag small { display: none; }
 }
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+@media (prefers-reduced-motion: reduce) { .lt-tag { animation: none; } .lt-btn, .lt-btn svg { transition: none; } }

@@ -3,11 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Waving Portfolio Landing</title>
+  <title>Poster Portfolio Landing</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="pw-page">
+    <header class="pw-nav">
+      <a class="pw-brand" href="#">Ines Vale</a>
+      <nav aria-label="Main"><a href="#">Work</a><a href="#">About</a><a href="#">Contact</a></nav>
+    </header>
+
+    <section class="pw-hero">
+      <p class="pw-small">Illustrator &amp; motion designer</p>
+      <h1 class="pw-headline" aria-label="Hello, nice to draw you">
+        <span class="pw-row" aria-hidden="true"><span>H</span><span>E</span><span>L</span><span>L</span><span class="pw-gap">
+          <svg class="pw-hand" viewBox="0 0 140 190" aria-hidden="true">
+            <g class="pw-arm">
+              <rect x="56" y="124" width="28" height="70" rx="14" fill="currentColor" />
+              <g class="pw-wave">
+                <g transform="translate(70 104)" fill="currentColor">
+                  <rect x="-7" y="-74" width="14" height="62" rx="7" transform="rotate(-30)" />
+                  <rect x="-7" y="-84" width="14" height="72" rx="7" transform="rotate(-10)" />
+                  <rect x="-7" y="-82" width="14" height="70" rx="7" transform="rotate(11)" />
+                  <rect x="-7" y="-70" width="14" height="58" rx="7" transform="rotate(31)" />
+                  <rect x="-7" y="-52" width="14" height="46" rx="7" transform="rotate(-66) translate(0 -2)" />
+                  <ellipse cx="0" cy="8" rx="33" ry="30" />
+                </g>
+              </g>
+            </g>
+          </svg></span><span>O</span></span>
+        <span class="pw-row" aria-hidden="true"><span>N</span><span>I</span><span>C</span><span>E</span></span>
+      </h1>
+      <p class="pw-intro">I draw characters, posters and short loops for small studios and big ideas. Currently booking for autumn.</p>
+    </section>
+
+    <section class="pw-work" aria-label="Selected work">
+      <h2 class="pw-h2">Selected work</h2>
+      <ul class="pw-list">
+        <li><a href="#"><span>01</span><b>Paper Moon Festival</b><i>Poster series</i></a></li>
+        <li><a href="#"><span>02</span><b>Little Harbour</b><i>Animated shorts</i></a></li>
+        <li><a href="#"><span>03</span><b>Tin Whistle Records</b><i>Cover art</i></a></li>
+        <li><a href="#"><span>04</span><b>Night Bakery</b><i>Packaging</i></a></li>
+      </ul>
+    </section>
+
+    <footer class="pw-foot">
+      <a class="pw-mail" href="#">hello@inesvale.example</a>
+      <span>&copy; 2026</span>
+    </footer>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

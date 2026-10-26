@@ -1,46 +1,46 @@
 (function () {
   const ITEMS = [
     {
-      title: 'Arturo Torres for Autumn Editorial Monograph',
+      title: 'Harbour Campaign Autumn Monograph',
       tag: 'Campaign',
       date: 'Oct 2026',
       height: 220,
-      img: '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg'
+      img: '/assets/library/edv-art-02.svg'
     },
     {
-      title: 'Danielle Moore: Desert Couture Retrospective',
+      title: 'Desert Light: A Retrospective',
       tag: 'Exhibition',
       date: 'Oct 2026',
       height: 175,
-      img: '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg'
+      img: '/assets/library/edv-art-06.svg'
     },
     {
-      title: 'Zac Posen Studio Denim Portrait Series',
+      title: 'Studio Denim Portrait Series',
       tag: 'Cover',
       date: 'Sep 2026',
       height: 245,
-      img: '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg'
+      img: '/assets/library/edv-art-10.svg'
     },
     {
-      title: 'Quinn Gravier: Portrait Study Archive',
+      title: 'Portrait Study Archive 03',
       tag: 'Exhibition',
       date: 'Sep 2026',
       height: 190,
-      img: '/assets/library/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26-2e04fbf6.jpg'
+      img: '/assets/library/edv-art-14.svg'
     },
     {
-      title: 'Cera Hensley Sculptural Still Life Commission',
+      title: 'Sculptural Still Life Commission',
       tag: 'Campaign',
       date: 'Aug 2026',
       height: 230,
-      img: '/assets/library/1777466641-cera-hensley-beauty-photography-stilllife-cosmetics-21-08778a1a.jpg'
+      img: '/assets/library/edv-art-03.svg'
     },
     {
-      title: 'Barragan Stables Architectural Fashion Feature',
+      title: 'Stable Yard Architectural Feature',
       tag: 'Cover',
       date: 'Aug 2026',
       height: 200,
-      img: '/assets/library/1778184121-fashion-editorial-horse-barragan-stables-mexico-d62757c7.jpg'
+      img: '/assets/library/edv-art-11.svg'
     }
   ];
 

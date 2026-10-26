@@ -1,29 +1,25 @@
 {
-  "name": "Design Process Template",
-  "title": "Design Process Template",
+  "name": "Project Journal Page",
+  "title": "Project Journal Page",
   "slug": "design-process-template",
   "category": "Landing Pages",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A case-study page that walks through how a product was made, one phase at a time. A small eyebrow sits above a large indented headline with a round accent badge in the middle of the sentence. Below that, a short intro sits beside the team's role chips. Then each phase gets a ruled row: its share of ",
+  "description": "A case-study page with a big headline and inline badge, role chips, a time-share bar and an accordion of project phases.",
   "tags": [
-    "design",
+    "case-study",
+    "accordion",
+    "editorial",
     "process",
-    "template",
-    "full",
-    "react"
+    "page"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 134,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -37,72 +33,40 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "small-label",
+      "label": "Eyebrow",
       "type": "text",
-      "selector": ":scope p.dp-eyebrow"
+      "selector": ":scope .pj-eyebrow"
     },
     {
       "id": "link",
-      "label": "Link",
+      "label": "Badge link",
       "type": "link",
-      "selector": ":scope a.dp-badge"
+      "selector": ":scope .pj-badge"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
+      "id": "intro-text",
+      "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.dp-lede"
+      "selector": ":scope .pj-lede"
     },
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "paragraph-1",
+      "label": "Bar caption",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
-    },
-    {
-      "id": "button-text-3",
-      "label": "Button text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)"
-    },
-    {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
-      "type": "text",
-      "selector": ":scope p.dp-alloc-top"
+      "selector": ":scope .pj-split-label"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(1) > article:nth-of-type(1) > h3:nth-of-type(1)"
+      "selector": ":scope .pj-title"
     }
-  ],
-  "measured": {
-    "luma": 0.96,
-    "webgl": false,
-    "canvas2d": false
-  }
+  ]
 }

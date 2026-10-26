@@ -1,85 +1,54 @@
 {
-  "name": "Tilt Cascade Carousel",
-  "title": "Tilt Cascade Carousel",
+  "name": "Wheel Tile Carousel",
+  "title": "Wheel Tile Carousel",
   "slug": "tilt-cascade-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A minimal photo carousel. Square photos sit on a slanted line. The one in front is upright at full size. Each photo after it drops down and to the right, turns clockwise and shrinks, and each photo before it climbs up and to the left the other way. When you move through them, the line slides along a",
+  "description": "Postcard carousel where cards ride a big wheel, rotating and shrinking away from the centre, with buttons, keys, click and drag.",
   "tags": [
-    "tilt",
-    "cascade",
     "carousel",
-    "3d",
-    "react"
+    "wheel",
+    "cards",
+    "drag",
+    "3d"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 239,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
   "weight": "light",
   "mood": [
-    "futuristic",
-    "minimal",
-    "light"
+    "light",
+    "playful"
   ],
   "industry": [
     "general"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) > span:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2) > span:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3) > span:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4) > span:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "text",
-      "label": "Text",
+      "id": "headline",
+      "label": "Headline",
       "type": "text",
-      "selector": ":scope div.tcc-sr"
+      "selector": ":scope .wt-title"
+    },
+    {
+      "id": "small-label",
+      "label": "Counter",
+      "type": "text",
+      "selector": ":scope .wt-count"
     }
-  ],
-  "measured": {
-    "luma": 0.84,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  ]
 }

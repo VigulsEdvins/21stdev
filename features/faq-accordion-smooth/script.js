@@ -1,6 +1,6 @@
 /**
  * Editorial Smooth-Height FAQ Accordion
- * Extracted from carousel-gallery-play/app.js (bindFaqTriggers)
+ * ARIA accordion with grid-template-rows height transition
  */
 (function () {
   const FAQS = [
@@ -10,7 +10,7 @@
     },
     {
       q: 'Can I use these components in both Vanilla JS and React / Next.js?',
-      a: 'Yes. Every component includes standalone HTML/CSS/JS that runs directly in the browser, and React components like Works Wheel and Polaroid String also include their full TypeScript .tsx source.'
+      a: 'Yes. Every component includes standalone HTML/CSS/JS that runs directly in the browser, and React components also include their full TypeScript .tsx source.'
     },
     {
       q: 'How does the CSS Grid 0fr to 1fr height transition work?',

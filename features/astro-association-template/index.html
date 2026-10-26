@@ -3,11 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Astro Association Template</title>
+  <title>Night Sky Society Landing</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="ns-page">
+    <header class="ns-bar">
+      <a class="ns-brand" href="#"><span class="ns-dial" aria-hidden="true"><i></i></span>Dusk Observers</a>
+      <nav class="ns-nav" aria-label="Main"><a href="#">About</a><a href="#">Sessions</a><a href="#">Loans</a><a href="#">Join</a></nav>
+      <a class="ns-pill" href="#">Become a member</a>
+    </header>
+
+    <section class="ns-hero" id="nsHero">
+      <canvas class="ns-sky" id="nsSky" aria-hidden="true"></canvas>
+      <div class="ns-hero-in">
+        <p class="ns-label">Amateur astronomy club &middot; Season 12</p>
+        <h1 class="ns-h1"><span>Look</span><span class="ns-out">up,</span><span>together.</span></h1>
+        <div class="ns-hero-row">
+          <p class="ns-intro">We set up telescopes on the hill every clear Friday. No experience needed, no equipment required, only a warm coat.</p>
+          <div class="ns-actions"><a class="ns-pill" href="#">Join a session</a><a class="ns-pill ns-ghost" href="#">See the calendar</a></div>
+        </div>
+        <p class="ns-hint">Move your pointer to link the stars.</p>
+      </div>
+    </section>
+
+    <section class="ns-stats" aria-label="Club in numbers">
+      <div><b data-n="214">0</b><span>members</span></div>
+      <div><b data-n="18">0</b><span>telescopes to borrow</span></div>
+      <div><b data-n="52">0</b><span>sessions a year</span></div>
+      <div><b data-n="9">0</b><span>comets logged</span></div>
+    </section>
+
+    <section class="ns-sec">
+      <div class="ns-head"><p class="ns-label">Next up</p><h2 class="ns-h2">Observing schedule</h2></div>
+      <ul class="ns-table" id="nsTable">
+        <li><time>Fri 07</time><b>Saturn and its rings</b><span>Hilltop field</span><em>Beginner</em></li>
+        <li><time>Fri 14</time><b>Meteor shower watch</b><span>Hilltop field</span><em>All welcome</em></li>
+        <li><time>Fri 21</time><b>Deep sky clusters</b><span>Old quarry</span><em>Intermediate</em></li>
+        <li><time>Fri 28</time><b>Astro-photo clinic</b><span>Club room</span><em>Bring a camera</em></li>
+      </ul>
+    </section>
+
+    <section class="ns-sec ns-loans">
+      <div class="ns-head"><p class="ns-label">Borrow a scope</p><h2 class="ns-h2">Three ways to start</h2></div>
+      <div class="ns-grid">
+        <article><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="26"/><path d="M14 40h52M40 14v52"/></svg><h3>Binoculars</h3><p>Ten by fifty glass with a tripod mount. Moon craters and star fields.</p></article>
+        <article><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M10 58L62 22l6 8L16 66z"/><path d="M40 52l-10 20M40 52l12 20"/></svg><h3>Tabletop reflector</h3><p>A compact eight-inch dish, simple to align in under five minutes.</p></article>
+        <article><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="8"/><ellipse cx="40" cy="40" rx="30" ry="11" transform="rotate(-24 40 40)"/></svg><h3>Tracking mount</h3><p>Motorised mount that keeps a planet in view while you chat.</p></article>
+      </div>
+    </section>
+
+    <section class="ns-join">
+      <h2 class="ns-h2">Get the monthly sky letter</h2>
+      <p>One short email: what is up, when, and where to stand.</p>
+      <form class="ns-form" id="nsForm" novalidate>
+        <label class="ns-sr" for="nsMail">Email address</label>
+        <input id="nsMail" type="email" placeholder="you@example.com" required />
+        <button type="submit" class="ns-pill">Send me the letter</button>
+        <p class="ns-msg" id="nsMsg" role="status"></p>
+      </form>
+    </section>
+
+    <footer class="ns-foot"><span>&copy; 2026 Dusk Observers</span><span>Clear skies.</span></footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Isometric Lift Carousel</title>
+  <title>Lift Row Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ic-stage" aria-roledescription="carousel" aria-label="Colour cards">
+    <div class="ic-view">
+      <ul class="ic-row" id="icRow">
+        <li class="ic-slot"><button class="ic-card" type="button" style="--a:#f5b971;--b:#d9663b;--o:radial-gradient(circle at 70% 25%,#fff3d0 0 10%,transparent 11%)" aria-label="Show Dune"><span class="ic-face"><span class="ic-tag">01</span><span class="ic-name">Dune</span></span></button></li>
+        <li class="ic-slot"><button class="ic-card" type="button" style="--a:#bfe6f5;--b:#3d7fb0;--o:linear-gradient(160deg,transparent 55%,rgba(255,255,255,.55) 55% 70%,transparent 70%)" aria-label="Show Glacier"><span class="ic-face"><span class="ic-tag">02</span><span class="ic-name">Glacier</span></span></button></li>
+        <li class="ic-slot"><button class="ic-card" type="button" style="--a:#f3a6d6;--b:#6a3fb0;--o:radial-gradient(circle at 30% 60%,rgba(255,255,255,.4) 0 18%,transparent 19%)" aria-label="Show Orchid"><span class="ic-face"><span class="ic-tag">03</span><span class="ic-name">Orchid</span></span></button></li>
+        <li class="ic-slot"><button class="ic-card" type="button" style="--a:#9fd8a0;--b:#1f5a3d;--o:linear-gradient(200deg,transparent 40%,rgba(0,0,0,.25) 40% 60%,transparent 60%)" aria-label="Show Pine"><span class="ic-face"><span class="ic-tag">04</span><span class="ic-name">Pine</span></span></button></li>
+        <li class="ic-slot"><button class="ic-card" type="button" style="--a:#7aa7ff;--b:#1b2f8f;--o:radial-gradient(circle at 50% 80%,rgba(255,255,255,.45) 0 14%,transparent 15%)" aria-label="Show Cobalt"><span class="ic-face"><span class="ic-tag">05</span><span class="ic-name">Cobalt</span></span></button></li>
+        <li class="ic-slot"><button class="ic-card" type="button" style="--a:#ffe27a;--b:#e07a1f;--o:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.4) 30% 38%,transparent 38%)" aria-label="Show Saffron"><span class="ic-face"><span class="ic-tag">06</span><span class="ic-name">Saffron</span></span></button></li>
+        <li class="ic-slot"><button class="ic-card" type="button" style="--a:#b9c2d0;--b:#3a4357;--o:radial-gradient(circle at 25% 30%,rgba(255,255,255,.35) 0 12%,transparent 13%)" aria-label="Show Slate"><span class="ic-face"><span class="ic-tag">07</span><span class="ic-name">Slate</span></span></button></li>
+      </ul>
+    </div>
+    <p class="ic-title" aria-live="polite" id="icTitle">Dune</p>
+    <div class="ic-pill">
+      <button class="ic-nav" id="icPrev" type="button" aria-label="Previous">&larr;</button>
+      <div class="ic-dots" id="icDots"></div>
+      <button class="ic-nav" id="icNext" type="button" aria-label="Next">&rarr;</button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

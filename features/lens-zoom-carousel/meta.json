@@ -1,29 +1,25 @@
 {
-  "name": "Lens Zoom Carousel",
-  "title": "Lens Zoom Carousel",
+  "name": "Zoom Pull Slider",
+  "title": "Zoom Pull Slider",
   "slug": "lens-zoom-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed image carousel where the next picture lands like a fast zoom pull: out of a soft, magnified blur with two fading ghost copies trailing it, while the old picture falls back. Going back zooms out instead of in.",
+  "description": "A full-bleed slider where each new scene lands with a fast blurred zoom-in and fading ghost copies while the old scene drops back.",
   "tags": [
-    "lens",
-    "zoom",
     "carousel",
-    "3d",
-    "react"
+    "zoom",
+    "blur",
+    "slider",
+    "scenes"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 181,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
@@ -36,30 +32,18 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
-    {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope img.lz-img"
-    },
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope div.lz-sr"
+      "selector": ":scope .zp-title"
     }
   ],
-  "measured": {
-    "luma": 0.53,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "ownPalette": true
 }

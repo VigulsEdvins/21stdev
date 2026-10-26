@@ -3,11 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agent Console Template</title>
+  <title>Runbook Console</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="rc-app" id="rcApp">
+    <header class="rc-top">
+      <span class="rc-logo" aria-hidden="true"></span>
+      <strong class="rc-brand">Runbook</strong><span class="rc-slash">/</span><span class="rc-ws">Console</span>
+      <span class="rc-badge" id="rcStatus" role="status">Idle</span>
+    </header>
+
+    <aside class="rc-side" aria-label="Sessions">
+      <h2 class="rc-label">Sessions</h2>
+      <ul class="rc-sessions" id="rcSessions">
+        <li><button class="rc-sess is-on" type="button"><span class="rc-sess-t">New request</span><span class="rc-sess-s">Waiting for a prompt</span></button></li>
+        <li><button class="rc-sess" type="button"><span class="rc-sess-t">Draft the release notes</span><span class="rc-sess-s">Done</span></button></li>
+        <li><button class="rc-sess" type="button"><span class="rc-sess-t">Sort the inbox backlog</span><span class="rc-sess-s">Awaiting approval</span></button></li>
+      </ul>
+    </aside>
+
+    <main class="rc-main">
+      <div class="rc-feed" id="rcFeed" aria-live="polite">
+        <div class="rc-hello" id="rcHello">
+          <h1 class="rc-title">Ask for a job. Approve the plan. Watch it run.</h1>
+          <p class="rc-lead">Runbook turns a request into a small step-by-step machine. Nothing runs until you say so.</p>
+          <div class="rc-chips" id="rcChips">
+            <button class="rc-chip" type="button">Summarise this week's tickets</button>
+            <button class="rc-chip" type="button">Plan a product launch checklist</button>
+            <button class="rc-chip" type="button">Clean up the changelog</button>
+          </div>
+        </div>
+      </div>
+      <form class="rc-form" id="rcForm">
+        <label class="rc-label rc-sr" for="rcInput">Request</label>
+        <input class="rc-input" id="rcInput" type="text" placeholder="Describe the job..." autocomplete="off" />
+        <button class="rc-send" type="submit">Plan it</button>
+      </form>
+    </main>
+
+    <aside class="rc-panel" aria-label="Machine">
+      <h2 class="rc-label">Machine</h2>
+      <svg class="rc-graph" id="rcGraph" viewBox="0 0 300 90" role="img" aria-label="State graph"></svg>
+      <p class="rc-cur" id="rcCur">No machine yet</p>
+      <h2 class="rc-label">Store</h2>
+      <dl class="rc-store" id="rcStore"><dt>(empty)</dt><dd>-</dd></dl>
+    </aside>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Type Remix Preloader</title>
+  <title>Word Cycle Preloader</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="wc-stage" id="wcStage" aria-label="Loading">
+    <div class="wc-slides" id="wcSlides" aria-hidden="true"></div>
+    <p class="wc-sr" id="wcWordSr">Studio</p>
+    <div class="wc-hud">
+      <span class="wc-tag" id="wcTag">Loading</span>
+      <span class="wc-count" id="wcCount" role="status" aria-live="off">000</span>
+    </div>
+    <div class="wc-bar" aria-hidden="true"><i id="wcBar"></i></div>
+    <button class="wc-replay" id="wcReplay" type="button" hidden>Replay</button>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,29 +1,25 @@
 {
-  "name": "Connectome Arc Explorer",
-  "title": "Connectome Arc Explorer",
+  "name": "Mirrored Arc Diagram",
+  "title": "Mirrored Arc Diagram",
   "slug": "connectome-arc-explorer",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A mirrored radial wiring diagram. Pick a cell type in the middle column and two arcs light up around it. The left arc shows where that type **receives** synapses and the right arc shows where it **sends** them, with bundled curves running out to the neuron classes upstream and downstream.",
+  "description": "A mirrored radial diagram where picking an item in the middle lights up two arcs with bundled curves to the sources on the left and targets on the right.",
   "tags": [
-    "connectome",
-    "arc",
-    "explorer",
-    "interactions",
-    "react"
+    "diagram",
+    "arcs",
+    "data",
+    "interactive",
+    "svg"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "SVG",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 128,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
@@ -36,20 +32,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.98,
-    "webgl": false,
-    "canvas2d": false
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .ca-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .ca-lead"
+    }
+  ],
   "nativeWhen": [],
-  "reserveHeight": 844,
-  "themeReviewed": "one orange data figure is a series colour kept for meaning; everything else follows the tokens"
+  "reserveHeight": 760
 }

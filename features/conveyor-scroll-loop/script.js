@@ -1,6 +1,6 @@
 /**
  * Infinite Vertical Conveyor Scroll & 3D Trajectory Loop
- * Extracted from betteroff/app.js (measureAboutBlocks, updateAboutFrame, wrap)
+ * edvlabs component (measureBlocks, tick, wrap)
  */
 (function () {
   const content = document.getElementById('about-content');

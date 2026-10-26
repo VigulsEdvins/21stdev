@@ -1,33 +1,29 @@
 {
-  "name": "Sunlit Cutting Mat",
-  "title": "Sunlit Cutting Mat",
+  "name": "Window Light Desk",
+  "title": "Window Light Desk",
   "slug": "sunlit-cutting-mat",
   "category": "Interactions & Physics",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "An animated WebGL background: a green self-healing cutting mat on a desk by a window. Sunlight falls across it through a slatted blind and past foliage outside: soft, straight diagonal bands broken up by blurred leaf shadows, drifting slowly. The light is blocked, not refracted, so nothing ripples.",
+  "description": "An animated WebGL background of warm window light cut into slatted bands and soft leaf shadows drifting across a gridded desk mat.",
   "tags": [
-    "sunlit",
-    "cutting",
-    "mat",
-    "interactions",
-    "react"
+    "webgl",
+    "background",
+    "light",
+    "shadow",
+    "ambient"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 235,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic"
   ],
@@ -36,17 +32,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.42,
-    "webgl": true,
-    "canvas2d": true
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .sl-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .sl-title"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

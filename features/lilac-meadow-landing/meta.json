@@ -1,29 +1,26 @@
 {
-  "name": "Lilac Meadow Landing",
-  "title": "Lilac Meadow Landing",
+  "name": "Meadow Savings Landing",
+  "title": "Meadow Savings Landing",
   "slug": "lilac-meadow-landing",
   "category": "Landing Pages",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A complete landing-page template for a yield-bearing stablecoin, in a soft \"money grows\" art direction: chrome coins half buried in a meadow of tiny lilac flowers under a pale lavender sky. The page continues in the same hand: a \"what is it\" statement, three feature cards (a coneflower growing besid",
+  "description": "A landing page for a friendly savings app with a hand-painted blossom field hero, bobbing coins, three feature cards and counting numbers.",
   "tags": [
-    "lilac",
-    "meadow",
     "landing",
-    "full",
-    "react"
+    "savings",
+    "canvas",
+    "hero",
+    "finance"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 183,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -37,74 +34,71 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "button-link-1",
-      "label": "Button link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope .fm-kicker"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.lml-h1"
+      "selector": ":scope .fm-h1"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.lml-herosub"
+      "selector": ":scope .fm-sub"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Button text 1",
+      "type": "text",
+      "selector": ":scope .fm-hero .fm-btn"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .fm-hero .fm-btn"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope .fm-pill"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope .fm-pill"
     },
     {
       "id": "section-heading-1",
       "label": "Section heading 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .fm-about .fm-h2"
     },
     {
       "id": "paragraph",
       "label": "Paragraph",
       "type": "text",
-      "selector": ":scope p.lml-statement"
-    },
-    {
-      "id": "button-link-3",
-      "label": "Button link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope .fm-statement"
     },
     {
       "id": "section-heading-2",
       "label": "Section heading 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(5) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-3",
-      "label": "Section heading 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(6) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .fm-end .fm-h2"
     }
   ],
-  "measured": {
-    "luma": 0.79,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
-  "reserveHeight": 4440
+  "ownPalette": true
 }

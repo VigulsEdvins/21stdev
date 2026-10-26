@@ -1,29 +1,25 @@
 {
-  "name": "Polaroid Line Carousel",
-  "title": "Polaroid Line Carousel",
+  "name": "Pegged Print Carousel",
+  "title": "Pegged Print Carousel",
   "slug": "polaroid-line-carousel",
   "category": "3D & Carousels",
-  "source": "imported",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Instant photos pegged to a sagging string. Drag the line and the prints slide along it, swinging on their pegs with the speed you give them and settling back; at rest they sway in a light breeze. Click a print to bring it to the middle. Page colours follow the theme tokens.",
+  "description": "Instant-style prints pegged to a sagging string that swing as you drag, loop endlessly, sway in a light breeze and centre on click.",
   "tags": [
-    "polaroid",
-    "line",
     "carousel",
-    "3d",
-    "react"
+    "gallery",
+    "drag",
+    "photos",
+    "physics"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 211,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
@@ -37,36 +33,23 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "imported",
-    "license": "MIT",
-    "verifiedAt": "2026-10-24",
-    "note": "License field on the source component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope div.pl-sr"
-    },
-    {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+      "selector": ":scope .pl-label"
     },
     {
       "id": "text",
-      "label": "Text",
+      "label": "Caption text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
+      "selector": ":scope .pl-text"
     }
   ],
-  "measured": {
-    "luma": 0.85,
-    "webgl": false,
-    "canvas2d": true
-  },
   "reserveHeight": 800
 }
