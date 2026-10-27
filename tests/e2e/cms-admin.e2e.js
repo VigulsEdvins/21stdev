@@ -32,7 +32,7 @@ const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript
   const zip = await require('jszip').loadAsync(fs.readFileSync(await zipDl.path()));
   ['admin.html', 'admin.css', 'admin.js', 'cms.js', 'cms-content.js'].forEach(n => assert(zip.file(n), `${n} is in the ZIP`));
   const indexHtml = await zip.file('index.html').async('string');
-  assert(/<script src="script\.js"><\/script>\s*<script src="cms-content\.js"><\/script>\s*<script src="cms\.js"><\/script>/.test(indexHtml), 'index.html loads the CMS scripts after script.js');
+  assert(/<script defer src="script\.js"><\/script>\s*<script defer src="cms-content\.js"><\/script>\s*<script defer src="cms\.js"><\/script>/.test(indexHtml), 'index.html loads the CMS scripts after script.js');
   assert((await zip.file('README.md').async('string')).includes('## Content editor'), 'README explains the editor');
   const content = new Function('window', (await zip.file('cms-content.js').async('string')) + '; return window.EDV_CMS;')({});
   assert.strictEqual(content.pages.length, 1);

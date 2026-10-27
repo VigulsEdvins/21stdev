@@ -41,9 +41,11 @@
 
   /** Adds the two CMS scripts right after the page's own script tag. Throws when the tag is not found. */
   function injectTags(html, scriptName) {
-    const tag = `<script src="${scriptName}"></script>`;
-    if (!html.includes(tag)) throw new Error(`CMS: ${scriptName} is not linked in the page`);
-    return html.replace(tag, `${tag}\n  <script src="cms-content.js"></script>\n  <script src="cms.js"></script>`);
+    // exported pages load their script with defer (so the page paints first); the editor scripts follow in the same order
+    const tag = [`<script defer src="${scriptName}"></script>`, `<script src="${scriptName}"></script>`].find(t => html.includes(t));
+    if (!tag) throw new Error(`CMS: ${scriptName} is not linked in the page`);
+    const defer = tag.includes(' defer') ? ' defer' : '';
+    return html.replace(tag, `${tag}\n  <script${defer} src="cms-content.js"></script>\n  <script${defer} src="cms.js"></script>`);
   }
 
   function readmeSection(pageFiles) {

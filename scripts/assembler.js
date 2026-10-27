@@ -3239,7 +3239,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
 </head>
 <body data-theme="${isDark ? 'dark' : 'light'}">
 ${allHtml}
-  <script src="script.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>\n`;
 

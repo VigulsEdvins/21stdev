@@ -22,7 +22,7 @@ assert(bundle['index.html'].includes('<!DOCTYPE html>'), 'index.html must have <
 assert(bundle['index.html'].includes('<!-- Section: minimal-navbar -->'), 'index.html must have section minimal-navbar comment');
 assert(bundle['index.html'].includes('<!-- Section: tilt-hero -->'), 'index.html must have section tilt-hero comment');
 assert(bundle['index.html'].includes('<link rel="stylesheet" href="style.css">'), 'index.html must link style.css');
-assert(bundle['index.html'].includes('<script src="script.js"></script>'), 'index.html must link script.js');
+assert(bundle['index.html'].includes('<script defer src="script.js"></script>'), 'index.html must link script.js (deferred)');
 
 // Check style.css
 assert(bundle['style.css'].includes(':root {'), 'style.css must have :root selector');

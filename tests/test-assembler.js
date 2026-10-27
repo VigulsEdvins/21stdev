@@ -33,7 +33,7 @@ assert(bundle['index.html'] && bundle['style.css'] && bundle['script.js'] && bun
 assert(bundle['index.html'].includes('<!-- Section: feat-a -->'), 'index.html should have section comment');
 assert(bundle['index.html'].includes('<!-- Section: feat-b -->'), 'index.html should have section comment');
 assert(bundle['index.html'].includes('<link rel="stylesheet" href="style.css">'), 'index.html links style.css');
-assert(bundle['index.html'].includes('<script src="script.js"></script>'), 'index.html links script.js');
+assert(bundle['index.html'].includes('<script defer src="script.js"></script>'), 'index.html links script.js (deferred)');
 assert(bundle['style.css'].includes(':root {'), 'style.css defines :root');
 assert(bundle['style.css'].includes('--preview-bg'), 'style.css defines --preview-bg');
 assert(bundle['script.js'].includes('document.addEventListener("DOMContentLoaded"'), 'script.js wraps in DOMContentLoaded');

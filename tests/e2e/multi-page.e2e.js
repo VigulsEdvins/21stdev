@@ -76,7 +76,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const sitemap = await zip.file('sitemap.xml').async('string');
   assert(sitemap.includes('<loc>https://site.example/</loc>') && sitemap.includes('https://site.example/about-us.html'), 'sitemap lists both pages');
   for (const n of ['admin.html', 'admin.js', 'cms.js', 'cms-content.js']) assert(names.includes(n), `${n} in the ZIP`);
-  assert(/<script src="about-us\.js"><\/script>\s*<script src="cms-content\.js"><\/script>\s*<script src="cms\.js"><\/script>/.test(aboutHtml), 'the About page loads the CMS scripts');
+  assert(/<script defer src="about-us\.js"><\/script>\s*<script defer src="cms-content\.js"><\/script>\s*<script defer src="cms\.js"><\/script>/.test(aboutHtml), 'the About page loads the CMS scripts');
   const cmsContent = new Function('window', (await zip.file('cms-content.js').async('string')) + '; return window.EDV_CMS;')({});
   assert.deepStrictEqual(cmsContent.pages.map(p => p.file), ['index.html', 'about-us.html'], 'the editor lists every page');
   assert(cmsContent.pages.every(p => p.sections.length > 0), 'each page lists its sections');
