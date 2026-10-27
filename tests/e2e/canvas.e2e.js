@@ -11,7 +11,7 @@ async function main() {
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   const step = n => console.log('  ✓ ' + n);
-  const frame = page.frameLocator('iframe');
+  const frame = page.frameLocator('#previewFrame');
   const widgetCount = () => page.evaluate(() => document.querySelector('iframe').contentDocument.querySelectorAll('.canvas-element').length);
 
   console.log('Canvas widgets');

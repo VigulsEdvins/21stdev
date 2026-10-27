@@ -17,7 +17,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; return d && d.getElementById('c') && d.querySelector('#a [data-scroll-pin]'); }, null, { timeout: 20000 });
   await page.waitForTimeout(2000);
   const fr = page.frames().find(f => f !== page.mainFrame());
-  const box = await page.locator('iframe').boundingBox();
+  const box = await page.locator('#previewFrame').boundingBox();
   await page.mouse.move(box.x + box.width / 2, box.y + 300);
   const state = () => fr.evaluate(() => ({ y: Math.round(document.scrollingElement.scrollTop), max: document.scrollingElement.scrollHeight - innerHeight }));
   assert((await state()).max > 200, 'the page is taller than the screen');

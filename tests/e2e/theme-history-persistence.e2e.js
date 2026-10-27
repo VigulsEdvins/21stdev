@@ -12,7 +12,7 @@ async function main() {
   page.on('pageerror', e => errors.push(e.message));
   const step = name => console.log('  ✓ ' + name);
   const count = () => page.evaluate(() => Number(document.getElementById('stackCountBadge').textContent));
-  const ready = () => page.waitForFunction(() => { const f = document.querySelector('iframe'); return f && f.contentDocument.readyState === 'complete' && f.contentDocument.querySelector('.page-section'); });
+  const ready = () => page.waitForFunction(() => { const f = document.getElementById('previewFrame'); return f && f.contentDocument.readyState === 'complete' && f.contentDocument.querySelector('.page-section'); });
 
   console.log('Theme, history and persistence');
   await page.goto(srv.url + '/builder.html');
@@ -39,11 +39,13 @@ async function main() {
   // theme
   await ready();
   await page.selectOption('#themePresetSelect', 'clean-minimal');
-  await page.waitForFunction(() => (document.querySelector('iframe').contentDocument.documentElement || { getAttribute() {} }).getAttribute('data-theme') === 'light', null, { timeout: 8000 });
+  await page.waitForFunction(() => (document.getElementById('previewFrame').contentDocument.documentElement || { getAttribute() {} }).getAttribute('data-theme') === 'light', null, { timeout: 8000 });
   step('switching to a light theme reaches the preview');
   // a component migrated to the page tokens follows the light theme (it no longer keeps a dark palette)
+  // the preview reloads after a theme change; wait for the footer to be back before reading its colour
+  await page.waitForFunction(() => { const d = document.getElementById('previewFrame').contentDocument; return d && d.readyState === 'complete' && d.querySelector('.page-section[data-section-slug="beam-wordmark-footer"]'); }, null, { timeout: 15000 });
   const footerLooksDark = await page.evaluate(() => {
-    const sec = document.querySelector('iframe').contentDocument.querySelector('.page-section[data-section-slug="beam-wordmark-footer"]');
+    const sec = document.getElementById('previewFrame').contentDocument.querySelector('.page-section[data-section-slug="beam-wordmark-footer"]');
     if (!sec) return null;
     const m = getComputedStyle(sec).backgroundColor.match(/\d+/g).map(Number);
     return (m[0] * 0.299 + m[1] * 0.587 + m[2] * 0.114) < 90;
