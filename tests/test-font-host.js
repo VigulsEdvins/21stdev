@@ -27,5 +27,17 @@ assert.strictEqual(FH.fontUrls(css).length, 2, 'each font file once');
   assert(!bad.hosted && failing['style.css'] === 'body{}' && failing['index.html'].includes('fonts.googleapis.com'), 'offline leaves the export untouched');
   const none = await FH.hostFonts({ files: { 'style.css': '' }, page: {}, fetchFn });
   assert(!none.hosted);
+  // single-file page: Latin subsets inlined as data URIs, other subsets dropped, link tags replaced
+  const sheet = `/* cyrillic */\n@font-face { font-family: 'Inter'; font-weight: 400; src: url(https://fonts.gstatic.com/s/inter/v1/cyr.woff2) format('woff2'); }\n/* latin-ext */\n@font-face { font-family: 'Inter'; font-weight: 400; src: url(https://fonts.gstatic.com/s/inter/v1/ext.woff2) format('woff2'); }\n/* latin */\n@font-face { font-family: 'Inter'; font-weight: 400; src: url(https://fonts.gstatic.com/s/inter/v1/lat.woff2) format('woff2'); }`;
+  const fetched = [];
+  const sheetFetch = async (u) => { fetched.push(u); return u.includes('css2') ? { ok: true, text: async () => sheet } : { ok: true, arrayBuffer: async () => new Uint8Array([1, 2, 3]).buffer }; };
+  const single = await FH.inlineFonts({ html: `<head>${head}</head><body></body>`, page, fetchFn: sheetFetch });
+  assert(single.inlined && single.bytes === 6, 'two subsets fetched');
+  assert(!/fonts\.gstatic|fonts\.googleapis/.test(single.html), 'no remote font address left');
+  assert((single.html.match(/data:font\/woff2;base64,AQID/g) || []).length === 2, 'latin and latin-ext inlined');
+  assert(!fetched.some(u => u.includes('cyr.woff2')), 'other scripts are not downloaded');
+  assert(single.html.indexOf('<style id="page-fonts">') < single.html.indexOf('</head>'));
+  const offline = await FH.inlineFonts({ html: `<head>${head}</head>`, page, fetchFn: async () => { throw new Error('offline'); } });
+  assert(!offline.inlined && offline.html.includes('fonts.googleapis.com'), 'offline keeps the link');
   console.log('✅ Font hosting tests passed!');
 })().catch(e => { console.error(e); process.exit(1); });

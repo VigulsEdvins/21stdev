@@ -28,12 +28,14 @@
         await Promise.all(slugs.map(async (slug) => {
           const base = `/features/${slug}/`;
           const [component, demo, css] = await Promise.all([text(base + 'component.tsx'), text(base + 'demo.tsx'), text(base + 'style.css')]);
-          sources[slug] = { title: (featuresData[slug] && featuresData[slug].title) || slug, component, demo, css };
+          // no React source: the plain page and script are wrapped instead
+          const plain = component && demo ? {} : { index: await text(base + 'index.html'), js: await text(base + 'script.js') };
+          sources[slug] = { title: (featuresData[slug] && featuresData[slug].title) || slug, component, demo, css, ...plain };
         }));
         const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
         const out = (window.ReactExport || require('./react-export.js')).generateReactProject({ stack: state.stack, theme: themeConfig, page: state.page, sources });
         if (!out.included.length) {
-          showToast('None of these sections has a React source, so there is nothing to put in a React project.', 5000);
+          showToast('None of these sections could be put in a React project.', 5000);
           return;
         }
         const extra = Array.from(new Set(out.included.flatMap(slug => exportAssets[slug] || [])));
@@ -52,7 +54,7 @@
           blob = new Blob([window.Assembler.createZipArchive(entries)], { type: 'application/zip' });
         }
         triggerDownload(blob, 'my-react-project.zip', 'application/zip');
-        showToast(out.skipped.length ? `Downloaded. ${out.skipped.length} section(s) without a React source were left out (see README.md).` : 'Downloaded my-react-project.zip', 4500);
+        showToast(out.skipped.length ? `Downloaded. ${out.skipped.length} section(s) could not be carried over (see README.md).` : 'Downloaded my-react-project.zip', 4500);
       } catch (err) {
         console.error('Error generating React project:', err);
         showToast('Failed to generate the React project');

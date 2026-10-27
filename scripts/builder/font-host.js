@@ -1,9 +1,10 @@
 /**
  * Self-hosts the Google Fonts chosen in Page Settings for the ZIP export: downloads the font files, writes a local
  * @font-face block into style.css and removes the Google link tags from index.html, so the exported site makes no
- * request to fonts.googleapis.com / fonts.gstatic.com. The single-file page keeps the remote link (inlining every
- * subset would add megabytes).
+ * request to fonts.googleapis.com / fonts.gstatic.com. The single-file page gets the Latin and Latin Extended subsets
+ * inlined as data URIs (every other subset would add megabytes); text in other scripts falls back to the system font.
  *   FontHost.hostFonts({ files, page, fetchFn }) -> { assets, hosted, families }
+ *   FontHost.inlineFonts({ html, page, fetchFn }) -> { html, inlined, bytes, families }
  */
 (function () {
   'use strict';
@@ -76,7 +77,51 @@
     return { assets, hosted: true, families: families(page) };
   }
 
-  const api = { hostFonts, cssUrl, fontUrls, stripGoogleTags, families };
+  /** The @font-face blocks of a Google Fonts stylesheet whose subset comment is one of `subsets` (the sheet labels each block, e.g. "latin-ext"). */
+  function keepSubsets(css, subsets) {
+    const blocks = [];
+    String(css).replace(/\/\*\s*([\w-]+)\s*\*\/\s*(@font-face\s*\{[^}]*\})/g, (m, subset, block) => { if (subsets.includes(subset)) blocks.push(block); return m; });
+    return blocks;
+  }
+
+  function toBase64(bytes) {
+    let s = '';
+    for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return (typeof btoa === 'function' ? btoa(s) : Buffer.from(s, 'binary').toString('base64'));
+  }
+
+  /** Single-file export: replaces the Google Fonts link tags with a <style> holding the Latin subsets as data URIs. */
+  async function inlineFonts({ html, page, fetchFn, subsets = ['latin', 'latin-ext'] }) {
+    const url = cssUrl(page);
+    if (!url || typeof html !== 'string') return { html, inlined: false, bytes: 0, families: [] };
+    try {
+      const res = await fetchFn(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const blocks = keepSubsets(await res.text(), subsets);
+      if (!blocks.length) throw new Error('no usable font blocks');
+      let bytes = 0;
+      const inlined = await Promise.all(blocks.map(async block => {
+        const urls = fontUrls(block);
+        let out = block;
+        for (const u of urls) {
+          const r = await fetchFn(u);
+          if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + u);
+          const data = new Uint8Array(await r.arrayBuffer());
+          bytes += data.length;
+          out = out.split(u).join('data:font/woff2;base64,' + toBase64(data));
+        }
+        return out;
+      }));
+      const style = `<style id="page-fonts">\n${inlined.join('\n')}\n</style>`;
+      const stripped = stripGoogleTags(html);
+      const withStyle = /<\/head>/i.test(stripped) ? stripped.replace(/<\/head>/i, `${style}\n</head>`) : style + stripped;
+      return { html: withStyle, inlined: true, bytes, families: families(page) };
+    } catch (err) {
+      return { html, inlined: false, bytes: 0, families: families(page), error: String(err && err.message || err) };
+    }
+  }
+
+  const api = { inlineFonts, keepSubsets, hostFonts, cssUrl, fontUrls, stripGoogleTags, families };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.FontHost = api;
 })();

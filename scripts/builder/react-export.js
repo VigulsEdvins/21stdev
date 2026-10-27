@@ -1,10 +1,12 @@
 /**
  * React project export: turns the sections of a page into a small Vite + React + TypeScript project.
- * Only features that ship a React source (component.tsx plus demo.tsx) can be included; the rest are listed in
+ * A feature with a React source (component.tsx plus demo.tsx) becomes a real component. Every other feature is
+ * plain HTML/CSS/JS and is wrapped: its markup is rendered as it is, its CSS is scoped to the section and its script
+ * runs once after the section mounts. Features that cannot be wrapped (module scripts, Next.js imports) are listed in
  * the result so the caller can tell the person. Pure (no DOM, no network): the caller supplies the sources and
  * fetches the assets it reports.
  *   ReactExport.generateReactProject({ stack, theme, page, sources })
- *   sources: { [slug]: { title, component, demo, css } }
+ *   sources: { [slug]: { title, component, demo, css } | { title, index, js, css } }
  * Returns { files, assetUrls, included, skipped, dependencies }.
  */
 (function () {
@@ -28,7 +30,12 @@
 
   /** Why a feature cannot be part of the React project, or null if it can. */
   function unsupportedReason(slug, src) {
-    if (!src || !src.component || !src.demo) return 'it has no React source (it is plain HTML/CSS/JS)';
+    if (!src) return 'its files could not be read';
+    if (!src.component || !src.demo) {
+      if (!src.index) return 'its files could not be read';
+      if (/<script\b[^>]*\btype\s*=\s*["']module["']/i.test(src.index)) return 'it uses ES module scripts, which cannot be wrapped as plain HTML';
+      return null;
+    }
     const own = `@/components/ui/${slug}`;
     for (const spec of [...importsOf(src.component), ...importsOf(src.demo)]) {
       if (spec.startsWith('next/')) return 'it uses Next.js APIs';
@@ -40,6 +47,89 @@
     }
     return null;
   }
+
+
+  const isReactSource = (src) => !!(src && src.component && src.demo);
+  const isRemote = (u) => /^(https?:)?\/\//i.test(u);
+
+  /**
+   * Splits a plain feature into what the wrapper needs: markup without scripts, scoped CSS, one script (the feature's
+   * own script.js and any inline scripts, in page order) and the remote scripts / stylesheets its page loaded.
+   */
+  function splitPlainFeature(slug, src) {
+    const A = Assembler();
+    const id = 'sec-' + slug;
+    const html = String(src.index || '');
+    const head = (html.match(/<head[^>]*>([\s\S]*?)<\/head>/i) || ['', ''])[1];
+    const remoteLinks = [];
+    (head.match(/<link\b[^>]*>/gi) || []).forEach(tag => {
+      const href = (/\bhref\s*=\s*["']([^"']+)["']/i.exec(tag) || [])[1];
+      if (/\brel\s*=\s*["']?(stylesheet|preconnect)/i.test(tag) && href && isRemote(href)) remoteLinks.push(tag.replace(/\s*\/?>$/, ' />'));
+    });
+    const remoteScripts = [];
+    const parts = [];
+    let usedOwn = false;
+    const ownScript = String(src.js || '');
+    html.replace(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi, (m, attrs, body) => {
+      const type = (/\btype\s*=\s*["']([^"']+)["']/i.exec(attrs) || [])[1];
+      if (type && !/javascript|ecmascript/i.test(type)) return m;
+      const s = (/\bsrc\s*=\s*["']([^"']+)["']/i.exec(attrs) || [])[1];
+      if (s && isRemote(s)) remoteScripts.push(`<script src="${s}"></script>`);
+      else if (s) { if (!usedOwn) { parts.push(ownScript); usedOwn = true; } }
+      else if (body.trim()) parts.push(body);
+      return m;
+    });
+    if (!usedOwn && ownScript) parts.unshift(ownScript);
+    const markup = A.isolateSectionMarkup(html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, (m) => {
+      const type = (/\btype\s*=\s*["']([^"']+)["']/i.exec(m) || [])[1];
+      return type && !/javascript|ecmascript/i.test(type) ? m : '';
+    }), id);
+    return {
+      id, markup,
+      css: A.scopeSectionStyles(src.css || '', id),
+      js: A.isolateSectionScript(parts.join('\n;\n'), id),
+      remoteLinks, remoteScripts
+    };
+  }
+
+  const plainSectionSource = (slug, id) => `import { useEffect, useRef } from "react"
+import { runPlainScript } from "../lib/plain"
+import html from "../legacy/${slug}.html?raw"
+import js from "../legacy/${slug}.js?raw"
+
+// This section is plain HTML, CSS and JS: the markup is shown as it is and its script runs once after it mounts.
+export default function Section() {
+  const host = useRef<HTMLElement>(null)
+  useEffect(() => { if (host.current) runPlainScript(host.current, js, ${JSON.stringify(slug)}) }, [])
+  return <section ref={host} id="${id}" className="page-section" dangerouslySetInnerHTML={{ __html: html }} />
+}
+`;
+
+  const plainRuntimeSource = `// Runs a plain section's script once. The page has already loaded, so listeners for DOMContentLoaded and load that the
+// script adds are run right away instead of never. Safe under React StrictMode (the second mount does nothing).
+export function runPlainScript(host: HTMLElement, js: string, name: string): void {
+  if (host.dataset.ran === "1" || !js.trim()) return
+  host.dataset.ran = "1"
+  const patched: Array<[EventTarget, EventTarget["addEventListener"]]> = []
+  const replay = (target: EventTarget) => {
+    const original = target.addEventListener.bind(target)
+    patched.push([target, target.addEventListener])
+    target.addEventListener = ((type: string, fn: any, opts?: any) => {
+      if (type === "DOMContentLoaded" || type === "load") setTimeout(() => { try { typeof fn === "function" ? fn(new Event(type)) : fn.handleEvent(new Event(type)) } catch (e) { console.error(e) } }, 0)
+      else original(type, fn, opts)
+    }) as typeof target.addEventListener
+  }
+  replay(document)
+  replay(window)
+  try {
+    new Function(js)()
+  } catch (e) {
+    console.error("Section " + name + " failed to start:", e)
+  } finally {
+    patched.forEach(([target, fn]) => { target.addEventListener = fn })
+  }
+}
+`;
 
   const cnSource = `export function cn(...inputs: unknown[]): string {
   return inputs
@@ -78,6 +168,8 @@ body { font-family: var(--font-body, system-ui, sans-serif); }
     const assetUrls = new Set();
     const seen = new Set();
     const order = [];
+    const plainSlugs = [];
+    const extraHead = new Set();
 
     stack.filter(s => !s.hidden).forEach((s) => {
       const slug = s.slug;
@@ -89,15 +181,27 @@ body { font-family: var(--font-body, system-ui, sans-serif); }
       const reason = unsupportedReason(slug, src);
       if (reason) { skipped.push({ slug, title: (src && src.title) || slug, reason }); return; }
       included.push(slug);
-      files[`src/components/ui/${slug}.tsx`] = src.component;
-      files[`src/sections/${slug}.tsx`] = src.demo;
-      files[`src/styles/${slug}.css`] = src.css || '';
-      [src.component, src.demo, src.css || ''].forEach(text => A.findLocalAssetUrls(text).forEach(u => assetUrls.add(u)));
-      [...importsOf(src.component), ...importsOf(src.demo)].forEach(spec => {
-        if (spec.startsWith('@/') || spec.startsWith('.') || PROVIDED.has(spec)) return;
-        const pkg = packageOf(spec);
-        if (!PROVIDED.has(pkg)) deps[pkg] = KNOWN_VERSIONS[pkg] || 'latest';
-      });
+      if (isReactSource(src)) {
+        files[`src/components/ui/${slug}.tsx`] = src.component;
+        files[`src/sections/${slug}.tsx`] = src.demo;
+        files[`src/styles/${slug}.css`] = src.css || '';
+        [src.component, src.demo, src.css || ''].forEach(text => A.findLocalAssetUrls(text).forEach(u => assetUrls.add(u)));
+        [...importsOf(src.component), ...importsOf(src.demo)].forEach(spec => {
+          if (spec.startsWith('@/') || spec.startsWith('.') || PROVIDED.has(spec)) return;
+          const pkg = packageOf(spec);
+          if (!PROVIDED.has(pkg)) deps[pkg] = KNOWN_VERSIONS[pkg] || 'latest';
+        });
+      } else {
+        const plain = splitPlainFeature(slug, src);
+        plainSlugs.push(slug);
+        files[`src/legacy/${slug}.html`] = plain.markup;
+        files[`src/legacy/${slug}.js`] = plain.js;
+        files[`src/styles/${slug}.css`] = plain.css;
+        files[`src/sections/${slug}.tsx`] = plainSectionSource(slug, plain.id);
+        plain.remoteLinks.forEach(l => extraHead.add(l));
+        plain.remoteScripts.forEach(l => extraHead.add(l));
+        [plain.markup, plain.css, plain.js].forEach(text => A.findLocalAssetUrls(text).forEach(u => assetUrls.add(u)));
+      }
     });
 
     const placed = order.filter(slug => included.includes(slug));
@@ -127,6 +231,10 @@ createRoot(document.getElementById("root")!).render(
 `;
     files['src/index.css'] = themeCss(theme);
     files['src/lib/utils.ts'] = cnSource;
+    if (plainSlugs.length) {
+      files['src/lib/plain.ts'] = plainRuntimeSource;
+      files['src/vite-env.d.ts'] = '/// <reference types="vite/client" />\n';
+    }
 
     const head = A.renderPageHead(page || {}, 'My site');
     files['index.html'] = `<!doctype html>
@@ -135,6 +243,7 @@ createRoot(document.getElementById("root")!).render(
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   ${head.headTags}
+    ${Array.from(extraHead).join('\n    ')}
     ${head.css ? `<style>\n${head.css}\n    </style>` : ''}
   </head>
   <body>
@@ -168,7 +277,7 @@ export default defineConfig({
     }, null, 2) + '\n';
     files['README.md'] = `# ${head.title}
 
-A Vite + React + TypeScript project assembled from your page. Each section is a component in \`src/components/ui/\`, shown by a small demo wrapper in \`src/sections/\` (edit that file to change the text and options), with its styles in \`src/styles/\`.
+A Vite + React + TypeScript project assembled from your page. Each section is a file in \`src/sections/\` with its styles in \`src/styles/\`. Sections that started as React components keep their component in \`src/components/ui/\` and a small demo wrapper (edit it to change the text and options). Plain HTML sections keep their markup and script in \`src/legacy/\` (edit the \`.html\` file to change the text); their script runs once after the section mounts.
 
 \`\`\`bash
 npm install
@@ -186,7 +295,7 @@ Images, video and fonts are in \`public/\` and keep their \`/assets/...\` paths.
 ${skipped.length ? `
 ## Sections left out
 
-These sections have no React source or need files this export does not include:
+These sections cannot be carried over:
 
 ${skipped.map(s => `- ${s.title} (\`${s.slug}\`): ${s.reason}`).join('\n')}
 ` : ''}${Object.keys(deps).length ? `
