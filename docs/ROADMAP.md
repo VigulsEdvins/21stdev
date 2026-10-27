@@ -35,7 +35,7 @@ plan that follows the table is kept as written, so the original intent stays vis
 ## Round 3 (2026-10-27)
 - **Real-GPU frame times**: `GPU=1 npm run measure-frames` (Intel UHD 620, ANGLE over OpenGL) writes `reports/frames-gpu.json`. On the card, 232 of 235 components hold 60 fps; the software-rendering list of 62 slow ones was a renderer artefact. Fixed the real ones: `comeback-poster` (30 → 60 fps: flower heads are drawn once into sprites, stems batched) and `onward-summit-template` (35% → 7% slow frames: arrows batched by opacity). `murmuration-wordmark` (14% slow frames) now holds 60 fps: particle cap 2,400 → 1,600, no atan2/hypot in the loop. `breath-bloom`'s old contrast flag was a stale report entry; a fresh audit is clean.
 - **Tokens**: 210 of 235 read the tokens; the other 25 (canvas/WebGL/preloader art, print paper, physical objects, brand pages) are reviewed and recorded with `palette: "designed"` and a `paletteNote`.
-- **React export**: now wraps plain features (nearly all, since only one feature still has a React source): markup in `src/legacy/`, scoped CSS, script run once after mount (`src/lib/plain.ts`). All 235 bundle with esbuild; a browser run of four of them showed no script errors. Not carried over: the builder's theme engine, so a light-native section under a dark page theme can have pale text.
+- **React export**: now wraps plain features (nearly all, since only one feature still has a React source): markup in `src/legacy/`, scoped CSS, script run once after mount (`src/lib/plain.ts`). All 235 bundle with esbuild; a browser run of four of them showed no script errors. Own-palette features keep their colours (their CSS is scoped without the theme normaliser, as in the builder); the other sections read `--preview-bg` / `--preview-text` from `src/index.css`. Not carried over: the builder's per-section theme switching (native-polarity sections).
 - **Single-file export** inlines the Latin and Latin Extended subsets of the page fonts.
 
 ## Epic I decisions
@@ -43,7 +43,7 @@ plan that follows the table is kept as written, so the original intent stays vis
 - **I2 Contribution flow: not now.** No contributors; `new-feature` + `check-features` already describe the process.
 - **I3 AI assist: not now.** Needs key handling and cost limits; prototype as a local dev tool first if wanted.
 - **I4 Token import: done 2026-10-27.** "Import design tokens (JSON)" in Page Settings (`scripts/builder/token-import.js`): reads background / text / accent, heading and body font, and corner radius from a plain or W3C-style token file into the custom theme and page settings (new `radius` setting writes `--radius`). Undo reverts it.
-- **I5 Internationalisation: first step done 2026-10-27.** Each page has its own language code (field next to the page tabs; empty = site language) used in `<html lang>` of the ZIP and of the open-page exports. Still later: `hreflang` links between translations, per-language content.
+- **I5 Internationalisation: first step done 2026-10-27.** Each page has its own language code (field next to the page tabs; empty = site language) used in `<html lang>` of the ZIP and of the open-page exports. Translations: a page can be marked "Translation of" another page; with a live address set, every page of a group gets `<link rel="alternate" hreflang>` for all of them plus x-default (`translationAlternates` in `single-pages.js`). Still later: per-language content and a language switcher wired to the group.
 
 ---
 
