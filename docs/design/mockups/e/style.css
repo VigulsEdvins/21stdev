@@ -29,13 +29,14 @@ nav a { text-decoration:none; } nav a:hover { color:var(--rust); }
 .band .wrap { display:flex; justify-content:space-around; gap:20px; flex-wrap:wrap; text-align:center; }
 .sec { padding:90px 0; }
 .sec h2 { font:400 clamp(38px,5vw,62px)/1.05 var(--display); margin-bottom:12px; max-width:15em; }
-.sec .kick { font:600 13px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--rust); display:block; margin-bottom:16px; }
+.sec .kick { font:600 13px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:#a8401a; display:block; margin-bottom:16px; }
 .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:40px; margin-top:48px; }
 .step .shape { width:96px; height:96px; background:var(--teal); margin-bottom:22px; display:grid; place-items:center; color:var(--cream); font:400 44px/1 var(--display); }
 .step:nth-child(1) .shape { border-radius:50%; } .step:nth-child(2) .shape { border-radius:48px 48px 0 0; background:var(--rust); } .step:nth-child(3) .shape { border-radius:0 48px 0 48px; background:var(--mustard); color:var(--ink); }
 .step h3 { font:400 28px/1.15 var(--display); margin-bottom:8px; }
 .rust { background:var(--rust); color:#fff; }
-.rust .kick { color:var(--cream); }
+.rust .kick { color:#fff; }
+.rust { color:#fff; }
 .shots { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:44px; }
 .shots figure:nth-child(1) img { border-radius:999px 999px 18px 18px; aspect-ratio:3/4; object-fit:cover; object-position:50% 0; }
 .shots figure:nth-child(2) img { border-radius:18px; aspect-ratio:3/4; object-fit:cover; object-position:50% 0; }
@@ -70,7 +71,7 @@ nav a { text-decoration:none; } nav a:hover { color:var(--rust); }
 .qside li::before { content:counter(q); width:26px; height:26px; flex:none; display:grid; place-items:center; border:2px solid currentColor; border-radius:50%; font:600 13px/1 var(--body); }
 .qside li.done { color:var(--cream); } .qside li.done::before { background:var(--mustard); border-color:var(--mustard); color:var(--ink); content:"✓"; }
 .qside li.now { color:var(--mustard); font-weight:600; } .qside li.now::before { background:var(--mustard); color:var(--ink); border-color:var(--mustard); }
-.kick { font:600 13px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--rust); }
+.kick { font:600 13px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:#a8401a; }
 .qside .kick { color:var(--mustard); }
 .pills { display:none; }
 .qmain { padding:44px 48px 56px; }

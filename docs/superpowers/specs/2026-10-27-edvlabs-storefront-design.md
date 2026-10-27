@@ -96,7 +96,11 @@ I have proposed an answer for each so work can continue; change any of them.
 | D7 | After purchase | Unlimited re-download and edits of that project for 12 months; adding sections later pays the difference |
 | D8 | Languages of the storefront | English first. The builder output can already be multilingual |
 
-## 8. Look and feel: the direction you chose
+## 8. Look and feel
+
+**Decided 2026-10-27: direction E, mid-century poster** (teal, mustard and rust on cream, circles and arches, Gloock and Work Sans). Tokens: `site/styles/tokens.css`, usage and measured contrast: `docs/brand/tokens.md`. The sections below describe the original brief (editorial and warm); the final look is E.
+
+### Original brief
 
 **Editorial and warm.** The reference is a well-made printed magazine, not a software dashboard.
 
