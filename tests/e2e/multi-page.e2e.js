@@ -39,6 +39,16 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const firstId = (await sm('getStack'))[0].id;
   await page.evaluate(([id, aid]) => window.builderPreview.stackManager.setSectionOverride(id, 'lnk', 'page:' + aid, { selector: 'a', type: 'link' }), [firstId, aboutId]);
 
+  // the About page gets its own language; the home page keeps the site language
+  await page.click('#pageTabs .page-tab:has-text("About us")');
+  await page.fill('#pageOwnLangInput', 'de');
+  await page.press('#pageOwnLangInput', 'Tab');
+  await page.waitForFunction(() => window.builderPreview.stackManager.getPages().some(p => p.slug === 'about-us' && p.lang === 'de'));
+  await page.fill('#pageOwnLangInput', 'not a code');
+  await page.press('#pageOwnLangInput', 'Tab');
+  assert.strictEqual(await page.inputValue('#pageOwnLangInput'), 'de', 'a bad language code is refused and the old one stays');
+  await page.click('#pageTabs .page-tab:has-text("Home")');
+
   // page settings for a canonical address so the sitemap is written
   await page.click('#tabStylingBtn');
   await page.fill('#pageCanonicalInput', 'https://site.example/');
@@ -53,6 +63,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const aboutHtml = await zip.file('about-us.html').async('string');
   assert(aboutHtml.includes('href="about-us.css"') && aboutHtml.includes('src="about-us.js"'), 'the About page loads its own CSS and JS');
   assert(/<title>About us \| /.test(aboutHtml), 'page title carries the page name');
+  assert(/<html lang="de"/.test(aboutHtml), 'the About page carries its own language');
+  assert(/<html lang="en"/.test(await zip.file('index.html').async('string')), 'the home page keeps the site language');
   const homeJs = await zip.file('script.js').async('string');
   assert(homeJs.includes('about-us.html') && !homeJs.includes('page:' + aboutId), 'home link points at about-us.html');
   const sitemap = await zip.file('sitemap.xml').async('string');

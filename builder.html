@@ -524,6 +524,11 @@
               <label class="ps-field"><span>Business phone</span><input type="text" id="pageBizPhoneInput" maxlength="40" autocomplete="off" /></label>
               <label class="ps-field"><span>Business address</span><input type="text" id="pageBizAddressInput" maxlength="200" autocomplete="off" /></label>
               <label class="ps-field"><span>Language code</span><input type="text" id="pageLangInput" maxlength="10" placeholder="en" autocomplete="off" /></label>
+              <label class="ps-field"><span>Corner radius (e.g. 8px or 0.5rem)</span><input type="text" id="pageRadiusInput" maxlength="8" placeholder="Component default" autocomplete="off" /></label>
+              <div class="ps-field">
+                <button type="button" class="builder-btn-subtle" id="importTokensBtn" title="Read colours, fonts and corner radius from a design-token JSON file">Import design tokens (JSON)</button>
+                <input type="file" id="importTokensFile" accept="application/json,.json" hidden />
+              </div>
               <datalist id="googleFontList">
                 <option value="Inter"></option><option value="DM Sans"></option><option value="Manrope"></option>
                 <option value="Space Grotesk"></option><option value="Plus Jakarta Sans"></option><option value="Outfit"></option>
@@ -1104,6 +1109,7 @@
   <script src="scripts/builder/favicon-png.js"></script>
   <script src="scripts/builder/cms-export.js"></script>
   <script src="scripts/builder/export-notes.js"></script>
+  <script src="scripts/builder/export-zip.js"></script>
   <script src="scripts/builder/export-react-download.js"></script>
   <script src="scripts/builder/export-panel.js"></script>
   <script src="scripts/builder/drawer.js"></script>
@@ -1116,6 +1122,7 @@
   <script src="scripts/builder/history.js"></script>
   <script src="scripts/builder/history-panel.js"></script>
   <script src="scripts/builder/page-tabs.js"></script>
+  <script src="scripts/builder/token-import.js"></script>
   <script src="scripts/builder/page-controls.js"></script>
   <script src="scripts/builder/landing.js"></script>
   <script src="scripts/builder/tour.js"></script>

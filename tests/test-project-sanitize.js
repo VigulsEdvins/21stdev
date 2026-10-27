@@ -61,7 +61,7 @@ console.log('✅ Project sanitize tests passed!');
 {
   const multi = sanitizeState({ theme: 'midnight-dark', stack: [], activePageId: 'p2', pages: [
     { id: 'p1', title: 'Home', slug: 'whatever', stack: [{ id: 's1', slug: 'hero-a', html: '<script>x</script>' }] },
-    { id: 'p2', title: 'About <b>', slug: 'About Us!', description: 'd', stack: [{ id: 's2', slug: 'hero-b' }] },
+    { id: 'p2', title: 'About <b>', slug: 'About Us!', description: 'd', lang: 'de', stack: [{ id: 's2', slug: 'hero-b' }] },
     { id: 'p2', title: 'Dup', slug: 'dup', stack: [] },
     { id: 'bad id', title: 'x', stack: [] }
   ] });
@@ -69,6 +69,9 @@ console.log('✅ Project sanitize tests passed!');
   assert.strictEqual(multi.state.pages[0].slug, 'index', 'the first page is always index');
   assert.strictEqual(multi.state.pages[1].slug, 'page-2', 'an invalid slug is replaced');
   assert(!('html' in multi.state.pages[0].stack[0]), 'pages are cleaned like the main stack');
+  assert.strictEqual(multi.state.pages[1].lang, 'de', 'a page language is kept');
+  assert.strictEqual(multi.state.pages[0].lang, '', 'and a missing one is the site language');
+  assert.strictEqual(sanitizeState({ pages: [{ id: 'a', title: 'A', stack: [], lang: '"><script>' }, { id: 'b', title: 'B', stack: [] }] }).state.pages[0].lang, '', 'an unsafe language code is dropped');
   assert.deepStrictEqual(multi.state.stack.map(s => s.slug), ['hero-b'], 'the active page is the live stack');
   assert.strictEqual(multi.state.activePageId, 'p2');
   assert.deepStrictEqual(sanitizeState({ stack: [{ id: 'a', slug: 'x' }], pages: [{ id: 'only', title: 'One', stack: [] }] }).state.pages, [], 'a single "page" is not multi-page');

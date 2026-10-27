@@ -43,6 +43,20 @@ assert.strictEqual(copy.title, 'About us copy');
 sm.setPageMeta(copy.id, { description: 'x'.repeat(400) });
 assert.strictEqual(sm.getPages().find(p => p.id === copy.id).description.length, 300);
 
+// language per page: '' means the site language; bad codes are refused; duplicates keep it
+sm.setPageMeta(copy.id, { lang: 'de' });
+assert.strictEqual(sm.getPages().find(p => p.id === copy.id).lang, 'de');
+sm.setPageMeta(copy.id, { lang: 'not a code!' });
+assert.strictEqual(sm.getPages().find(p => p.id === copy.id).lang, 'de', 'an invalid code is ignored');
+assert.strictEqual(sm.getPages().find(p => p.id === about.id).lang, '', 'new pages follow the site language');
+const german = sm.duplicatePage(copy.id);
+assert.strictEqual(german.lang, 'de', 'a duplicate keeps the language');
+sm.removePage(german.id);
+sm.switchPage(about.id);
+sm.setPageMeta(copy.id, { lang: '' });
+assert.strictEqual(sm.getPages().find(p => p.id === copy.id).lang, '', 'empty goes back to the site language');
+sm.setPageMeta(copy.id, { lang: 'pt-BR' });
+
 const saved = sm.getPages();
 const savedActive = sm.getActivePageId();
 const restored = createStackManager();

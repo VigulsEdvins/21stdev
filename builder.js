@@ -602,6 +602,7 @@
     };
 
     if (window.BuilderPageTabs) window.BuilderPageTabs.init({ stackManager, featuresMap, showToast });
+    if (window.BuilderTokenImport) window.BuilderTokenImport.init({ stackManager, showToast });
     if (window.BuilderHistoryPanel) window.BuilderHistoryPanel.init({ history: historyCtl });
     const emptyStarterBtn = document.getElementById('emptyStarterBtn');
     if (emptyStarterBtn && loadStarterBtn) emptyStarterBtn.addEventListener('click', () => loadStarterBtn.click());

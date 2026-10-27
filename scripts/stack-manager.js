@@ -4,6 +4,9 @@
  * Compatible with Node.js (CommonJS) and browser (window.createStackManager).
  */
 
+/** A BCP 47 style language code such as en, pt-BR or zh-Hans. */
+const LANG_RE = /^[a-z]{2,3}(-[A-Za-z0-9]+)*$/;
+
 /** Page-level settings exported with every build. */
 const DEFAULT_PAGE = {
   title: 'Assembled Web Page',
@@ -12,6 +15,7 @@ const DEFAULT_PAGE = {
   fontDisplay: '', // Google Fonts family name, empty = leave section fonts alone
   fontBody: '',
   lang: 'en',
+  radius: '', // corner radius for the sections' --radius token, e.g. '8px' or '0.5rem'; empty = component default
   shareImage: '', // full https:// URL of the picture shown when the page is shared (og:image)
   canonical: '', // full https:// URL of the live page
   robots: '', // '' = let search engines index the page, 'noindex' = ask them not to
@@ -97,7 +101,7 @@ function createStackManager(initialConfig = {}) {
   /** Turns a single-page project into a multi-page one: the current stack becomes the Home page. */
   function ensurePages() {
     if (state.pages.length) return;
-    state.pages = [{ id: generateId('page'), title: 'Home', slug: 'index', description: '', stack: cloneJson(state.stack) }];
+    state.pages = [{ id: generateId('page'), title: 'Home', slug: 'index', description: '', lang: '', stack: cloneJson(state.stack) }];
     state.activePageId = state.pages[0].id;
   }
 
@@ -105,7 +109,7 @@ function createStackManager(initialConfig = {}) {
     ensurePages();
     syncActivePage();
     const clean = String(title || '').trim().slice(0, 60) || 'New page';
-    const page = { id: generateId('page'), title: clean, slug: uniqueSlug(slugify(clean)), description: '', stack: [] };
+    const page = { id: generateId('page'), title: clean, slug: uniqueSlug(slugify(clean)), description: '', lang: '', stack: [] };
     state.pages.push(page);
     state.activePageId = page.id;
     state.stack = [];
@@ -137,6 +141,8 @@ function createStackManager(initialConfig = {}) {
     const page = state.pages.find(p => p.id === id);
     if (!page) return null;
     if (typeof updates.description === 'string') page.description = updates.description.slice(0, 300);
+    // '' = use the site language from Page Settings
+    if (typeof updates.lang === 'string' && (updates.lang === '' || LANG_RE.test(updates.lang))) page.lang = updates.lang;
     notify();
     return { ...page, stack: [] };
   }
@@ -147,7 +153,7 @@ function createStackManager(initialConfig = {}) {
     syncActivePage();
     const stack = cloneJson(source.stack).map(s => ({ ...s, id: generateId() }));
     const title = `${source.title} copy`.slice(0, 60);
-    const page = { id: generateId('page'), title, slug: uniqueSlug(slugify(title)), description: source.description, stack };
+    const page = { id: generateId('page'), title, slug: uniqueSlug(slugify(title)), description: source.description, lang: source.lang || '', stack };
     state.pages.splice(state.pages.indexOf(source) + 1, 0, page);
     state.activePageId = page.id;
     state.stack = cloneJson(stack);

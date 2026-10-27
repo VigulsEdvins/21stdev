@@ -79,6 +79,25 @@
         button('Header & footer to all', 'builder-btn-subtle', shareChrome, { title: 'Copy this page\'s header and footer to every other page' }),
         button('Delete', 'builder-btn-subtle page-delete', remove, { disabled: pages.length <= 1 ? 'true' : null })
       );
+      const current = pages.find(p => p.id === active);
+      const langLabel = doc.createElement('label');
+      langLabel.className = 'page-lang';
+      langLabel.textContent = 'Language of this page ';
+      const langInput = doc.createElement('input');
+      langInput.type = 'text';
+      langInput.id = 'pageOwnLangInput';
+      langInput.maxLength = 12;
+      langInput.autocomplete = 'off';
+      langInput.value = (current && current.lang) || '';
+      langInput.placeholder = (sm.getState().page.lang || 'en') + ' (site)';
+      langInput.title = 'Language code for this page only, e.g. de or pt-BR. Empty uses the site language from Page Settings.';
+      langInput.addEventListener('change', () => {
+        const v = langInput.value.trim();
+        if (v && !/^[a-z]{2,3}(-[A-Za-z0-9]+)*$/.test(v)) { showToast('Use a language code like en, de or pt-BR.', 4000); langInput.value = (current && current.lang) || ''; return; }
+        sm.setPageMeta(active, { lang: v });
+      });
+      langLabel.appendChild(langInput);
+      actions.appendChild(langLabel);
       host.appendChild(actions);
     }
 

@@ -2759,6 +2759,8 @@ function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page', opts = 
   const css = [];
   if (display) css.push(`:root { --font-display: ${cssFamily(display)}, system-ui, sans-serif; }`);
   if (body) css.push(`:root { --font-body: ${cssFamily(body)}, system-ui, sans-serif; }`);
+  const radius = /^\d{1,3}(\.\d{1,2})?(px|rem|em)$/.test(String(page.radius || '').trim()) ? String(page.radius).trim() : '';
+  if (radius) css.push(`:root { --radius: ${radius}; }`);
   if (display) css.push(`.page-section :is(h1, h2, h3, h4, h5, h6) { font-family: var(--font-display) !important; }`);
   if (body) css.push(`.page-section :is(p, li, a, span, button, label, input, textarea, blockquote, td, th, figcaption):not(code):not(pre) { font-family: var(--font-body) !important; }`);
 

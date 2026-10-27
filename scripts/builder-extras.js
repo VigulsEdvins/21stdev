@@ -420,6 +420,7 @@
       fontDisplay: doc.getElementById('pageFontDisplayInput'),
       fontBody: doc.getElementById('pageFontBodyInput'),
       lang: doc.getElementById('pageLangInput'),
+      radius: doc.getElementById('pageRadiusInput'),
       shareImage: doc.getElementById('pageShareImageInput'),
       canonical: doc.getElementById('pageCanonicalInput'),
       robots: doc.getElementById('pageRobotsInput'),

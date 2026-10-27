@@ -12,7 +12,7 @@
   const MAX_TEXT = 5000;
   const ID_RE = /^[A-Za-z0-9_-]{1,80}$/;
   const SLUG_RE = /^[a-z0-9][a-z0-9-]{0,99}$/i;
-  const PAGE_KEYS = ['title', 'description', 'favicon', 'fontDisplay', 'fontBody', 'lang', 'shareImage', 'canonical', 'robots', 'bizType', 'bizName', 'bizPhone', 'bizAddress'];
+  const PAGE_KEYS = ['title', 'description', 'favicon', 'fontDisplay', 'fontBody', 'lang', 'radius', 'shareImage', 'canonical', 'robots', 'bizType', 'bizName', 'bizPhone', 'bizAddress'];
   const URL_KEYS = /^(link|ctaLink|imageUrl|href|src|url)$/i;
 
   function newCounter() { return { n: 0 }; }
@@ -124,6 +124,7 @@
       if (out.length === 0) slug = 'index';
       out.push({
         id: p.id, title, slug, description: text(typeof p.description === 'string' ? p.description : '', 300, counter),
+        lang: typeof p.lang === 'string' && /^[a-z]{2,3}(-[A-Za-z0-9]{1,8}){0,3}$/.test(p.lang) && p.lang.length <= 12 ? p.lang : '',
         stack: (Array.isArray(p.stack) ? p.stack.slice(0, MAX_SECTIONS) : []).map(s => cleanSection(s, counter)).filter(Boolean)
       });
     });
