@@ -34,6 +34,7 @@ The whole public site and the builder are redesigned in an **editorial, warm** s
 
 - A visitor has to understand what a "section", "widget" or "mood" is before they can get started.
 - The shown price differs from the charged price.
+- A secret, a customer's data or a paid download leaks because a check was skipped.
 - A paid site can be downloaded by someone who did not pay, and nobody notices.
 - The owner has to copy and paste answers out of an inbox to understand a lead.
 - Personal data (emails, phone numbers) is collected without a clear reason, a privacy notice and a way to delete it.
@@ -58,6 +59,8 @@ Things found in the code that matter for going public:
 - Exports are generated **in the visitor's browser**. A paywall in front of a browser-side export can be bypassed by a determined person. Decision D4 covers how strict to be.
 - The Git remote is `VigulsEdvins/21stdev`. Do not push or rename it without asking (existing instruction).
 - The licence column says `own` for all 235 components, which is what a commercial product needs; the plan still adds a final licence and asset check (E12.6) because stock-like images in `assets/library/` and the five templates from sibling folders were not part of that audit.
+
+**Security** is a goal of its own: every line of code (components, builder, storefront, server functions, CI, infrastructure) is checked automatically on every change and reviewed by hand, and no real payment is taken before an outside penetration test has no open high or critical finding. See epic E16 in the plan.
 
 ## 6. Approaches considered for the technical base
 
