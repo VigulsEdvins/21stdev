@@ -15,6 +15,7 @@
     ctx.clearRect(0, 0, W, H);
     var cx = W / 2, cy = H * 0.42, clearX = Math.min(W * 0.42, 300), clearY = 130;
     for (var k = ripples.length - 1; k >= 0; k--) { ripples[k].r += 5; if (ripples[k].r > 600) ripples.splice(k, 1); }
+    var paths = {};
     for (var n = 0; n < pts.length; n++) {
       var p = pts[n], dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.sqrt(dx * dx + dy * dy);
       var target = Math.atan2(1, 0.4) * 0 + 0.8; // base angle: pointing down-right
@@ -31,14 +32,14 @@
       var tone = Math.min(1, p.y / H);
       var alpha = fade * (0.3 + 0.5 * shimmer) * (1 - tone * 0.85);
       if (alpha < 0.02) continue;
-      ctx.save();
-      ctx.translate(p.x + Math.cos(ang) * push, p.y + Math.sin(ang) * push);
-      ctx.rotate(ang);
-      ctx.strokeStyle = 'rgba(210,225,255,' + alpha.toFixed(3) + ')';
-      ctx.lineWidth = 1.4; ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(-5, 0); ctx.lineTo(5, 0); ctx.moveTo(1, -3.5); ctx.lineTo(5, 0); ctx.lineTo(1, 3.5); ctx.stroke();
-      ctx.restore();
+      // arrows are grouped by (rounded) opacity so a frame makes a few dozen stroke calls instead of one per arrow
+      var level = Math.round(alpha * 40), path = paths[level] || (paths[level] = new Path2D());
+      var ox = p.x + Math.cos(ang) * push, oy = p.y + Math.sin(ang) * push, c = Math.cos(ang), s = Math.sin(ang);
+      path.moveTo(ox - 5 * c, oy - 5 * s); path.lineTo(ox + 5 * c, oy + 5 * s);
+      path.moveTo(ox + c + 3.5 * s, oy + s - 3.5 * c); path.lineTo(ox + 5 * c, oy + 5 * s); path.lineTo(ox + c - 3.5 * s, oy + s + 3.5 * c);
     }
+    ctx.lineWidth = 1.4; ctx.lineCap = 'round';
+    for (var lv in paths) { ctx.strokeStyle = 'rgba(210,225,255,' + (lv / 40).toFixed(3) + ')'; ctx.stroke(paths[lv]); }
   }
   function loop(t) { if (!run) return; draw(t); requestAnimationFrame(loop); }
   size();

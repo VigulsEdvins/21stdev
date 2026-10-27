@@ -49,7 +49,8 @@ async function measureOne(browser, baseUrl, slug, seconds) {
   let slugs = items.map(i => i.slug);
   const only = arg('slug');
   if (only) slugs = slugs.filter(s => only.split(',').includes(s));
-  const file = path.join(ROOT, 'reports', 'frames.json');
+  // GPU=1 measures on the graphics card and keeps its numbers apart from the software-rendering ones
+  const file = path.join(ROOT, 'reports', process.env.GPU ? 'frames-gpu.json' : 'frames.json');
   const recheck = process.argv.includes('--recheck');
   if (recheck) {
     const prev = JSON.parse(fs.readFileSync(file, 'utf8'));

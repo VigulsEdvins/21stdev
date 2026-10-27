@@ -15,22 +15,44 @@
       flowers.push({ x: rnd(-10, W + 10), y: y, s: 3 + t * 20, ph: rnd(0, 6.28), hue: rnd(-8, 10) });
     }
     flowers.sort(function (a, b) { return a.y - b.y; });
+    flowers.forEach(function (f) { f.sprite = head(f, dpr); f.bin = f.s < 8 ? 0 : f.s < 15 ? 1 : 2; });
   }
+  // Each flower head is painted once into a small canvas; a frame then only draws the stems (batched) and the sprites.
+  function head(f, dpr) {
+    var r = Math.ceil(f.s * 0.9) + 2, c = document.createElement('canvas'), x = c.getContext('2d');
+    c.width = c.height = Math.ceil(r * 2 * dpr);
+    x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    x.fillStyle = 'hsl(' + (4 + f.hue) + ',85%,' + (40 + f.s) + '%)';
+    for (var p = 0; p < 4; p++) {
+      var a = p * 1.57 + f.ph * 0.3;
+      x.beginPath(); x.ellipse(r + Math.cos(a) * f.s * 0.35, r + Math.sin(a) * f.s * 0.3, f.s * 0.42, f.s * 0.34, a, 0, 6.28); x.fill();
+    }
+    x.fillStyle = '#1a0b08'; x.beginPath(); x.arc(r, r, f.s * 0.14, 0, 6.28); x.fill();
+    f.r = r;
+    return c;
+  }
+  var widths = [1, 1.2, 1.9];
   function draw(t) {
     ctx.clearRect(0, 0, W, H);
     var g = ctx.createLinearGradient(0, H * 0.5, 0, H);
     g.addColorStop(0, '#6c2a1a'); g.addColorStop(1, '#2c1208');
     ctx.fillStyle = g; ctx.fillRect(0, H * 0.5, W, H * 0.5);
-    for (var i = 0; i < flowers.length; i++) {
-      var f = flowers[i], sway = reduce ? 0 : Math.sin(t / 900 + f.ph) * f.s * 0.15;
-      ctx.strokeStyle = '#3d4a1c'; ctx.lineWidth = Math.max(1, f.s * 0.08);
-      ctx.beginPath(); ctx.moveTo(f.x, f.y + f.s * 1.4); ctx.quadraticCurveTo(f.x, f.y + f.s * 0.5, f.x + sway, f.y); ctx.stroke();
-      ctx.fillStyle = 'hsl(' + (4 + f.hue) + ',85%,' + (40 + f.s) + '%)';
-      for (var p = 0; p < 4; p++) {
-        var a = p * 1.57 + f.ph * 0.3;
-        ctx.beginPath(); ctx.ellipse(f.x + sway + Math.cos(a) * f.s * 0.35, f.y + Math.sin(a) * f.s * 0.3, f.s * 0.42, f.s * 0.34, a, 0, 6.28); ctx.fill();
+    var sways = new Array(flowers.length);
+    ctx.strokeStyle = '#3d4a1c';
+    for (var b = 0; b < 3; b++) {
+      ctx.lineWidth = widths[b];
+      ctx.beginPath();
+      for (var i = 0; i < flowers.length; i++) {
+        var f = flowers[i];
+        if (f.bin !== b) continue;
+        var sway = sways[i] = reduce ? 0 : Math.sin(t / 900 + f.ph) * f.s * 0.15;
+        ctx.moveTo(f.x, f.y + f.s * 1.4); ctx.quadraticCurveTo(f.x, f.y + f.s * 0.5, f.x + sway, f.y);
       }
-      ctx.fillStyle = '#1a0b08'; ctx.beginPath(); ctx.arc(f.x + sway, f.y, f.s * 0.14, 0, 6.28); ctx.fill();
+      ctx.stroke();
+    }
+    for (var k = 0; k < flowers.length; k++) {
+      var h = flowers[k];
+      ctx.drawImage(h.sprite, h.x + sways[k] - h.r, h.y - h.r, h.r * 2, h.r * 2);
     }
   }
   function loop(t) { if (!run) return; draw(t); requestAnimationFrame(loop); }

@@ -33,12 +33,14 @@ async function launchBrowser() {
   if (engine === 'firefox') return require('playwright-core').firefox.launch({ headless: true });
   const { chromium } = require('playwright-core');
   const executablePath = process.env.CHROMIUM_PATH || undefined;
+  // GPU=1 draws with the machine's graphics card (ANGLE over desktop OpenGL) instead of software rendering
+  const args = process.env.GPU ? ['--enable-gpu', '--ignore-gpu-blocklist', '--use-gl=angle', '--use-angle=gl'] : [];
   try {
-    return await chromium.launch({ headless: true, executablePath });
+    return await chromium.launch({ headless: true, executablePath, args });
   } catch (err) {
     const cached = findCachedChromium();
     if (!cached) throw err;
-    return chromium.launch({ headless: true, executablePath: cached });
+    return chromium.launch({ headless: true, executablePath: cached, args });
   }
 }
 
