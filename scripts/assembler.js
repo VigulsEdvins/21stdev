@@ -112,8 +112,9 @@ function scopeSectionStyles(css, sectionId, keepPalette, keepViewport) {
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-]):root(?![a-zA-Z0-9_-])/g, `.page-section#${sectionId}`);
 
   // 2. Rewrite universal * selectors so margin/padding resets do not bleed across the entire page,
+  // (only a `*` that starts a selector: not `calc(a * b)` and not `.card > *`, where it already sits inside a selector)
   // using :where() to preserve (0, 0, 0) specificity so component class styles (padding, margin) are never overridden!
-  scoped = scoped.replace(/(^|[\s,;{}])\*(?=[,\s{:]|::)/g, `$1:where(.page-section#${sectionId}) *`);
+  scoped = scoped.replace(/(?<=(?:^|[,{}])\s*)\*(?=\s*[,{:])/g, `:where(.page-section#${sectionId}) *`);
 
   // 3. Replace html, body or body, html compound selectors
   scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])(html\s*,\s*body|body\s*,\s*html)(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
@@ -128,9 +129,15 @@ function scopeSectionStyles(css, sectionId, keepPalette, keepViewport) {
 
   // 6. Replace viewport locking 100vh on height with responsive section height that never collapses
   // (a preloader overlay is meant to fill the whole viewport, so its 100vh rules stay as they are)
+  // (a pinned or fixed element, such as the stage of a scroll-driven section, is meant to be exactly one screen tall: it keeps its 100vh)
   if (!keepViewport) {
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(680px, 90vh, 1000px)$1; height: auto$1');
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: clamp(680px, 90vh, 1000px)$1');
+  scoped = scoped.replace(/\{([^{}]*)\}/g, (match, body) => {
+    if (/position\s*:\s*(?:sticky|fixed)/i.test(body)) return match;
+    const next = body
+      .replace(/(?<![a-zA-Z0-9_-])height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(680px, 90vh, 1000px)$1; height: auto$1')
+      .replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: clamp(680px, 90vh, 1000px)$1');
+    return '{' + next + '}';
+  });
   }
 
   // 7. Clean up viewport-locking rules on .page-section container inherited from html, body
@@ -2356,6 +2363,22 @@ ${allHtml}
         };
       })();
 
+      // Preview is a static mock-up: links and form buttons stay clickable but never navigate the frame away
+      // (a navigation replaces the preview with a blank page until the builder is reloaded).
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href], area[href]');
+        if (!a) return;
+        e.preventDefault();
+        var href = a.getAttribute('href') || '';
+        if (href.charAt(0) === '#' && href.length > 1) {
+          try {
+            var t = document.getElementById(decodeURIComponent(href.slice(1)));
+            if (t) t.scrollIntoView({ behavior: 'smooth' });
+          } catch (_) {}
+        }
+      }, true);
+      document.addEventListener('submit', function (e) { e.preventDefault(); }, true);
+
       // Notify parent builder when a section is clicked in preview
       document.addEventListener('click', function (e) {
         var sec = e.target.closest('.page-section');
@@ -2410,6 +2433,7 @@ ${allHtml}
 })();
 
 // Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
+// (a section's page-level wheel handler only runs while that section is the main one on screen, i.e. covers the middle of the viewport, wherever the pointer is)
       (function () {
         var origAdd = EventTarget.prototype.addEventListener;
         EventTarget.prototype.addEventListener = function (type, listener, options) {
@@ -2421,7 +2445,7 @@ ${allHtml}
             var safeWheel = function (e) {
               if (isGlobal && secId) {
                 var sec = document.getElementById(secId);
-                if (sec && !sec.contains(e.target) && e.target !== sec) {
+                if (sec && !(function (box) { var m = window.innerHeight / 2; return box.top <= m && box.bottom >= m; })(sec.getBoundingClientRect())) {
                   return;
                 }
               }
@@ -3013,7 +3037,14 @@ const OVERRIDES_RUNTIME = `(function () {
     if (!el.children.length) { el.textContent = value; return; }
     var texts = [];
     for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) texts.push(n);
-    if (!texts.length) { el.insertBefore(document.createTextNode(value), el.firstChild); return; }
+    if (!texts.length) {
+      // the words live in a child (a button whose label is a <span>): change those, not add a second set next to them
+      for (var c = el.firstElementChild; c; c = c.nextElementSibling) {
+        if (c.textContent.trim()) { setText(c, value); return; }
+      }
+      el.insertBefore(document.createTextNode(value), el.firstChild);
+      return;
+    }
     texts[0].nodeValue = value;
     for (var i = 1; i < texts.length; i++) texts[i].nodeValue = '';
   }
@@ -3073,6 +3104,7 @@ const OVERRIDES_RUNTIME = `(function () {
     });
   }
   window.__setOverrides = function (next) { list = next || []; apply(); };
+  window.__getOverrides = function () { return list.slice(); };
   window.__applyOverrides = apply;
   document.addEventListener('DOMContentLoaded', function () { apply(); setTimeout(apply, 400); setTimeout(apply, 1500); });
   window.addEventListener('load', apply);
@@ -3281,6 +3313,7 @@ ${renderNativePaletteCss(safeSections, options.nativeMap)}`;
 ${OFFSCREEN_RUNTIME}
 
 // Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
+// (a section's page-level wheel handler only runs while that section is the main one on screen, i.e. covers the middle of the viewport, wherever the pointer is)
 (function () {
   var origAdd = EventTarget.prototype.addEventListener;
   EventTarget.prototype.addEventListener = function (type, listener, options) {
@@ -3292,7 +3325,7 @@ ${OFFSCREEN_RUNTIME}
       var safeWheel = function (e) {
         if (isGlobal && secId) {
           var sec = document.getElementById(secId);
-          if (sec && !sec.contains(e.target) && e.target !== sec) {
+          if (sec && !(function (box) { var m = window.innerHeight / 2; return box.top <= m && box.bottom >= m; })(sec.getBoundingClientRect())) {
             return;
           }
         }
@@ -3438,7 +3471,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette });
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette, pageLinks: options.pageLinks });
   return doc
     .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }

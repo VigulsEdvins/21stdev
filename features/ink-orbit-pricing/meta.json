@@ -72,6 +72,48 @@
       "label": "Plan 3 button",
       "type": "text",
       "selector": ":scope .op-card:nth-child(3) .op-btn"
+    },
+    {
+      "id": "plan-1-price-monthly",
+      "label": "Plan 1 price per month (big number)",
+      "type": "number",
+      "selector": ":scope .op-card:nth-child(1) .op-m"
+    },
+    {
+      "id": "plan-1-price-yearly",
+      "label": "Plan 1 price per month when billed yearly",
+      "type": "number",
+      "selector": ":scope .op-card:nth-child(1) .op-y"
+    },
+    {
+      "id": "plan-2-price-monthly",
+      "label": "Plan 2 price per month (big number)",
+      "type": "number",
+      "selector": ":scope .op-card:nth-child(2) .op-m"
+    },
+    {
+      "id": "plan-2-price-yearly",
+      "label": "Plan 2 price per month when billed yearly",
+      "type": "number",
+      "selector": ":scope .op-card:nth-child(2) .op-y"
+    },
+    {
+      "id": "plan-3-price-monthly",
+      "label": "Plan 3 price per month (big number)",
+      "type": "number",
+      "selector": ":scope .op-card:nth-child(3) .op-m"
+    },
+    {
+      "id": "plan-3-price-yearly",
+      "label": "Plan 3 price per month when billed yearly",
+      "type": "number",
+      "selector": ":scope .op-card:nth-child(3) .op-y"
+    },
+    {
+      "id": "currency",
+      "label": "Currency (all plans)",
+      "type": "currency",
+      "selector": ":scope .op-cur"
     }
   ],
   "nativeWhen": [],

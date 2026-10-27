@@ -58,6 +58,7 @@ async function main() {
 
   // --- content editor ------------------------------------------------------
   await page.click('#tabContentBtn');
+  await page.evaluate(() => { document.querySelector('.quick-edit').open = true; });
   await page.waitForSelector('#contentFields .content-field');
   // pick a text field: link and photo fields change an href or src, not visible text
   const textField = page.locator('#contentFields .content-field').filter({ hasNotText: /link|photo|logo/i }).first();

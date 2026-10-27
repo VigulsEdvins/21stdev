@@ -551,12 +551,20 @@
           <div class="widgets-header-subtitle">Swap text, images and links without touching code</div>
         </div>
         <div class="content-pane-body">
+          <div class="admin-open-card">
+            <p>Edit every heading, text, picture, link and colour of this page in a full admin panel with a live preview. Click anything in the preview to change it.</p>
+            <button type="button" class="builder-btn-primary" id="openAdminBtn">Open admin panel</button>
+            <p class="content-hint">The same panel is included in the ZIP for your client.</p>
+          </div>
+          <details class="quick-edit">
+            <summary>Quick edit one section</summary>
           <label class="ps-field">
             <span>Section</span>
             <select id="contentSectionSelect" class="attr-select"></select>
           </label>
           <div class="content-fields" id="contentFields"></div>
           <p class="content-empty" id="contentEmpty" hidden>Add a section first, then edit its text, images and links here.</p>
+          </details>
         </div>
       </div>
     </aside>
@@ -737,9 +745,14 @@
                   <div class="file-row">📄 index.html</div>
                   <div class="file-row">🎨 style.css (theme variables + combined styles)</div>
                   <div class="file-row">⚡ script.js (isolated lifecycle scripts)</div>
+                  <div class="file-row">🧩 admin.html + admin.css + admin.js + cms.js + cms-content.js (content editor)</div>
                   <div class="file-row">📖 README.md</div>
                 </div>
               </div>
+              <label class="export-option" style="display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;font-size:12.5px;color:var(--text-muted,#a1a1aa)">
+                <input type="checkbox" id="exportCmsToggle" style="margin-top:2px" checked />
+                <span><strong>Include the content editor (admin.html)</strong> &mdash; a CMS for this page: every section's text, pictures, links and colours with a live preview, undo/redo, publish and backup. Your client edits the site without touching code.</span>
+              </label>
               <label class="export-option" style="display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;font-size:12.5px;color:var(--text-muted,#a1a1aa)">
                 <input type="checkbox" id="exportCspToggle" style="margin-top:2px" />
                 <span><strong>Strict security policy (CSP)</strong> &mdash; the page may only run scripts from itself and the CDNs it uses. If a section needs more, the policy is relaxed and the README says why.</span>
@@ -1063,6 +1076,11 @@
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <!-- Script Modules -->
+  <!-- Admin panel: the content editor over the builder (scripts/cms/admin.js, opened from the Content tab) -->
+  <div class="admin-overlay" id="adminOverlay" hidden>
+    <iframe id="adminFrame" title="Admin panel"></iframe>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="registry.js"></script>
   <script src="scripts/catalog-search.js"></script>
@@ -1084,6 +1102,7 @@
   <script src="scripts/builder/page-checks.js"></script>
   <script src="scripts/builder/font-host.js"></script>
   <script src="scripts/builder/favicon-png.js"></script>
+  <script src="scripts/builder/cms-export.js"></script>
   <script src="scripts/builder/export-notes.js"></script>
   <script src="scripts/builder/export-react-download.js"></script>
   <script src="scripts/builder/export-panel.js"></script>

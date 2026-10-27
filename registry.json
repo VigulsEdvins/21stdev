@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T11:37:54.082Z",
+  "generatedAt": "2026-10-27T07:04:13.019Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 235,
   "categories": [
@@ -13,6 +13,8 @@
     "Scroll & Parallax",
     "Interactions & Physics",
     "Audio & Shaders",
+    "Audio",
+    "404 Page",
     "Preloaders & Shaders",
     "Landing Pages",
     "Full Websites"
@@ -271,9 +273,7 @@
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(5)"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "imported",
@@ -1545,7 +1545,7 @@
     {
       "slug": "audio-jukebox-player",
       "title": "WebAudio Synth Jukebox Pill & Sound Gate Modal",
-      "category": "Audio & Shaders",
+      "category": "Audio",
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
@@ -4988,9 +4988,7 @@
           "selector": ":scope .ow-btn"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
@@ -5319,9 +5317,7 @@
           "selector": ":scope .rb-ghost"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
@@ -5473,9 +5469,7 @@
           "selector": ":scope .cp-list li:nth-of-type(5) .cp-name"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
@@ -5733,9 +5727,7 @@
           "selector": ":scope img.hero-reveal__parallax-card"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "imported",
@@ -6070,7 +6062,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -6733,7 +6725,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -6884,10 +6876,8 @@
           "selector": ":scope .bh-phone"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
-      "ownPalette": true,
+      "nativeWhen": [],
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -7872,7 +7862,7 @@
     {
       "slug": "constellation-turntable",
       "title": "Star Chart Record Player",
-      "category": "Audio & Shaders",
+      "category": "Audio",
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
@@ -8180,7 +8170,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -8760,9 +8750,7 @@
           "selector": ":scope .tc-pause"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
+      "nativeWhen": [],
       "ownPalette": true,
       "exportAssets": [],
       "source": "edvlabs",
@@ -9195,7 +9183,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -9265,7 +9253,7 @@
         }
       ],
       "nativeWhen": [
-        "dark"
+        "light"
       ],
       "ownPalette": true,
       "exportAssets": [],
@@ -10611,7 +10599,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -11219,6 +11207,48 @@
           "label": "Plan 3 button",
           "type": "text",
           "selector": ":scope .op-card:nth-child(3) .op-btn"
+        },
+        {
+          "id": "plan-1-price-monthly",
+          "label": "Plan 1 price per month (big number)",
+          "type": "number",
+          "selector": ":scope .op-card:nth-child(1) .op-m"
+        },
+        {
+          "id": "plan-1-price-yearly",
+          "label": "Plan 1 price per month when billed yearly",
+          "type": "number",
+          "selector": ":scope .op-card:nth-child(1) .op-y"
+        },
+        {
+          "id": "plan-2-price-monthly",
+          "label": "Plan 2 price per month (big number)",
+          "type": "number",
+          "selector": ":scope .op-card:nth-child(2) .op-m"
+        },
+        {
+          "id": "plan-2-price-yearly",
+          "label": "Plan 2 price per month when billed yearly",
+          "type": "number",
+          "selector": ":scope .op-card:nth-child(2) .op-y"
+        },
+        {
+          "id": "plan-3-price-monthly",
+          "label": "Plan 3 price per month (big number)",
+          "type": "number",
+          "selector": ":scope .op-card:nth-child(3) .op-m"
+        },
+        {
+          "id": "plan-3-price-yearly",
+          "label": "Plan 3 price per month when billed yearly",
+          "type": "number",
+          "selector": ":scope .op-card:nth-child(3) .op-y"
+        },
+        {
+          "id": "currency",
+          "label": "Currency (all plans)",
+          "type": "currency",
+          "selector": ":scope .op-cur"
         }
       ],
       "nativeWhen": [],
@@ -11601,7 +11631,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -11923,7 +11953,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -12556,7 +12586,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -12715,7 +12745,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -12991,7 +13021,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -13056,7 +13086,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -13732,7 +13762,7 @@
       "updatedAt": "2026-10-25",
       "customizable": [],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -13881,7 +13911,7 @@
     {
       "slug": "phosphor-crt-404",
       "title": "Green Screen 404",
-      "category": "Audio & Shaders",
+      "category": "404 Page",
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
       "mood": [
@@ -13925,10 +13955,8 @@
           "selector": ":scope .ph-link"
         }
       ],
-      "nativeWhen": [
-        "light"
-      ],
-      "ownPalette": true,
+      "nativeWhen": [],
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -14092,7 +14120,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -14568,9 +14596,7 @@
           "selector": ":scope .sz-link"
         }
       ],
-      "nativeWhen": [
-        "dark"
-      ],
+      "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
@@ -15042,7 +15068,7 @@
     },
     {
       "slug": "scanline-bloom",
-      "title": "Red Print Bouquet",
+      "title": "Scanline Bouquet",
       "category": "Audio & Shaders",
       "legacyCategory": "Audio & Shaders",
       "status": "stable",
@@ -15069,11 +15095,11 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
-      "description": "A procedural bouquet drawn by a small fragment shader as red ragged scanlines that turn into stipple dots toward the bottom of a black sheet.",
+      "description": "A procedural bouquet drawn by a small fragment shader as ragged scanlines in the theme's accent colour that turn into stipple dots toward the bottom of the sheet.",
       "tags": [
         "shader",
         "scanlines",
@@ -16966,7 +16992,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -17259,7 +17285,7 @@
         }
       ],
       "nativeWhen": [],
-      "ownPalette": true,
+      "ownPalette": false,
       "exportAssets": [],
       "source": "edvlabs",
       "type": "component",
@@ -18781,7 +18807,7 @@
     {
       "slug": "not-found-page",
       "title": "Not Found (404) Page",
-      "category": "Heroes",
+      "category": "404 Page",
       "legacyCategory": null,
       "status": "stable",
       "mood": [
@@ -18949,6 +18975,48 @@
           "type": "color",
           "selector": ":scope .ptw-demo",
           "attr": "--accent"
+        },
+        {
+          "id": "plan-1-price-monthly",
+          "label": "Plan 1 price per month (big number)",
+          "type": "number",
+          "selector": ":scope .ptw-card:nth-child(1) .ptw-m"
+        },
+        {
+          "id": "plan-1-price-yearly",
+          "label": "Plan 1 price per month when billed yearly",
+          "type": "number",
+          "selector": ":scope .ptw-card:nth-child(1) .ptw-y"
+        },
+        {
+          "id": "plan-2-price-monthly",
+          "label": "Plan 2 price per month (big number)",
+          "type": "number",
+          "selector": ":scope .ptw-card:nth-child(2) .ptw-m"
+        },
+        {
+          "id": "plan-2-price-yearly",
+          "label": "Plan 2 price per month when billed yearly",
+          "type": "number",
+          "selector": ":scope .ptw-card:nth-child(2) .ptw-y"
+        },
+        {
+          "id": "plan-3-price-monthly",
+          "label": "Plan 3 price per month (big number)",
+          "type": "number",
+          "selector": ":scope .ptw-card:nth-child(3) .ptw-m"
+        },
+        {
+          "id": "plan-3-price-yearly",
+          "label": "Plan 3 price per month when billed yearly",
+          "type": "number",
+          "selector": ":scope .ptw-card:nth-child(3) .ptw-y"
+        },
+        {
+          "id": "currency",
+          "label": "Currency (all plans)",
+          "type": "currency",
+          "selector": ":scope .ptw-cur"
         }
       ],
       "nativeWhen": [],

@@ -17,6 +17,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.querySelector('#a .hn-root'), null, { timeout: 20000 });
   await page.waitForTimeout(1500);
   await page.click('#tabContentBtn');
+  await page.evaluate(() => { document.querySelector('.quick-edit').open = true; });
   const field = page.locator('#contentFields .content-field', { hasText: 'Accent colour' });
   await field.waitFor();
   const input = field.locator('input[type=color]');
