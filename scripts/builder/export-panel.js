@@ -153,7 +153,17 @@
         currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: openPageSettings(state), nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked });
       }
 
-      if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
+      if (state.pages.length > 1 && window.BuilderSinglePages && window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
+        // every page in one file, with a small router (the ZIP has one file per page)
+        const missingAll = state.pages.flatMap(p => p.stack.map(s => s.slug)).filter(slug => slug && !featureCache.has(slug));
+        if (missingAll.length) await Promise.all(Array.from(new Set(missingAll)).map(slug => fetchFeatureFiles(slug)));
+        const keys = window.BuilderSinglePages.pageKeys(state.pages);
+        const links = Object.fromEntries(Object.entries(keys).map(([id, key]) => [id, '#' + key]));
+        const home = state.pages[0];
+        const combined = state.pages.flatMap(p => p.stack);
+        const html = window.Assembler.generateSingleFileBundle(combined, themeConfig, featuresData, { page: { ...state.page, lang: home.lang || state.page.lang }, nativeMap, pageLinks: links });
+        currentSingleHtml = window.BuilderSinglePages.addRouter(html, state.pages.map((p, i) => ({ key: keys[p.id], title: i === 0 ? state.page.title : `${p.title} | ${state.page.title}`, ids: p.stack.filter(s => !s.hidden).map(s => s.id) })));
+      } else if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
         currentSingleHtml = window.Assembler.generateSingleFileBundle(currentStack, themeConfig, featuresData, { page: openPageSettings(state), nativeMap });
       } else if (window.Assembler && typeof window.Assembler.assemblePreviewDocument === 'function') {
         currentSingleHtml = window.Assembler.assemblePreviewDocument(currentStack, themeConfig, featuresData);

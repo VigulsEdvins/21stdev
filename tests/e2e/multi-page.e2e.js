@@ -77,6 +77,28 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const readme = await zip.file('README.md').async('string');
   assert(/## Pages/.test(readme) && /about-us\.html/.test(readme));
   console.log('  ✓ ZIP has one HTML, CSS and JS per page; links and sitemap are right');
+
+  // the single-file page holds every page and routes between them
+  const [one] = await Promise.all([page.waitForEvent('download'), page.evaluate(() => document.getElementById('downloadSingleHtmlBtn').click())]);
+  const oneHtml = fs.readFileSync(await one.path(), 'utf8');
+  const onePath = require('path').join(require('os').tmpdir(), 'multi-page-single-' + process.pid + '.html');
+  fs.writeFileSync(onePath, oneHtml);
+  assert(/id="page-router"/.test(oneHtml), 'router in the single file');
+  assert(oneHtml.includes('#about-us') && !oneHtml.includes('page:' + aboutId), 'the home link points at #about-us');
+  const reader = await ctx.newPage();
+  const readerErrors = [];
+  reader.on('pageerror', e => readerErrors.push(e.message));
+  await reader.goto('file://' + onePath);
+  const visible = () => reader.evaluate(() => [...document.querySelectorAll('section.page-section')].filter(s => getComputedStyle(s).display !== 'none').length);
+  const homeCount = await visible();
+  assert(homeCount > 0, 'home sections shown: ' + homeCount + ' in ' + oneHtml.length + ' bytes, sections ' + (oneHtml.match(/class="page-section/g) || []).length + ', title ' + await reader.title());
+  await reader.goto('file://' + onePath + '#about-us');
+  await reader.waitForFunction(() => document.title.startsWith('About us | '));
+  assert.strictEqual(await visible(), 1, 'only the About section is shown');
+  assert.deepStrictEqual(readerErrors, [], readerErrors.join('; '));
+  await reader.close();
+  fs.unlinkSync(onePath);
+  console.log('  ✓ single-file page holds every page and switches with the address');
   await page.keyboard.press('Escape');
 
   // reload: pages survive, undo history shows page entries
