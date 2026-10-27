@@ -6,7 +6,8 @@
  * the result so the caller can tell the person. Pure (no DOM, no network): the caller supplies the sources and
  * fetches the assets it reports.
  *   ReactExport.generateReactProject({ stack, theme, page, sources })
- *   sources: { [slug]: { title, component, demo, css } | { title, index, js, css } }
+ *   sources: { [slug]: { title, component, demo, css } | { title, index, js, css, ownPalette } }
+ *   ownPalette: the feature keeps its own colours (meta.json), so its CSS is scoped without the theme normaliser
  * Returns { files, assetUrls, included, skipped, dependencies }.
  */
 (function () {
@@ -86,7 +87,7 @@
     }), id);
     return {
       id, markup,
-      css: A.scopeSectionStyles(src.css || '', id),
+      css: A.scopeSectionStyles(src.css || '', id, !!src.ownPalette),
       js: A.isolateSectionScript(parts.join('\n;\n'), id),
       remoteLinks, remoteScripts
     };
@@ -143,6 +144,8 @@ export function runPlainScript(host: HTMLElement, js: string, name: string): voi
     const t = Assembler().resolveTheme(theme);
     return `:root {
   --bg: ${t.bg};
+  --preview-bg: ${t.bg};
+  --preview-text: ${t.text};
   --text: ${t.text};
   --accent: ${t.accent};
   --card-bg: ${t.cardBg};

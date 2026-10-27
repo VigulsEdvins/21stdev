@@ -34,6 +34,15 @@ assert(/ES module/.test(unsupportedReason('x', { index: '<script type="module" s
 assert.strictEqual(unsupportedReason('x', { index: '<p>hi</p>' }), null, 'plain HTML is supported');
 assert(/not include/.test(unsupportedReason('x', { component: 'import a from "@/registry/default/lib/utils"', demo: 'x' })));
 
+// a feature that keeps its own palette keeps its inks; others follow the project's theme variables
+{
+  const own = generateReactProject({ stack: [{ slug: 'onward-summit-template' }], sources: { 'onward-summit-template': { ...source('onward-summit-template'), ownPalette: true } } });
+  assert(/--os-ink:\s*#14213d/.test(own.files['src/styles/onward-summit-template.css']), 'own-palette ink is kept');
+  const themed = generateReactProject({ stack: [{ slug: 'onward-summit-template' }], sources: { 'onward-summit-template': source('onward-summit-template') } });
+  assert(/--os-ink:\s*var\(--preview-text\)/.test(themed.files['src/styles/onward-summit-template.css']), 'without ownPalette the ink follows the page text');
+  assert(/--preview-text:/.test(themed.files['src/index.css']), 'the project defines the variables the themed CSS reads');
+}
+
 // Vite's "?raw" imports, for esbuild
 const rawPlugin = {
   name: 'raw',

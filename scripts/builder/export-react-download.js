@@ -8,7 +8,7 @@
   const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function createReactDownload(ctx, { triggerDownload }) {
-    const { stackManager, featuresData, exportAssets = {} } = ctx;
+    const { stackManager, featuresData, exportAssets = {}, ownPalette = {} } = ctx;
     const downloadReactBtn = document.getElementById('downloadReactBtn');
 
     async function handleDownloadReact() {
@@ -29,7 +29,7 @@
           const base = `/features/${slug}/`;
           const [component, demo, css] = await Promise.all([text(base + 'component.tsx'), text(base + 'demo.tsx'), text(base + 'style.css')]);
           // no React source: the plain page and script are wrapped instead
-          const plain = component && demo ? {} : { index: await text(base + 'index.html'), js: await text(base + 'script.js') };
+          const plain = component && demo ? {} : { index: await text(base + 'index.html'), js: await text(base + 'script.js'), ownPalette: !!ownPalette[slug] };
           sources[slug] = { title: (featuresData[slug] && featuresData[slug].title) || slug, component, demo, css, ...plain };
         }));
         const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
