@@ -44,6 +44,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.fill('#pageOwnLangInput', 'de');
   await page.press('#pageOwnLangInput', 'Tab');
   await page.waitForFunction(() => window.builderPreview.stackManager.getPages().some(p => p.slug === 'about-us' && p.lang === 'de'));
+  await page.selectOption('#pageTranslationSelect', { label: 'Home' });
+  await page.waitForFunction(() => window.builderPreview.stackManager.getPages().some(p => p.slug === 'about-us' && p.translationOf));
   await page.fill('#pageOwnLangInput', 'not a code');
   await page.press('#pageOwnLangInput', 'Tab');
   assert.strictEqual(await page.inputValue('#pageOwnLangInput'), 'de', 'a bad language code is refused and the old one stays');
@@ -64,7 +66,11 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert(aboutHtml.includes('href="about-us.css"') && aboutHtml.includes('src="about-us.js"'), 'the About page loads its own CSS and JS');
   assert(/<title>About us \| /.test(aboutHtml), 'page title carries the page name');
   assert(/<html lang="de"/.test(aboutHtml), 'the About page carries its own language');
-  assert(/<html lang="en"/.test(await zip.file('index.html').async('string')), 'the home page keeps the site language');
+  const homeHtml = await zip.file('index.html').async('string');
+  assert(/<html lang="en"/.test(homeHtml), 'the home page keeps the site language');
+  for (const [name, html] of [['index.html', homeHtml], ['about-us.html', aboutHtml]]) {
+    assert(html.includes('hreflang="en" href="https://site.example/"') && html.includes('hreflang="de" href="https://site.example/about-us.html"') && html.includes('hreflang="x-default" href="https://site.example/"'), name + ' lists the translations');
+  }
   const homeJs = await zip.file('script.js').async('string');
   assert(homeJs.includes('about-us.html') && !homeJs.includes('page:' + aboutId), 'home link points at about-us.html');
   const sitemap = await zip.file('sitemap.xml').async('string');

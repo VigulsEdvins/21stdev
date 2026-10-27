@@ -98,6 +98,20 @@
       });
       langLabel.appendChild(langInput);
       actions.appendChild(langLabel);
+      const originals = pages.filter(p => p.id !== active && !p.translationOf);
+      if (originals.length && !pages.some(p => p.translationOf === active)) {
+        const trLabel = doc.createElement('label');
+        trLabel.className = 'page-lang';
+        trLabel.textContent = 'Translation of ';
+        const select = doc.createElement('select');
+        select.id = 'pageTranslationSelect';
+        select.title = 'Mark this page as a translation of another page; with a live address set, the exported pages link to each other with hreflang.';
+        select.innerHTML = '<option value="">None</option>' + originals.map(p => `<option value="${p.id}">${String(p.title).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])}</option>`).join('');
+        select.value = (current && current.translationOf) || '';
+        select.addEventListener('change', () => sm.setPageMeta(active, { translationOf: select.value }));
+        trLabel.appendChild(select);
+        actions.appendChild(trLabel);
+      }
       host.appendChild(actions);
     }
 

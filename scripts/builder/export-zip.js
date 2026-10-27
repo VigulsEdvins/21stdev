@@ -23,12 +23,13 @@
       const fileOf = (p) => (p.slug === 'index' ? 'index.html' : `${p.slug}.html`);
       const pageLinks = Object.fromEntries(pages.map(p => [p.id, fileOf(p)]));
       const pageFiles = pages.map(fileOf);
+      const alternates = (window.BuilderSinglePages ? window.BuilderSinglePages.translationAlternates(pages, state.page) : {});
       const out = { files: {}, assets: {} };
       for (const p of pages) {
         const home = p.slug === 'index';
         const missing = p.stack.map(s => s.slug).filter(slug => slug && !featureCache.has(slug));
         if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
-        const settings = { ...state.page, title: home ? state.page.title : `${p.title} | ${state.page.title}`, description: p.description || state.page.description, lang: p.lang || state.page.lang };
+        const settings = { ...state.page, title: home ? state.page.title : `${p.title} | ${state.page.title}`, description: p.description || state.page.description, lang: p.lang || state.page.lang, alternates: alternates[p.id] || [] };
         const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles });
         const extraAssets = Array.from(new Set(p.stack.flatMap(s => exportAssets[s.slug] || [])));
         const bundled = await assetBundler.bundle({ files: bundle, singleHtml: '', extraAssets });

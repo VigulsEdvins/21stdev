@@ -101,7 +101,7 @@ function createStackManager(initialConfig = {}) {
   /** Turns a single-page project into a multi-page one: the current stack becomes the Home page. */
   function ensurePages() {
     if (state.pages.length) return;
-    state.pages = [{ id: generateId('page'), title: 'Home', slug: 'index', description: '', lang: '', stack: cloneJson(state.stack) }];
+    state.pages = [{ id: generateId('page'), title: 'Home', slug: 'index', description: '', lang: '', translationOf: '', stack: cloneJson(state.stack) }];
     state.activePageId = state.pages[0].id;
   }
 
@@ -109,7 +109,7 @@ function createStackManager(initialConfig = {}) {
     ensurePages();
     syncActivePage();
     const clean = String(title || '').trim().slice(0, 60) || 'New page';
-    const page = { id: generateId('page'), title: clean, slug: uniqueSlug(slugify(clean)), description: '', lang: '', stack: [] };
+    const page = { id: generateId('page'), title: clean, slug: uniqueSlug(slugify(clean)), description: '', lang: '', translationOf: '', stack: [] };
     state.pages.push(page);
     state.activePageId = page.id;
     state.stack = [];
@@ -143,6 +143,13 @@ function createStackManager(initialConfig = {}) {
     if (typeof updates.description === 'string') page.description = updates.description.slice(0, 300);
     // '' = use the site language from Page Settings
     if (typeof updates.lang === 'string' && (updates.lang === '' || LANG_RE.test(updates.lang))) page.lang = updates.lang;
+    // which page this one is a translation of ('' = none); a translation always points at the original, never at another translation
+    if (typeof updates.translationOf === 'string') {
+      const target = state.pages.find(p => p.id === updates.translationOf);
+      const hasTranslations = state.pages.some(p => p.translationOf === page.id);
+      if (updates.translationOf === '') page.translationOf = '';
+      else if (target && target.id !== page.id && !target.translationOf && !hasTranslations) page.translationOf = target.id;
+    }
     notify();
     return { ...page, stack: [] };
   }
@@ -153,7 +160,7 @@ function createStackManager(initialConfig = {}) {
     syncActivePage();
     const stack = cloneJson(source.stack).map(s => ({ ...s, id: generateId() }));
     const title = `${source.title} copy`.slice(0, 60);
-    const page = { id: generateId('page'), title, slug: uniqueSlug(slugify(title)), description: source.description, lang: source.lang || '', stack };
+    const page = { id: generateId('page'), title, slug: uniqueSlug(slugify(title)), description: source.description, lang: source.lang || '', translationOf: '', stack };
     state.pages.splice(state.pages.indexOf(source) + 1, 0, page);
     state.activePageId = page.id;
     state.stack = cloneJson(stack);
@@ -168,6 +175,7 @@ function createStackManager(initialConfig = {}) {
     syncActivePage();
     const wasActive = id === state.activePageId;
     state.pages.splice(index, 1);
+    state.pages.forEach(p => { if (p.translationOf === id) p.translationOf = ''; });
     if (state.pages.length === 1) {
       // back to a single page: its stack is the project's stack
       state.stack = cloneJson(state.pages[0].stack);

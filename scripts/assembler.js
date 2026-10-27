@@ -2721,6 +2721,11 @@ function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page', opts = 
   if (shareImage) tags.push(`<meta property="og:image" content="${escapeHtml(shareImage)}">`, '<meta name="twitter:card" content="summary_large_image">');
   const canonical = absolute(page.canonical);
   if (canonical) tags.push(`<link rel="canonical" href="${escapeHtml(canonical)}">`, `<meta property="og:url" content="${escapeHtml(canonical)}">`);
+  // translations: every page of a group lists all of them (and the original as x-default); hreflang needs full addresses
+  (Array.isArray(page.alternates) ? page.alternates : []).slice(0, 40).forEach(a => {
+    const href = absolute(a && a.href);
+    if (href && a && (a.lang === 'x-default' || /^[a-z]{2,3}(-[A-Za-z0-9]+)*$/.test(a.lang || ''))) tags.push(`<link rel="alternate" hreflang="${escapeHtml(a.lang)}" href="${escapeHtml(href)}">`);
+  });
   if (page.robots === 'noindex') tags.push('<meta name="robots" content="noindex, nofollow">');
   const jsonLd = renderJsonLd(page, title);
   if (jsonLd) tags.push(jsonLd);

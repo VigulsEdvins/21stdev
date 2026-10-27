@@ -72,6 +72,8 @@ console.log('✅ Project sanitize tests passed!');
   assert.strictEqual(multi.state.pages[1].lang, 'de', 'a page language is kept');
   assert.strictEqual(multi.state.pages[0].lang, '', 'and a missing one is the site language');
   assert.strictEqual(sanitizeState({ pages: [{ id: 'a', title: 'A', stack: [], lang: '"><script>' }, { id: 'b', title: 'B', stack: [] }] }).state.pages[0].lang, '', 'an unsafe language code is dropped');
+  const tl = sanitizeState({ pages: [{ id: 'a', title: 'A', stack: [] }, { id: 'b', title: 'B', translationOf: 'a', stack: [] }, { id: 'c', title: 'C', translationOf: 'b', stack: [] }, { id: 'd', title: 'D', translationOf: 'ghost', stack: [] }] }).state.pages;
+  assert.deepStrictEqual(tl.map(p => p.translationOf), ['', 'a', '', ''], 'translation links point at an existing original only');
   assert.deepStrictEqual(multi.state.stack.map(s => s.slug), ['hero-b'], 'the active page is the live stack');
   assert.strictEqual(multi.state.activePageId, 'p2');
   assert.deepStrictEqual(sanitizeState({ stack: [{ id: 'a', slug: 'x' }], pages: [{ id: 'only', title: 'One', stack: [] }] }).state.pages, [], 'a single "page" is not multi-page');

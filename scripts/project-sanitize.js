@@ -124,6 +124,7 @@
       if (out.length === 0) slug = 'index';
       out.push({
         id: p.id, title, slug, description: text(typeof p.description === 'string' ? p.description : '', 300, counter),
+        translationOf: typeof p.translationOf === 'string' && ID_RE.test(p.translationOf) && p.translationOf !== p.id && pages.some(q => q && q.id === p.translationOf && !q.translationOf) ? p.translationOf : '',
         lang: typeof p.lang === 'string' && /^[a-z]{2,3}(-[A-Za-z0-9]{1,8}){0,3}$/.test(p.lang) && p.lang.length <= 12 ? p.lang : '',
         stack: (Array.isArray(p.stack) ? p.stack.slice(0, MAX_SECTIONS) : []).map(s => cleanSection(s, counter)).filter(Boolean)
       });

@@ -57,6 +57,20 @@ sm.setPageMeta(copy.id, { lang: '' });
 assert.strictEqual(sm.getPages().find(p => p.id === copy.id).lang, '', 'empty goes back to the site language');
 sm.setPageMeta(copy.id, { lang: 'pt-BR' });
 
+// translations: point at an original, never at yourself or at another translation; removing the original clears the link
+const tr = sm.addPage('Pārskats');
+assert.strictEqual(sm.setPageMeta(tr.id, { translationOf: tr.id }).translationOf, '', 'not a translation of itself');
+assert.strictEqual(sm.setPageMeta(tr.id, { translationOf: 'nope' }).translationOf, '', 'unknown page ignored');
+assert.strictEqual(sm.setPageMeta(tr.id, { translationOf: about.id }).translationOf, about.id);
+assert.strictEqual(sm.setPageMeta(about.id, { translationOf: tr.id }).translationOf, '', 'an original cannot become a translation');
+const tr2 = sm.addPage('Trešā');
+assert.strictEqual(sm.setPageMeta(tr2.id, { translationOf: tr.id }).translationOf, '', 'no translation of a translation');
+sm.removePage(tr2.id);
+sm.removePage(about.id);
+assert.strictEqual(sm.getPages().find(p => p.id === tr.id).translationOf, '', 'removing the original clears the link');
+sm.removePage(tr.id);
+sm.switchPage(copy.id);
+
 const saved = sm.getPages();
 const savedActive = sm.getActivePageId();
 const restored = createStackManager();
