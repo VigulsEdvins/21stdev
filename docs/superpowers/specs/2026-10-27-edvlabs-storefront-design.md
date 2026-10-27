@@ -98,8 +98,8 @@ I have proposed an answer for each so work can continue; change any of them.
 
 ## 7a. Answers received from the owner (2026-10-27)
 
-- **Domain:** edvlabs.com.
-- **VAT:** the seller is VAT-registered in Latvia (to be confirmed with the accountant: Latvian rate 21% for Latvian and, below the EU-wide €10,000 threshold for cross-border sales to consumers, other EU customers; above it, VAT of the customer's country through the OSS scheme).
+- **Domain:** edvlabs.com, already owned, DNS managed in the owner's Cloudflare account (confirmed 2026-10-27). The Cloudflare account is the owner's.
+- **VAT:** the seller is VAT-registered in Latvia (confirmed by the owner 2026-10-27; the rules below still go to the accountant: Latvian rate 21% for Latvian and, below the EU-wide €10,000 threshold for cross-border sales to consumers, other EU customers; above it, VAT of the customer's country through the OSS scheme).
 - **Where leads go:** email first, WhatsApp second. The address and the number are **not stored in the repository**; they go into the hosting service's environment settings (see E4.4 and E9.1).
 - **Hosting:** Cloudflare Pages for the static site and builder; Supabase for accounts, data and server functions; no virtual machine for Phase 1 or 2 (see the plan, E0.8).
 
