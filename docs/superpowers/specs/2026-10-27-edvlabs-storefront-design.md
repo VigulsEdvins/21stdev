@@ -117,3 +117,46 @@ The "looks AI-made" list that the plan turns into a checklist: gradient headline
 ## 10. What is left to whoever builds it
 
 Exact prices, exact wording of the questions, the final colour and font choices (the plan has a design step with two options for you to choose between), legal texts (to be written or reviewed by a professional), and the order of the post-launch items.
+
+## 11. Market prices (looked up 2026-10-27)
+
+Figures come from review and comparison sites, which are often affiliate-supported, and some sources disagree. **Confirm every number on the vendor's own pricing page before it is used in a decision or on the site.** The Latvian market could not be priced from search results (no concrete euro figures found); ask two or three local freelancers or agencies for real quotes (task E-research below).
+
+### Do-it-yourself builders (subscriptions, hosting included)
+
+| Product | Entry paid plan | Typical business plan | Notes |
+|---|---|---|---|
+| Wix | Light $17/mo (annual) | Core $29/mo, Business $39/mo | 14-day trial; monthly billing about 40% more |
+| Squarespace | Basic $16–19/mo (annual) | Core $23/mo, Plus $39/mo | Sources disagree on Basic and Core |
+| Webflow | Basic about $15/mo | Premium about $25/mo (annual) | Restructured May 2026; older pages show $14 / $23 / $39 |
+| Framer | Basic $10/mo (annual) | Pro $30/mo | Charged per site |
+| Carrd | Pro Standard $19/year | Pro Plus $49/year | One-page sites, very cheap |
+| Mozello (Latvian) | Premium about €7/mo (annual) | Premium Plus about €15/mo | Local platform named by LIAA |
+
+### One-time templates (no hosting)
+Landing page templates for Framer and Webflow mostly cost **$15–40** once (some free, a few up to $99); the site plan to host them is a separate $5–15 per month.
+
+### Done-for-you (freelancers and agencies)
+- Europe, small-business landing page: **about €300–1,500** from a competent freelancer; template-based work at the low end (Italy €100–300 for a basic template page, €300–1,000 customised; France €100–1,000 typical).
+- General estimates: freelancer $300–1,500, agency $800–3,000, bespoke $5,000+; Eastern Europe about 0.55× Western Europe; hourly $25–50 (Eastern Europe) to $60–100 (Western Europe).
+
+### What this means for edvlabs (my reading, not data)
+- Your self-serve product is closer to a **template with an editor** than to a subscription builder: the customer pays once and gets the files, but hosting is their own cost. That makes a **one-time price** the natural model, and it should sit well above a $15–40 template (you give a guided build, 235 sections and an editor) and well below a freelancer's €300+.
+- Subscriptions (Wix, Squarespace) cost a small business roughly **€150–350 per year including hosting**; a one-time €80–200 with ~€5–10 per month hosting somewhere else is competitive, and you should say so plainly.
+- Done-for-you should land **inside the freelancer band** (about €300–800 for a typical 5–8 block page), because that is what a customer compares you to.
+
+**Draft starting point for E5.1 (to test, not a decision):**
+
+| Item | Draft |
+|---|---|
+| Self-serve base (includes 3 blocks, header and footer free) | €39 |
+| Each extra block | €9 |
+| Editor add-on ("admin panel") | €39 |
+| Example: 7 blocks, no editor | 39 + 4 × 9 = **€75** |
+| Example: 7 blocks with editor | **€114** |
+| Done-for-you work fee | €150 set-up + €35 per block (heavier blocks more) |
+| Example: 7 blocks done for you, with editor | 114 + 150 + 7 × 35 = **€509** |
+
+Check these against: what a local freelancer quotes, what you earn per hour at the done-for-you fee, and what Stripe and VAT take (see D2 and E8.1).
+
+**Research task added to the plan:** E-research — ask 3 local freelancers or agencies for a quote for the same 6-block landing page, collect 5 more competitor pages with prices, and record the date; redo each year.
