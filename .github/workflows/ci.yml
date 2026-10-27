@@ -7,6 +7,9 @@ on:
   schedule:
     - cron: '0 3 * * *' # nightly full run of every check
 
+permissions:
+  contents: read # every job reads the code and nothing else
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -24,7 +27,7 @@ jobs:
           cache: npm
           # package-lock.json is git-ignored in this repo, so cache on package.json
           cache-dependency-path: package.json
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - run: npx playwright-core install --with-deps chromium
       - run: npm run verify
       - run: npm test
@@ -47,7 +50,7 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: package.json
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
@@ -80,7 +83,7 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: package.json
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
@@ -111,7 +114,7 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: package.json
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
@@ -139,7 +142,7 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: package.json
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - run: npx playwright-core install --with-deps chromium
       - run: mkdir -p reports
       - run: npm run check-features
@@ -157,3 +160,20 @@ jobs:
         with:
           name: quality-reports
           path: reports/
+
+  security:
+    name: security (secrets, dependencies, code safety)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the history scan needs every commit
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund --ignore-scripts
+      - run: npm run check-secrets
+      - run: npm run check-secrets -- --history
+      - run: npm run audit
+      - run: npm run check-code-safety

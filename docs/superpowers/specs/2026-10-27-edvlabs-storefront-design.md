@@ -145,7 +145,7 @@ Landing page templates for Framer and Webflow mostly cost **$15–40** once (som
 - Subscriptions (Wix, Squarespace) cost a small business roughly **€150–350 per year including hosting**; a one-time €80–200 with ~€5–10 per month hosting somewhere else is competitive, and you should say so plainly.
 - Done-for-you should land **inside the freelancer band** (about €300–800 for a typical 5–8 block page), because that is what a customer compares you to.
 
-**Draft starting point for E5.1 (to test, not a decision):**
+**Draft starting point for E5.1 (accepted by the owner on 2026-10-27 as the starting point; still to be tested against local quotes and costs):**
 
 | Item | Draft |
 |---|---|

@@ -2,7 +2,6 @@
 graphify-out/
 
 node_modules/
-package-lock.json
 
 # local tooling data
 .claude-flow/

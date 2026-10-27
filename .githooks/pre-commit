@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks a commit that adds a secret. Enable once with: npm run setup-hooks
+node scripts/check-secrets.js --staged
