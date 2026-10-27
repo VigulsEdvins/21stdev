@@ -52,5 +52,7 @@
       "selector": ":scope .cg-btn"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A preloader whose red, green and blue channel split is the effect; the field colours are drawn in code."
 }

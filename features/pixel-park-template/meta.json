@@ -99,5 +99,7 @@
       "selector": ":scope .lm-contact .lm-h2"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A pixel-art night meadow drawn on canvas with a studio page around it; the night palette is the design."
 }

@@ -73,5 +73,7 @@
   "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
   "reserveHeight": 800,
   "ownPalette": false,
-  "nativeWhen": []
+  "nativeWhen": [],
+  "palette": "designed",
+  "paletteNote": "The badge is a physical object: navy card face, metal clip and holo strip are the artwork. The page around it (stage, text, accent, controls) already reads the tokens."
 }

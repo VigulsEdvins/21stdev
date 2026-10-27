@@ -39,5 +39,7 @@
   "updatedAt": "2026-10-25",
   "customizable": [],
   "lazy": true,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A fragment-shader gravel bed with moss; the sand and stone colours are drawn in the shader."
 }

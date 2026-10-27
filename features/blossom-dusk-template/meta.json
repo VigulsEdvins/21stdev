@@ -97,5 +97,7 @@
   "nativeWhen": [
     "dark"
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A brand landing page built around a dusk-sky illustration and petals; its colours are the design (own palette, dark)."
 }

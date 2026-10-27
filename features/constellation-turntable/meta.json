@@ -59,5 +59,7 @@
     }
   ],
   "reserveHeight": 800,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A vinyl record and star map drawn in fixed retro colours; the colours are the illustration."
 }

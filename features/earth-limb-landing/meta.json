@@ -94,5 +94,7 @@
   ],
   "nativeWhen": [],
   "reserveHeight": 6283,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A satellite-imaging page over a glowing planet horizon; text sits over the artwork, so the dark palette is fixed (a token mapping was tried and reverted)."
 }

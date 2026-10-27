@@ -70,5 +70,7 @@
     }
   ],
   "ownPalette": true,
-  "lazy": true
+  "lazy": true,
+  "palette": "designed",
+  "paletteNote": "WebGL black hole: the amber disc and starlight are drawn in the shader."
 }

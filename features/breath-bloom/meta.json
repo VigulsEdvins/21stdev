@@ -53,5 +53,7 @@
   ],
   "nativeWhen": [],
   "reserveHeight": 800,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Eight glowing orbs on a deep night gradient: the glow colours are the effect and need a dark ground."
 }

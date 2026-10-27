@@ -75,5 +75,7 @@
       "selector": ":scope .sr-icons li:nth-child(3) .sr-label"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A cosy pastel desktop with folders, windows and a dock; the pastel palette is the concept."
 }

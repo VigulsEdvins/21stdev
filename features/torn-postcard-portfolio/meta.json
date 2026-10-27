@@ -70,5 +70,7 @@
     }
   ],
   "ownPalette": true,
-  "reserveHeight": 4000
+  "reserveHeight": 4000,
+  "palette": "designed",
+  "paletteNote": "Postcard chapters torn along a ragged seam; the paper and photo colours are the design."
 }

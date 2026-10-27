@@ -58,5 +58,7 @@
     }
   ],
   "lazy": true,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "WebGL water: the blue-turquoise caustics are the artwork, with a CSS gradient fallback in the same colours."
 }

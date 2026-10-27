@@ -95,5 +95,7 @@
   ],
   "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
   "ownPalette": true,
-  "nativeWhen": []
+  "nativeWhen": [],
+  "palette": "designed",
+  "paletteNote": "Grey paper sheets on an accent wash for a photographer portfolio; the paper greys are the look (reviewed against themes)."
 }

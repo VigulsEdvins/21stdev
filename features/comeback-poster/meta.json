@@ -72,5 +72,7 @@
     }
   ],
   "ownPalette": true,
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "palette": "designed",
+  "paletteNote": "A printed gig poster with a drawn poppy field and paper masthead; the print colours are the illustration."
 }

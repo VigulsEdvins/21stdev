@@ -39,5 +39,7 @@
   "updatedAt": "2026-10-25",
   "customizable": [],
   "lazy": true,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Glossy gel shapes (ring, ball, cube, gem) whose colours are the artwork."
 }

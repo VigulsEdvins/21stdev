@@ -52,5 +52,7 @@
     }
   ],
   "lazy": true,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A woven blue cloth shader: the denim blue is the material."
 }

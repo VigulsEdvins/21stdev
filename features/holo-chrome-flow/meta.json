@@ -39,5 +39,7 @@
   "updatedAt": "2026-10-25",
   "customizable": [],
   "lazy": true,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "WebGL iridescent foil: the rainbow film is drawn in the shader."
 }

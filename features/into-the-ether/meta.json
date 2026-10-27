@@ -96,5 +96,7 @@
     "luma": 0.95,
     "webgl": false,
     "canvas2d": true
-  }
+  },
+  "palette": "designed",
+  "paletteNote": "Concentric ripple rings and a synth pulse drawn on canvas; the ring colours are drawn in code and the component has its own dual theme."
 }

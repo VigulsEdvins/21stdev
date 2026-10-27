@@ -62,5 +62,7 @@
     "light"
   ],
   "reserveHeight": 800,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "The grey portrait and the colourful hero beneath it are the artwork; the colours cannot follow a page theme."
 }

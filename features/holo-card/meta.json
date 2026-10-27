@@ -68,5 +68,7 @@
       "type": "text",
       "selector": ":scope .pf-flip"
     }
-  ]
+  ],
+  "palette": "designed",
+  "paletteNote": "The card is a physical object: gold foil frame, cream face and prism foil are the artwork. The page around it (background, text, accent, controls) already reads the tokens."
 }

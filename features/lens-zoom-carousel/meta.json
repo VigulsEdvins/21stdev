@@ -45,5 +45,7 @@
     }
   ],
   "reserveHeight": 800,
-  "ownPalette": true
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "A full-bleed slider of scenes with their own colours; the scene art sets the palette."
 }
