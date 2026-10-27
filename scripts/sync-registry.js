@@ -179,11 +179,14 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
     }))
   };
 
-  fs.writeFileSync(
-    path.join(rootDir, 'registry.json'),
-    JSON.stringify(jsonCatalog, null, 2),
-    'utf8'
-  );
+  // The timestamp only moves when the catalogue does, so running tests or sync twice leaves no diff in git
+  const registryFile = path.join(rootDir, 'registry.json');
+  try {
+    const previous = JSON.parse(fs.readFileSync(registryFile, 'utf8'));
+    const same = (o) => JSON.stringify({ ...o, generatedAt: '' });
+    if (previous.generatedAt && same(previous) === same(jsonCatalog)) jsonCatalog.generatedAt = previous.generatedAt;
+  } catch (_) { /* no earlier registry */ }
+  fs.writeFileSync(registryFile, JSON.stringify(jsonCatalog, null, 2), 'utf8');
 
   // registry.js carries metadata only; source files are fetched on demand (scripts/feature-files.js)
   // The field lists (`customizable`, a third of the size) and long licence notes are left out; the Content tab reads

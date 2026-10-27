@@ -37,5 +37,9 @@ assert.strictEqual(slim.customizable, undefined, 'registry.js leaves out the fie
 assert.strictEqual(slim.customizableCount, 1);
 assert.deepStrictEqual(slim.origin, { source: 'custom', license: 'own' }, 'registry.js keeps only source and licence');
 assert(!slim.files, 'registry.js has no source files');
+// syncing again with nothing changed rewrites the same bytes (the timestamp does not move)
+const first = fs.readFileSync(path.join(root, 'registry.json'), 'utf8');
+syncRegistry(root);
+assert.strictEqual(fs.readFileSync(path.join(root, 'registry.json'), 'utf8'), first, 'registry.json is stable when nothing changed');
 fs.rmSync(root, { recursive: true, force: true });
 console.log('✅ Sync registry tests passed!');
