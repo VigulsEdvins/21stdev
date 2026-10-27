@@ -96,6 +96,13 @@ I have proposed an answer for each so work can continue; change any of them.
 | D7 | After purchase | Unlimited re-download and edits of that project for 12 months; adding sections later pays the difference |
 | D8 | Languages of the storefront | English first. The builder output can already be multilingual |
 
+## 7a. Answers received from the owner (2026-10-27)
+
+- **Domain:** edvlabs.com.
+- **VAT:** the seller is VAT-registered in Latvia (to be confirmed with the accountant: Latvian rate 21% for Latvian and, below the EU-wide €10,000 threshold for cross-border sales to consumers, other EU customers; above it, VAT of the customer's country through the OSS scheme).
+- **Where leads go:** email first, WhatsApp second. The address and the number are **not stored in the repository**; they go into the hosting service's environment settings (see E4.4 and E9.1).
+- **Hosting:** Cloudflare Pages for the static site and builder; Supabase for accounts, data and server functions; no virtual machine for Phase 1 or 2 (see the plan, E0.8).
+
 ## 8. Look and feel
 
 **Decided 2026-10-27: direction E, mid-century poster** (teal, mustard and rust on cream, circles and arches, Gloock and Work Sans). Tokens: `site/styles/tokens.css`, usage and measured contrast: `docs/brand/tokens.md`. The sections below describe the original brief (editorial and warm); the final look is E.
