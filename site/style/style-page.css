@@ -1,0 +1,24 @@
+/* Layout of the style page only; the components come from components.css. */
+.sg-wrap { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
+.sg-section { padding: var(--s-8) 0 var(--s-5); border-top: 2px solid var(--ink); }
+.sg-section > .section-head { margin-bottom: var(--s-6); }
+.sg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--s-5); }
+.sg-swatch { border: var(--border); border-radius: var(--radius-m); overflow: hidden; background: var(--paper-raised); }
+.sg-swatch .chip { height: 84px; display: flex; align-items: flex-end; padding: var(--s-2) var(--s-3); font: 600 13px var(--font-body); }
+.sg-swatch dl { margin: 0; padding: var(--s-3); font-size: 14px; }
+.sg-swatch dt { font-weight: 600; } .sg-swatch dd { margin: 0 0 6px; color: var(--text-muted); }
+.sg-pairs { width: 100%; border-collapse: collapse; font-size: 15px; }
+.sg-pairs th, .sg-pairs td { text-align: left; padding: 8px 10px; border-top: 1px solid var(--line); }
+.sg-pairs .sample { padding: 4px 12px; border-radius: 8px; font-weight: 600; display: inline-block; }
+.sg-pairs .pass { color: var(--ok); font-weight: 600; } .sg-pairs .fail { color: var(--error); font-weight: 600; }
+.sg-states { display: grid; grid-template-columns: 140px repeat(5, minmax(0, 1fr)); gap: var(--s-4) var(--s-5); align-items: center; }
+.sg-states .name { font: 600 13px var(--font-body); text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); }
+.sg-row { display: flex; flex-wrap: wrap; gap: var(--s-6); align-items: flex-start; }
+.sg-type > * { margin: 0 0 var(--s-4); }
+.sg-note { font-size: 15px; color: var(--text-muted); max-width: 44em; margin-bottom: var(--s-5); }
+.sg-nav { position: sticky; top: 0; background: var(--paper); border-bottom: 2px solid var(--ink); z-index: 20; }
+.sg-nav ul { display: flex; flex-wrap: wrap; gap: var(--s-5); list-style: none; margin: 0; padding: var(--s-3) 0; font-weight: 600; font-size: 15px; }
+.sg-nav a { color: var(--text); }
+.sg-teal { background: var(--teal); color: var(--text-on-teal); padding: var(--s-6); border-radius: var(--radius-l); }
+.sg-modal-frame { background: rgba(29,42,51,.12); padding: var(--s-6); border-radius: var(--radius-l); }
+.sg-modal-frame .modal { display: block; position: static; margin: 0 auto; }

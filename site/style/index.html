@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The edvlabs design system: colour, type, spacing and every component in every state.">
+<title>edvlabs style page</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Ccircle cx=%2717%27 cy=%2717%27 r=%2717%27 fill=%27%23e2a627%27/%3E%3Cpath d=%27M0 17a17 17 0 0 0 34 0z%27 fill=%27%23c4522a%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../styles/components.css">
+<link rel="stylesheet" href="style-page.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="sg-wrap site-header">
+  <a class="logo" href="#top"><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="17" fill="#e2a627"/><path d="M0 17a17 17 0 0 0 34 0z" fill="#c4522a"/></svg>edvlabs</a>
+  <span class="small muted">Style page · direction E, mid-century poster</span>
+</header>
+<nav class="sg-nav" aria-label="On this page"><div class="sg-wrap"><ul>
+<li><a href="#colour">Colour</a></li><li><a href="#type">Type</a></li><li><a href="#space">Space and shape</a></li><li><a href="#buttons">Buttons and links</a></li><li><a href="#forms">Forms</a></li><li><a href="#options">Option cards</a></li><li><a href="#progress">Progress</a></li><li><a href="#price">Price</a></li><li><a href="#feedback">Feedback</a></li><li><a href="#table">Table</a></li><li><a href="#layout">Header, footer, empty</a></li>
+</ul></div></nav>
+
+<main id="main" class="sg-wrap">
+<section class="sg-section" id="colour" style="border-top:0">
+  <div class="section-head"><span class="no">01</span><h2>Colour</h2></div>
+  <p class="sg-note">Colours are roles. Contrast below is measured live from the tokens on this page; the same pairs are checked by <code>npm run check-brand</code> in CI.</p>
+  <div class="sg-grid"><div class="sg-swatch" data-token="--paper"><div class="chip"></div><dl><dt>--paper</dt><dd class="hex"></dd><dd>Page background</dd></dl></div><div class="sg-swatch" data-token="--paper-raised"><div class="chip"></div><dl><dt>--paper-raised</dt><dd class="hex"></dd><dd>Cards</dd></dl></div><div class="sg-swatch" data-token="--teal"><div class="chip"></div><dl><dt>--teal</dt><dd class="hex"></dd><dd>Deep field</dd></dl></div><div class="sg-swatch" data-token="--mustard"><div class="chip"></div><dl><dt>--mustard</dt><dd class="hex"></dd><dd>Highlight and price panel</dd></dl></div><div class="sg-swatch" data-token="--rust"><div class="chip"></div><dl><dt>--rust</dt><dd class="hex"></dd><dd>Action fills, big shapes</dd></dl></div><div class="sg-swatch" data-token="--ink"><div class="chip"></div><dl><dt>--ink</dt><dd class="hex"></dd><dd>Text, outlines, footer</dd></dl></div><div class="sg-swatch" data-token="--accent-text"><div class="chip"></div><dl><dt>--accent-text</dt><dd class="hex"></dd><dd>Rust as text on paper</dd></dl></div><div class="sg-swatch" data-token="--text-muted"><div class="chip"></div><dl><dt>--text-muted</dt><dd class="hex"></dd><dd>Secondary text</dd></dl></div><div class="sg-swatch" data-token="--ok"><div class="chip"></div><dl><dt>--ok</dt><dd class="hex"></dd><dd>Saved</dd></dl></div><div class="sg-swatch" data-token="--error"><div class="chip"></div><dl><dt>--error</dt><dd class="hex"></dd><dd>Errors</dd></dl></div></div>
+  <h3 style="margin:var(--s-7) 0 var(--s-4)">Every pair the design uses</h3>
+  <table class="sg-pairs"><thead><tr><th scope="col">Sample</th><th scope="col">Pair</th><th scope="col">Used for</th><th scope="col">Ratio</th><th scope="col">WCAG AA</th></tr></thead><tbody id="pair-rows"></tbody></table>
+  <script type="application/json" id="pair-data">[["--text", "--paper", "normal", "body text on the page"], ["--text", "--paper-raised", "normal", "text on cards"], ["--text-muted", "--paper", "normal", "secondary text on the page"], ["--text-muted", "--paper-raised", "normal", "secondary text on cards"], ["--accent-text", "--paper", "normal", "kickers, links and labels in rust on the page"], ["--accent-text", "--paper-raised", "normal", "kickers and links on cards"], ["--text-on-teal", "--teal", "normal", "text on the teal field"], ["--text-on-teal-soft", "--teal", "normal", "lead text on the teal field"], ["--accent-on-teal", "--teal", "large", "big mustard words in headlines on teal (24px and up)"], ["--text-on-rust", "--rust", "normal", "button text on rust"], ["--text-on-mustard", "--mustard", "normal", "text on the mustard panel and band"], ["--text-on-ink", "--ink", "normal", "footer and builder bar text"], ["--accent-on-teal", "--ink", "normal", "prices and buttons in mustard on the dark bar"], ["--ok", "--paper", "normal", "saved status"], ["--error", "--paper", "normal", "error messages"], ["--ink", "--paper", "large", "outlines and checkbox borders (3:1 for interface parts)"], ["--teal", "--paper", "large", "teal shapes and icons on paper (3:1)"]]</script>
+</section>
+
+<section class="sg-section" id="type">
+  <div class="section-head"><span class="no">02</span><h2>Type</h2></div>
+  <div class="sg-type">
+    <p class="display">A good page for a good small business.</p>
+    <h1>Heading one: which parts should your page have?</h1>
+    <h2>Heading two: three steps, no code</h2>
+    <h3>Heading three: tell us what you need</h3>
+    <p class="lead">Lead text. Answer a few easy questions and make the page yourself, or let us make it.</p>
+    <p class="prose">Body text, 18 pixels on a 1.6 line, set to a line no longer than 38 characters wide. “I don’t know yet” is always a good answer, and we will suggest something sensible. Ā ē ī ū š ž ņ ģ ķ ļ č work in both fonts.</p>
+    <p class="small muted">Small text, 15 pixels. Prices include VAT.</p>
+    <span class="kicker">Kicker label, 13 pixels, uppercase</span>
+  </div>
+</section>
+
+<section class="sg-section" id="space">
+  <div class="section-head"><span class="no">03</span><h2>Space and shape</h2></div>
+  <p class="sg-note">Space runs on a 4 pixel base: 4, 8, 12, 16, 24, 32, 48, 64, 96. Corners are 14, 22, 28 and pill. The circle and the arch are the recurring shapes; they are for decoration and images, never for cropping words away.</p>
+  <div class="sg-row">
+    <div style="width:96px;height:96px;border-radius:50%;background:var(--mustard);border:var(--border)"></div>
+    <div style="width:96px;height:96px;border-radius:var(--radius-arch);background:var(--rust);border:var(--border);border-bottom:0"></div>
+    <div style="width:96px;height:96px;border-radius:var(--radius-m);background:var(--teal);border:var(--border)"></div>
+    <div style="width:140px;height:56px;border-radius:var(--radius-pill);background:var(--paper-raised);border:var(--border)"></div>
+  </div>
+</section>
+
+<section class="sg-section" id="buttons">
+  <div class="section-head"><span class="no">04</span><h2>Buttons and links</h2></div>
+  <p class="sg-note">Button labels are verbs: “Start your page”, “Save”, not “Submit”. Disabled buttons keep readable text and a flat look.</p>
+  <div class="sg-states">
+    <span class="name">State</span><span class="name">Default</span><span class="name">Hover</span><span class="name">Focus</span><span class="name">Active</span><span class="name">Disabled</span>
+    <span class="name">Primary</span><a class="btn" href="#buttons">Start</a><a class="btn is-hover" href="#buttons">Start</a><a class="btn is-focus" href="#buttons">Start</a><a class="btn is-active" href="#buttons">Start</a><button class="btn" disabled>Start</button>
+    <span class="name">Secondary</span><a class="btn btn--secondary" href="#buttons">Back</a><a class="btn btn--secondary is-hover" href="#buttons">Back</a><a class="btn btn--secondary is-focus" href="#buttons">Back</a><a class="btn btn--secondary is-active" href="#buttons">Back</a><button class="btn btn--secondary" disabled>Back</button>
+    <span class="name">Gold (on dark)</span><span class="sg-teal" style="padding:12px;border-radius:12px"><a class="btn btn--gold" href="#buttons">Pay</a></span><span class="sg-teal" style="padding:12px;border-radius:12px"><a class="btn btn--gold is-hover" href="#buttons">Pay</a></span><span class="sg-teal" style="padding:12px;border-radius:12px"><a class="btn btn--gold is-focus" href="#buttons">Pay</a></span><span></span><span></span>
+    <span class="name">Danger</span><a class="btn btn--danger" href="#buttons">Delete</a><a class="btn btn--danger is-hover" href="#buttons">Delete</a><a class="btn btn--danger is-focus" href="#buttons">Delete</a><span></span><button class="btn btn--danger" disabled>Delete</button>
+  </div>
+  <div class="sg-row" style="margin-top:var(--s-6)"><a class="btn btn--small" href="#buttons">Small button</a><a class="link" href="#buttons">A text link</a><a class="link is-hover" href="#buttons">Link, hover</a></div>
+</section>
+
+<section class="sg-section" id="forms">
+  <div class="section-head"><span class="no">05</span><h2>Forms</h2></div>
+  <p class="sg-note">Every field has a visible label. Hints sit under the label; errors name the problem in words and never rely on colour alone.</p>
+  <div class="sg-row">
+    <form class="sg-row" style="flex-direction:column;gap:var(--s-5)" onsubmit="return false" novalidate>
+      <div class="field"><label for="f-name">Your name</label><span class="hint" id="f-name-h">What should we call you?</span><input class="input" id="f-name" aria-describedby="f-name-h" autocomplete="name"></div>
+      <div class="field"><label for="f-mail">Email</label><span class="hint">We only use it to answer you.</span><input class="input" id="f-mail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+      <div class="field has-error"><label for="f-phone">Phone (optional)</label><input class="input" id="f-phone" type="tel" value="12 ab" aria-invalid="true" aria-describedby="f-phone-e"><span class="error-text" id="f-phone-e">That does not look like a phone number. Use digits, and a + for the country code.</span></div>
+      <div class="field is-ok"><label for="f-ok">Page title</label><input class="input" id="f-ok" value="Marren &amp; Finch"><span class="ok-text">Saved.</span></div>
+      <div class="field"><label for="f-dis">Domain (locked until you pay)</label><input class="input" id="f-dis" value="marren.example" disabled></div>
+      <div class="field"><label for="f-sel">How should we reach you?</label><select class="select" id="f-sel"><option>Email</option><option>Phone</option><option>WhatsApp</option></select></div>
+      <div class="field sample"><label for="f-t">Headline <span class="badge badge--sample">sample text</span></label><span class="hint">Replace this; the yellow means it is still sample text.</span><textarea class="textarea" id="f-t">Made slowly, kept for a lifetime</textarea></div>
+    </form>
+    <div style="display:grid;gap:var(--s-5);max-width:30em">
+      <fieldset style="border:0;padding:0;margin:0;display:grid;gap:var(--s-3)"><legend class="label" style="font-weight:600;margin-bottom:var(--s-3)">Who builds your page?</legend>
+        <label class="choice"><input type="radio" name="who" checked> I build it myself</label>
+        <label class="choice"><input type="radio" name="who"> edvlabs builds it for me</label>
+        <label class="choice"><input type="radio" name="who" disabled> Both (not available)</label></fieldset>
+      <fieldset style="border:0;padding:0;margin:0;display:grid;gap:var(--s-3)"><legend style="font-weight:600;margin-bottom:var(--s-3)">Extras</legend>
+        <label class="choice"><input type="checkbox" checked> Editor, to change the words later</label>
+        <label class="choice"><input type="checkbox"> A second language</label></fieldset>
+      <label class="switch"><input type="checkbox" role="switch" checked> Show hints</label>
+      <div class="file-drop"><strong>Drop a photo here</strong><p class="small muted" style="margin:6px 0 12px">JPG, PNG or WebP, up to 5 MB</p><button class="btn btn--secondary btn--small" type="button">Choose a file</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="sg-section" id="options">
+  <div class="section-head"><span class="no">06</span><h2>Option cards</h2></div>
+  <p class="sg-note">Used for the questions. A checked card changes fill and tick, never colour alone. The corner shapes vary on purpose.</p>
+  <div class="option-grid">
+    <label class="option "><input type="checkbox"><b>Opening banner</b><small>The first thing people see.</small></label>
+    <label class="option is-checked"><input type="checkbox" checked><b>About you</b><small>A short story and a photo.</small></label>
+    <label class="option is-hover"><input type="checkbox"><b>Prices</b><small>Hover state.</small></label>
+    <label class="option is-focus"><input type="checkbox"><b>Contact form</b><small>Keyboard focus state.</small></label>
+    <label class="option is-disabled"><input type="checkbox" disabled><b>Map and hours</b><small>Not available on this plan.</small></label>
+    <label class="option is-checked is-focus"><input type="checkbox" checked><b>What customers say</b><small>Checked and focused.</small></label>
+  </div>
+</section>
+
+<section class="sg-section" id="progress">
+  <div class="section-head"><span class="no">07</span><h2>Progress</h2></div>
+  <div class="dots" role="img" aria-label="Question 4 of 10" style="max-width:520px;margin-bottom:var(--s-6)"><i class="is-done"></i><i class="is-done"></i><i class="is-done"></i><i class="is-now"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <ol class="steps"><li class="step is-done"><span class="num">✓</span>Blocks</li><li class="step is-now" aria-current="step"><span class="num">2</span>Words</li><li class="step"><span class="num">3</span>Look</li><li class="step"><span class="num">4</span>Check</li><li class="step"><span class="num">5</span>Get it</li></ol>
+</section>
+
+<section class="sg-section" id="price">
+  <div class="section-head"><span class="no">08</span><h2>Price</h2></div>
+  <div class="sg-row">
+    <div class="receipt" role="group" aria-label="Your price so far"><div><span>Base, 3 blocks in</span><span>€39</span></div><div><span>4 extra blocks × €9</span><span>€36</span></div><div><span>Editor</span><span>not chosen</span></div><div class="sum"><span>You build it</span><span>€75</span></div></div>
+    <div class="price-panel"><span>If we build it, from</span><b>€509</b><span>our work included, agreed first</span></div>
+    <div class="meter"><b>€75</b><span>7 blocks · 3 included, 4 extra at €9</span></div>
+  </div>
+  <p class="sg-note" style="margin-top:var(--s-4)">Sample prices. The real numbers come from the price table.</p>
+</section>
+
+<section class="sg-section" id="feedback">
+  <div class="section-head"><span class="no">09</span><h2>Feedback</h2></div>
+  <div style="display:grid;gap:var(--s-4);margin-bottom:var(--s-6)">
+    <div class="alert alert--ok" role="status"><div><strong>Saved</strong>Your page is saved. You can close this tab.</div></div>
+    <div class="alert alert--info"><div><strong>Good to know</strong>Hosting and a domain are not included.</div></div>
+    <div class="alert alert--error" role="alert"><div><strong>Could not save</strong>Check your connection. A copy is kept in this browser.</div></div>
+  </div>
+  <div class="sg-row"><span class="toast" role="status">Link copied <a class="link" href="#feedback">Undo</a></span><span class="badge badge--sample">sample text</span><span class="badge badge--ok">paid</span><span class="badge badge--new">new</span></div>
+  <h3 style="margin:var(--s-7) 0 var(--s-4)">Dialog</h3>
+  <p class="sg-note">A native dialog: focus moves into it, Escape closes it, focus returns to the button.</p>
+  <button class="btn btn--secondary" id="open-modal" type="button">Open the dialog</button>
+  <dialog class="modal" id="demo-modal" aria-labelledby="dm-t"><h2 id="dm-t">Delete this page?</h2><p>The page and its words are removed. You can bring it back for 30 days.</p><div class="btn-row"><button class="btn btn--danger" type="button" data-close>Delete the page</button><button class="btn btn--secondary" type="button" data-close>Keep it</button></div></dialog>
+</section>
+
+<section class="sg-section" id="table">
+  <div class="section-head"><span class="no">10</span><h2>Table</h2></div>
+  <table class="table"><caption>How the price is worked out</caption><thead><tr><th scope="col">What</th><th scope="col" class="num">Price</th></tr></thead><tbody><tr><td>Base: your page, three blocks included</td><td class="num">€39</td></tr><tr><td>Each extra block (4 × €9)</td><td class="num">€36</td></tr><tr><td>Editor (optional)</td><td class="num">+ €39</td></tr></tbody><tfoot><tr><td>Seven blocks, no editor</td><td class="num">€75</td></tr></tfoot></table>
+</section>
+
+<section class="sg-section" id="layout">
+  <div class="section-head"><span class="no">11</span><h2>Header, footer and empty state</h2></div>
+  <div class="card" style="margin-bottom:var(--s-6)"><div class="site-header" style="padding:0"><a class="logo" href="#layout"><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="17" fill="#e2a627"/><path d="M0 17a17 17 0 0 0 34 0z" fill="#c4522a"/></svg>edvlabs</a><nav class="nav" aria-label="Example"><a href="#layout" aria-current="page">How it works</a><a href="#layout">Examples</a><a href="#layout">Prices</a></nav><a class="btn btn--small" href="#layout">Start your page</a></div></div>
+  <div class="empty"><div class="shape" aria-hidden="true"></div><h3>No pages yet</h3><p class="muted" style="margin:var(--s-3) 0 var(--s-5)">Answer ten short questions and your first page will be here.</p><a class="btn" href="#layout">Start your page</a></div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="sg-wrap"><div style="display:flex;justify-content:space-between;gap:var(--s-5);flex-wrap:wrap"><span class="logo" style="color:var(--text-on-ink)">edvlabs</span><span><a href="#top">Back to the top</a></span></div><small>Style page. Sample text and prices are placeholders. Print this page to check the print styles.</small></div></footer>
+<script src="contrast.js"></script>
+</body>
+</html>

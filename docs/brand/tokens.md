@@ -17,7 +17,7 @@ Direction **E, mid-century poster**, chosen by the owner on 2026-10-27. The toke
 | `--text-on-rust` | `#ffffff` | Button text on rust (4.6:1) | Cream on rust (only 3.8:1) |
 | `--ok` / `--error` | `#2f6a2d` / `#a3261b` | Saved status, error messages | Colour alone: always add words or an icon |
 
-Findings from the measuring, now fixed in the tokens: rust on paper was 3.8:1 (too low for small text), so text uses the darker `--accent-text`; cream text on rust was 3.8:1, so buttons use white; mustard on teal is 3.6:1, so it is limited to large words.
+Do not put `--text-muted` on mustard (about 3.6:1): text on mustard is always `--text-on-mustard`. Findings from the measuring, now fixed in the tokens: rust on paper was 3.8:1 (too low for small text), so text uses the darker `--accent-text`; cream text on rust was 3.8:1, so buttons use white; mustard on teal is 3.6:1, so it is limited to large words.
 
 ## Type
 
