@@ -16,7 +16,7 @@
   function createCanvasController(ctx) {
     const {
       stackManager, previewFrame, canvasContextMenu, elementEditToolbar,
-      addOrReplaceLandingSection, getActiveSection, setActiveSection,
+      addOrReplaceLandingSection, addWithTemplateGuard, getActiveSection, setActiveSection,
       handleHistoryKeydown, pushHistorySnapshot
     } = ctx;
 
@@ -326,7 +326,7 @@
     window.addEventListener('scroll', updateToolbarPosition, true);
     window.addEventListener('keydown', handleCanvasElementKeydown);
 
-    CanvasFrame.wire({ previewFrame, handleHistoryKeydown, handleCanvasElementKeydown, cs, selectCanvasElement, closeToolbarPopup, ensureResizeHandles, elementEditToolbar, updateToolbarPosition, clearElementSelection, canvasContextMenu, hideContextMenu, focusElementPrimaryText, pushHistorySnapshot, toolbarBtnWidth, toolbarBtnHeight, toolbarImgWidth, toolbarImgHeight, toolbarCardWidth, toolbarCardHeight, toolbarTableWidth, toolbarTableHeight, stackManager, getActiveSection, setActiveSection, addOrReplaceLandingSection });
+    CanvasFrame.wire({ previewFrame, handleHistoryKeydown, handleCanvasElementKeydown, cs, selectCanvasElement, closeToolbarPopup, ensureResizeHandles, elementEditToolbar, updateToolbarPosition, clearElementSelection, canvasContextMenu, hideContextMenu, focusElementPrimaryText, pushHistorySnapshot, toolbarBtnWidth, toolbarBtnHeight, toolbarImgWidth, toolbarImgHeight, toolbarCardWidth, toolbarCardHeight, toolbarTableWidth, toolbarTableHeight, stackManager, getActiveSection, setActiveSection, addOrReplaceLandingSection, addWithTemplateGuard });
     return {
       state: cs,
       hideContextMenu,

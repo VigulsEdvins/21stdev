@@ -3,11 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lilac Meadow Landing</title>
+  <title>Meadow Savings Landing</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="fm-page">
+    <header class="fm-nav">
+      <a class="fm-logo" href="#"><span class="fm-logo-dot" aria-hidden="true"></span> Marigold</a>
+      <nav class="fm-links" aria-label="Main">
+        <a href="#fm-about">About</a>
+        <a href="#fm-features">Features</a>
+        <a href="#fm-numbers">Numbers</a>
+      </nav>
+      <a class="fm-pill" href="#">Open an account</a>
+    </header>
+
+    <section class="fm-hero">
+      <canvas class="fm-field" id="fmField" aria-hidden="true"></canvas>
+      <div class="fm-coin fm-coin-a" aria-hidden="true"><span>M</span></div>
+      <div class="fm-coin fm-coin-b" aria-hidden="true"><span>M</span></div>
+      <div class="fm-hero-copy">
+        <p class="fm-kicker">Savings that grow on their own</p>
+        <h1 class="fm-h1">Let your money bloom</h1>
+        <p class="fm-sub">A calm savings account that pays you every day, with no lock-in and no small print to dig through.</p>
+        <a class="fm-btn" href="#">Start saving</a>
+      </div>
+    </section>
+
+    <section class="fm-sec fm-about" id="fm-about">
+      <h2 class="fm-h2">Plain money, patiently grown</h2>
+      <p class="fm-statement">Marigold is a fictional savings app. Deposits earn a little every day, and you can take them back whenever you wish.</p>
+      <a class="fm-link" href="#">Read how it works</a>
+    </section>
+
+    <section class="fm-sec" id="fm-features">
+      <div class="fm-cards">
+        <article class="fm-card">
+          <svg viewBox="0 0 60 60" class="fm-icon" aria-hidden="true"><path d="M30 54V26" /><circle cx="30" cy="18" r="9" /><path d="M30 40c-8 0-12-5-12-10M30 36c7 0 11-4 11-9" /></svg>
+          <h3>Daily growth</h3><p>Earnings are added each morning, so the balance you see is always the balance you own.</p>
+        </article>
+        <article class="fm-card">
+          <svg viewBox="0 0 60 60" class="fm-icon" aria-hidden="true"><circle cx="30" cy="30" r="22" /><path d="M30 18v24M22 26c0-6 16-6 16 0s-16 4-16 10 16 6 16 0" /></svg>
+          <h3>No lock-in</h3><p>Move money in and out at any hour. There are no notice periods and no exit fees.</p>
+        </article>
+        <article class="fm-card">
+          <svg viewBox="0 0 60 60" class="fm-icon" aria-hidden="true"><path d="M8 48h44M14 48V30M30 48V18M46 48V36" /></svg>
+          <h3>Clear reports</h3><p>One page shows what you put in, what it earned and what is coming next month.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="fm-sec fm-numbers" id="fm-numbers">
+      <div><strong data-to="4.2" data-dec="1" data-suf="%">0</strong><span>Example yearly rate</span></div>
+      <div><strong data-to="0" data-suf=" fees">0</strong><span>Account or exit fees</span></div>
+      <div><strong data-to="24" data-suf="/7">0</strong><span>Withdrawals any time</span></div>
+    </section>
+
+    <section class="fm-sec fm-end">
+      <h2 class="fm-h2">Plant the first coin today</h2>
+      <a class="fm-btn" href="#">Open an account</a>
+    </section>
+
+    <footer class="fm-foot"><span>Marigold, a placeholder brand for demos.</span><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

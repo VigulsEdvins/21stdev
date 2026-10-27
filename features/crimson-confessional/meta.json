@@ -1,29 +1,25 @@
 {
-  "name": "Crimson Confessional",
-  "title": "Crimson Confessional",
+  "name": "Noir Scroll Chapters",
+  "title": "Noir Scroll Chapters",
   "slug": "crimson-confessional",
   "category": "Scroll & Parallax",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A scroll-scrubbed noir sequence. Each chapter is one word, one cryptic line, and a procedural motif drawn from scroll position. Red, black, bone, and a lot of grain.",
+  "description": "A scroll-scrubbed sequence of four chapters, each with one big word, a cryptic line and a canvas motif driven by scroll position, in red, black and bone.",
   "tags": [
-    "crimson",
-    "confessional",
-    "21st.dev",
     "scroll",
-    "react"
+    "noir",
+    "chapters",
+    "canvas",
+    "grain"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 132,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
@@ -37,72 +33,65 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "headline",
-      "label": "Headline",
+      "id": "small-label",
+      "label": "Brand label",
       "type": "text",
-      "selector": ":scope h2.relative"
+      "selector": ":scope .nc-brand"
+    },
+    {
+      "id": "headline",
+      "label": "Chapter 1 word",
+      "type": "text",
+      "selector": ":scope .nc-ch:nth-child(1) .nc-word"
     },
     {
       "id": "intro-text",
-      "label": "Intro text",
+      "label": "Chapter 1 line",
       "type": "text",
-      "selector": ":scope p.m-0"
+      "selector": ":scope .nc-ch:nth-child(1) .nc-line"
     },
     {
-      "id": "text",
-      "label": "Text",
+      "id": "headline-2",
+      "label": "Chapter 2 word",
       "type": "text",
-      "selector": ":scope div.bottom-6"
+      "selector": ":scope .nc-ch:nth-child(2) .nc-word"
     },
     {
-      "id": "list-item-1",
-      "label": "List item 1",
+      "id": "intro-text-2",
+      "label": "Chapter 2 line",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(1)"
+      "selector": ":scope .nc-ch:nth-child(2) .nc-line"
     },
     {
-      "id": "list-item-2",
-      "label": "List item 2",
+      "id": "headline-3",
+      "label": "Chapter 3 word",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(2)"
+      "selector": ":scope .nc-ch:nth-child(3) .nc-word"
     },
     {
-      "id": "list-item-3",
-      "label": "List item 3",
+      "id": "intro-text-3",
+      "label": "Chapter 3 line",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(3)"
+      "selector": ":scope .nc-ch:nth-child(3) .nc-line"
     },
     {
-      "id": "list-item-4",
-      "label": "List item 4",
+      "id": "headline-4",
+      "label": "Chapter 4 word",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(4)"
+      "selector": ":scope .nc-ch:nth-child(4) .nc-word"
     },
     {
-      "id": "list-item-5",
-      "label": "List item 5",
+      "id": "intro-text-4",
+      "label": "Chapter 4 line",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(5)"
+      "selector": ":scope .nc-ch:nth-child(4) .nc-line"
     }
-  ],
-  "measured": {
-    "luma": 0.05,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "nativeWhen": [
-    "light"
   ],
   "reserveHeight": 7560
 }

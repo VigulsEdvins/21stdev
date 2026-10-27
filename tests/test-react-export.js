@@ -10,15 +10,15 @@ const ROOT = path.resolve(__dirname, '..');
 const read = (slug, f) => { const p = path.join(ROOT, 'features', slug, f); return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : ''; };
 const source = (slug) => ({ title: slug, component: read(slug, 'component.tsx'), demo: read(slug, 'demo.tsx'), css: read(slug, 'style.css') });
 
-const slugs = ['glass-folder-cards', 'engraved-ticket', 'waitlist-hero', 'spotlight-offer-quiz'];
+const slugs = ['alice-scroll-story', 'waitlist-hero'];
 const sources = Object.fromEntries(slugs.map(s => [s, source(s)]));
-const stack = [...slugs, 'glass-folder-cards'].map(slug => ({ slug }));
+const stack = [...slugs, 'alice-scroll-story'].map(slug => ({ slug }));
 const out = generateReactProject({ stack, theme: 'clean-minimal', page: { title: 'Zephyr Dental', description: 'Family dentistry.' }, sources });
 
 // waitlist-hero is plain bundle code (no component.tsx): left out with a reason
 assert(out.skipped.some(s => s.slug === 'waitlist-hero' && /no React source/.test(s.reason)));
-assert(out.included.includes('glass-folder-cards') && out.included.includes('engraved-ticket'));
-assert.strictEqual((out.files['src/App.tsx'].match(/<Section\d+ \/>/g) || []).length, 5 - out.skipped.length, 'a repeated section is rendered twice but imported once');
+assert(out.included.includes('alice-scroll-story'));
+assert.strictEqual((out.files['src/App.tsx'].match(/<Section\d+ \/>/g) || []).length, 3 - out.skipped.length, 'a repeated section is rendered twice but imported once');
 assert.strictEqual((out.files['src/App.tsx'].match(/import Section/g) || []).length, out.included.length);
 assert(out.files['index.html'].includes('<title>Zephyr Dental</title>'));
 assert(out.files['src/index.css'].includes('--bg: #ffffff'));

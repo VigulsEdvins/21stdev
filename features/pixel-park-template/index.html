@@ -3,11 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pixel Park Template</title>
+  <title>Lantern Meadow Studio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="lm-page">
+    <header class="lm-nav">
+      <a class="lm-logo" href="#">lantern<b>meadow</b></a>
+      <nav aria-label="Main"><a href="#lm-about">About</a><a href="#lm-letter">Letter</a><a href="#lm-jobs">Jobs</a><a href="#lm-contact">Contact</a></nav>
+    </header>
+
+    <section class="lm-hero">
+      <canvas class="lm-art" id="lmArt" width="160" height="100" aria-hidden="true"></canvas>
+      <div class="lm-hero-copy">
+        <p class="lm-kicker">A tiny studio for slow software</p>
+        <h1 class="lm-h1">Lantern Meadow</h1>
+        <div class="lm-card">
+          <p>We make calm little apps, small enough to finish and kind enough to keep.</p>
+          <a class="lm-cta" href="#lm-jobs"><span class="lm-ctalabel">See open roles</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="lm-sec lm-manifesto" id="lm-about">
+      <h2 class="lm-h2">Our small manifesto</h2>
+      <ol class="lm-list">
+        <li><span>01</span>Ship less, polish more.</li>
+        <li><span>02</span>Quiet interfaces beat clever ones.</li>
+        <li><span>03</span>Everyone gets to leave by six.</li>
+      </ol>
+    </section>
+
+    <section class="lm-sec lm-letterwrap" id="lm-letter">
+      <article class="lm-letter">
+        <div class="lm-stamp" aria-hidden="true">LM<br />26</div>
+        <h2 class="lm-h2">A note from the meadow</h2>
+        <p>Dear visitor, we started with one desk, one lamp and a long walk each noon. The walk is still the best feature we ship.</p>
+        <p class="lm-sign">Mina &amp; Odo, founders</p>
+      </article>
+    </section>
+
+    <section class="lm-sec lm-jobs" id="lm-jobs">
+      <div class="lm-sky" aria-hidden="true"></div>
+      <div class="lm-jobcard">
+        <h2 class="lm-h2">Join the meadow</h2>
+        <p>Three open seats this season, all remote friendly.</p>
+        <ul><li>Interface designer</li><li>Frontend engineer</li><li>Community host</li></ul>
+        <a class="lm-arrowlink" href="#">View all roles &rarr;</a>
+      </div>
+    </section>
+
+    <section class="lm-sec lm-contact" id="lm-contact">
+      <h2 class="lm-h2">Say hello</h2>
+      <dl>
+        <div><dt>Mail</dt><dd><a href="#">hello@lantern.example</a></dd></div>
+        <div><dt>Visit</dt><dd><a href="#">Book a studio tea</a></dd></div>
+      </dl>
+    </section>
+
+    <footer class="lm-foot">&copy; 2026 Lantern Meadow Studio. Made slowly.</footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

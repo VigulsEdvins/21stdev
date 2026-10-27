@@ -1,4 +1,4 @@
-# Local 21st.dev Feature & Design Registry Implementation Plan
+# edvlabs Feature & Design Registry Implementation Plan
 
 > **Status (2026-10-24): implemented.** This plan was carried out and the work is in git history; its checkboxes were not kept up to date. Open work now lives in `docs/BACKLOG.md`.
 
@@ -6,7 +6,7 @@
 
 **Goal:** Build a 100% local, zero-auth, zero-build Component, Feature & Design Vault modeled after 21st.dev inside `/home/edvins/features-for-web/web-for-options` with 26 standalone, runnable features and full templates extracted from `photo-caroulsel`, `carousel-gallery-play`, `betteroff`, `vivmgmt`, and `21st.dev`.
 
-**Architecture:** Each feature lives in its own isolated folder (`features/<slug>/`) with `meta.json`, standalone `index.html`, scoped `style.css`, clean `script.js` (and `component.tsx` where applicable). A Node sync utility (`scripts/sync-registry.js`) compiles all `features/*/meta.json` and raw source files into `registry.json` (for agents/tools) and `registry.js` (`window.FEATURE_REGISTRY`, including pre-combined single-file HTML strings for instant zero-CORS copying and `srcdoc` previewing). The main application (`index.html`, `styles.css`, `app.js`) provides both a **21st.dev Catalog Grid + Slide-Over Inspector Modal** and an **IDE Split-Screen Workbench**, plus a **"+ Add Feature"** studio modal and `AGENT_GUIDE.md`.
+**Architecture:** Each feature lives in its own isolated folder (`features/<slug>/`) with `meta.json`, standalone `index.html`, scoped `style.css`, clean `script.js` (and `component.tsx` where applicable). A Node sync utility (`scripts/sync-registry.js`) compiles all `features/*/meta.json` and raw source files into `registry.json` (for agents/tools) and `registry.js` (`window.FEATURE_REGISTRY`, including pre-combined single-file HTML strings for instant zero-CORS copying and `srcdoc` previewing). The main application (`index.html`, `styles.css`, `app.js`) provides both a **Catalog Grid + Slide-Over Inspector Modal** and an **IDE Split-Screen Workbench**, plus a **"+ Add Feature"** studio modal and `AGENT_GUIDE.md`.
 
 **Tech Stack:** Vanilla HTML5, CSS3 (OKLCH variables, Grid/Flex, View Transitions), ES2022 JavaScript, Canvas 2D / Web Audio API / 3D CSS Transforms, Node.js (`fs`, `path`, `assert` for `sync-registry.js` and `tests/verify-registry.js`).
 
@@ -234,7 +234,7 @@ Expected: PASS (26 features verified and compiled into `registry.json` and `regi
 
 ---
 
-### Task 6: Build the Main `21st.local` Web Application (Catalog Grid + IDE Workbench + Feature Studio)
+### Task 6: Build the Main `edvlabs` Web Application (Catalog Grid + IDE Workbench + Feature Studio)
 
 **Files:**
 - Create: `index.html`
@@ -245,7 +245,7 @@ Expected: PASS (26 features verified and compiled into `registry.json` and `regi
 **Interfaces:**
 - Consumes: `window.FEATURE_REGISTRY` from `registry.js`
 - Produces:
-  - **Header Bar:** Brand logo (`21st.local`), collection tabs (`All (26)`, `Components & Physics (23)`, `Full Websites & CMS (3)`), Global Search input (`⌘K` shortcut), View Mode Switcher (**Grid View** vs **IDE Workbench View**), and **"+ Add Feature"** button.
+  - **Header Bar:** Brand logo (`edvlabs`), collection tabs (`All (26)`, `Components & Physics (23)`, `Full Websites & CMS (3)`), Global Search input (`⌘K` shortcut), View Mode Switcher (**Grid View** vs **IDE Workbench View**), and **"+ Add Feature"** button.
   - **21st.dev Hero & Filter River (Grid View):** OKLCH radial aurora glow background, source project filter pills (`All Sources`, `photo-caroulsel`, `carousel-gallery-play`, `betteroff`, `vivmgmt`, `21st-crafted`, `Custom`), and category chip bar (`3D & Carousels`, `Scroll & Parallax`, `Cursors & Physics`, `Galleries & Grids`, `Navigation & UI`, `Audio & Shaders`, `Full Templates`).
   - **Interactive Card Grid:** Each card displays a live interactive preview iframe (lazy-mounted via `IntersectionObserver` with an interactive toggle / replay button), source badge, category tag, title, description, and quick actions: **Inspect & Code**, **Copy Combined HTML**, **Copy Folder Path**.
   - **Slide-Over Inspector Modal (Option A):** Full-height modal with:

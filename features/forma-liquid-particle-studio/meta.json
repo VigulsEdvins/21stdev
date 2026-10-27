@@ -2,9 +2,9 @@
   "name": "Forma - Liquid Particle Studio",
   "title": "Forma - Liquid Particle Studio",
   "slug": "forma-liquid-particle-studio",
-  "category": "Full Templates",
-  "source": "21st.dev",
-  "type": "template",
+  "category": "Landing Pages",
+  "source": "imported",
+  "type": "component",
   "description": "Form that answers back. (Images are generated placeholders: swap them in the Content tab.) High-end independent studio template featuring real-time WebGL liquid particle simulations, responsive layout, and smooth typography.",
   "tags": [
     "template",
@@ -12,9 +12,7 @@
     "liquid",
     "threejs",
     "studio",
-    "webgl",
-    "21st.dev",
-    "top-today"
+    "webgl"
   ],
   "tech": [
     "React",
@@ -39,14 +37,10 @@
     "agency",
     "media"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "own",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "note": "Recorded as own by the project owner 2026-10-24"
+    "source": "imported",
+    "license": "own"
   },
   "updatedAt": "2026-10-22",
   "customizable": [

@@ -7,7 +7,30 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="bp-stage">
+    <div class="bp-flip" id="bpFlip">
+      <div class="bp-card bp-front">
+        <div class="bp-moon" aria-hidden="true"></div>
+        <span class="bp-small">Crescent Line</span>
+        <h2 class="bp-title">VIP Pass</h2>
+        <div class="bp-row"><div><span class="bp-small">Holder</span><p>A. Nightingale</p></div><div><span class="bp-small">Tier</span><p>Apogee</p></div></div>
+        <span class="bp-chip" aria-hidden="true"></span>
+      </div>
+      <div class="bp-card bp-back" aria-hidden="true">
+        <div class="bp-main">
+          <span class="bp-small">Boarding pass</span>
+          <div class="bp-route"><b>EAR</b><span class="bp-line"></span><b>LUN</b></div>
+          <div class="bp-row"><div><span class="bp-small">Gate</span><p>07</p></div><div><span class="bp-small">Seat</span><p>12C</p></div><div><span class="bp-small">Depart</span><p>06:40</p></div></div>
+        </div>
+        <div class="bp-stub"><span class="bp-bars" aria-hidden="true"></span><span class="bp-small">No. 00417</span></div>
+      </div>
+    </div>
+    <div class="bp-tabs" role="group" aria-label="Pass side">
+      <button type="button" class="bp-tab is-on" data-side="0" aria-pressed="true">VIP pass</button>
+      <button type="button" class="bp-tab" data-side="1" aria-pressed="false">Boarding pass</button>
+    </div>
+    <p class="bp-sr">Two-sided ticket to the Moon. Use the buttons to turn it over.</p>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

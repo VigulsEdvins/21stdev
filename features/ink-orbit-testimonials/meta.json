@@ -1,30 +1,25 @@
 {
-  "name": "Ink Orbit Testimonials",
-  "title": "Ink Orbit Testimonials",
+  "name": "Quote Stage Testimonials",
+  "title": "Quote Stage Testimonials",
   "slug": "ink-orbit-testimonials",
-  "category": "Full Templates",
-  "source": "21st.dev",
+  "category": "Landing Pages",
+  "source": "edvlabs",
   "type": "component",
-  "description": "The testimonials section from `ink-orbit-saas-template`, standalone and unchanged: a hatched page background, a bracketed frame holding a snap-scrolling row of quote cards (star rating, drawn quote marks, greyscale portrait), an arrows-and-dots pager, and a marquee of customer names, each with a gen",
+  "description": "A testimonials page with a rotating single-quote stage, arrows and dots pager, initial avatars and a scrolling customer-name strip.",
   "tags": [
-    "ink",
-    "orbit",
     "testimonials",
-    "21st.dev",
-    "full",
-    "react"
+    "quotes",
+    "carousel",
+    "landing",
+    "marquee"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 173,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -38,70 +33,47 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope span.it-tag"
+      "selector": ":scope .tq-label"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h2.it-h2"
+      "selector": ":scope .tq-title"
     },
     {
       "id": "text-1",
-      "label": "Text 1",
+      "label": "Quote 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > figure:nth-of-type(1) > figcaption:nth-of-type(1) > span:nth-of-type(2)"
+      "selector": ":scope .tq-slide:nth-of-type(1) .tq-quote"
     },
     {
       "id": "text-2",
-      "label": "Text 2",
+      "label": "Quote 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > figure:nth-of-type(2) > figcaption:nth-of-type(1) > span:nth-of-type(2)"
+      "selector": ":scope .tq-slide:nth-of-type(2) .tq-quote"
     },
     {
       "id": "text-3",
-      "label": "Text 3",
+      "label": "Quote 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > figure:nth-of-type(3) > figcaption:nth-of-type(1) > span:nth-of-type(2)"
+      "selector": ":scope .tq-slide:nth-of-type(3) .tq-quote"
     },
     {
       "id": "text-4",
-      "label": "Text 4",
+      "label": "Quote 4",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > figure:nth-of-type(4) > figcaption:nth-of-type(1) > span:nth-of-type(2)"
-    },
-    {
-      "id": "text-5",
-      "label": "Text 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > figure:nth-of-type(5) > figcaption:nth-of-type(1) > span:nth-of-type(2)"
-    },
-    {
-      "id": "text-6",
-      "label": "Text 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > figure:nth-of-type(6) > figcaption:nth-of-type(1) > span:nth-of-type(2)"
+      "selector": ":scope .tq-slide:nth-of-type(4) .tq-quote"
     }
   ],
-  "measured": {
-    "luma": 0.96,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
-  "reserveHeight": 844
+  "reserveHeight": 800
 }

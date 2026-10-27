@@ -1,33 +1,29 @@
 {
-  "name": "Scanline Bloom",
-  "title": "Scanline Bloom",
+  "name": "Scanline Bouquet",
+  "title": "Scanline Bouquet",
   "slug": "scanline-bloom",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A bouquet of lilies and roses printed in red on black paper, the way a cheap risograph or a dying CRT would do it: ragged horizontal scanlines that thicken with the light, a stipple dither that takes over toward the bottom, paper grain, and a thin frame behind it all.",
+  "description": "A procedural bouquet drawn by a small fragment shader as ragged scanlines in the theme's accent colour that turn into stipple dots toward the bottom of the sheet.",
   "tags": [
-    "scanline",
-    "bloom",
-    "21st.dev",
-    "audio",
-    "react"
+    "shader",
+    "scanlines",
+    "halftone",
+    "flowers",
+    "print"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 219,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "retro",
     "dark"
@@ -37,20 +33,17 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.04,
-    "webgl": true,
-    "canvas2d": true
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Caption",
+      "type": "text",
+      "selector": ":scope .sb-cap"
+    }
+  ],
   "lazy": true
 }

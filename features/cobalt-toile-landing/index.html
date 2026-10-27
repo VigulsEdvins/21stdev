@@ -3,11 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cobalt Toile Landing</title>
+  <title>Engraved Atelier Landing</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="ea-page">
+    <header class="ea-nav">
+      <a class="ea-logo" href="#"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M4.2 19.8L7 17M17 7l2.8-2.8" stroke="currentColor" stroke-width="1.4"/></svg><span>Marrow &amp; Finch</span></a>
+      <nav class="ea-links" aria-label="Main"><a href="#">Studio</a><a href="#">Services</a><a href="#">Method</a><a href="#">Letters</a></nav>
+      <a class="ea-btn ea-btn-sm" href="#" data-ea="nav-cta">Book a visit</a>
+    </header>
+
+    <section class="ea-plate" id="eaPlate">
+      <span class="ea-tag ea-tag-l">Plate I</span><span class="ea-tag ea-tag-r">Vol. 04</span>
+      <svg class="ea-art" viewBox="0 0 1200 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <pattern id="eaHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" y1="0" x2="0" y2="6" stroke="#f4ecd8" stroke-width="1.4"/></pattern>
+          <pattern id="eaHatch2" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)"><line x1="0" y1="0" x2="0" y2="5" stroke="#f4ecd8" stroke-width="1"/></pattern>
+        </defs>
+        <g id="eaRays" stroke="#f4ecd8" stroke-width="1.2" opacity=".55"></g>
+        <g id="eaSun"><circle cx="600" cy="300" r="92" fill="#f4ecd8"/><circle cx="600" cy="300" r="106" fill="none" stroke="#f4ecd8" stroke-width="2"/><circle cx="600" cy="300" r="118" fill="none" stroke="#f4ecd8" stroke-width="1" stroke-dasharray="3 5"/></g>
+        <path d="M0 400 C150 340 260 380 420 350 S700 330 840 360 1080 330 1200 370 V560 H0Z" fill="url(#eaHatch2)" stroke="#f4ecd8" stroke-width="1.6"/>
+        <path d="M0 450 C180 400 330 450 500 420 S820 410 960 440 1130 420 1200 440 V560 H0Z" fill="#1d4033" stroke="#f4ecd8" stroke-width="2"/>
+        <path d="M0 450 C180 400 330 450 500 420 S820 410 960 440 1130 420 1200 440 V560 H0Z" fill="url(#eaHatch)" opacity=".7"/>
+        <g class="ea-tower" fill="#1d4033" stroke="#f4ecd8" stroke-width="2"><path d="M168 430 L188 250 H224 L244 430Z"/><rect x="180" y="226" width="52" height="24"/><path d="M174 226 L206 196 L238 226Z"/><path d="M188 300 H224 M184 345 H228 M180 390 H232" stroke-width="1.4"/></g>
+        <g id="eaBirds" fill="none" stroke="#f4ecd8" stroke-width="2" stroke-linecap="round"><path d="M880 140q14-16 28 0q14-16 28 0"/><path d="M960 190q10-12 20 0q10-12 20 0"/><path d="M820 210q8-9 16 0q8-9 16 0"/></g>
+      </svg>
+      <div class="ea-hero-copy">
+        <p class="ea-kicker">Hand-thrown ceramics &middot; Est. 1998</p>
+        <h1 class="ea-title">Made slowly, kept for a lifetime</h1>
+        <p class="ea-lead">A small workshop making tableware, tiles and commissions in stoneware, finished with glazes mixed in house.</p>
+        <div class="ea-cta"><a class="ea-btn" href="#" data-ea="cta-1">View the collection</a><a class="ea-btn ea-btn-ghost" href="#" data-ea="cta-2">Commission a piece</a></div>
+      </div>
+    </section>
+
+    <div class="ea-marquee" aria-label="Stockists">
+      <p class="ea-marq-lab">Found in rooms at</p>
+      <div class="ea-marq-win"><div class="ea-marq-track" id="eaMarq"></div></div>
+    </div>
+
+    <section class="ea-sec">
+      <p class="ea-eyebrow">What we make</p>
+      <h2 class="ea-h2">Three ways to work with the kiln</h2>
+      <div class="ea-cards">
+        <article class="ea-card ea-reveal"><span class="ea-no">01</span><h3>Table sets</h3><p>Plates, bowls and cups in repeatable ranges, made in batches of twelve and glazed by hand.</p><a href="#">See sets &rarr;</a></article>
+        <article class="ea-card ea-reveal"><span class="ea-no">02</span><h3>Wall tiles</h3><p>Relief tiles for kitchens and hallways, pressed from our own carved moulds and fired twice.</p><a href="#">See tiles &rarr;</a></article>
+        <article class="ea-card ea-reveal"><span class="ea-no">03</span><h3>Commissions</h3><p>One-off vessels, lamp bases and garden pieces designed with you over a few quiet sittings.</p><a href="#">Start a brief &rarr;</a></article>
+      </div>
+    </section>
+
+    <section class="ea-sec ea-method">
+      <div class="ea-method-l"><p class="ea-eyebrow">The method</p><h2 class="ea-h2">Clay, fire, patience</h2><p class="ea-lead2">Nothing leaves the workshop until it has rested, been fired twice and passed the thumb test.</p></div>
+      <ol class="ea-steps">
+        <li class="ea-reveal"><b>Wedge</b><span>Local clay is wedged by hand to drive out air.</span></li>
+        <li class="ea-reveal"><b>Throw</b><span>Each form is pulled on the wheel and trimmed leather-hard.</span></li>
+        <li class="ea-reveal"><b>Glaze</b><span>Ash and iron glazes are dipped, then fired to 1260&deg;C.</span></li>
+        <li class="ea-reveal"><b>Pack</b><span>Wrapped in recycled paper, sent with a care card.</span></li>
+      </ol>
+    </section>
+
+    <section class="ea-quote ea-reveal">
+      <blockquote>&ldquo;The bowl was heavier than I expected and lighter than I deserve. We use it every morning.&rdquo;</blockquote>
+      <p>A. Lindqvist, repeat customer</p>
+    </section>
+
+    <section class="ea-final">
+      <h2 class="ea-h2">Visit the workshop</h2>
+      <p>Open Thursday to Saturday, with tea on the kettle.</p>
+      <a class="ea-btn" href="#" data-ea="cta-3">Plan a visit</a>
+    </section>
+
+    <footer class="ea-foot"><span>&copy; 2026 Marrow &amp; Finch</span><span><a href="#">Care guide</a> &middot; <a href="#">Shipping</a> &middot; <a href="#">Contact</a></span></footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,62 +1,55 @@
 {
-  "name": "Tile Scrollbar",
-  "title": "Tile Scrollbar",
+  "name": "Stepping Stones Scrollbar",
+  "title": "Stepping Stones Scrollbar",
   "slug": "tile-scrollbar",
   "category": "Scroll & Parallax",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A scrollbar built out of tiles on a tilted tray. The page is cut into equal slices, one tile each; tiles behind you press flat and darken, the one you are in stands proud and fills left to right, and a dot marks the tile where each section begins. Click a tile to jump, drag across the tray to scrub,",
+  "description": "Custom page scrollbar made of tilted stones that darken as you pass them, fill as you read, mark section starts and accept click, drag and keys.",
   "tags": [
-    "tile",
     "scrollbar",
-    "21st.dev",
     "scroll",
-    "react"
+    "progress",
+    "navigation",
+    "tiles"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS 3D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 238,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
   "weight": "light",
   "mood": [
-    "light"
+    "light",
+    "minimal"
   ],
   "industry": [
     "general"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.tsb-hint"
+      "selector": ":scope .ss-hint"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .ss-article h1"
     }
   ],
-  "measured": {
-    "luma": 1,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 4338
+  "themeReviewed": "Long text page with a fixed rail: surfaces follow the tokens; the automatic luminance probe mis-measures the tall section, checked by eye in a dark and a light theme on 2026-10-25."
 }

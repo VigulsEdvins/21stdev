@@ -227,6 +227,24 @@ function createStackManager(initialConfig = {}) {
     return section;
   }
 
+  /** Throws every section away and leaves just this one (a full website replaces the whole page): one change, one undo step. */
+  function replaceAllWithSection(slugOrSection, extraProps = {}) {
+    const slug = typeof slugOrSection === 'string' ? slugOrSection : (slugOrSection && slugOrSection.slug) || '';
+    if (!slug) throw new Error('Invalid section provided to replaceAllWithSection');
+    const base = typeof slugOrSection === 'object' ? slugOrSection : {};
+    const section = {
+      id: generateId(),
+      slug,
+      sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none', ...(base.sizing || {}), ...(extraProps.sizing || {}) },
+      ...base,
+      ...extraProps
+    };
+    section.id = generateId();
+    state.stack = [section];
+    notify();
+    return section;
+  }
+
   function addSection(slugOrSection, extraProps = {}) {
     return insertSection(state.stack.length, slugOrSection, extraProps);
   }
@@ -254,6 +272,26 @@ function createStackManager(initialConfig = {}) {
     if (!section) return null;
     const clean = Array.from(new Set((Array.isArray(list) ? list : []).filter(b => b === 'mobile' || b === 'tablet' || b === 'desktop')));
     if (clean.length) section.hideOn = clean; else delete section.hideOn;
+    notify();
+    return section;
+  }
+
+  /**
+   * How a section treats the page theme: 'match' makes it follow the theme even when the component keeps its own
+   * look by default, 'keep' makes it keep its own colours under every page theme (`designPolarity` is how the
+   * component was designed, 'dark' or 'light'); anything else goes back to the component's default.
+   */
+  function setSectionThemeMode(id, mode, designPolarity) {
+    if (isLocked(id)) return null;
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    if (mode === 'match' || mode === 'keep') {
+      section.themeMode = mode;
+      if (mode === 'keep') section.designPolarity = designPolarity === 'light' ? 'light' : 'dark'; else delete section.designPolarity;
+    } else {
+      delete section.themeMode;
+      delete section.designPolarity;
+    }
     notify();
     return section;
   }
@@ -532,6 +570,8 @@ function createStackManager(initialConfig = {}) {
     isLocked,
     setSectionFlag,
     setSectionHideOn,
+    setSectionThemeMode,
+    replaceAllWithSection,
     moveSection,
     duplicateSection,
     replaceSection,

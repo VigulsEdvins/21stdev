@@ -3,11 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bento Portfolio Template</title>
+  <title>Pebble Bento Portfolio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="bn-page">
+    <header class="bn-bar">
+      <a class="bn-logo" href="#">mira.k</a>
+      <nav class="bn-nav" aria-label="Sections">
+        <a href="#">Work</a><a href="#">Notes</a><a href="#">About</a>
+      </nav>
+      <a class="bn-pill" href="#">Say hello</a>
+    </header>
+
+    <section class="bn-grid">
+      <article class="bn-card bn-intro">
+        <span class="bn-label">Product designer</span>
+        <h1 class="bn-title">I shape calm, useful interfaces for small teams.</h1>
+        <p class="bn-text">Based between time zones, working with early-stage founders on products people return to.</p>
+        <a class="bn-btn" href="#">See selected work</a>
+      </article>
+
+      <article class="bn-card bn-clock" aria-label="Local time">
+        <span class="bn-label">Local time</span>
+        <time class="bn-time" id="bnTime">--:--</time>
+        <span class="bn-sub">Open for projects</span>
+        <i class="bn-dot" aria-hidden="true"></i>
+      </article>
+
+      <article class="bn-card bn-work" data-tilt>
+        <div class="bn-art" aria-hidden="true"></div>
+        <span class="bn-label">Case study</span>
+        <h2 class="bn-h2">Harbor, a budgeting app</h2>
+        <p class="bn-text">From first sketch to 40k downloads.</p>
+      </article>
+
+      <article class="bn-card bn-stack">
+        <span class="bn-label">Toolkit</span>
+        <div class="bn-chips">
+          <button class="bn-chip" type="button">Research</button>
+          <button class="bn-chip" type="button">Prototyping</button>
+          <button class="bn-chip" type="button">Design systems</button>
+          <button class="bn-chip" type="button">Motion</button>
+          <button class="bn-chip" type="button">Workshops</button>
+        </div>
+      </article>
+
+      <article class="bn-card bn-quote">
+        <p class="bn-q">"Mira turned a messy backlog into a product we are proud to show."</p>
+        <span class="bn-sub">Jonas Weller, founder</span>
+      </article>
+
+      <article class="bn-card bn-count">
+        <span class="bn-label">Projects shipped</span>
+        <strong class="bn-num" id="bnNum" data-to="38">0</strong>
+        <button class="bn-btn bn-ghost" id="bnBump" type="button">Add one</button>
+      </article>
+
+      <article class="bn-card bn-contact">
+        <span class="bn-label">Contact</span>
+        <h2 class="bn-h2">Have something in mind?</h2>
+        <a class="bn-mail" href="#">hello@example.test</a>
+      </article>
+    </section>
+    <footer class="bn-foot">&copy; 2026 edvlabs. Made by hand.</footer>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

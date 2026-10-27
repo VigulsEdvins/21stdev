@@ -47,7 +47,7 @@ verifyFeatureFolder(
 
 console.log('Task 2 photo-caroulsel feature checks passed.');
 
-// Test 3: Verify carousel-gallery-play extracted features (6 items)
+// Test 3: Verify arena-source extracted features (6 items)
 const carouselPlaySlugs = [
   'cylindrical-3d-carousel',
   'cursor-image-trail',
@@ -61,10 +61,10 @@ for (const slug of carouselPlaySlugs) {
   verifyFeatureFolder(slug, ['meta.json', 'index.html', 'style.css', 'script.js']);
 }
 
-console.log('Task 3 carousel-gallery-play feature checks passed.');
+console.log('Task 3 arena-source feature checks passed.');
 
-// Test 4: Verify betteroff (The Lookback) extracted features (5 items)
-const betteroffSlugs = [
+// Test 4: Verify yearbook-source extracted features (5 items)
+const yearbookSlugs = [
   'surf-3d-ribbon',
   'timeline-inertia-drag',
   'conveyor-scroll-loop',
@@ -72,13 +72,13 @@ const betteroffSlugs = [
   'article-slide-drawer'
 ];
 
-for (const slug of betteroffSlugs) {
+for (const slug of yearbookSlugs) {
   verifyFeatureFolder(slug, ['meta.json', 'index.html', 'style.css', 'script.js']);
 }
 
-console.log('Task 4 betteroff feature checks passed.');
+console.log('Task 4 yearbook-source feature checks passed.');
 
-// Test 5: Verify vivmgmt (6), 21st-crafted (4), mom (4+1), cvmaker (4+1), and full website templates (5) -> Total 36 items
+// Test 5: Verify roster-source (6), edvlabs (4), mom (4+1), cvmaker (4+1), and full website templates (5) -> Total 36 items
 const task5Slugs = [
   'parallax-5col-gallery',
   'split-screen-entrance',
@@ -90,9 +90,9 @@ const task5Slugs = [
   'spotlight-bento-grid',
   'liquid-metal-shader-card',
   'kinetic-typography-strapline',
-  'template-betteroff',
-  'template-carousel-play',
-  'template-vivmgmt',
+  'template-yearbook',
+  'template-arena',
+  'template-roster',
   'template-mom',
   'template-cvmaker',
   'editorial-3x3-hover-grid',
@@ -117,7 +117,7 @@ for (const item of synced.items) {
 
 console.log(`Task 5 all ${synced.count} features & templates verified.`);
 
-// Test 6: Verify main 21st.local Web Application (index.html, styles.css, app.js)
+// Test 6: Verify main edvlabs Web Application (index.html, styles.css, app.js)
 for (const appFile of ['index.html', 'styles.css', 'app.js']) {
   const p = path.join(ROOT, appFile);
   assert(fs.existsSync(p), `Missing main application file: ${appFile}`);
@@ -146,7 +146,7 @@ for (const it of loadedItems) {
   assert(it.name && it.title && it.slug, `Missing name/title/slug on registry item ${it.slug}`);
 }
 
-console.log('Task 6 main 21st.local web application verified.');
+console.log('Task 6 main edvlabs web application verified.');
 
 // Test 7: every meta.json conforms to the schema (fixed categories, required filter attributes)
 const { validateMeta, CATEGORIES } = require('../scripts/schema.js');

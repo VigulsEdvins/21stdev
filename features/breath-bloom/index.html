@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Breath Bloom</title>
+  <title>Breathing Orbs</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="bb-stage" id="bbStage" aria-label="Guided breathing background">
+    <div class="bb-glow" aria-hidden="true"></div>
+    <div class="bb-ring" id="bbRing" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="bb-core" aria-hidden="true"></div>
+    <div class="bb-copy">
+      <p class="bb-cue" id="bbCue" aria-live="off">Breathe in</p>
+      <p class="bb-count" id="bbCount" aria-hidden="true">4</p>
+      <p class="bb-hint">Follow the orbs. Four in, two hold, six out.</p>
+    </div>
+    <button class="bb-toggle" id="bbToggle" type="button" aria-pressed="false">Pause</button>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

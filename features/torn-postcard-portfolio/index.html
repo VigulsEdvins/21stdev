@@ -1,13 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Torn Postcard Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Torn Postcard Journal</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<main class="tc-root" data-tc-root>
+  <div class="tc-track" data-tc-track>
+    <div class="tc-stage" data-tc-stage>
+      <header class="tc-bar">
+        <span class="tc-logo">Field Notes</span>
+        <nav class="tc-nav" aria-label="Chapters" data-tc-nav></nav>
+      </header>
+
+      <div class="tc-cards" data-tc-cards>
+        <article class="tc-card" data-tone="0">
+          <div class="tc-inner">
+            <p class="tc-kicker">Chapter 01 / Departure</p>
+            <h1 class="tc-title">Postcards from a winter that kept going</h1>
+            <p class="tc-text">A travel journal in five torn pages. Scroll, and each card rips open to show the next place on the route.</p>
+            <a class="tc-btn" href="#">Start the journey</a>
+          </div>
+        </article>
+        <article class="tc-card" data-tone="1">
+          <div class="tc-inner">
+            <p class="tc-kicker">Chapter 02 / Night train</p>
+            <h2 class="tc-title">Eleven hours of frosted window</h2>
+            <p class="tc-text">Tea in paper cups, a stranger's card game, and a sunrise that arrived pink and then forgot itself.</p>
+            <a class="tc-btn" href="#">Read the entry</a>
+          </div>
+        </article>
+        <article class="tc-card" data-tone="2">
+          <div class="tc-inner">
+            <p class="tc-kicker">Chapter 03 / Harbour</p>
+            <h2 class="tc-title">Salt, rope and a very small ferry</h2>
+            <p class="tc-text">The market opens at five. By six every crate of silver fish has a name chalked on it.</p>
+            <a class="tc-btn" href="#">Read the entry</a>
+          </div>
+        </article>
+        <article class="tc-card" data-tone="3">
+          <div class="tc-inner">
+            <p class="tc-kicker">Chapter 04 / Ridge</p>
+            <h2 class="tc-title">Above the cloud line, finally quiet</h2>
+            <p class="tc-text">Four hours up, one thermos, no signal. The map says we are nowhere, which felt about right.</p>
+            <a class="tc-btn" href="#">Read the entry</a>
+          </div>
+        </article>
+        <article class="tc-card" data-tone="4">
+          <div class="tc-inner">
+            <p class="tc-kicker">Chapter 05 / Return</p>
+            <h2 class="tc-title">Write back, the post box is open</h2>
+            <p class="tc-text">Send a line to the next traveller. Every reply gets pinned to the wall of the next journal.</p>
+            <a class="tc-btn" href="#">Send a card</a>
+          </div>
+        </article>
+      </div>
+      <p class="tc-hint" aria-hidden="true">Scroll to tear</p>
+    </div>
+  </div>
+</main>
+<script src="script.js"></script>
 </body>
 </html>

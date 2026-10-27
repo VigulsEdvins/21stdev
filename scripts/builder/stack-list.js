@@ -181,6 +181,14 @@
               </div>
             </div>`).join('')}
             <div class="sizing-row">
+              <span class="sizing-label" title="How this section treats the page theme">Colours:</span>
+              <div class="sizing-pills theme-mode-pills">
+                <button type="button" class="sizing-pill ${!item.themeMode ? 'is-active' : ''}" data-theme-mode="" title="What this component does by default">Default</button>
+                <button type="button" class="sizing-pill ${item.themeMode === 'match' ? 'is-active' : ''}" data-theme-mode="match" title="Follow the page theme's colours">Match page</button>
+                <button type="button" class="sizing-pill ${item.themeMode === 'keep' ? 'is-active' : ''}" data-theme-mode="keep" title="Keep the colours it was designed in, whatever the page theme">Keep original</button>
+              </div>
+            </div>
+            <div class="sizing-row">
               <span class="sizing-label">Hide on:</span>
               <div class="sizing-pills hide-on-pills">
                 ${[['desktop', 'Desktop'], ['tablet', 'Tablet'], ['mobile', 'Phone']].map(([bp, label]) => `<button type="button" class="sizing-pill ${(item.hideOn || []).includes(bp) ? 'is-active' : ''}" data-bp="${bp}" aria-pressed="${(item.hideOn || []).includes(bp) ? 'true' : 'false'}">${label}</button>`).join('')}
@@ -227,25 +235,21 @@
               const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
               const secEl = doc.getElementById(item.id);
               if (secEl) {
-                secEl.style.height = `${val}px`;
-                secEl.style.minHeight = `${val}px`;
-                secEl.style.overflow = 'hidden';
-                const contentEl = secEl.querySelector(':scope > div[id^="root-"], :scope > :first-child:not(.section-overlay-layer):not(.section-resize-handle)');
-                if (contentEl) {
-                  contentEl.style.flex = '1 1 auto';
-                  contentEl.style.height = '100%';
-                  contentEl.style.minHeight = '100%';
-                  if (contentEl.firstElementChild) {
-                    contentEl.firstElementChild.style.flex = '1 1 auto';
-                    contentEl.firstElementChild.style.height = '100%';
-                    contentEl.firstElementChild.style.minHeight = '100%';
-                  }
-                }
+                const natural = window.SectionFit.measureNatural(secEl);
+                const r = window.SectionFit.apply(secEl, Number(val), natural, window.SectionFit.minScaleFor(secEl.dataset.sectionSlug));
+                valLabel.textContent = `${r.height}px`;
+                if (r.height !== Number(val)) slider.value = r.height;
               }
             } catch (_) {}
           });
           slider.addEventListener('change', (e) => {
-            stackManager.updateSectionSizing(item.id, { heightMode: 'custom', customHeight: Number(e.target.value) });
+            let fitScale = 1;
+            try {
+              const doc = previewFrame.contentDocument || (previewFrame.contentWindow && previewFrame.contentWindow.document);
+              const secEl = doc.getElementById(item.id);
+              if (secEl) fitScale = window.SectionFit.fit(Number(e.target.value), window.SectionFit.measureNatural(secEl), window.SectionFit.minScaleFor(secEl.dataset.sectionSlug)).scale;
+            } catch (_) {}
+            stackManager.updateSectionSizing(item.id, { heightMode: 'custom', customHeight: Number(e.target.value), fitScale });
           });
         }
 
@@ -270,6 +274,17 @@
             stackManager.updateSectionSizing(item.id, { [group.dataset.key]: pill.dataset.pad });
           }));
         });
+        const themeModePills = card.querySelectorAll('.theme-mode-pills .sizing-pill');
+        themeModePills.forEach(pill => pill.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const mode = pill.dataset.themeMode;
+          themeModePills.forEach(p => p.classList.toggle('is-active', p === pill));
+          // the polarity the component was designed in: from its measured brightness, else from its nativeWhen lock
+          const entry = (window.FEATURE_REGISTRY || []).find(f => f.slug === item.slug) || {};
+          const designed = typeof entry.luma === 'number' ? (entry.luma < 0.5 ? 'dark' : 'light') : ((entry.nativeWhen || []).includes('light') ? 'dark' : (entry.nativeWhen || []).includes('dark') ? 'light' : 'dark');
+          stackManager.setSectionThemeMode(item.id, mode, designed);
+        }));
+
         const hidePills = card.querySelectorAll('.hide-on-pills .sizing-pill');
         hidePills.forEach(pill => pill.addEventListener('click', (e) => {
           e.stopPropagation();

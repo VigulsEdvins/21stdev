@@ -1,29 +1,25 @@
 {
-  "name": "Murmuration Wordmark",
-  "title": "Murmuration Wordmark",
+  "name": "Flocking Word Sky",
+  "title": "Flocking Word Sky",
   "slug": "murmuration-wordmark",
   "category": "Interactions & Physics",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Thousands of starlings over a dusk sky. The flock rolls and folds the way a real murmuration does, in thin ribbons and dense dark knots, driven by a slow curl-noise current and a wandering centre of gravity. Every few seconds it converges, bird by bird, into your word, holds it, and scatters again.",
+  "description": "A night sky where hundreds of tiny light streaks swirl as a flock, gather into a word, hold it and scatter again.",
   "tags": [
-    "murmuration",
-    "wordmark",
-    "21st.dev",
-    "interactions",
-    "react"
+    "canvas",
+    "flock",
+    "particles",
+    "text",
+    "background"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 195,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
@@ -36,26 +32,17 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
-      "label": "Small label",
+      "label": "Accessible description",
       "type": "text",
-      "selector": ":scope span.mmw-sr"
+      "selector": ":scope .sw-sr"
     }
   ],
-  "measured": {
-    "luma": 0.48,
-    "webgl": false,
-    "canvas2d": true
-  }
+  "ownPalette": true
 }

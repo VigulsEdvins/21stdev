@@ -114,7 +114,7 @@ function resolveSafePath(urlPath, referer = '') {
     }
   }
 
-  // 4. Fallback to PARENT_ROOT (/home/edvins/features-for-web) for ../betteroff, ../vivmgmt, ../carousel-gallery-play, etc.
+  // 4. Fallback to PARENT_ROOT (/home/edvins/features-for-web) for ../edv-yearbook, ../edv-roster, ../edv-arena, etc.
   const parentCandidate = path.resolve(PARENT_ROOT, '.' + rel);
   if (!STRICT && (parentCandidate === PARENT_ROOT || isInside(parentCandidate, PARENT_ROOT)) && fs.existsSync(parentCandidate)) {
     const stat = fs.statSync(parentCandidate);
@@ -135,10 +135,39 @@ function resolveSafePath(urlPath, referer = '') {
   return null;
 }
 
+const SITE_PREFIXES = ['mom', 'cvmaker', 'edv-roster', 'edv-yearbook', 'edv-arena'];
+
+/** The /prefix/page URL a page request from inside a sibling site should go to, or null. */
+function redirectWithinSite(req) {
+  if (STRICT) return null;
+  let from;
+  try { from = new URL(req.headers.referer || '').pathname; } catch { return null; }
+  const site = SITE_PREFIXES.find(p => from === '/' + p || from.startsWith('/' + p + '/'));
+  if (!site) return null;
+  let target;
+  try { target = new URL(req.url || '/', 'http://x'); } catch { return null; }
+  const pathname = target.pathname;
+  if (pathname === '/' + site || pathname.startsWith('/' + site + '/')) return null;
+  const dest = String(req.headers['sec-fetch-dest'] || '');
+  const isPage = ['document', 'iframe', 'frame'].includes(dest) || /\.html?$/i.test(pathname) || pathname === '/';
+  if (!isPage) return null;
+  const inSite = '/' + site + (pathname === '/' ? '/index.html' : pathname);
+  return resolveSafePath(inSite, req.headers.referer || '') ? '/' + site + (pathname === '/' ? '/' : pathname) + target.search : null;
+}
+
 const server = http.createServer((req, res) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.writeHead(405, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('405 Method Not Allowed');
+    return;
+  }
+
+  // A sibling site is served under a prefix (/mom/...) but its pages link to the site root (/work.html). When a page
+  // of that site asks for another page, send the visitor to the same page under the prefix instead of to a vault file.
+  const siteRedirect = redirectWithinSite(req);
+  if (siteRedirect) {
+    res.writeHead(302, { Location: siteRedirect, 'Cache-Control': 'no-cache' });
+    res.end();
     return;
   }
 
@@ -200,7 +229,7 @@ const server = http.createServer((req, res) => {
 
 if (require.main === module) {
   server.listen(PORT, '127.0.0.1', () => {
-    console.log(`21st.local Vault Server running at http://localhost:${PORT}`);
+    console.log(`edvlabs Vault Server running at http://localhost:${PORT}`);
     console.log(`Graphify Interactive Map at http://localhost:${PORT}/graphify-out/graph.html`);
   });
 }

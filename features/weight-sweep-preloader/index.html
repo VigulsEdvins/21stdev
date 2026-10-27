@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Weight Sweep Preloader</title>
+  <title>Heavy Counter Gate</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="hc-gate" id="hcGate" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <header class="hc-top"><span>Specimen No. 7</span><span id="hcState">Loading</span></header>
+    <div class="hc-rail" aria-hidden="true" id="hcRail"></div>
+    <div class="hc-num" id="hcNum" aria-hidden="true">000</div>
+    <footer class="hc-hud">
+      <span>Weight <b id="hcW">100</b></span>
+      <span>Size <b>Display</b></span>
+    </footer>
+  </main>
+  <button class="hc-btn" id="hcBtn" type="button" hidden>Replay</button>
   <script src="script.js"></script>
 </body>
 </html>

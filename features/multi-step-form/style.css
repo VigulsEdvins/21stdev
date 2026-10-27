@@ -28,3 +28,5 @@
 .msf-done { margin: 1rem 0 0; padding: 1rem; border-radius: var(--radius, 12px); background: color-mix(in srgb, #22c55e 16%, transparent); font-weight: 600; }
 .msf-done[hidden] { display: none; }
 @media (prefers-reduced-motion: reduce) { .msf-bar { transition: none; } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

@@ -3,11 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Animator Title Preloader</title>
+  <title>Pipeline Title Card</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="pt-card" id="ptCard" data-stage="rough" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <p class="pt-small">A short film in four passes</p>
+    <h1 class="pt-title" aria-label="The Paper Lantern">
+      <span class="pt-layer pt-rough" aria-hidden="true">THE PAPER<br>LANTERN</span>
+      <span class="pt-layer pt-ink" aria-hidden="true">THE PAPER<br>LANTERN</span>
+      <span class="pt-layer pt-paint" aria-hidden="true">THE PAPER<br>LANTERN</span>
+    </h1>
+    <ol class="pt-steps" aria-hidden="true">
+      <li data-step="rough"><i></i>Rough</li>
+      <li data-step="ink"><i></i>Ink</li>
+      <li data-step="paint"><i></i>Paint</li>
+      <li data-step="final"><i></i>Final</li>
+    </ol>
+    <div class="pt-meter" aria-hidden="true"><span id="ptFill"></span></div>
+    <div class="pt-foot"><span id="ptPct">000%</span></div>
+  </main>
+  <button class="pt-replay" id="ptReplay" type="button" hidden>Roll it again</button>
   <script src="script.js"></script>
 </body>
 </html>

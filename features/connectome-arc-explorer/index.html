@@ -3,11 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Connectome Arc Explorer</title>
+  <title>Mirrored Arc Explorer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ca-wrap">
+    <header class="ca-head">
+      <h1 class="ca-title">Where each bus line draws from, and where it sends riders</h1>
+      <p class="ca-lead">Pick a line in the middle. The left arc shows the districts it collects riders from, the right arc shows where they get off.</p>
+    </header>
+    <div class="ca-stage">
+      <div class="ca-menu" id="caMenu" role="listbox" aria-label="Bus lines"></div>
+      <svg class="ca-svg" id="caSvg" viewBox="0 0 1000 560" aria-hidden="true"></svg>
+      <div class="ca-readout" id="caOut" aria-live="polite"></div>
+    </div>
+    <div class="ca-legend"><span class="ca-in">Riders boarding</span><span class="ca-out">Riders alighting</span></div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

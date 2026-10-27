@@ -1,26 +1,24 @@
 {
-  "name": "Hover Magnetic Footer",
-  "title": "Hover Magnetic Footer",
+  "name": "Spotlight Footer",
+  "title": "Spotlight Footer",
   "slug": "hover-footer",
   "category": "Footers & Endings",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Interactive magnetic hover footer animation with glowing cursor dynamics and social docks.",
+  "description": "Footer with link columns, social chips that lean toward the cursor, and a giant wordmark that lights up under a gradient spotlight.",
   "tags": [
     "footer",
-    "magnetic",
-    "cursor",
-    "interactive",
-    "21st.dev"
+    "spotlight",
+    "hover",
+    "wordmark",
+    "social"
   ],
   "tech": [
-    "React",
-    "Framer Motion",
-    "Tailwind CSS"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React",
-    "Tailwind CSS"
+    "Vanilla HTML/CSS/JS"
   ],
   "order": 44,
   "legacyCategory": "Footers & Endings",
@@ -35,86 +33,48 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "permission",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "footer-heading-1",
-      "label": "Footer heading 1",
+      "label": "Brand name",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h4:nth-of-type(1)"
-    },
-    {
-      "id": "footer-heading-2",
-      "label": "Footer heading 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > h4:nth-of-type(1)"
-    },
-    {
-      "id": "footer-heading-3",
-      "label": "Footer heading 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > h4:nth-of-type(1)"
+      "selector": ":scope .sf-name"
     },
     {
       "id": "footer-text-1",
-      "label": "Footer text 1",
+      "label": "About text",
       "type": "text",
-      "selector": ":scope div.space-x-2"
+      "selector": ":scope .sf-about"
     },
     {
-      "id": "footer-link-1",
-      "label": "Footer link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+      "id": "footer-heading-2",
+      "label": "Column 1 heading",
+      "type": "text",
+      "selector": ":scope .sf-col:nth-of-type(1) h4"
+    },
+    {
+      "id": "footer-heading-3",
+      "label": "Column 2 heading",
+      "type": "text",
+      "selector": ":scope .sf-col:nth-of-type(2) h4"
+    },
+    {
+      "id": "footer-heading-4",
+      "label": "Column 3 heading",
+      "type": "text",
+      "selector": ":scope .sf-col:nth-of-type(3) h4"
     },
     {
       "id": "footer-text-2",
-      "label": "Footer text 2",
+      "label": "Legal line",
       "type": "text",
-      "selector": ":scope p.text-sm"
-    },
-    {
-      "id": "footer-link-text-1",
-      "label": "Footer link text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-text-2",
-      "label": "Footer link text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-2",
-      "label": "Footer link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-3",
-      "label": "Footer link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-text-3",
-      "label": "Footer text 3",
-      "type": "text",
-      "selector": ":scope span.hover\\:text-\\[\\#3ca2fa\\]"
+      "selector": ":scope .sf-legal"
     }
   ],
-  "measured": {
-    "luma": 0.05,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "nativeWhen": []
 }

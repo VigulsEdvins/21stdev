@@ -1,33 +1,29 @@
 {
-  "name": "Lycoris Specimen",
-  "title": "Lycoris Specimen",
+  "name": "Bloom Scroll Specimen",
+  "title": "Bloom Scroll Specimen",
   "slug": "lycoris-specimen",
   "category": "Scroll & Parallax",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A scroll-scrubbed type specimen built around one object: a red chrome spider lily, modelled procedurally and lit in raw WebGL. Six frames, one continuous camera move:",
+  "description": "A scroll-scrubbed specimen page where a procedurally drawn flower grows, opens and turns across six captioned frames.",
   "tags": [
-    "lycoris",
-    "specimen",
-    "21st.dev",
     "scroll",
-    "react"
+    "canvas",
+    "specimen",
+    "flower",
+    "sticky"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 188,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "luxury",
     "futuristic",
@@ -38,81 +34,35 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "text-1",
-      "label": "Text 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph",
-      "label": "Paragraph",
-      "type": "text",
-      "selector": ":scope p.lys-hide-md"
-    },
-    {
-      "id": "text-2",
-      "label": "Text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > span:nth-of-type(1)"
+      "selector": ":scope .bs-head span:first-child"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > h2:nth-of-type(1)"
+      "selector": ":scope .bs-frame:first-child .bs-title"
     },
     {
-      "id": "text-3",
-      "label": "Text 3",
+      "id": "intro-text",
+      "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2)"
+      "selector": ":scope .bs-frame:first-child .bs-text"
     },
     {
-      "id": "text-4",
-      "label": "Text 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(1)"
-    },
-    {
-      "id": "text-5",
-      "label": "Text 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > span:nth-of-type(2)"
-    },
-    {
-      "id": "text-6",
-      "label": "Text 6",
-      "type": "text",
-      "selector": ":scope div.gap-5"
-    },
-    {
-      "id": "link-1",
-      "label": "Link 1",
+      "id": "link",
+      "label": "Link",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(8) > div:nth-of-type(2) > a:nth-of-type(1)"
-    },
-    {
-      "id": "link-2",
-      "label": "Link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(8) > div:nth-of-type(2) > a:nth-of-type(2)"
+      "selector": ":scope .bs-link"
     }
   ],
-  "measured": {
-    "luma": 0.03,
-    "webgl": true,
-    "canvas2d": false
-  },
   "reserveHeight": 5600
 }

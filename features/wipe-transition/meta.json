@@ -1,30 +1,26 @@
 {
-  "name": "Wipe Transition Content Switcher",
-  "title": "Wipe Transition Content Switcher",
+  "name": "Band Wipe Tabs",
+  "title": "Band Wipe Tabs",
   "slug": "wipe-transition",
   "category": "Buttons & UI",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Content switcher that sweeps a colored band across the panel, swaps the content underneath while it is covered, and crossfades on phones or reduced motion.",
+  "description": "A tab switcher that sweeps a coloured band across the panel, swaps the content while it is covered, and fades instead on phones or reduced motion.",
   "tags": [
-    "transition",
-    "wipe",
-    "switcher",
     "tabs",
+    "wipe",
+    "transition",
+    "switcher",
     "animation",
-    "21st.dev"
+    "ui"
   ],
   "tech": [
     "Web Animations API",
-    "Vanilla JS",
-    "CSS 3D",
-    "React (.tsx included)"
+    "Vanilla JS"
   ],
   "dependencies": [
-    "Vanilla HTML/CSS/JS",
-    "React (.tsx included)"
+    "Vanilla HTML/CSS/JS"
   ],
-  "author": "kevingirelli",
   "order": 8,
   "legacyCategory": "Buttons & UI",
   "status": "stable",
@@ -38,68 +34,28 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/community/components",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "button-text-1",
-      "label": "Button text 1",
+      "label": "Tab 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)"
+      "selector": ":scope #wt-t1"
     },
     {
       "id": "button-text-2",
-      "label": "Button text 2",
+      "label": "Tab 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)"
+      "selector": ":scope #wt-t2"
     },
     {
       "id": "button-text-3",
-      "label": "Button text 3",
+      "label": "Tab 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)"
-    },
-    {
-      "id": "button-text-5",
-      "label": "Button text 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-6",
-      "label": "Button text 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > button:nth-of-type(2)"
-    },
-    {
-      "id": "button-text-7",
-      "label": "Button text 7",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > button:nth-of-type(3)"
-    },
-    {
-      "id": "headline",
-      "label": "Headline",
-      "type": "text",
-      "selector": ":scope h3.panel-title"
+      "selector": ":scope #wt-t3"
     }
-  ],
-  "measured": {
-    "luma": 0.07,
-    "webgl": false,
-    "canvas2d": false
-  }
+  ]
 }

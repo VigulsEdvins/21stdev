@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Foundation Primitives</title>
+  <title>Gel Shapes Card</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="gel-wrap">
+    <div class="gel-card" id="gelCard" role="img" aria-label="A row of glossy shapes: a ring, a ball, a stack of pills, a cube and a gem">
+      <div class="gel-shape gel-ring" style="--z:1"></div>
+      <div class="gel-shape gel-ball" style="--z:2"></div>
+      <div class="gel-shape gel-pills" style="--z:1.4"><i></i><i></i><i></i></div>
+      <div class="gel-shape gel-cube" style="--z:2.4">
+        <div class="gel-cube-in"><b class="f1"></b><b class="f2"></b><b class="f3"></b><b class="f4"></b><b class="f5"></b><b class="f6"></b></div>
+      </div>
+      <div class="gel-shape gel-gem" style="--z:1.8"></div>
+      <div class="gel-lens" id="gelLens"></div>
+    </div>
+    <p class="gel-caption">Glossy shapes. Move the pointer over the card.</p>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

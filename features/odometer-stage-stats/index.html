@@ -3,11 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Odometer Stage Stats</title>
+  <title>Rolling Digit Stats</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="rd-stage" id="rdStage">
+    <header class="rd-head">
+      <h2 class="rd-title">Our year in numbers</h2>
+      <div class="rd-tabs" id="rdTabs" role="tablist" aria-label="Statistics"></div>
+    </header>
+
+    <div class="rd-main">
+      <div class="rd-figure" aria-live="polite">
+        <span class="rd-prefix" id="rdPrefix"></span>
+        <span class="rd-digits" id="rdDigits" aria-hidden="true"></span>
+        <span class="rd-suffix" id="rdSuffix"></span>
+        <span class="rd-sr" id="rdSr"></span>
+      </div>
+      <p class="rd-line" id="rdLine"></p>
+    </div>
+
+    <p class="rd-note" id="rdNote"></p>
+    <div class="rd-word" id="rdWord" aria-hidden="true"></div>
+    <div class="rd-bar" aria-hidden="true"><i id="rdBar"></i></div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

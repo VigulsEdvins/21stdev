@@ -1,32 +1,28 @@
 {
-  "name": "Galaxy Starfield",
-  "title": "Galaxy Starfield",
+  "name": "Night Sky Canvas",
+  "title": "Night Sky Canvas",
   "slug": "galaxy-starfield",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed hero background: you sit inside a sphere of tens of thousands of stars, each twinkling on its own clock and flaring into a four-point diffraction cross at its peak, against a slow violet-and-teal nebula with a dusty band across the equator. The sky leans toward the pointer, turns by its",
+  "description": "A full-bleed hero background of a rotating dome of twinkling stars with flares and a soft nebula that leans toward the pointer.",
   "tags": [
-    "galaxy",
-    "starfield",
-    "21st.dev",
-    "react"
+    "stars",
+    "space",
+    "canvas",
+    "hero",
+    "background"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 153,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "minimal",
     "dark"
@@ -36,20 +32,30 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.11,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .ns-kicker"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .ns-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .ns-lead"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

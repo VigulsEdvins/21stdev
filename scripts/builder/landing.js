@@ -194,7 +194,49 @@
       return { section: newSec, replaced: false, singletonType: null };
     }
 
-    return { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection };
+    /** A full website (own pages and CMS) or a landing page (a whole page in one section) replaces everything else on the page. */
+    function isFullWebsite(slug) {
+      const f = (featuresMap && featuresMap.get && featuresMap.get(slug)) || {};
+      return !!f.liveSiteUrl || f.category === 'Full Websites' || f.category === 'Landing Pages';
+    }
+    function isLandingPageSlug(slug) {
+      const f = (featuresMap && featuresMap.get && featuresMap.get(slug)) || {};
+      return !f.liveSiteUrl && f.category === 'Landing Pages';
+    }
+
+    /**
+     * Adds a section from the catalogue. A full website first asks, because it throws away the page's sections:
+     * resolves to the same result as addOrReplaceLandingSection, or null when the person says no.
+     */
+    async function addWithTemplateGuard(slug, extraProps = {}, preferredIndex = null) {
+      const existing = stackManager.getStack();
+      if (!isFullWebsite(slug) || existing.length === 0) {
+        return addOrReplaceLandingSection(slug, extraProps, preferredIndex);
+      }
+      const title = extraProps.title || (featuresMap.get(slug) || {}).title || slug;
+      const locked = existing.filter(sec => sec.locked).length;
+      const kind = isLandingPageSlug(slug) ? 'landing page' : 'full website';
+      const ok = await window.BuilderConfirm.ask({
+        title: `Use the ${kind} “${title}”?`,
+        message: `A ${kind} is a complete ${kind === 'landing page' ? 'page' : 'site'}, not one section. Using it replaces the page you have built so far.`,
+        details: [
+          `All ${existing.length} section${existing.length === 1 ? '' : 's'} on this page will be discarded${locked ? ` (including ${locked} locked)` : ''}, whether you added them or came from a template.`,
+          'Edits to their content and sizing go with them.',
+          'Your theme, colours, page title and settings stay.',
+          'Undo brings the old page back.'
+        ],
+        confirmLabel: 'Yes, replace the page',
+        cancelLabel: 'Keep my page'
+      });
+      if (!ok) return null;
+      catalogLib.addRecent(slug);
+      rt.preloaderForceReplay = false;
+      const section = stackManager.replaceAllWithSection(slug, extraProps);
+      showToast(`Page replaced with “${title}”`);
+      return { section, replaced: true, singletonType: null, wholePage: true };
+    }
+
+    return { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection, addWithTemplateGuard, isFullWebsite };
   }
 
   const api = { createLandingSections };

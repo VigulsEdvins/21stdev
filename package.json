@@ -22,6 +22,7 @@
     "suggest-customizable": "node scripts/suggest-customizable.js",
     "refine-meta": "node scripts/refine-meta.js",
     "audit-themes": "node scripts/audit-themes.js",
+    "check-theme-clash": "node scripts/check-theme-clash.js",
     "set-license": "node scripts/set-license.js",
     "build-tailwind": "node scripts/build-tailwind.js",
     "check-blank": "node scripts/check-blank.js",
@@ -43,7 +44,8 @@
     "check-lighthouse": "node scripts/check-lighthouse.js",
     "encode-video-fallback": "node scripts/encode-video-fallback.js",
     "setup-webkit-libs": "node scripts/setup-webkit-libs.js",
-    "measure-frames": "node scripts/measure-frames.js"
+    "measure-frames": "node scripts/measure-frames.js",
+    "check-contrast": "node scripts/check-contrast.js"
   },
   "keywords": [],
   "author": "",

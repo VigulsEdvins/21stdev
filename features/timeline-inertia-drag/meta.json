@@ -2,7 +2,7 @@
   "slug": "timeline-inertia-drag",
   "title": "Horizontal Inertia Drag Timeline & Mechanical Tick Ruler",
   "category": "Scroll & Parallax",
-  "source": "betteroff",
+  "source": "edvlabs",
   "type": "component",
   "description": "Horizontal inertia-draggable archive timeline grouped by months with velocity-driven 3D Y-axis card tilt, synchronized mechanical tick ruler, month jump buttons, and subtle Web Audio tick feedback.",
   "tags": [
@@ -27,12 +27,12 @@
   "industry": [
     "media"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "betteroff",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-24",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",

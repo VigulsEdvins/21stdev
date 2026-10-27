@@ -12,7 +12,9 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.goto(srv.url + '/builder.html');
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.querySelector('.page-section'));
   // a section that contains a picture
-  const slugs = await page.evaluate(() => window.FEATURE_REGISTRY.filter(f => f.weight === 'light' && f.type === 'component' && /gallery|card|bento|team|testimonial/i.test(f.title + f.category)).map(f => f.slug).slice(0, 12));
+  const preferred = ['portfolio-masonry-filter', 'editorial-3x3-hover-grid', 'studio-info-drawer'];
+  const slugs0 = await page.evaluate(() => window.FEATURE_REGISTRY.filter(f => f.weight === 'light' && f.type === 'component' && /gallery|card|bento|team|testimonial/i.test(f.title + f.category)).map(f => f.slug).slice(0, 12));
+  const slugs = [...preferred, ...slugs0];
   let target = null;
   for (const slug of slugs) {
     const id = await page.evaluate(s => window.builderPreview.stackManager.addSection(s).id, slug);

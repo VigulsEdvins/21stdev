@@ -1,13 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keycap Orb</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keycap Sphere</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="ko-root" aria-label="A rotating sphere made of keyboard caps">
+  <canvas class="ko-canvas" data-ko-canvas role="img" aria-label="Sphere of keycaps. Drag to rotate."></canvas>
+  <div class="ko-copy">
+    <p class="ko-label">Typed in orbit</p>
+    <h1 class="ko-title">Every key, one sphere</h1>
+  </div>
+  <p class="ko-hint">Drag to spin</p>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

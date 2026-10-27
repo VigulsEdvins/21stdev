@@ -1,17 +1,17 @@
 /**
  * Filterable Roster & Portrait Hover Showcase
- * Extracted from carousel-gallery-play/app.js (with real athlete photography)
+ * Category-filtered portrait cards with placeholder artwork
  */
 (function () {
   const ROSTER = [
-    { name: 'Kaye Furo', role: 'Club Brugge // Forward', category: 'exclusive', img: '/assets/library/20241106_Pieter-Slembrouck-KAYE-100-b2f7226f.webp' },
-    { name: 'Kasper Dolberg', role: 'AFC Ajax // Striker', category: 'exclusive', img: '/assets/library/20250328_Pieter-Slembrouck-AJAX-Dolberg-110-4d291839.webp' },
-    { name: 'Thibaud Verlinden', role: 'OH Leuven // Winger', category: 'all', img: '/assets/library/20240612_Thibaud-Verlinden-121-3c436bd0.webp' },
-    { name: 'Sebastiaan Bornauw', role: 'VfL Wolfsburg // Center Back', category: 'exclusive', img: '/assets/library/20250630_Pieter-Slembrouck-Sebastiaan-Bornauw-323-64ad2d52.webp' },
-    { name: 'Ignace Van Der Brempt', role: 'Como 1907 // Fullback', category: 'all', img: '/assets/library/20250125_Pieter-Slembrouck-COMO1907-104-ff37252c.webp' },
-    { name: 'Tolu Arokodare', role: 'KRC Genk // Striker', category: 'exclusive', img: '/assets/library/20250226_Pieter-Slembrouck-Tolu-100-096ae4f0.webp' },
-    { name: 'Steven Berghuis', role: 'AFC Ajax // Creative Midfielder', category: 'creative', img: '/assets/library/20250728_Pieter-Slembrouck-Skechers-Steven-Berghuis-PR-Retouches-106-8afed694.webp' },
-    { name: 'Jerry Lawyer', role: 'Visual Director & Photographer', category: 'creative', img: '/assets/library/20251007_Pieter-Slembrouck-Jerry-selection-119-scaled-84c4ed8e.webp' }
+    { name: 'Athlete 01', role: 'Club A // Forward', category: 'exclusive', img: '/assets/library/edv-art-01.svg' },
+    { name: 'Athlete 02', role: 'Club B // Striker', category: 'exclusive', img: '/assets/library/edv-art-02.svg' },
+    { name: 'Athlete 03', role: 'Club C // Winger', category: 'all', img: '/assets/library/edv-art-03.svg' },
+    { name: 'Athlete 04', role: 'Club D // Center Back', category: 'exclusive', img: '/assets/library/edv-art-04.svg' },
+    { name: 'Athlete 05', role: 'Club E // Fullback', category: 'all', img: '/assets/library/edv-art-05.svg' },
+    { name: 'Athlete 06', role: 'Club F // Striker', category: 'exclusive', img: '/assets/library/edv-art-06.svg' },
+    { name: 'Athlete 07', role: 'Club B // Creative Midfielder', category: 'creative', img: '/assets/library/edv-art-07.svg' },
+    { name: 'Team Member 01', role: 'Visual Director & Photographer', category: 'creative', img: '/assets/library/edv-art-08.svg' }
   ];
 
   const rail = document.getElementById('athletes-rail');

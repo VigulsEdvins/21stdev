@@ -1,6 +1,6 @@
 /**
  * Polaroid Line Carousel — Sagging String & Breeze Physics
- * Standalone Vanilla JS implementation ported from photo-caroulsel/code2.txt
+ * Standalone Vanilla JS implementation
  */
 (function () {
   function clamp(v, a, b) {
@@ -129,12 +129,12 @@
   }
 
   const SLIDES = [
-    { title: 'First Light', caption: 'Haze lifting off the eastern ridges.', palette: 'dawn', seed: 3, img: '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg' },
-    { title: 'High Pass', caption: 'Cold air, clear to the far range.', palette: 'alpine', seed: 8, img: '/assets/library/20240726-Pieter-Slembrouck-SPA-GP-131-39be5b71.webp' },
-    { title: 'Ember Hour', caption: 'The last of the sun on the valley floor.', palette: 'dusk', seed: 14, img: '/assets/library/ch-11-shit-waves-hawaii-f95e8577.webp' },
-    { title: 'Still Valley', caption: 'Morning mist that never quite lifts.', palette: 'mist', seed: 21, img: '/assets/library/1778184121-fashion-editorial-horse-barragan-stables-mexico-d62757c7.jpg' },
-    { title: 'Rose Ridge', caption: 'Five ridges, one long exhale.', palette: 'dawn', seed: 34, img: '/assets/library/asap-x-rayban-b0252755.webp' },
-    { title: 'Blue Hour', caption: 'Pines going dark against the snow.', palette: 'alpine', seed: 55, img: '/assets/library/20240806-Pieter-Slembrouck-IBZ-Woodwork-110-4d7b9cb4.webp' }
+    { title: 'First Light', caption: 'Haze lifting off the eastern ridges.', palette: 'dawn', seed: 3, img: '/assets/library/edv-art-02.svg' },
+    { title: 'High Pass', caption: 'Cold air, clear to the far range.', palette: 'alpine', seed: 8, img: '/assets/library/edv-art-04.svg' },
+    { title: 'Ember Hour', caption: 'The last of the sun on the valley floor.', palette: 'dusk', seed: 14, img: '/assets/library/edv-art-06.svg' },
+    { title: 'Still Valley', caption: 'Morning mist that never quite lifts.', palette: 'mist', seed: 21, img: '/assets/library/edv-art-08.svg' },
+    { title: 'Rose Ridge', caption: 'Five ridges, one long exhale.', palette: 'dawn', seed: 34, img: '/assets/library/edv-art-10.svg' },
+    { title: 'Blue Hour', caption: 'Pines going dark against the snow.', palette: 'alpine', seed: 55, img: '/assets/library/edv-art-12.svg' }
   ];
 
   const root = document.getElementById('pl-root');

@@ -1,13 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Amour Sunrise Preloader</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dawn Poster Loader</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<main class="dp-root" data-dp-root aria-busy="true">
+  <div class="dp-rays" aria-hidden="true"></div>
+  <div class="dp-sun" data-dp-sun aria-hidden="true"></div>
+  <h1 class="dp-word" data-dp-word aria-label="Solstice"></h1>
+  <p class="dp-status" role="status"><span data-dp-pct>0</span><b>%</b> <span data-dp-msg>warming up</span></p>
+</main>
+<button class="dp-replay" type="button" data-dp-replay hidden>Replay</button>
+<script src="script.js"></script>
 </body>
 </html>

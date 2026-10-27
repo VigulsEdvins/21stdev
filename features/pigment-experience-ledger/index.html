@@ -3,11 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pigment Experience Ledger</title>
+  <title>Career Ledger</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="cl-wrap">
+    <header class="cl-head">
+      <p class="cl-small">Career ledger</p>
+      <h1 class="cl-title">Places I have made things</h1>
+      <p class="cl-intro">Ten years across print, product and a very small barn. Open a row for the details.</p>
+    </header>
+    <div class="cl-rows" id="clRows">
+      <article class="cl-row is-open" style="--h: 18">
+        <h2><button class="cl-btn" type="button" aria-expanded="true" aria-controls="cl-p1" id="cl-b1">
+          <span class="cl-no">01</span><span class="cl-name">Oriel Works</span><span class="cl-yrs">2023 &ndash; now</span><span class="cl-plus" aria-hidden="true"></span>
+        </button></h2>
+        <div class="cl-panel" id="cl-p1" role="region" aria-labelledby="cl-b1"><div class="cl-inner">
+          <dl><dt>Role</dt><dd>Lead designer</dd><dt>Based</dt><dd>Hybrid</dd><dt>Field</dt><dd>Workshop software</dd></dl>
+          <div><p>Built the design team from one to six and rebuilt the booking tools used by two hundred small workshops.</p><ul class="cl-tags"><li>Systems</li><li>Hiring</li><li>Research</li></ul></div>
+        </div></div>
+      </article>
+      <article class="cl-row" style="--h: 205">
+        <h2><button class="cl-btn" type="button" aria-expanded="false" aria-controls="cl-p2" id="cl-b2">
+          <span class="cl-no">02</span><span class="cl-name">Kestrel Print</span><span class="cl-yrs">2019 &ndash; 2023</span><span class="cl-plus" aria-hidden="true"></span>
+        </button></h2>
+        <div class="cl-panel" id="cl-p2" role="region" aria-labelledby="cl-b2"><div class="cl-inner">
+          <dl><dt>Role</dt><dd>Senior designer</dd><dt>Based</dt><dd>On site</dd><dt>Field</dt><dd>Independent publishing</dd></dl>
+          <div><p>Designed forty book covers and the ordering flow that cut proof turnaround from nine days to three.</p><ul class="cl-tags"><li>Editorial</li><li>Prototyping</li></ul></div>
+        </div></div>
+      </article>
+      <article class="cl-row" style="--h: 95">
+        <h2><button class="cl-btn" type="button" aria-expanded="false" aria-controls="cl-p3" id="cl-b3">
+          <span class="cl-no">03</span><span class="cl-name">Lumen Barn</span><span class="cl-yrs">2016 &ndash; 2019</span><span class="cl-plus" aria-hidden="true"></span>
+        </button></h2>
+        <div class="cl-panel" id="cl-p3" role="region" aria-labelledby="cl-b3"><div class="cl-inner">
+          <dl><dt>Role</dt><dd>Co-founder</dd><dt>Based</dt><dd>Countryside</dd><dt>Field</dt><dd>Lighting studio</dd></dl>
+          <div><p>Ran a three-person studio making lamps and the website that sold them, including the packing line.</p><ul class="cl-tags"><li>Product</li><li>Brand</li><li>Shipping</li></ul></div>
+        </div></div>
+      </article>
+      <article class="cl-row" style="--h: 285">
+        <h2><button class="cl-btn" type="button" aria-expanded="false" aria-controls="cl-p4" id="cl-b4">
+          <span class="cl-no">04</span><span class="cl-name">Quarry &amp; Co</span><span class="cl-yrs">2014 &ndash; 2016</span><span class="cl-plus" aria-hidden="true"></span>
+        </button></h2>
+        <div class="cl-panel" id="cl-p4" role="region" aria-labelledby="cl-b4"><div class="cl-inner">
+          <dl><dt>Role</dt><dd>Junior designer</dd><dt>Based</dt><dd>On site</dd><dt>Field</dt><dd>Brand agency</dd></dl>
+          <div><p>Learned layout, type and client patience on identity work for restaurants and a regional bakery chain.</p><ul class="cl-tags"><li>Identity</li><li>Print</li></ul></div>
+        </div></div>
+      </article>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,67 +1,56 @@
 {
-  "name": "Animator Title Preloader",
-  "title": "Animator Title Preloader",
+  "name": "Pipeline Title Card",
+  "title": "Pipeline Title Card",
   "slug": "animator-title-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A loading screen for an animator's portfolio, staged as the title card of a short film. The load bar is the production pipeline: **rough → ink → paint → final**, and you watch your title go through it.",
+  "description": "Film title-card preloader where the title passes through rough, ink, paint and final stages as a counter climbs to 100.",
   "tags": [
-    "animator",
-    "title",
     "preloader",
-    "21st.dev",
-    "galleries",
-    "react"
+    "title-card",
+    "film",
+    "animation",
+    "loading"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 104,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "editorial",
     "retro",
     "dark"
   ],
   "industry": [
-    "portfolio",
-    "ecommerce"
+    "portfolio"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope span.atp-sr"
+      "selector": ":scope .pt-small"
+    },
+    {
+      "id": "button-text",
+      "label": "Replay button",
+      "type": "text",
+      "selector": ":scope .pt-replay"
     }
   ],
-  "measured": {
-    "luma": 0.12,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
-  "reserveHeight": 800
+  "ownPalette": true
 }

@@ -1,13 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Singularity Horizon</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gravity Well Display</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="gw-root" data-gw-root>
+  <canvas class="gw-canvas" data-gw-canvas role="img" aria-label="A black hole with a glowing accretion disk. Drag to tilt the view."></canvas>
+  <div class="gw-hud">
+    <div class="gw-top">
+      <p class="gw-label">Gravity well / sector 9</p>
+      <p class="gw-state" aria-live="polite"><span class="gw-dot"></span><span data-gw-state>Nominal</span></p>
+    </div>
+    <div class="gw-grid">
+      <div class="gw-stat"><span class="gw-k">Mass</span><span class="gw-v"><b data-gw-mass>4.3</b> M</span></div>
+      <div class="gw-stat"><span class="gw-k">Spin</span><span class="gw-v"><b data-gw-spin>0.62</b> c</span></div>
+      <div class="gw-stat"><span class="gw-k">Disk heat</span><span class="gw-v"><b data-gw-heat>1.8</b> MK</span></div>
+      <div class="gw-stat"><span class="gw-k">Tilt</span><span class="gw-v"><b data-gw-tilt>24</b> deg</span></div>
+    </div>
+    <p class="gw-hint">Drag to orbit</p>
+  </div>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

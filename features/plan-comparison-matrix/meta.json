@@ -1,0 +1,53 @@
+{
+  "name": "Plan Comparison Matrix",
+  "title": "Plan Comparison Matrix",
+  "slug": "plan-comparison-matrix",
+  "category": "Cards & Tiles",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "A comparison table of three plans with feature rows and yes/no cells; click a plan header to highlight its column.",
+  "tags": [
+    "pricing",
+    "plans",
+    "comparison",
+    "table",
+    "matrix"
+  ],
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal"
+  ],
+  "industry": [
+    "saas",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-26",
+  "order": 300,
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .pm-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .pm-sub"
+    }
+  ]
+}

@@ -1,95 +1,55 @@
 {
-  "name": "Shutter Glyph Footer",
-  "title": "Shutter Glyph Footer",
+  "name": "Watching Eyes Footer",
+  "title": "Watching Eyes Footer",
   "slug": "shutter-glyph-footer",
   "category": "Footers & Endings",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A signal-orange closing section set in monospace caps, with the brand drawn across the full width in a geometric display alphabet. One letter is swapped for a **shutter**: three black blades that meet at a pivot, and the pivot turns to follow the pointer.",
+  "description": "A bold lime closing section with link columns, a newsletter field and a giant wordmark where two letters are eyes that follow the pointer and blink now and then.",
   "tags": [
-    "shutter",
-    "glyph",
     "footer",
-    "21st.dev",
-    "react"
+    "pointer",
+    "eyes",
+    "wordmark",
+    "newsletter"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 222,
   "legacyCategory": "Footers & Endings",
   "status": "stable",
   "weight": "light",
   "mood": [
+    "playful",
     "minimal"
   ],
   "industry": [
-    "agency",
-    "saas"
+    "agency"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "footer-text-1",
-      "label": "Footer text 1",
+      "id": "intro-text",
+      "label": "Sign-up label",
       "type": "text",
-      "selector": ":scope label.sgf-lede"
+      "selector": ":scope .we-lab"
     },
     {
-      "id": "footer-text-2",
-      "label": "Footer text 2",
+      "id": "small-label",
+      "label": "Copyright line",
       "type": "text",
-      "selector": ":scope p.sgf-copy"
-    },
-    {
-      "id": "footer-link-1",
-      "label": "Footer link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-2",
-      "label": "Footer link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-3",
-      "label": "Footer link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-text-3",
-      "label": "Footer text 3",
-      "type": "text",
-      "selector": ":scope p.sr-only"
+      "selector": ":scope .we-legal span:first-child"
     }
   ],
-  "measured": {
-    "luma": 0.56,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800,
-  "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "ownPalette": true
 }

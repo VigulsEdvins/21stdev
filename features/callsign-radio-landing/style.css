@@ -1,9 +1,39 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0e1116); color: var(--text, #f1ede4); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.rl-page { --rl-line: color-mix(in srgb, var(--text, #f1ede4) 16%, transparent); --rl-mute: color-mix(in srgb, var(--text, #f1ede4) 62%, transparent); min-height: 100vh; overflow: hidden; }
+a { color: inherit; }
+.rl-nav { display: flex; align-items: center; gap: 1.5rem; padding: 1rem clamp(1rem, 4vw, 2.5rem); border-bottom: 1px solid var(--rl-line); }
+.rl-logo { font-family: var(--font-display, system-ui, sans-serif); font-weight: 800; letter-spacing: 0.08em; text-decoration: none; }
+.rl-logo span { font-weight: 400; color: var(--rl-mute); margin-left: 0.4rem; font-size: 0.8rem; }
+.rl-links { display: flex; gap: 1.2rem; margin-left: auto; font-size: 0.9rem; }
+.rl-links a { text-decoration: none; color: var(--rl-mute); }
+.rl-links a:hover { color: var(--text, #f1ede4); }
+.rl-btn { display: inline-block; padding: 0.8rem 1.4rem; border-radius: var(--radius, 14px); background: var(--accent, #ffb23e); color: #14110a; font-weight: 700; text-decoration: none; }
+.rl-btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent, #ffb23e); outline-offset: 3px; }
+.rl-hero { padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2.5rem) 3rem; }
+.rl-kicker { font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rl-mute); }
+.rl-title { display: flex; justify-content: space-between; font-family: var(--font-display, system-ui, sans-serif); font-size: clamp(5rem, 28vw, 19rem); line-height: 0.9; font-weight: 900; margin: 1rem 0 0.6rem; }
+.rl-letter { color: color-mix(in srgb, var(--text, #f1ede4) 12%, transparent); background: linear-gradient(to top, var(--accent, #ffb23e) var(--lvl, 0%), transparent var(--lvl, 0%)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; transition: --lvl 0.1s; }
+.rl-letter { -webkit-text-stroke: 1px var(--rl-line); }
+.rl-meter { display: flex; gap: 3px; height: 28px; align-items: flex-end; }
+.rl-meter i { flex: 1; height: 100%; background: var(--rl-line); border-radius: 2px; transition: background 0.08s; }
+.rl-meter i.on { background: var(--accent, #ffb23e); }
+.rl-meter i.hot.on { background: #ff5a4a; }
+.rl-deck { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; margin-top: 1.6rem; }
+.rl-play { display: inline-flex; align-items: center; gap: 0.7rem; padding: 0.85rem 1.5rem; border: 1px solid var(--text, #f1ede4); border-radius: 99px; background: transparent; color: inherit; font: 700 0.95rem var(--font-body, system-ui, sans-serif); cursor: pointer; }
+.rl-play[aria-pressed="true"] { background: var(--text, #f1ede4); color: var(--bg, #0e1116); }
+.rl-play-icon { width: 0; height: 0; border-left: 10px solid currentColor; border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+.rl-play[aria-pressed="true"] .rl-play-icon { width: 10px; height: 12px; border: 0; border-left: 3px solid currentColor; border-right: 3px solid currentColor; }
+.rl-now { color: var(--rl-mute); font-size: 0.95rem; }
+.rl-now b { color: #ff5a4a; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.12em; margin-right: 0.4rem; }
+.rl-sec { padding: 2.5rem clamp(1rem, 4vw, 2.5rem); border-top: 1px solid var(--rl-line); }
+.rl-h2 { font-family: var(--font-display, system-ui, sans-serif); font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 1.2rem; }
+.rl-sched { list-style: none; max-width: 46rem; }
+.rl-sched li { display: grid; grid-template-columns: 4.5rem 1fr; gap: 0.2rem 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--rl-line); }
+.rl-sched time { font-variant-numeric: tabular-nums; color: var(--accent, #ffb23e); }
+.rl-sched span { font-weight: 700; }
+.rl-sched em { grid-column: 2; font-style: normal; color: var(--rl-mute); font-size: 0.9rem; }
+.rl-cta .rl-text { color: var(--rl-mute); max-width: 32rem; line-height: 1.6; margin-bottom: 1.4rem; }
+.rl-foot { display: flex; flex-wrap: wrap; gap: 1rem 2rem; padding: 1.5rem clamp(1rem, 4vw, 2.5rem); border-top: 1px solid var(--rl-line); font-size: 0.85rem; color: var(--rl-mute); }
+@media (max-width: 560px) { .rl-links { display: none; } .rl-btn-sm { margin-left: auto; } }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' data: blob: https:; frame-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>21st.local — Visual Page Builder &amp; Preview Studio</title>
+  <title>edvlabs — Visual Page Builder &amp; Preview Studio</title>
   <meta name="description" content="Assemble client web pages from a library of ready-made sections, edit their content, and export a ZIP, a single HTML file or a React project." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="builder.css" />
@@ -21,14 +21,14 @@
   <header class="vault-header builder-header">
     <div class="header-left">
       <a href="index.html" class="brand-logo" id="brandReset" title="Return to Catalog">
-        <span class="brand-cube">21</span>
-        <span class="brand-text">21st<span class="brand-dot">.local</span></span>
+        <span class="brand-cube">e</span>
+        <span class="brand-text">edv<span class="brand-dot">labs</span></span>
         <span class="brand-tag">PAGE BUILDER</span>
       </a>
 
       <!-- Workspace Navigation Tabs -->
       <nav class="mode-switcher" aria-label="Workspace Mode">
-        <a href="index.html" class="mode-btn" id="navCatalogLink" title="21st.dev Catalog Grid Mode">
+        <a href="index.html" class="mode-btn" id="navCatalogLink" title="Catalog Grid Mode">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="7" height="7" rx="1"></rect>
             <rect x="14" y="3" width="7" height="7" rx="1"></rect>
@@ -363,7 +363,8 @@
             <button type="button" class="elements-cat-pill" data-category="Audio &amp; Shaders">Audio &amp; Shaders</button>
             <button type="button" class="elements-cat-pill" data-category="Interactions &amp; Physics">Physics &amp; Cursors</button>
             <button type="button" class="elements-cat-pill" data-category="Preloaders &amp; Shaders">Preloaders</button>
-            <button type="button" class="elements-cat-pill" data-category="Full Templates">Full Templates</button>
+            <button type="button" class="elements-cat-pill" data-category="Landing Pages">Landing Pages</button>
+            <button type="button" class="elements-cat-pill" data-category="Full Websites">Full Websites</button>
           </div>
         </div>
 
@@ -550,12 +551,20 @@
           <div class="widgets-header-subtitle">Swap text, images and links without touching code</div>
         </div>
         <div class="content-pane-body">
+          <div class="admin-open-card">
+            <p>Edit every heading, text, picture, link and colour of this page in a full admin panel with a live preview. Click anything in the preview to change it.</p>
+            <button type="button" class="builder-btn-primary" id="openAdminBtn">Open admin panel</button>
+            <p class="content-hint">The same panel is included in the ZIP for your client.</p>
+          </div>
+          <details class="quick-edit">
+            <summary>Quick edit one section</summary>
           <label class="ps-field">
             <span>Section</span>
             <select id="contentSectionSelect" class="attr-select"></select>
           </label>
           <div class="content-fields" id="contentFields"></div>
           <p class="content-empty" id="contentEmpty" hidden>Add a section first, then edit its text, images and links here.</p>
+          </details>
         </div>
       </div>
     </aside>
@@ -576,7 +585,7 @@
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
-              <span class="url-text" id="browserUrlText">https://preview.21st.local/assembled-page</span>
+              <span class="url-text" id="browserUrlText">https://preview.edvlabs/assembled-page</span>
             </div>
             <div class="browser-dimension-label" id="viewportDimensionLabel">Desktop (100%)</div>
           </div>
@@ -736,9 +745,14 @@
                   <div class="file-row">📄 index.html</div>
                   <div class="file-row">🎨 style.css (theme variables + combined styles)</div>
                   <div class="file-row">⚡ script.js (isolated lifecycle scripts)</div>
+                  <div class="file-row">🧩 admin.html + admin.css + admin.js + cms.js + cms-content.js (content editor)</div>
                   <div class="file-row">📖 README.md</div>
                 </div>
               </div>
+              <label class="export-option" style="display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;font-size:12.5px;color:var(--text-muted,#a1a1aa)">
+                <input type="checkbox" id="exportCmsToggle" style="margin-top:2px" checked />
+                <span><strong>Include the content editor (admin.html)</strong> &mdash; a CMS for this page: every section's text, pictures, links and colours with a live preview, undo/redo, publish and backup. Your client edits the site without touching code.</span>
+              </label>
               <label class="export-option" style="display:flex;gap:8px;align-items:flex-start;margin:0 0 12px;font-size:12.5px;color:var(--text-muted,#a1a1aa)">
                 <input type="checkbox" id="exportCspToggle" style="margin-top:2px" />
                 <span><strong>Strict security policy (CSP)</strong> &mdash; the page may only run scripts from itself and the CDNs it uses. If a section needs more, the policy is relaxed and the README says why.</span>
@@ -1062,6 +1076,11 @@
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <!-- Script Modules -->
+  <!-- Admin panel: the content editor over the builder (scripts/cms/admin.js, opened from the Content tab) -->
+  <div class="admin-overlay" id="adminOverlay" hidden>
+    <iframe id="adminFrame" title="Admin panel"></iframe>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="registry.js"></script>
   <script src="scripts/catalog-search.js"></script>
@@ -1069,6 +1088,7 @@
   <script src="scripts/projects.js"></script>
   <script src="scripts/builder-extras.js"></script>
   <script src="scripts/builder/ui-helpers.js"></script>
+  <script src="scripts/builder/confirm-dialog.js"></script>
   <script src="scripts/builder/categories.js"></script>
   <script src="scripts/builder/widget-catalog.js"></script>
   <script src="scripts/builder/export-assets.js"></script>
@@ -1076,11 +1096,13 @@
   <script src="scripts/builder/preview-patch.js"></script>
   <script src="scripts/builder/canvas-toolbar-inputs.js"></script>
   <script src="scripts/builder/canvas-context-menu.js"></script>
+  <script src="scripts/builder/section-fit.js"></script>
   <script src="scripts/builder/canvas-frame.js"></script>
   <script src="scripts/builder/canvas.js"></script>
   <script src="scripts/builder/page-checks.js"></script>
   <script src="scripts/builder/font-host.js"></script>
   <script src="scripts/builder/favicon-png.js"></script>
+  <script src="scripts/builder/cms-export.js"></script>
   <script src="scripts/builder/export-notes.js"></script>
   <script src="scripts/builder/export-react-download.js"></script>
   <script src="scripts/builder/export-panel.js"></script>

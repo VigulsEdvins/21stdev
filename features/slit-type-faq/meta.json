@@ -1,30 +1,25 @@
 {
-  "name": "Slit Type FAQ",
-  "title": "Slit Type FAQ",
+  "name": "Split Headline FAQ",
+  "title": "Split Headline FAQ",
   "slug": "slit-type-faq",
   "category": "Scroll & Parallax",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A frequently-asked-questions section set in one ink on one paper. The display headline is cut by a hard horizontal slit: its capitals rise into the slit as the section scrolls in and rest there, cut through, like a stencil pulled before the print is finished. Hovering the headline lifts the letters ",
+  "description": "An FAQ section whose headline letters are cut in half by a thin slit and slide into place on scroll, above an animated accordion.",
   "tags": [
-    "slit",
-    "type",
     "faq",
-    "21st.dev",
+    "accordion",
+    "headline",
     "scroll",
-    "react"
+    "typography"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 227,
   "legacyCategory": "Scroll & Parallax",
   "status": "stable",
@@ -37,76 +32,60 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "headline",
-      "label": "Headline",
+      "id": "small-label",
+      "label": "Eyebrow",
       "type": "text",
-      "selector": ":scope h2.stf-title"
+      "selector": ":scope .sf-eyebrow"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.stf-intro"
+      "selector": ":scope .sf-lead"
     },
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "question-1",
+      "label": "Question 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope #sfQ1 .sf-qt"
     },
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "answer-1",
+      "label": "Answer 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)"
+      "selector": ":scope #sfA1 p"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
+      "id": "question-2",
+      "label": "Question 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope #sfQ2 .sf-qt"
     },
     {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
+      "id": "answer-2",
+      "label": "Answer 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope #sfA2 p"
     },
     {
-      "id": "button-text-2",
-      "label": "Button text 2",
+      "id": "question-3",
+      "label": "Question 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)"
+      "selector": ":scope #sfQ3 .sf-qt"
     },
     {
-      "id": "paragraph-4",
-      "label": "Paragraph 4",
+      "id": "answer-3",
+      "label": "Answer 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "button-link",
-      "label": "Button link",
-      "type": "link",
-      "selector": ":scope a.stf-cta"
+      "selector": ":scope #sfA3 p"
     }
   ],
-  "measured": {
-    "luma": 0.74,
-    "webgl": false,
-    "canvas2d": false
-  },
   "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
   "reserveHeight": 1398,
   "palette": "designed",

@@ -3,11 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flatlay Resume Board</title>
+  <title>Desk Flatlay CV</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="fl-desk" id="flDesk">
+    <p class="fl-hint">Drag the pieces around the desk</p>
+
+    <article class="fl-item fl-card" style="--r:-3deg">
+      <div class="fl-photo" aria-hidden="true">TV</div>
+      <h1 class="fl-name">Tomas Verne</h1>
+      <p class="fl-role">Product designer</p>
+      <p class="fl-blurb">Ten years of turning messy ideas into calm screens.</p>
+    </article>
+
+    <article class="fl-item fl-receipt" style="--r:2deg">
+      <h2 class="fl-h">Experience</h2>
+      <ul>
+        <li><span>Lead designer, Northfield</span><i></i><b>2022&ndash;now</b></li>
+        <li><span>Designer, Paper Kite</span><i></i><b>2018&ndash;22</b></li>
+        <li><span>Intern, Studio Ash</span><i></i><b>2016&ndash;18</b></li>
+      </ul>
+      <p class="fl-total">TOTAL: 10 YRS</p>
+      <span class="fl-ring" aria-hidden="true"></span>
+    </article>
+
+    <article class="fl-item fl-ruled" style="--r:-1.5deg">
+      <h2 class="fl-h">Education</h2>
+      <p>BA Visual Communication<br>Lakeside College, 2016</p>
+      <p>Short course: Interaction Design</p>
+    </article>
+
+    <article class="fl-item fl-sticky" style="--r:4deg">
+      <h2 class="fl-h">Skills</h2>
+      <ul><li>Wireframes</li><li>Prototyping</li><li>Workshops</li><li>Design systems</li></ul>
+    </article>
+
+    <article class="fl-item fl-stick" style="--r:-2deg">
+      <span class="fl-lolly">Contact</span>
+      <p>tomas@verne.example</p>
+      <p>+00 000 000 0000</p>
+    </article>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

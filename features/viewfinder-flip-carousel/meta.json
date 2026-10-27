@@ -1,30 +1,25 @@
 {
-  "name": "Viewfinder Flip Carousel",
-  "title": "Viewfinder Flip Carousel",
+  "name": "Folding Frame Carousel",
+  "title": "Folding Frame Carousel",
   "slug": "viewfinder-flip-carousel",
   "category": "3D & Carousels",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A minimal photo carousel built around a viewfinder frame. Only the photo in the frame lies flat. Every other photo is folded away on its side, turned a quarter round and tipped back in perspective, so the strip reads as a thin stack of edges on either side. Moving opens the next photo out of the sta",
+  "description": "A carousel where only the framed card lies flat and every other card is folded edge-on like a stack of slides; arrows, keys and swipes unfold the next one.",
   "tags": [
-    "viewfinder",
-    "flip",
     "carousel",
-    "21st.dev",
     "3d",
-    "react"
+    "gallery",
+    "frame",
+    "minimal"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS 3D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 245,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
@@ -39,51 +34,23 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > div:nth-of-type(1) > button:nth-of-type(1) > img:nth-of-type(1)"
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .ff-label"
     },
     {
       "id": "text",
-      "label": "Text",
+      "label": "Frame caption",
       "type": "text",
-      "selector": ":scope div.vfc-sr"
+      "selector": ":scope .ff-text"
     }
   ],
-  "measured": {
-    "luma": 0.8,
-    "webgl": false,
-    "canvas2d": false
-  },
   "reserveHeight": 800
 }

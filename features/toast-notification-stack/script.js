@@ -1,5 +1,6 @@
 (function () {
-  var region = document.getElementById('tnsRegion');
+  Array.prototype.forEach.call(document.querySelectorAll('.tns-demo'), function (root) {
+  var region = root.querySelector('.tns-region');
   if (!region) return;
   var LIFE = 4000;
   var MAX = 4;
@@ -32,7 +33,7 @@
     region.appendChild(t);
     arm(t, LIFE);
   }
-  document.querySelectorAll('.tns-btn').forEach(function (b) {
+  root.querySelectorAll('.tns-btn').forEach(function (b) {
     b.addEventListener('click', function () { show(b.getAttribute('data-kind'), b.getAttribute('data-msg')); });
   });
   document.addEventListener('keydown', function (e) {
@@ -41,4 +42,5 @@
   // a couple on load so the stack is visible in previews
   setTimeout(function () { show('success', 'Changes saved'); }, 400);
   setTimeout(function () { show('info', 'A new version is available'); }, 900);
+  });
 })();

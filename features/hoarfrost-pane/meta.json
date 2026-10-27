@@ -1,29 +1,25 @@
 {
-  "name": "Hoarfrost Pane",
-  "title": "Hoarfrost Pane",
+  "name": "Frosted Window Background",
+  "title": "Frosted Window Background",
   "slug": "hoarfrost-pane",
   "category": "Interactions & Physics",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed background: a winter window at blue hour that frosts over as the page loads. The ice is a real phase-field crystal growth model (Kobayashi) on the GPU: six-fold dendrites nucleate on specks along the cold frame, branch, and stall where the glass is warmer, so the middle stays clear for ",
+  "description": "A full-screen dusk window with warm blurred lights that slowly frosts over from the edges; moving the pointer warms and clears a patch.",
   "tags": [
-    "hoarfrost",
-    "pane",
-    "21st.dev",
-    "interactions",
-    "react"
+    "background",
+    "webgl",
+    "frost",
+    "window",
+    "ambient"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 162,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
@@ -37,20 +33,11 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [],
-  "measured": {
-    "luma": 0.18,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

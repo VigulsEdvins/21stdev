@@ -104,7 +104,7 @@ function isDarkTheme(theme) {
  * - Replaces viewport locking 100vh with min-height: auto
  * - Scopes #root selectors to #root-${sectionId}
  */
-function scopeSectionStyles(css, sectionId) {
+function scopeSectionStyles(css, sectionId, keepPalette, keepViewport) {
   if (!css || typeof css !== 'string') return '';
   let scoped = css;
 
@@ -112,8 +112,9 @@ function scopeSectionStyles(css, sectionId) {
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-]):root(?![a-zA-Z0-9_-])/g, `.page-section#${sectionId}`);
 
   // 2. Rewrite universal * selectors so margin/padding resets do not bleed across the entire page,
+  // (only a `*` that starts a selector: not `calc(a * b)` and not `.card > *`, where it already sits inside a selector)
   // using :where() to preserve (0, 0, 0) specificity so component class styles (padding, margin) are never overridden!
-  scoped = scoped.replace(/(^|[\s,;{}])\*(?=[,\s{:]|::)/g, `$1:where(.page-section#${sectionId}) *`);
+  scoped = scoped.replace(/(?<=(?:^|[,{}])\s*)\*(?=\s*[,{:])/g, `:where(.page-section#${sectionId}) *`);
 
   // 3. Replace html, body or body, html compound selectors
   scoped = scoped.replace(/(?<![a-zA-Z0-9_.-])(html\s*,\s*body|body\s*,\s*html)(?![a-zA-Z0-9_-])/gi, `.page-section#${sectionId}`);
@@ -127,11 +128,24 @@ function scopeSectionStyles(css, sectionId) {
   scoped = scoped.replace(/(?<![a-zA-Z0-9_-])#root(?![a-zA-Z0-9_-])/g, `#root-${sectionId}`);
 
   // 6. Replace viewport locking 100vh on height with responsive section height that never collapses
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(680px, 90vh, 1000px)$1; height: auto$1');
-  scoped = scoped.replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: clamp(680px, 90vh, 1000px)$1');
+  // (a preloader overlay is meant to fill the whole viewport, so its 100vh rules stay as they are)
+  // (a pinned or fixed element, such as the stage of a scroll-driven section, is meant to be exactly one screen tall: it keeps its 100vh)
+  if (!keepViewport) {
+  scoped = scoped.replace(/\{([^{}]*)\}/g, (match, body) => {
+    if (/position\s*:\s*(?:sticky|fixed)/i.test(body)) return match;
+    const next = body
+      .replace(/(?<![a-zA-Z0-9_-])height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: auto$1; min-height: clamp(680px, 90vh, 1000px)$1; height: auto$1')
+      .replace(/(?<![a-zA-Z0-9_-])min-height\s*:\s*(?:100vh|100svh|100dvh)(\s*!important)?/gi, 'min-height: clamp(680px, 90vh, 1000px)$1');
+    return '{' + next + '}';
+  });
+  }
 
   // 7. Clean up viewport-locking rules on .page-section container inherited from html, body
   scoped = scoped.replace(new RegExp(`(\\.page-section#${sectionId}[^{]*\\{[^}]*?\\b)height\\s*:\\s*(?:100%|100vh|100svh|100dvh)(?![a-zA-Z0-9_-])`, 'gi'), '$1min-height: auto; height: auto');
+
+  // A component with its own fixed palette keeps every colour it declares: the normalizer below would turn its
+  // inks and dark backgrounds into the page theme's text and background colours and make its text unreadable.
+  if (keepPalette) return scoped;
 
   // 8. Universal color normalizer: replace hardcoded dark backgrounds on container with var(--preview-bg)
   scoped = scoped.replace(
@@ -1302,6 +1316,17 @@ function computeSectionSizingStyles(sizing) {
 }
 
 /**
+ * CSS that shrinks a section's content when the section was made shorter than it needs (`sizing.fitScale`, set by the
+ * builder's resize handle and never below the component's minimum), so the text scales instead of being cropped.
+ */
+function fitScaleCss(section, id) {
+  const z = section && section.sizing;
+  const f = z && z.heightMode === 'custom' ? Number(z.fitScale) : 0;
+  if (!(f >= 0.3 && f < 1)) return '';
+  return `#${id} > :first-child:not(.section-overlay-layer):not(.section-resize-handle) { zoom: ${f}; }`;
+}
+
+/**
  * Sizing plus the space a script-rendered section will fill (`reserveHeight` in meta.json, measured by
  * scripts/measure-reserve.js). Reserving it before the script runs stops the sections below from jumping down.
  */
@@ -1400,7 +1425,7 @@ function generateUniversalThemeStyles(theme) {
       --preview-card-bg: ${cardBg};
       --preview-border: ${border};
 
-      /* Universal design system tokens (Tailwind, 21st.dev, shadcn) */
+      /* Universal design system tokens (Tailwind, shadcn) */
       --background: ${theme.bg};
       --foreground: ${theme.text};
       --color-background: ${theme.bg};
@@ -2024,6 +2049,8 @@ function applyThemeToDocument(doc, themeConfig) {
     s.style.color = native ? '' : theme.text;
     if (typeof s.setAttribute === 'function') {
       s.setAttribute('data-theme', native ? (isDark ? 'light' : 'dark') : pagePol);
+      // `.dark` on the section is what shadcn-style components with theme="auto" follow
+      if (s.classList && typeof s.classList.toggle === 'function') s.classList.toggle('dark', (native ? (isDark ? 'light' : 'dark') : pagePol) === 'dark');
     }
   });
 
@@ -2046,6 +2073,31 @@ function applyThemeToDocument(doc, themeConfig) {
 /**
  * Assembles a complete HTML5 document string for rendering inside the preview iframe.
  */
+/**
+ * A full website lives in its own project (served at its `liveSiteUrl`); the vault holds a showcase card for it.
+ * In the builder's live preview (options.embedSites) the section shows the real site in a frame instead of the card,
+ * so what you see is what that URL serves. The frame is a window of fixed height that scrolls on its own: sites lay
+ * themselves out in viewport units, so a frame sized to its content would never settle. Exports keep the card,
+ * because the site's files are not part of the page.
+ */
+function siteEmbedFor(slug, options) {
+  if (!options || !options.embedSites) return null;
+  let list = options.embedMap;
+  if (!list && typeof window !== 'undefined' && Array.isArray(window.FEATURE_REGISTRY)) {
+    list = {};
+    window.FEATURE_REGISTRY.forEach(f => { if (f.liveSiteUrl && f.category === 'Full Websites') list[f.slug] = { url: f.liveSiteUrl, admin: f.adminUrl || '', title: f.title || f.name || f.slug }; });
+  }
+  const info = list && list[slug];
+  if (!info || !/^\/[A-Za-z0-9._\/-]+$/.test(info.url || '')) return null;
+  const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  const admin = info.admin && /^\/[A-Za-z0-9._\/-]+$/.test(info.admin) ? `<a class="fullsite-link" data-href="${esc(info.admin)}" target="_blank" rel="noopener">CMS ↗</a>` : '';
+  return {
+    html: `<div class="fullsite"><div class="fullsite-bar"><span class="fullsite-name">Full website · ${esc(info.title)}</span><span class="fullsite-links"><a class="fullsite-link" data-href="${esc(info.url)}" target="_blank" rel="noopener">Open live site ↗</a>${admin}</span></div><iframe class="fullsite-frame" data-src="${esc(info.url)}" title="${esc(info.title)}" loading="lazy"></iframe></div>`,
+    css: `.fullsite{display:block;width:100%;background:#0b0b0f}.fullsite-bar{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:8px 14px;font:600 12px/1.2 system-ui,sans-serif;color:#d4d4d8 !important;background:#17171d !important;border-bottom:1px solid #2a2a33}.fullsite-name{color:#d4d4d8 !important}.fullsite-links{display:flex;gap:14px}.fullsite-link{color:#a5b4fc !important;text-decoration:none}.fullsite-link:hover{text-decoration:underline}.fullsite-frame{display:block;width:100%;height:88vh;min-height:560px;border:0;background:#fff}`,
+    js: `(function(){var origin=window.origin&&window.origin!=='null'?window.origin:'';if(!origin){try{origin=new URL(document.baseURI).origin;}catch(e){}}document.querySelectorAll('.fullsite-link[data-href]').forEach(function(a){a.href=new URL(a.getAttribute('data-href'),origin).href;});document.querySelectorAll('.fullsite-frame[data-src]').forEach(function(f){f.src=new URL(f.getAttribute('data-src'),origin).href;});})();`
+  };
+}
+
 function assemblePreviewDocument(sections, themeConfig, featuresData = {}, options = {}) {
   if (Array.isArray(sections)) sections = mapPageLinks(sections.filter(s => !s.hidden), options.pageLinks);
   const pageHead = renderPageHead(options.page, 'Page Preview');
@@ -2064,18 +2116,22 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
   sections.forEach((section, index) => {
     const id = section.id || `sec-${index + 1}`;
     const slug = section.slug || `section-${index + 1}`;
-    const rawHtml = section.html !== undefined ? section.html : (featuresData[slug] && featuresData[slug].html) || '';
-    const rawCss = section.css !== undefined ? section.css : (featuresData[slug] && featuresData[slug].css) || '';
-    const rawJs = section.js !== undefined ? section.js : (featuresData[slug] && featuresData[slug].js) || '';
+    const embed = section.html === undefined ? siteEmbedFor(slug, options) : null;
+    const rawHtml = embed ? embed.html : (section.html !== undefined ? section.html : (featuresData[slug] && featuresData[slug].html) || '');
+    const rawCss = embed ? embed.css : (section.css !== undefined ? section.css : (featuresData[slug] && featuresData[slug].css) || '');
+    const rawJs = embed ? embed.js : (section.js !== undefined ? section.js : (featuresData[slug] && featuresData[slug].js) || '');
 
     // Collect external head links
     extractHeadLinks(rawHtml).forEach(link => headLinks.add(link));
 
     // Scoped CSS
-    const scopedCss = scopeSectionStyles(rawCss, id);
+    const scopedCss = scopeSectionStyles(rawCss, id, !!(options.ownPalette || {})[slug], /preloader/i.test(slug));
     if (scopedCss.trim()) {
       scopedStyleBlocks.push(`    /* Section: ${slug} (${id}) */\n    ${scopedCss.trim()}`);
     }
+
+    const fitCss = fitScaleCss(section, id);
+    if (fitCss) scopedStyleBlocks.push(`    /* Section: ${slug} (${id}) fit */\n    ${fitCss}`);
 
     // Isolated HTML
     const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
@@ -2089,9 +2145,9 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
       styleAttr = ' style="display: none !important; pointer-events: none !important;"';
     }
     const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
-    const nativeList = nativePolarities(options.nativeMap, slug);
+    const nativeList = sectionNativeList(section, options.nativeMap);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -2251,6 +2307,7 @@ ${allHtml}
             s.style.backgroundColor = native ? '' : (t.bg || '');
             s.style.color = native ? '' : (t.text || '');
             s.setAttribute('data-theme', native ? (isDark ? 'light' : 'dark') : pagePol);
+            if (s.classList && typeof s.classList.toggle === 'function') s.classList.toggle('dark', (native ? (isDark ? 'light' : 'dark') : pagePol) === 'dark');
           });
           document.querySelectorAll('[data-theme]').forEach(function (el) {
             el.setAttribute('data-theme', isNativeEl(el) ? (isDark ? 'light' : 'dark') : pagePol);
@@ -2306,6 +2363,22 @@ ${allHtml}
         };
       })();
 
+      // Preview is a static mock-up: links and form buttons stay clickable but never navigate the frame away
+      // (a navigation replaces the preview with a blank page until the builder is reloaded).
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href], area[href]');
+        if (!a) return;
+        e.preventDefault();
+        var href = a.getAttribute('href') || '';
+        if (href.charAt(0) === '#' && href.length > 1) {
+          try {
+            var t = document.getElementById(decodeURIComponent(href.slice(1)));
+            if (t) t.scrollIntoView({ behavior: 'smooth' });
+          } catch (_) {}
+        }
+      }, true);
+      document.addEventListener('submit', function (e) { e.preventDefault(); }, true);
+
       // Notify parent builder when a section is clicked in preview
       document.addEventListener('click', function (e) {
         var sec = e.target.closest('.page-section');
@@ -2360,6 +2433,7 @@ ${allHtml}
 })();
 
 // Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
+// (a section's page-level wheel handler only runs while that section is the main one on screen, i.e. covers the middle of the viewport, wherever the pointer is)
       (function () {
         var origAdd = EventTarget.prototype.addEventListener;
         EventTarget.prototype.addEventListener = function (type, listener, options) {
@@ -2371,7 +2445,7 @@ ${allHtml}
             var safeWheel = function (e) {
               if (isGlobal && secId) {
                 var sec = document.getElementById(secId);
-                if (sec && !sec.contains(e.target) && e.target !== sec) {
+                if (sec && !(function (box) { var m = window.innerHeight / 2; return box.top <= m && box.bottom >= m; })(sec.getBoundingClientRect())) {
                   return;
                 }
               }
@@ -2380,7 +2454,9 @@ ${allHtml}
                 get: function (t, prop) {
                   if (prop === 'preventDefault') {
                     return function () {
-                      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                      // a component that holds the page on purpose ([data-scroll-pin]) decides for itself when to let go
+                      var pinned = e.target && e.target.closest && e.target.closest('[data-scroll-pin]');
+                      if (pinned || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                         e.preventDefault();
                       }
                     };
@@ -2431,6 +2507,17 @@ function nativePolarities(nativeMap, slug) {
   return Array.isArray(v) ? v.filter(p => p === 'light' || p === 'dark') : [];
 }
 
+/**
+ * The page polarities under which a section keeps its own palette. A section can override the component's default:
+ * `themeMode: 'match'` follows every page theme, `themeMode: 'keep'` keeps the colours it was designed in
+ * (`designPolarity`) under the opposite page theme.
+ */
+function sectionNativeList(section, nativeMap) {
+  if (section && section.themeMode === 'match') return [];
+  if (section && section.themeMode === 'keep') return [section.designPolarity === 'light' ? 'dark' : 'light'];
+  return nativePolarities(nativeMap, section && section.slug);
+}
+
 /** Value for a section's data-theme attribute: the opposite polarity when it is native under the page theme. */
 function sectionThemeAttr(pageIsDark, nativeList) {
   const pagePol = pageIsDark ? 'dark' : 'light';
@@ -2443,7 +2530,7 @@ function renderNativePaletteCss(sections, nativeMap) {
   const blocks = [];
   (Array.isArray(sections) ? sections : []).forEach((sec, index) => {
     const id = sec.id || `sec-${index + 1}`;
-    nativePolarities(nativeMap, sec.slug).forEach(pol => {
+    sectionNativeList(sec, nativeMap).forEach(pol => {
       const local = THEME_PRESETS[NATIVE_PRESET_FOR_PAGE[pol]];
       const m = generateUniversalThemeStyles(local).match(/:root\s*\{([\s\S]*?)\n    \}/);
       if (!m) return;
@@ -2944,6 +3031,23 @@ const OVERRIDES_RUNTIME = `(function () {
     else if (key === 'href') { if (value === null) el.removeAttribute('href'); else el.setAttribute('href', value); }
     else if (key.indexOf('style:') === 0) { if (value) el.style.setProperty(key.slice(6), value); else el.style.removeProperty(key.slice(6)); }
   }
+  // Replaces the words of an element without destroying elements inside it (a link, an icon, another editable field):
+  // when it has child elements, only its own text nodes change.
+  function setText(el, value) {
+    if (!el.children.length) { el.textContent = value; return; }
+    var texts = [];
+    for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) texts.push(n);
+    if (!texts.length) {
+      // the words live in a child (a button whose label is a <span>): change those, not add a second set next to them
+      for (var c = el.firstElementChild; c; c = c.nextElementSibling) {
+        if (c.textContent.trim()) { setText(c, value); return; }
+      }
+      el.insertBefore(document.createTextNode(value), el.firstChild);
+      return;
+    }
+    texts[0].nodeValue = value;
+    for (var i = 1; i < texts.length; i++) texts[i].nodeValue = '';
+  }
   function apply() {
     var active = [];
     list.forEach(function (o) {
@@ -2987,7 +3091,7 @@ const OVERRIDES_RUNTIME = `(function () {
       } else {
         key = remember(el, 'html', function () { return el.innerHTML; });
         active.push([el, key]);
-        el.textContent = o.value;
+        setText(el, o.value);
       }
     });
     // anything an override changed earlier but no longer asks for goes back to what it was
@@ -3000,6 +3104,7 @@ const OVERRIDES_RUNTIME = `(function () {
     });
   }
   window.__setOverrides = function (next) { list = next || []; apply(); };
+  window.__getOverrides = function () { return list.slice(); };
   window.__applyOverrides = apply;
   document.addEventListener('DOMContentLoaded', function () { apply(); setTimeout(apply, 400); setTimeout(apply, 1500); });
   window.addEventListener('load', apply);
@@ -3038,10 +3143,13 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     extractHeadLinks(rawHtml).forEach(link => headLinks.add(link));
 
     // Scoped CSS
-    const scopedCss = scopeSectionStyles(rawCss, id);
+    const scopedCss = scopeSectionStyles(rawCss, id, !!(options.ownPalette || {})[slug], /preloader/i.test(slug));
     if (scopedCss.trim()) {
       scopedStyleBlocks.push(`/* Section: ${slug} */\n${scopedCss.trim()}`);
     }
+
+    const fitCss = fitScaleCss(section, id);
+    if (fitCss) scopedStyleBlocks.push(fitCss);
 
     // Isolated HTML
     const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
@@ -3050,9 +3158,9 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
-    const nativeList = nativePolarities(options.nativeMap, slug);
+    const nativeList = sectionNativeList(section, options.nativeMap);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -3205,6 +3313,7 @@ ${renderNativePaletteCss(safeSections, options.nativeMap)}`;
 ${OFFSCREEN_RUNTIME}
 
 // Anti-Scroll-Trapping & Cross-Section Wheel Isolation Guard
+// (a section's page-level wheel handler only runs while that section is the main one on screen, i.e. covers the middle of the viewport, wherever the pointer is)
 (function () {
   var origAdd = EventTarget.prototype.addEventListener;
   EventTarget.prototype.addEventListener = function (type, listener, options) {
@@ -3216,7 +3325,7 @@ ${OFFSCREEN_RUNTIME}
       var safeWheel = function (e) {
         if (isGlobal && secId) {
           var sec = document.getElementById(secId);
-          if (sec && !sec.contains(e.target) && e.target !== sec) {
+          if (sec && !(function (box) { var m = window.innerHeight / 2; return box.top <= m && box.bottom >= m; })(sec.getBoundingClientRect())) {
             return;
           }
         }
@@ -3225,7 +3334,9 @@ ${OFFSCREEN_RUNTIME}
           get: function (t, prop) {
             if (prop === 'preventDefault') {
               return function () {
-                if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                // a component that holds the page on purpose ([data-scroll-pin]) decides for itself when to let go
+                var pinned = e.target && e.target.closest && e.target.closest('[data-scroll-pin]');
+                if (pinned || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                   e.preventDefault();
                 }
               };
@@ -3266,7 +3377,7 @@ ${sectionInfoList.map((s, idx) => `${idx + 1}. **${s.title}** (\`${s.slug}\`) �
 
 ${unverifiedLicences.length ? `## Licences to check before delivery
 
-These components come from 21st.dev, whose Terms (https://21st.dev/terms) say community components stay the property of their authors, may be used only through the 21st.dev platform, and may not be redistributed. Unless a component's own page shows an open licence such as MIT, get the author's written permission before shipping it to a client, or replace it:
+These components were imported from third-party sources and their licence is not verified. Unless a component's own page shows an open licence such as MIT, get the author's written permission before shipping it to a client, or replace it:
 
 ${unverifiedLicences.map(s => `- ${s.title} (\`${s.slug}\`)`).join('\n')}
 
@@ -3360,7 +3471,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette });
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette, pageLinks: options.pageLinks });
   return doc
     .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
 }
@@ -3413,7 +3524,7 @@ function putU32(buffer, offset, val) {
 }
 
 /**
- * Root-relative local asset references (e.g. "/vivmgmt/assets/images/a.jpg") only resolve on the
+ * Root-relative local asset references (e.g. "/site-b/assets/images/a.jpg") only resolve on the
  * builder's dev server. These helpers find them so export can bundle or inline the files.
  */
 const LOCAL_ASSET_RE = /(["'(=,\s])(\/(?!\/)[A-Za-z0-9_\-.%~@+\/]+\.(?:png|jpe?g|webp|gif|svg|avif|ico|mp4|webm|mp3|wav|ogg|woff2?|ttf|otf|css))(?=[?#"')\s>,]|$)/gi;

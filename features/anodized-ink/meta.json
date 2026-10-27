@@ -1,33 +1,29 @@
 {
-  "name": "Anodized Ink",
-  "title": "Anodized Ink",
+  "name": "Crimson Ink Field",
+  "title": "Crimson Ink Field",
   "slug": "anodized-ink",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed shader background: crimson ink suspended in black, lit like anodized metal. Move the pointer to stir it, click to drop ink that rings outward. Left alone, the light drifts on its own so it is never a still.",
+  "description": "A full-bleed WebGL background of crimson ink lit like polished metal that swirls with the pointer and ripples on click.",
   "tags": [
-    "anodized",
+    "shader",
     "ink",
-    "21st.dev",
-    "audio",
-    "react"
+    "background",
+    "webgl",
+    "interactive"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 105,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic",
     "dark"
@@ -37,20 +33,10 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [],
-  "measured": {
-    "luma": 0,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "ownPalette": true
 }

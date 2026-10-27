@@ -3,11 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>design-process-template</title>
+  <title>Project Journal Page</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="pj-page" id="pjPage">
+    <p class="pj-eyebrow"><i></i> Project journal</p>
+
+    <h1 class="pj-title">Six weeks, four phases, and one <a class="pj-badge" href="#" aria-label="Open the project summary"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15L15 5M7 5h8v8" /></svg></a> small app we are proud of.</h1>
+
+    <div class="pj-meta">
+      <p class="pj-lede">Every phase had a clear owner and a clear end. Here is where the time went and what we learned in each one.</p>
+      <ul class="pj-roles" aria-label="Team roles">
+        <li>Lead</li><li>Producer</li><li>Interface designer</li><li>Researcher</li>
+      </ul>
+    </div>
+
+    <div class="pj-split" aria-hidden="true" id="pjSplit">
+      <span style="--w:20" data-i="0"></span><span style="--w:30" data-i="1"></span><span style="--w:35" data-i="2"></span><span style="--w:15" data-i="3"></span>
+    </div>
+    <p class="pj-split-label">Share of total time per phase</p>
+
+    <ol class="pj-list" id="pjList">
+      <li class="pj-item is-open">
+        <h2><button type="button" class="pj-head" aria-expanded="true" aria-controls="pj-p0">
+          <span class="pj-pct">20%</span><span class="pj-name">Discover</span><span class="pj-plus" aria-hidden="true"></span>
+        </button></h2>
+        <div class="pj-panel" id="pj-p0"><div><p>We sat with ten people who run small shops and watched how they tracked orders. Most used paper and memory, and nobody wanted another dashboard.</p><div class="pj-chips"><span>Interviews</span><span>Shadowing</span><span>Audit</span></div></div></div>
+      </li>
+      <li class="pj-item">
+        <h2><button type="button" class="pj-head" aria-expanded="false" aria-controls="pj-p1">
+          <span class="pj-pct">30%</span><span class="pj-name">Sketch</span><span class="pj-plus" aria-hidden="true"></span>
+        </button></h2>
+        <div class="pj-panel" id="pj-p1"><div><p>Paper first. We drew forty rough screens, kept six, and tested them with a stack of index cards before touching a design tool.</p><div class="pj-chips"><span>Wireframes</span><span>Card tests</span><span>Flow maps</span></div></div></div>
+      </li>
+      <li class="pj-item">
+        <h2><button type="button" class="pj-head" aria-expanded="false" aria-controls="pj-p2">
+          <span class="pj-pct">35%</span><span class="pj-name">Build</span><span class="pj-plus" aria-hidden="true"></span>
+        </button></h2>
+        <div class="pj-panel" id="pj-p2"><div><p>Design and code moved together. Each week ended with something real that a customer could tap, even when it was unfinished.</p><div class="pj-chips"><span>Prototype</span><span>Components</span><span>Weekly demos</span></div></div></div>
+      </li>
+      <li class="pj-item">
+        <h2><button type="button" class="pj-head" aria-expanded="false" aria-controls="pj-p3">
+          <span class="pj-pct">15%</span><span class="pj-name">Polish</span><span class="pj-plus" aria-hidden="true"></span>
+        </button></h2>
+        <div class="pj-panel" id="pj-p3"><div><p>The last stretch was small things: spacing, empty states, wording and a pass for people using large text or a keyboard only.</p><div class="pj-chips"><span>Accessibility</span><span>Copy</span><span>Motion</span></div></div></div>
+      </li>
+    </ol>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

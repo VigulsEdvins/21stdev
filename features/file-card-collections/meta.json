@@ -1,27 +1,24 @@
 {
-  "name": "File Card Collections",
-  "title": "File Card Collections",
+  "name": "Folder Stack Cards",
+  "title": "Folder Stack Cards",
   "slug": "file-card-collections",
   "category": "Cards & Tiles",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Interactive frosted glass folder and card collection stacks with vibrant abstract liquid art tabs, active tab states, and smooth spring physics.",
+  "description": "Three tabbed folders, each holding a stack of cards that fans out when the folder opens. Hover or click to switch folders.",
   "tags": [
     "cards",
     "folders",
-    "glassmorphism",
-    "file-card",
-    "21st.dev",
-    "top-today"
+    "tabs",
+    "stack",
+    "fan"
   ],
   "tech": [
-    "React",
-    "Tailwind CSS",
-    "Framer Motion"
+    "CSS Transforms",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React",
-    "Tailwind CSS"
+    "Vanilla HTML/CSS/JS"
   ],
   "order": 1,
   "legacyCategory": "Cards & Tiles",
@@ -35,19 +32,42 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "permission",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.46,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .fs-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .fs-intro"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Folder tab 1",
+      "type": "text",
+      "selector": ":scope .fs-folder:nth-of-type(1) .fs-tab"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Folder tab 2",
+      "type": "text",
+      "selector": ":scope .fs-folder:nth-of-type(2) .fs-tab"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Folder tab 3",
+      "type": "text",
+      "selector": ":scope .fs-folder:nth-of-type(3) .fs-tab"
+    }
+  ],
+  "reserveHeight": 800,
+  "nativeWhen": []
 }

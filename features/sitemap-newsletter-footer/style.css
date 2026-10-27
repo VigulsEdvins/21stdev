@@ -25,3 +25,5 @@
 @media (max-width: 860px) { .snf-inner { grid-template-columns: 1fr 1fr; } .snf-brand { grid-column: 1 / -1; } }
 @media (max-width: 480px) { .snf-row { flex-direction: column; } .snf-inner { grid-template-columns: 1fr; gap: 28px; } }
 @media (prefers-reduced-motion: reduce) { .snf-submit { transition: none; } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Paper Curl Carousel</title>
+  <title>Peeling Print Slider</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="pk-wrap" aria-roledescription="carousel" aria-label="Printed sheets">
+    <div class="pk-stage" id="pkStage" tabindex="0" aria-label="Print stack. Drag the sheet, or use the arrow keys.">
+      <div class="pk-sheet pk-under" id="pkUnder"></div>
+      <div class="pk-shadow" id="pkShadow"></div>
+      <div class="pk-sheet pk-top" id="pkTop"></div>
+      <div class="pk-sheet pk-flap" id="pkFlap"></div>
+    </div>
+    <div class="pk-bar">
+      <button class="pk-btn" id="pkPrev" type="button" aria-label="Previous print">&larr;</button>
+      <p class="pk-caption" id="pkCaption" aria-live="polite">Print 1 of 5</p>
+      <button class="pk-btn" id="pkNext" type="button" aria-label="Next print">&rarr;</button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

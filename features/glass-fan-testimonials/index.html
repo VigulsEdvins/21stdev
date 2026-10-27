@@ -1,13 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glass Fan Testimonials</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frosted Review Fan</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="gf-section" aria-labelledby="gf-h">
+  <p class="gf-kicker">Kind words</p>
+  <h2 id="gf-h" class="gf-title">What customers say</h2>
+  <div class="gf-fan" role="list">
+    <figure class="gf-pane" role="listitem"><div class="gf-card"><blockquote>Setup took one afternoon and the team stopped chasing spreadsheets.</blockquote><figcaption><span class="gf-av" style="--h:210">MR</span><b>Mara Reyes</b><small>Ops lead, Fernbank</small></figcaption></div></figure>
+    <figure class="gf-pane" role="listitem"><div class="gf-card"><blockquote>Clear, fast and oddly calming. Our weekly review is now ten minutes.</blockquote><figcaption><span class="gf-av" style="--h:340">TO</span><b>Tomas Okafor</b><small>Founder, Lumen Yard</small></figcaption></div></figure>
+    <figure class="gf-pane" role="listitem"><div class="gf-card"><blockquote>Support answered like a friend who happens to know everything.</blockquote><figcaption><span class="gf-av" style="--h:150">IS</span><b>Ines Sato</b><small>Designer, Plainfield</small></figcaption></div></figure>
+    <figure class="gf-pane" role="listitem"><div class="gf-card"><blockquote>We switched in March and have not looked back since.</blockquote><figcaption><span class="gf-av" style="--h:35">KB</span><b>Kofi Brandt</b><small>CTO, Tidewater</small></figcaption></div></figure>
+  </div>
+  <div class="gf-ctrl">
+    <button class="gf-prev" type="button" aria-label="Previous review">&larr;</button>
+    <span class="gf-count" aria-live="polite">1 / 4</span>
+    <button class="gf-next" type="button" aria-label="Next review">&rarr;</button>
+  </div>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

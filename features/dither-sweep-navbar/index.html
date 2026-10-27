@@ -3,11 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dither Sweep Navbar</title>
+  <title>Pixel Sweep Header</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+<div class="dn-demo">
+  <header class="dn-head">
+    <div class="dn-bar">
+      <a class="dn-brand" href="#" aria-label="Tessel home">
+        <svg class="dn-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="9" height="9"/><rect x="13" y="2" width="9" height="9" opacity=".45"/><rect x="2" y="13" width="9" height="9" opacity=".45"/><rect x="13" y="13" width="9" height="9"/></svg>
+        <span class="dn-word">Tessel<small>tiny tile studio</small></span>
+      </a>
+      <button class="dn-burger" type="button" aria-expanded="false" aria-label="Toggle menu"><i></i><i></i></button>
+      <nav class="dn-nav"  aria-label="Main">
+        <a class="dn-link" href="#"><canvas aria-hidden="true"></canvas><span>Studio</span></a>
+        <a class="dn-link" href="#"><canvas aria-hidden="true"></canvas><span>Journal</span></a>
+        <a class="dn-link" href="#"><canvas aria-hidden="true"></canvas><span>Shop</span></a>
+        <a class="dn-link dn-cta" href="#"><canvas aria-hidden="true"></canvas><span>Say hello</span></a>
+      </nav>
+    </div>
+  </header>
+</div>
   <script src="script.js"></script>
 </body>
 </html>

@@ -3,34 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stagger Testimonials</title>
+  <title>Staggered Quote Cards</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body data-theme="dark">
-  <div class="stagger-stage">
-    <!-- Header Controls -->
-    <div class="stagger-controls">
-      <button type="button" class="theme-btn" id="btnThemeToggle">Toggle Theme</button>
-      <button type="button" class="filter-btn active" data-filter="all">All Reviews</button>
-      <button type="button" class="filter-btn" data-filter="leadership">Leadership</button>
-      <button type="button" class="filter-btn" data-filter="engineering">Engineering</button>
-    </div>
-
-    <!-- Title Section -->
-    <header class="stagger-header">
-      <span class="proof-pill">Social Proof</span>
-      <h2 class="stagger-title">Loved by builders worldwide</h2>
-      <p class="stagger-sub">
-        Real feedback from designers, founders, and engineering leaders who moved away from boring quote boxes.
-      </p>
+<body>
+  <section class="sq-stage">
+    <header class="sq-head">
+      <h2 class="sq-title">Kind words from people we worked with</h2>
+      <p class="sq-intro">Filter by role. Click any card to bring it forward.</p>
+      <div class="sq-tabs" role="tablist" id="sqTabs">
+        <button type="button" class="sq-tab is-active" data-filter="all">Everyone</button>
+        <button type="button" class="sq-tab" data-filter="founder">Founders</button>
+        <button type="button" class="sq-tab" data-filter="design">Designers</button>
+      </div>
     </header>
 
-    <!-- Staggered Cards Grid -->
-    <div class="stagger-grid" id="staggerGrid">
-      <!-- Injected via script.js -->
+    <div class="sq-grid" id="sqGrid">
+      <article class="sq-card" data-role="founder" style="--h: 255">
+        <p class="sq-quote">The page went live in a week and our first customers said it felt calm and clear.</p>
+        <footer class="sq-who"><span class="sq-avatar">MQ</span><span><strong>Mara Quill</strong><small>Founder, Lumen Works</small></span></footer>
+      </article>
+      <article class="sq-card" data-role="design" style="--h: 175">
+        <p class="sq-quote">Every section matched my palette on the first try. I only had to swap the words.</p>
+        <footer class="sq-who"><span class="sq-avatar">TO</span><span><strong>Tomas Okafor</strong><small>Product designer</small></span></footer>
+      </article>
+      <article class="sq-card" data-role="founder" style="--h: 20">
+        <p class="sq-quote">We replaced three tools with one editor. Handing the site to a teammate was painless.</p>
+        <footer class="sq-who"><span class="sq-avatar">IR</span><span><strong>Ines Rahn</strong><small>Co-founder, Fieldnote</small></span></footer>
+      </article>
+      <article class="sq-card" data-role="design" style="--h: 300">
+        <p class="sq-quote">Light and fast. The motion is there when you want it and quiet when you do not.</p>
+        <footer class="sq-who"><span class="sq-avatar">DB</span><span><strong>Dara Bekele</strong><small>Art director</small></span></footer>
+      </article>
     </div>
-  </div>
-
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,33 +1,29 @@
 {
-  "name": "Earth Limb Landing",
-  "title": "Earth Limb Landing",
+  "name": "Orbital Survey Landing",
+  "title": "Orbital Survey Landing",
   "slug": "earth-limb-landing",
-  "category": "Full Templates",
-  "source": "21st.dev",
+  "category": "Landing Pages",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A complete home page for an Earth-imaging satellite company, shown the way its own fleet sees the planet.",
+  "description": "A full landing page for a fictional satellite imaging service, with a glowing planet horizon, counters, feature cards and a pipeline.",
   "tags": [
-    "earth",
-    "limb",
     "landing",
-    "21st.dev",
-    "react"
+    "space",
+    "satellite",
+    "hero",
+    "dark"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 141,
   "legacyCategory": "Full Templates",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
     "minimal"
   ],
@@ -36,90 +32,67 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope a.elx-headcta"
-    },
-    {
-      "id": "button-link-1",
-      "label": "Button link 1",
-      "type": "link",
-      "selector": ":scope a.elx-headcta"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope button.elx-menubtn"
-    },
-    {
-      "id": "paragraph",
-      "label": "Paragraph",
-      "type": "text",
-      "selector": ":scope p.elx-kicker"
+      "selector": ":scope .ol-hero .ol-label"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > h1:nth-of-type(1)"
+      "selector": ":scope .ol-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .ol-copy .ol-intro"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Button text 1",
+      "type": "text",
+      "selector": ":scope .ol-actions .ol-cta"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .ol-actions .ol-cta"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope .ol-ghost"
     },
     {
       "id": "button-link-2",
       "label": "Button link 2",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope .ol-ghost"
     },
     {
-      "id": "button-link-3",
-      "label": "Button link 3",
-      "type": "link",
-      "selector": ":scope a.elx-ghost"
-    },
-    {
-      "id": "section-heading-1",
-      "label": "Section heading 1",
+      "id": "heading-2",
+      "label": "Fleet heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope #ol-fleet .ol-h2"
     },
     {
-      "id": "section-heading-2",
-      "label": "Section heading 2",
+      "id": "heading-3",
+      "label": "Closing heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-3",
-      "label": "Section heading 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-4",
-      "label": "Section heading 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > h2:nth-of-type(1)"
+      "selector": ":scope .ol-end .ol-h2"
     }
   ],
-  "measured": {
-    "luma": 0.29,
-    "webgl": true,
-    "canvas2d": true
-  },
-  "nativeWhen": [
-    "light"
-  ],
-  "reserveHeight": 6283
+  "nativeWhen": [],
+  "reserveHeight": 6283,
+  "ownPalette": true
 }

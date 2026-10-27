@@ -1,9 +1,30 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #3f342c); color: var(--text, #2b2622); font-family: var(--font-body, system-ui, sans-serif); }
+.fl-desk { --fl-acc: var(--accent, #e4572e); position: relative; min-height: 100vh; padding: 3rem max(1rem, calc((100% - 64rem) / 2)) 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 3rem 2rem; align-content: center; justify-items: center; overflow: hidden;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--text, #000) 10%, transparent) 0 2px, transparent 2px 90px), repeating-linear-gradient(0deg, color-mix(in srgb, var(--text, #fff) 3%, transparent) 0 1px, transparent 1px 6px), linear-gradient(135deg, color-mix(in srgb, var(--bg, #3f342c) 88%, var(--accent, #5a4a3d)), var(--bg, #3f342c)); }
+.fl-hint { position: absolute; top: 0.9rem; left: 50%; transform: translateX(-50%); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--text, #fff) 55%, transparent); white-space: nowrap; }
+.fl-item { color: #2b2622; position: relative; width: 100%; max-width: 20rem; padding: 1.6rem; transform: translate(var(--x, 0px), var(--y, 0px)) rotate(var(--r, 0deg)); cursor: grab; touch-action: none; user-select: none; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25), 0 14px 24px -8px rgba(0, 0, 0, 0.5); transition: box-shadow 0.2s; }
+.fl-item.is-drag { cursor: grabbing; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25), 0 28px 40px -8px rgba(0, 0, 0, 0.6); }
+.fl-h { font: 700 0.78rem/1 var(--font-display, system-ui, sans-serif); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.9rem; }
+.fl-card { background: #f4efe6; border-radius: 10px; text-align: center; padding-top: 2rem; }
+.fl-photo { width: 5.4rem; height: 5.4rem; margin: 0 auto 1rem; border-radius: 50%; display: grid; place-items: center; font: 700 1.6rem/1 var(--font-display, system-ui, sans-serif); color: #fff; background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--fl-acc) 70%, #fff), var(--fl-acc)); border: 4px solid #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); }
+.fl-name { font: 700 1.5rem/1.1 var(--font-display, Georgia, serif); }
+.fl-role { margin-top: 0.3rem; color: var(--fl-acc); font-weight: 600; font-size: 0.9rem; }
+.fl-blurb { margin-top: 0.8rem; font-size: 0.88rem; line-height: 1.55; opacity: 0.8; }
+.fl-receipt { background: #fbfaf5; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.78rem; clip-path: polygon(0 0, 100% 0, 100% 97%, 95% 100%, 90% 97%, 85% 100%, 80% 97%, 75% 100%, 70% 97%, 65% 100%, 60% 97%, 55% 100%, 50% 97%, 45% 100%, 40% 97%, 35% 100%, 30% 97%, 25% 100%, 20% 97%, 15% 100%, 10% 97%, 5% 100%, 0 97%); padding-bottom: 2.2rem; }
+.fl-receipt ul { list-style: none; display: grid; gap: 0.7rem; }
+.fl-receipt li { display: flex; align-items: baseline; gap: 0.3rem; }
+.fl-receipt i { flex: 1; border-bottom: 2px dotted rgba(0, 0, 0, 0.35); transform: translateY(-3px); min-width: 0.5rem; }
+.fl-total { margin-top: 1.1rem; padding-top: 0.6rem; border-top: 1px dashed rgba(0, 0, 0, 0.4); font-weight: 700; }
+.fl-ring { position: absolute; right: 0.6rem; bottom: 0.4rem; width: 3.4rem; height: 3.4rem; border-radius: 50%; border: 5px solid rgba(110, 66, 30, 0.22); filter: blur(0.6px); pointer-events: none; }
+.fl-ruled { background: repeating-linear-gradient(transparent 0 1.55rem, rgba(60, 110, 200, 0.35) 1.55rem calc(1.55rem + 1px)), #fffdf6; border-left: 3px solid rgba(220, 70, 70, 0.5); line-height: 1.55rem; font-size: 0.88rem; }
+.fl-ruled p { margin-bottom: 1.55rem; }
+.fl-ruled .fl-h { line-height: 1.55rem; margin-bottom: 1.55rem; }
+.fl-sticky { background: #ffe27a; min-height: 11rem; font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive; }
+.fl-sticky ul { list-style: none; display: grid; gap: 0.4rem; font-size: 1.05rem; }
+.fl-sticky li::before { content: "\2713  "; color: #b4361a; }
+.fl-stick { background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 14px), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 14px), #e8f0e0; font-size: 0.9rem; padding-top: 2.4rem; }
+.fl-lolly { position: absolute; top: 0.8rem; left: -0.6rem; padding: 0.35rem 1rem; background: #e6c488; border-radius: 4px 14px 14px 4px; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); }
+.fl-stick p { margin-bottom: 0.4rem; }
+@media (prefers-reduced-motion: reduce) { .fl-item { transition: none; } }
+.fl-receipt b { white-space: nowrap; } html, body { overflow-x: hidden; }

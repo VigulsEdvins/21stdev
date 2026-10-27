@@ -3,11 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ink Orbit SaaS Template</title>
+  <title>Signal Desk Landing</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="qp-page">
+    <header class="qp-nav">
+      <a class="qp-logo" href="#"><span class="qp-mark" aria-hidden="true"></span>Quillpoint</a>
+      <nav class="qp-links" aria-label="Main">
+        <a href="#">Product</a><a href="#">Workflows</a><a href="#">Pricing</a><a href="#">Docs</a>
+      </nav>
+      <a class="qp-btn qp-btn-ghost qp-nav-cta" href="#">Sign in</a>
+    </header>
+
+    <section class="qp-hero">
+      <div class="qp-hero-copy">
+        <p class="qp-tag">New &middot; Assistants that file their own reports</p>
+        <h1 class="qp-headline">Turn scattered work into one calm queue.</h1>
+        <p class="qp-intro">Quillpoint reads your inbox, tickets and notes, drafts the next step and leaves the final click to you. Less triage, more finished work.</p>
+        <div class="qp-actions">
+          <a class="qp-btn qp-btn-solid" href="#">Start for free</a>
+          <a class="qp-btn qp-btn-ghost" href="#">See a demo</a>
+        </div>
+        <ul class="qp-proof" aria-label="Highlights"><li><b>4.2h</b> saved per week</li><li><b>38</b> integrations</li><li><b>99.9%</b> uptime</li></ul>
+      </div>
+      <div class="qp-art" aria-hidden="true">
+        <canvas id="qpCanvas" width="600" height="600"></canvas>
+        <span class="qp-art-cap">drag to spin</span>
+      </div>
+    </section>
+
+    <section class="qp-section">
+      <h2 class="qp-h2">Everything routes through one place</h2>
+      <p class="qp-lead">Three small ideas, done thoroughly.</p>
+      <div class="qp-cards">
+        <article class="qp-card"><span class="qp-num">01</span><h3>Capture</h3><p>Mail, chat and forms land in a single feed, tagged and de-duplicated before you see them.</p></article>
+        <article class="qp-card"><span class="qp-num">02</span><h3>Draft</h3><p>Every item arrives with a suggested reply or action, written in your tone from past work.</p></article>
+        <article class="qp-card"><span class="qp-num">03</span><h3>Review</h3><p>Approve, tweak or snooze. Nothing is sent until you say so, and every change can be undone.</p></article>
+      </div>
+    </section>
+
+    <section class="qp-section qp-band">
+      <h2 class="qp-h2">Plans that stay out of the way</h2>
+      <div class="qp-plans">
+        <div class="qp-plan"><h3>Solo</h3><p class="qp-price">$0</p><p>One workspace, 200 drafts a month.</p></div>
+        <div class="qp-plan qp-plan-hot"><h3>Team</h3><p class="qp-price">$18<small>/seat</small></p><p>Shared queues, roles and audit log.</p></div>
+        <div class="qp-plan"><h3>Studio</h3><p class="qp-price">Custom</p><p>Private hosting and priority support.</p></div>
+      </div>
+    </section>
+
+    <footer class="qp-footer">
+      <span>&copy; 2026 Quillpoint</span>
+      <nav aria-label="Footer"><a class="qp-flink" href="#">Privacy</a><a class="qp-flink" href="#">Terms</a><a class="qp-flink" href="#">Status</a></nav>
+    </footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

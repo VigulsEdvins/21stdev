@@ -1,13 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wordmark Newsletter Signup</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Letterbox Signup</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="nw-sec">
+  <div class="nw-mark" aria-hidden="true"></div>
+  <div class="nw-card">
+    <span class="nw-tag">Monthly letter</span>
+    <h2 class="nw-title">One good email, once a month.</h2>
+    <p class="nw-text">Short notes on making things, sent on the first Sunday. Leave any time.</p>
+    <form class="nw-form" novalidate>
+      <label class="nw-field"><span class="nw-lab">Email address</span>
+        <input class="nw-input" type="email" name="email" placeholder="you@example.test" autocomplete="email" required></label>
+      <button class="nw-btn" type="submit">Subscribe</button>
+      <p class="nw-msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

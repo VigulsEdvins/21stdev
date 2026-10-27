@@ -3,11 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wirebound Inquiry</title>
+  <title>Index Card Inquiry</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ic-wrap" aria-labelledby="icTitle">
+    <div class="ic-copy">
+      <p class="ic-kicker">Taking on work</p>
+      <h2 class="ic-title" id="icTitle">Tell us the short version.</h2>
+      <p class="ic-intro">Three quick questions, then a real person writes back within two working days with next steps.</p>
+    </div>
+
+    <div class="ic-deck" id="icDeck">
+      <div class="ic-card ic-front" id="icFront">
+        <span class="ic-stamp" aria-hidden="true">No. 014</span>
+        <h3 class="ic-name">Fennel &amp; Rook<br />Design Office</h3>
+        <p class="ic-line">hello@fennelrook.example</p>
+        <p class="ic-line">+00 000 000 000</p>
+        <button class="ic-btn ic-open" id="icOpen" type="button" aria-expanded="false" aria-controls="icForm">Start a brief</button>
+      </div>
+
+      <form class="ic-card ic-form" id="icForm" novalidate hidden>
+        <div class="ic-progress" aria-hidden="true"><i></i><i></i><i></i></div>
+        <fieldset class="ic-step" data-step="0">
+          <legend>What are we making?</legend>
+          <div class="ic-chips" role="radiogroup" aria-label="Project type">
+            <label><input type="radio" name="type" value="Brand" /><span>Brand identity</span></label>
+            <label><input type="radio" name="type" value="Web" /><span>Website</span></label>
+            <label><input type="radio" name="type" value="App" /><span>Product / app</span></label>
+            <label><input type="radio" name="type" value="Other" /><span>Something else</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="ic-step" data-step="1" hidden>
+          <legend>Roughly what budget?</legend>
+          <div class="ic-chips" role="radiogroup" aria-label="Budget">
+            <label><input type="radio" name="budget" value="s" /><span>Under 5k</span></label>
+            <label><input type="radio" name="budget" value="m" /><span>5k to 15k</span></label>
+            <label><input type="radio" name="budget" value="l" /><span>15k to 40k</span></label>
+            <label><input type="radio" name="budget" value="xl" /><span>40k and up</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="ic-step" data-step="2" hidden>
+          <legend>Where do we reach you?</legend>
+          <label class="ic-field">Email<input type="email" name="email" placeholder="you@example.com" autocomplete="email" /></label>
+          <label class="ic-field">One line about the project<textarea name="note" rows="2" placeholder="A few words is plenty"></textarea></label>
+        </fieldset>
+        <p class="ic-error" id="icError" role="alert"></p>
+        <div class="ic-nav">
+          <button class="ic-btn ic-ghost" type="button" id="icBack">Back</button>
+          <button class="ic-btn" type="button" id="icNext">Next</button>
+        </div>
+      </form>
+
+      <div class="ic-card ic-done" id="icDone" hidden tabindex="-1">
+        <h3 class="ic-name">Got it.</h3>
+        <p class="ic-line">Your brief is on our desk. Watch your inbox.</p>
+        <button class="ic-btn ic-ghost" type="button" id="icReset">Send another</button>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

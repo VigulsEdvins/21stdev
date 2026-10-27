@@ -1,65 +1,62 @@
 {
-  "name": "Zero Melt Preloader",
-  "title": "Zero Melt Preloader",
+  "name": "Trace Gate Preloader",
+  "title": "Trace Gate Preloader",
   "slug": "zero-melt-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A page gate with no enter button. A sheet of ice wipes down over the surface while a counter runs to zero, then you **melt your way in by tracing a circle**. Get the shape right and the screen blows out to white, pays you, and lifts.",
+  "description": "A page gate that counts from 0 to 100, then asks you to draw a circle with the pointer; a good loop opens an iris onto the page, with a skip button for keyboard users.",
   "tags": [
-    "zero",
-    "melt",
     "preloader",
-    "21st.dev",
-    "scroll",
-    "react"
+    "gesture",
+    "canvas",
+    "intro",
+    "gate"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 252,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
     "minimal",
-    "light"
+    "futuristic"
   ],
   "industry": [
     "general"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text",
-      "label": "Button text",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope button.zmp-enter"
+      "selector": ":scope .tg-small"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .tg-site-title"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Replay button text",
+      "type": "text",
+      "selector": ":scope .tg-replay"
     }
   ],
-  "measured": {
-    "luma": 0.99,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "themeReviewed": "Hint text is drawn over a WebGL surface the audit cannot sample; headless Chromium has no GPU so not visually confirmed. Accepted 2026-10-24.",
-  "reserveHeight": 800
+  "ownPalette": true
 }

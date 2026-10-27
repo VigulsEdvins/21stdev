@@ -1,0 +1,62 @@
+{
+  "name": "Storyline Timeline",
+  "title": "Storyline Timeline",
+  "slug": "storyline-timeline",
+  "category": "Scroll & Parallax",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Horizontal milestone timeline with drag, wheel and button scrolling, smooth glide, and a glowing rail that fills as each milestone reaches the middle.",
+  "tags": [
+    "timeline",
+    "horizontal-scroll",
+    "drag",
+    "milestones",
+    "history"
+  ],
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 3,
+  "legacyCategory": "Scroll & Parallax",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "dark"
+  ],
+  "industry": [
+    "ecommerce"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .st-kicker"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .st-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .st-intro"
+    }
+  ],
+  "nativeWhen": [],
+  "palette": "designed",
+  "paletteNote": "Has its own dark/light switch with two fixed palettes"
+}

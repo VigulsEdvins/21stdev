@@ -1,76 +1,72 @@
 {
-  "name": "Holo Card",
-  "title": "Holo Card",
+  "name": "Prism Foil Card",
+  "title": "Prism Foil Card",
   "slug": "holo-card",
   "category": "Cards & Tiles",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A holographic foil trading card you tilt with the pointer. Four finishes, a flip, and layered parallax if you give it art.",
+  "description": "Trading card that tilts with the pointer under a moving foil shine, with four finishes and a flip to the back.",
   "tags": [
-    "holo",
     "card",
-    "21st.dev",
-    "cards",
-    "react"
+    "holographic",
+    "tilt",
+    "foil",
+    "3d"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS 3D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 163,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
     "futuristic",
-    "light"
+    "dark"
   ],
   "industry": [
     "general"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "intro-text",
-      "label": "Intro text",
+      "id": "button-text-1",
+      "label": "Button text 1",
       "type": "text",
-      "selector": ":scope p.font-semibold"
+      "selector": ":scope .pf-opt[data-f=\"rainbow\"]"
     },
     {
-      "id": "paragraph",
-      "label": "Paragraph",
+      "id": "button-text-2",
+      "label": "Button text 2",
       "type": "text",
-      "selector": ":scope p.mt-1"
+      "selector": ":scope .pf-opt[data-f=\"gold\"]"
     },
     {
-      "id": "small-label",
-      "label": "Small label",
+      "id": "button-text-3",
+      "label": "Button text 3",
       "type": "text",
-      "selector": ":scope div.items-end"
+      "selector": ":scope .pf-opt[data-f=\"glitter\"]"
+    },
+    {
+      "id": "button-text-4",
+      "label": "Button text 4",
+      "type": "text",
+      "selector": ":scope .pf-opt[data-f=\"mono\"]"
+    },
+    {
+      "id": "button-text-5",
+      "label": "Button text 5",
+      "type": "text",
+      "selector": ":scope .pf-flip"
     }
-  ],
-  "measured": {
-    "luma": 0.97,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "reserveHeight": 800,
-  "lazy": true
+  ]
 }

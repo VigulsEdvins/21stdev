@@ -1,125 +1,74 @@
 {
-  "name": "Halftone Wordmark Footer",
-  "title": "Halftone Wordmark Footer",
+  "name": "Dotprint Wordmark Footer",
+  "title": "Dotprint Wordmark Footer",
   "slug": "halftone-wordmark-footer",
   "category": "Footers & Endings",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A site footer whose wordmark is set enormous and cropped by the bottom edge, printed as a field of halftone dots. Each dot is sized by how much of the letter covers its cell, so the type keeps its edges at any width. Above it sit your studio line, tracked link columns and a back-to-top link, over a ",
+  "description": "A footer with a huge wordmark rendered as a field of halftone dots that swell and recolour near the pointer, above studio links and a back-to-top pill.",
   "tags": [
+    "footer",
     "halftone",
     "wordmark",
-    "footer",
-    "21st.dev",
-    "react"
+    "canvas",
+    "dots"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 160,
   "legacyCategory": "Footers & Endings",
   "status": "stable",
   "weight": "medium",
   "mood": [
-    "retro"
+    "retro",
+    "editorial"
   ],
   "industry": [
     "agency"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "footer-text-1",
-      "label": "Footer text 1",
+      "label": "Studio line",
       "type": "text",
-      "selector": ":scope span.hwf-sr"
+      "selector": ":scope .hp-line"
     },
     {
       "id": "footer-heading-1",
-      "label": "Footer heading 1",
+      "label": "Studio heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > h3:nth-of-type(1)"
+      "selector": ":scope .hp-cols nav:nth-child(1) h3"
     },
     {
       "id": "footer-heading-2",
-      "label": "Footer heading 2",
+      "label": "Elsewhere heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > h3:nth-of-type(1)"
-    },
-    {
-      "id": "footer-heading-3",
-      "label": "Footer heading 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(3) > h3:nth-of-type(1)"
-    },
-    {
-      "id": "footer-text-2",
-      "label": "Footer text 2",
-      "type": "text",
-      "selector": ":scope div.hwf-brand"
-    },
-    {
-      "id": "footer-link-text-1",
-      "label": "Footer link text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-text-2",
-      "label": "Footer link text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-1",
-      "label": "Footer link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-2",
-      "label": "Footer link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-3",
-      "label": "Footer link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(3) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope .hp-cols nav:nth-child(2) h3"
     },
     {
       "id": "button-text",
-      "label": "Button text",
+      "label": "Back to top",
       "type": "text",
-      "selector": ":scope button.hwf-up"
+      "selector": ":scope .hp-up"
+    },
+    {
+      "id": "button-link",
+      "label": "Back to top link",
+      "type": "link",
+      "selector": ":scope .hp-up"
     }
   ],
-  "measured": {
-    "luma": 0.42,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "nativeWhen": [
-    "light"
-  ],
+  "nativeWhen": [],
   "reserveHeight": 800
 }

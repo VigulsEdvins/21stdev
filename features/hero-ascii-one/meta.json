@@ -1,22 +1,20 @@
 {
-  "name": "Hero ASCII Wireframe Globe",
-  "title": "Hero ASCII Wireframe Globe",
+  "name": "Terminal Globe Hero",
+  "title": "Terminal Globe Hero",
   "slug": "hero-ascii-one",
   "category": "Heroes",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Retro-futuristic terminal ASCII wireframe 3D globe animation with responsive canvas rendering.",
+  "description": "Hero with a rotating wireframe globe drawn entirely from text characters chosen by depth and light. Drag to spin it.",
   "tags": [
     "ascii",
-    "3d",
     "globe",
-    "retro",
     "terminal",
-    "21st.dev"
+    "canvas",
+    "hero"
   ],
   "tech": [
-    "HTML5 Canvas",
-    "ASCII Art Engine",
+    "Canvas 2D",
     "Vanilla JS"
   ],
   "dependencies": [
@@ -25,7 +23,7 @@
   "order": 42,
   "legacyCategory": "Heroes",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic",
     "retro",
@@ -36,68 +34,36 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "permission",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "small-label-1",
-      "label": "Small label 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope span.lg\\:hidden"
-    },
-    {
-      "id": "small-label-2",
-      "label": "Small label 2",
-      "type": "text",
-      "selector": ":scope div.text-white"
-    },
-    {
-      "id": "small-label-3",
-      "label": "Small label 3",
-      "type": "text",
-      "selector": ":scope span.text-white\\/60"
-    },
-    {
-      "id": "small-label-4",
-      "label": "Small label 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)"
+      "selector": ":scope .tg-tag"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.text-2xl"
+      "selector": ":scope .tg-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.text-xs"
+      "selector": ":scope .tg-lead"
     },
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "button-text",
+      "label": "Button text",
       "type": "text",
-      "selector": ":scope button.group"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(8) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > button:nth-of-type(2)"
+      "selector": ":scope .tg-btn"
     }
   ],
-  "measured": {
-    "luma": 0.03,
-    "webgl": true,
-    "canvas2d": true
-  },
-  "reserveHeight": 840
+  "reserveHeight": 840,
+  "nativeWhen": []
 }

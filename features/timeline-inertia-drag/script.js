@@ -1,21 +1,21 @@
 /**
  * Horizontal Inertia Drag Timeline & Mechanical Tick Ruler
- * Extracted from betteroff/app.js (with real Lookback photography)
+ * edvlabs component with placeholder art
  */
 (function () {
   const ITEMS = [
-    { title: 'Defective Units Vol. 1', group: "OCTOBER '26", tag: 'SHOWCASE', aspect: 1.15, img: '/assets/library/defective-units-vol-1-ee41dd19.webp' },
-    { title: 'A$AP × Ray-Ban', group: "OCTOBER '26", tag: 'INSPIRE', aspect: 1.35, img: '/assets/library/asap-x-rayban-b0252755.webp' },
-    { title: '99 Cents Exhibition', group: "OCTOBER '26", tag: 'EXPERIMENT', aspect: 1.0, img: '/assets/library/99-cents-only-store-gallery-exhibition-095f12c1.webp' },
-    { title: 'Converse × Works Studio', group: "SEPTEMBER '26", tag: 'ARCHIVE', aspect: 1.25, img: '/assets/library/converse-shoe-drop-by-works-studio-5e6ce881.webp' },
-    { title: 'Ch. 11 Waves Hawaii', group: "SEPTEMBER '26", tag: 'SHOWCASE', aspect: 1.1, img: '/assets/library/ch-11-shit-waves-hawaii-f95e8577.webp' },
-    { title: 'Broncho Jams', group: "SEPTEMBER '26", tag: 'INSPIRE', aspect: 1.3, img: '/assets/library/broncho-jams-1165a14b.webp' },
-    { title: 'Helge Tscharn Capsule', group: "AUGUST '26", tag: 'PRINT', aspect: 1.2, img: '/assets/library/helge-tscharn-capsule-69ab1fe5.webp' },
-    { title: 'Kelly Slater Retires', group: "AUGUST '26", tag: 'SHOWCASE', aspect: 1.05, img: '/assets/library/kelly-slater-retires-71a71a99.webp' },
-    { title: 'New Balance 933', group: "JULY '26", tag: 'CRAFT', aspect: 1.3, img: '/assets/library/new-balance-933-andrew-reynolds-5ef3de7f.webp' },
-    { title: 'Off-White Resistance', group: "JULY '26", tag: 'EXPERIMENT', aspect: 1.15, img: '/assets/library/off-white-state-of-resistance-d1387472.webp' },
-    { title: 'Pocket Vol. 12', group: "JUNE '26", tag: 'INSPIRE', aspect: 1.25, img: '/assets/library/pocket-vol-12-dc21015a.webp' },
-    { title: 'North Face Early Days', group: "JUNE '26", tag: 'SHOWCASE', aspect: 1.1, img: '/assets/library/north-face-in-early-days-a05563c1.webp' }
+    { title: 'Client 01 Campaign', group: "OCTOBER '26", tag: 'SHOWCASE', aspect: 1.15, img: '/assets/library/edv-art-01.svg' },
+    { title: 'Client 02 Lookbook', group: "OCTOBER '26", tag: 'INSPIRE', aspect: 1.35, img: '/assets/library/edv-art-04.svg' },
+    { title: 'Gallery Pop-up', group: "OCTOBER '26", tag: 'EXPERIMENT', aspect: 1.0, img: '/assets/library/edv-art-07.svg' },
+    { title: 'Studio Collab Drop', group: "SEPTEMBER '26", tag: 'ARCHIVE', aspect: 1.25, img: '/assets/library/edv-art-10.svg' },
+    { title: 'Coastal Waves', group: "SEPTEMBER '26", tag: 'SHOWCASE', aspect: 1.1, img: '/assets/library/edv-art-13.svg' },
+    { title: 'Night Session', group: "SEPTEMBER '26", tag: 'INSPIRE', aspect: 1.3, img: '/assets/library/edv-art-16.svg' },
+    { title: 'Print Capsule', group: "AUGUST '26", tag: 'PRINT', aspect: 1.2, img: '/assets/library/edv-art-03.svg' },
+    { title: 'Final Heat', group: "AUGUST '26", tag: 'SHOWCASE', aspect: 1.05, img: '/assets/library/edv-art-06.svg' },
+    { title: 'Craft Release 03', group: "JULY '26", tag: 'CRAFT', aspect: 1.3, img: '/assets/library/edv-art-09.svg' },
+    { title: 'Resistance Series', group: "JULY '26", tag: 'EXPERIMENT', aspect: 1.15, img: '/assets/library/edv-art-12.svg' },
+    { title: 'Pocket Vol. 12', group: "JUNE '26", tag: 'INSPIRE', aspect: 1.25, img: '/assets/library/edv-art-15.svg' },
+    { title: 'Early Days', group: "JUNE '26", tag: 'SHOWCASE', aspect: 1.1, img: '/assets/library/edv-art-02.svg' }
   ];
 
   const viewport = document.getElementById('timeline-viewport');
@@ -83,7 +83,7 @@
       const g = closest.getAttribute('data-group');
       if (g && g !== activeGroup) {
         activeGroup = g;
-        if (brandRow3) brandRow3.textContent = `(BO®S/${g})`;
+        if (brandRow3) brandRow3.textContent = `(EDV®/${g})`;
         rulerMonths.querySelectorAll('.ruler-month-btn').forEach((btn) => {
           btn.classList.toggle('is-active', btn.getAttribute('data-group') === g);
         });
@@ -187,4 +187,27 @@
     },
     { passive: false }
   );
+
+  // Pins the section while the page scrolls past it and reports how far through (0 to 1) the visitor is,
+  // so the animation plays through with the page scroll
+  function pinRunway(el, screens, onProgress) {
+    var run = document.createElement('div');
+    run.style.cssText = 'position:relative;height:' + screens * 100 + 'vh';
+    var pin = document.createElement('div');
+    pin.style.cssText = 'position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1fr);align-items:center';
+    el.parentNode.insertBefore(run, el); run.appendChild(pin); pin.appendChild(el);
+    el.style.alignSelf = 'stretch'; // fill the pinned screen
+    function update() {
+      var r = run.getBoundingClientRect(), total = r.height - window.innerHeight;
+      onProgress(total > 0 ? Math.max(0, Math.min(1, -r.top / total)) : 0);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+  pinRunway(viewport.closest('.tl-root') || viewport, 3, function (v) {
+    targetX = v * Math.max(0, track.scrollWidth - viewport.clientWidth);
+    clampTarget();
+    startAnimation();
+  });
 })();

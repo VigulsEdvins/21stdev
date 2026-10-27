@@ -3,11 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Water Ripple Carousel</title>
+  <title>Ripple Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="wr-stage" id="wrStage" aria-roledescription="carousel" aria-label="Scenes">
+    <canvas class="wr-cv" id="wrCv" aria-hidden="true"></canvas>
+    <div class="wr-ui">
+      <p class="wr-count" id="wrCount" aria-live="polite">01 / 04</p>
+      <div class="wr-bottom">
+        <div>
+          <h2 class="wr-title" id="wrTitle">Dune light</h2>
+          <p class="wr-sub">Tap anywhere on the picture to drop a ripple.</p>
+        </div>
+        <div class="wr-ctl">
+          <button class="wr-btn" id="wrPrev" type="button" aria-label="Previous scene">&larr;</button>
+          <button class="wr-btn" id="wrNext" type="button" aria-label="Next scene">&rarr;</button>
+        </div>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

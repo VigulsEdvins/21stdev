@@ -1,22 +1,22 @@
 /**
  * Interactive Velocity Cursor Image Trail
- * Extracted from carousel-gallery-play/app.js (with real photography & idle preview demo)
+ * edvlabs component with placeholder art
  */
 (function () {
   const container = document.getElementById('main-container');
   if (!container) return;
 
   const TRAIL_CARDS = [
-    { label: '01 // AJAX 125', img: '/assets/library/20250328_Pieter-Slembrouck-AJAX-Dolberg-115-01265321.webp' },
-    { label: '02 // RED DEVILS', img: '/assets/library/20260603_Pieter-Slembrouck_BRD-101-1-26f0b7ca.webp' },
-    { label: '03 // COMO 1907', img: '/assets/library/20250125_Pieter-Slembrouck-COMO1907-104-ff37252c.webp' },
-    { label: '04 // SPA GP F1', img: '/assets/library/20240726-Pieter-Slembrouck-SPA-GP-131-39be5b71.webp' },
-    { label: '05 // PSG UCL', img: '/assets/library/20250219_Pieter-Slembrouck-PSG-148-1c72f705.webp' },
-    { label: '06 // LIMBXL CAMPAIGN', img: '/assets/library/20251003_Pieter-Slembrouck-LIMBXL-106-scaled-346c180d.jpg' },
-    { label: '07 // BNXT ARENA', img: '/assets/library/20240903_Pieter-Slembrouck-Donar-101-fc0c2249.webp' },
-    { label: '08 // HSV DERBY', img: '/assets/library/20240421_HSV-Pieter-Slembrouck-106-bd8cd58b.webp' },
-    { label: '09 // AL QADSIAH', img: '/assets/library/20240609_pieter-Slembrouck-AL-QADSIAH-118-39bee346.webp' },
-    { label: '10 // LEGIA WARSAW', img: '/assets/library/20241103_Pieter-Slembrouck-LEGIA-131-a11d1f17.webp' }
+    { label: '01 // CLIENT 01', img: '/assets/library/edv-art-03.svg' },
+    { label: '02 // CLUB A', img: '/assets/library/edv-art-04.svg' },
+    { label: '03 // CLUB B', img: '/assets/library/edv-art-05.svg' },
+    { label: '04 // GRAND PRIX', img: '/assets/library/edv-art-06.svg' },
+    { label: '05 // CHAMPIONS NIGHT', img: '/assets/library/edv-art-07.svg' },
+    { label: '06 // BACKSTREET CAMPAIGN', img: '/assets/library/edv-art-08.svg' },
+    { label: '07 // LEAGUE 01', img: '/assets/library/edv-art-09.svg' },
+    { label: '08 // CITY DERBY', img: '/assets/library/edv-art-10.svg' },
+    { label: '09 // DESERT LAUNCH', img: '/assets/library/edv-art-11.svg' },
+    { label: '10 // CLUB C', img: '/assets/library/edv-art-12.svg' }
   ];
 
   const images = TRAIL_CARDS.map((card) => {

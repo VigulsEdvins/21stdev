@@ -1,13 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Title Sequence Preloader</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Film Credits Preloader</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="sq-stage" aria-label="Loading">
+  <div class="sq-shot" aria-hidden="true"><i class="sq-shape"></i><i class="sq-grain"></i></div>
+  <div class="sq-credits" aria-live="off">
+    <div class="sq-line sq-l1"><span class="sq-role">Directed by</span><span class="sq-rule"></span><span class="sq-name">Ada Vellum</span></div>
+    <div class="sq-line sq-l2"><span class="sq-role">Sound</span><span class="sq-rule"></span><span class="sq-name">Milo Parr</span></div>
+  </div>
+  <div class="sq-brand">Reel No. 7</div>
+  <div class="sq-count" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">000</div>
+  <button class="sq-skip" type="button">Skip intro</button>
+  <span class="sq-hint">Frames are generated, nothing is downloaded</span>
+  <div class="sq-end" aria-hidden="true"><p>The reel is ready</p><button class="sq-enter" type="button" tabindex="-1">Enter</button></div>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,34 +1,30 @@
 {
-  "name": "Chroma Glitch Preloader",
-  "title": "Chroma Glitch Preloader",
+  "name": "RGB Split Loader",
+  "title": "RGB Split Loader",
   "slug": "chroma-glitch-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Heavy chromatic aberration (3.5x the cinema grade) pulling the RGB channels apart toward the edges, over colour-rich footage where the fringing reads loudest.",
+  "description": "A counting loader over a colourful animated field, where the red, green and blue channels split apart toward the edges and glitch in bands.",
   "tags": [
-    "chroma",
-    "glitch",
     "preloader",
-    "21st.dev",
-    "scroll",
-    "react"
+    "webgl",
+    "glitch",
+    "chromatic",
+    "shader"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 121,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic",
     "dark"
@@ -38,19 +34,23 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.27,
-    "webgl": true,
-    "canvas2d": false
-  }
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .cg-label"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .cg-btn"
+    }
+  ],
+  "ownPalette": true
 }

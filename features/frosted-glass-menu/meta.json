@@ -1,30 +1,25 @@
 {
-  "name": "Frosted Glass Menu",
-  "title": "Frosted Glass Menu",
+  "name": "Glass Unfold Menu",
+  "title": "Glass Unfold Menu",
   "slug": "frosted-glass-menu",
   "category": "Headers & Nav",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A quiet, membership-club navigation. A frosted glass bar unfolds in place into a full index: muted column heads, monospace caps links, a pill call-to-action, a ruled footer, and a small hand-drawn traveller who pulls a suitcase along the footer rule. He strolls while the menu is open and breaks into",
+  "description": "A frosted glass navigation bar that unfolds in place into a three-column index with a call-to-action and a small marker walking the footer rule.",
   "tags": [
-    "frosted",
+    "navigation",
     "glass",
     "menu",
-    "21st.dev",
-    "navigation",
-    "react"
+    "blur",
+    "dropdown"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 152,
   "legacyCategory": "Navigation & Headers",
   "status": "stable",
@@ -38,87 +33,52 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text",
-      "label": "Button text",
-      "type": "text",
-      "selector": ":scope button.fgm-toggle"
-    },
-    {
       "id": "menu-link-1",
-      "label": "Menu link 1",
+      "label": "Logo link",
       "type": "link",
-      "selector": ":scope a.fgm-logo"
+      "selector": ":scope .fm-logo"
     },
     {
-      "id": "headline",
-      "label": "Headline",
+      "id": "button-text",
+      "label": "Toggle text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .fm-toggle"
     },
     {
       "id": "section-heading-1",
-      "label": "Section heading 1",
+      "label": "Column 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h2:nth-of-type(1)"
+      "selector": ":scope .fm-col:nth-child(1) .fm-head"
     },
     {
       "id": "section-heading-2",
-      "label": "Section heading 2",
+      "label": "Column 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > h2:nth-of-type(1)"
+      "selector": ":scope .fm-col:nth-child(2) .fm-head"
+    },
+    {
+      "id": "section-heading-3",
+      "label": "Column 3",
+      "type": "text",
+      "selector": ":scope .fm-col:nth-child(3) .fm-head"
     },
     {
       "id": "button-link",
-      "label": "Button link",
+      "label": "CTA link",
       "type": "link",
-      "selector": ":scope a.fgm-cta"
+      "selector": ":scope .fm-cta"
     },
     {
-      "id": "menu-item-1",
-      "label": "Menu item 1",
+      "id": "small-label",
+      "label": "Footer note",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > a:nth-of-type(1) > span:nth-of-type(1)"
-    },
-    {
-      "id": "menu-item-2",
-      "label": "Menu item 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
-    },
-    {
-      "id": "menu-item-3",
-      "label": "Menu item 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)"
-    },
-    {
-      "id": "menu-link-2",
-      "label": "Menu link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "menu-item-4",
-      "label": "Menu item 4",
-      "type": "text",
-      "selector": ":scope div.fgm-foot"
+      "selector": ":scope .fm-note"
     }
-  ],
-  "measured": {
-    "luma": 0.99,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  ]
 }

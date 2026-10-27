@@ -1,8 +1,9 @@
 (function () {
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.btb-tab'));
-  var pill = document.getElementById('btbPill');
-  var title = document.getElementById('btbTitle');
-  var text = document.getElementById('btbText');
+  Array.prototype.forEach.call(document.querySelectorAll('.btb-demo'), function (root) {
+  var tabs = Array.prototype.slice.call(root.querySelectorAll('.btb-tab'));
+  var pill = root.querySelector('.btb-pill');
+  var title = root.querySelector('.btb-title');
+  var text = root.querySelector('.btb-text');
   if (!tabs.length || !pill) return;
   function select(i, focus) {
     tabs.forEach(function (t, n) {
@@ -25,5 +26,6 @@
       else if (e.key === 'Home') { e.preventDefault(); select(0, true); }
       else if (e.key === 'End') { e.preventDefault(); select(n - 1, true); }
     });
+  });
   });
 })();

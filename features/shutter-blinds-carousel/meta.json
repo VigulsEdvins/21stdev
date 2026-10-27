@@ -1,34 +1,29 @@
 {
-  "name": "Shutter Blinds Carousel",
-  "title": "Shutter Blinds Carousel",
+  "name": "Slat Flip Carousel",
+  "title": "Slat Flip Carousel",
   "slug": "shutter-blinds-carousel",
   "category": "3D & Carousels",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed image carousel where the next picture swings in on horizontal slats, like blinds tilting open one after another, while the old picture dims behind them. Forward runs the slats top to bottom, back runs them bottom to top.",
+  "description": "A full-bleed scene carousel where the next picture flips open on horizontal slats one after another, forward or backward.",
   "tags": [
-    "shutter",
-    "blinds",
     "carousel",
-    "21st.dev",
+    "slats",
     "3d",
-    "react"
+    "transition",
+    "slider"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS 3D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 221,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "futuristic"
   ],
@@ -37,33 +32,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope img.sb-img"
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .sf-title"
     },
     {
-      "id": "small-label",
-      "label": "Small label",
+      "id": "intro-text",
+      "label": "Intro text",
       "type": "text",
-      "selector": ":scope div.sb-sr"
+      "selector": ":scope .sf-text"
     }
   ],
-  "measured": {
-    "luma": 0.53,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "ownPalette": true
 }

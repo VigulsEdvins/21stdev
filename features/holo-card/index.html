@@ -3,11 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Holo Card</title>
+  <title>Prism Foil Card</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="pf-stage">
+    <div class="pf-wrap">
+      <div class="pf-card" id="pfCard" data-finish="rainbow" tabindex="0" role="button" aria-label="Foil card. Move the pointer to tilt, press Enter to flip.">
+        <div class="pf-inner" id="pfInner">
+          <div class="pf-face pf-front">
+            <div class="pf-top"><b>Lumen Moth</b><span>HP 90</span></div>
+            <div class="pf-art"><svg viewBox="0 0 200 140" aria-hidden="true"><defs><radialGradient id="pfg" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#3b2a8f"/></radialGradient></defs><rect width="200" height="140" fill="url(#pfg)"/><g fill="#14102e" opacity=".9"><path d="M100 70C70 30 30 40 28 70c2 26 40 36 72 0z"/><path d="M100 70c30-40 70-30 72 0-2 26-40 36-72 0z"/></g><g fill="#ffd166"><circle cx="64" cy="64" r="8"/><circle cx="136" cy="64" r="8"/></g><rect x="97" y="48" width="6" height="52" rx="3" fill="#f6ecc9"/></svg></div>
+            <p class="pf-type">Night flyer &middot; Stage 2</p>
+            <div class="pf-move"><b>Glow Dust</b><span>Flip a coin. If heads, the target is dazzled.</span></div>
+            <div class="pf-move"><b>Moonbeam</b><span>40 damage.</span></div>
+            <p class="pf-foot">No. 042 / 120</p>
+            <div class="pf-foil" aria-hidden="true"></div><div class="pf-glare" aria-hidden="true"></div>
+          </div>
+          <div class="pf-face pf-back"><div class="pf-sigil"></div><p>PRISM</p><div class="pf-foil" aria-hidden="true"></div><div class="pf-glare" aria-hidden="true"></div></div>
+        </div>
+      </div>
+      <div class="pf-ctl" role="group" aria-label="Finish">
+        <button class="pf-opt is-on" data-f="rainbow" aria-pressed="true">Rainbow</button>
+        <button class="pf-opt" data-f="gold" aria-pressed="false">Gold</button>
+        <button class="pf-opt" data-f="glitter" aria-pressed="false">Glitter</button>
+        <button class="pf-opt" data-f="mono" aria-pressed="false">Mono</button>
+        <button class="pf-opt pf-flip" id="pfFlip" type="button">Flip</button>
+      </div>
+    </div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

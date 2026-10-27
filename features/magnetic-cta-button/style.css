@@ -20,3 +20,5 @@
 .mcb-note { margin: 0; font-size: .85rem; opacity: .55; }
 @media (hover: none) { .mcb-button { transform: none !important; } .mcb-zone { padding: 16px; } }
 @media (prefers-reduced-motion: reduce) { .mcb-button, .mcb-label-a, .mcb-label-b, .mcb-arrow { transition: none; } .mcb-ripple { animation: none; opacity: 0; } .mcb-button { transform: none !important; } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

@@ -3,11 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Folder Tab Portfolio Template</title>
+  <title>Binder Portfolio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="fb-page">
+    <header class="fb-head">
+      <a class="fb-mark" href="#">Noor<b>/</b>Vale</a>
+      <nav class="fb-nav" aria-label="Primary">
+        <a href="#">Index</a><a href="#fbFolders">Work</a><a href="#fbAbout">About</a><a href="#fbContact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="fb-hero">
+      <p class="fb-kicker">Portfolio 2026 &middot; Edition 04</p>
+      <h1 class="fb-big" aria-label="Folio">FOLIO</h1>
+      <div class="fb-hero-row">
+        <p class="fb-name">Noor Vale<span>Visual designer</span>
+          <svg class="fb-sign" viewBox="0 0 160 50" aria-hidden="true"><path d="M6 36c14-30 22-30 18-8s10 14 20-4 10 14 22 2 8-8 14-14c-4 14 4 16 14 6s16-6 20-2" /></svg>
+        </p>
+        <p class="fb-intro">Four folders of selected projects, filed by kind. Open a tab to flip through what is inside.</p>
+      </div>
+    </section>
+
+    <section class="fb-stack" id="fbFolders" aria-label="Project folders">
+      <article class="fb-folder" data-c="plum">
+        <h2 class="fb-tabrow"><button class="fb-tab" type="button" aria-expanded="true" aria-controls="fbP1"><span>Identity</span><i>03</i></button></h2>
+        <div class="fb-body" id="fbP1">
+          <div class="fb-inner">
+            <p class="fb-cap">Marks, type systems and small brand worlds.</p>
+            <ul class="fb-works"><li class="w1"><span>Tidepool Co-op</span></li><li class="w2"><span>Marrow Bakery</span></li><li class="w3"><span>Lantern Press</span></li></ul>
+          </div>
+        </div>
+      </article>
+      <article class="fb-folder" data-c="teal">
+        <h2 class="fb-tabrow"><button class="fb-tab" type="button" aria-expanded="false" aria-controls="fbP2"><span>Posters</span><i>04</i></button></h2>
+        <div class="fb-body" id="fbP2" hidden>
+          <div class="fb-inner">
+            <p class="fb-cap">Loud single-sheet pieces for nights, talks and fairs.</p>
+            <ul class="fb-works"><li class="w2"><span>Night Swim</span></li><li class="w3"><span>Open Studios</span></li><li class="w1"><span>Seed Swap</span></li><li class="w4"><span>Low Tide</span></li></ul>
+          </div>
+        </div>
+      </article>
+      <article class="fb-folder" data-c="coral">
+        <h2 class="fb-tabrow"><button class="fb-tab" type="button" aria-expanded="false" aria-controls="fbP3"><span>Interfaces</span><i>02</i></button></h2>
+        <div class="fb-body" id="fbP3" hidden>
+          <div class="fb-inner">
+            <p class="fb-cap">Screens and flows for small apps and shops.</p>
+            <ul class="fb-works"><li class="w4"><span>Pantry app</span></li><li class="w1"><span>Ticket kiosk</span></li></ul>
+          </div>
+        </div>
+      </article>
+      <article class="fb-folder" data-c="sand">
+        <h2 class="fb-tabrow"><button class="fb-tab" type="button" aria-expanded="false" aria-controls="fbP4"><span>Sketchbook</span><i>05</i></button></h2>
+        <div class="fb-body" id="fbP4" hidden>
+          <div class="fb-inner">
+            <p class="fb-cap">Studies and experiments that never shipped.</p>
+            <ul class="fb-works"><li class="w3"><span>Paper cuts</span></li><li class="w4"><span>Grid games</span></li><li class="w2"><span>Ink drops</span></li><li class="w1"><span>Letter loops</span></li><li class="w3"><span>Blue hour</span></li></ul>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="fb-about" id="fbAbout">
+      <h2>About</h2>
+      <p>Noor is a made-up designer who likes tidy grids, loud colour and files kept in order. This text is placeholder copy for your own story.</p>
+    </section>
+
+    <footer class="fb-foot" id="fbContact">
+      <p class="fb-foot-t">Have a project in mind?</p>
+      <a class="fb-mail" href="#">hello@example.test</a>
+      <small>&copy; 2026 Noor Vale. Placeholder portfolio.</small>
+    </footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

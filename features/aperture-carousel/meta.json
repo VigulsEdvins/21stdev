@@ -1,33 +1,30 @@
 {
-  "name": "Aperture Carousel",
-  "title": "Aperture Carousel",
+  "name": "Iris Slide Carousel",
+  "title": "Iris Slide Carousel",
   "slug": "aperture-carousel",
   "category": "3D & Carousels",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed image carousel where the next picture opens through a circular iris that grows from wherever you click, with a hairline ring riding its edge. Titles rise out of a mask, a hairline fills toward the next slide, and the cursor becomes a small \"Next / Prev\" lens.",
+  "description": "A full-bleed carousel where the next slide opens through a circular iris growing from the click point, with a ring on its edge, masked titles and a cursor lens.",
   "tags": [
-    "aperture",
     "carousel",
-    "21st.dev",
-    "3d",
-    "react"
+    "iris",
+    "clip-path",
+    "slider",
+    "fullscreen",
+    "cursor"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 106,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "futuristic",
     "minimal"
@@ -37,33 +34,52 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope img.ap-img"
+      "id": "small-label",
+      "label": "Slide 1 label",
+      "type": "text",
+      "selector": ":scope .ap-slide:nth-child(1) .ap-text p"
     },
     {
-      "id": "small-label",
-      "label": "Small label",
+      "id": "headline",
+      "label": "Slide 1 title",
       "type": "text",
-      "selector": ":scope div.ap-sr"
+      "selector": ":scope .ap-slide:nth-child(1) .ap-text h2"
+    },
+    {
+      "id": "text-2",
+      "label": "Slide 2 title",
+      "type": "text",
+      "selector": ":scope .ap-slide:nth-child(2) .ap-text h2"
+    },
+    {
+      "id": "text-3",
+      "label": "Slide 3 title",
+      "type": "text",
+      "selector": ":scope .ap-slide:nth-child(3) .ap-text h2"
+    },
+    {
+      "id": "text-4",
+      "label": "Slide 4 title",
+      "type": "text",
+      "selector": ":scope .ap-slide:nth-child(4) .ap-text h2"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Prev button",
+      "type": "text",
+      "selector": ":scope .ap-prev"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Next button",
+      "type": "text",
+      "selector": ":scope .ap-next"
     }
-  ],
-  "measured": {
-    "luma": 0.53,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  ]
 }

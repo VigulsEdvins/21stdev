@@ -168,7 +168,7 @@
     // Landing-page rules and section add/replace (scripts/builder/landing.js)
     const rt = { playedPreloaderId: null, preloaderForceReplay: false, forceFullPreviewReload: false }; // preloader and preview state shared by several modules
     const landing = (window.BuilderLanding || require('./scripts/builder/landing.js')).createLandingSections({ catalogLib, featuresMap, stackManager, rt });
-    const { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection } = landing;
+    const { LANDING_PAGE_SINGLETONS, getSingletonType, findExistingSingleton, addOrReplaceLandingSection, addWithTemplateGuard } = landing;
     let activeTargetSectionId = null;
 
     // Styling Tab Elements
@@ -228,7 +228,7 @@
     // Freeform canvas: overlay widgets, context menu, edit toolbar, selection (scripts/builder/canvas.js)
     const canvas = (window.BuilderCanvas || require('./scripts/builder/canvas.js')).createCanvasController({
       stackManager, previewFrame, canvasContextMenu, elementEditToolbar,
-      addOrReplaceLandingSection, getActiveSection, setActiveSection,
+      addOrReplaceLandingSection, addWithTemplateGuard, getActiveSection, setActiveSection,
       handleHistoryKeydown, pushHistorySnapshot
     });
     const { closeToolbarPopup, clearElementSelection, selectCanvasElement, updateToolbarPosition, ensureResizeHandles } = canvas;
@@ -303,7 +303,7 @@
 
     // Elements sidebar catalogue (scripts/builder/elements-catalog.js)
     const elementsCatalog = (window.BuilderElements || require('./scripts/builder/elements-catalog.js')).createElementsCatalog({
-      addOrReplaceLandingSection, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
+      addOrReplaceLandingSection, addWithTemplateGuard, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
       previewFrame, registry, setActiveSection, stackManager, updateActiveSectionUI
     });
     const { renderElementsCatalog } = elementsCatalog;
@@ -339,8 +339,37 @@
     if (sidebarTextColor) sidebarTextColor.addEventListener('input', (e) => syncColorsFromSidebar({ text: e.target.value }));
     if (sidebarAccentColor) sidebarAccentColor.addEventListener('input', (e) => syncColorsFromSidebar({ accent: e.target.value }));
 
+    // One place keeps every theme control in step with the project's theme, whichever control (or undo, or a loaded
+    // project) changed it: the header select and colour pickers, the Styling tab's preset cards and its palette.
+    function syncThemeControls() {
+      const st = stackManager.getState();
+      const theme = st.theme || 'midnight-dark';
+      if (themePresetSelect && themePresetSelect.value !== theme) themePresetSelect.value = theme;
+      if (themePresetCards) themePresetCards.querySelectorAll('.theme-card-btn').forEach(b => b.classList.toggle('is-active', b.dataset.theme === theme));
+      const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
+      const colors = theme === 'custom' ? (st.customColors || {}) : (presets[theme] || {});
+      // a project saved with custom colours shows the colour pickers when it is opened
+      if (theme === 'custom') {
+        if (customColorsControls && customColorsControls.style.display === 'none') customColorsControls.style.display = 'inline-flex';
+        if (customThemeToggle) customThemeToggle.classList.add('is-active');
+      }
+      // the preview width buttons follow the project's viewport (loaded project, API, undo)
+      const stage = document.getElementById('viewportStage');
+      const vp = st.viewport;
+      if (stage && ['desktop', 'tablet', 'mobile'].includes(vp) && stage.getAttribute('data-active-viewport') !== vp) {
+        const btn = document.getElementById('viewport' + vp.charAt(0).toUpperCase() + vp.slice(1) + 'Btn');
+        if (btn) btn.click();
+      }
+      [[colors.bg, bgColorInput, sidebarBgColor], [colors.text, textColorInput, sidebarTextColor], [colors.accent, accentColorInput, sidebarAccentColor]].forEach(([value, ...inputs]) => {
+        if (typeof value !== 'string' || !/^#[0-9a-f]{6}$/i.test(value)) return;
+        inputs.forEach(input => { if (input && input.value.toLowerCase() !== value.toLowerCase()) input.value = value; });
+      });
+    }
+    syncThemeControls();
+
     // Subscribe to stack changes
     stackManager.subscribe(() => {
+      syncThemeControls();
       renderStackList();
       updatePreview();
       if (!historyCtl.state.applying) {
@@ -411,7 +440,7 @@
 
     // 5. Component drawer (scripts/builder/drawer.js)
     const drawer = (window.BuilderDrawer || require('./scripts/builder/drawer.js')).createDrawerController({
-      LANDING_PAGE_SINGLETONS, addOrReplaceLandingSection, catalogSearch, elementsFilters, featuresMap,
+      LANDING_PAGE_SINGLETONS, addOrReplaceLandingSection, addWithTemplateGuard, catalogSearch, elementsFilters, featuresMap,
       findExistingSingleton, getSingletonType, registry, setActiveSection
     });
     const { openDrawer, renderDrawerFeatures } = drawer;

@@ -1,33 +1,29 @@
 {
-  "name": "Singularity Horizon",
-  "title": "Singularity Horizon",
+  "name": "Gravity Well Display",
+  "title": "Gravity Well Display",
   "slug": "singularity-horizon",
   "category": "Interactions & Physics",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A black hole with a live accretion disk, cycling through named states — nominal, turbulent, collapsing — with a relativistic HUD over it. Drag to orbit.",
+  "description": "A WebGL black hole with a swirling accretion disk that cycles through nominal, turbulent and collapsing states under a live readout.",
   "tags": [
-    "singularity",
-    "horizon",
-    "21st.dev",
-    "interactions",
-    "react"
+    "black-hole",
+    "webgl",
+    "hud",
+    "space",
+    "interactive"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 225,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic",
     "light"
@@ -37,61 +33,25 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label-1",
-      "label": "Small label 1",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope div.mb-3"
+      "selector": ":scope .gw-label"
     },
     {
       "id": "small-label-2",
-      "label": "Small label 2",
+      "label": "Hint",
       "type": "text",
-      "selector": ":scope div.inline-block"
-    },
-    {
-      "id": "small-label-3",
-      "label": "Small label 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1)"
-    },
-    {
-      "id": "small-label-4",
-      "label": "Small label 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2)"
-    },
-    {
-      "id": "small-label-5",
-      "label": "Small label 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
-    },
-    {
-      "id": "small-label-6",
-      "label": "Small label 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2)"
+      "selector": ":scope .gw-hint"
     }
   ],
-  "measured": {
-    "luma": 0.96,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "nativeWhen": [
-    "light"
-  ],
   "reserveHeight": 800,
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

@@ -11,7 +11,7 @@
 
   function createElementsCatalog(ctx) {
     const {
-      addOrReplaceLandingSection, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
+      addOrReplaceLandingSection, addWithTemplateGuard, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
       previewFrame, registry, setActiveSection, stackManager, updateActiveSectionUI
     } = ctx;
 
@@ -92,6 +92,28 @@
     const similarChipClear = document.getElementById('similarChipClear');
     if (similarChipClear) similarChipClear.addEventListener('click', () => { elementsSimilarTo = null; renderElementsCatalog(); });
 
+    // Section previews follow the project's theme. The committed thumbnails were shot in the default dark theme, so they
+    // only stand in for it; under any other theme each visible card mounts a live preview that gets the theme applied.
+    function currentTheme() {
+      const st = stackManager.getState();
+      return (window.Assembler && window.Assembler.resolveTheme)
+        ? window.Assembler.resolveTheme(st.theme === 'custom' ? (st.customColors || {}) : (st.theme || 'midnight-dark'))
+        : null;
+    }
+    function thumbsMatchTheme() {
+      const st = stackManager.getState();
+      return !st.theme || st.theme === 'midnight-dark';
+    }
+    function themeKey() {
+      const th = currentTheme();
+      return th ? [th.bg, th.text, th.accent, th.cardBg, th.border].join('|') : '';
+    }
+    function applyThemeToPreview(iframe) {
+      const th = currentTheme();
+      if (!th || !window.Assembler || !window.Assembler.applyThemeToDocument) return;
+      try { window.Assembler.applyThemeToDocument(iframe.contentDocument, th); } catch (_) {}
+    }
+
     // Lazy Preview Observer for Sidebar Section Cards
     const elementsPreviewObserver = typeof IntersectionObserver !== 'undefined'
       ? new IntersectionObserver((entries) => {
@@ -110,6 +132,7 @@
                 iframe.src = `features/${slug}/index.html`;
                 const placeholder = box.querySelector('.element-card-preview-placeholder');
                 iframe.addEventListener('load', () => {
+                  applyThemeToPreview(iframe);
                   if (placeholder) placeholder.style.display = 'none';
                 });
                 iframe.addEventListener('error', () => {
@@ -219,18 +242,26 @@
         else if (catLower.includes('audio') || catLower.includes('shader')) badgeClass = 'badge-shaders';
         else if (catLower.includes('physics') || catLower.includes('cursor')) badgeClass = 'badge-physics';
 
+        // a widget sits inside a section; a section is one row; a landing page is a whole page in one row;
+        // a full website is a complete site (own pages and CMS) that replaces the page
+        const isWebsite = !item.isWidget && normCat === 'Full Websites';
+        const isLanding = !item.isWidget && normCat === 'Landing Pages';
         const scopeBadgeHtml = item.isWidget
           ? '<span class="element-scope-badge scope-widget">Widget</span>'
-          : '<span class="element-scope-badge scope-section">Section</span>';
+          : isWebsite ? '<span class="element-scope-badge scope-website">Full website</span>'
+            : isLanding ? '<span class="element-scope-badge scope-landing">Landing page</span>'
+              : '<span class="element-scope-badge scope-section">Section</span>';
 
-        const btnLabel = item.isWidget ? '+ Add to Section' : '+ Add Section';
+        const btnLabel = item.isWidget ? '+ Add to Section' : isWebsite ? '+ Add Full Website' : isLanding ? '+ Add Landing Page' : '+ Add Section';
 
         // Preview box HTML: rendered widget preview for widgets, live iframe box for sections
+        const useThumb = item.thumb && thumbsMatchTheme();
+        const themeBg = (currentTheme() || {}).bg;
         const previewBoxHtml = item.isWidget
           ? `<div class="element-widget-preview">${item.previewHtml || ''}</div>`
           : `
-            <div class="element-card-preview-box" data-slug="${item.slug}"${item.thumb ? ` data-thumb="${escapeHtml(item.thumb)}"` : ''}>
-              ${item.thumb
+            <div class="element-card-preview-box" data-slug="${item.slug}"${useThumb ? ` data-thumb="${escapeHtml(item.thumb)}"` : ''}${themeBg ? ` style="background:${escapeHtml(themeBg)}"` : ''}>
+              ${useThumb
                 ? `<img class="element-card-thumb" src="${escapeHtml(item.thumb)}" alt="" width="512" height="320" loading="lazy" decoding="async" /><span class="element-card-live-hint">Hover for live preview</span>`
                 : `<div class="element-card-preview-placeholder"><div class="spinner-ring"></div><span>Live Preview</span></div>`}
             </div>
@@ -278,6 +309,7 @@
                 iframe.title = item.slug;
                 iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
                 iframe.src = `features/${item.slug}/index.html`;
+                iframe.addEventListener('load', () => applyThemeToPreview(iframe));
                 previewBox.appendChild(iframe);
               }, 250);
             });
@@ -316,7 +348,7 @@
           });
         }
 
-        const triggerAction = () => {
+        const triggerAction = async () => {
           catalogLib.addRecent(item.slug);
           if (item.isWidget) {
             // Add directly into active section
@@ -336,10 +368,11 @@
             }
           } else {
             // Add as new page section row
-            const res = addOrReplaceLandingSection(item.slug, {
+            const res = await addWithTemplateGuard(item.slug, {
               title: title,
               category: normCat
             });
+            if (!res) return; // a full website that the person chose not to use
             if (res && res.section) {
               setActiveSection(res.section.id);
               canvas.state.pendingSection = res.section.id;
@@ -450,6 +483,21 @@
         });
       });
     }
+
+    // A theme change restyles the cards: re-render (keeping the scroll position) so thumbnails and live previews swap.
+    let lastThemeKey = themeKey();
+    let lastThumbMode = thumbsMatchTheme();
+    stackManager.subscribe(() => {
+      const key = themeKey();
+      const thumbMode = thumbsMatchTheme();
+      if (key === lastThemeKey && thumbMode === lastThumbMode) return;
+      lastThemeKey = key;
+      lastThumbMode = thumbMode;
+      const scroller = document.getElementById('elementsCatalogScroll');
+      const top = scroller ? scroller.scrollTop : 0;
+      renderElementsCatalog();
+      if (scroller) scroller.scrollTop = top;
+    });
 
     return { renderElementsCatalog };
   }

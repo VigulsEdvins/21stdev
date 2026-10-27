@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blueprint Ink Reveal</title>
+  <title>Drafting Plate Reveal</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="dp-sheet" id="dpSheet">
+    <span class="dp-tick dp-t1" aria-hidden="true"></span><span class="dp-tick dp-t2" aria-hidden="true"></span>
+    <span class="dp-tick dp-t3" aria-hidden="true"></span><span class="dp-tick dp-t4" aria-hidden="true"></span>
+    <p class="dp-meta dp-m1">Plate 07 &middot; scale 1:1</p>
+    <p class="dp-meta dp-m2" id="dpHint">Move across the plate</p>
+    <h1 class="dp-word" id="dpWord">Atlas</h1>
+    <canvas class="dp-canvas" id="dpCanvas" aria-hidden="true"></canvas>
+    <p class="dp-meta dp-m3">Drawn by hand &middot; rev. C</p>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,9 +1,20 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0b0d12); color: var(--text, #f3f4f6); }
+.sf-stage { --n: 8; position: relative; height: 100vh; height: 100svh; min-height: 420px; overflow: hidden; font-family: var(--font-body, system-ui, sans-serif); perspective: 1400px; background: #0b0d12; }
+.sf-base, .sf-slat { background-repeat: no-repeat; }
+.sf-base { position: absolute; inset: 0; transition: filter .8s; }
+.sf-stage.is-busy .sf-base { filter: brightness(.45); }
+.sf-slats { position: absolute; inset: 0; transform-style: preserve-3d; }
+.sf-slat { position: absolute; left: 0; width: 100%; height: calc(100% / var(--n) + 1px); transform-origin: 50% 50%; transform: rotateX(90deg); backface-visibility: hidden; }
+.sf-slat.is-in { animation: sf-open .7s cubic-bezier(.3,.8,.3,1) forwards; }
+@keyframes sf-open { from { transform: rotateX(90deg); } to { transform: rotateX(0); } }
+.sf-cap { position: absolute; left: clamp(20px, 5vw, 64px); bottom: clamp(24px, 8vh, 80px); max-width: 420px; text-shadow: 0 2px 18px rgba(0,0,0,.55); }
+.sf-count { font-family: ui-monospace, monospace; font-size: .8rem; letter-spacing: .2em; opacity: .85; }
+.sf-title { font-family: var(--font-display, system-ui, sans-serif); font-size: clamp(2rem, 6vw, 3.8rem); line-height: 1; margin: 8px 0; }
+.sf-text { opacity: .9; }
+.sf-nav { position: absolute; right: clamp(20px, 5vw, 64px); bottom: clamp(24px, 8vh, 80px); display: flex; gap: 10px; }
+.sf-btn { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.7); background: rgba(0,0,0,.25); color: #fff; font-size: 1.2rem; cursor: pointer; backdrop-filter: blur(4px); }
+.sf-btn:hover { background: #fff; color: #111; }
+.sf-btn:focus-visible { outline: 2px solid var(--accent, #7c8cff); outline-offset: 3px; }
+@media (max-width: 560px) { .sf-cap { bottom: 96px; right: 20px; } .sf-nav { left: 20px; right: auto; } }
+@media (prefers-reduced-motion: reduce) { .sf-slat.is-in { animation-duration: .01s; } .sf-base { transition: none; } }

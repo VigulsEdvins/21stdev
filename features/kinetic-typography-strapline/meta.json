@@ -2,15 +2,14 @@
   "name": "Kinetic Editorial Strapline Scrub",
   "slug": "kinetic-typography-strapline",
   "category": "Scroll & Parallax",
-  "source": "21st-crafted",
+  "source": "edvlabs",
   "type": "component",
   "description": "Wheel- and scrubber-driven word-by-word illumination mixing upright neo-grotesk sans and italic editorial serif typography.",
   "tags": [
     "typography",
     "kinetic",
     "scroll-scrub",
-    "serif",
-    "21st-dev"
+    "serif"
   ],
   "tech": [
     "Vanilla JS",
@@ -33,7 +32,7 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st-crafted",
+    "source": "edvlabs",
     "license": "own"
   },
   "updatedAt": "2026-10-24",

@@ -7,24 +7,24 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<section class="msf-demo" aria-labelledby="msfTitle">
+<section class="msf-demo">
   <div class="msf-card">
-    <h2 class="msf-title" id="msfTitle">Request a quote</h2>
-    <div class="msf-progress" aria-hidden="true"><span class="msf-bar" id="msfBar"></span></div>
-    <p class="msf-step-label" id="msfLabel" aria-live="polite">Step 1 of 3: About you</p>
-    <form id="msfForm" novalidate>
+    <h2 class="msf-title">Request a quote</h2>
+    <div class="msf-progress" aria-hidden="true"><span class="msf-bar"></span></div>
+    <p class="msf-step-label" aria-live="polite">Step 1 of 3: About you</p>
+    <form novalidate>
       <fieldset class="msf-step" data-step="1"><legend class="msf-legend">About you</legend>
-        <div class="msf-field"><label for="msfName">Name</label><input class="msf-input" id="msfName" type="text" autocomplete="name" required aria-describedby="msfNameErr"><p class="msf-error" id="msfNameErr" role="alert"></p></div>
-        <div class="msf-field"><label for="msfEmail">Email</label><input class="msf-input" id="msfEmail" type="email" autocomplete="email" required aria-describedby="msfEmailErr"><p class="msf-error" id="msfEmailErr" role="alert"></p></div>
+        <div class="msf-field"><label>Name</label><input class="msf-input" data-key="name" type="text" autocomplete="name" required><p class="msf-error" role="alert"></p></div>
+        <div class="msf-field"><label>Email</label><input class="msf-input" data-key="email" type="email" autocomplete="email" required><p class="msf-error" role="alert"></p></div>
       </fieldset>
       <fieldset class="msf-step" data-step="2" hidden><legend class="msf-legend">Your project</legend>
-        <div class="msf-field"><label for="msfType">Project type</label><select class="msf-input" id="msfType" required aria-describedby="msfTypeErr"><option value="">Choose one</option><option>Website</option><option>Online shop</option><option>Branding</option></select><p class="msf-error" id="msfTypeErr" role="alert"></p></div>
-        <div class="msf-field"><label for="msfBudget">Budget</label><select class="msf-input" id="msfBudget"><option>Under 5,000</option><option>5,000 to 15,000</option><option>Over 15,000</option></select></div>
+        <div class="msf-field"><label>Project type</label><select class="msf-input" data-key="type" required><option value="">Choose one</option><option>Website</option><option>Online shop</option><option>Branding</option></select><p class="msf-error" role="alert"></p></div>
+        <div class="msf-field"><label>Budget</label><select class="msf-input" data-key="budget"><option>Under 5,000</option><option>5,000 to 15,000</option><option>Over 15,000</option></select></div>
       </fieldset>
-      <fieldset class="msf-step" data-step="3" hidden><legend class="msf-legend">Review</legend><dl class="msf-summary" id="msfSummary"></dl></fieldset>
-      <div class="msf-actions"><button class="msf-btn msf-back" id="msfBack" type="button" hidden>Back</button><button class="msf-btn" id="msfNext" type="submit">Next</button></div>
+      <fieldset class="msf-step" data-step="3" hidden><legend class="msf-legend">Review</legend><dl class="msf-summary"></dl></fieldset>
+      <div class="msf-actions"><button class="msf-btn msf-back" type="button" hidden>Back</button><button class="msf-btn" type="submit">Next</button></div>
     </form>
-    <p class="msf-done" id="msfDone" role="status" hidden>Thank you! We will send your quote within two working days.</p>
+    <p class="msf-done" role="status" hidden>Thank you! We will send your quote within two working days.</p>
   </div>
 </section>
   <script src="script.js"></script>

@@ -3,11 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zero Melt Preloader</title>
+  <title>Trace Gate Preloader</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="tg-root" id="tgRoot" data-phase="count">
+    <main class="tg-site" aria-hidden="true" id="tgSite">
+      <p class="tg-small">You are in</p>
+      <h1 class="tg-site-title">Welcome to the<br />open room</h1>
+    </main>
+
+    <div class="tg-gate" id="tgGate">
+      <canvas class="tg-canvas" id="tgCanvas"></canvas>
+      <div class="tg-center">
+        <div class="tg-count" id="tgCount" aria-live="off">000</div>
+        <div class="tg-bar"><i id="tgBar"></i></div>
+        <p class="tg-msg" id="tgMsg" role="status">Loading</p>
+        <button class="tg-skip" id="tgSkip" type="button">Enter without drawing</button>
+      </div>
+    </div>
+  </div>
+  <button class="tg-replay" id="tgReplay" type="button" hidden>Replay the gate</button>
   <script src="script.js"></script>
 </body>
 </html>

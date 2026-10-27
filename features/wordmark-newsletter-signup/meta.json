@@ -1,34 +1,29 @@
 {
-  "name": "Wordmark Newsletter Signup",
-  "title": "Wordmark Newsletter Signup",
+  "name": "Giant Word Signup",
+  "title": "Giant Word Signup",
   "slug": "wordmark-newsletter-signup",
   "category": "Cards & Tiles",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A newsletter signup for a brand that is loud about its name. Your wordmark fills the field edge to edge in heavy condensed capitals, cropped by the section like a shop sign, and a hard-bordered card sits on top with the form. When someone signs up, the wordmark letters drop out one by one and your c",
+  "description": "A newsletter card over a giant cropped word that tumbles away when someone subscribes.",
   "tags": [
-    "wordmark",
     "newsletter",
     "signup",
-    "21st.dev",
-    "cards",
-    "react"
+    "form",
+    "typography",
+    "card"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 251,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
-  "weight": "medium",
+  "weight": "light",
   "mood": [
     "minimal",
     "light"
@@ -39,51 +34,41 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Tag",
+      "type": "text",
+      "selector": ":scope .nw-tag"
+    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h2.wns-h"
+      "selector": ":scope .nw-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.wns-desc"
+      "selector": ":scope .nw-text"
     },
     {
       "id": "text-1",
-      "label": "Text 1",
+      "label": "Field label",
       "type": "text",
-      "selector": ":scope span.wns-label"
-    },
-    {
-      "id": "text-2",
-      "label": "Text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > form:nth-of-type(1) > label:nth-of-type(1) > span:nth-of-type(1)"
+      "selector": ":scope .nw-lab"
     },
     {
       "id": "button-text",
       "label": "Button text",
       "type": "text",
-      "selector": ":scope button.wns-btn"
+      "selector": ":scope .nw-btn"
     }
   ],
-  "measured": {
-    "luma": 0.73,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "ownPalette": true
 }

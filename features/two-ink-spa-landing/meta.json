@@ -1,0 +1,72 @@
+{
+  "name": "Two-Ink Spa Landing",
+  "title": "Two-Ink Spa Landing",
+  "slug": "two-ink-spa-landing",
+  "category": "Galleries & Bento",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "A spa landing page printed in two inks with a halftone dot screen and a hot/cold room switch that swaps the ink.",
+  "tags": [
+    "spa",
+    "landing",
+    "halftone",
+    "two-colour",
+    "grid"
+  ],
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 186,
+  "legacyCategory": "Galleries & Portfolios",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "retro",
+    "light"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .sh-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .sh-h1"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .sh-lead"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Book button",
+      "type": "text",
+      "selector": ":scope .sh-book"
+    },
+    {
+      "id": "button-link",
+      "label": "Book link",
+      "type": "link",
+      "selector": ":scope .sh-book"
+    }
+  ]
+}

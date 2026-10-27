@@ -96,6 +96,48 @@
       "type": "color",
       "selector": ":scope .ptw-demo",
       "attr": "--accent"
+    },
+    {
+      "id": "plan-1-price-monthly",
+      "label": "Plan 1 price per month (big number)",
+      "type": "number",
+      "selector": ":scope .ptw-card:nth-child(1) .ptw-m"
+    },
+    {
+      "id": "plan-1-price-yearly",
+      "label": "Plan 1 price per month when billed yearly",
+      "type": "number",
+      "selector": ":scope .ptw-card:nth-child(1) .ptw-y"
+    },
+    {
+      "id": "plan-2-price-monthly",
+      "label": "Plan 2 price per month (big number)",
+      "type": "number",
+      "selector": ":scope .ptw-card:nth-child(2) .ptw-m"
+    },
+    {
+      "id": "plan-2-price-yearly",
+      "label": "Plan 2 price per month when billed yearly",
+      "type": "number",
+      "selector": ":scope .ptw-card:nth-child(2) .ptw-y"
+    },
+    {
+      "id": "plan-3-price-monthly",
+      "label": "Plan 3 price per month (big number)",
+      "type": "number",
+      "selector": ":scope .ptw-card:nth-child(3) .ptw-m"
+    },
+    {
+      "id": "plan-3-price-yearly",
+      "label": "Plan 3 price per month when billed yearly",
+      "type": "number",
+      "selector": ":scope .ptw-card:nth-child(3) .ptw-y"
+    },
+    {
+      "id": "currency",
+      "label": "Currency (all plans)",
+      "type": "currency",
+      "selector": ":scope .ptw-cur"
     }
   ],
   "order": 900

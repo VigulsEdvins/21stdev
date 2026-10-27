@@ -3,11 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glassmorphism Folder Cards</title>
+  <title>Frosted Folders</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ff-stage">
+    <header class="ff-head">
+      <p class="ff-kicker">Project shelf</p>
+      <h1 class="ff-title">Pick a folder, peek inside</h1>
+      <p class="ff-intro">Each folder keeps its files between a painted back panel and a frosted front. Open one to fan the files out.</p>
+    </header>
+
+    <div class="ff-row">
+      <article class="ff-folder" style="--a:#ff8a5c;--b:#ff4f7b;--c:#ffd36e">
+        <button class="ff-toggle" aria-expanded="false" aria-controls="ffl1">
+          <span class="ff-back"><span class="ff-tab"></span><span class="ff-art"></span></span>
+          <span class="ff-files" id="ffl1">
+            <span class="ff-file"><b>brief.pdf</b><i>2 pages</i></span>
+            <span class="ff-file"><b>moodboard.png</b><i>image</i></span>
+            <span class="ff-file"><b>palette.ase</b><i>swatches</i></span>
+          </span>
+          <span class="ff-front"><strong>Sunset Rebrand</strong><small>3 files</small></span>
+        </button>
+      </article>
+
+      <article class="ff-folder" style="--a:#4cc9f0;--b:#4361ee;--c:#b5f3ff">
+        <button class="ff-toggle" aria-expanded="false" aria-controls="ffl2">
+          <span class="ff-back"><span class="ff-tab"></span><span class="ff-art"></span></span>
+          <span class="ff-files" id="ffl2">
+            <span class="ff-file"><b>wireframes.fig</b><i>design</i></span>
+            <span class="ff-file"><b>flow.svg</b><i>diagram</i></span>
+            <span class="ff-file"><b>notes.md</b><i>text</i></span>
+          </span>
+          <span class="ff-front"><strong>Harbor App</strong><small>3 files</small></span>
+        </button>
+      </article>
+
+      <article class="ff-folder" style="--a:#80ed99;--b:#2a9d8f;--c:#e9ffb5">
+        <button class="ff-toggle" aria-expanded="false" aria-controls="ffl3">
+          <span class="ff-back"><span class="ff-tab"></span><span class="ff-art"></span></span>
+          <span class="ff-files" id="ffl3">
+            <span class="ff-file"><b>invoice-07.pdf</b><i>1 page</i></span>
+            <span class="ff-file"><b>scope.docx</b><i>text</i></span>
+            <span class="ff-file"><b>timeline.csv</b><i>sheet</i></span>
+          </span>
+          <span class="ff-front"><strong>Greenhouse Site</strong><small>3 files</small></span>
+        </button>
+      </article>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -2,14 +2,13 @@
   "name": "OKLCH Ambient Aurora Hero",
   "slug": "oklch-ambient-glow-hero",
   "category": "Heroes",
-  "source": "21st-crafted",
+  "source": "edvlabs",
   "type": "component",
-  "description": "21st.dev signature dark hero with wide-gamut oklch() radial pulsing aurora shaders, blur-to-sharp entrance choreography, and interactive category chip river.",
+  "description": "Signature dark hero with wide-gamut oklch() radial pulsing aurora shaders, blur-to-sharp entrance choreography, and interactive category chip river.",
   "tags": [
     "oklch",
     "aurora",
     "hero",
-    "21st-dev",
     "glow"
   ],
   "tech": [
@@ -33,7 +32,7 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st-crafted",
+    "source": "edvlabs",
     "license": "own"
   },
   "updatedAt": "2026-10-22",

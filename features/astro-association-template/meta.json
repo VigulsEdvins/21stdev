@@ -1,131 +1,110 @@
 {
-  "name": "Astro Association Template",
-  "title": "Astro Association Template",
+  "name": "Star Chart Club Page",
+  "title": "Star Chart Club Page",
   "slug": "astro-association-template",
-  "category": "Full Templates",
-  "source": "21st.dev",
-  "type": "template",
-  "description": "A complete landing page for an astronomy club, set like a Swiss space poster. A giant wordmark is filled with confetti bubbles, and a compass-ring logo's needle follows your pointer. A bubble band has the mark knocked out of it, ribbons cross over oversized type, and the whole page sits inside a per",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "A landing page for an astronomy club with a drifting star field whose stars link into constellations near the pointer, animated stats, an observing schedule and a sign-up strip.",
   "tags": [
-    "astro",
-    "association",
-    "template",
-    "21st.dev",
-    "full",
-    "react"
+    "landing",
+    "astronomy",
+    "canvas",
+    "swiss",
+    "club"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 107,
   "legacyCategory": "Full Templates",
   "status": "stable",
   "weight": "medium",
   "mood": [
     "editorial",
-    "light"
+    "dark"
   ],
   "industry": [
-    "general"
+    "education"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "menu-link-1",
-      "label": "Menu link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "menu-link-2",
-      "label": "Menu link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > a:nth-of-type(2)"
-    },
-    {
-      "id": "headline",
-      "label": "Headline",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope h1.aa-sr"
+      "selector": ":scope .ns-hero .ns-label"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
+      "selector": ":scope .ns-intro"
     },
     {
-      "id": "button-text",
-      "label": "Button text",
+      "id": "button-text-1",
+      "label": "Nav button text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)"
+      "selector": ":scope .ns-bar .ns-pill"
     },
     {
-      "id": "section-heading-1",
-      "label": "Section heading 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
-      "type": "text",
-      "selector": ":scope p.aa-stage-body"
-    },
-    {
-      "id": "section-heading-2",
-      "label": "Section heading 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > article:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link",
-      "label": "Footer link",
+      "id": "button-link-1",
+      "label": "Nav button link",
       "type": "link",
-      "selector": ":scope a.aa-toggle"
+      "selector": ":scope .ns-bar .ns-pill"
     },
     {
-      "id": "accent-colour",
-      "label": "Accent colour",
-      "type": "color",
-      "selector": ":scope .aa-root",
-      "attr": "--aa-accent"
+      "id": "button-text-2",
+      "label": "Hero button text",
+      "type": "text",
+      "selector": ":scope .ns-actions a:nth-child(1)"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Hero button link",
+      "type": "link",
+      "selector": ":scope .ns-actions a:nth-child(1)"
+    },
+    {
+      "id": "button-text-3",
+      "label": "Second button text",
+      "type": "text",
+      "selector": ":scope .ns-actions a:nth-child(2)"
+    },
+    {
+      "id": "button-link-3",
+      "label": "Second button link",
+      "type": "link",
+      "selector": ":scope .ns-actions a:nth-child(2)"
+    },
+    {
+      "id": "schedule-title",
+      "label": "Schedule heading",
+      "type": "text",
+      "selector": ":scope .ns-sec .ns-h2"
+    },
+    {
+      "id": "join-title",
+      "label": "Sign-up heading",
+      "type": "text",
+      "selector": ":scope .ns-join .ns-h2"
+    },
+    {
+      "id": "button-text-4",
+      "label": "Sign-up button",
+      "type": "text",
+      "selector": ":scope .ns-form .ns-pill"
     }
   ],
-  "measured": {
-    "luma": 0.87,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
+  "ownPalette": true
 }

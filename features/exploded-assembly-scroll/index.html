@@ -3,11 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exploded Assembly Scroll</title>
+  <title>Blueprint Assembly Scroll</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <header class="ba-top">
+    <a class="ba-logo" href="#">Brightline Works</a>
+    <nav aria-label="Pages"><a href="#">Capabilities</a><a href="#">Projects</a><a class="is-on" href="#">Process</a></nav>
+  </header>
+  <section class="ba-intro">
+    <p class="ba-tag">Sheet 01 / Process</p>
+    <h1 class="ba-title">We draw it apart, then we put it together.</h1>
+    <p class="ba-lead">Every pump skid starts as a stack of loose parts on a drawing. Scroll to watch one close up into a single, bolted assembly.</p>
+  </section>
+
+  <section class="ba-track" id="baTrack">
+    <div class="ba-sticky">
+      <figure class="ba-sheet">
+        <figcaption><span>FIG. 01 / EXPLODED VIEW</span><span id="baPct">000%</span></figcaption>
+        <svg class="ba-draw" id="baDraw" viewBox="0 0 400 620" role="img" aria-label="Exploded drawing of a vertical pump closing into an assembly"></svg>
+        <div class="ba-bar"><i id="baFill"></i></div>
+      </figure>
+      <ol class="ba-steps" id="baSteps">
+        <li><b>01</b><div><h2>Foundation</h2><p>A ground base plate and a cast housing set the datum for everything above.</p></div></li>
+        <li><b>02</b><div><h2>Rotating group</h2><p>Impeller and shaft are balanced together before they go anywhere near the casing.</p></div></li>
+        <li><b>03</b><div><h2>Sealing cover</h2><p>The cover clamps the seal faces and carries the bearing for the drive end.</p></div></li>
+        <li><b>04</b><div><h2>Drive unit</h2><p>The motor drops on last, aligned by dowels, and the drawing is complete.</p></div></li>
+      </ol>
+    </div>
+  </section>
+  <footer class="ba-foot"><span>Brightline Works, a fictional shop</span><span>Not to scale</span></footer>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 (function () {
-  var zone = document.getElementById('mcbZone');
-  var btn = document.getElementById('mcbButton');
+  Array.prototype.forEach.call(document.querySelectorAll('.mcb-demo'), function (root) {
+  if (root.__mcbInit) return;
+  root.__mcbInit = true;
+  var zone = root.querySelector('.mcb-zone');
+  var btn = root.querySelector('.mcb-button');
   if (!zone || !btn) return;
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -32,5 +35,6 @@
     d.style.top = (e.clientY - r.top - size / 2) + 'px';
     layer.appendChild(d);
     setTimeout(function () { d.remove(); }, 700);
+  });
   });
 })();

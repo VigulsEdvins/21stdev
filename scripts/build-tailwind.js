@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Components imported from 21st.dev are written with Tailwind utility classes (flex, px-5, sm:gap-4 ...)
+ * Components imported from third-party sources are written with Tailwind utility classes (flex, px-5, sm:gap-4 ...)
  * but ship no Tailwind CSS, so they render partly unstyled. This compiles exactly the utilities a feature
  * uses (from component.tsx and demo*.tsx) into features/<slug>/tailwind.css and links it from style.css
  * through @import-free concatenation: the CSS is appended to style.css between marker comments.

@@ -1,37 +1,32 @@
 {
-  "name": "Title Sequence Preloader",
-  "title": "Title Sequence Preloader",
+  "name": "Film Credits Preloader",
+  "title": "Film Credits Preloader",
   "slug": "title-sequence-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A page gate cut like the opening titles of a design conference. While your page loads, a monochrome reel plays shot after shot, and every shot credits your people on leader lines, each in its own typographic voice. When the load hits 100, a rocket lifts off through the clouds. The clouds rise over t",
+  "description": "A monochrome loading gate that cuts between abstract shots while credit lines draw on, counts to 100 and then holds an enter screen.",
   "tags": [
-    "title",
-    "sequence",
     "preloader",
-    "21st.dev",
-    "scroll",
-    "react"
+    "credits",
+    "monochrome",
+    "film",
+    "intro",
+    "counter"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 240,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
     "editorial",
-    "luxury",
     "dark"
   ],
   "industry": [
@@ -39,69 +34,47 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
-    {
-      "id": "list-item-1",
-      "label": "List item 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)"
-    },
-    {
-      "id": "list-item-2",
-      "label": "List item 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2)"
-    },
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope div.tsp-brand"
-    },
-    {
-      "id": "list-item-3",
-      "label": "List item 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3)"
-    },
-    {
-      "id": "list-item-4",
-      "label": "List item 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(4)"
+      "selector": ":scope .sq-brand"
     },
     {
       "id": "text-1",
-      "label": "Text 1",
+      "label": "Credit 1",
       "type": "text",
-      "selector": ":scope div.tsp-count"
-    },
-    {
-      "id": "button-text",
-      "label": "Button text",
-      "type": "text",
-      "selector": ":scope button.tsp-skip"
+      "selector": ":scope .sq-l1 .sq-name"
     },
     {
       "id": "text-2",
-      "label": "Text 2",
+      "label": "Credit 2",
       "type": "text",
-      "selector": ":scope span.tsp-hint"
+      "selector": ":scope .sq-l2 .sq-name"
+    },
+    {
+      "id": "button-text",
+      "label": "Skip button",
+      "type": "text",
+      "selector": ":scope .sq-skip"
+    },
+    {
+      "id": "text-3",
+      "label": "Hint",
+      "type": "text",
+      "selector": ":scope .sq-hint"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Enter button",
+      "type": "text",
+      "selector": ":scope .sq-enter"
     }
   ],
-  "measured": {
-    "luma": 0.16,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "reserveHeight": 800
+  "ownPalette": true
 }

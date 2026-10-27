@@ -1,9 +1,38 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #efe6d2); color: var(--text, #0f4d3a); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid var(--accent, #ff6a2b); outline-offset: 3px; }
+
+.pw-page { --pw-ink: var(--text, #0f4d3a); --pw-hot: var(--accent, #ff6a2b); color: var(--pw-ink); max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.25rem 2rem; overflow: hidden; }
+.pw-nav { display: flex; justify-content: space-between; align-items: center; font-weight: 700; letter-spacing: 0.04em; }
+.pw-nav nav { display: flex; gap: 1.4rem; font-size: 0.9rem; }
+.pw-nav nav a, .pw-brand { background: linear-gradient(var(--pw-hot), var(--pw-hot)) 0 100% / 0 3px no-repeat; transition: background-size 0.3s; }
+.pw-nav nav a:hover, .pw-brand:hover { background-size: 100% 3px; }
+
+.pw-hero { padding: 3rem 0 2rem; }
+.pw-page .pw-small { display: block; font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; color: var(--pw-hot); }
+.pw-headline { margin: 1.2rem 0; font-family: var(--font-display, Impact, "Arial Narrow Bold", "Haettenschweiler", sans-serif); font-weight: 900; font-size: clamp(4rem, 17vw, 12.5rem); line-height: 0.88; text-transform: uppercase; letter-spacing: -0.01em; }
+.pw-row { display: flex; align-items: flex-end; gap: 0.02em; }
+.pw-row > span { display: inline-block; transform: translateY(110%); opacity: 0; animation: pw-rise 0.7s cubic-bezier(.2,.9,.2,1) forwards; }
+.pw-row:nth-child(1) > span:nth-child(1) { animation-delay: 0.05s; } .pw-row:nth-child(1) > span:nth-child(2) { animation-delay: 0.12s; } .pw-row:nth-child(1) > span:nth-child(3) { animation-delay: 0.19s; } .pw-row:nth-child(1) > span:nth-child(4) { animation-delay: 0.26s; } .pw-row:nth-child(1) > span:nth-child(5) { animation-delay: 0.4s; } .pw-row:nth-child(1) > span:nth-child(6) { animation-delay: 0.33s; }
+.pw-row:nth-child(2) > span:nth-child(1) { animation-delay: 0.45s; } .pw-row:nth-child(2) > span:nth-child(2) { animation-delay: 0.52s; } .pw-row:nth-child(2) > span:nth-child(3) { animation-delay: 0.59s; } .pw-row:nth-child(2) > span:nth-child(4) { animation-delay: 0.66s; }
+@keyframes pw-rise { to { transform: none; opacity: 1; } }
+.pw-gap { width: 0.74em; height: 0.8em; margin-right: 0.05em; color: var(--pw-hot); position: relative; align-self: flex-end; overflow: visible !important; }
+.pw-hand { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; overflow: visible; }
+.pw-arm { transform-origin: 70px 190px; }
+.pw-wave { transform-origin: 70px 126px; animation: pw-wave 1.3s ease-in-out 1.2s infinite; }
+@keyframes pw-wave { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(11deg); } }
+.pw-intro { max-width: 32rem; font-size: 1.1rem; line-height: 1.6; }
+
+.pw-work { padding: 2rem 0; }
+.pw-h2 { font-family: var(--font-display, Impact, "Arial Narrow Bold", sans-serif); font-size: 1.6rem; text-transform: uppercase; letter-spacing: 0.02em; border-bottom: 3px solid var(--pw-ink); padding-bottom: 0.5rem; }
+.pw-list { list-style: none; }
+.pw-list a { display: grid; grid-template-columns: 3rem 1fr auto; align-items: baseline; gap: 1rem; padding: 1.05rem 0; border-bottom: 1px solid color-mix(in srgb, var(--pw-ink) 30%, transparent); transition: padding-left 0.3s, color 0.3s; }
+.pw-list a:hover { padding-left: 0.8rem; color: var(--pw-hot); }
+.pw-list span { font-weight: 700; font-size: 0.8rem; }
+.pw-list b { font-size: clamp(1.2rem, 3.4vw, 2rem); font-family: var(--font-display, Impact, "Arial Narrow Bold", sans-serif); text-transform: uppercase; font-weight: 700; }
+.pw-list i { font-size: 0.85rem; font-style: normal; opacity: 0.75; }
+.pw-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: baseline; padding-top: 2rem; font-size: 0.85rem; }
+.pw-mail { font-family: var(--font-display, Impact, "Arial Narrow Bold", sans-serif); text-transform: uppercase; font-size: clamp(1.4rem, 5vw, 2.6rem); border-bottom: 3px solid var(--pw-hot); }
+@media (max-width: 520px) { .pw-list a { grid-template-columns: 2.2rem 1fr; } .pw-list i { grid-column: 2; } }
+@media (prefers-reduced-motion: reduce) { .pw-row > span { animation: none; transform: none; opacity: 1; } .pw-wave { animation: none; } }

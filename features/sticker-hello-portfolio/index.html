@@ -3,11 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sticker Hello Portfolio</title>
+  <title>Sticker Intro Portfolio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="sk-page">
+    <header class="sk-bar">
+      <a class="sk-me" href="#"><i></i>Mara Quill</a>
+      <nav aria-label="Pages"><a href="#skWork">Work</a><a href="#skSheet">Stickers</a><a href="#skAbout">About</a></nav>
+    </header>
+
+    <section class="sk-hero" id="skStage">
+      <h1 class="sk-title">Hey, I&rsquo;m <em>Mara.</em></h1>
+      <p class="sk-intro">I design friendly interfaces and loud little logos for people who would rather be outside. Drag the stickers around, they do not mind.</p>
+      <a class="sk-down" href="#skWork">See what I made <span aria-hidden="true">&darr;</span></a>
+      <button class="sk-sticker sk-s1" type="button" style="--r:-11deg;left:62%;top:6%">Fresh<br>out of<br>coffee</button>
+      <button class="sk-sticker sk-s2" type="button" style="--r:8deg;left:7%;top:58%">Pixels<br>with<br>manners</button>
+      <button class="sk-sticker sk-s3" type="button" style="--r:-5deg;left:76%;top:62%">No dark<br>patterns</button>
+    </section>
+
+    <section class="sk-sec" id="skWork">
+      <h2 class="sk-h2">Selected work</h2>
+      <ul class="sk-cases" id="skCases"></ul>
+    </section>
+
+    <section class="sk-sec sk-sheet" id="skSheet">
+      <h2 class="sk-h2">The sticker sheet</h2>
+      <p class="sk-note">Tap a sticker to slap it on the board. Drag to move, double-click to peel.</p>
+      <div class="sk-tray" id="skTray"></div>
+      <div class="sk-board" id="skBoard" aria-label="Sticker board"><span class="sk-empty">your board is empty</span></div>
+    </section>
+
+    <section class="sk-sec sk-about" id="skAbout">
+      <h2 class="sk-h2">About</h2>
+      <p>Nine years of product design, three of them at a studio that made tide tables beautiful. I like clear type, honest buttons and snacks near the keyboard. Currently booking small projects for next season.</p>
+      <a class="sk-mail" href="#">hello@maraquill.example</a>
+    </section>
+    <footer class="sk-foot"><span>Mara Quill, a fictional portfolio</span><span>Made of sticker paper and CSS</span></footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

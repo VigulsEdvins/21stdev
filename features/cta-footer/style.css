@@ -18,3 +18,5 @@
 .ctf-links a:hover, .ctf-links a:focus-visible { color: var(--accent, #6366f1); outline: none; text-decoration: underline; }
 .ctf-copy { max-width: 860px; margin: 0 auto; font-size: .85rem; color: color-mix(in srgb, var(--text, #f3f4f6) 55%, transparent); text-align: center; }
 @media (max-width: 560px) { .ctf-form { flex-direction: column; } .ctf-links { grid-template-columns: 1fr 1fr; } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

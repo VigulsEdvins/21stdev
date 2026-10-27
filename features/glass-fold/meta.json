@@ -1,22 +1,20 @@
 {
-  "name": "Glass Fold Translucent Mesh",
-  "title": "Glass Fold Translucent Mesh",
+  "name": "Folded Glass Backdrop",
+  "title": "Folded Glass Backdrop",
   "slug": "glass-fold",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Animated WebGL background of translucent glass panes folded over each other with lit creases.",
+  "description": "Animated WebGL backdrop of tinted glass panes folding across each other with bright crease lines.",
   "tags": [
     "webgl",
     "glass",
-    "glassmorphism",
-    "background",
-    "21st.dev"
+    "shader",
+    "background"
   ],
   "tech": [
     "WebGL",
-    "GLSL Shader",
-    "Canvas"
+    "GLSL"
   ],
   "dependencies": [
     "WebGL"
@@ -24,7 +22,7 @@
   "order": 48,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic",
     "dark"
@@ -34,45 +32,42 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/community/components",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .gf-label"
+    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.text-4xl"
+      "selector": ":scope .gf-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.mt-2"
+      "selector": ":scope .gf-intro"
     },
     {
-      "id": "link",
-      "label": "Link",
-      "type": "link",
-      "selector": ":scope a.rounded-full"
-    },
-    {
-      "id": "link-text",
-      "label": "Link text",
+      "id": "button-text",
+      "label": "Button text",
       "type": "text",
-      "selector": ":scope a.rounded-full"
+      "selector": ":scope .gf-link"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .gf-link"
     }
   ],
-  "measured": {
-    "luma": 0.24,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

@@ -3,11 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiet Portfolio Template</title>
+  <title>Plain Folio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="pf-shell" id="pfShell">
+    <aside class="pf-side">
+      <div class="pf-me">
+        <span class="pf-avatar" aria-hidden="true">NV</span>
+        <div><strong class="pf-name">Noor Valen</strong><span class="pf-role">Interface designer</span></div>
+      </div>
+      <nav class="pf-menu" aria-label="Sections" id="pfMenu">
+        <a href="#pf-about" class="is-on">About</a>
+        <a href="#pf-work">Selected work</a>
+        <a href="#pf-notes">Notes</a>
+        <a href="#pf-contact">Contact</a>
+      </nav>
+      <button class="pf-theme" id="pfTheme" type="button" aria-pressed="false"><span aria-hidden="true"></span>Dark mode</button>
+    </aside>
+
+    <main class="pf-main">
+      <section id="pf-about" class="pf-sec">
+        <p class="pf-status"><i></i><span class="pf-st">Available from January</span></p>
+        <h1 class="pf-title">I design calm interfaces for busy tools.</h1>
+        <p class="pf-intro">Eight years of shaping dashboards, forms and the small moments between them. I like clear type, honest spacing and fewer buttons.</p>
+      </section>
+
+      <section id="pf-work" class="pf-sec">
+        <h2 class="pf-h2">Selected work</h2>
+        <ul class="pf-list" id="pfList">
+          <li><a href="#" data-hue="24"><span class="pf-sw"></span><span class="pf-t"><b>Tidewater ledger</b><small>Bookkeeping for small studios</small></span><span class="pf-y">2026</span><span class="pf-ar" aria-hidden="true">&rarr;</span></a></li>
+          <li><a href="#" data-hue="160"><span class="pf-sw"></span><span class="pf-t"><b>Fernway planner</b><small>Shared garden and allotment calendar</small></span><span class="pf-y">2025</span><span class="pf-ar" aria-hidden="true">&rarr;</span></a></li>
+          <li><a href="#" data-hue="260"><span class="pf-sw"></span><span class="pf-t"><b>Paperlight reader</b><small>A quiet reading app for long essays</small></span><span class="pf-y">2024</span><span class="pf-ar" aria-hidden="true">&rarr;</span></a></li>
+          <li><a href="#" data-hue="330"><span class="pf-sw"></span><span class="pf-t"><b>Kiln booking</b><small>Studio slots for a ceramics co-op</small></span><span class="pf-y">2023</span><span class="pf-ar" aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+      </section>
+
+      <section id="pf-notes" class="pf-sec">
+        <h2 class="pf-h2">Notes</h2>
+        <div class="pf-notes">
+          <details><summary>Why I sketch in greyscale first</summary><p>Colour hides weak hierarchy. If the layout reads in grey, the colour only has to add mood, not rescue structure.</p></details>
+          <details><summary>A small checklist for empty states</summary><p>Say what is missing, say why, offer one next step. Anything more and people stop reading.</p></details>
+          <details><summary>On saying no to features</summary><p>Every addition has a maintenance cost that nobody budgets. I ask what we would remove to make room.</p></details>
+        </div>
+      </section>
+
+      <section id="pf-contact" class="pf-sec">
+        <h2 class="pf-h2">Contact</h2>
+        <p class="pf-intro">The easiest way to reach me is a short email about what you are making.</p>
+        <div class="pf-mail">
+          <a href="#" class="pf-addr" id="pfAddr">hello@noorvalen.example</a>
+          <button type="button" class="pf-copy" id="pfCopy">Copy address</button>
+        </div>
+        <p class="pf-fine">&copy; 2026 edvlabs. Set in system type, built by hand.</p>
+      </section>
+    </main>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

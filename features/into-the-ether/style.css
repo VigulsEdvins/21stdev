@@ -8,13 +8,15 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
+  background: var(--bg, #0b0c10);
+  color: var(--text, #f3f4f6);
   font-family: 'Space Grotesk', -apple-system, sans-serif;
   overflow: hidden;
   user-select: none;
   -webkit-font-smoothing: antialiased;
 }
 
-body.theme-light {
+.ether-viewport.theme-light {
   --bg-core: #f5f5f9;
   --bg-card: rgba(255, 255, 255, 0.94);
   --bg-card-border: rgba(99, 102, 241, 0.18);
@@ -31,7 +33,7 @@ body.theme-light {
   --dot-grid: rgba(99, 102, 241, 0.14);
 }
 
-body.theme-dark {
+.ether-viewport.theme-dark {
   --bg-core: #09090e;
   --bg-card: rgba(15, 15, 23, 0.92);
   --bg-card-border: rgba(129, 140, 248, 0.22);
@@ -50,8 +52,9 @@ body.theme-dark {
 
 .ether-viewport {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
+  min-height: 480px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,7 +108,7 @@ body.theme-dark {
   margin-bottom: 22px;
 }
 
-body.theme-dark .ether-badge {
+.ether-viewport.theme-dark .ether-badge {
   color: #a5b4fc;
   background: rgba(129, 140, 248, 0.12);
   border-color: rgba(129, 140, 248, 0.3);
@@ -127,7 +130,7 @@ body.theme-dark .ether-badge {
 
 .ether-title {
   margin: 0 0 16px 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Space Grotesk', -apple-system, sans-serif;
   font-size: clamp(34px, 5.5vw, 56px);
   font-weight: 900;
   line-height: 1.05;
@@ -146,7 +149,7 @@ body.theme-dark .ether-badge {
   filter: drop-shadow(0 4px 18px rgba(99, 102, 241, 0.3));
 }
 
-body.theme-dark .ether-glow-text {
+.ether-viewport.theme-dark .ether-glow-text {
   background: linear-gradient(135deg, #a5b4fc 0%, #c084fc 50%, #93c5fd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -210,7 +213,7 @@ body.theme-dark .ether-glow-text {
   transform: translateY(-1px);
 }
 
-body.theme-dark .ether-btn.secondary:hover {
+.ether-viewport.theme-dark .ether-btn.secondary:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
@@ -247,3 +250,7 @@ body.theme-dark .ether-btn.secondary:hover {
   height: 24px;
   background: var(--bg-card-border);
 }
+
+.ether-btn:focus-visible { outline: 2px solid #818cf8; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .badge-dot { animation: none; } .ether-btn, .ether-card, .ether-viewport { transition: none; } }
+@media (max-width: 480px) { .ether-card { padding: 32px 18px 24px; } .ether-actions { flex-wrap: wrap; } .stat-num { font-size: 12px; } }

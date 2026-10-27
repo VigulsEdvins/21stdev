@@ -1,34 +1,30 @@
 {
-  "name": "Mono Contrast Preloader",
-  "title": "Mono Contrast Preloader",
+  "name": "Crushed Mono Loader",
+  "title": "Crushed Mono Loader",
   "slug": "mono-contrast-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A crushed black-and-white luminance grade at 2.2x contrast, over soft archival footage whose 480p grain the treatment reads as film rather than as a defect.",
+  "description": "A black-and-white loading screen where drifting soft light and film grain are crushed by a 2.2x contrast grade while a counter runs to 100 and holds.",
   "tags": [
-    "mono",
-    "contrast",
     "preloader",
-    "21st.dev",
-    "scroll",
-    "react"
+    "monochrome",
+    "grain",
+    "film",
+    "canvas",
+    "contrast"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS filters"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 193,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "retro",
     "dark"
@@ -38,19 +34,23 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.23,
-    "webgl": true,
-    "canvas2d": false
-  }
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .mc-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .mc-title"
+    }
+  ],
+  "ownPalette": true
 }

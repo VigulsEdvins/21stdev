@@ -22,3 +22,5 @@
 @keyframes tns-out { to { opacity: 0; transform: translateX(24px) scale(.96); } }
 @keyframes tns-bar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
 @media (prefers-reduced-motion: reduce) { .tns-toast, .tns-toast.is-leaving { animation: none; } .tns-toast.is-leaving { opacity: 0; } .tns-bar { animation: none; transform: scaleX(0); } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

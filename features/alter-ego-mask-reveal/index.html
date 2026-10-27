@@ -3,11 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alter Ego Mask Reveal</title>
+  <title>Hidden Hero Portrait</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="aeFigure" viewBox="0 0 400 520">
+        <path class="ae-cape" d="M80 520 L110 250 Q200 200 290 250 L320 520 Z" />
+        <path class="ae-body" d="M120 520 L135 300 Q200 265 265 300 L280 520 Z" />
+        <path class="ae-emblem" d="M200 340 l22 22 -22 44 -22 -44 z" />
+        <rect class="ae-skin" x="178" y="240" width="44" height="50" rx="10" />
+        <ellipse class="ae-skin" cx="200" cy="190" rx="62" ry="76" />
+        <path class="ae-hair" d="M138 180 Q140 108 205 110 Q262 112 262 180 Q240 140 200 142 Q160 144 138 180 Z" />
+        <path class="ae-mask" d="M140 182 Q170 166 198 184 Q230 166 260 182 L256 206 Q232 214 208 200 L192 200 Q168 214 144 206 Z" />
+        <ellipse class="ae-eye" cx="168" cy="190" rx="9" ry="5" />
+        <ellipse class="ae-eye" cx="232" cy="190" rx="9" ry="5" />
+        <path class="ae-mouth" d="M180 236 Q200 246 220 236" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <section class="ae-stage" id="aeStage" aria-label="Portrait with a hidden hero identity">
+    <div class="ae-layer ae-civil" aria-hidden="true">
+      <svg class="ae-fig" viewBox="0 0 400 520"><use href="#aeFigure" /></svg>
+    </div>
+    <div class="ae-layer ae-hero" id="aeHero" aria-hidden="true">
+      <div class="ae-burst"></div>
+      <svg class="ae-fig" viewBox="0 0 400 520"><use href="#aeFigure" /></svg>
+    </div>
+    <div class="ae-copy">
+      <p class="ae-eyebrow">Case file 07</p>
+      <h1 class="ae-title">Nobody looks twice at Mara Velk.</h1>
+      <p class="ae-hint">Sweep the pointer across the portrait. The mask only shows where you have been.</p>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

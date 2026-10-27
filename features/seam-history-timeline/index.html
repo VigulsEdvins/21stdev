@@ -3,11 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seam History Timeline</title>
+  <title>Slant Milestone Cards</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sm-section">
+    <header class="sm-head">
+      <p class="sm-label">Our journey</p>
+      <h2 class="sm-title">Five chapters, stitched edge to edge</h2>
+      <p class="sm-intro">Pick a year or scroll sideways. Each card tucks under the next along a shared diagonal.</p>
+      <div class="sm-years" id="smYears" role="group" aria-label="Jump to year"></div>
+    </header>
+    <div class="sm-rail" id="smRail" tabindex="0" aria-label="Milestones, scroll sideways">
+      <article class="sm-card" style="--h:12">
+        <div class="sm-art"><svg viewBox="0 0 100 60" aria-hidden="true"><circle cx="30" cy="34" r="16"/><path d="M0 60 L40 28 L70 50 L100 30 V60Z"/></svg></div>
+        <div class="sm-body"><span class="sm-year">2016</span><h3>The garage desk</h3><p>Three friends, one shared desk and a whiteboard full of arrows.</p></div>
+      </article>
+      <article class="sm-card" style="--h:200">
+        <div class="sm-art"><svg viewBox="0 0 100 60" aria-hidden="true"><rect x="14" y="14" width="30" height="30" rx="4"/><rect x="50" y="22" width="34" height="24" rx="4"/></svg></div>
+        <div class="sm-body"><span class="sm-year">2018</span><h3>First real customer</h3><p>A bakery chain signed on and taught us what "simple" really means.</p></div>
+      </article>
+      <article class="sm-card" style="--h:150">
+        <div class="sm-art"><svg viewBox="0 0 100 60" aria-hidden="true"><path d="M10 50 L30 20 L50 40 L70 10 L90 36"/><circle cx="70" cy="10" r="5"/></svg></div>
+        <div class="sm-body"><span class="sm-year">2020</span><h3>Growth year</h3><p>The team tripled and the tiny office became a very loud loft.</p></div>
+      </article>
+      <article class="sm-card" style="--h:280">
+        <div class="sm-art"><svg viewBox="0 0 100 60" aria-hidden="true"><circle cx="50" cy="30" r="22"/><circle cx="50" cy="30" r="10"/></svg></div>
+        <div class="sm-body"><span class="sm-year">2022</span><h3>Going global</h3><p>Support in nine languages, with people who actually speak them.</p></div>
+      </article>
+      <article class="sm-card" style="--h:330">
+        <div class="sm-art"><svg viewBox="0 0 100 60" aria-hidden="true"><path d="M50 8 L58 26 L78 28 L63 41 L68 58 L50 48 L32 58 L37 41 L22 28 L42 26Z"/></svg></div>
+        <div class="sm-body"><span class="sm-year">2025</span><h3>Open to everyone</h3><p>Free tools for schools and the next chapter still being written.</p><a class="sm-more" href="#">Read the full story</a></div>
+      </article>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

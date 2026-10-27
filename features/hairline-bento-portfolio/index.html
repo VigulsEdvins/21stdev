@@ -1,13 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hairline Bento Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruled Bento Sheet</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<main class="hn-root">
+  <div class="hn-sheet">
+    <section class="hn-cell hn-name-cell">
+      <p class="hn-small">Portfolio sheet / No. 07</p>
+      <h1 class="hn-name">Ollie Penrose</h1>
+    </section>
+
+    <section class="hn-cell hn-about">
+      <p class="hn-text">Interaction designer making small, precise tools. I like grids, good defaults and the sound of a well-named layer.</p>
+    </section>
+
+    <section class="hn-cell hn-launch">
+      <p class="hn-small">Now launching</p>
+      <h2 class="hn-launch-title">Tinyclock, a timer for people who forget timers</h2>
+      <div class="hn-count" aria-live="off"><span data-hn-d>00</span><i>d</i><span data-hn-h>00</span><i>h</i><span data-hn-m>00</span><i>m</i></div>
+      <a class="hn-btn" href="#">Join the list</a>
+    </section>
+
+    <section class="hn-cell hn-time">
+      <p class="hn-small">Local time</p>
+      <p class="hn-clock" data-hn-clock>--:--:--</p>
+      <p class="hn-small">Lisbon-ish, UTC+0</p>
+    </section>
+
+    <section class="hn-cell hn-work">
+      <h2 class="hn-head">Work</h2>
+      <ul class="hn-list">
+        <li><a href="#"><span>Orbit Notes</span><em>Writing app</em></a></li>
+        <li><a href="#"><span>Plainfield</span><em>Design system</em></a></li>
+        <li><a href="#"><span>Kite Mail</span><em>Email client</em></a></li>
+        <li><a href="#"><span>Glasshouse</span><em>Plant tracker</em></a></li>
+      </ul>
+    </section>
+
+    <section class="hn-cell hn-stat">
+      <p class="hn-num" data-hn-count="42">0</p>
+      <p class="hn-small">Projects shipped</p>
+    </section>
+    <section class="hn-cell hn-stat">
+      <p class="hn-num" data-hn-count="9">0</p>
+      <p class="hn-small">Years in practice</p>
+    </section>
+
+    <section class="hn-cell hn-tags">
+      <h2 class="hn-head">Toolbox</h2>
+      <div class="hn-chips">
+        <button type="button" class="hn-chip" aria-pressed="false">Prototyping</button>
+        <button type="button" class="hn-chip" aria-pressed="false">Type</button>
+        <button type="button" class="hn-chip" aria-pressed="false">Motion</button>
+        <button type="button" class="hn-chip" aria-pressed="false">Research</button>
+        <button type="button" class="hn-chip" aria-pressed="false">Systems</button>
+      </div>
+    </section>
+
+    <section class="hn-cell hn-mail">
+      <h2 class="hn-head">Write to me</h2>
+      <a class="hn-link" href="#">hello@example.test</a>
+    </section>
+    <section class="hn-cell hn-mail">
+      <h2 class="hn-head">Elsewhere</h2>
+      <a class="hn-link" href="#">Read the journal</a>
+    </section>
+  </div>
+</main>
+<script src="script.js"></script>
 </body>
 </html>

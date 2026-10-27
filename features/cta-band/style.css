@@ -10,3 +10,5 @@
 .cta-primary:hover, .cta-secondary:hover { transform: translateY(-2px); }
 .cta-primary:focus-visible, .cta-secondary:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .cta-primary, .cta-secondary { transition: none; } .cta-primary:hover, .cta-secondary:hover { transform: none; } }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

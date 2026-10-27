@@ -18,3 +18,5 @@ textarea.cfv-input { resize: vertical; min-height: 120px; }
 .cfv-success { padding: 1.25rem; border-radius: var(--radius, 12px); background: color-mix(in srgb, #22c55e 16%, transparent); border: 1px solid color-mix(in srgb, #22c55e 50%, transparent); }
 .cfv-success-text { margin: 0; font-weight: 600; }
 .cfv-success[hidden] { display: none; }
+
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); }

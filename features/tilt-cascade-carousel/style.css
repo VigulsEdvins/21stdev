@@ -1,9 +1,18 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f4f1ea); color: var(--text, #22201c); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+
+.wt-stage { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 1rem 2.4rem; }
+.wt-wheel { position: relative; flex: 1; min-height: 340px; outline: none; touch-action: pan-y; cursor: grab; }
+.wt-wheel:focus-visible { outline: 2px solid var(--accent, #d9603b); outline-offset: -6px; }
+.wt-wheel.is-drag { cursor: grabbing; }
+.wt-tile { --s: min(300px, 62vw); position: absolute; left: 50%; top: 0; width: var(--s); height: var(--s); margin-left: calc(var(--s) / -2); padding: 8px 8px 30px; border: 0; background: #fffdf8; border-radius: 6px; box-shadow: 0 14px 30px rgba(40,30,20,.22); cursor: pointer; will-change: transform; transition: filter .3s; }
+.wt-tile:focus-visible { outline: 2px solid var(--accent, #d9603b); outline-offset: 4px; }
+.wt-art { position: relative; display: block; width: 100%; height: 100%; border-radius: 3px; overflow: hidden; }
+.wt-sun { position: absolute; left: 62%; top: 16%; width: 20%; aspect-ratio: 1; border-radius: 50%; background: rgba(255,255,255,.85); box-shadow: 0 0 30px rgba(255,255,255,.7); }
+.wt-info { text-align: center; }
+.wt-count { font-size: .75rem; letter-spacing: .25em; color: color-mix(in srgb, var(--text, #22201c) 55%, transparent); font-variant-numeric: tabular-nums; }
+.wt-title { margin-top: .4rem; font-family: var(--font-display, Georgia, "Times New Roman", serif); font-weight: 500; font-size: clamp(1.8rem, 5vw, 2.8rem); }
+.wt-btns { margin-top: 1rem; display: flex; justify-content: center; gap: .7rem; }
+.wt-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--text, #22201c) 30%, transparent); background: transparent; color: inherit; font-size: 1.1rem; cursor: pointer; transition: background .2s, color .2s; }
+.wt-btn:hover { background: var(--text, #22201c); color: var(--bg, #f4f1ea); }
+.wt-btn:focus-visible { outline: 2px solid var(--accent, #d9603b); outline-offset: 3px; }

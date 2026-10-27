@@ -3,11 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hover Expand Gallery</title>
+  <title>Expanding Panel Gallery</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="he-wrap">
+    <h1 class="he-head">Six palettes, one wall</h1>
+    <ul class="he-row" id="heRow">
+      <li class="he-item" style="--a:#f2b36b;--b:#c4552d">
+        <button class="he-btn" type="button" aria-expanded="true"><span class="he-num">01</span><span class="he-name">Dune</span></button>
+        <div class="he-art" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><circle cx="30" cy="30" r="14" fill="#fff" opacity=".7"/><path d="M0 70 Q 25 45 50 68 T 100 60 V100 H0Z" fill="#000" opacity=".22"/><path d="M0 82 Q 30 62 60 80 T 100 74 V100 H0Z" fill="#000" opacity=".3"/></svg><p class="he-cap">Dune collection, sketch 1</p></div>
+      </li>
+      <li class="he-item" style="--a:#6fc1d6;--b:#1c4c78">
+        <button class="he-btn" type="button" aria-expanded="false"><span class="he-num">02</span><span class="he-name">Tide</span></button>
+        <div class="he-art" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><circle cx="38" cy="38" r="14" fill="#fff" opacity=".7"/><path d="M0 70 Q 25 48 50 68 T 100 60 V100 H0Z" fill="#000" opacity=".22"/><path d="M0 82 Q 30 62 60 80 T 100 74 V100 H0Z" fill="#000" opacity=".3"/></svg><p class="he-cap">Tide collection, sketch 2</p></div>
+      </li>
+      <li class="he-item" style="--a:#7cb27a;--b:#17402c">
+        <button class="he-btn" type="button" aria-expanded="false"><span class="he-num">03</span><span class="he-name">Pine</span></button>
+        <div class="he-art" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><circle cx="46" cy="46" r="14" fill="#fff" opacity=".7"/><path d="M0 70 Q 25 51 50 68 T 100 60 V100 H0Z" fill="#000" opacity=".22"/><path d="M0 82 Q 30 62 60 80 T 100 74 V100 H0Z" fill="#000" opacity=".3"/></svg><p class="he-cap">Pine collection, sketch 3</p></div>
+      </li>
+      <li class="he-item" style="--a:#f08a5d;--b:#6a1b3a">
+        <button class="he-btn" type="button" aria-expanded="false"><span class="he-num">04</span><span class="he-name">Ember</span></button>
+        <div class="he-art" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><circle cx="54" cy="30" r="14" fill="#fff" opacity=".7"/><path d="M0 70 Q 25 54 50 68 T 100 60 V100 H0Z" fill="#000" opacity=".22"/><path d="M0 82 Q 30 62 60 80 T 100 74 V100 H0Z" fill="#000" opacity=".3"/></svg><p class="he-cap">Ember collection, sketch 4</p></div>
+      </li>
+      <li class="he-item" style="--a:#cfe3f2;--b:#6b8fb8">
+        <button class="he-btn" type="button" aria-expanded="false"><span class="he-num">05</span><span class="he-name">Frost</span></button>
+        <div class="he-art" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><circle cx="62" cy="38" r="14" fill="#fff" opacity=".7"/><path d="M0 70 Q 25 57 50 68 T 100 60 V100 H0Z" fill="#000" opacity=".22"/><path d="M0 82 Q 30 62 60 80 T 100 74 V100 H0Z" fill="#000" opacity=".3"/></svg><p class="he-cap">Frost collection, sketch 5</p></div>
+      </li>
+      <li class="he-item" style="--a:#b79ae0;--b:#2d1d5a">
+        <button class="he-btn" type="button" aria-expanded="false"><span class="he-num">06</span><span class="he-name">Dusk</span></button>
+        <div class="he-art" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><circle cx="70" cy="46" r="14" fill="#fff" opacity=".7"/><path d="M0 70 Q 25 60 50 68 T 100 60 V100 H0Z" fill="#000" opacity=".22"/><path d="M0 82 Q 30 62 60 80 T 100 74 V100 H0Z" fill="#000" opacity=".3"/></svg><p class="he-cap">Dusk collection, sketch 6</p></div>
+      </li>
+    </ul>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

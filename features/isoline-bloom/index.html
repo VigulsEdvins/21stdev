@@ -3,11 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Isoline Bloom</title>
+  <title>Contour Bloom</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ib-stage" id="ibStage">
+    <canvas class="ib-cv" id="ibCv" role="img" aria-label="A glowing lobed shape drawn only with contour lines"></canvas>
+    <div class="ib-cap">
+      <p class="ib-title">Contour bloom</p>
+      <p class="ib-sub">Move across the shape. Move fast and the rings pump.</p>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

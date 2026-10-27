@@ -3,11 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Polaroid Line Carousel</title>
+  <title>Pegged Print Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="pl-wrap" aria-label="Photo prints hanging on a string">
+    <p class="pl-label">Field notes, volume two</p>
+    <div class="pl-line" id="plLine" tabindex="0" aria-label="Drag or use arrow keys to move the prints">
+      <svg class="pl-string" id="plString" aria-hidden="true"><path id="plPath" /></svg>
+      <ul class="pl-prints" id="plPrints">
+        <li class="pl-print" style="--s1:#f3b7a0;--s2:#fbe9d8;--h1:#6b4a5e;--h2:#3b2a3d"><i class="pl-peg"></i><div class="pl-art"></div><b>First Light</b></li>
+        <li class="pl-print" style="--s1:#a9bdd0;--s2:#e6eef4;--h1:#52687a;--h2:#26384a"><i class="pl-peg"></i><div class="pl-art"></div><b>High Pass</b></li>
+        <li class="pl-print" style="--s1:#3a2f5c;--s2:#c9788a;--h1:#2d2147;--h2:#120d22"><i class="pl-peg"></i><div class="pl-art"></div><b>Last Embers</b></li>
+        <li class="pl-print" style="--s1:#9fcfb2;--s2:#f4f0c8;--h1:#3f7a62;--h2:#1c4437"><i class="pl-peg"></i><div class="pl-art"></div><b>Mossy Bend</b></li>
+        <li class="pl-print" style="--s1:#e9c46a;--s2:#fff1cf;--h1:#b4693f;--h2:#6c3322"><i class="pl-peg"></i><div class="pl-art"></div><b>Dry Season</b></li>
+        <li class="pl-print" style="--s1:#7aa7d6;--s2:#dcebf7;--h1:#3d6f9c;--h2:#183a5c"><i class="pl-peg"></i><div class="pl-art"></div><b>Clear Water</b></li>
+      </ul>
+    </div>
+    <div class="pl-bar">
+      <div><h2 class="pl-name" id="plName">First Light</h2><p class="pl-text">Six small landscapes, pinned up in the order they were found.</p></div>
+      <div class="pl-pager"><span class="pl-count" id="plCount">01 / 06</span>
+        <button type="button" class="pl-btn" id="plPrev" aria-label="Previous print">&#8249;</button>
+        <button type="button" class="pl-btn" id="plNext" aria-label="Next print">&#8250;</button></div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

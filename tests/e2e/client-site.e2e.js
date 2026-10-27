@@ -53,6 +53,7 @@ async function main() {
   // 3. edit the hero headline through the Content tab
   await page.click('#tabSectionsBtn');
   await page.click('#tabContentBtn');
+  await page.evaluate(() => { document.querySelector('.quick-edit').open = true; });
   await page.selectOption('#contentSectionSelect', { index: 1 });
   await page.waitForSelector('#contentFields .content-field');
   const headline = page.locator('#contentFields .content-field', { hasText: 'Headline' }).locator('input, textarea').first();

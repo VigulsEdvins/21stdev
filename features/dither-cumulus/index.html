@@ -1,13 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dither Cumulus</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dithered Night Clouds</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<section class="dc-root" data-dc-root>
+  <canvas class="dc-canvas" data-dc-canvas aria-hidden="true"></canvas>
+  <div class="dc-content">
+    <p class="dc-label">Low-fi weather</p>
+    <h1 class="dc-title">Clouds drawn with six colours</h1>
+    <p class="dc-text">An ordered-dither sky that drifts behind your content. Move the pointer to swing the moonlight.</p>
+    <a class="dc-btn" href="#">Look up</a>
+  </div>
+</section>
+<script src="script.js"></script>
 </body>
 </html>

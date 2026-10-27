@@ -1,30 +1,25 @@
 {
-  "name": "Grid Loupe Shader",
-  "title": "Grid Loupe Shader",
+  "name": "Mosaic Lens Gallery",
+  "title": "Mosaic Lens Gallery",
   "slug": "grid-loupe-shader",
   "category": "Galleries & Bento",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A WebGL image that turns into a magnifying mosaic under the pointer. The picture is cut into a grid, and every cell near the pointer shows its own patch blown up: the closest cells flatten into single colours, the outer ones read as a ring of tiny lenses, and dots swell on the grid nodes. Move faste",
+  "description": "A WebGL artwork that breaks into a grid of magnified cells and glowing nodes around the pointer, reacting to how fast you move.",
   "tags": [
-    "grid",
-    "loupe",
+    "webgl",
     "shader",
-    "21st.dev",
-    "galleries",
-    "react"
+    "lens",
+    "grid",
+    "gallery"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 157,
   "legacyCategory": "Galleries & Portfolios",
   "status": "stable",
@@ -37,20 +32,18 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.3,
-    "webgl": true,
-    "canvas2d": true
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .ml-cap"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

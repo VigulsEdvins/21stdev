@@ -3,11 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ticket Stub Footer</title>
+  <title>Boarding Pass Footer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <footer class="ts-foot">
+    <div class="ts-top">
+      <div class="ts-pitch">
+        <p class="ts-eyebrow">Next departure &middot; every hour</p>
+        <h2 class="ts-head">Slow trains,<br />sharp timetables.</h2>
+        <p class="ts-lead">Plan the whole route in one place and keep a pass in your pocket.</p>
+      </div>
+      <nav class="ts-cols" aria-label="Footer">
+        <div><h3>Travel</h3><a href="#">Timetables</a><a href="#">Routes</a><a href="#">Fares</a><a href="#">Stations</a></div>
+        <div><h3>Company</h3><a href="#">About</a><a href="#">Careers</a><a href="#">Press kit</a><a href="#">Contact</a></div>
+        <div><h3>Help</h3><a href="#">Lost items</a><a href="#">Accessibility</a><a href="#">Refunds</a></div>
+      </nav>
+    </div>
+
+    <div class="ts-ticket" id="tsTicket">
+      <div class="ts-stub">
+        <span class="ts-seat">Seat<b>14A</b></span>
+        <span class="ts-code" aria-hidden="true"></span>
+      </div>
+      <div class="ts-main">
+        <dl class="ts-meta">
+          <div><dt>From</dt><dd>Harbour</dd></div>
+          <div><dt>To</dt><dd>Northgate</dd></div>
+          <div><dt>Gate</dt><dd>B7</dd></div>
+          <div><dt>Boards</dt><dd>09:40</dd></div>
+        </dl>
+        <p class="ts-brand">Kestrel Line</p>
+        <a class="ts-cta" href="#">Book a seat <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+
+    <p class="ts-legal"><span>&copy; 2026 Kestrel Line (fictional)</span><a href="#">Privacy</a><a href="#">Terms</a></p>
+  </footer>
   <script src="script.js"></script>
 </body>
 </html>

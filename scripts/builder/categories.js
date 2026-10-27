@@ -12,13 +12,21 @@
     const slug = (feature.slug || '').toLowerCase();
     const title = (feature.title || feature.name || '').toLowerCase();
 
+    // 0. A whole website (own pages and CMS) or a whole landing page: the category in meta.json decides
+    if (feature.liveSiteUrl || cat === 'Full Websites') return 'Full Websites';
+    if (cat === 'Landing Pages') return 'Landing Pages';
+    // A loader keeps its own category even when its name has "card", "hero" or "menu" in it
+    if (cat === 'Preloaders & Shaders') return 'Preloaders & Shaders';
+    if (cat === 'Audio') return 'Audio';
+    if (cat === '404 Page') return '404 Page';
+
     // 1. Footers & Endings
     if (slug.includes('footer') || title.includes('footer') || cat.toLowerCase().includes('footer')) {
       return 'Footers & Endings';
     }
 
     // 2. Pricing & Tables
-    if (slug.includes('pricing') || title.includes('pricing') || slug.includes('turntable') || title.includes('turntable') || slug.includes('matrix')) {
+    if (slug.includes('pricing') || title.includes('pricing') || slug.includes('matrix')) {
       return 'Pricing & Tables';
     }
 
@@ -67,9 +75,12 @@
       return 'Audio & Shaders';
     }
 
-    // 12. Full Templates
-    if (cat.toLowerCase().includes('full') || slug.includes('template') || slug.includes('landing')) {
-      return 'Full Templates';
+    // 12. Full Websites (a whole site with its own pages and CMS) and Landing Pages (a whole page in one section)
+    if (feature.liveSiteUrl || cat.toLowerCase().includes('full websites')) {
+      return 'Full Websites';
+    }
+    if (cat.toLowerCase().includes('landing pages') || cat.toLowerCase().includes('full templates') || slug.includes('template') || slug.includes('landing')) {
+      return 'Landing Pages';
     }
 
     // 13. Interactions & Physics / Cursors
@@ -88,6 +99,7 @@
     const currentNorm = norm.toLowerCase().trim();
 
     if (currentNorm === targetNorm) return true;
+    if (targetNorm === 'audio') return false; // exact only: "Audio & Shaders" also contains the word
     if ((targetNorm === 'footers' || targetNorm === 'footers & endings') && currentNorm.includes('footer')) return true;
     if ((targetNorm === 'headers & nav' || targetNorm === 'navigation & headers') && currentNorm.includes('nav')) return true;
     if ((targetNorm === 'pricing & tables' || targetNorm === 'tables & pricing') && (currentNorm.includes('pricing') || currentNorm.includes('table'))) return true;
@@ -96,10 +108,9 @@
     if ((targetNorm === 'galleries & bento' || targetNorm === 'galleries & grids') && (currentNorm.includes('galleries') || currentNorm.includes('grid') || currentNorm.includes('bento'))) return true;
     if (targetNorm === '3d & carousels' && (currentNorm.includes('3d') || currentNorm.includes('carousel'))) return true;
     if (targetNorm === 'scroll & parallax' && (currentNorm.includes('scroll') || currentNorm.includes('parallax'))) return true;
-    if (targetNorm === 'audio & shaders' && (currentNorm.includes('audio') || currentNorm.includes('shader'))) return true;
+    if (targetNorm === 'audio & shaders' && currentNorm !== 'audio' && !currentNorm.includes('preloader') && (currentNorm.includes('audio') || currentNorm.includes('shader'))) return true;
     if ((targetNorm === 'interactions & physics' || targetNorm === 'physics & cursors') && currentNorm.includes('physics')) return true;
     if ((targetNorm === 'preloaders & shaders' || targetNorm === 'preloaders') && currentNorm.includes('preloader')) return true;
-    if (targetNorm === 'full templates' && currentNorm.includes('template')) return true;
 
     return currentNorm.includes(targetNorm);
   }

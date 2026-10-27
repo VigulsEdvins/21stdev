@@ -1,29 +1,25 @@
 {
-  "name": "Caustic Pool",
-  "title": "Caustic Pool",
+  "name": "Stirred Water",
+  "title": "Stirred Water",
   "slug": "caustic-pool",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Shallow water you can stir, lit from above. Drag across it and the wake spreads, reflects off the walls and interferes with itself; leave it alone and it keeps moving without you.",
+  "description": "A WebGL pool floor of rippling caustic light webs on blue-turquoise water; drag to stir ripples that spread and fade, with a CSS gradient fallback.",
   "tags": [
-    "caustic",
-    "pool",
-    "21st.dev",
-    "audio",
-    "react"
+    "water",
+    "webgl",
+    "shader",
+    "caustics",
+    "ripple"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 119,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
@@ -37,20 +33,30 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.98,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .cw-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .cw-title"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .cw-drop"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

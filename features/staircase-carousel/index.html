@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Staircase Carousel</title>
+  <title>Stepped Card Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sc-wrap" id="scWrap" tabindex="0" aria-roledescription="carousel" aria-label="Print collection">
+    <div class="sc-stage" id="scStage"></div>
+    <div class="sc-info" aria-live="polite">
+      <span class="sc-index" id="scIndex">01</span>
+      <h1 class="sc-name" id="scName">Peach Arch</h1>
+      <p class="sc-sub" id="scSub">Risograph print, edition of 40</p>
+    </div>
+    <div class="sc-ctrl">
+      <button type="button" id="scPrev" aria-label="Previous print"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="sc-dots" id="scDots"></div>
+      <button type="button" id="scNext" aria-label="Next print"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

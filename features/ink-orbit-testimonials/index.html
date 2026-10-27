@@ -3,11 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ink Orbit Testimonials</title>
+  <title>Quote Stage Testimonials</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="tq-page" aria-labelledby="tqTitle">
+    <header class="tq-bar">
+      <a class="tq-logo" href="#"><i aria-hidden="true"></i>Northlark</a>
+      <nav aria-label="Main"><a href="#">Features</a><a href="#">Customers</a><a href="#">Pricing</a></nav>
+    </header>
+
+    <div class="tq-head">
+      <p class="tq-label">Customer notes</p>
+      <h2 class="tq-title" id="tqTitle">Small teams, big relief.</h2>
+    </div>
+
+    <div class="tq-stage" id="tqStage" role="region" aria-roledescription="carousel" aria-label="Customer quotes">
+      <span class="tq-mark" aria-hidden="true">&ldquo;</span>
+      <figure class="tq-slide is-on" data-i="0">
+        <blockquote class="tq-quote">We stopped chasing status updates in week one. The whole team now works from a single page.</blockquote>
+        <figcaption><span class="tq-av" style="--h:262">DM</span><b>Dara Mensah</b><small>Operations lead, Brightfold</small></figcaption>
+      </figure>
+      <figure class="tq-slide" data-i="1">
+        <blockquote class="tq-quote">Setup took an afternoon and nobody needed training. It simply gets out of the way.</blockquote>
+        <figcaption><span class="tq-av" style="--h:18">LR</span><b>Leo Ravn</b><small>Founder, Pinecone Bakery</small></figcaption>
+      </figure>
+      <figure class="tq-slide" data-i="2">
+        <blockquote class="tq-quote">Reports that used to take Fridays now arrive on Monday morning, already written.</blockquote>
+        <figcaption><span class="tq-av" style="--h:160">AK</span><b>Aiko Kerr</b><small>Analyst, Tallow &amp; Reed</small></figcaption>
+      </figure>
+      <figure class="tq-slide" data-i="3">
+        <blockquote class="tq-quote">Our support replies are faster and, oddly, friendlier. Customers have noticed.</blockquote>
+        <figcaption><span class="tq-av" style="--h:330">SB</span><b>Sol Barros</b><small>Support manager, Halcyon Row</small></figcaption>
+      </figure>
+      <div class="tq-ctrl">
+        <button class="tq-arrow" id="tqPrev" type="button" aria-label="Previous quote">&larr;</button>
+        <div class="tq-dots" id="tqDots" role="tablist" aria-label="Choose a quote"></div>
+        <button class="tq-arrow" id="tqNext" type="button" aria-label="Next quote">&rarr;</button>
+      </div>
+    </div>
+
+    <div class="tq-marquee" aria-hidden="true">
+      <div class="tq-track">
+        <span>Brightfold</span><span>Pinecone Bakery</span><span>Tallow &amp; Reed</span><span>Halcyon Row</span><span>Ostrich Labs</span><span>Quill &amp; Co</span>
+        <span>Brightfold</span><span>Pinecone Bakery</span><span>Tallow &amp; Reed</span><span>Halcyon Row</span><span>Ostrich Labs</span><span>Quill &amp; Co</span>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -3,11 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Open Slot Booking</title>
+  <title>Slot Picker Card</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="sp-wrap">
+    <div class="sp-intro">
+      <p class="sp-label">Office hours</p>
+      <h2 class="sp-title">Pick a time that suits you</h2>
+      <p class="sp-text">Choose a length, choose a day, tap a slot. You get a confirmation straight away and a reminder the evening before.</p>
+      <a class="sp-link" href="#">Prefer to send a message instead?</a>
+    </div>
+
+    <div class="sp-card" id="spCard">
+      <div class="sp-host">
+        <span class="sp-avatar" aria-hidden="true">MR</span>
+        <div><b>Mara Reyes</b><small>Product advisor &middot; <span id="spZone">local time</span></small></div>
+      </div>
+
+      <div class="sp-seg" role="radiogroup" aria-label="Call length" id="spLen">
+        <button type="button" role="radio" aria-checked="false" data-len="15">15 min</button>
+        <button type="button" role="radio" aria-checked="true" data-len="30">30 min</button>
+        <button type="button" role="radio" aria-checked="false" data-len="45">45 min</button>
+      </div>
+
+      <div class="sp-days" id="spDays" role="tablist" aria-label="Day"></div>
+      <div class="sp-slots" id="spSlots" role="group" aria-label="Open times"></div>
+
+      <form class="sp-confirm" id="spForm" hidden>
+        <p class="sp-pick" id="spPick"></p>
+        <label>Your name<input type="text" id="spName" required autocomplete="off" placeholder="Alex Doe" /></label>
+        <label>Email<input type="email" id="spMail" required autocomplete="off" placeholder="alex@example.com" /></label>
+        <div class="sp-row">
+          <button type="button" class="sp-btn sp-ghost" id="spBack">Back</button>
+          <button type="submit" class="sp-btn sp-solid">Confirm booking</button>
+        </div>
+      </form>
+
+      <div class="sp-done" id="spDone" hidden aria-live="polite">
+        <span class="sp-tick" aria-hidden="true"></span>
+        <h3>You are booked</h3>
+        <p id="spSummary"></p>
+        <button type="button" class="sp-btn sp-ghost" id="spAgain">Book another</button>
+      </div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,9 +1,45 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #f7f5f0); color: var(--text, #17181c); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+
+.pj-page { --pj-line: color-mix(in srgb, var(--text, #17181c) 16%, transparent); --pj-soft: color-mix(in srgb, var(--text, #17181c) 62%, transparent); --pj-acc: var(--accent, #e4572e); max-width: 62rem; margin: 0 auto; padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2rem); }
+
+.pj-eyebrow { display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pj-soft); }
+.pj-eyebrow i { width: 1.6rem; height: 2px; background: var(--pj-acc); }
+
+.pj-title { margin: 1.6rem 0 2.2rem; font-family: var(--font-display, Georgia, "Times New Roman", serif); font-size: clamp(2rem, 5.4vw, 3.9rem); line-height: 1.12; letter-spacing: -0.02em; font-weight: 500; text-wrap: balance; }
+.pj-badge { display: inline-grid; place-items: center; vertical-align: middle; width: 0.95em; height: 0.95em; margin: 0 0.1em; border-radius: 50%; background: var(--pj-acc); color: #fff; transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.pj-badge svg { width: 55%; height: 55%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pj-badge:hover { transform: rotate(45deg) scale(1.08); }
+.pj-badge:focus-visible, .pj-head:focus-visible { outline: 2px solid var(--pj-acc); outline-offset: 3px; }
+
+.pj-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.2rem 2rem; margin-bottom: 2.4rem; }
+.pj-lede { max-width: 26rem; line-height: 1.6; color: var(--pj-soft); }
+.pj-roles { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; max-width: 22rem; align-content: flex-start; }
+.pj-roles li { padding: 0.35rem 0.8rem; border: 1px solid var(--pj-line); border-radius: 99px; font-size: 0.82rem; }
+
+.pj-split { display: flex; gap: 4px; height: 0.9rem; }
+.pj-split span { flex: var(--w) 1 0; border-radius: 4px; background: var(--pj-line); transition: background 0.3s, flex-grow 0.5s; }
+.pj-split span.is-on { background: var(--pj-acc); }
+.pj-split-label { margin: 0.6rem 0 2rem; font-size: 0.78rem; color: var(--pj-soft); }
+
+.pj-list { list-style: none; border-top: 1px solid var(--pj-line); }
+.pj-item { border-bottom: 1px solid var(--pj-line); }
+.pj-head { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr) auto; align-items: center; gap: 1rem; width: 100%; padding: 1.3rem 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.pj-pct { font-size: 0.85rem; color: var(--pj-soft); font-variant-numeric: tabular-nums; }
+.pj-name { font-family: var(--font-display, Georgia, serif); font-size: clamp(1.5rem, 3.6vw, 2.3rem); letter-spacing: -0.01em; transition: transform 0.3s, color 0.3s; }
+.pj-head:hover .pj-name { transform: translateX(6px); }
+.pj-item.is-open .pj-name { color: var(--pj-acc); }
+.pj-plus { position: relative; width: 1.2rem; height: 1.2rem; }
+.pj-plus::before, .pj-plus::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: currentColor; transition: transform 0.3s; }
+.pj-plus::after { transform: rotate(90deg); }
+.pj-item.is-open .pj-plus::after { transform: rotate(0); }
+
+.pj-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s ease; }
+.pj-panel > div { overflow: hidden; padding-left: 5.5rem; }
+.pj-item.is-open .pj-panel { grid-template-rows: 1fr; }
+.pj-panel p { max-width: 34rem; line-height: 1.65; color: var(--pj-soft); }
+.pj-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 1.5rem; }
+.pj-chips span { padding: 0.25rem 0.7rem; border-radius: 99px; background: color-mix(in srgb, var(--pj-acc) 14%, transparent); font-size: 0.78rem; }
+
+@media (max-width: 560px) { .pj-head { grid-template-columns: 3rem minmax(0, 1fr) auto; } .pj-panel > div { padding-left: 0; } }
+@media (prefers-reduced-motion: reduce) { .pj-panel, .pj-name, .pj-badge, .pj-split span, .pj-plus::before, .pj-plus::after { transition: none; } }

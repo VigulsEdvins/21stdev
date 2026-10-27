@@ -1,29 +1,25 @@
 {
-  "name": "Wirebound Inquiry",
-  "title": "Wirebound Inquiry",
+  "name": "Index Card Inquiry",
+  "title": "Index Card Inquiry",
   "slug": "wirebound-inquiry",
   "category": "Cards & Tiles",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A contact section for a studio, agency or freelancer, built as a wire-bound notebook. Closed, the kraft cover is already a contact card: your name printed big, a highlighter band that opens the brief, your email and socials written on the cover lines. Open it and the project inquiry is one question ",
+  "description": "A contact section where a ruled index card holds the studio details and opens into a three-step project brief form.",
   "tags": [
-    "wirebound",
-    "inquiry",
-    "21st.dev",
-    "cards",
-    "react"
+    "contact",
+    "form",
+    "stepper",
+    "card",
+    "inquiry"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 250,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
@@ -36,89 +32,42 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope p.wbi-kicker"
+      "selector": ":scope .ic-kicker"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h2.wbi-headline"
+      "selector": ":scope .ic-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.wbi-intro-copy"
+      "selector": ":scope .ic-intro"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
+      "id": "paragraph-1",
+      "label": "Email line",
       "type": "text",
-      "selector": ":scope p.wbi-avail"
+      "selector": ":scope .ic-front .ic-line:nth-of-type(1)"
     },
     {
       "id": "button-text-1",
-      "label": "Button text 1",
+      "label": "Open button",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-3",
-      "label": "Button text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(4) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope button.wbi-band"
-    },
-    {
-      "id": "link-1",
-      "label": "Link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "link-2",
-      "label": "Link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > a:nth-of-type(3)"
-    },
-    {
-      "id": "link-3",
-      "label": "Link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > a:nth-of-type(2)"
+      "selector": ":scope .ic-open"
     }
   ],
-  "measured": {
-    "luma": 0.38,
-    "webgl": false,
-    "canvas2d": true
-  },
   "ownPalette": true,
-  "themeReviewed": "Flagged text is on the notebook cover/pages, which keep their own palette; white-on-blue copy is readable. Checked both themes 2026-10-24.",
-  "reserveHeight": 801
+  "reserveHeight": 800
 }

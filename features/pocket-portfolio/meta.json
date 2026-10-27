@@ -1,29 +1,25 @@
 {
-  "name": "Pocket Portfolio",
-  "title": "Pocket Portfolio",
+  "name": "Card Stack Portfolio",
+  "title": "Card Stack Portfolio",
   "slug": "pocket-portfolio",
-  "category": "Full Templates",
-  "source": "21st.dev",
+  "category": "Landing Pages",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A minimal, card-stacked one-page portfolio template. White rounded cards on a soft grey page, a pill nav, one hot accent colour.",
+  "description": "A one-page portfolio made of white rounded cards on a soft grey page, with a floating pill nav and one hot accent colour.",
   "tags": [
-    "pocket",
     "portfolio",
-    "21st.dev",
-    "full",
-    "react"
+    "cards",
+    "bento",
+    "minimal",
+    "landing"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 210,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -38,78 +34,76 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Status label",
+      "type": "text",
+      "selector": ":scope .cs-label"
+    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.ppf-sr"
+      "selector": ":scope .cs-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .cs-intro .cs-text"
     },
     {
       "id": "button-text-1",
-      "label": "Button text 1",
+      "label": "Button text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)"
+      "selector": ":scope .cs-btn"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .cs-btn"
     },
     {
       "id": "button-text-2",
-      "label": "Button text 2",
+      "label": "Nav button text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)"
+      "selector": ":scope .cs-hire"
     },
     {
-      "id": "text-1",
-      "label": "Text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > span:nth-of-type(2)"
-    },
-    {
-      "id": "text-2",
-      "label": "Text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > span:nth-of-type(3)"
-    },
-    {
-      "id": "text-3",
-      "label": "Text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > span:nth-of-type(4)"
-    },
-    {
-      "id": "section-heading-1",
-      "label": "Section heading 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "link",
-      "label": "Link",
+      "id": "button-link-2",
+      "label": "Nav button link",
       "type": "link",
-      "selector": ":scope a.ppf-email"
+      "selector": ":scope .cs-hire"
     },
     {
-      "id": "section-heading-2",
-      "label": "Section heading 2",
+      "id": "heading-2",
+      "label": "Work heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > h2:nth-of-type(1)"
+      "selector": ":scope .cs-works .cs-h"
+    },
+    {
+      "id": "paragraph",
+      "label": "Note title",
+      "type": "text",
+      "selector": ":scope .cs-note"
+    },
+    {
+      "id": "email-link",
+      "label": "Email link",
+      "type": "link",
+      "selector": ":scope .cs-mail"
     }
   ],
-  "measured": {
-    "luma": 0.91,
-    "webgl": false,
-    "canvas2d": false
-  },
   "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
   "reserveHeight": 800,
   "palette": "designed",
-  "paletteNote": "Mixed dark panels on a light page: a token mapping flips text onto the wrong surface (tried, reverted)"
+  "paletteNote": "Mixed dark panels on a light page: a token mapping flips text onto the wrong surface (tried, reverted)",
+  "ownPalette": true,
+  "nativeWhen": []
 }

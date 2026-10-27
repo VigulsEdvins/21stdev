@@ -1,30 +1,26 @@
 {
-  "name": "Agent Console Template",
-  "title": "Agent Console Template",
+  "name": "Runbook Console",
+  "title": "Runbook Console",
   "slug": "agent-console-template",
-  "category": "Full Templates",
-  "source": "21st.dev",
-  "type": "template",
-  "description": "A complete, working front end for an agent that plans its work as a small state machine. You ask for something, the agent writes a machine for it, and nothing runs until you approve. Then it runs state by state while you watch the transcript, a live state graph, and the store it writes to.",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "A three-pane console where a request becomes a small step machine that waits for approval, then runs with a live state graph and store.",
   "tags": [
-    "agent",
     "console",
-    "template",
-    "21st.dev",
-    "full",
-    "react"
+    "workflow",
+    "dashboard",
+    "approval",
+    "app"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS",
+    "SVG"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 100,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -39,70 +35,37 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "brand",
+      "label": "Brand name",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > button:nth-of-type(1)"
+      "selector": ":scope .rc-brand"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h3.act-pstate"
+      "selector": ":scope .rc-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .rc-lead"
     },
     {
-      "id": "paragraph",
-      "label": "Paragraph",
+      "id": "button-text",
+      "label": "Send button",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > aside:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > p:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-3",
-      "label": "Button text 3",
-      "type": "text",
-      "selector": ":scope button.act-mono-b"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope button.act-warnbtn"
-    },
-    {
-      "id": "section-heading",
-      "label": "Section heading",
-      "type": "text",
-      "selector": ":scope h2.act-state-name"
+      "selector": ":scope .rc-send"
     }
   ],
-  "measured": {
-    "luma": 0.79,
-    "webgl": false,
-    "canvas2d": false
-  },
   "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine",
+  "themeReviewed": "full-page template with its own light look"
 }

@@ -1,72 +1,99 @@
 (function () {
   const ARTISTS = [
     {
-      name: 'Arturo Torres',
+      name: 'Artist 01',
       role: 'Fashion & Motion',
       images: [
-        '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg',
-        '/assets/library/1779142866-arturo-torres-advertising-photographer-lifestyle-fashion-sports88-fa38814d.jpg',
-        '/assets/library/1779142866-arturo-torres-advertising-photographer-lifestyle-fashion-sports30-3161d767.jpg'
+        '/assets/library/edv-art-01.svg',
+        '/assets/library/edv-art-06.svg',
+        '/assets/library/edv-art-11.svg'
       ]
     },
     {
-      name: 'Danielle Moore',
+      name: 'Artist 02',
       role: 'Editorial',
       images: [
-        '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg',
-        '/assets/library/1778184121-danielle-moore-tidal-magazine-black-and-white-fashion-portrait-94accaf7.jpg',
-        '/assets/library/1773702313-danielle-moore-arturo-torres-summer-25-quay19-756bc24d.jpg'
+        '/assets/library/edv-art-02.svg',
+        '/assets/library/edv-art-07.svg',
+        '/assets/library/edv-art-12.svg'
       ]
     },
     {
-      name: 'Quinn Gravier',
+      name: 'Artist 03',
       role: 'Portraiture',
       images: [
-        '/assets/library/1778795293-quinn-gravier-advertising-photographer-portraits-celebrity26-2e04fbf6.jpg',
-        '/assets/library/1778795294-quinn-gravier-advertising-photographer-portraits-celebrity36-dddb4848.jpg',
-        '/assets/library/1778795294-quinn-gravier-advertising-photographer-portraits-celebrity47-dd3ca91b.jpg'
+        '/assets/library/edv-art-03.svg',
+        '/assets/library/edv-art-08.svg',
+        '/assets/library/edv-art-13.svg'
       ]
     },
     {
-      name: 'Cera Hensley',
+      name: 'Artist 04',
       role: 'Still Life',
       images: [
-        '/assets/library/1777466641-cera-hensley-beauty-photography-stilllife-cosmetics-21-08778a1a.jpg',
-        '/assets/library/1777465200-cera-hensley-food-photography-beverage-stilllife-16-7e2ab988.jpg',
-        '/assets/library/1778275287-kinship-makeup-sunscreen-stilllife-photoshoot-production-6-43d4affd.jpg'
+        '/assets/library/edv-art-04.svg',
+        '/assets/library/edv-art-09.svg',
+        '/assets/library/edv-art-14.svg'
       ]
     },
     {
-      name: 'Zac Posen Studio',
+      name: 'Artist 05',
       role: 'Campaign',
       images: [
-        '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg',
-        '/assets/library/1778184121-fashion-editorial-horse-barragan-stables-mexico-d62757c7.jpg',
-        '/assets/library/1778772904-danielle-moore-phils-skincare-mens-beauty-portrait-1a449411.jpg'
+        '/assets/library/edv-art-05.svg',
+        '/assets/library/edv-art-10.svg',
+        '/assets/library/edv-art-15.svg'
       ]
     },
     {
-      name: 'Byrum Archive',
+      name: 'Artist 06',
       role: 'Sport & Studio',
       images: [
-        '/assets/library/1774484653-byrum-20200305-nike-basketball-studio-0416-31763667.jpg',
-        '/assets/library/1774484687-221112_nike-hydrostrong_5316-e4298508.jpg',
-        '/assets/library/1774484866-byrum-191105-adidas-victor-702-21861bd2.jpg'
+        '/assets/library/edv-art-06.svg',
+        '/assets/library/edv-art-11.svg',
+        '/assets/library/edv-art-16.svg'
       ]
     },
     {
-      name: 'Harper Christian',
+      name: 'Artist 07',
       role: 'Monograph',
       images: [
-        '/assets/library/1774485213-160609-harper-christian-1484-3-5902d9c7.jpg',
-        '/assets/library/1777465143-20180623_foam_test_585-9d2f1747.jpg',
-        '/assets/library/1778793996-arturo-torres-fashion-photography-advertising-photographer-25-d265cb3a.jpg'
+        '/assets/library/edv-art-07.svg',
+        '/assets/library/edv-art-12.svg',
+        '/assets/library/edv-art-01.svg'
+      ]
+    },
+    {
+      name: 'Artist 08',
+      role: 'Documentary',
+      images: [
+        '/assets/library/edv-art-08.svg',
+        '/assets/library/edv-art-13.svg',
+        '/assets/library/edv-art-02.svg'
+      ]
+    },
+    {
+      name: 'Artist 09',
+      role: 'Fashion & Motion',
+      images: [
+        '/assets/library/edv-art-09.svg',
+        '/assets/library/edv-art-14.svg',
+        '/assets/library/edv-art-03.svg'
+      ]
+    },
+    {
+      name: 'Artist 10',
+      role: 'Editorial',
+      images: [
+        '/assets/library/edv-art-10.svg',
+        '/assets/library/edv-art-15.svg',
+        '/assets/library/edv-art-04.svg'
       ]
     }
   ];
 
-  const columnsEl = document.getElementById('vivColumns');
-  const panStage = document.getElementById('vivPanStage');
+  const columnsEl = document.getElementById('edvColumns');
+  const panStage = document.getElementById('edvPanStage');
   if (!columnsEl || !panStage) return;
 
   const colSpeeds = [1.0, -0.85, 1.15, -0.95, 0.9];
@@ -76,18 +103,18 @@
 
   for (let c = 0; c < 5; c++) {
     const col = document.createElement('div');
-    col.className = 'viv-col';
+    col.className = 'edv-col';
     for (let r = 0; r < 4; r++) {
       const artist = ARTISTS[(c * 2 + r) % ARTISTS.length];
       const card = document.createElement('article');
-      card.className = 'viv-card';
+      card.className = 'edv-card';
 
       const media = document.createElement('div');
-      media.className = 'viv-card-media';
+      media.className = 'edv-card-media';
 
       const layers = artist.images.map((imgSrc, idx) => {
         const layer = document.createElement('div');
-        layer.className = 'viv-card-layer' + (idx === 0 ? ' is-active' : '');
+        layer.className = 'edv-card-layer' + (idx === 0 ? ' is-active' : '');
         layer.style.backgroundImage = `url('${imgSrc}')`;
         layer.style.backgroundSize = 'cover';
         layer.style.backgroundPosition = 'center';
@@ -97,15 +124,15 @@
 
       if (r === 0) {
         const badge = document.createElement('span');
-        badge.className = 'viv-cycle-badge';
+        badge.className = 'edv-cycle-badge';
         badge.textContent = '1 / 3';
         media.appendChild(badge);
         topCardLayers.push({ layers, badge, active: 0 });
       }
 
       const meta = document.createElement('div');
-      meta.className = 'viv-card-meta';
-      meta.innerHTML = `<span class="viv-artist-name">${artist.name}</span><span class="viv-artist-role">${artist.role}</span>`;
+      meta.className = 'edv-card-meta';
+      meta.innerHTML = `<span class="edv-artist-name">${artist.name}</span><span class="edv-artist-role">${artist.role}</span>`;
 
       card.appendChild(media);
       card.appendChild(meta);
@@ -120,14 +147,14 @@
   let targetScrollY = 0;
   let currentScrollY = 0;
 
-  const vivGallery = panStage.closest('.viv-gallery') || panStage;
-  vivGallery.addEventListener('mousemove', (e) => {
-    const rect = vivGallery.getBoundingClientRect();
+  const edvGallery = panStage.closest('.edv-gallery') || panStage;
+  edvGallery.addEventListener('mousemove', (e) => {
+    const rect = edvGallery.getBoundingClientRect();
     const normX = ((e.clientX - rect.left) / (rect.width || window.innerWidth)) - 0.5;
     targetPanX = -normX * 140;
   });
 
-  vivGallery.addEventListener('wheel', (e) => {
+  edvGallery.addEventListener('wheel', (e) => {
     targetScrollY = Math.max(-360, Math.min(360, targetScrollY + e.deltaY * 0.45));
   }, { passive: true });
 

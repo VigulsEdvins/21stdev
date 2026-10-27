@@ -1,30 +1,24 @@
 {
-  "name": "Stardust Stage Preloader",
-  "title": "Stardust Stage Preloader",
+  "name": "Dot Curtain Preloader",
+  "title": "Dot Curtain Preloader",
   "slug": "stardust-stage-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A cinematic loading gate in black-and-white stipple. A lone star in a pixel-art cosmos turns into a moonlit theatre stage, and every dot on screen moves in that change.",
+  "description": "A black-and-white halftone loader where a lone star in a dotted night sky transforms into a spotlit stage with a counter, then holds with a replay button.",
   "tags": [
-    "stardust",
-    "stage",
     "preloader",
-    "21st.dev",
-    "scroll",
-    "react"
+    "halftone",
+    "canvas",
+    "dots",
+    "loading"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 231,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
@@ -38,27 +32,17 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "small-label",
-      "label": "Small label",
+      "id": "button-text",
+      "label": "Button text",
       "type": "text",
-      "selector": ":scope span.ssp-sr"
+      "selector": ":scope .dc-enter"
     }
   ],
-  "measured": {
-    "luma": 0.05,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "ownPalette": true
 }

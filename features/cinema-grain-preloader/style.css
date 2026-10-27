@@ -1,9 +1,18 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0d0b09); color: var(--text, #f2e8d5); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.cg-stage { position: relative; width: 100%; transition: opacity .6s ease; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: #0d0b09; display: grid; place-items: center; }
+.cg-stage.is-exiting { opacity: 0; pointer-events: none; }
+.cg-fallback, .cg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.cg-fallback { background: radial-gradient(circle at 30% 40%, #5c3a1c, transparent 55%), radial-gradient(circle at 75% 65%, #1e3a46, transparent 55%), #0d0b09; }
+.cg-canvas { z-index: 1; }
+.cg-ui { position: relative; z-index: 2; width: min(460px, 88%); text-align: center; display: grid; gap: 0.9rem; color: #f2e8d5; text-shadow: 0 2px 12px rgb(0 0 0 / 0.7); }
+.cg-small { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: #e5b36a; }
+.cg-title { font-family: var(--font-display, Georgia, serif); font-weight: 400; font-style: italic; font-size: clamp(1.8rem, 6vw, 3rem); }
+.cg-meter { height: 3px; background: rgb(242 232 213 / 0.2); }
+.cg-meter i { display: block; height: 100%; width: 0; background: #e5b36a; }
+.cg-row { display: flex; justify-content: space-between; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.cg-btn { justify-self: center; margin-top: 0.4rem; font: inherit; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #0d0b09; background: #e5b36a; border: 0; padding: 0.8rem 1.8rem; cursor: pointer; transition: transform 0.2s; }
+.cg-btn:hover { transform: scale(1.05); }
+.cg-btn:focus-visible { outline: 2px solid #f2e8d5; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .cg-stage { transition-duration: .15s; } }
+.cg-btn[hidden] { display: none; }

@@ -1,33 +1,29 @@
 {
-  "name": "Meridian Mist",
-  "title": "Meridian Mist",
+  "name": "Grain Mesh Gradient",
+  "title": "Grain Mesh Gradient",
   "slug": "meridian-mist",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A grainy cobalt mesh gradient under a drafting overlay: sky blue catching the top-left corner, a royal bloom in the middle, navy pooling into the bottom-left and slate grey everywhere the light doesn't reach. On top sit hairline guides (two columns, a few rows, and a pair of large overlapping circle",
+  "description": "A grainy warm mesh gradient drawn by a fragment shader that drifts slowly and follows the pointer, under hairline drafting guides and circles.",
   "tags": [
-    "meridian",
-    "mist",
-    "21st.dev",
-    "audio",
-    "react"
+    "shader",
+    "gradient",
+    "grain",
+    "mesh",
+    "background"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 192,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "retro",
     "light"
@@ -38,20 +34,23 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.7,
-    "webgl": true,
-    "canvas2d": false
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .mm-kicker"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .mm-title"
+    }
+  ],
   "lazy": true
 }

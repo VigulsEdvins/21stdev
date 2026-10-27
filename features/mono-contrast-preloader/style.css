@@ -1,9 +1,15 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #000); color: var(--text, #fff); }
+body { font-family: var(--font-body, system-ui, sans-serif); }
+.mc-stage { position: relative; width: 100%; transition: opacity .6s ease; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: var(--bg, #000); color: var(--text, #fff); }
+.mc-stage.is-exiting { opacity: 0; pointer-events: none; }
+.mc-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; filter: grayscale(1) contrast(2.2) brightness(.95); image-rendering: auto; }
+.mc-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, color-mix(in srgb, var(--bg, #000) 85%, transparent)); pointer-events: none; }
+.mc-label { position: absolute; top: 24px; left: 24px; font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; }
+.mc-title { position: absolute; left: 24px; bottom: 18vh; font-family: var(--font-display, Georgia, serif); font-style: italic; font-weight: 400; font-size: clamp(2.4rem, 10vw, 7rem); mix-blend-mode: difference; }
+.mc-count { position: absolute; right: 24px; top: 20px; font-size: 1rem; font-variant-numeric: tabular-nums; letter-spacing: .1em; }
+.mc-bar { position: absolute; left: 24px; right: 24px; bottom: 7vh; height: 1px; background: color-mix(in srgb, var(--text, #fff) 30%, transparent); }
+.mc-bar i { display: block; height: 100%; width: 0; background: var(--text, #fff); }
+.mc-stage.mc-done .mc-title { animation: mc-flash 1.2s steps(2) 2; }
+@keyframes mc-flash { 50% { opacity: .2; } }
+@media (prefers-reduced-motion: reduce) { .mc-stage { transition-duration: .15s; } .mc-stage.mc-done .mc-title { animation: none; } }

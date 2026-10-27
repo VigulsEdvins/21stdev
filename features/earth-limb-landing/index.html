@@ -3,11 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Earth Limb Landing</title>
+  <title>Orbital Survey Landing</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="ol-page">
+    <header class="ol-nav">
+      <a class="ol-logo" href="#"><span class="ol-logo-dot" aria-hidden="true"></span>Nadir Array</a>
+      <nav class="ol-links" id="olLinks" aria-label="Main">
+        <a href="#ol-fleet">Fleet</a><a href="#ol-data">Data</a><a href="#ol-plans">Plans</a>
+      </nav>
+      <a class="ol-cta ol-cta-nav" href="#">Request access</a>
+      <button class="ol-burger" id="olBurger" type="button" aria-expanded="false" aria-controls="olLinks" aria-label="Toggle menu"><span></span><span></span></button>
+    </header>
+
+    <section class="ol-hero">
+      <div class="ol-stars" aria-hidden="true"></div>
+      <div class="ol-copy">
+        <p class="ol-label">Earth observation, daily</p>
+        <h1 class="ol-title">See the whole planet before breakfast.</h1>
+        <p class="ol-intro">Thirty small satellites photograph every coast, field and city once a day, and hand you the pictures through a plain web feed.</p>
+        <div class="ol-actions">
+          <a class="ol-cta" href="#">Browse the archive</a>
+          <a class="ol-ghost" href="#ol-fleet">Meet the fleet</a>
+        </div>
+      </div>
+      <div class="ol-limb" aria-hidden="true"><div class="ol-orb"><i class="ol-sat"></i></div></div>
+    </section>
+
+    <section class="ol-stats" aria-label="Key numbers">
+      <div><b data-n="30">30</b><span>satellites in orbit</span></div>
+      <div><b data-n="24">24</b><span>hours between revisits</span></div>
+      <div><b data-n="3">3</b><span>metre pixels</span></div>
+      <div><b data-n="99">99</b><span>percent uptime</span></div>
+    </section>
+
+    <section class="ol-sec" id="ol-fleet">
+      <p class="ol-label">The fleet</p>
+      <h2 class="ol-h2">Small craft, wide view</h2>
+      <div class="ol-cards">
+        <article class="ol-card"><span class="ol-ico">1</span><h3>Strip imaging</h3><p>Long ribbons of ground captured in one pass, stitched without seams.</p></article>
+        <article class="ol-card"><span class="ol-ico">2</span><h3>Night lights</h3><p>A low-light sensor that tracks cities, roads and harbours after dark.</p></article>
+        <article class="ol-card"><span class="ol-ico">3</span><h3>Thermal sweep</h3><p>Heat maps of land and sea for farms, forests and shipping lanes.</p></article>
+      </div>
+    </section>
+
+    <section class="ol-sec ol-split" id="ol-data">
+      <div>
+        <p class="ol-label">The data</p>
+        <h2 class="ol-h2">From orbit to your dashboard in minutes</h2>
+        <p class="ol-intro">Each scene is corrected, tagged and posted to your feed within ten minutes of the downlink. Pull it by area, by date, or by cloud cover.</p>
+      </div>
+      <ul class="ol-steps">
+        <li><b>Capture</b><span>Sensor scans the strip below.</span></li>
+        <li><b>Downlink</b><span>Passing a ground station.</span></li>
+        <li><b>Deliver</b><span>Tiles land in your feed.</span></li>
+      </ul>
+    </section>
+
+    <section class="ol-sec ol-end" id="ol-plans">
+      <h2 class="ol-h2">Start with one region, grow to the globe</h2>
+      <a class="ol-cta" href="#">Talk to the survey team</a>
+    </section>
+
+    <footer class="ol-foot"><span>&copy; 2026 Nadir Array</span><span><a href="#">Privacy</a> <a href="#">Terms</a></span></footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

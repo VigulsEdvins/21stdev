@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hitch Cargo Landing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="hc-page">
+    <header class="hc-nav">
+      <a class="hc-logo" href="#">Bramble<b>Cargo</b></a>
+      <button type="button" class="hc-burger" id="hcBurger" aria-expanded="false" aria-controls="hcLinks">Menu</button>
+      <nav class="hc-links" id="hcLinks" aria-label="Main">
+        <a href="#build">Build</a><a href="#specs">Specs</a><a href="#order">Order</a>
+        <a class="hc-btn hc-btn-sm" href="#order">Reserve</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hc-hero">
+        <div class="hc-hero-copy">
+          <p class="hc-kicker">Electric longtail &middot; Model L2</p>
+          <h1 class="hc-h1">One frame. Every errand.</h1>
+          <p class="hc-intro">A sturdy electric cargo bike with four click-in mounts, so the same ride carries groceries on Monday and two kids on Saturday.</p>
+          <div class="hc-cta">
+            <a class="hc-btn" href="#order">Reserve yours</a>
+            <a class="hc-btn hc-ghost" href="#build">See the mounts</a>
+          </div>
+          <ul class="hc-stats">
+            <li><b>180 kg</b><span>total load</span></li>
+            <li><b>110 km</b><span>per charge</span></li>
+            <li><b>4</b><span>mounts</span></li>
+          </ul>
+        </div>
+        <svg class="hc-bike" id="hcBike" viewBox="0 0 520 300" role="img" aria-label="Line drawing of a longtail cargo bike with highlighted mounts">
+          <circle class="hc-wheel" cx="110" cy="210" r="62"/><circle class="hc-wheel" cx="410" cy="210" r="62"/>
+          <path class="hc-frame" d="M110 210 L190 120 L330 120 L410 210 M190 120 L250 210 L110 210 M250 210 L330 120 M190 120 L170 90 M170 90 L150 90 M330 120 L350 80 L370 80"/>
+          <g class="hc-mount" data-mount="0"><rect x="300" y="100" width="150" height="14" rx="5"/></g>
+          <g class="hc-mount" data-mount="1"><path d="M350 118 L350 190 M420 118 L420 190" /><rect x="342" y="150" width="86" height="30" rx="8"/></g>
+          <g class="hc-mount" data-mount="2"><rect x="46" y="96" width="70" height="12" rx="5"/><path d="M80 108 L96 160"/></g>
+          <g class="hc-mount" data-mount="3"><rect x="206" y="140" width="52" height="34" rx="7"/></g>
+        </svg>
+      </section>
+
+      <section class="hc-sec" id="build">
+        <h2 class="hc-h2">Four mounts, endless setups</h2>
+        <p class="hc-sub">Pick a mount to see where it clicks onto the frame.</p>
+        <div class="hc-tabs" role="tablist" aria-label="Mounts">
+          <button type="button" role="tab" class="hc-tab is-on" aria-selected="true" data-mount="0">Rear deck</button>
+          <button type="button" role="tab" class="hc-tab" aria-selected="false" data-mount="1">Side bags</button>
+          <button type="button" role="tab" class="hc-tab" aria-selected="false" data-mount="2">Front rack</button>
+          <button type="button" role="tab" class="hc-tab" aria-selected="false" data-mount="3">Power pack</button>
+        </div>
+        <p class="hc-panel" id="hcPanel" role="tabpanel"></p>
+      </section>
+
+      <section class="hc-sec hc-dark" id="specs">
+        <h2 class="hc-h2">The numbers</h2>
+        <dl class="hc-specs">
+          <div><dt>Motor</dt><dd>250 W mid-drive</dd></div>
+          <div><dt>Battery</dt><dd>720 Wh, removable</dd></div>
+          <div><dt>Brakes</dt><dd>Hydraulic discs</dd></div>
+          <div><dt>Frame</dt><dd>Alloy, 2.1 m long</dd></div>
+          <div><dt>Weight</dt><dd>34 kg</dd></div>
+          <div><dt>Gears</dt><dd>9-speed</dd></div>
+        </dl>
+      </section>
+
+      <section class="hc-sec hc-order" id="order">
+        <h2 class="hc-h2">Reserve with a small deposit</h2>
+        <p class="hc-price">From 3,490 per bike</p>
+        <p class="hc-sub">Fully refundable until your bike ships in spring.</p>
+        <a class="hc-btn" href="#">Reserve now</a>
+      </section>
+    </main>
+
+    <footer class="hc-foot">
+      <span>&copy; Bramble Cargo, a fictional company</span>
+      <span><a href="#">Contact</a> &middot; <a href="#">Delivery</a> &middot; <a href="#">Care guide</a></span>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

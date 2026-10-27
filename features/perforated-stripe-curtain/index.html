@@ -7,7 +7,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ps-stage" id="psStage">
+    <div class="ps-pic" id="psPic" aria-hidden="true"><div class="ps-sun"></div><div class="ps-hill ps-h1"></div><div class="ps-hill ps-h2"></div></div>
+    <canvas class="ps-canvas" id="psCanvas" aria-hidden="true"></canvas>
+    <button type="button" class="ps-play" id="psPlay" aria-pressed="false" aria-label="Reveal the picture"><span class="ps-icon"></span></button>
+    <div class="ps-foot">Move across the strips, then press the button</div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

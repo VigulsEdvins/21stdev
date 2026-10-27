@@ -1,27 +1,24 @@
 {
-  "name": "Vapour Text Effect",
-  "title": "Vapour Text Effect",
+  "name": "Smoke Text Cycle",
+  "title": "Smoke Text Cycle",
   "slug": "vapour-text-effect",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Interactive text vaporization animation using Canvas with customizable text cycling and particle dissolving effects.",
+  "description": "Canvas text built from tiny particles that condenses, holds, then drifts away like smoke before the next phrase forms. Phrases are separated by a pipe character.",
   "tags": [
-    "text-effect",
-    "vapour",
+    "text",
     "particles",
     "canvas",
-    "animation",
-    "21st.dev"
+    "smoke",
+    "typography"
   ],
   "tech": [
-    "React",
-    "HTML5 Canvas",
-    "Tailwind CSS"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React",
-    "Tailwind CSS"
+    "HTML5 Canvas"
   ],
   "order": 40,
   "legacyCategory": "Audio & Shaders",
@@ -36,25 +33,23 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "permission",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",
-      "label": "Headline",
+      "label": "Phrases (separate with |)",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)"
+      "selector": ":scope .sm-words"
+    },
+    {
+      "id": "intro-text",
+      "label": "Caption",
+      "type": "text",
+      "selector": ":scope .sm-hint"
     }
   ],
-  "measured": {
-    "luma": 0,
-    "webgl": false,
-    "canvas2d": true
-  }
+  "nativeWhen": []
 }

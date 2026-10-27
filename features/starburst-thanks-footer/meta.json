@@ -1,30 +1,26 @@
 {
-  "name": "Starburst Thanks Footer",
-  "title": "Starburst Thanks Footer",
+  "name": "Cheers Sign-off Footer",
+  "title": "Cheers Sign-off Footer",
   "slug": "starburst-thanks-footer",
   "category": "Footers & Endings",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A \"thank you for your time\" sign-off for the end of a portfolio, case study or deck. It has heavy extended caps, a hand-lettered line underneath, a loose pen loop around both, and a hot-pink starburst. Contact pills sit at the bottom, with little pointing hands under the links. The background is dar",
+  "description": "A bold thank-you ending for a portfolio or case study with outlined giant letters, a spinning starburst, a scribble underline and contact pills.",
   "tags": [
-    "starburst",
-    "thanks",
     "footer",
-    "21st.dev",
-    "galleries",
-    "react"
+    "sign-off",
+    "typography",
+    "contact",
+    "portfolio"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "SVG",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 230,
   "legacyCategory": "Footers & Endings",
   "status": "stable",
@@ -38,86 +34,50 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "footer-text-1",
-      "label": "Footer text 1",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope span.stf-name"
+      "selector": ":scope .sb-small"
     },
     {
       "id": "footer-heading",
-      "label": "Footer heading",
+      "label": "Heading",
       "type": "text",
-      "selector": ":scope h2.stf-h"
+      "selector": ":scope .sb-heading"
     },
     {
       "id": "footer-text-2",
-      "label": "Footer text 2",
+      "label": "Note",
       "type": "text",
-      "selector": ":scope p.stf-signoff"
-    },
-    {
-      "id": "button-text",
-      "label": "Button text",
-      "type": "text",
-      "selector": ":scope button.stf-pill"
-    },
-    {
-      "id": "footer-link-text-1",
-      "label": "Footer link text 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-text-2",
-      "label": "Footer link text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(2) > a:nth-of-type(1)"
+      "selector": ":scope .sb-note"
     },
     {
       "id": "footer-link-1",
-      "label": "Footer link 1",
+      "label": "Link 1",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(2) > a:nth-of-type(1)"
+      "selector": ":scope .sb-pills li:nth-child(1) .sb-pill"
     },
     {
       "id": "footer-link-2",
-      "label": "Footer link 2",
+      "label": "Link 2",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > footer:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(2) > a:nth-of-type(1)"
-    },
-    {
-      "id": "footer-link-text-3",
-      "label": "Footer link text 3",
-      "type": "text",
-      "selector": ":scope a.stf-phone"
+      "selector": ":scope .sb-pills li:nth-child(2) .sb-pill"
     },
     {
       "id": "footer-link-3",
-      "label": "Footer link 3",
+      "label": "Link 3",
       "type": "link",
-      "selector": ":scope a.stf-phone"
+      "selector": ":scope .sb-pills li:nth-child(3) .sb-pill"
     }
   ],
-  "measured": {
-    "luma": 0.1,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "nativeWhen": [
-    "light"
-  ],
+  "nativeWhen": [],
   "reserveHeight": 800,
   "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "ownPalette": true
 }

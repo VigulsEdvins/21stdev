@@ -3,11 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Particle Dissolve Carousel</title>
+  <title>Pixel Dust Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="dz-stage" id="dzStage" aria-roledescription="carousel" aria-label="Landscapes">
+    <canvas class="dz-canvas" id="dzCanvas" aria-hidden="true"></canvas>
+    <div class="dz-shade" aria-hidden="true"></div>
+
+    <div class="dz-top">
+      <span class="dz-count" id="dzCount">01 / 05</span>
+      <div class="dz-dots" id="dzDots" role="tablist" aria-label="Choose slide"></div>
+    </div>
+
+    <div class="dz-caption" aria-live="polite">
+      <p class="dz-eyebrow" id="dzEyebrow"></p>
+      <h2 class="dz-title" id="dzTitle"></h2>
+      <p class="dz-text" id="dzText"></p>
+    </div>
+
+    <div class="dz-nav">
+      <button type="button" class="dz-arrow" id="dzPrev" aria-label="Previous slide"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H4M9 5l-5 5 5 5" /></svg></button>
+      <button type="button" class="dz-arrow" id="dzNext" aria-label="Next slide"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5" /></svg></button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

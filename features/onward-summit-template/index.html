@@ -3,11 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Onward Summit Template</title>
+  <title>Fieldnote Day Event Page</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="os-page">
+    <section class="os-hero" id="osHero">
+      <canvas class="os-canvas" id="osCanvas" aria-hidden="true"></canvas>
+      <nav class="os-nav" aria-label="Event">
+        <a class="os-mark" href="#">Fieldnote Day</a>
+        <div class="os-links"><a href="#">Agenda</a><a href="#">Speakers</a><a href="#">Venue</a><a href="#">FAQ</a></div>
+        <a class="os-btn os-btn-sm" href="#">Get a ticket</a>
+      </nav>
+      <div class="os-heroText">
+        <p class="os-kicker">One day / 14 June / Harbour Hall</p>
+        <h1 class="os-title">Fieldnote Day</h1>
+        <p class="os-lede">A single day of short talks and honest workshops for people who make things with data.</p>
+        <a class="os-btn" href="#">Reserve a seat</a>
+      </div>
+    </section>
+
+    <section class="os-sec">
+      <h2 class="os-h2">What to expect</h2>
+      <div class="os-three">
+        <div class="os-box"><b>06</b><p>Short talks, 20 minutes each, no slides over ten.</p></div>
+        <div class="os-box"><b>03</b><p>Hands-on workshops in small rooms.</p></div>
+        <div class="os-box"><b>01</b><p>Long lunch with everyone at one table.</p></div>
+      </div>
+    </section>
+
+    <section class="os-sec os-alt">
+      <h2 class="os-h2">Agenda</h2>
+      <ol class="os-agenda">
+        <li><time>09:00</time><span>Doors and coffee</span></li>
+        <li><time>10:00</time><span>Opening talk: small maps, big questions</span></li>
+        <li><time>11:30</time><span>Workshops, round one</span></li>
+        <li><time>13:00</time><span>Shared lunch</span></li>
+        <li><time>15:00</time><span>Lightning talks</span></li>
+        <li><time>17:30</time><span>Closing and drinks</span></li>
+      </ol>
+    </section>
+
+    <section class="os-sec">
+      <h2 class="os-h2">Speakers</h2>
+      <div class="os-people">
+        <div class="os-person"><i style="--h:215">AL</i><b>Ada Lindqvist</b><span>Cartographer</span></div>
+        <div class="os-person"><i style="--h:160">TO</i><b>Tomas Okoye</b><span>Data editor</span></div>
+        <div class="os-person"><i style="--h:30">RV</i><b>Rena Vasquez</b><span>Field researcher</span></div>
+        <div class="os-person"><i style="--h:280">KP</i><b>Kit Palmer</b><span>Visual designer</span></div>
+      </div>
+    </section>
+
+    <section class="os-sec os-alt">
+      <h2 class="os-h2">Tickets</h2>
+      <div class="os-tix">
+        <div class="os-tick"><b>Early</b><span class="os-price">$90</span><p>Limited to the first 80.</p><a class="os-btn os-btn-sm" href="#">Choose</a></div>
+        <div class="os-tick os-hot"><b>Standard</b><span class="os-price">$140</span><p>Full day, lunch included.</p><a class="os-btn os-btn-sm" href="#">Choose</a></div>
+        <div class="os-tick"><b>Team of 4</b><span class="os-price">$480</span><p>Bring your colleagues.</p><a class="os-btn os-btn-sm" href="#">Choose</a></div>
+      </div>
+    </section>
+
+    <section class="os-sec">
+      <h2 class="os-h2">Questions</h2>
+      <div class="os-faq">
+        <details><summary>Is there a recording?</summary><p>Talks are recorded and shared with ticket holders a week later.</p></details>
+        <details><summary>Is the venue accessible?</summary><p>Yes, step-free entry and a quiet room are available.</p></details>
+        <details><summary>Can I get a refund?</summary><p>Tickets are refundable up to two weeks before the day.</p></details>
+      </div>
+    </section>
+    <footer class="os-foot">Fieldnote Day &middot; 14 June &middot; Harbour Hall &middot; <a href="#">Contact</a></footer>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

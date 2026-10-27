@@ -3,7 +3,7 @@
   "title": "Into The Ether",
   "slug": "into-the-ether",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "imported",
   "type": "component",
   "description": "Atmospheric typographic hero section with hypnotic concentric ether ripple rings, kinetic mouse harmonics, Web Audio synthesizer pulse, and luminous dual theme.",
   "tags": [
@@ -13,9 +13,7 @@
     "pulse",
     "canvas",
     "hero",
-    "ambient",
-    "21st.dev",
-    "top-today"
+    "ambient"
   ],
   "tech": [
     "HTML5 Canvas",
@@ -40,12 +38,8 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "own",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "note": "Recorded as own by the project owner 2026-10-24"
+    "source": "imported",
+    "license": "own"
   },
   "updatedAt": "2026-10-22",
   "customizable": [
@@ -102,8 +96,5 @@
     "luma": 0.95,
     "webgl": false,
     "canvas2d": true
-  },
-  "nativeWhen": [
-    "dark"
-  ]
+  }
 }

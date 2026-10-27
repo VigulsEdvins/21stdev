@@ -10,7 +10,7 @@
 
   function createDrawerController(ctx) {
     const {
-      LANDING_PAGE_SINGLETONS, addOrReplaceLandingSection, catalogSearch, elementsFilters, featuresMap,
+      LANDING_PAGE_SINGLETONS, addOrReplaceLandingSection, addWithTemplateGuard, catalogSearch, elementsFilters, featuresMap,
       findExistingSingleton, getSingletonType, registry, setActiveSection
     } = ctx;
 
@@ -183,11 +183,12 @@
 
         const addBtn = card.querySelector('.drawer-add-btn');
 
-        const triggerAdd = () => {
-          const res = addOrReplaceLandingSection(feature.slug, {
+        const triggerAdd = async () => {
+          const res = await addWithTemplateGuard(feature.slug, {
             title: feature.title || feature.name || feature.slug,
             category: feature.category || 'Component'
           });
+          if (!res) return; // a full website that the person chose not to use
 
           if (res && res.section) {
             setActiveSection(res.section.id);

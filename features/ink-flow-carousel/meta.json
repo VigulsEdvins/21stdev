@@ -1,34 +1,28 @@
 {
-  "name": "Ink Flow Carousel",
-  "title": "Ink Flow Carousel",
+  "name": "Ink Pour Carousel",
+  "title": "Ink Pour Carousel",
   "slug": "ink-flow-carousel",
   "category": "3D & Carousels",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "An image carousel where every slide is wet paint. Move over it and the picture stirs like ink in water, then settles back. Change slides and the next one pours in as ink: a jet from the edge, or a drop where you clicked, curling into vortices as it spreads.",
+  "description": "A full-bleed canvas carousel where the next slide pours in like ink from the point you click, spreading as a wobbling blot.",
   "tags": [
-    "ink",
-    "flow",
     "carousel",
-    "21st.dev",
-    "3d",
-    "react"
+    "ink",
+    "canvas",
+    "transition",
+    "gallery"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 168,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "futuristic"
   ],
@@ -37,34 +31,20 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "intro-text",
-      "label": "Intro text",
+      "id": "small-label",
+      "label": "Hint text",
       "type": "text",
-      "selector": ":scope p.ifc-sr"
-    },
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope div.ifc-caption"
+      "selector": ":scope .ip-sub"
     }
   ],
-  "measured": {
-    "luma": 0.35,
-    "webgl": true,
-    "canvas2d": true
-  },
   "reserveHeight": 800,
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true,
+  "nativeWhen": []
 }

@@ -91,7 +91,7 @@
         if (!asset) { missing.push(url); return; }
         let decoded = url;
         try { decoded = decodeURIComponent(url); } catch (_) { /* keep raw */ }
-        // /assets/library/x.png keeps its own path; anything else (e.g. /vivmgmt/a.jpg) goes under assets/
+        // /assets/library/x.png keeps its own path; anything else (e.g. /site-b/a.jpg) goes under assets/
         const zipPath = decoded.startsWith('/assets/') ? decoded.slice(1) : 'assets' + decoded;
         assets[zipPath] = asset.bytes;
         zipMap[url] = zipPath;

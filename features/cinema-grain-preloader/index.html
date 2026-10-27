@@ -3,11 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cinema Grain Preloader</title>
+  <title>Reel Grain Loader</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="cg-stage" id="cgStage">
+    <div class="cg-fallback" aria-hidden="true"></div>
+    <canvas class="cg-canvas" id="cgCanvas" aria-hidden="true"></canvas>
+    <div class="cg-ui">
+      <p class="cg-small">Reel 01 &middot; Night shift</p>
+      <h1 class="cg-title">Threading the projector</h1>
+      <div class="cg-meter" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="cgMeter"><i id="cgFill"></i></div>
+      <div class="cg-row"><span id="cgPct">00%</span><span id="cgState">Loading frames</span></div>
+      <button class="cg-btn" id="cgGo" type="button" hidden>Roll film</button>
+    </div>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

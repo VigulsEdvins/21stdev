@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site Payroll Landing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="pp-page">
+    <header class="pp-nav">
+      <a class="pp-logo" href="#"><span class="pp-mark"></span>Gangpay</a>
+      <nav class="pp-links" aria-label="Main"><a href="#pp-how">How it works</a><a href="#pp-run">Pay run</a><a href="#pp-price">Pricing</a></nav>
+      <a class="pp-btn pp-btn-ghost" href="#">Sign in</a>
+    </header>
+
+    <section class="pp-hero">
+      <p class="pp-label">Payroll for building crews</p>
+      <h1 class="pp-title">Pay every crew on site, to the hour, on Friday.</h1>
+      <p class="pp-intro">Clock-ins from the gate tablet turn into timesheets, overtime and payslips without anyone retyping a number.</p>
+      <div class="pp-cta">
+        <a class="pp-btn pp-btn-solid" href="#">Book a walkthrough</a>
+        <a class="pp-btn pp-btn-ghost" href="#pp-how">See how it works</a>
+      </div>
+      <dl class="pp-stats">
+        <div><dt>Hours matched</dt><dd>99.7%</dd></div>
+        <div><dt>Pay run time</dt><dd>6 min</dd></div>
+        <div><dt>Sites per account</dt><dd>40+</dd></div>
+      </dl>
+    </section>
+
+    <section class="pp-how" id="pp-how">
+      <h2 class="pp-h2">Three steps from gate to bank</h2>
+      <ol class="pp-steps">
+        <li><span class="pp-n">01</span><h3>Clock in</h3><p>Workers tap a badge at the site gate. Late and missed taps are flagged at once.</p></li>
+        <li><span class="pp-n">02</span><h3>Check hours</h3><p>Foremen approve a single sheet per crew, with rates and overtime already applied.</p></li>
+        <li><span class="pp-n">03</span><h3>Pay out</h3><p>Money lands in each account on payday and payslips arrive on every phone.</p></li>
+      </ol>
+    </section>
+
+    <section class="pp-run" id="pp-run">
+      <div class="pp-run-text">
+        <h2 class="pp-h2">Approve a pay run in one pass</h2>
+        <p>Tick the crews you trust, open the ones you do not. Totals update as you go.</p>
+      </div>
+      <div class="pp-card" aria-live="polite">
+        <div class="pp-tabs" role="group" aria-label="Crew">
+          <button type="button" class="pp-tab is-on" data-crew="0" aria-pressed="true">Framing</button>
+          <button type="button" class="pp-tab" data-crew="1" aria-pressed="false">Concrete</button>
+          <button type="button" class="pp-tab" data-crew="2" aria-pressed="false">Roofing</button>
+        </div>
+        <table class="pp-table">
+          <thead><tr><th>Worker</th><th>Hours</th><th>Pay</th></tr></thead>
+          <tbody id="ppRows"></tbody>
+        </table>
+        <div class="pp-total"><span>Crew total</span><strong id="ppTotal"></strong></div>
+        <button type="button" class="pp-btn pp-btn-solid pp-approve" id="ppApprove">Approve crew</button>
+      </div>
+    </section>
+
+    <section class="pp-price" id="pp-price">
+      <h2 class="pp-h2">Priced per paid worker</h2>
+      <div class="pp-plans">
+        <article class="pp-plan"><h3>Crew</h3><p class="pp-amt">$6<small>/worker</small></p><p>Timesheets, payslips and weekly pay runs for one site.</p></article>
+        <article class="pp-plan pp-plan-hot"><h3>Contractor</h3><p class="pp-amt">$9<small>/worker</small></p><p>Many sites, subcontractor splits and certified reports.</p><a class="pp-btn pp-btn-accent" href="#">Start free month</a></article>
+      </div>
+    </section>
+
+    <footer class="pp-foot"><span>&copy; Gangpay, placeholder company</span><a href="#">Privacy</a><a href="#">Contact</a></footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

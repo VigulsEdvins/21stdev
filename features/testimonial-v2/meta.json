@@ -1,31 +1,25 @@
 {
-  "name": "Testimonial Block v2",
-  "title": "Testimonial Block v2",
+  "name": "Metrics Quote Carousel",
+  "title": "Metrics Quote Carousel",
   "slug": "testimonial-v2",
   "category": "Cards & Tiles",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Modern reusable testimonial showcase block with social proof metrics, user avatars, verified client pill, quote typography, and interactive carousel navigation.",
+  "description": "Quote carousel that pairs each testimonial with the result it led to, with arrows, dots, keyboard control and a gentle autoplay that pauses on hover.",
   "tags": [
     "testimonials",
-    "social-proof",
-    "reviews",
-    "metrics",
     "carousel",
-    "cards",
-    "21st.dev"
+    "metrics",
+    "social-proof",
+    "quotes"
   ],
   "tech": [
-    "Vanilla JS",
-    "CSS Grid",
-    "Carousel",
-    "React (.tsx included)"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "Vanilla HTML/CSS/JS",
-    "React (.tsx included)"
+    "Vanilla HTML/CSS/JS"
   ],
-  "author": "avanishverma4",
   "order": 7,
   "legacyCategory": "Cards & Tiles",
   "status": "stable",
@@ -39,73 +33,29 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "permission",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope span.testi-badge"
+      "selector": ":scope .mq-badge"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h2.testi-heading"
+      "selector": ":scope .mq-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.quote-body"
-    },
-    {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
-      "type": "text",
-      "selector": ":scope p.testi-sub"
-    },
-    {
-      "id": "text-1",
-      "label": "Text 1",
-      "type": "text",
-      "selector": ":scope div.metric-block"
-    },
-    {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope img.client-avatar"
-    },
-    {
-      "id": "text-2",
-      "label": "Text 2",
-      "type": "text",
-      "selector": ":scope div.star-row"
-    },
-    {
-      "id": "subheading",
-      "label": "Subheading",
-      "type": "text",
-      "selector": ":scope h4.client-name"
-    },
-    {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope p.client-title"
+      "selector": ":scope .mq-sub"
     }
   ],
-  "measured": {
-    "luma": 0.09,
-    "webgl": false,
-    "canvas2d": false
-  }
+  "nativeWhen": []
 }

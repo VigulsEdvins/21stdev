@@ -1,25 +1,23 @@
 {
-  "name": "Multilingual Language Switcher & Reactive Translator",
+  "name": "Language Switcher Header",
   "slug": "multilingual-lang-switcher",
   "category": "Headers & Nav",
-  "source": "mom",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Minimal studio language switcher supporting instant reactive translation, cross-fade text transitions, persistent locale caching, and data-i18n bindings.",
+  "description": "A compact header bar with a language dropdown that instantly translates the navigation labels.",
   "tags": [
     "i18n",
-    "multilingual",
-    "language-switcher",
-    "mom",
-    "ui",
-    "reactive"
+    "language",
+    "switcher",
+    "header",
+    "dropdown"
   ],
   "tech": [
-    "Vanilla JS",
-    "Data Attributes",
-    "Transitions"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "vanilla-js"
+    "Vanilla HTML/CSS/JS"
   ],
   "order": 30,
   "legacyCategory": "Navigation & Headers",
@@ -34,64 +32,36 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "mom",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-26",
   "customizable": [
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "small-label",
+      "label": "Brand",
       "type": "text",
-      "selector": ":scope button.active"
+      "selector": ":scope .lsw-brand-text"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Link 1",
+      "type": "text",
+      "selector": ":scope .lsw-nav a:nth-child(1)"
     },
     {
       "id": "button-text-2",
-      "label": "Button text 2",
+      "label": "Link 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(2)"
+      "selector": ":scope .lsw-nav a:nth-child(2)"
     },
     {
       "id": "button-text-3",
-      "label": "Button text 3",
+      "label": "Link 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > button:nth-of-type(3)"
-    },
-    {
-      "id": "small-label",
-      "label": "Small label",
-      "type": "text",
-      "selector": ":scope div.brand"
-    },
-    {
-      "id": "headline",
-      "label": "Headline",
-      "type": "text",
-      "selector": ":scope h2.headline"
-    },
-    {
-      "id": "intro-text",
-      "label": "Intro text",
-      "type": "text",
-      "selector": ":scope p.description"
-    },
-    {
-      "id": "button-text-4",
-      "label": "Button text 4",
-      "type": "text",
-      "selector": ":scope button.primary"
-    },
-    {
-      "id": "button-text-5",
-      "label": "Button text 5",
-      "type": "text",
-      "selector": ":scope button.secondary"
+      "selector": ":scope .lsw-nav a:nth-child(3)"
     }
   ],
-  "measured": {
-    "luma": 0.06,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "nativeWhen": []
+  "nativeWhen": [],
+  "title": "Language Switcher Header"
 }

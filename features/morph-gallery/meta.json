@@ -1,88 +1,44 @@
 {
-  "name": "Morph Gallery",
-  "title": "Morph Gallery",
+  "name": "Noise Dissolve Gallery",
+  "title": "Noise Dissolve Gallery",
   "slug": "morph-gallery",
   "category": "Galleries & Bento",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A photo gallery whose slides dissolve into each other through noise instead of cutting or cross-fading. Arrows, thumbnails, keyboard, swipe and autoplay.",
+  "description": "A gallery of painted landscapes whose slides dissolve into each other through a glowing noise edge, with arrows, thumbnails, swipe, keyboard and autoplay.",
   "tags": [
-    "morph",
     "gallery",
-    "21st.dev",
-    "galleries",
-    "react"
+    "webgl",
+    "transition",
+    "carousel",
+    "slideshow"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 194,
   "legacyCategory": "Galleries & Portfolios",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
-    "minimal",
-    "light"
+    "minimal"
   ],
   "industry": [
     "portfolio"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [
-    {
-      "id": "hero-photo-1",
-      "label": "Hero photo 1",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-2",
-      "label": "Hero photo 2",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-3",
-      "label": "Hero photo 3",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "hero-photo-4",
-      "label": "Hero photo 4",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > button:nth-of-type(1) > img:nth-of-type(1)"
-    },
-    {
-      "id": "text",
-      "label": "Text",
-      "type": "text",
-      "selector": ":scope span.sr-only"
-    }
-  ],
-  "measured": {
-    "luma": 0.97,
-    "webgl": true,
-    "canvas2d": false
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [],
   "reserveHeight": 800,
-  "lazy": true
+  "lazy": true,
+  "ownPalette": true
 }

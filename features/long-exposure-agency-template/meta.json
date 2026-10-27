@@ -1,127 +1,110 @@
 {
-  "name": "Long Exposure Agency Template",
-  "title": "Long Exposure Agency Template",
+  "name": "Soft Haze Agency Page",
+  "title": "Soft Haze Agency Page",
   "slug": "long-exposure-agency-template",
-  "category": "Full Templates",
-  "source": "21st.dev",
-  "type": "template",
-  "description": "A complete automation-agency site in one component, full screen and edge to edge: a pale page with a quiet serif, ink buttons and soft grey cards. Every picture is a long-exposure blur of a landscape that was never photographed, drawn live in WebGL.",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "A full landing page for a fictional automation studio: pale serif look, ink buttons, soft cards and drifting blurred gradient landscapes.",
   "tags": [
-    "long",
-    "exposure",
+    "landing",
     "agency",
-    "template",
-    "21st.dev",
-    "full",
-    "react"
+    "serif",
+    "light",
+    "gradient",
+    "template"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 184,
   "legacyCategory": "Full Templates",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "light",
   "mood": [
     "editorial",
-    "futuristic",
     "light"
   ],
   "industry": [
-    "portfolio",
     "agency"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > nav:nth-of-type(2) > a:nth-of-type(5)"
-    },
-    {
-      "id": "button-link-1",
-      "label": "Button link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > nav:nth-of-type(2) > a:nth-of-type(5)"
-    },
-    {
-      "id": "button-text-2",
-      "label": "Button text 2",
-      "type": "text",
-      "selector": ":scope a.lx-btn-sm"
-    },
-    {
-      "id": "button-link-2",
-      "label": "Button link 2",
-      "type": "link",
-      "selector": ":scope a.lx-btn-sm"
+      "selector": ":scope .ha-kicker"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.lx-h1"
+      "selector": ":scope .ha-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.lx-lede"
+      "selector": ":scope .ha-lede"
     },
     {
-      "id": "button-link-3",
-      "label": "Button link 3",
+      "id": "button-text-1",
+      "label": "Button text 1",
+      "type": "text",
+      "selector": ":scope .ha-btn-sm"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > a:nth-of-type(1)"
+      "selector": ":scope .ha-btn-sm"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope .ha-actions .ha-btn"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope .ha-actions .ha-btn"
     },
     {
       "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "label": "Clients label",
       "type": "text",
-      "selector": ":scope p.lx-clients-title"
-    },
-    {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .ha-clients-title"
     },
     {
       "id": "section-heading-1",
-      "label": "Section heading 1",
+      "label": "Work heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope #ha-work .ha-h2"
     },
     {
       "id": "section-heading-2",
-      "label": "Section heading 2",
+      "label": "Method heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > section:nth-of-type(5) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope #ha-method .ha-h2"
+    },
+    {
+      "id": "section-heading-3",
+      "label": "Plans heading",
+      "type": "text",
+      "selector": ":scope #ha-plans .ha-h2"
     }
   ],
-  "measured": {
-    "luma": 0.68,
-    "webgl": true,
-    "canvas2d": true
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
+  "themeReviewed": "Checked by eye in a dark and a light theme: the page follows the theme tokens; the audit screenshot of this tall page paints black below the first screen."
 }

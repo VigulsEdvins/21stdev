@@ -1,0 +1,84 @@
+{
+  "name": "Site Payroll Landing",
+  "title": "Site Payroll Landing",
+  "slug": "site-payroll-landing",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "A construction payroll landing page on a faint drafting grid, with a live pay-run card that switches crews and approves totals.",
+  "tags": [
+    "landing",
+    "payroll",
+    "fintech",
+    "grid",
+    "template"
+  ],
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 209,
+  "legacyCategory": "Full Templates",
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "fintech"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .pp-label"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .pp-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .pp-intro"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Button text 1",
+      "type": "text",
+      "selector": ":scope .pp-cta .pp-btn-solid"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .pp-cta .pp-btn-solid"
+    },
+    {
+      "id": "button-text-2",
+      "label": "Button text 2",
+      "type": "text",
+      "selector": ":scope .pp-btn-accent"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope .pp-btn-accent"
+    }
+  ]
+}

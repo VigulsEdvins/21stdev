@@ -1,12 +1,12 @@
 {
-  "name": "CV Craft Pro — Intelligent Resume Builder & Career Suite Template",
+  "name": "CV Craft Pro — Intelligent Resume Builder & Career Suite Website",
   "slug": "template-cvmaker",
-  "category": "Full Templates",
+  "category": "Full Websites",
   "source": "cvmaker",
   "type": "template",
   "description": "Full-stack client-side resume architect built with React & Vite. Features 8 professional templates, real-time A4 document preview, job description ATS keyword matcher, STAR accomplishment enhancer, and matching cover letter suite.",
   "tags": [
-    "full-template",
+    "full-website",
     "resume-builder",
     "react",
     "ats-matcher",

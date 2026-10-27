@@ -3,11 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pocket Portfolio</title>
+  <title>Card Stack Portfolio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="cs-page">
+    <nav class="cs-pill" aria-label="Main">
+      <a class="cs-brand" href="#">kl.</a>
+      <a href="#cs-work" class="cs-link is-on">Work</a>
+      <a href="#cs-about" class="cs-link">About</a>
+      <a href="#cs-news" class="cs-link">Notes</a>
+      <a href="#cs-contact" class="cs-hire">Hire me</a>
+    </nav>
+
+    <main class="cs-grid">
+      <section class="cs-card cs-intro">
+        <p class="cs-label">Available for projects</p>
+        <h1 class="cs-title">Kai Lindgren designs <em>friendly</em> software.</h1>
+        <p class="cs-text">Independent interface designer. I help small teams ship products that feel obvious to use.</p>
+        <a class="cs-btn" href="#cs-contact">Start a project</a>
+      </section>
+
+      <section class="cs-card cs-me" id="cs-about">
+        <div class="cs-avatar" aria-hidden="true">KL</div>
+        <p class="cs-small">Based in a small coastal town, working with teams everywhere.</p>
+        <span class="cs-badge">8 yrs</span>
+      </section>
+
+      <section class="cs-card cs-count"><b data-n="42">42</b><span>projects shipped</span></section>
+      <section class="cs-card cs-count cs-hot"><b data-n="17">17</b><span>happy studios</span></section>
+
+      <section class="cs-card cs-works" id="cs-work">
+        <h2 class="cs-h">Recent work</h2>
+        <ul class="cs-list">
+          <li><a href="#"><i class="cs-th cs-t1"></i><span>Tidepool<small>Banking app</small></span><b>&rarr;</b></a></li>
+          <li><a href="#"><i class="cs-th cs-t2"></i><span>Fieldnotes<small>Research tool</small></span><b>&rarr;</b></a></li>
+          <li><a href="#"><i class="cs-th cs-t3"></i><span>Quill &amp; Co<small>Shop redesign</small></span><b>&rarr;</b></a></li>
+        </ul>
+      </section>
+
+      <section class="cs-card cs-news" id="cs-news">
+        <h2 class="cs-h">Latest note</h2>
+        <p class="cs-note">Why every settings page should have a search box.</p>
+        <a class="cs-more" href="#">Read it</a>
+      </section>
+
+      <section class="cs-card cs-contact" id="cs-contact">
+        <h2 class="cs-h">Let&rsquo;s talk</h2>
+        <a class="cs-mail" href="#">hello@lindgren.example</a>
+      </section>
+    </main>
+    <p class="cs-foot">&copy; 2026 Kai Lindgren</p>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

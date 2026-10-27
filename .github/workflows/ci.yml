@@ -4,6 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  schedule:
+    - cron: '0 3 * * *' # nightly full run of every check
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -29,50 +31,99 @@ jobs:
       - run: npm run test:e2e
 
   render:
-    name: every feature renders in the builder
+    name: every feature renders in the builder (shard ${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: package.json
       - run: npm install --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package.json') }}
       - run: npx playwright-core install --with-deps chromium
-      - run: npm run check-blank
-      - run: npm run check-fields
+      - name: Pick this shard's components
+        id: pick
+        # Pull requests check only components whose files changed (everything if shared code changed);
+        # pushes to main and the nightly run check everything. Each shard takes every n-th component.
+        run: echo "slugs=$(node scripts/ci-slugs.js --base '${{ github.event.pull_request.base.sha }}' --shard ${{ matrix.shard }}/4)" >> "$GITHUB_OUTPUT"
+      - if: steps.pick.outputs.slugs != 'NONE'
+        run: npm run check-blank -- --slug "${{ steps.pick.outputs.slugs }}"
+      - if: steps.pick.outputs.slugs != 'NONE'
+        run: npm run check-fields -- --slug "${{ steps.pick.outputs.slugs }}"
 
   exports:
-    name: every export opens from disk
+    name: every export opens from disk (shard ${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: package.json
       - run: npm install --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package.json') }}
       - run: npx playwright-core install --with-deps chromium
-      - run: npm run check-exports
+      - name: Pick this shard's components
+        id: pick
+        # Pull requests check only components whose files changed (everything if shared code changed);
+        # pushes to main and the nightly run check everything. Each shard takes every n-th component.
+        run: echo "slugs=$(node scripts/ci-slugs.js --base '${{ github.event.pull_request.base.sha }}' --shard ${{ matrix.shard }}/4)" >> "$GITHUB_OUTPUT"
+      - if: steps.pick.outputs.slugs != 'NONE'
+        run: npm run check-exports -- --slug "${{ steps.pick.outputs.slugs }}"
 
   responsive:
-    name: every feature fits a phone and a tablet window
+    name: every feature fits a phone and a tablet window (shard ${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: package.json
       - run: npm install --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package.json') }}
       - run: npx playwright-core install --with-deps chromium
-      - run: npm run check-responsive
+      - name: Pick this shard's components
+        id: pick
+        # Pull requests check only components whose files changed (everything if shared code changed);
+        # pushes to main and the nightly run check everything. Each shard takes every n-th component.
+        run: echo "slugs=$(node scripts/ci-slugs.js --base '${{ github.event.pull_request.base.sha }}' --shard ${{ matrix.shard }}/4)" >> "$GITHUB_OUTPUT"
+      - if: steps.pick.outputs.slugs != 'NONE'
+        run: npm run check-responsive -- --slug "${{ steps.pick.outputs.slugs }}"
 
   # Reports for people to read. They do not block a pull request: the theme audit over-flags brand-coloured
   # text, and the visual fingerprints depend on the fonts and renderer of the machine that made the baseline.

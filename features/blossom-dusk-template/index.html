@@ -3,11 +3,87 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>blossom-dusk-template</title>
+  <title>Twilight Garden Landing</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="tg-page" id="tgPage">
+    <header class="tg-nav">
+      <a class="tg-logo" href="#"><span class="tg-mark" aria-hidden="true"></span>Linkwell</a>
+      <button class="tg-burger" type="button" aria-expanded="false" aria-controls="tgMenu" aria-label="Toggle menu"><span></span><span></span></button>
+      <nav class="tg-menu" id="tgMenu" aria-label="Main">
+        <a href="#tg-features">Features</a>
+        <a href="#tg-apps">Apps</a>
+        <a href="#tg-steps">How it works</a>
+        <a href="#tg-faq">FAQ</a>
+        <a class="tg-btn tg-btn-small" href="#">Sign in</a>
+      </nav>
+    </header>
+
+    <div class="tg-hero">
+      <div class="tg-sky" aria-hidden="true">
+        <div class="tg-moon"></div>
+        <svg class="tg-hills" viewBox="0 0 1200 300" preserveAspectRatio="none">
+          <path d="M0 190 C160 120 300 150 460 190 S760 240 900 170 S1120 110 1200 150 V300 H0Z" fill="#3a2a5c"/>
+          <path d="M0 240 C200 190 360 230 560 250 S900 210 1200 240 V300 H0Z" fill="#241a3d"/>
+        </svg>
+        <div class="tg-petals" id="tgPetals"></div>
+      </div>
+      <div class="tg-hero-copy">
+        <p class="tg-kicker">Quiet automation for busy teams</p>
+        <h1 class="tg-title">Every tool you use, growing in the same garden</h1>
+        <p class="tg-lead">Linkwell connects your apps with calm, readable flows. Plant a trigger, watch the rest bloom.</p>
+        <div class="tg-actions">
+          <a class="tg-btn tg-btn-primary" href="#">Start for free</a>
+          <a class="tg-btn tg-btn-ghost" href="#tg-steps">See how it works</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="tg-section" id="tg-features">
+      <h2 class="tg-h2">Small flows, soft landings</h2>
+      <div class="tg-cards">
+        <article class="tg-card"><span class="tg-ico" aria-hidden="true">1</span><h3>Two-click flows</h3><p>Pick a trigger, pick a result. The editor fills in the boring parts for you.</p></article>
+        <article class="tg-card"><span class="tg-ico" aria-hidden="true">2</span><h3>Gentle retries</h3><p>When an app is down, Linkwell waits, tries again and tells you only if it matters.</p></article>
+        <article class="tg-card"><span class="tg-ico" aria-hidden="true">3</span><h3>Shared seasons</h3><p>Version every flow and roll back to any earlier season with one tap.</p></article>
+      </div>
+    </section>
+
+    <section class="tg-section tg-apps" id="tg-apps">
+      <h2 class="tg-h2">Works with the apps you already grow</h2>
+      <ul class="tg-chips" id="tgChips">
+        <li>Notes</li><li>Calendar</li><li>Tickets</li><li>Chat</li><li>Invoices</li><li>Forms</li><li>Storage</li><li>Mail</li><li>Boards</li><li>Sheets</li><li>Support</li><li>Payments</li>
+      </ul>
+    </section>
+
+    <section class="tg-section" id="tg-steps">
+      <h2 class="tg-h2">Three steps to a first bloom</h2>
+      <ol class="tg-steps">
+        <li><b>Connect</b><span>Sign in to two apps. No keys to copy.</span></li>
+        <li><b>Compose</b><span>Drag a trigger onto an action and name the flow.</span></li>
+        <li><b>Let it run</b><span>Flows run in the background and report back each evening.</span></li>
+      </ol>
+    </section>
+
+    <section class="tg-section tg-faq" id="tg-faq">
+      <h2 class="tg-h2">Questions, answered</h2>
+      <div class="tg-acc">
+        <details><summary>Is there a free plan?</summary><p>Yes. Up to five flows and a thousand runs each month, no card needed.</p></details>
+        <details><summary>Can my team edit the same flow?</summary><p>Everyone with access can edit. Changes are saved as seasons you can compare.</p></details>
+        <details><summary>Where does my data live?</summary><p>Flows pass data through and keep nothing longer than the run needs.</p></details>
+      </div>
+    </section>
+
+    <section class="tg-cta">
+      <h2 class="tg-h2 tg-cta-title">Plant your first flow tonight</h2>
+      <a class="tg-btn tg-btn-primary tg-cta-btn" href="#">Create a free account</a>
+    </section>
+
+    <footer class="tg-foot">
+      <span>&copy; 2026 Linkwell Studio. All rights reserved.</span>
+      <span class="tg-foot-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></span>
+    </footer>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

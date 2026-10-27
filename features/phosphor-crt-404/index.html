@@ -1,13 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Phosphor CRT 404</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal Lost 404</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<main class="ph-screen">
+  <canvas class="ph-noise" aria-hidden="true"></canvas>
+  <div class="ph-glass">
+    <p class="ph-status">&gt; CHANNEL 04 / NO CARRIER</p>
+    <h1 class="ph-code" data-text="404">404</h1>
+    <p class="ph-msg">Signal lost. This page drifted off the dial.</p>
+    <p class="ph-log" aria-hidden="true"><span class="ph-typed"></span><i class="ph-cursor"></i></p>
+    <a class="ph-link" href="#">Return to start</a>
+  </div>
+  <div class="ph-vignette" aria-hidden="true"></div>
+</main>
+<script src="script.js"></script>
 </body>
 </html>

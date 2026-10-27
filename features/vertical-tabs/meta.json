@@ -1,34 +1,27 @@
 {
-  "name": "Vertical Tabs Service Showcase",
-  "title": "Vertical Tabs Service Showcase",
+  "name": "Side Tabs Showcase",
+  "title": "Side Tabs Showcase",
   "slug": "vertical-tabs",
   "category": "Buttons & UI",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Vertical tabbed service navigation with automated timer progress indicators, slide transition gallery on the right, and responsive layout.",
+  "description": "Vertical service tabs with a timer bar on the active tab and a sliding image panel beside them; hover pauses and arrow keys move between tabs.",
   "tags": [
     "tabs",
-    "vertical-tabs",
-    "navigation",
-    "gallery",
-    "services",
+    "vertical",
     "autoplay",
-    "21st.dev"
+    "gallery",
+    "navigation"
   ],
   "tech": [
-    "Vanilla JS",
-    "CSS Grid",
-    "Timer Progress Bar",
-    "React (.tsx included)"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "Vanilla HTML/CSS/JS",
-    "React (.tsx included)"
+    "Vanilla HTML/CSS/JS"
   ],
-  "author": "0xUrvish",
   "order": 6,
   "legacyCategory": "Buttons & UI",
-  "ownPalette": true,
   "status": "stable",
   "weight": "light",
   "mood": [
@@ -36,78 +29,44 @@
     "dark"
   ],
   "industry": [
-    "portfolio"
+    "agency"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/community/components",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "headline",
-      "label": "Headline",
+      "id": "tab-text-1",
+      "label": "Tab 1 title",
       "type": "text",
-      "selector": ":scope h2.sidebar-title"
+      "selector": ":scope .vt-tab:nth-child(1) .vt-name"
     },
     {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > img:nth-of-type(1)"
+      "id": "tab-text-2",
+      "label": "Tab 2 title",
+      "type": "text",
+      "selector": ":scope .vt-tab:nth-child(2) .vt-name"
     },
     {
-      "id": "small-label",
-      "label": "Small label",
+      "id": "tab-text-3",
+      "label": "Tab 3 title",
       "type": "text",
-      "selector": ":scope span.sidebar-tag"
+      "selector": ":scope .vt-tab:nth-child(3) .vt-name"
     },
     {
-      "id": "text-1",
-      "label": "Text 1",
+      "id": "tab-text-4",
+      "label": "Tab 4 title",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)"
-    },
-    {
-      "id": "text-2",
-      "label": "Text 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1) > span:nth-of-type(1)"
+      "selector": ":scope .vt-tab:nth-child(4) .vt-name"
     },
     {
       "id": "intro-text",
-      "label": "Intro text",
+      "label": "Tab 1 text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)"
-    },
-    {
-      "id": "text-3",
-      "label": "Text 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(3) > div:nth-of-type(2) > p:nth-of-type(1)"
+      "selector": ":scope .vt-tab:nth-child(1) .vt-desc"
     }
-  ],
-  "measured": {
-    "luma": 0.19,
-    "webgl": false,
-    "canvas2d": false
-  }
+  ]
 }

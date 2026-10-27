@@ -1,13 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sidebar Portfolio Template</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sidebar Folio Page</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script src="script.js"></script>
+<div class="sf-page">
+  <aside class="sf-side">
+    <div class="sf-avatar" aria-hidden="true">MV</div>
+    <h2 class="sf-name">Mara Vellum</h2>
+    <p class="sf-role">Product designer and illustrator</p>
+    <p class="sf-bio">I shape calm, readable interfaces for small teams and write about the craft in between projects.</p>
+    <nav class="sf-nav" aria-label="Sections">
+      <a href="#sf-work" class="is-on">Work</a>
+      <a href="#sf-path">Path</a>
+      <a href="#sf-notes">Notes</a>
+      <a href="#sf-contact">Contact</a>
+    </nav>
+    <ul class="sf-links">
+      <li><a href="#">Email</a></li>
+      <li><a href="#">Journal</a></li>
+      <li><a href="#">Archive</a></li>
+    </ul>
+  </aside>
+
+  <main class="sf-main">
+    <section class="sf-intro">
+      <p class="sf-label">Available from spring</p>
+      <h1 class="sf-h1">Quiet interfaces for loud, busy days.</h1>
+      <p class="sf-tagline">Ten years of turning tangled workflows into pages people finish reading. Currently open for two small projects.</p>
+    </section>
+
+    <section id="sf-work" class="sf-sec">
+      <h2 class="sf-h2">Selected work</h2>
+      <div class="sf-work">
+        <a class="sf-proj" href="#"><span class="sf-thumb" style="--a:#d98e5f;--b:#f3d9b5"></span><span class="sf-pt">Lantern Ledger</span><span class="sf-pd">Budgeting app for shared households</span></a>
+        <a class="sf-proj" href="#"><span class="sf-thumb" style="--a:#6b8f8a;--b:#d6e4dc"></span><span class="sf-pt">Moss &amp; Pine</span><span class="sf-pd">Identity and shop for a plant studio</span></a>
+        <a class="sf-proj" href="#"><span class="sf-thumb" style="--a:#7a6a9a;--b:#e4dcef"></span><span class="sf-pt">Night Desk</span><span class="sf-pd">Dashboard for overnight support teams</span></a>
+        <a class="sf-proj" href="#"><span class="sf-thumb" style="--a:#b5564a;--b:#f2d4cc"></span><span class="sf-pt">Paper Trails</span><span class="sf-pd">Editorial system for a small magazine</span></a>
+      </div>
+    </section>
+
+    <section id="sf-path" class="sf-sec">
+      <h2 class="sf-h2">Path so far</h2>
+      <ol class="sf-path">
+        <li><span class="sf-yr">2023 - now</span><div><strong>Independent studio</strong><p>Product and brand work for early-stage teams.</p></div></li>
+        <li><span class="sf-yr">2018 - 2023</span><div><strong>Lead designer, Harbor Works</strong><p>Grew the design team from two to nine people.</p></div></li>
+        <li><span class="sf-yr">2014 - 2018</span><div><strong>Designer, Open Shelf</strong><p>Built the first component library for a reading platform.</p></div></li>
+      </ol>
+    </section>
+
+    <section id="sf-notes" class="sf-sec">
+      <h2 class="sf-h2">Recent notes</h2>
+      <ul class="sf-notes">
+        <li><a href="#"><span>Why every empty state deserves a sentence</span><time>Mar 2026</time></a></li>
+        <li><a href="#"><span>Spacing is a promise you keep</span><time>Jan 2026</time></a></li>
+        <li><a href="#"><span>Notes on drawing with a very small palette</span><time>Nov 2025</time></a></li>
+      </ul>
+    </section>
+
+    <section id="sf-contact" class="sf-sec sf-contact">
+      <h2 class="sf-h2">Say hello</h2>
+      <p>Tell me what you are making and when it needs to be done. I reply within two working days.</p>
+      <a class="sf-cta" href="#">Start a conversation</a>
+    </section>
+    <footer class="sf-foot">Made by hand, set in serif. 2026 edvlabs.</footer>
+  </main>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

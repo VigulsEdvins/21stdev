@@ -3,11 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Postmark CTA</title>
+  <title>Luggage Tag CTA</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="lt-cta" id="ltCta">
+    <div class="lt-tags" aria-hidden="true">
+      <div class="lt-tag" style="--x:7%;--y:12%;--r:-12deg;--c:#f6c453;--d:3"><i></i><b>LUN</b><span>to</span><b>ORO</b><small>Gate 14</small></div>
+      <div class="lt-tag" style="--x:78%;--y:8%;--r:9deg;--c:#7fd6c2;--d:5"><i></i><b>KEL</b><span>to</span><b>PAM</b><small>Seat 3A</small></div>
+      <div class="lt-tag" style="--x:3%;--y:62%;--r:7deg;--c:#f28b82;--d:4"><i></i><b>VAL</b><span>to</span><b>NEO</b><small>Row 22</small></div>
+      <div class="lt-tag" style="--x:84%;--y:60%;--r:-8deg;--c:#a9b8ff;--d:6"><i></i><b>ARK</b><span>to</span><b>SOL</b><small>Gate 2</small></div>
+    </div>
+
+    <div class="lt-body">
+      <h2 class="lt-title">Pack light.<br /><em>Leave tonight.</em></h2>
+      <p class="lt-text">Flights, rooms and trains in a single booking, with someone on call if the plan changes.</p>
+      <div class="lt-actions">
+        <button type="button" class="lt-btn" id="ltBtn"><span>Plan a trip</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10 5l5 5-5 5" /></svg></button>
+        <a class="lt-link" href="#">Browse destinations</a>
+      </div>
+      <p class="lt-note" id="ltNote" role="status" aria-live="polite">Free to plan. Pay only when you book.</p>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

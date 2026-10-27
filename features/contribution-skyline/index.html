@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contribution Skyline</title>
+  <title>Activity Skyline</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ak-panel" aria-labelledby="akTitle">
+    <header class="ak-head">
+      <h2 class="ak-title" id="akTitle"><b>1,204</b> check-ins in the last year</h2>
+      <div class="ak-switch" role="group" aria-label="View">
+        <button type="button" class="ak-opt is-on" data-mode="flat" aria-pressed="true">Grid</button>
+        <button type="button" class="ak-opt" data-mode="city" aria-pressed="false">Skyline</button>
+      </div>
+    </header>
+    <div class="ak-stage">
+      <canvas id="akCanvas" aria-label="Year of daily activity drawn as a calendar grid that rises into towers" role="img"></canvas>
+      <p class="ak-tip" id="akTip" aria-live="polite">Hover a day</p>
+    </div>
+    <dl class="ak-stats">
+      <div><dt class="ak-lab">Busiest day</dt><dd class="ak-val" id="akBest">0</dd></div>
+      <div><dt class="ak-lab">Longest streak</dt><dd class="ak-val" id="akStreak">0 days</dd></div>
+      <div><dt class="ak-lab">Active days</dt><dd class="ak-val" id="akActive">0</dd></div>
+    </dl>
+    <p class="ak-legend" aria-hidden="true">Quiet <i></i><i></i><i></i><i></i><i></i> Busy</p>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

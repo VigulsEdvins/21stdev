@@ -1,29 +1,25 @@
 {
-  "name": "Contribution Skyline",
-  "title": "Contribution Skyline",
+  "name": "Activity Skyline",
+  "title": "Activity Skyline",
   "slug": "contribution-skyline",
   "category": "Interactions & Physics",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A year of activity as a GitHub-style heat map that folds up into an isometric skyline and back down again.",
+  "description": "A year of daily activity drawn as a calendar heat grid that rises into a tower skyline and back, with hover readouts.",
   "tags": [
-    "contribution",
-    "skyline",
-    "21st.dev",
-    "interactions",
-    "react"
+    "heatmap",
+    "chart",
+    "calendar",
+    "canvas",
+    "stats"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 130,
   "legacyCategory": "Interactions & Physics",
   "status": "stable",
@@ -37,69 +33,35 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h3.m-0"
+      "selector": ":scope .ak-title"
     },
     {
       "id": "text-1",
-      "label": "Text 1",
+      "label": "Busiest label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
+      "selector": ":scope .ak-stats div:nth-child(1) .ak-lab"
     },
     {
       "id": "text-2",
-      "label": "Text 2",
+      "label": "Streak label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3)"
+      "selector": ":scope .ak-stats div:nth-child(2) .ak-lab"
     },
     {
       "id": "text-3",
-      "label": "Text 3",
+      "label": "Active label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1)"
-    },
-    {
-      "id": "text-4",
-      "label": "Text 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(2)"
-    },
-    {
-      "id": "text-5",
-      "label": "Text 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1)"
-    },
-    {
-      "id": "text-6",
-      "label": "Text 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3)"
-    },
-    {
-      "id": "text-7",
-      "label": "Text 7",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1)"
+      "selector": ":scope .ak-stats div:nth-child(3) .ak-lab"
     }
   ],
-  "measured": {
-    "luma": 0.95,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "reserveHeight": 700
 }

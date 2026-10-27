@@ -21,16 +21,15 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
     sm.setTheme('clean-minimal');
     sm.setPage({ title: 'Zephyr Dental' });
     sm.setStack([
-      { id: 'a', slug: 'engraved-ticket', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } },
-      { id: 'b', slug: 'waitlist-hero', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } },
-      { id: 'c', slug: 'magic-hour', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }
+      { id: 'a', slug: 'alice-scroll-story', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } },
+      { id: 'b', slug: 'waitlist-hero', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }
     ]);
   });
   const [dl] = await Promise.all([page.waitForEvent('download'), page.evaluate(() => document.getElementById('downloadReactBtn').click())]);
   const zip = await require('jszip').loadAsync(fs.readFileSync(await dl.path()));
   const names = Object.keys(zip.files);
-  for (const f of ['package.json', 'vite.config.ts', 'index.html', 'src/App.tsx', 'src/main.tsx', 'src/components/ui/engraved-ticket.tsx', 'src/sections/engraved-ticket.tsx', 'README.md']) assert(names.includes(f), 'missing ' + f);
-  assert(names.some(n => n.startsWith('public/assets/library/magic-hour-scrub-')), 'magic-hour video in public/');
+  for (const f of ['package.json', 'vite.config.ts', 'index.html', 'src/App.tsx', 'src/main.tsx', 'src/components/ui/alice-scroll-story.tsx', 'src/sections/alice-scroll-story.tsx', 'README.md']) assert(names.includes(f), 'missing ' + f);
+  assert(names.some(n => n.startsWith('public/assets/library/edv-art-')), 'library images in public/');
   assert(!names.some(n => n.includes('waitlist-hero')), 'plain-HTML section left out');
   const readme = await zip.file('README.md').async('string');
   assert(readme.includes('waitlist-hero'), 'README says what was left out');

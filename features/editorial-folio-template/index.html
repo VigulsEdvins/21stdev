@@ -3,11 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>editorial-folio-template</title>
+  <title>Folio Sheets Portfolio</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <div class="fo-desk">
+    <header class="fo-top">
+      <a class="fo-mark" href="#">I.C. / folio</a>
+      <nav class="fo-nav" aria-label="Sections"><a href="#fo-work">Work</a><a href="#fo-about">About</a><a href="#fo-contact">Contact</a></nav>
+      <span class="fo-vol">Vol. 07 &mdash; 2026</span>
+    </header>
+
+    <section class="fo-sheet fo-cover">
+      <p class="fo-small">Selected prints &amp; interiors, 2019&ndash;2026</p>
+      <h1 class="fo-name">Ines<br>Calloway</h1>
+      <p class="fo-lead">Photographer and set designer. Quiet rooms, hard light, a lot of paper.</p>
+      <a class="fo-btn" href="#fo-work">Open the folio</a>
+      <span class="fo-fig">fig. 00 &mdash; cover</span>
+    </section>
+
+    <section class="fo-work" id="fo-work" aria-label="Work">
+      <figure class="fo-sheet fo-plate" data-tilt>
+        <div class="fo-art fo-a1"></div>
+        <figcaption><span>fig. 01</span> Tea room, north window</figcaption>
+      </figure>
+      <figure class="fo-sheet fo-plate" data-tilt>
+        <div class="fo-art fo-a2"></div>
+        <figcaption><span>fig. 02</span> Stairwell study</figcaption>
+      </figure>
+      <figure class="fo-sheet fo-plate" data-tilt>
+        <div class="fo-art fo-a3"></div>
+        <figcaption><span>fig. 03</span> Paper &amp; brass, still life</figcaption>
+      </figure>
+      <figure class="fo-sheet fo-plate" data-tilt>
+        <div class="fo-art fo-a4"></div>
+        <figcaption><span>fig. 04</span> Harbour office at noon</figcaption>
+      </figure>
+    </section>
+
+    <section class="fo-sheet fo-about" id="fo-about">
+      <h2 class="fo-h2">About</h2>
+      <p>Ines works from a small studio with a long table and one good lamp. Commissions cover editorial shoots, set building for print, and the odd book cover.</p>
+      <dl class="fo-facts"><div><dt>Based</dt><dd>Studio 4, the old press</dd></div><div><dt>Clients</dt><dd>Magazines, makers, small hotels</dd></div><div><dt>Booking</dt><dd>Open from September</dd></div></dl>
+    </section>
+
+    <section class="fo-sheet fo-contact" id="fo-contact">
+      <h2 class="fo-h2">Say hello</h2>
+      <a class="fo-mail" href="#">hello@calloway.example</a>
+      <span class="fo-fig">fig. 99 &mdash; end of folio</span>
+    </section>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

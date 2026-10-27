@@ -1,20 +1,20 @@
 (function () {
   const PLATES = [
     {
-      title: 'Plate I — Arturo Torres Chromatic Study, Paris',
-      img: '/assets/library/1778793995-arturo-torres-fashion-photography-advertising-photographer-15-ba930551.jpg'
+      title: 'Plate I — Chromatic Study, City A',
+      img: '/assets/library/edv-art-01.svg'
     },
     {
-      title: 'Plate II — Danielle Moore Desert Couture, Milan',
-      img: '/assets/library/1778184121-danielle-moore-desert-couture-fashion-editorial-ead1d087.jpg'
+      title: 'Plate II — Desert Light Editorial, City B',
+      img: '/assets/library/edv-art-05.svg'
     },
     {
-      title: 'Plate III — Zac Posen Studio Denim Portrait, NY',
-      img: '/assets/library/1778184120-gap-studio-zac-posen-denim-portrait-ea9bd030.jpg'
+      title: 'Plate III — Studio Portrait Series, City C',
+      img: '/assets/library/edv-art-09.svg'
     },
     {
-      title: 'Plate IV — Barragan Stables Editorial, Mexico City',
-      img: '/assets/library/1778184121-fashion-editorial-horse-barragan-stables-mexico-d62757c7.jpg'
+      title: 'Plate IV — Stable Yard Editorial, City D',
+      img: '/assets/library/edv-art-13.svg'
     }
   ];
 

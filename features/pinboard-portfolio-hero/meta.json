@@ -1,30 +1,26 @@
 {
-  "name": "Pinboard Portfolio Hero",
-  "title": "Pinboard Portfolio Hero",
+  "name": "Pinned Wall Hero",
+  "title": "Pinned Wall Hero",
   "slug": "pinboard-portfolio-hero",
   "category": "Heroes",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed portfolio hero drawn as a lit studio wall: a stamped `PORT` / `FOLIO` lockup with the lower line mirrored on its baseline, two cut-out portraits breaking out of the letters, hand-lettered service labels, and pinned paper joined by red floss.",
+  "description": "A hero shaped like a lit studio wall, with rotated paper cards pinned up and joined by red thread, and a big title in the middle.",
   "tags": [
-    "pinboard",
-    "portfolio",
     "hero",
-    "21st.dev",
-    "galleries",
-    "react"
+    "portfolio",
+    "pinboard",
+    "cards",
+    "parallax"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "SVG",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 207,
   "legacyCategory": "Heroes",
   "status": "stable",
@@ -38,53 +34,53 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .pw-label"
+    },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)"
+      "selector": ":scope .pw-title"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .pw-lead"
     },
     {
-      "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "id": "button-text-1",
+      "label": "Button text 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)"
+      "selector": ":scope .pw-btn"
     },
     {
-      "id": "paragraph-2",
-      "label": "Paragraph 2",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(3)"
+      "id": "button-link-1",
+      "label": "Button link 1",
+      "type": "link",
+      "selector": ":scope .pw-btn"
     },
     {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
+      "id": "button-text-2",
+      "label": "Button text 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(4)"
+      "selector": ":scope .pw-link"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Button link 2",
+      "type": "link",
+      "selector": ":scope .pw-link"
     }
   ],
-  "measured": {
-    "luma": 0.47,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800,
-  "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "reserveHeight": 800
 }

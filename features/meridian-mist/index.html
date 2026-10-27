@@ -7,7 +7,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="mm-stage" id="mmStage">
+    <canvas class="mm-canvas" id="mmCanvas" aria-hidden="true"></canvas>
+    <div class="mm-guides" aria-hidden="true">
+      <span class="mm-v mm-v1"></span><span class="mm-v mm-v2"></span>
+      <span class="mm-h mm-h1"></span><span class="mm-h mm-h2"></span><span class="mm-h mm-h3"></span>
+      <span class="mm-ring mm-r1"></span><span class="mm-ring mm-r2"></span>
+    </div>
+    <div class="mm-copy">
+      <p class="mm-kicker">Fig. 3 &middot; Drift study</p>
+      <h1 class="mm-title">Soft light, drawn on a grid</h1>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

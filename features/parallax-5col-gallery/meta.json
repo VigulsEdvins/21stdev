@@ -2,7 +2,7 @@
   "name": "5-Column Staggered Parallax Gallery",
   "slug": "parallax-5col-gallery",
   "category": "Scroll & Parallax",
-  "source": "vivmgmt",
+  "source": "edvlabs",
   "type": "component",
   "description": "5-column editorial artist gallery with horizontal cursor pan, opposing vertical wheel parallax per column, and automatic top-card media cycling on idle.",
   "tags": [
@@ -10,8 +10,7 @@
     "gallery",
     "5-column",
     "editorial",
-    "mouse-pan",
-    "vivmgmt"
+    "mouse-pan"
   ],
   "tech": [
     "Vanilla JS",
@@ -31,54 +30,24 @@
   "industry": [
     "portfolio"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "vivmgmt",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-24",
+  "updatedAt": "2026-10-25",
   "customizable": [
-    {
-      "id": "small-label-1",
-      "label": "Small label 1",
-      "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
-    },
     {
       "id": "menu-item-1",
       "label": "Menu item 1",
       "type": "text",
-      "selector": ":scope div.viv-brand"
+      "selector": ":scope div.edv-brand"
     },
     {
       "id": "menu-item-2",
       "label": "Menu item 2",
       "type": "text",
-      "selector": ":scope div.viv-hint"
-    },
-    {
-      "id": "small-label-2",
-      "label": "Small label 2",
-      "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
-    },
-    {
-      "id": "small-label-3",
-      "label": "Small label 3",
-      "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > article:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
-    },
-    {
-      "id": "small-label-4",
-      "label": "Small label 4",
-      "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > article:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
-    },
-    {
-      "id": "small-label-5",
-      "label": "Small label 5",
-      "type": "text",
-      "selector": ":scope > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
+      "selector": ":scope div.edv-hint"
     },
     {
       "id": "text",

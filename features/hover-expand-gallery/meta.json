@@ -1,30 +1,25 @@
 {
-  "name": "Hover Expand Gallery",
-  "title": "Hover Expand Gallery",
+  "name": "Expanding Panel Gallery",
+  "title": "Expanding Panel Gallery",
   "slug": "hover-expand-gallery",
   "category": "Galleries & Bento",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A row of hairline-separated panels with vertical labels. Hover (or tap) one and it absorbs the free space, revealing its image; the rest stay rail-width. Below 1024px the same list becomes a vertical accordion — tapping a row opens its image above the label.",
+  "description": "A row of narrow panels with vertical labels where the hovered one widens to show its artwork, turning into an accordion on small screens.",
   "tags": [
-    "hover",
-    "expand",
     "gallery",
-    "21st.dev",
-    "galleries",
-    "react"
+    "hover",
+    "accordion",
+    "panels",
+    "css"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 165,
   "legacyCategory": "Galleries & Portfolios",
   "status": "stable",
@@ -39,71 +34,53 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text-1",
-      "label": "Button text 1",
+      "id": "headline",
+      "label": "Headline",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1)"
+      "selector": ":scope .he-head"
+    },
+    {
+      "id": "button-text-1",
+      "label": "Panel label 1",
+      "type": "text",
+      "selector": ":scope .he-item:nth-of-type(1) .he-name"
     },
     {
       "id": "button-text-2",
-      "label": "Button text 2",
+      "label": "Panel label 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > button:nth-of-type(1)"
+      "selector": ":scope .he-item:nth-of-type(2) .he-name"
     },
     {
       "id": "button-text-3",
-      "label": "Button text 3",
+      "label": "Panel label 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > button:nth-of-type(1)"
+      "selector": ":scope .he-item:nth-of-type(3) .he-name"
     },
     {
       "id": "button-text-4",
-      "label": "Button text 4",
+      "label": "Panel label 4",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > button:nth-of-type(1)"
+      "selector": ":scope .he-item:nth-of-type(4) .he-name"
     },
     {
       "id": "button-text-5",
-      "label": "Button text 5",
+      "label": "Panel label 5",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > button:nth-of-type(1)"
+      "selector": ":scope .he-item:nth-of-type(5) .he-name"
     },
     {
       "id": "button-text-6",
-      "label": "Button text 6",
+      "label": "Panel label 6",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-7",
-      "label": "Button text 7",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(7) > button:nth-of-type(1)"
-    },
-    {
-      "id": "button-text-8",
-      "label": "Button text 8",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(8) > button:nth-of-type(1)"
+      "selector": ":scope .he-item:nth-of-type(6) .he-name"
     }
   ],
-  "measured": {
-    "luma": 0.99,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "reserveHeight": 800,
-  "palette": "designed",
-  "paletteNote": "The colours are the artwork (image or shader stage); the CSS only holds fixed text colours over it"
+  "reserveHeight": 800
 }

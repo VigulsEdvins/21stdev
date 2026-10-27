@@ -1,56 +1,74 @@
 {
-  "name": "Etched Accretion",
-  "title": "Etched Accretion",
+  "name": "Ember Ring Backdrop",
+  "title": "Ember Ring Backdrop",
   "slug": "etched-accretion",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A black hole drawn like an engraving. A tilted accretion disk made of hair-thin orbital streaks banded in crimson, a photon crown flaring off the horizon, dark nebula banks cut from contour lines, and heavy film grain over all of it. It animates, and it's meant to sit behind a hero.",
+  "description": "A WebGL black-hole backdrop: a glowing amber accretion disc with etched concentric lines, lensed starlight, film grain and pointer parallax.",
   "tags": [
-    "etched",
-    "accretion",
-    "21st.dev",
-    "react"
+    "webgl",
+    "shader",
+    "backdrop",
+    "hero",
+    "space"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "WebGL",
+    "GLSL"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "WebGL"
   ],
-  "author": "kedhareswer",
   "order": 144,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
   "weight": "heavy",
   "mood": [
-    "retro",
-    "dark"
+    "dark",
+    "futuristic"
   ],
   "industry": [
-    "fintech",
     "media"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.07,
-    "webgl": true,
-    "canvas2d": false
-  },
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .ea-small"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .ea-title"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .ea-text"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .ea-btn"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .ea-btn"
+    }
+  ],
+  "ownPalette": true,
   "lazy": true
 }

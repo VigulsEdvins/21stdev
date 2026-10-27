@@ -1,33 +1,29 @@
 {
-  "name": "Distressed Denim",
-  "title": "Distressed Denim",
+  "name": "Tearable Twill Cloth",
+  "title": "Tearable Twill Cloth",
   "slug": "distressed-denim",
   "category": "Audio & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed background of hanging denim you can rip. The cloth is a real mesh of a few thousand points, gathered so it falls in soft vertical folds. Rest the pointer on it to press it in. Drag across it to tear it: the indigo warp under the stroke snaps, the cut opens under its own weight, and the ",
+  "description": "A full-bleed woven blue cloth background you can press with the pointer and tear open by dragging across it.",
   "tags": [
-    "distressed",
-    "denim",
-    "21st.dev",
-    "audio",
-    "react"
+    "canvas",
+    "cloth",
+    "interactive",
+    "texture",
+    "tear"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 136,
   "legacyCategory": "Audio & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "minimal",
     "dark"
@@ -37,20 +33,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
-  "customizable": [],
-  "measured": {
-    "luma": 0.21,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "lazy": true
+  "updatedAt": "2026-10-25",
+  "customizable": [
+    {
+      "id": "small-label",
+      "label": "Hint text",
+      "type": "text",
+      "selector": ":scope .dn-hint"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .dn-reset"
+    }
+  ],
+  "lazy": true,
+  "ownPalette": true
 }

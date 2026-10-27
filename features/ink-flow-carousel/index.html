@@ -3,11 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ink Flow Carousel</title>
+  <title>Ink Pour Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="ip-stage" aria-roledescription="carousel" aria-label="Ink pour gallery">
+    <canvas class="ip-canvas" id="ipCanvas" aria-hidden="true"></canvas>
+    <div class="ip-cap" aria-live="polite">
+      <p class="ip-count" id="ipCount">01 / 04</p>
+      <h2 class="ip-title" id="ipTitle">Deep Tide</h2>
+      <p class="ip-sub" id="ipSub">Click anywhere to pour the next one from that spot.</p>
+    </div>
+    <div class="ip-ctl">
+      <button class="ip-btn" id="ipPrev" type="button" aria-label="Previous slide">&larr;</button>
+      <div class="ip-dots" id="ipDots"></div>
+      <button class="ip-btn" id="ipNext" type="button" aria-label="Next slide">&rarr;</button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

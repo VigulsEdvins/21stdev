@@ -1,69 +1,55 @@
 {
-  "name": "RGB Glitch Carousel",
-  "title": "RGB Glitch Carousel",
+  "name": "Channel Split Carousel",
+  "title": "Channel Split Carousel",
   "slug": "rgb-glitch-carousel",
   "category": "3D & Carousels",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed image carousel that cuts between pictures with a signal glitch: for a split second the picture tears into horizontal bands and its red, green and blue channels slide apart, then it snaps back as the next picture. Canvas 2D, no WebGL.",
+  "description": "A full-bleed canvas carousel of procedurally drawn scenes that changes slides with a glitch: the picture tears into bands while its red, green and blue channels slide apart.",
   "tags": [
-    "rgb",
-    "glitch",
     "carousel",
-    "21st.dev",
-    "3d",
-    "react"
+    "glitch",
+    "canvas",
+    "rgb-split",
+    "slider"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 218,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
   "weight": "medium",
   "mood": [
-    "futuristic"
+    "futuristic",
+    "dark"
   ],
   "industry": [
-    "general"
+    "media"
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope img.rg-img"
+      "id": "headline",
+      "label": "Caption title",
+      "type": "text",
+      "selector": ":scope .cs-title"
     },
     {
-      "id": "small-label",
-      "label": "Small label",
+      "id": "intro-text",
+      "label": "Caption text",
       "type": "text",
-      "selector": ":scope div.rg-sr"
+      "selector": ":scope .cs-sub"
     }
   ],
-  "measured": {
-    "luma": 0.53,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "ownPalette": true
 }

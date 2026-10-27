@@ -449,6 +449,108 @@
       return out;
     }
 
+    const cmsMeta = {}; // slug -> named fields from meta.json
+    async function cmsExplicitFor(slug) {
+      if (!(slug in cmsMeta)) {
+        try {
+          const res = await fetch(`features/${encodeURIComponent(slug)}/meta.json`);
+          const meta = res.ok ? await res.json() : {};
+          cmsMeta[slug] = Array.isArray(meta.customizable) && meta.customizable.length ? meta.customizable : undefined;
+        } catch (_) { cmsMeta[slug] = undefined; }
+      }
+      return cmsMeta[slug];
+    }
+
+    /**
+     * The content editor for a ZIP: admin.html, admin.css, admin.js, cms.js and cms-content.js, plus the pages with the
+     * two CMS scripts added. `pagesIn` is [{ file, title, stack, settings, script }]; returns { files, pages } where
+     * `pages` maps a page file to its new HTML.
+     */
+    async function buildCms(pagesIn, html, pageLinks, { inPlace = false } = {}) {
+      const cms = window.BuilderCms;
+      const state = stackManager.getState();
+      const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
+      const pages = [];
+      const docs = {};
+      for (const p of pagesIn) {
+        const missing = p.stack.map(s => s.slug).filter(slug => slug && !featureCache.has(slug));
+        if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
+        // editing in place starts from the original content, so "reset" has something to go back to
+        const baseStack = inPlace ? p.stack.map(s => ({ ...s, overrides: {} })) : p.stack;
+        const doc = window.Assembler.generateSingleFileBundle(baseStack, themeConfig, featuresData, { page: p.settings, nativeMap, pageLinks });
+        docs[p.file] = doc;
+        const sections = p.stack.filter(s => !s.hidden).map((s, i) => ({
+          id: s.id || `sec-${i + 1}`,
+          slug: s.slug,
+          title: s.title || (featuresData[s.slug] && (featuresData[s.slug].title || featuresData[s.slug].name)) || s.slug
+        }));
+        pages.push({
+          file: p.file,
+          title: p.title,
+          sections: await cms.discoverSections({ html: doc, sections, discoverFields: window.BuilderExtras.discoverFields, explicitFor: cmsExplicitFor })
+        });
+      }
+      const files = await cms.runtimeFiles((url) => fetch(url));
+      const published = {};
+      if (inPlace) {
+        pagesIn.forEach((p, i) => p.stack.forEach(sec => {
+          const known = (pages[i].sections.find(x => x.id === sec.id) || { fields: [] }).fields;
+          Object.entries(sec.overrides || {}).forEach(([fieldId, o]) => {
+            if (!o || o.value === undefined || !known.some(f => f.id === fieldId)) return;
+            ((published[p.file] = published[p.file] || {})[sec.id] = published[p.file][sec.id] || {})[fieldId] = String(o.value);
+          });
+        }));
+      }
+      files['cms-content.js'] = cms.buildContent({ site: stackManager.getState().page.title || 'Website', pages, published });
+      const patched = {};
+      if (html) pagesIn.forEach(p => { patched[p.file] = cms.injectTags(html[p.file], p.script); });
+      return { files, docs, pages: patched, fields: pages.reduce((n, p) => n + p.sections.reduce((m, s) => m + s.fields.length, 0), 0) };
+    }
+
+    /**
+     * The admin panel: the Content tab's "Open admin panel" button. Shows the editor over the builder; every change goes
+     * to the section's content edits (the same ones the Content tab writes), so the preview and the export follow.
+     */
+    const adminOverlay = document.getElementById('adminOverlay');
+    const adminFrame = document.getElementById('adminFrame');
+    function closeAdmin() {
+      if (!adminOverlay || adminOverlay.hidden) return;
+      adminOverlay.hidden = true;
+      const old = adminFrame.src;
+      adminFrame.removeAttribute('src');
+      if (old && old.startsWith('blob:')) URL.revokeObjectURL(old);
+      delete window.__cmsBridge;
+      document.body.style.overflow = '';
+    }
+    async function openAdmin() {
+      const btn = document.getElementById('openAdminBtn');
+      const st = stackManager.getState();
+      if (!window.BuilderCms || !adminOverlay) return;
+      if (!st.stack.some(s => !s.hidden)) { showToast('Add a section first, then open the admin panel.'); return; }
+      const label = btn && btn.textContent;
+      if (btn) { btn.disabled = true; btn.textContent = 'Opening…'; }
+      try {
+        const pageIn = { file: 'index.html', title: (st.pages.find(p => p.id === st.activePageId) || {}).title || 'Home', stack: st.stack, settings: st.page, script: '' };
+        const cms = await buildCms([pageIn], null, undefined, { inPlace: true });
+        const html = window.BuilderCms.buildPreviewPage({ files: cms.files, docs: cms.docs });
+        window.__cmsBridge = {
+          setOverride: (sectionId, fieldId, value, def) => stackManager.setSectionOverride(sectionId, fieldId, value, def),
+          close: closeAdmin
+        };
+        adminFrame.src = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+        adminOverlay.hidden = false;
+        document.body.style.overflow = 'hidden';
+      } catch (err) {
+        console.error('Admin panel could not be opened:', err);
+        showToast('The admin panel could not be opened.', 4000);
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = label; }
+      }
+    }
+    const openAdminBtn = document.getElementById('openAdminBtn');
+    if (openAdminBtn) openAdminBtn.addEventListener('click', openAdmin);
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && adminOverlay && !adminOverlay.hidden) closeAdmin(); });
+
     /**
      * Download Project ZIP generator.
      * Generates a clean archive with index.html, style.css, script.js, and README.md.
@@ -490,9 +592,36 @@
           currentExportBundle['README.md'] += '\n## Review copy\n\nThis copy has a Review button (bottom left). Open `index.html`, press **Comment mode**, click anything on the page and write what should change. Press **Review** to see the list and **Download comments** to send the file back. Comments stay in the browser until downloaded. Remove the review code before the final launch by exporting a normal copy.\n';
         }
 
+        const cmsToggle = document.getElementById('exportCmsToggle');
+        const cmsOn = !!window.BuilderCms && (!cmsToggle || cmsToggle.checked);
         const multi = stackManager.getState().pages.length > 1;
+        let cmsFiles = {};
+        const addCms = async (pagesIn, htmlByFile, readmeFiles, intoFiles, pageLinks) => {
+          try {
+            const cms = await buildCms(pagesIn, htmlByFile, pageLinks);
+            Object.assign(intoFiles, cms.pages, cms.files);
+            intoFiles['README.md'] += window.BuilderCms.readmeSection(readmeFiles);
+            cmsFiles = cms.files;
+          } catch (err) {
+            console.error('Content editor could not be added:', err);
+            showToast('The content editor could not be added; the ZIP has the page only.', 5000);
+          }
+        };
+        if (!multi && cmsOn) {
+          const st = stackManager.getState();
+          await addCms([{ file: 'index.html', title: 'Home', stack: st.stack, settings: st.page, script: 'script.js' }], { 'index.html': currentExportBundle['index.html'] }, ['index.html'], currentExportBundle);
+        }
         if (multi) {
           const site = await buildMultiPageFiles(exportOptions);
+          if (cmsOn) {
+            const st = stackManager.getState();
+            const fileOf = (p) => (p.slug === 'index' ? 'index.html' : `${p.slug}.html`);
+            const pageLinks = Object.fromEntries(st.pages.map(p => [p.id, fileOf(p)]));
+            await addCms(
+              st.pages.map(p => ({ file: fileOf(p), title: p.title, stack: p.stack, settings: { ...st.page, title: p.slug === 'index' ? st.page.title : `${p.title} | ${st.page.title}` }, script: p.slug === 'index' ? 'script.js' : `${p.slug}.js` })),
+              Object.fromEntries(st.pages.map(p => [fileOf(p), site.files[fileOf(p)]])),
+              st.pages.map(fileOf), site.files, pageLinks);
+          }
           if (exportOptions.review) site.files['README.md'] += '\n## Review copy\n\nOpen `index.html`, press **Comment mode**, click anything and write what should change; **Download comments** sends the file back. Remove the review code before launch by exporting a normal copy.\n';
           if (typeof window.JSZip !== 'undefined') {
             const zip = new window.JSZip();
@@ -509,7 +638,7 @@
           zip.file('style.css', currentExportBundle['style.css']);
           zip.file('script.js', currentExportBundle['script.js']);
           zip.file('README.md', currentExportBundle['README.md']);
-          ['robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md'].forEach(n => { if (currentExportBundle[n]) zip.file(n, currentExportBundle[n]); });
+          ['robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md', ...Object.keys(cmsFiles)].forEach(n => { if (currentExportBundle[n]) zip.file(n, currentExportBundle[n]); });
           Object.entries(currentExportAssets).forEach(([name, bytes]) => zip.file(name, bytes));
           const blob = await zip.generateAsync({ type: 'blob' });
           triggerDownload(blob, zipFilename, 'application/zip');

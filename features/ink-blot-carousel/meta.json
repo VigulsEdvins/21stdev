@@ -1,30 +1,25 @@
 {
-  "name": "Ink Blot Carousel",
-  "title": "Ink Blot Carousel",
+  "name": "Bleeding Slide Carousel",
+  "title": "Bleeding Slide Carousel",
   "slug": "ink-blot-carousel",
   "category": "3D & Carousels",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A full-bleed image carousel where the next picture spreads in like ink soaking into paper: a ragged blot blooms from where you tap, throws satellite drops and runs together until it fills the frame. An SVG mask with a turbulence filter, no WebGL.",
+  "description": "A full-bleed scene carousel where the next slide seeps in through a ragged, noise-warped SVG mask that blooms from your click.",
   "tags": [
-    "ink",
-    "blot",
     "carousel",
-    "21st.dev",
-    "3d",
-    "react"
+    "svg",
+    "mask",
+    "transition",
+    "gradient"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "SVG",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 167,
   "legacyCategory": "3D & Carousels",
   "status": "stable",
@@ -37,33 +32,24 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
-    {
-      "id": "hero-photo",
-      "label": "Hero photo",
-      "type": "image",
-      "selector": ":scope img.ib-img"
-    },
     {
       "id": "small-label",
       "label": "Small label",
       "type": "text",
-      "selector": ":scope div.ib-sr"
+      "selector": ":scope .ib-small"
+    },
+    {
+      "id": "headline",
+      "label": "Scene title",
+      "type": "text",
+      "selector": ":scope .ib-title"
     }
   ],
-  "measured": {
-    "luma": 0.53,
-    "webgl": false,
-    "canvas2d": true
-  },
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "ownPalette": true
 }

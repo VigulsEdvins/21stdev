@@ -3,11 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Engraved Ticket</title>
+  <title>Breathing Ticket</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <main class="bt-stage">
+    <div class="bt-tilt" id="btTilt">
+      <article class="bt-ticket" id="btTicket" aria-label="Event ticket">
+        <div class="bt-main">
+          <svg class="bt-art" id="btArt" viewBox="0 0 300 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+          <div class="bt-body">
+            <p class="bt-small">Admit one &middot; Row C &middot; Seat 14</p>
+            <h1 class="bt-title" aria-label="Exhale"><span>E</span><span>X</span><span>H</span><span>A</span><span>L</span><span>E</span></h1>
+            <p class="bt-copy">An evening of slow music and long silences. Doors at seven, lights down at eight, nobody hurries home.</p>
+            <div class="bt-meta"><span><b>Fri</b>14 Nov</span><span><b>Doors</b>19:00</span><span><b>Hall</b>The Greenhouse</span></div>
+          </div>
+        </div>
+        <div class="bt-stub" id="btStub">
+          <div class="bt-bars" id="btBars" aria-hidden="true"></div>
+          <p class="bt-no">No. 000482</p>
+          <p class="bt-hint">Keep this half</p>
+        </div>
+      </article>
+    </div>
+    <button class="bt-btn" id="btTear" type="button">Tear off the stub</button>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

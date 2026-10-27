@@ -3,11 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Disc Cascade Carousel</title>
+  <title>Vinyl Slope Carousel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="vs-wrap" id="vsWrap" aria-roledescription="carousel" aria-label="Records">
+    <header class="vs-top">
+      <span class="vs-brand">Groove Cellar</span>
+      <span class="vs-hint">Drag, scroll or use the arrow keys</span>
+    </header>
+
+    <div class="vs-stage" id="vsStage"></div>
+
+    <div class="vs-info" aria-live="polite">
+      <p class="vs-year" id="vsYear"></p>
+      <h2 class="vs-name" id="vsName"></h2>
+      <p class="vs-artist" id="vsArtist"></p>
+    </div>
+
+    <div class="vs-ctrl">
+      <button type="button" class="vs-arrow" id="vsPrev" aria-label="Previous record">&larr;</button>
+      <span class="vs-count" id="vsCount"></span>
+      <button type="button" class="vs-arrow" id="vsNext" aria-label="Next record">&rarr;</button>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

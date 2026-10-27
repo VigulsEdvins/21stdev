@@ -103,9 +103,15 @@ html, body {
   justify-content: center;
   gap: 14px;
   transform-style: preserve-3d;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
   will-change: transform;
+}
+
+/* The back half of the ring stays visible: cards facing away are turned round so their text reads normally, and dimmed a little */
+.cyl-panel.is-back .cyl-item {
+  rotate: y 180deg;
+  filter: brightness(0.7);
 }
 
 .cyl-item {

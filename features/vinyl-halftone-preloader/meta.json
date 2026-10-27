@@ -1,34 +1,30 @@
 {
-  "name": "Vinyl Halftone Preloader",
-  "title": "Vinyl Halftone Preloader",
+  "name": "Two-Ink Record Gate",
+  "title": "Two-Ink Record Gate",
   "slug": "vinyl-halftone-preloader",
   "category": "Preloaders & Shaders",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A loading gate for a portfolio, printed like a record sleeve in two inks. A giant record sits on the left with your name on its label, and a halftone starburst throbs on the right in time with the tempo. While the page loads:",
+  "description": "A loading gate printed in two inks: a spinning record on one side and a halftone starburst that pulses to a beat on the other.",
   "tags": [
-    "vinyl",
-    "halftone",
     "preloader",
-    "21st.dev",
-    "galleries",
-    "react"
+    "halftone",
+    "record",
+    "canvas",
+    "retro"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "Canvas 2D",
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
-    "Vanilla HTML/CSS/JS"
+    "HTML5 Canvas"
   ],
-  "author": "kedhareswer",
   "order": 246,
   "legacyCategory": "Preloaders & Shaders",
   "status": "stable",
-  "weight": "heavy",
+  "weight": "medium",
   "mood": [
     "retro",
     "editorial"
@@ -38,46 +34,48 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "button-text",
-      "label": "Button text",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope button.vhp-item"
+      "selector": ":scope .vr-small"
+    },
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ":scope .vr-title"
     },
     {
       "id": "list-item-1",
       "label": "List item 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(1)"
+      "selector": ":scope .vr-steps li:nth-child(1)"
     },
     {
       "id": "list-item-2",
       "label": "List item 2",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(2)"
+      "selector": ":scope .vr-steps li:nth-child(2)"
     },
     {
       "id": "list-item-3",
       "label": "List item 3",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ol:nth-of-type(1) > li:nth-of-type(3)"
+      "selector": ":scope .vr-steps li:nth-child(3)"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .vr-btn"
     }
   ],
-  "measured": {
-    "luma": 0.32,
-    "webgl": true,
-    "canvas2d": false
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "ownPalette": true
 }

@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Distressed Denim</title>
+  <title>Tearable Twill Cloth</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="dn-stage" id="dnStage">
+    <canvas class="dn-canvas" id="dnCanvas" role="img" aria-label="Blue woven cloth. Drag across it to tear it."></canvas>
+    <p class="dn-hint" id="dnHint">Drag across the cloth to tear it</p>
+    <button type="button" class="dn-reset" id="dnReset">Mend cloth</button>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

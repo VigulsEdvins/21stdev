@@ -24,7 +24,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert.strictEqual(await page.getAttribute('#viewportDesktopBtn', 'aria-pressed'), 'true');
   // a narrow preview really applies the page's mobile layout
   await page.click('#viewportMobileBtn');
-  await page.waitForTimeout(500);
+  // the frame animates to its new width, so wait until the page inside has been resized
+  await page.waitForFunction(() => document.querySelector('iframe').contentWindow.innerWidth <= 380, null, { timeout: 8000 }).catch(() => {});
   const innerWidth = await page.evaluate(() => document.querySelector('iframe').contentWindow.innerWidth);
   assert(innerWidth <= 380, 'the page inside sees a phone-sized window, got ' + innerWidth);
   console.log('  ✓ mobile 375, tablet 768, desktop restored, window size reaches the page');

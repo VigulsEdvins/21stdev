@@ -70,6 +70,7 @@ html, body {
 }
 
 .faq-trigger__icon {
+  position: relative;
   width: 16px;
   height: 16px;
   flex-shrink: 0;
@@ -101,3 +102,9 @@ html, body {
   line-height: 1.65;
   color: color-mix(in srgb, var(--text, #fafafa) 65%, transparent);
 }
+
+.faq-trigger__icon::before, .faq-trigger__icon::after { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; border-radius: 2px; background: currentColor; }
+.faq-trigger__icon::after { transform: rotate(90deg); }
+.faq-trigger:focus-visible { outline: 2px solid var(--accent, #ff3700); outline-offset: 2px; }
+.faq-intro { margin-top: 10px; font-size: 15px; color: color-mix(in srgb, var(--text, #fafafa) 62%, transparent); }
+@media (prefers-reduced-motion: reduce) { .faq-panel, .faq-trigger__icon { transition: none; } }

@@ -3,46 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vertical Tabs — Service Showcase</title>
+  <title>Side Tabs Showcase</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="tabs-stage">
-    <div class="tabs-container">
-      <!-- Left Column: Vertical Tab List -->
-      <div class="tabs-sidebar">
-        <div class="sidebar-header">
-          <h2 class="sidebar-title">How I can help you</h2>
-          <span class="sidebar-tag">(SERVICES)</span>
-        </div>
-
-        <div class="tab-list" id="tabList" role="tablist">
-          <!-- Dynamically populated tab items -->
-        </div>
-      </div>
-
-      <!-- Right Column: Interactive Gallery & Controls -->
-      <div class="gallery-wrapper">
-        <div class="gallery-card" id="galleryCard">
-          <div class="gallery-slide" id="gallerySlide">
-            <img id="galleryImg" src="" alt="Active Service" />
-            <div class="gallery-gradient" aria-hidden="true"></div>
-          </div>
-
-          <!-- Bottom Navigation Arrows -->
-          <div class="gallery-nav">
-            <button type="button" class="nav-btn" id="btnPrev" aria-label="Previous service">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            </button>
-            <button type="button" class="nav-btn" id="btnNext" aria-label="Next service">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
+  <section class="vt-wrap" id="vtWrap">
+    <div class="vt-list" role="tablist" aria-orientation="vertical" aria-label="Services">
+      <button class="vt-tab is-on" role="tab" id="vt-t0" aria-controls="vt-p0" aria-selected="true" type="button">
+        <span class="vt-num">01</span><span class="vt-name">Strategy</span><span class="vt-desc">Find the one idea worth building.</span><i class="vt-bar"></i>
+      </button>
+      <button class="vt-tab" role="tab" id="vt-t1" aria-controls="vt-p1" aria-selected="false" tabindex="-1" type="button">
+        <span class="vt-num">02</span><span class="vt-name">Design</span><span class="vt-desc">Interfaces with a clear point of view.</span><i class="vt-bar"></i>
+      </button>
+      <button class="vt-tab" role="tab" id="vt-t2" aria-controls="vt-p2" aria-selected="false" tabindex="-1" type="button">
+        <span class="vt-num">03</span><span class="vt-name">Build</span><span class="vt-desc">Fast, accessible, plain code.</span><i class="vt-bar"></i>
+      </button>
+      <button class="vt-tab" role="tab" id="vt-t3" aria-controls="vt-p3" aria-selected="false" tabindex="-1" type="button">
+        <span class="vt-num">04</span><span class="vt-name">Care</span><span class="vt-desc">Support after launch day.</span><i class="vt-bar"></i>
+      </button>
     </div>
-  </div>
-
+    <div class="vt-stage" id="vtStage">
+      <div class="vt-slide is-on" role="tabpanel" id="vt-p0" aria-labelledby="vt-t0"><div class="vt-art vt-a0"></div><p class="vt-cap">Workshops and a one-page plan</p></div>
+      <div class="vt-slide" role="tabpanel" id="vt-p1" aria-labelledby="vt-t1" hidden><div class="vt-art vt-a1"></div><p class="vt-cap">Systems, screens and prototypes</p></div>
+      <div class="vt-slide" role="tabpanel" id="vt-p2" aria-labelledby="vt-t2" hidden><div class="vt-art vt-a2"></div><p class="vt-cap">Production-ready front end</p></div>
+      <div class="vt-slide" role="tabpanel" id="vt-p3" aria-labelledby="vt-t3" hidden><div class="vt-art vt-a3"></div><p class="vt-cap">Monitoring, fixes and updates</p></div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

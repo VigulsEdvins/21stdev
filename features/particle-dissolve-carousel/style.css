@@ -1,9 +1,32 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+
+.dz-stage { position: relative; min-height: 34rem; height: 100vh; max-height: 52rem; overflow: hidden; color: #fff; background: #10131c; }
+.dz-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.dz-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(5, 8, 15, 0.45), transparent 22%, transparent 48%, rgba(5, 8, 15, 0.78)); }
+
+.dz-top { position: absolute; top: 1.4rem; left: clamp(1rem, 4vw, 2.5rem); right: clamp(1rem, 4vw, 2.5rem); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.dz-count { font: 600 0.8rem/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.14em; }
+.dz-dots { display: flex; gap: 0.5rem; }
+.dz-dot { width: 1.6rem; height: 1.6rem; border: 0; border-radius: 50%; background: transparent; position: relative; cursor: pointer; }
+.dz-dot::after { content: ""; position: absolute; inset: 0.5rem; border-radius: 50%; background: rgba(255, 255, 255, 0.4); transition: all 0.3s; }
+.dz-dot[aria-selected="true"]::after { inset: 0.3rem; background: #fff; }
+.dz-dot:focus-visible, .dz-arrow:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+.dz-caption { position: absolute; left: clamp(1rem, 4vw, 2.5rem); bottom: clamp(1.4rem, 5vw, 3rem); max-width: min(30rem, calc(100% - 9rem)); }
+.dz-eyebrow { font: 600 0.72rem/1 ui-monospace, Menlo, monospace; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.8; }
+.dz-title { margin: 0.7rem 0; font-family: var(--font-display, Georgia, "Times New Roman", serif); font-size: clamp(2.4rem, 7vw, 5rem); line-height: 0.98; letter-spacing: -0.02em; font-weight: 600; text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35); }
+.dz-text { line-height: 1.55; font-size: 0.98rem; opacity: 0.88; }
+.dz-eyebrow, .dz-title, .dz-text { transition: opacity 0.4s, transform 0.5s; }
+.dz-stage.is-moving .dz-eyebrow, .dz-stage.is-moving .dz-title, .dz-stage.is-moving .dz-text { opacity: 0; transform: translateY(10px); }
+
+.dz-nav { position: absolute; right: clamp(1rem, 4vw, 2.5rem); bottom: clamp(1.4rem, 5vw, 3rem); display: flex; gap: 0.6rem; }
+.dz-arrow { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.5); background: rgba(10, 14, 24, 0.35); backdrop-filter: blur(6px); color: #fff; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.dz-arrow:hover { background: rgba(255, 255, 255, 0.25); transform: scale(1.06); }
+.dz-arrow svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (max-width: 560px) {
+  .dz-caption { max-width: calc(100% - 2rem); bottom: 5.4rem; }
+  .dz-nav { left: 1rem; right: auto; bottom: 1.2rem; }
 }
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-}
+@media (prefers-reduced-motion: reduce) { .dz-eyebrow, .dz-title, .dz-text, .dz-arrow { transition: none; } }

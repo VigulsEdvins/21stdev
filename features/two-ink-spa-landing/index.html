@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steam House</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="sh-page" data-mode="hot">
+  <header class="sh-nav">
+    <a class="sh-brand" href="#">STEAM/HOUSE</a>
+    <nav class="sh-links" aria-label="Main"><a href="#">Sessions</a><a href="#">Rituals</a><a href="#">Visit</a></nav>
+    <a class="sh-book" href="#">Book a slot</a>
+  </header>
+
+  <section class="sh-hero">
+    <div class="sh-copy">
+      <p class="sh-label">Public sauna and cold plunge</p>
+      <h1 class="sh-h1">Heat <i>then</i> cold. Repeat until quiet.</h1>
+      <p class="sh-lead">Two rooms, one rhythm. Sit in the cedar heat, drop into the plunge, breathe out.</p>
+      <div class="sh-switch" role="group" aria-label="Choose a room">
+        <button type="button" class="sh-opt is-on" data-mode="hot" aria-pressed="true">Hot room</button>
+        <button type="button" class="sh-opt" data-mode="cold" aria-pressed="false">Cold room</button>
+      </div>
+    </div>
+    <div class="sh-art" aria-hidden="true">
+      <div class="sh-dots"></div>
+      <div class="sh-temp"><b class="sh-deg">86</b><span>&deg;C</span></div>
+    </div>
+  </section>
+
+  <section class="sh-grid">
+    <article class="sh-cell sh-wide"><h2>Morning rounds</h2><p>Quiet hour, 7:00 to 9:00. Three rounds of heat and plunge.</p></article>
+    <article class="sh-cell"><h2>Steam</h2><p>Pour water on the stones every twenty minutes.</p></article>
+    <article class="sh-cell sh-ink"><h2>Plunge</h2><p>Four degrees. Thirty seconds is plenty.</p></article>
+    <article class="sh-cell"><h2>Towels</h2><p>Linen towels and felt hats on loan.</p></article>
+  </section>
+
+  <footer class="sh-foot"><span>12 Cedar Lane, Northfield</span><span>Open daily 7:00 to 22:00</span><a href="#">hello@example.test</a></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

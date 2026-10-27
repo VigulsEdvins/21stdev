@@ -1,12 +1,28 @@
 // Into The Ether - Kinetic Concentric Wave Harmonic System
-(() => {
-  const canvas = document.getElementById('etherCanvas');
+Array.prototype.forEach.call(document.querySelectorAll('.ether-viewport'), (root) => {
+  if (root.dataset.etherReady) return;
+  root.dataset.etherReady = '1';
+  const canvas = root.querySelector('.ether-canvas');
   const ctx = canvas.getContext('2d');
-  const btnPulse = document.getElementById('btnPulse');
-  const btnTheme = document.getElementById('btnTheme');
-  const themeLabel = document.getElementById('themeLabel');
-  const statFps = document.getElementById('statFps');
-  const statRipples = document.getElementById('statRipples');
+  const btnPulse = root.querySelector('.ether-btn.primary');
+  const btnTheme = root.querySelector('.ether-btn.secondary');
+  const themeLabel = root.querySelector('.ether-theme-label');
+
+  // start in the palette that matches the page: a dark page background gives the dark palette (the button still switches)
+  (function () {
+    const host = root.closest('.page-section') || document.body;
+    const c = getComputedStyle(host).backgroundColor;
+    const m = (c.match(/[\d.]+/g) || []).map(Number);
+    if (m.length < 3 || (m[3] !== undefined && m[3] < 0.5)) return;
+    const k = c.indexOf('color(') === 0 ? 255 : 1;
+    const dark = (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) * k / 255 < 0.45;
+    root.classList.toggle('theme-dark', dark);
+    root.classList.toggle('theme-light', !dark);
+    if (btnTheme) btnTheme.setAttribute('aria-pressed', String(dark));
+    if (themeLabel) themeLabel.textContent = dark ? 'Light Theme' : 'Dark Theme';
+  })();
+  const statFps = root.querySelector('.stat-fps');
+  const statRipples = root.querySelector('.stat-ripples');
 
   let width = 0;
   let height = 0;
@@ -130,8 +146,9 @@
 
   if (btnTheme) {
     btnTheme.addEventListener('click', () => {
-      const isDark = document.body.classList.toggle('theme-dark');
-      document.body.classList.toggle('theme-light', !isDark);
+      const isDark = root.classList.toggle('theme-dark');
+      root.classList.toggle('theme-light', !isDark);
+      btnTheme.setAttribute('aria-pressed', String(isDark));
       themeLabel.textContent = isDark ? 'Light Theme' : 'Dark Theme';
     });
   }
@@ -164,7 +181,7 @@
 
     ctx.clearRect(0, 0, width, height);
 
-    const isDark = document.body.classList.contains('theme-dark');
+    const isDark = root.classList.contains('theme-dark');
     const centerX = width / 2;
     const centerY = height / 2;
 
@@ -261,4 +278,4 @@
   }
 
   requestAnimationFrame(render);
-})();
+});

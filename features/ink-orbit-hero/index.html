@@ -3,11 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ink Orbit Hero</title>
+  <title>Orbiting Ink Hero</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="io-hero" id="ioHero">
+    <canvas class="io-canvas" id="ioCanvas" aria-hidden="true"></canvas>
+    <header class="io-bar"><span class="io-brand">orbit&middot;ink</span><nav aria-label="Main"><a href="#">Work</a><a href="#">Notes</a><a href="#">Contact</a></nav></header>
+    <div class="io-copy">
+      <p class="io-tag">Drawn by hand, moving by itself</p>
+      <h1 class="io-h1">Ideas circle until they land</h1>
+      <p class="io-lede">A calm hero where small ink dots keep orbiting the words, leaving soft trails on the paper.</p>
+      <div class="io-actions"><a class="io-btn" href="#">Start a project</a><a class="io-ghost" href="#">See the sketches</a></div>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

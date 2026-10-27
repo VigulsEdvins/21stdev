@@ -2,15 +2,14 @@
   "name": "Full-Screen Parallax Footer Reveal",
   "slug": "fullscreen-parallax-footer",
   "category": "Footers & Endings",
-  "source": "vivmgmt",
+  "source": "edvlabs",
   "type": "component",
   "description": "Uncovering full-screen parallax footer with cursor-tracking hover image previews and dynamic ambient background color transitions.",
   "tags": [
     "footer",
     "parallax",
     "hover-reveal",
-    "color-shift",
-    "vivmgmt"
+    "color-shift"
   ],
   "tech": [
     "Vanilla JS",
@@ -31,12 +30,12 @@
   "industry": [
     "general"
   ],
-  "needsAssets": true,
+  "needsAssets": false,
   "origin": {
-    "source": "vivmgmt",
+    "source": "edvlabs",
     "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "footer-text-1",

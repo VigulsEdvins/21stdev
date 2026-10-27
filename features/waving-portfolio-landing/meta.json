@@ -1,30 +1,26 @@
 {
-  "name": "Waving Portfolio Landing",
-  "title": "Waving Portfolio Landing",
+  "name": "Poster Portfolio Landing",
+  "title": "Poster Portfolio Landing",
   "slug": "waving-portfolio-landing",
   "category": "Galleries & Bento",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A red-on-paper poster landing page with a cinematic intro. The poster reads as two rows of tall condensed capitals sharing one giant letter: **P [O] RT / F [O] LIO**, with an ink-drawn character leaning out of the gap.",
+  "description": "A green-on-sand poster landing page with big condensed capitals, a waving hand in the gap, a work list and contact footer.",
   "tags": [
-    "waving",
     "portfolio",
     "landing",
-    "21st.dev",
-    "galleries",
-    "react"
+    "poster",
+    "typography",
+    "illustration"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "SVG",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 248,
   "legacyCategory": "Galleries & Portfolios",
   "status": "stable",
@@ -39,35 +35,36 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "https://21st.dev/@kedhareswer",
-    "note": "License field on the 21st.dev component page, checked 2026-10-24; keep the author's MIT notice"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "headline",
-      "label": "Headline",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope h1.wpl-sr"
+      "selector": ":scope .pw-small"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.wpl-sr"
+      "selector": ":scope .pw-intro"
+    },
+    {
+      "id": "section-heading-1",
+      "label": "Work heading",
+      "type": "text",
+      "selector": ":scope .pw-h2"
+    },
+    {
+      "id": "footer-link-1",
+      "label": "Email link",
+      "type": "link",
+      "selector": ":scope .pw-mail"
     }
   ],
-  "measured": {
-    "luma": 0.91,
-    "webgl": false,
-    "canvas2d": false
-  },
   "reserveHeight": 800,
-  "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  "palette": "designed"
 }

@@ -3,11 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index List Carousel</title>
+  <title>Poster Index List</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="pi-wrap">
+    <div class="pi-pic" id="piPic" aria-hidden="true"></div>
+    <div class="pi-side">
+      <header class="pi-head"><span class="pi-small">Print series</span><span class="pi-tot" id="piTot">06</span></header>
+      <ol class="pi-list" id="piList">
+        <li class="is-on"><button type="button" aria-current="true"><span class="pi-n">01</span><span class="pi-t">Ember Drift</span><span class="pi-c">Warm gradients over a slow desert horizon.</span></button></li>
+        <li><button type="button"><span class="pi-n">02</span><span class="pi-t">Tidal Chart</span><span class="pi-c">Layered waves printed in two blues and sand.</span></button></li>
+        <li><button type="button"><span class="pi-n">03</span><span class="pi-t">Orchard Grid</span><span class="pi-c">Fruit circles on a quiet green lattice.</span></button></li>
+        <li><button type="button"><span class="pi-n">04</span><span class="pi-t">Night Arches</span><span class="pi-c">Stacked arches glowing against deep violet.</span></button></li>
+        <li><button type="button"><span class="pi-n">05</span><span class="pi-t">Paper Sun</span><span class="pi-c">A cut-paper sun above folded hills.</span></button></li>
+        <li><button type="button"><span class="pi-n">06</span><span class="pi-t">Signal Bars</span><span class="pi-c">Bold stripes that vibrate when you look twice.</span></button></li>
+      </ol>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

@@ -3,11 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ink Orbit Features</title>
+  <title>Feature Bento Cards</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="root"></div>
+  <section class="fb-sec" id="fbSec">
+    <header class="fb-head">
+      <span class="fb-tag">Features</span>
+      <h2 class="fb-h2">Quiet automation for <span>busy teams</span></h2>
+      <p class="fb-intro">Three small tools that remove the busywork between an idea and a finished report.</p>
+    </header>
+
+    <div class="fb-grid">
+      <article class="fb-card fb-wide">
+        <div class="fb-art">
+          <svg viewBox="0 0 360 150" class="fb-svg" aria-hidden="true">
+            <g class="fb-links"><path d="M180 75L70 30M180 75L60 95M180 75L120 130M180 75L290 40M180 75L300 110" /></g>
+            <g class="fb-pulses"><circle r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" path="M70 30L180 75" /></circle><circle r="3.5"><animateMotion dur="2.6s" begin="-1s" repeatCount="indefinite" path="M60 95L180 75" /></circle><circle r="3.5"><animateMotion dur="3.6s" begin="-2s" repeatCount="indefinite" path="M180 75L290 40" /></circle><circle r="3.5"><animateMotion dur="2.9s" begin="-.5s" repeatCount="indefinite" path="M180 75L300 110" /></circle></g>
+            <g class="fb-people">
+              <circle cx="70" cy="30" r="16" /><text x="70" y="35" text-anchor="middle">AK</text>
+              <circle cx="60" cy="95" r="16" /><text x="60" y="100" text-anchor="middle">JM</text>
+              <circle cx="120" cy="130" r="14" /><text x="120" y="135" text-anchor="middle">RS</text>
+              <circle cx="290" cy="40" r="16" /><text x="290" y="45" text-anchor="middle">TL</text>
+              <circle cx="300" cy="110" r="14" /><text x="300" y="115" text-anchor="middle">NB</text>
+            </g>
+            <g class="fb-hub"><circle cx="180" cy="75" r="26" /><circle cx="180" cy="75" r="26" class="fb-ring" /><path d="M170 75h20M180 65v20" /></g>
+          </svg>
+        </div>
+        <h3>Everyone on the same page</h3>
+        <p>Edits, comments and status changes arrive for the whole team as they happen, with no refresh.</p>
+      </article>
+
+      <article class="fb-card">
+        <div class="fb-art">
+          <div class="fb-bars" aria-hidden="true"><i style="--h:35%"></i><i style="--h:58%"></i><i style="--h:42%"></i><i style="--h:76%"></i><i style="--h:64%"></i><i style="--h:92%"></i></div>
+        </div>
+        <h3>Reports that write themselves</h3>
+        <p>Pick a range and get a clean summary with the numbers already in the right place.</p>
+      </article>
+
+      <article class="fb-card">
+        <div class="fb-art">
+          <ul class="fb-steps" aria-hidden="true"><li>Collect data</li><li>Check values</li><li>Send summary</li></ul>
+        </div>
+        <h3>Flows you can read</h3>
+        <p>Chain steps in plain words. Each one lights up as it finishes so you see where it stands.</p>
+      </article>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>

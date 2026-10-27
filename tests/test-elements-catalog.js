@@ -44,13 +44,21 @@ const pricingFeatures = registry.items.filter(f => matchesCategory(f, 'Pricing &
 assert(pricingFeatures.length >= 3, `Pricing & Tables must contain at least 3 features, got ${pricingFeatures.length}`);
 assert(pricingFeatures.some(f => f.slug === 'pricing-table-switch'), 'pricing-table-switch must be in Pricing & Tables');
 assert(pricingFeatures.some(f => f.slug === 'ink-orbit-pricing'), 'ink-orbit-pricing must be in Pricing & Tables');
-assert(pricingFeatures.some(f => f.slug === 'constellation-turntable'), 'constellation-turntable must be in Pricing & Tables');
+assert(pricingFeatures.some(f => f.slug === 'plan-comparison-matrix'), 'plan-comparison-matrix must be in Pricing & Tables');
+assert(!pricingFeatures.some(f => f.slug === 'constellation-turntable'), 'the record player is not a pricing component');
 
 const buttonFeatures = registry.items.filter(f => matchesCategory(f, 'Buttons & UI'));
 assert(buttonFeatures.length >= 9, `Buttons & UI must contain at least 9 features, got ${buttonFeatures.length}`);
 
 const carouselFeatures = registry.items.filter(f => matchesCategory(f, '3D & Carousels'));
-assert.strictEqual(carouselFeatures.length, 22, `3D & Carousels must contain 22 features, got ${carouselFeatures.length}`);
+assert.strictEqual(carouselFeatures.length, 21, `3D & Carousels must contain 21 features, got ${carouselFeatures.length}`);
+
+// Full websites (own pages and CMS) are told apart from landing pages (a whole page in one section)
+const websites = registry.items.filter(f => matchesCategory(f, 'Full Websites')).map(f => f.slug).sort();
+assert.deepStrictEqual(websites, ['template-arena', 'template-cvmaker', 'template-mom', 'template-roster', 'template-yearbook'], 'Full Websites are exactly the five sites with a live site and CMS');
+assert(registry.items.filter(f => f.type === 'template').every(f => f.liveSiteUrl), 'only full websites have type template');
+const landing = registry.items.filter(f => matchesCategory(f, 'Landing Pages'));
+assert(landing.length >= 25 && !landing.some(f => f.liveSiteUrl), 'Landing Pages hold the single-section page designs, none of them a full website');
 
 const allFeatures = registry.items.filter(f => matchesCategory(f, 'all'));
 assert.strictEqual(allFeatures.length, registry.items.length, 'The All category must hold every feature in the registry');

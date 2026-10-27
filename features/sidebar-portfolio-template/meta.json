@@ -1,30 +1,25 @@
 {
-  "name": "Sidebar Portfolio Template",
-  "title": "Sidebar Portfolio Template",
+  "name": "Sidebar Folio Page",
+  "title": "Sidebar Folio Page",
   "slug": "sidebar-portfolio-template",
-  "category": "Full Templates",
-  "source": "21st.dev",
-  "type": "template",
-  "description": "A complete one-page portfolio in a single file. It's quiet and minimal: warm paper, serif headings, one accent colour. A profile sidebar sticks on the left, and the reading column holds everything else:",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "A one-page portfolio with a sticky profile sidebar and a reading column of work, path, notes and contact.",
   "tags": [
-    "sidebar",
     "portfolio",
-    "template",
-    "21st.dev",
-    "full",
-    "react"
+    "sidebar",
+    "landing",
+    "editorial",
+    "minimal"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 223,
   "legacyCategory": "Full Templates",
   "status": "stable",
@@ -39,88 +34,58 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "section-heading-1",
-      "label": "Section heading 1",
+      "label": "Name",
       "type": "text",
-      "selector": ":scope h2.spt-name"
+      "selector": ":scope .sf-name"
     },
     {
       "id": "paragraph-1",
-      "label": "Paragraph 1",
+      "label": "Role",
       "type": "text",
-      "selector": ":scope p.spt-role"
+      "selector": ":scope .sf-role"
     },
     {
       "id": "paragraph-2",
-      "label": "Paragraph 2",
+      "label": "Bio",
       "type": "text",
-      "selector": ":scope p.spt-bio"
+      "selector": ":scope .sf-bio"
+    },
+    {
+      "id": "small-label",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .sf-label"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.spt-h1"
+      "selector": ":scope h1.sf-h1"
     },
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope p.spt-tagline"
+      "selector": ":scope .sf-tagline"
     },
     {
-      "id": "section-heading-2",
-      "label": "Section heading 2",
+      "id": "button-text",
+      "label": "Button text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .sf-cta"
     },
     {
-      "id": "link-1",
-      "label": "Link 1",
+      "id": "button-link",
+      "label": "Button link",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "link-2",
-      "label": "Link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
-    },
-    {
-      "id": "link-3",
-      "label": "Link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)"
-    },
-    {
-      "id": "paragraph-3",
-      "label": "Paragraph 3",
-      "type": "text",
-      "selector": ":scope p.spt-label"
-    },
-    {
-      "id": "section-heading-3",
-      "label": "Section heading 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .sf-cta"
     }
-  ],
-  "measured": {
-    "luma": 0.94,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "palette": "designed",
-  "paletteNote": "The palette comes in as component props with named presets (see the demo-*.tsx files), so the page theme is chosen per use, not by the theme engine"
+  ]
 }

@@ -184,7 +184,7 @@
         }
 
         const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
-        const fullDoc = window.Assembler.assemblePreviewDocument(state.stack, themeConfig, featuresData);
+        const fullDoc = window.Assembler.assemblePreviewDocument(state.stack, themeConfig, featuresData, { embedSites: true });
 
         try {
           const blob = new Blob([fullDoc], { type: 'text/html;charset=utf-8' });

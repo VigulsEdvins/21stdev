@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Content editor</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="cms-layout" id="cms-layout">
+    <aside class="cms-sidebar" aria-label="Sections">
+      <div class="cms-brand">
+        <a href="index.html" class="cms-brand-link" id="cms-site-link" title="Back to the website">
+          <span class="cms-brand-mark" aria-hidden="true">e</span>
+          <span class="cms-brand-name" id="cms-site-name">Website</span>
+        </a>
+        <span class="cms-badge">CMS</span>
+      </div>
+      <label class="cms-page-pick" id="cms-page-pick" hidden>
+        <span>Page</span>
+        <select id="cms-page-select"></select>
+      </label>
+      <nav class="cms-nav" id="cms-nav" aria-label="Page sections"></nav>
+      <div class="cms-nav-foot">
+        <button type="button" class="cms-nav-item" id="cms-nav-backup" data-tab="__backup">
+          <span class="cms-nav-title">Publishing &amp; backup</span>
+        </button>
+        <a class="cms-nav-item cms-nav-link" id="cms-view-site" href="index.html" target="_blank" rel="noopener">
+          <span class="cms-nav-title">View website &#8599;</span>
+        </a>
+      </div>
+    </aside>
+
+    <div class="cms-main">
+      <header class="cms-topbar">
+        <div class="cms-topbar-title">
+          <h1 id="cms-title">Content</h1>
+          <span class="cms-pill" id="cms-pill">Published</span>
+        </div>
+        <div class="cms-topbar-actions">
+          <input type="search" id="cms-search" class="cms-input cms-search" placeholder="Find a field" aria-label="Find a field in this section">
+          <button type="button" class="cms-btn cms-btn-ghost" id="cms-undo" title="Undo (Ctrl+Z)" disabled>&#8630; Undo</button>
+          <button type="button" class="cms-btn cms-btn-ghost" id="cms-redo" title="Redo (Ctrl+Y)" disabled>&#8631; Redo</button>
+          <button type="button" class="cms-btn cms-btn-ghost" id="cms-toggle-preview" aria-pressed="true">Preview</button>
+          <button type="button" class="cms-btn cms-btn-primary" id="cms-publish" title="Publish changes (Ctrl+S)" disabled>Published</button>
+        </div>
+      </header>
+
+      <div class="cms-workspace" id="cms-workspace">
+        <main class="cms-editor" id="cms-editor" aria-live="polite"></main>
+        <section class="cms-preview" id="cms-preview" aria-label="Live preview">
+          <div class="cms-preview-bar">
+            <span class="cms-preview-label">Live preview &middot; click anything to edit it</span>
+            <div class="cms-viewports" role="group" aria-label="Preview width">
+              <button type="button" class="cms-vp is-active" data-vp="desktop">Desktop</button>
+              <button type="button" class="cms-vp" data-vp="tablet">768</button>
+              <button type="button" class="cms-vp" data-vp="mobile">375</button>
+            </div>
+            <button type="button" class="cms-btn cms-btn-ghost cms-btn-sm" id="cms-reload-preview" title="Reload the preview">&#8635;</button>
+          </div>
+          <div class="cms-stage" id="cms-stage" data-vp="desktop">
+            <iframe id="cms-frame" title="Website preview"></iframe>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="cms-modal-backdrop" id="cms-media" role="dialog" aria-modal="true" aria-labelledby="cms-media-title" hidden>
+    <div class="cms-modal">
+      <header class="cms-modal-head">
+        <h2 id="cms-media-title">Choose a picture</h2>
+        <button type="button" class="cms-modal-close" id="cms-media-close" aria-label="Close">&times;</button>
+      </header>
+      <div class="cms-modal-tools">
+        <label class="cms-btn cms-btn-primary">
+          Upload from this device
+          <input type="file" id="cms-upload" accept="image/*" hidden>
+        </label>
+        <div class="cms-url-row">
+          <input type="text" id="cms-media-url" class="cms-input" placeholder="Or paste a picture address" aria-label="Picture address" autocomplete="off">
+          <button type="button" class="cms-btn cms-btn-ghost" id="cms-media-use">Use address</button>
+        </div>
+      </div>
+      <div class="cms-media-grid" id="cms-media-grid"></div>
+    </div>
+  </div>
+
+  <div class="cms-toast" id="cms-toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="cms-content.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -17,6 +17,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 
   // content edit
   await page.click('#tabContentBtn');
+  await page.evaluate(() => { document.querySelector('.quick-edit').open = true; });
   await page.waitForSelector('#contentFields .content-field');
   const headline = page.locator('#contentFields .content-field', { hasText: 'Headline' }).locator('input, textarea').first();
   const original = await headline.inputValue();

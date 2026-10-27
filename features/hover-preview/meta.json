@@ -1,26 +1,24 @@
 {
-  "name": "Cursor Hover Link Preview",
-  "title": "Cursor Hover Link Preview",
+  "name": "Cursor Preview List",
+  "title": "Cursor Preview List",
   "slug": "hover-preview",
   "category": "Interactions & Physics",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "Smooth cursor-following floating image card preview component that displays previews above text links.",
+  "description": "Editorial project list where hovering a row shows a small floating preview card that glides after the cursor.",
   "tags": [
-    "cursor",
     "hover",
     "preview",
-    "floating",
-    "21st.dev"
+    "list",
+    "cursor",
+    "portfolio"
   ],
   "tech": [
-    "React",
-    "Tailwind CSS",
-    "Framer Motion"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React",
-    "Tailwind CSS"
+    "Vanilla HTML/CSS/JS"
   ],
   "order": 47,
   "legacyCategory": "Cursors & Physics",
@@ -35,35 +33,47 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "permission",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "note": "Written permission from the author, reported by the project owner 2026-10-24; exact terms not recorded"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
       "id": "intro-text",
       "label": "Intro text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .cp-intro"
     },
     {
-      "id": "paragraph",
-      "label": "Paragraph",
+      "id": "project-1",
+      "label": "Project 1",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)"
+      "selector": ":scope .cp-list li:nth-of-type(1) .cp-name"
+    },
+    {
+      "id": "project-2",
+      "label": "Project 2",
+      "type": "text",
+      "selector": ":scope .cp-list li:nth-of-type(2) .cp-name"
+    },
+    {
+      "id": "project-3",
+      "label": "Project 3",
+      "type": "text",
+      "selector": ":scope .cp-list li:nth-of-type(3) .cp-name"
+    },
+    {
+      "id": "project-4",
+      "label": "Project 4",
+      "type": "text",
+      "selector": ":scope .cp-list li:nth-of-type(4) .cp-name"
+    },
+    {
+      "id": "project-5",
+      "label": "Project 5",
+      "type": "text",
+      "selector": ":scope .cp-list li:nth-of-type(5) .cp-name"
     }
-  ],
-  "measured": {
-    "luma": 0.04,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "nativeWhen": [
-    "light"
   ],
   "reserveHeight": 800
 }

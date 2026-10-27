@@ -1,80 +1,45 @@
-/**
- * Lightweight Client-Side Multilingual Dictionary & Reactive Switcher
- * Extracted from Margarita Vigule portfolio (i18n.js)
- */
 (function () {
-  const STORAGE_KEY = 'vigule_preferred_lang_v1';
-
-  const DICTIONARY = {
-    lv: {
-      'hero.tag': 'PORTFOLIO • 2026',
-      'hero.title': 'Tverot patiesus mirkļus, sporta dinamiku un kultūras notikumus.',
-      'hero.desc': 'Profesionāla fotogrāfe no Daugavpils. Specializējos sporta reportāžās, komerciālajā fotogrāfijā un ekspresīvos portretos visā Latvijā un Eiropā.',
-      'actions.viewWork': 'Skatīt visus darbus',
-      'actions.contact': 'Sazināties ar studiju'
-    },
-    en: {
-      'hero.tag': 'PORTFOLIO • 2026',
-      'hero.title': 'Capturing genuine moments, sports action, and cultural events.',
-      'hero.desc': 'Professional photographer based in Daugavpils, Latvia. Specializing in high-speed sports action, commercial editorial, and expressive portraiture across Europe.',
-      'actions.viewWork': 'Explore All Work',
-      'actions.contact': 'Contact Studio'
-    },
-    ru: {
-      'hero.tag': 'ПОРТФОЛИО • 2026',
-      'hero.title': 'Искренние моменты, динамика спорта и культурные события.',
-      'hero.desc': 'Профессиональный фотограф из Даугавпилса. Специализируюсь на спортивном экшене, коммерческой съёмке и выразительных портретах.',
-      'actions.viewWork': 'Смотреть все работы',
-      'actions.contact': 'Связаться со студией'
-    }
+  var DICT = {
+    en: { work: 'Work', about: 'About', contact: 'Contact' },
+    de: { work: 'Arbeiten', about: 'Über uns', contact: 'Kontakt' },
+    es: { work: 'Trabajos', about: 'Nosotros', contact: 'Contacto' }
   };
-
-  let currentLang = 'lv';
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && DICTIONARY[saved]) currentLang = saved;
-  } catch (_) {}
-
-  const buttons = document.querySelectorAll('.lang-btn');
-  const elements = document.querySelectorAll('[data-i18n]');
-  const debugEl = document.getElementById('localeDebug');
-
-  function updateLanguage(newLang) {
-    if (!DICTIONARY[newLang]) return;
-    currentLang = newLang;
-    try {
-      localStorage.setItem(STORAGE_KEY, newLang);
-    } catch (_) {}
-
-    buttons.forEach((btn) => {
-      btn.classList.toggle('active', btn.getAttribute('data-lang') === newLang);
-    });
-
-    elements.forEach((el) => {
-      el.classList.add('fade-out');
-    });
-
-    setTimeout(() => {
-      elements.forEach((el) => {
-        const key = el.getAttribute('data-i18n');
-        if (DICTIONARY[newLang][key]) {
-          el.textContent = DICTIONARY[newLang][key];
-        }
-        el.classList.remove('fade-out');
-      });
-
-      if (debugEl) {
-        debugEl.innerHTML = `ACTIVE LOCALE: <strong>${newLang.toUpperCase()}</strong> (Saved in localStorage)`;
+  Array.prototype.forEach.call(document.querySelectorAll('.lsw-demo'), function (root) {
+    if (root.getAttribute('data-lsw-ready')) return;
+    root.setAttribute('data-lsw-ready', '1');
+    var btn = root.querySelector('.lsw-current');
+    var menu = root.querySelector('.lsw-menu');
+    var code = root.querySelector('.lsw-code');
+    var opts = Array.prototype.slice.call(menu.querySelectorAll('[role=option]'));
+    function setOpen(open, focusFirst) {
+      btn.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      if (open) {
+        var sel = opts.filter(function (o) { return o.getAttribute('aria-selected') === 'true'; })[0] || opts[0];
+        if (focusFirst) sel.focus();
       }
-    }, 180);
-  }
-
-  buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-lang');
-      if (target !== currentLang) updateLanguage(target);
+    }
+    function choose(lang) {
+      var d = DICT[lang] || DICT.en;
+      opts.forEach(function (o) { o.setAttribute('aria-selected', String(o.getAttribute('data-lang') === lang)); });
+      code.textContent = lang.toUpperCase();
+      root.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = d[el.getAttribute('data-i18n')] || el.textContent; });
+      var h = root.closest('html') || document.documentElement;
+      root.setAttribute('data-lang', lang);
+    }
+    btn.addEventListener('click', function () { setOpen(menu.hidden, true); });
+    btn.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true, true); } });
+    opts.forEach(function (o, i) {
+      o.addEventListener('click', function () { choose(o.getAttribute('data-lang')); setOpen(false); btn.focus(); });
+      o.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown') { e.preventDefault(); opts[(i + 1) % opts.length].focus(); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); opts[(i - 1 + opts.length) % opts.length].focus(); }
+        else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); o.click(); }
+        else if (e.key === 'Escape') { setOpen(false); btn.focus(); }
+        else if (e.key === 'Tab') setOpen(false);
+      });
     });
+    root.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { setOpen(false); btn.focus(); } });
+    document.addEventListener('click', function (e) { if (!root.contains(e.target)) setOpen(false); });
   });
-
-  updateLanguage(currentLang);
 })();

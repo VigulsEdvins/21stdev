@@ -9,6 +9,18 @@
   const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'SVG', 'NOSCRIPT', 'CANVAS', 'IFRAME', 'TEMPLATE']);
   const TEXT_CANDIDATES = 'h1,h2,h3,h4,h5,h6,p,a,button,li,figcaption,blockquote,label,span,div,td,th,dt,dd';
   const TAG_LABELS = { h1: 'Heading 1', h2: 'Heading 2', h3: 'Heading 3', h4: 'Heading 4', h5: 'Heading 5', h6: 'Heading 6', p: 'Paragraph', a: 'Link text', button: 'Button', li: 'List item', figcaption: 'Caption', blockquote: 'Quote', label: 'Label' };
+  // Same list as the admin panel (scripts/cms/admin.js)
+  const CURRENCIES = [
+    ['$', 'US dollar'], ['€', 'Euro'], ['£', 'British pound'], ['¥', 'Yen / Yuan'], ['₹', 'Indian rupee'], ['CHF', 'Swiss franc'],
+    ['kr', 'Krona / Krone'], ['zł', 'Polish złoty'], ['Kč', 'Czech koruna'], ['Ft', 'Hungarian forint'], ['₽', 'Russian ruble'], ['₺', 'Turkish lira'],
+    ['₩', 'Korean won'], ['R$', 'Brazilian real'], ['A$', 'Australian dollar'], ['C$', 'Canadian dollar'], ['₪', 'Israeli shekel'], ['AED', 'UAE dirham']
+  ];
+  /** Digits with one decimal sign (. or ,): what a price may contain. */
+  function onlyNumber(v) {
+    const s = String(v).replace(/[^0-9.,]/g, '');
+    const i = s.search(/[.,]/);
+    return i < 0 ? s : s.slice(0, i + 1) + s.slice(i + 1).replace(/[.,]/g, '');
+  }
   const MAX_TEXT_FIELDS = 14;
   const MAX_IMAGE_FIELDS = 6;
   const MAX_LINK_FIELDS = 6;
@@ -41,6 +53,8 @@
   function isHidden(el, rootEl) {
     for (let node = el; node && node !== rootEl; node = node.parentElement) {
       if (SKIP_TAGS.has(node.tagName.toUpperCase())) return true;
+      // a component marks text its own script rewrites (a computed price, a counter) so it is not offered for editing
+      if (node.hasAttribute && node.hasAttribute('data-cms-skip')) return true;
       if (node.classList && (node.classList.contains('section-overlay-layer') || node.classList.contains('section-resize-handle'))) return true;
       if (node.getAttribute && node.getAttribute('aria-hidden') === 'true') return true;
     }
@@ -88,6 +102,8 @@
     const maxImages = opts.limit || MAX_IMAGE_FIELDS;
     const maxLinks = opts.limit || MAX_LINK_FIELDS;
     const fields = [];
+    const named = [];
+    const taken = (el) => (opts.skip || []).some(u => u === el || u.contains(el) || el.contains(u));
 
     if (Array.isArray(explicit) && explicit.length) {
       explicit.forEach(def => {
@@ -97,29 +113,36 @@
         const type = def.type || 'text';
         const current = type === 'image' ? (el.getAttribute('src') || '') : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? currentColor(el, def.attr || 'color') : el.textContent.trim();
         fields.push({ id: def.id, label: def.label || def.id, type, selector: def.selector, attr: def.attr, current, auto: false });
+        if (type !== 'color') named.push(el); // a colour field styles a whole block; its content stays editable
       });
+      // Named fields come first. Everything else the section shows (prices, list items, badges) is added after them,
+      // so a curated list never hides content a client needs to change.
+      if (!opts.namedOnly) return fields.concat(discoverFields(sectionEl, null, { ...opts, skip: named }));
       return fields;
     }
 
     let textCount = 0;
     const collected = [];
     sectionEl.querySelectorAll(TEXT_CANDIDATES).forEach(el => {
-      if (textCount >= maxText || isHidden(el, sectionEl) || !isTextLeaf(el)) return;
+      if (textCount >= maxText || isHidden(el, sectionEl) || !isTextLeaf(el) || taken(el)) return;
       // Parents come first in document order: an element inside one we already list is part of its text
       if (collected.some(c => c.contains(el))) return;
       const text = el.textContent.replace(/\s+/g, ' ').trim();
-      if (text.length < 2 || text.length > 220) return;
+      if ((text.length < 2 && !/^[0-9%]$/.test(text) && !CURRENCIES.some(c => c[0] === text)) || text.length > 220) return;
       // Skip wrappers whose text is fully inside a child we will list anyway
       if (el.children.length && Array.from(el.children).some(c => c.textContent.trim() === text && !INLINE_TAGS.has(c.tagName))) return;
       const selector = selectorFor(el, sectionEl);
       collected.push(el);
-      fields.push({ id: `auto-${shortHash(selector + 'text')}`, label: `${TAG_LABELS[el.tagName.toLowerCase()] || 'Text'}: ${snippet(text)}`, type: 'text', selector, current: text, auto: true });
+      // a lone currency sign becomes a currency choice, a plain number a numbers-only field
+      const isCur = CURRENCIES.some(c => c[0] && c[0] === text);
+      const isNum = !isCur && /^[0-9]+([.,][0-9]+)?$/.test(text) && text.length <= 8;
+      fields.push({ id: `auto-${shortHash(selector + 'text')}`, label: isCur ? 'Currency' : isNum ? `Number: ${text}` : `${TAG_LABELS[el.tagName.toLowerCase()] || 'Text'}: ${snippet(text)}`, type: isCur ? 'currency' : isNum ? 'number' : 'text', selector, current: text, auto: true });
       textCount++;
     });
 
     let imgCount = 0;
     sectionEl.querySelectorAll('img').forEach(img => {
-      if (imgCount >= maxImages || isHidden(img, sectionEl)) return;
+      if (imgCount >= maxImages || isHidden(img, sectionEl) || taken(img)) return;
       const src = img.getAttribute('src') || '';
       if (!src) return;
       const selector = selectorFor(img, sectionEl);
@@ -129,7 +152,7 @@
 
     let linkCount = 0;
     sectionEl.querySelectorAll('a[href]').forEach(a => {
-      if (linkCount >= maxLinks || isHidden(a, sectionEl)) return;
+      if (linkCount >= maxLinks || isHidden(a, sectionEl) || taken(a)) return;
       const selector = selectorFor(a, sectionEl);
       fields.push({ id: `auto-${shortHash(selector + 'link')}`, label: `Link to: ${snippet(a.textContent || a.getAttribute('href'), 28)}`, type: 'link', selector, current: a.getAttribute('href') || '', auto: true });
       linkCount++;
@@ -539,7 +562,18 @@
           </label>
           ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}" /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><label class="ps-field content-alt"><span>Picture description (alt text)</span><input type="text" class="content-alt-input" autocomplete="off" maxlength="200" placeholder="Describe what the picture shows" /></label><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above. The description is read by screen readers and search engines.</p>` : ''}
           ${ov ? '<button type="button" class="content-reset">Reset to original</button>' : ''}`;
-        const input = wrap.querySelector('textarea, input:not([type=file])');
+        let input = wrap.querySelector('textarea, input:not([type=file])');
+        if (f.type === 'currency') {
+          const sel = doc.createElement('select');
+          sel.className = 'builder-select';
+          if (!CURRENCIES.some(c => c[0] === value)) sel.innerHTML = `<option value="${escapeHtml(value)}">${escapeHtml(value)}  (current)</option>`;
+          sel.insertAdjacentHTML('beforeend', CURRENCIES.map(c => `<option value="${escapeHtml(c[0])}">${escapeHtml(c[0] || '–')}  ${escapeHtml(c[1])}</option>`).join(''));
+          input.replaceWith(sel);
+          input = sel;
+        } else if (f.type === 'number') {
+          input.inputMode = 'decimal';
+          input.addEventListener('input', () => { const clean = onlyNumber(input.value); if (clean !== input.value) input.value = clean; });
+        }
         input.value = isData ? '(uploaded image)' : value;
         // links can point at another page of a multi-page site (stored as "page:<id>", resolved to a file name on export)
         const sitePages = f.type === 'link' ? sm.getPages() : [];
@@ -644,7 +678,7 @@
     };
   }
 
-  const api = { create, discoverFields, selectorFor };
+  const api = { create, discoverFields, selectorFor, onlyNumber };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.BuilderExtras = api;
 })(typeof window !== 'undefined' ? window : globalThis);

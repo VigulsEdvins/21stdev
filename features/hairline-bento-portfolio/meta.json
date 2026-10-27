@@ -1,30 +1,25 @@
 {
-  "name": "Hairline Bento Portfolio",
-  "title": "Hairline Bento Portfolio",
+  "name": "Ruled Bento Sheet",
+  "title": "Ruled Bento Sheet",
   "slug": "hairline-bento-portfolio",
   "category": "Galleries & Bento",
-  "source": "21st.dev",
+  "source": "edvlabs",
   "type": "component",
-  "description": "A whole link-in-bio portfolio on one sheet. Cells sit on warm paper, divided by one-pixel rules, with a stretched black display name and one inverted panel for the thing you're launching. It's minimal, but every cell does something.",
+  "description": "A one-sheet portfolio of cells divided by hairline rules, with a live clock, a launch countdown, counters and toggle chips.",
   "tags": [
-    "hairline",
     "bento",
     "portfolio",
-    "21st.dev",
-    "galleries",
-    "react"
+    "hairline",
+    "minimal",
+    "grid"
   ],
   "tech": [
-    "React",
-    "TypeScript",
-    "Tailwind CSS",
-    "CSS Physics"
+    "CSS",
+    "Vanilla JS"
   ],
   "dependencies": [
-    "React (.tsx included)",
     "Vanilla HTML/CSS/JS"
   ],
-  "author": "kedhareswer",
   "order": 158,
   "legacyCategory": "Galleries & Portfolios",
   "status": "stable",
@@ -38,95 +33,60 @@
   ],
   "needsAssets": false,
   "origin": {
-    "source": "21st.dev",
-    "license": "MIT",
-    "termsNote": "21st.dev Terms read on 2026-10-24: community components remain the property of their authors, may be used 'solely through the official 21st.dev platform', and may not be redistributed or licensed on. Unless the component's own licence (MIT etc.) is shown on its 21st.dev page, get the author's written permission before using it for a client.",
-    "termsUrl": "https://21st.dev/terms",
-    "verifiedAt": "2026-10-24",
-    "url": "docs/licence-audit/kedhareswer-permission.md",
-    "note": "Written permission from Kedhareswer Naidu under MIT terms, 2026-10-24; credit appreciated"
+    "source": "edvlabs",
+    "license": "own"
   },
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-25",
   "customizable": [
     {
-      "id": "paragraph",
-      "label": "Paragraph",
+      "id": "small-label",
+      "label": "Small label",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)"
+      "selector": ":scope .hn-name-cell .hn-small"
     },
     {
       "id": "headline",
       "label": "Headline",
       "type": "text",
-      "selector": ":scope h1.hb-name"
+      "selector": ":scope h1.hn-name"
+    },
+    {
+      "id": "intro-text",
+      "label": "Intro text",
+      "type": "text",
+      "selector": ":scope .hn-text"
     },
     {
       "id": "section-heading-1",
-      "label": "Section heading 1",
+      "label": "Launch title",
       "type": "text",
-      "selector": ":scope h2.hb-offer-title"
+      "selector": ":scope h2.hn-launch-title"
+    },
+    {
+      "id": "button-text",
+      "label": "Button text",
+      "type": "text",
+      "selector": ":scope .hn-btn"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope .hn-btn"
     },
     {
       "id": "section-heading-2",
-      "label": "Section heading 2",
+      "label": "Work heading",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "button-link-1",
-      "label": "Button link 1",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-3",
-      "label": "Section heading 3",
-      "type": "text",
-      "selector": ":scope h2.hb-head"
-    },
-    {
-      "id": "section-heading-4",
-      "label": "Section heading 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(5) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-5",
-      "label": "Section heading 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(6) > h2:nth-of-type(1)"
-    },
-    {
-      "id": "button-link-2",
-      "label": "Button link 2",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(5) > a:nth-of-type(1)"
-    },
-    {
-      "id": "button-link-3",
-      "label": "Button link 3",
-      "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(6) > a:nth-of-type(1)"
-    },
-    {
-      "id": "section-heading-6",
-      "label": "Section heading 6",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(8) > div:nth-of-type(1) > h2:nth-of-type(1)"
+      "selector": ":scope .hn-work .hn-head"
     },
     {
       "id": "accent-colour",
       "label": "Accent colour",
       "type": "color",
-      "selector": ":scope .hb-root",
-      "attr": "--hb-accent"
+      "selector": ":scope .hn-root",
+      "attr": "--hn-accent"
     }
   ],
-  "measured": {
-    "luma": 0.72,
-    "webgl": false,
-    "canvas2d": false
-  },
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
   "reserveHeight": 1010
 }

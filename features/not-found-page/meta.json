@@ -2,7 +2,7 @@
   "name": "Not Found (404) Page",
   "slug": "not-found-page",
   "title": "Not Found (404) Page",
-  "category": "Heroes",
+  "category": "404 Page",
   "source": "custom",
   "type": "component",
   "description": "A friendly 404 screen with a large status number, a short explanation, a button back home and a few useful links.",

@@ -14,7 +14,7 @@
 .ptw-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); margin: 0; padding: 4px 12px; border-radius: 999px; background: var(--accent, #6366f1); color: #fff; font-size: .75rem; font-weight: 600; white-space: nowrap; }
 .ptw-name { font-family: var(--font-display, inherit); font-size: 1.15rem; margin: 0 0 .75rem; }
 .ptw-price { margin: 0 0 1.25rem; display: flex; align-items: baseline; gap: 6px; }
-.ptw-price::before { content: '$'; font-size: 1.4rem; font-weight: 600; }
+.ptw-cur { font-size: 1.4rem; font-weight: 600; }
 .ptw-amount { font-size: 3rem; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
 .ptw-per { color: color-mix(in srgb, var(--text, #f3f4f6) 62%, transparent); font-size: .9rem; }
 .ptw-list { list-style: none; margin: 0 0 1.75rem; padding: 0; display: grid; gap: .6rem; flex: 1; }
@@ -25,3 +25,5 @@
 .ptw-cta:hover { transform: translateY(-1px); }
 @media (max-width: 860px) { .ptw-grid { grid-template-columns: 1fr; max-width: 440px; } .ptw-card.is-featured { margin-top: 12px; } }
 @media (prefers-reduced-motion: reduce) { .ptw-opt, .ptw-cta { transition: none; } .ptw-cta:hover { transform: none; } }
+.ptw-note { margin: -.6rem 0 1.1rem; min-height: 1.3em; font-size: .85rem; color: var(--accent, #6366f1); }
+html, body { background: var(--bg, #0b0f19); color: var(--text, #f3f4f6); }

@@ -1105,6 +1105,18 @@ select option {
   border: 1px solid rgba(99, 102, 241, 0.3);
 }
 
+.element-scope-badge.scope-landing {
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.element-scope-badge.scope-website {
+  background: rgba(168, 85, 247, 0.18);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
 .element-feature-card {
   display: flex;
   flex-direction: column;
@@ -3237,3 +3249,53 @@ select option {
 .page-tab.is-active { background: rgba(168, 85, 247, .22); color: var(--text-main, var(--text-main)); border-color: var(--accent-primary, #a855f7); }
 .page-actions { display: flex; flex-wrap: wrap; gap: 4px; }
 .page-actions .builder-btn-subtle { font-size: 11.5px; padding: 4px 8px; }
+
+/* In-app confirm dialog (scripts/builder/confirm-dialog.js) */
+.confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(4px);
+}
+.confirm-dialog {
+  width: min(460px, 100%);
+  padding: 22px;
+  border-radius: 14px;
+  background: rgb(var(--ui-panel-rgb));
+  color: var(--ui-ink);
+  border: 1px solid color-mix(in srgb, var(--ui-ink) 14%, transparent);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.5);
+}
+.confirm-title { margin: 0 0 8px; font-size: 17px; font-weight: 700; }
+.confirm-message { margin: 0 0 10px; font-size: 13.5px; line-height: 1.5; color: color-mix(in srgb, var(--ui-ink) 80%, transparent); }
+.confirm-details { margin: 0 0 14px; padding-left: 18px; font-size: 13px; line-height: 1.55; color: color-mix(in srgb, var(--ui-ink) 72%, transparent); }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.confirm-btn {
+  padding: 9px 16px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--ui-ink) 20%, transparent);
+  background: transparent;
+  color: var(--ui-ink);
+}
+.confirm-btn:hover { background: color-mix(in srgb, var(--ui-ink) 8%, transparent); }
+.confirm-btn:focus-visible { outline: 2px solid #a855f7; outline-offset: 2px; }
+.confirm-btn-danger { background: #dc2626; border-color: #dc2626; color: #fff; }
+.confirm-btn-danger:hover { background: #b91c1c; }
+
+/* Admin panel opened from the Content tab */
+.admin-overlay { position: fixed; inset: 0; z-index: 2000; background: #111214; }
+.admin-overlay[hidden] { display: none; }
+.admin-overlay iframe { width: 100%; height: 100%; border: 0; display: block; }
+.admin-open-card { display: grid; gap: 10px; padding: 14px; margin-bottom: 14px; border: 1px solid var(--ui-line, rgba(127, 127, 127, 0.3)); border-radius: 10px; }
+.admin-open-card p { margin: 0; font-size: 12.5px; line-height: 1.5; }
+.quick-edit > summary { cursor: pointer; font-size: 12.5px; padding: 6px 0; opacity: 0.8; }
+.quick-edit[open] > summary { margin-bottom: 10px; }
