@@ -40,10 +40,10 @@ plan that follows the table is kept as written, so the original intent stays vis
 
 ## Epic I decisions
 - **I1 Optional backend: not now.** Revisit only if the vault goes public; the review copy covers client feedback without a server.
-- **I2 Contribution flow: not now.** No contributors; `new-feature` + `check-features` already describe the process.
+- **I2 Contribution flow: short version done 2026-10-27.** `CONTRIBUTING.md` (steps and a pull-request checklist built from the existing scripts). Still not built: a form or bot for outside contributors; there are none yet.
 - **I3 AI assist: not now.** Needs key handling and cost limits; prototype as a local dev tool first if wanted.
 - **I4 Token import: done 2026-10-27.** "Import design tokens (JSON)" in Page Settings (`scripts/builder/token-import.js`): reads background / text / accent, heading and body font, and corner radius from a plain or W3C-style token file into the custom theme and page settings (new `radius` setting writes `--radius`). Undo reverts it.
-- **I5 Internationalisation: first step done 2026-10-27.** Each page has its own language code (field next to the page tabs; empty = site language) used in `<html lang>` of the ZIP and of the open-page exports. Translations: a page can be marked "Translation of" another page; with a live address set, every page of a group gets `<link rel="alternate" hreflang>` for all of them plus x-default (`translationAlternates` in `single-pages.js`). Still later: per-language content and a language switcher wired to the group.
+- **I5 Internationalisation: first step done 2026-10-27.** Each page has its own language code (field next to the page tabs; empty = site language) used in `<html lang>` of the ZIP and of the open-page exports. Translations: a page can be marked "Translation of" another page; with a live address set, every page of a group gets `<link rel="alternate" hreflang>` for all of them plus x-default (`translationAlternates` in `single-pages.js`). The language switcher header (`multilingual-lang-switcher`) on a page in a group lists the group's languages and opens the translated page (ZIP export). Still later: per-language content editing side by side.
 
 ---
 
