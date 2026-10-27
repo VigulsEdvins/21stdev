@@ -1,6 +1,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #0d2744; color: #dcebff; font-family: var(--font-body, ui-monospace, "SF Mono", Menlo, Consolas, monospace); }
-body { --ba-ink: #dcebff; --ba-dim: #dcebff80; --ba-line: #dcebff2e; --ba-hot: #ffd166; line-height: 1.55; overflow-x: clip; background-image: linear-gradient(#ffffff0a 1px, transparent 1px), linear-gradient(90deg, #ffffff0a 1px, transparent 1px); background-size: 28px 28px; }
+html, body { background: var(--bg, #0d2744); color: var(--text, #dcebff); font-family: var(--font-body, ui-monospace, "SF Mono", Menlo, Consolas, monospace); }
+body { --ba-ink: var(--text, #dcebff); --ba-dim: color-mix(in srgb, var(--ba-ink) 50%, transparent); --ba-line: color-mix(in srgb, var(--ba-ink) 18%, transparent); --ba-hot: var(--accent, #ffd166); line-height: 1.55; overflow-x: clip; background-image: linear-gradient(color-mix(in srgb, var(--ba-ink) 4%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--ba-ink) 4%, transparent) 1px, transparent 1px); background-size: 28px 28px; }
 a { color: inherit; }
 a:focus-visible { outline: 2px solid var(--ba-hot); outline-offset: 3px; }
 .ba-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.2rem clamp(1rem, 4vw, 3rem); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; }
@@ -15,15 +15,15 @@ a:focus-visible { outline: 2px solid var(--ba-hot); outline-offset: 3px; }
 
 .ba-track { height: 320vh; position: relative; }
 .ba-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1rem, 3vw, 3rem); align-items: center; padding: 1rem clamp(1rem, 4vw, 3rem); }
-.ba-sheet { height: min(100%, 44rem); display: flex; flex-direction: column; border: 1px solid var(--ba-ink); background: #0d274499; min-height: 0; }
+.ba-sheet { height: min(100%, 44rem); display: flex; flex-direction: column; border: 1px solid var(--ba-ink); background: color-mix(in srgb, var(--bg, #0d2744) 60%, transparent); min-height: 0; }
 .ba-sheet figcaption { display: flex; justify-content: space-between; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--ba-line); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--ba-dim); }
 .ba-draw { flex: 1; min-height: 0; width: 100%; }
 .ba-bar { height: 4px; background: var(--ba-line); }
 .ba-bar i { display: block; height: 100%; width: 0; background: var(--ba-hot); }
-.ba-draw .part { fill: #1b4577; stroke: var(--ba-ink); stroke-width: 1.6; stroke-linejoin: round; transition: stroke 0.3s, fill 0.3s; }
+.ba-draw .part { fill: color-mix(in srgb, var(--ba-ink) 12%, var(--bg, #1b4577)); stroke: var(--ba-ink); stroke-width: 1.6; stroke-linejoin: round; transition: stroke 0.3s, fill 0.3s; }
 .ba-draw .thin { fill: none; stroke: var(--ba-ink); stroke-width: 1; }
 .ba-draw .hid { fill: none; stroke: var(--ba-dim); stroke-width: 1; stroke-dasharray: 4 3; }
-.ba-draw g.on .part { stroke: var(--ba-hot); fill: #2a4f78; }
+.ba-draw g.on .part { stroke: var(--ba-hot); fill: color-mix(in srgb, var(--ba-hot) 28%, var(--bg, #2a4f78)); }
 .ba-draw g.on .thin { stroke: var(--ba-hot); }
 .ba-draw .cl { stroke: var(--ba-dim); stroke-width: 1; stroke-dasharray: 10 3 2 3; transition: opacity 0.3s; }
 .ba-draw text { fill: var(--ba-hot); font-size: 11px; font-family: inherit; text-anchor: middle; transition: opacity 0.3s; }

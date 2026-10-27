@@ -1,7 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #0d0709); color: var(--text, #f4ece8); }
 .bs-track { height: 560vh; position: relative; font-family: var(--font-body, system-ui, sans-serif); }
-.bs-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: radial-gradient(circle at 50% 55%, #2a0d12 0%, var(--bg, #0d0709) 70%); }
+.bs-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--accent, #ff4d5e) 16%, var(--bg, #0d0709)) 0%, var(--bg, #0d0709) 70%); }
 .bs-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .bs-head { position: absolute; top: 18px; left: 24px; right: 24px; display: flex; justify-content: space-between; font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; opacity: .7; }
 .bs-frames { position: absolute; left: 24px; bottom: 36px; width: min(380px, calc(100% - 48px)); height: 190px; }

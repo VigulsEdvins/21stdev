@@ -8,12 +8,19 @@
   var W = 160, H = 90;
   cv.width = W; cv.height = H;
   var img = ctx.createImageData(W, H);
+  // the static is tinted with the phosphor colour (the theme's accent)
+  var tint = [0.3, 1, 0.5];
+  (function () {
+    var s = document.createElement('span'); s.style.color = 'var(--ph)'; screen.appendChild(s);
+    var m = (getComputedStyle(s).color.match(/[\d.]+/g) || []); screen.removeChild(s);
+    if (m.length >= 3) tint = [m[0] / 255, m[1] / 255, m[2] / 255];
+  })();
   function draw(now) {
     if (visible && now - last > 70) {
       last = now;
       for (var i = 0; i < img.data.length; i += 4) {
         var v = Math.random() * 255;
-        img.data[i] = v * 0.3; img.data[i + 1] = v; img.data[i + 2] = v * 0.5; img.data[i + 3] = 255;
+        img.data[i] = v * tint[0]; img.data[i + 1] = v * tint[1]; img.data[i + 2] = v * tint[2]; img.data[i + 3] = 255;
       }
       ctx.putImageData(img, 0, 0);
     }

@@ -6,11 +6,9 @@
 
 html, body {
   width: 100%;
-  height: 100%;
   background: var(--bg, #f4f3ef);
   color: var(--text, #111);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", monospace;
-  overflow: hidden;
   user-select: none;
 }
 

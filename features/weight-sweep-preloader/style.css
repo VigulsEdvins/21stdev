@@ -1,10 +1,10 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #f1efe8); color: var(--text, #111); }
 
-.hc-gate { --hc-ink: #111; --hc-paper: #f1efe8; --hc-stroke: 0px; width: 100%; min-height: 100vh; min-height: 100dvh; transition: opacity .6s ease; display: flex; flex-direction: column; justify-content: space-between; padding: 1.2rem clamp(1rem, 4vw, 2.4rem); background: var(--hc-paper); color: var(--hc-ink); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.hc-gate { --hc-ink: var(--text, #111); --hc-paper: var(--bg, #f1efe8); --hc-stroke: 0px; width: 100%; min-height: 100vh; min-height: 100dvh; transition: opacity .6s ease; display: flex; flex-direction: column; justify-content: space-between; padding: 1.2rem clamp(1rem, 4vw, 2.4rem); background: var(--hc-paper); color: var(--hc-ink); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
 .hc-top, .hc-hud { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; }
 .hc-rail { display: flex; gap: 3px; height: 14px; margin-top: .7rem; border-top: 2px solid var(--hc-ink); padding-top: 6px; }
-.hc-rail i { flex: 1; background: rgba(17,17,17,.14); transition: background .2s; }
+.hc-rail i { flex: 1; background: color-mix(in srgb, var(--text, #111) 14%, transparent); transition: background .2s; }
 .hc-rail i.is-on { background: var(--hc-ink); }
 .hc-num { flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--font-display, "Helvetica Neue", Helvetica, Arial, sans-serif); font-size: clamp(7rem, 34vw, 26rem); line-height: .9; font-weight: 200; font-variant-numeric: tabular-nums; letter-spacing: -.04em; -webkit-text-stroke: var(--hc-stroke) var(--hc-ink); paint-order: stroke fill; user-select: none; }
 .hc-hud b { font-variant-numeric: tabular-nums; margin-left: .4rem; }

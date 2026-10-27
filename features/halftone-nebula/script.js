@@ -4,7 +4,7 @@
   if (!gl) return;
   var VS = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
   var FS = [
-    "precision mediump float;uniform vec2 uR;uniform float uT;uniform vec2 uM;",
+    "precision mediump float;uniform vec2 uR;uniform float uT;uniform vec2 uM;uniform vec3 uPaper,uInk,uDark;",
     "float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}",
     "float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}",
     "float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p=p*2.1+vec2(3.1,1.7);a*=.5;}return v;}",
@@ -24,7 +24,7 @@
     "    if(h(c)>.62){vec2 sp=c+vec2(h(c+3.1),h(c+7.7));vec2 dv=(g-sp)/7.;float tw=.6+.4*sin(uT*1.5+h(c)*30.);",
     "      float core=exp(-dot(dv,dv)*9000.);float spike=(exp(-abs(dv.x)*400.)*exp(-abs(dv.y)*28.)+exp(-abs(dv.y)*400.)*exp(-abs(dv.x)*28.))*.8;star+=(core+spike)*tw;}}",
     "  float tt=clamp(ptone+star,0.,1.);",
-    "  float cell=7.;vec3 paper=vec3(.945,.914,.847);vec3 ink=vec3(.70,.125,.185);vec3 dark=vec3(.16,.1,.12);",
+    "  float cell=7.;vec3 paper=uPaper;vec3 ink=uInk;vec3 dark=uDark;",
     "  float dr=dots(px,tt,.26,cell);float dk=dots(px,max(star,planet*shade*.6),.78,cell)*step(.15,star+planet*shade);",
     "  vec3 col=mix(paper,ink,dr);col=mix(col,dark,dk*.9);",
     "  gl_FragColor=vec4(col,1.);}"
@@ -39,11 +39,29 @@
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   var loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   var uR = gl.getUniformLocation(pr, "uR"), uT = gl.getUniformLocation(pr, "uT"), uM = gl.getUniformLocation(pr, "uM");
+  
+  // the shader follows the page theme: colours are read from the section's computed --bg / --accent / --text
+  function rgb(cssVar, fb) {
+    var s = document.createElement("span"); s.style.color = "var(" + cssVar + ")"; host.appendChild(s);
+    var c = getComputedStyle(s).color; host.removeChild(s);
+    var m = c.match(/[\d.]+/g) || [];
+    if (m.length < 3) return fb;
+    var k = c.indexOf("color(") === 0 ? 1 : 1 / 255;
+    return [m[0] * k, m[1] * k, m[2] * k];
+  }
+  function mixc(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  var uPaper = gl.getUniformLocation(pr, "uPaper"), uInk = gl.getUniformLocation(pr, "uInk"), uDark = gl.getUniformLocation(pr, "uDark");
+  function setColours() {
+    var bg = rgb("--bg", [.945, .914, .847]), ac = rgb("--accent", [.70, .125, .185]), tx = rgb("--text", [.16, .1, .12]);
+    gl.uniform3f(uPaper, bg[0], bg[1], bg[2]); gl.uniform3f(uInk, ac[0], ac[1], ac[2]); gl.uniform3f(uDark, tx[0], tx[1], tx[2]);
+  }
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, vis = true, t0 = performance.now(), raf = 0, mx = 0, my = 0, tx = 0, ty = 0;
-  function draw() { gl.uniform2f(uR, cv.width, cv.height); gl.uniform1f(uT, reduce ? 20 : (performance.now() - t0) / 1000); gl.uniform2f(uM, mx, my); gl.drawArrays(gl.TRIANGLES, 0, 3); }
+  var nf = 0;
+  function draw() { if (nf++ % 20 === 0) setColours(); gl.uniform2f(uR, cv.width, cv.height); gl.uniform1f(uT, reduce ? 20 : (performance.now() - t0) / 1000); gl.uniform2f(uM, mx, my); gl.drawArrays(gl.TRIANGLES, 0, 3); }
   function size() { cv.width = Math.max(1, host.clientWidth); cv.height = Math.max(1, host.clientHeight); gl.viewport(0, 0, cv.width, cv.height); draw(); }
   host.addEventListener("pointermove", function (e) { var r = host.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width - .5; ty = (e.clientY - r.top) / r.height - .5; });
   function loop() { raf = 0; if (!vis || reduce) return; mx += (tx - mx) * .05; my += (ty - my) * .05; draw(); raf = requestAnimationFrame(loop); }
   new IntersectionObserver(function (e) { vis = e[0].isIntersecting; if (vis && !raf) loop(); }).observe(host);
   addEventListener("resize", size); size(); loop();
+  new MutationObserver(function () { setColours(); draw(); }).observe(document.documentElement, { attributes: true });
 })();

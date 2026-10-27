@@ -1,6 +1,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #0f2a22); color: var(--text, #f3ecd8); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
-.sc-stage { --sc-a: #0f2a22; --sc-b: #f3ecd8; --sc-c: #ff9d2e; position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; transition: opacity .6s ease; background: var(--sc-a); color: var(--sc-b); }
+.sc-stage { --sc-a: var(--bg, #0f2a22); --sc-b: var(--text, #f3ecd8); --sc-c: var(--accent, #ff9d2e); position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; transition: opacity .6s ease; background: var(--sc-a); color: var(--sc-b); }
 .sc-ready { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 1rem; }
 .sc-ready-label { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sc-c); }
 .sc-ready-title { font-family: var(--font-display, system-ui, sans-serif); font-size: clamp(3rem, 12vw, 8rem); letter-spacing: -0.04em; line-height: 1; }

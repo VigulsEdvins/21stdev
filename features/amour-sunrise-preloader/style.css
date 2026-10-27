@@ -1,19 +1,19 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #f7d9bd; color: #3a1740; }
+html, body { background: var(--bg, #f7d9bd); color: var(--text, #3a1740); }
 body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
 
 .dp-root {
-  --p: 0; position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: linear-gradient(180deg, #f9e3cc, #f2b38a);
+  --p: 0; position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: linear-gradient(180deg, var(--bg, #f9e3cc), color-mix(in srgb, var(--accent, #ff7a4d) 35%, var(--bg, #f9e3cc)));
   display: grid; place-items: center;
 }
 .dp-sun {
   position: absolute; left: 50%; bottom: 0; width: min(74vmin, 560px); aspect-ratio: 1; border-radius: 50%;
-  background: radial-gradient(circle at 50% 40%, #ffd36b, #ff7a4d 70%);
-  transform: translate(-50%, calc(100% - var(--p) * 62%)); box-shadow: 0 0 120px 30px rgba(255, 140, 80, .55);
+  background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent, #ff7a4d) 55%, #ffd36b), var(--accent, #ff7a4d) 70%);
+  transform: translate(-50%, calc(100% - var(--p) * 62%)); box-shadow: 0 0 120px 30px color-mix(in srgb, var(--accent, #ff7a4d) 55%, transparent);
 }
 .dp-rays {
   position: absolute; left: 50%; bottom: 0; width: 220vmax; height: 220vmax; translate: -50% 50%;
-  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, .28) 0 4deg, transparent 4deg 12deg);
+  background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--text, #3a1740) 28%, transparent) 0 4deg, transparent 4deg 12deg);
   opacity: calc(var(--p) * 1); animation: dp-spin 60s linear infinite; -webkit-mask: radial-gradient(circle, #000, transparent 40%); mask: radial-gradient(circle, #000, transparent 40%);
 }
 .dp-root { transition: opacity .6s ease; }
@@ -22,24 +22,24 @@ body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-
 
 .dp-word {
   position: relative; z-index: 2; display: flex; justify-content: center; align-items: flex-end; height: min(52vmin, 360px);
-  font-family: var(--font-display, Impact, "Arial Black", system-ui, sans-serif); font-weight: 900; color: #3a1740;
+  font-family: var(--font-display, Impact, "Arial Black", system-ui, sans-serif); font-weight: 900; color: var(--text, #3a1740);
   margin-top: -14vh;
 }
 .dp-ch {
   display: inline-block; font-size: min(15vw, 120px); line-height: .9; transform-origin: 50% 100%;
   transform: translateY(calc((1 - var(--in, 0)) * 40px)) rotate(var(--r)) scaleY(var(--sy));
   margin: 0 -0.01em; opacity: var(--in, 0); transition: opacity .5s, transform .6s cubic-bezier(.2, 1.4, .4, 1);
-  text-shadow: 3px 3px 0 #ff7a4d;
+  text-shadow: 3px 3px 0 var(--accent, #ff7a4d);
 }
 .dp-status {
-  position: absolute; z-index: 3; left: 0; right: 0; bottom: 26px; text-align: center; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #3a1740;
+  position: absolute; z-index: 3; left: 0; right: 0; bottom: 26px; text-align: center; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--text, #3a1740);
 }
 .dp-status span:first-child { font: 800 28px var(--font-display, Impact, system-ui, sans-serif); letter-spacing: 0; }
 .dp-status b { font-size: 16px; }
 .dp-replay {
-  position: fixed; top: 18px; right: 18px; z-index: 4; padding: 8px 16px; border-radius: 999px; border: 2px solid #3a1740;
-  background: transparent; color: #3a1740; font: 700 12px var(--font-body, system-ui, sans-serif); letter-spacing: .12em; text-transform: uppercase; cursor: pointer;
+  position: fixed; top: 18px; right: 18px; z-index: 4; padding: 8px 16px; border-radius: 999px; border: 2px solid var(--text, #3a1740);
+  background: transparent; color: var(--text, #3a1740); font: 700 12px var(--font-body, system-ui, sans-serif); letter-spacing: .12em; text-transform: uppercase; cursor: pointer;
 }
-.dp-replay:hover { background: #3a1740; color: #f9e3cc; }
-.dp-replay:focus-visible { outline: 3px solid #3a1740; outline-offset: 3px; }
+.dp-replay:hover { background: var(--text, #3a1740); color: var(--bg, #f9e3cc); }
+.dp-replay:focus-visible { outline: 3px solid var(--text, #3a1740); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .dp-rays { animation: none; } .dp-ch { transition: none; } .dp-root { transition-duration: .15s; } }

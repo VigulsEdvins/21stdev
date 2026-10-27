@@ -2,7 +2,7 @@
   "name": "Star Chart Record Player",
   "title": "Star Chart Record Player",
   "slug": "constellation-turntable",
-  "category": "Audio & Shaders",
+  "category": "Audio",
   "source": "edvlabs",
   "type": "component",
   "description": "A spinning vinyl pressed with a star map: pick a track to light its constellation while the tonearm drops on the record.",

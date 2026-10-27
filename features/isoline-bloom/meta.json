@@ -52,6 +52,5 @@
       "selector": ":scope .ib-sub"
     }
   ],
-  "lazy": true,
-  "ownPalette": true
+  "lazy": true
 }

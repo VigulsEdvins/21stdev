@@ -35,10 +35,6 @@ body, html {
   transition: color 0.4s ease;
 }
 
-.nav-demo-shell.is-open .brand {
-  color: var(--bg, #0b0c10);
-}
-
 .burger-btn {
   display: inline-flex;
   align-items: center;
@@ -52,10 +48,6 @@ body, html {
   font-size: 11px;
   letter-spacing: 0.16em;
   transition: color 0.4s ease, border-color 0.4s ease;
-}
-
-.nav-demo-shell.is-open .burger-btn {
-  color: var(--bg, #0b0c10);
 }
 
 .burger-lines {
@@ -93,8 +85,8 @@ body, html {
 .overlay-menu {
   position: fixed;
   inset: 0;
-  background: var(--text, #f3f4f6);
-  color: var(--bg, #0b0c10);
+  background: color-mix(in srgb, var(--text, #f3f4f6) 5%, var(--bg, #0b0c10));
+  color: var(--text, #f3f4f6);
   z-index: 20;
   display: flex;
   align-items: center;
@@ -114,7 +106,7 @@ body, html {
 
 .menu-links li {
   overflow: hidden;
-  border-bottom: 1px solid color-mix(in srgb, var(--bg, #0b0c10) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 14%, transparent);
 }
 
 .menu-links a {
@@ -122,7 +114,7 @@ body, html {
   align-items: baseline;
   gap: 24px;
   padding: 18px 0;
-  color: var(--bg, #0b0c10);
+  color: var(--text, #f3f4f6);
   text-decoration: none;
   font-size: clamp(2rem, 4.5vw, 3.6rem);
   transform: translateY(100%);

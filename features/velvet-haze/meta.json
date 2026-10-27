@@ -45,6 +45,5 @@
       "selector": ":scope .df-label"
     }
   ],
-  "ownPalette": true,
   "lazy": true
 }

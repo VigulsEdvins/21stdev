@@ -14,6 +14,8 @@ const CATEGORIES = [
   'Scroll & Parallax',
   'Interactions & Physics',
   'Audio & Shaders',
+  'Audio',
+  '404 Page',
   'Preloaders & Shaders',
   'Landing Pages',
   'Full Websites'

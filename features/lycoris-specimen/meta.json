@@ -64,6 +64,5 @@
       "selector": ":scope .bs-link"
     }
   ],
-  "reserveHeight": 5600,
-  "ownPalette": true
+  "reserveHeight": 5600
 }

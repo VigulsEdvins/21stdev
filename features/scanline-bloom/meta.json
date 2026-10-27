@@ -1,11 +1,11 @@
 {
-  "name": "Red Print Bouquet",
-  "title": "Red Print Bouquet",
+  "name": "Scanline Bouquet",
+  "title": "Scanline Bouquet",
   "slug": "scanline-bloom",
   "category": "Audio & Shaders",
   "source": "edvlabs",
   "type": "component",
-  "description": "A procedural bouquet drawn by a small fragment shader as red ragged scanlines that turn into stipple dots toward the bottom of a black sheet.",
+  "description": "A procedural bouquet drawn by a small fragment shader as ragged scanlines in the theme's accent colour that turn into stipple dots toward the bottom of the sheet.",
   "tags": [
     "shader",
     "scanlines",
@@ -45,6 +45,5 @@
       "selector": ":scope .sb-cap"
     }
   ],
-  "lazy": true,
-  "ownPalette": true
+  "lazy": true
 }

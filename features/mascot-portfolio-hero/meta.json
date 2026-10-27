@@ -82,6 +82,5 @@
       "selector": ":scope .mp-btn"
     }
   ],
-  "ownPalette": true,
   "reserveHeight": 800
 }

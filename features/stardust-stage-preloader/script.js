@@ -8,6 +8,8 @@
   var start = performance.now(), visible = true, finished = false, raf = 0;
   var notes = [[0, "Lighting the first star"], [0.35, "The sky starts to fall"], [0.6, "Hanging the curtain"], [0.85, "Warming the spotlight"], [1, "Curtain up"]];
 
+  function tok(n, f) { var s = document.createElement("span"); s.style.color = "var(" + n + ", " + f + ")"; stage.appendChild(s); var c = getComputedStyle(s).color; stage.removeChild(s); return c; }
+  var cBg = "#050505", cInk = "#f2f2f2", nDraw = 0;
   function hash(x, y) { var s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return s - Math.floor(s); }
   function smooth(a, b, x) { x = Math.min(1, Math.max(0, (x - a) / (b - a))); return x * x * (3 - 2 * x); }
 
@@ -46,8 +48,9 @@
   function draw(now) {
     var p = finished ? 1 : progress(now), t = now - start;
     var mix = smooth(0.38, 0.72, p);
-    ctx.fillStyle = "#050505"; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = "#f2f2f2";
+    if (nDraw++ % 30 === 0) { cBg = tok("--bg", "#050505"); cInk = tok("--text", "#f2f2f2"); }
+    ctx.fillStyle = cBg; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = cInk;
     for (var j = 0; j < rows; j++) {
       for (var i = 0; i < cols; i++) {
         var u = (i + 0.5) / cols, v = (j + 0.5) / rows;

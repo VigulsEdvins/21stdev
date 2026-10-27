@@ -26,4 +26,26 @@
     });
   });
   var first = list.querySelector(".sf-q"); if (first) first.click();
+
+  // Pins the section while the page scrolls past it and reports how far through (0 to 1) the visitor is,
+  // so the animation plays through with the page scroll
+  function pinRunway(el, screens, onProgress) {
+    var run = document.createElement('div');
+    run.style.cssText = 'position:relative;height:' + screens * 100 + 'vh';
+    var pin = document.createElement('div');
+    pin.style.cssText = 'position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1fr);align-items:center';
+    el.parentNode.insertBefore(run, el); run.appendChild(pin); pin.appendChild(el);
+    el.style.alignSelf = 'stretch'; // fill the pinned screen
+    function update() {
+      var r = run.getBoundingClientRect(), total = r.height - window.innerHeight;
+      onProgress(total > 0 ? Math.max(0, Math.min(1, -r.top / total)) : 0);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+  pinRunway(document.getElementById("sfSec"), 3, function (v) {
+    var qs = list.querySelectorAll(".sf-q"), i = Math.min(qs.length - 1, Math.floor(v * qs.length));
+    if (qs[i] && qs[i].getAttribute("aria-expanded") !== "true") qs[i].click();
+  });
 })();

@@ -179,6 +179,7 @@
     panels.forEach((panel, i) => {
       const deg = (i * 360) / numPanels + angleOffset;
       panel.style.transform = `rotateY(${deg.toFixed(2)}deg)`;
+      panel.classList.toggle('is-back', Math.cos((deg * Math.PI) / 180) < 0);
     });
 
     if (readoutEl) {

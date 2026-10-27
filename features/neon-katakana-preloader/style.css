@@ -1,30 +1,30 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #05040a); color: var(--text, #f3f4f6); }
 
-.ns-root { --pink: #ff2e93; --cyan: #25f4ee; position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: #05040a; transition: opacity .6s ease; font-family: var(--font-body, ui-monospace, "SFMono-Regular", Menlo, monospace); }
+.ns-root { --pink: var(--accent, #ff2e93); --cyan: color-mix(in srgb, var(--accent, #25f4ee) 40%, var(--text, #25f4ee)); position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: var(--bg, #05040a); transition: opacity .6s ease; font-family: var(--font-body, ui-monospace, "SFMono-Regular", Menlo, monospace); }
 .ns-behind { position: absolute; inset: 0; display: grid; place-items: center; }
 .ns-behind canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .ns-ready { position: relative; text-align: center; }
 .ns-root.is-exiting { opacity: 0; pointer-events: none; }
 .ns-ready p { font-size: clamp(1.2rem, 4vw, 2rem); letter-spacing: .4em; text-transform: uppercase; color: var(--cyan); text-shadow: 0 0 14px var(--cyan); }
-.ns-again { position: fixed; top: 16px; right: 16px; z-index: 5; font: inherit; font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--pink); background: rgba(5,4,10,.7); border: 1px solid var(--pink); padding: .6rem 1.2rem; cursor: pointer; transition: opacity .4s; }
+.ns-again { position: fixed; top: 16px; right: 16px; z-index: 5; font: inherit; font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--pink); background: color-mix(in srgb, var(--bg, #05040a) 70%, transparent); border: 1px solid var(--pink); padding: .6rem 1.2rem; cursor: pointer; transition: opacity .4s; }
 .ns-again[hidden] { display: none; }
 .ns-again:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 
-.ns-door { position: absolute; left: 0; right: 0; height: 50%; background: #0b0a14; transition: transform 1.1s cubic-bezier(.77,0,.18,1); z-index: 2; overflow: hidden; }
-.ns-top { top: 0; border-bottom: 2px solid var(--pink); box-shadow: 0 6px 30px rgba(255,46,147,.5); }
-.ns-bot { bottom: 0; border-top: 2px solid var(--cyan); box-shadow: 0 -6px 30px rgba(37,244,238,.45); }
-.ns-slats { position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, transparent 2px 22px), repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 14px); }
+.ns-door { position: absolute; left: 0; right: 0; height: 50%; background: color-mix(in srgb, var(--bg, #05040a) 88%, var(--text, #f3f4f6)); transition: transform 1.1s cubic-bezier(.77,0,.18,1); z-index: 2; overflow: hidden; }
+.ns-top { top: 0; border-bottom: 2px solid var(--pink); box-shadow: 0 6px 30px color-mix(in srgb, var(--pink) 50%, transparent); }
+.ns-bot { bottom: 0; border-top: 2px solid var(--cyan); box-shadow: 0 -6px 30px color-mix(in srgb, var(--cyan) 45%, transparent); }
+.ns-slats { position: absolute; inset: 0; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--text, #f3f4f6) 4%, transparent) 0 2px, transparent 2px 22px), repeating-linear-gradient(0deg, color-mix(in srgb, var(--text, #f3f4f6) 5%, transparent) 0 1px, transparent 1px 14px); }
 .ns-root.is-open .ns-top { transform: translateY(-101%); }
 .ns-root.is-open .ns-bot { transform: translateY(101%); }
 
 .ns-sign { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .9rem; transition: opacity .5s; pointer-events: none; }
 .ns-root.is-open .ns-sign { opacity: 0; }
-.ns-word { font-family: var(--font-display, "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif); font-weight: 900; font-size: clamp(3rem, 16vw, 9rem); line-height: 1; letter-spacing: .05em; color: #fff; text-shadow: 0 0 6px #fff, 0 0 18px var(--pink), 0 0 42px var(--pink), 0 0 80px var(--pink); animation: ns-flicker 3s infinite; }
+.ns-word { font-family: var(--font-display, "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif); font-weight: 900; font-size: clamp(3rem, 16vw, 9rem); line-height: 1; letter-spacing: .05em; color: var(--text, #fff); text-shadow: 0 0 6px var(--text, #fff), 0 0 18px var(--pink), 0 0 42px var(--pink), 0 0 80px var(--pink); animation: ns-flicker 3s infinite; }
 @keyframes ns-flicker { 0%, 18%, 22%, 62%, 66%, 100% { opacity: 1; } 20% { opacity: .35; } 64% { opacity: .5; } }
 .ns-sub { font-size: .75rem; letter-spacing: .5em; text-transform: uppercase; color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
 .ns-count { font-size: clamp(1.6rem, 6vw, 2.6rem); font-weight: 700; font-variant-numeric: tabular-nums; color: var(--cyan); text-shadow: 0 0 12px var(--cyan); }
-.ns-bar { width: min(380px, 78vw); height: 4px; background: rgba(37,244,238,.18); }
+.ns-bar { width: min(380px, 78vw); height: 4px; background: color-mix(in srgb, var(--cyan) 18%, transparent); }
 .ns-bar span { display: block; width: 0; height: 100%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
 
 @media (prefers-reduced-motion: reduce) { .ns-word { animation: none; } .ns-door { transition-duration: .01s; } .ns-root { transition-duration: .15s; } }

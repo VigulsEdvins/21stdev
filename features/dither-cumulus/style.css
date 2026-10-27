@@ -1,21 +1,21 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #0d1030; color: #f3efe4; }
+html, body { background: var(--bg, #0d1030); color: var(--text, #f3efe4); }
 body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
 
-.dc-root { position: relative; min-height: 100vh; overflow: hidden; display: grid; place-items: center; background: linear-gradient(180deg, #0d1030, #2b2f6b); }
+.dc-root { position: relative; min-height: 100vh; overflow: hidden; display: grid; place-items: center; background: var(--bg, #0d1030); }
 .dc-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: pixelated; }
 .dc-content { position: relative; z-index: 2; text-align: center; padding: 24px; max-width: 640px; }
-.dc-content::before { content: ""; position: absolute; inset: -40px -60px; z-index: -1; background: radial-gradient(closest-side, rgba(13,16,48,.78), transparent); }
+.dc-content::before { content: ""; position: absolute; inset: -40px -60px; z-index: -1; background: radial-gradient(closest-side, color-mix(in srgb, var(--bg, #0d1030) 78%, transparent), transparent); }
 .dc-label { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; opacity: .8; }
 .dc-title {
   margin: 12px 0 14px; font-family: var(--font-display, "Courier New", ui-monospace, monospace); font-weight: 800;
-  font-size: clamp(28px, 6vw, 62px); line-height: 1.05; text-shadow: 3px 3px 0 #0d1030, -1px -1px 0 #0d1030;
+  font-size: clamp(28px, 6vw, 62px); line-height: 1.05; text-shadow: 3px 3px 0 var(--bg, #0d1030), -1px -1px 0 var(--bg, #0d1030);
 }
-.dc-text { font-size: clamp(14px, 1.8vw, 18px); line-height: 1.55; text-shadow: 2px 2px 0 #0d1030; }
+.dc-text { font-size: clamp(14px, 1.8vw, 18px); line-height: 1.55; text-shadow: 2px 2px 0 var(--bg, #0d1030); }
 .dc-btn {
-  display: inline-block; margin-top: 22px; padding: 12px 24px; background: #f6d9a8; color: #0d1030; text-decoration: none;
-  font-weight: 700; border: 3px solid #0d1030; box-shadow: 4px 4px 0 #0d1030;
+  display: inline-block; margin-top: 22px; padding: 12px 24px; background: var(--accent, #f6d9a8); color: var(--bg, #0d1030); text-decoration: none;
+  font-weight: 700; border: 3px solid var(--bg, #0d1030); box-shadow: 4px 4px 0 var(--bg, #0d1030);
 }
-.dc-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #0d1030; }
+.dc-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--bg, #0d1030); }
 .dc-btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .dc-btn { transition: none; } }

@@ -2,8 +2,11 @@
   var cv = document.getElementById('vrDots'), ctx = cv.getContext('2d'), stage = document.getElementById('vrStage');
   var steps = document.querySelectorAll('#vrSteps li'), btn = document.getElementById('vrGo');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, W, H, dpr, vis = true;
+  function tok(n, f) { var s = document.createElement('span'); s.style.color = 'var(' + n + ', ' + f + ')'; stage.appendChild(s); var c = getComputedStyle(s).color; stage.removeChild(s); return c; }
+  var c1 = '#e5344f', c2 = '#1d3f8a', nd = 0;
   function size() { dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; }
   function draw(t) {
+    if (nd++ % 30 === 0) { c1 = tok('--ink1', '#e5344f'); c2 = tok('--ink2', '#1d3f8a'); }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     var step = 16, cx = W * 0.55, cy = H * 0.5, beat = reduce ? 0 : Math.pow(Math.max(0, Math.sin(t / 380)), 3);
     for (var y = step / 2; y < H; y += step) for (var x = step / 2; x < W; x += step) {
@@ -11,7 +14,7 @@
       var ray = 0.5 + 0.5 * Math.cos(a * 12 + (reduce ? 0 : t / 2600));
       var v = ray * Math.max(0, 1 - d / (Math.min(W, H) * (0.62 + beat * 0.08)));
       var r = v * step * 0.62; if (r < 0.7) continue;
-      ctx.fillStyle = (Math.floor(x / step) + Math.floor(y / step)) % 2 ? '#e5344f' : '#1d3f8a';
+      ctx.fillStyle = (Math.floor(x / step) + Math.floor(y / step)) % 2 ? c1 : c2;
       ctx.globalAlpha = 0.9; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.3); ctx.fill();
     }
   }

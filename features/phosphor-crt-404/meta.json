@@ -2,7 +2,7 @@
   "name": "Green Screen 404",
   "title": "Green Screen 404",
   "slug": "phosphor-crt-404",
-  "category": "Audio & Shaders",
+  "category": "404 Page",
   "source": "edvlabs",
   "type": "component",
   "description": "A full-screen not-found page on a green phosphor monitor with static, scanlines, a rolling bar and a glitching error code.",
@@ -63,9 +63,5 @@
       "type": "text",
       "selector": ":scope .ph-link"
     }
-  ],
-  "nativeWhen": [
-    "light"
-  ],
-  "ownPalette": true
+  ]
 }

@@ -1,5 +1,5 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #070b1a); color: var(--text, #e8f4ff); }
 
-.sf-field { position: relative; height: 100vh; min-height: 24rem; overflow: hidden; background: radial-gradient(ellipse at 50% 50%, #12204a, #070b1a 75%); }
+.sf-field { position: relative; height: 100vh; min-height: 24rem; overflow: hidden; background: var(--bg, #070b1a); }
 .sf-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }

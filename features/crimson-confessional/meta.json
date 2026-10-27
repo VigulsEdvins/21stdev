@@ -93,7 +93,5 @@
       "selector": ":scope .nc-ch:nth-child(4) .nc-line"
     }
   ],
-  "nativeWhen": [],
-  "reserveHeight": 7560,
-  "ownPalette": true
+  "reserveHeight": 7560
 }

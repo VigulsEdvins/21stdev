@@ -40,13 +40,6 @@
   window.addEventListener('resize', measureBlocks);
 
   const stage = content.closest('.conv-stage') || content;
-  stage.addEventListener(
-    'wheel',
-    (e) => {
-      targetY += e.deltaY * 1.1;
-    },
-    { passive: true }
-  );
 
   let dragY = null;
   stage.addEventListener('pointerdown', (e) => {
@@ -63,7 +56,6 @@
 
   function tick() {
     requestAnimationFrame(tick);
-    targetY += 0.35; // gentle ambient drift
     currentY += (targetY - currentY) * 0.12;
 
     const wh = window.innerHeight;
@@ -87,4 +79,23 @@
   }
 
   requestAnimationFrame(tick);
+
+  // Pins the section while the page scrolls past it and reports how far through (0 to 1) the visitor is,
+  // so the animation plays through with the page scroll
+  function pinRunway(el, screens, onProgress) {
+    var run = document.createElement('div');
+    run.style.cssText = 'position:relative;height:' + screens * 100 + 'vh';
+    var pin = document.createElement('div');
+    pin.style.cssText = 'position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1fr);align-items:center';
+    el.parentNode.insertBefore(run, el); run.appendChild(pin); pin.appendChild(el);
+    el.style.alignSelf = 'stretch'; // fill the pinned screen
+    function update() {
+      var r = run.getBoundingClientRect(), total = r.height - window.innerHeight;
+      onProgress(total > 0 ? Math.max(0, Math.min(1, -r.top / total)) : 0);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+  pinRunway(stage, 4, function (v) { targetY = v * aboutTotalHeight * 1.2; });
 })();

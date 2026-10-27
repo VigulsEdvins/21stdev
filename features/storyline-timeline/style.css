@@ -12,7 +12,7 @@ html, body { background: var(--bg, #0e1014); color: var(--text, #f3f4f6); font-f
 .st-track.is-dragging { cursor: grabbing; user-select: none; }
 .st-rail { position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--st-line); min-width: 100%; width: var(--st-w, 100%); }
 .st-rail-fill { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--accent, #7c8cff); box-shadow: 0 0 14px var(--accent, #7c8cff); }
-.st-list { list-style: none; display: flex; gap: 0; padding: 0 20vw; width: max-content; min-width: 100%; }
+.st-list { list-style: none; display: flex; gap: 0; padding: 0 calc(50% - 9rem); width: max-content; min-width: 100%; }
 .st-item { position: relative; flex: 0 0 18rem; height: 25rem; opacity: 0.35; transition: opacity 0.5s, transform 0.5s; }
 .st-item.is-lit { opacity: 1; }
 .st-dot { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--bg, #0e1014); border: 2px solid var(--st-line); transition: all 0.4s; }

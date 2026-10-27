@@ -57,6 +57,5 @@
       "selector": ":scope .ba-lead"
     }
   ],
-  "ownPalette": true,
   "reserveHeight": 3200
 }

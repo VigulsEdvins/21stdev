@@ -25,7 +25,7 @@
     if (busy) return;
     busy = true;
     var c = order[0];
-    if (dx === undefined) { dx = (Math.random() < 0.5 ? -1 : 1) * 380; dy = -40; }
+    if (dx === undefined) { dx = 380; dy = -40; }
     c.classList.remove('is-drag');
     c.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + dx / 12 + 'deg)';
     c.style.opacity = '0';
@@ -41,21 +41,6 @@
       busy = false;
     }, reduce ? 20 : 380);
   }
-  function back() {
-    if (busy) return;
-    busy = true;
-    var c = order.pop();
-    order.unshift(c);
-    c.style.transition = 'none';
-    c.style.transform = 'translate(0,-60px) rotate(-10deg)';
-    c.style.opacity = '0';
-    void c.offsetWidth;
-    c.style.transition = '';
-    c.style.opacity = '';
-    layout();
-    setTimeout(function () { busy = false; }, reduce ? 20 : 400);
-  }
-
   var sx = 0, sy = 0, dragging = null;
   deck.addEventListener('pointerdown', function (e) {
     var c = order[0];
@@ -80,10 +65,10 @@
   deck.addEventListener('pointercancel', release);
 
   document.getElementById('dkNext').addEventListener('click', function () { throwTop(); });
-  document.getElementById('dkPrev').addEventListener('click', back);
+  document.getElementById('dkPrev').addEventListener('click', function () { throwTop(-380, -40); });
   deck.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowRight') { e.preventDefault(); throwTop(380, -30); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); back(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); throwTop(-380, -30); }
   });
 
   function schedule() {

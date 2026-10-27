@@ -12,6 +12,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var W = 0, H = 0, dpr = 1, pts = [], drawing = false, phase = "count", raf = 0, tCount = 0;
 
+  function tok(n, f) { var s = document.createElement("span"); s.style.color = "var(" + n + ", " + f + ")"; root.appendChild(s); var c = getComputedStyle(s).color; root.removeChild(s); return c; }
   function setPhase(p) { phase = p; root.setAttribute("data-phase", p); }
   function say(t, bad) {
     msg.textContent = t;
@@ -58,10 +59,12 @@
       ctx.beginPath();
       ctx.moveTo(pts[0].x, pts[0].y);
       for (var i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
-      ctx.strokeStyle = pass ? "#eafffb" : "rgba(94,224,200,0.35)";
+      ctx.globalAlpha = pass ? 1 : 0.35;
+      ctx.strokeStyle = pass ? tok("--text", "#eafffb") : tok("--accent", "#5ee0c8");
       ctx.lineWidth = pass ? 2 : 10;
       ctx.stroke();
     }
+    ctx.globalAlpha = 1;
   }
   function localPoint(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
 

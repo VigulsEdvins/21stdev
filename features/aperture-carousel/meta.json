@@ -81,6 +81,5 @@
       "type": "text",
       "selector": ":scope .ap-next"
     }
-  ],
-  "ownPalette": true
+  ]
 }

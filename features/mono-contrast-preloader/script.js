@@ -10,6 +10,8 @@
   var DUR = reduce ? 800 : 6500, t0 = performance.now(), visible = true, done = false;
   var small = document.createElement('canvas'), sctx = small.getContext('2d');
   var grain = document.createElement('canvas'); grain.width = grain.height = 128;
+  function tok(n, f) { var s = document.createElement('span'); s.style.color = 'var(' + n + ', ' + f + ')'; stage.appendChild(s); var c = getComputedStyle(s).color; stage.removeChild(s); return c; }
+  var cBg = '#222', cInk = '#fff', nF = 0;
   var blobs = [];
   for (var i = 0; i < 7; i++) blobs.push({ x: Math.random(), y: Math.random(), r: .15 + Math.random() * .25, sx: (Math.random() - .5) * .05, sy: (Math.random() - .5) * .05, v: 70 + Math.random() * 160 });
 
@@ -24,12 +26,13 @@
   }
   function frame(now) {
     var p = Math.min(1, (now - t0) / DUR), s = (now - t0) / 1000;
-    sctx.fillStyle = '#222'; sctx.fillRect(0, 0, small.width, small.height);
+    if (nF++ % 30 === 0) { cBg = tok('--bg', '#222'); cInk = tok('--text', '#fff'); }
+    sctx.globalAlpha = 1; sctx.fillStyle = cBg; sctx.fillRect(0, 0, small.width, small.height);
     blobs.forEach(function (b) {
       var x = ((b.x + b.sx * s) % 1 + 1) % 1 * small.width, y = ((b.y + b.sy * s) % 1 + 1) % 1 * small.height, r = b.r * small.width * (0.8 + 0.2 * Math.sin(s + b.v));
       var g = sctx.createRadialGradient(x, y, 0, x, y, r);
-      g.addColorStop(0, 'rgba(' + b.v + ',' + b.v + ',' + b.v + ',.9)'); g.addColorStop(1, 'rgba(0,0,0,0)');
-      sctx.fillStyle = g; sctx.fillRect(0, 0, small.width, small.height);
+      g.addColorStop(0, cInk); g.addColorStop(1, cBg);
+      sctx.globalAlpha = .9 * b.v / 255; sctx.fillStyle = g; sctx.fillRect(0, 0, small.width, small.height); sctx.globalAlpha = 1;
     });
     ctx.imageSmoothingEnabled = true;
     ctx.globalAlpha = 1; ctx.drawImage(small, 0, 0, cv.width, cv.height);

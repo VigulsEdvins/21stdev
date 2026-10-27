@@ -1,7 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #0d0b1a); color: var(--text, #f1f0f8); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
 
-.pf-stage { min-height: 100vh; display: grid; place-items: center; padding: 2rem 1rem; background: radial-gradient(circle at 50% 40%, #2a2160 0, #0d0b1a 65%); }
+.pf-stage { min-height: 100vh; display: grid; place-items: center; padding: 2rem 1rem; background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent, #7c6cff) 22%, var(--bg, #0d0b1a)) 0, var(--bg, #0d0b1a) 65%); color: var(--text, #f1f0f8); }
 .pf-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.8rem; }
 .pf-card { --mx: 50%; --my: 50%; --rx: 0deg; --ry: 0deg; --int: 0; width: min(300px, 78vw); aspect-ratio: 5 / 7; perspective: 900px; cursor: pointer; border-radius: 16px; outline-offset: 6px; }
 .pf-card:focus-visible { outline: 2px solid #ffd166; }
@@ -28,8 +28,8 @@ html, body { background: var(--bg, #0d0b1a); color: var(--text, #f1f0f8); font-f
 .pf-card[data-finish="glitter"] .pf-foil { background-image: radial-gradient(circle at 20% 20%, #fff 0 1px, transparent 2px), radial-gradient(circle at 70% 60%, #fff 0 1px, transparent 2px), radial-gradient(circle at 40% 85%, #ffd 0 1px, transparent 2px), linear-gradient(115deg, #ff9de2, #9df3ff, #fff3a0); background-size: 13px 13px, 17px 17px, 11px 11px, 250% 250%; background-position: var(--mx) var(--my), 0 0, 0 0, var(--mx) var(--my); mix-blend-mode: overlay; opacity: calc(.45 + var(--int) * .5); }
 
 .pf-ctl { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
-.pf-opt { font: inherit; font-size: .8rem; padding: .45rem .9rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: transparent; color: inherit; cursor: pointer; }
-.pf-opt.is-on { background: #ffd166; color: #20180a; border-color: #ffd166; }
+.pf-opt { font: inherit; font-size: .8rem; padding: .45rem .9rem; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--text, #fff) 30%, transparent); background: transparent; color: var(--text, inherit); cursor: pointer; }
+.pf-opt.is-on { background: var(--accent, #ffd166); color: var(--bg, #20180a); border-color: var(--accent, #ffd166); }
 .pf-opt:focus-visible { outline: 2px solid #ffd166; outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) { .pf-inner { transition-duration: .01s; } }

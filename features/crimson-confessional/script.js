@@ -5,9 +5,20 @@
   var num = document.getElementById('ncNum'), bar = document.getElementById('ncBar'), hint = document.getElementById('ncHint');
   var romans = ['I', 'II', 'III', 'IV'], N = chs.length;
   var W = 0, H = 0, dpr = 1, progress = 0, shown = -1, raf = 0, visible = true;
-  var RED = '196,22,28', BONE = '239,230,214';
+  var RED = '196,22,28', BONE = '239,230,214', INK = '10,5,6';
+  // the drawing uses the theme's colours: accent, text and background, read from the section as plain r,g,b
+  function rgbOf(v) {
+    var s = document.createElement('span'); s.style.color = 'var(' + v + ')'; track.appendChild(s);
+    var c = getComputedStyle(s).color; track.removeChild(s);
+    var m = c.match(/[\d.]+/g) || [];
+    if (m.length < 3) return null;
+    var k = c.indexOf('color(') === 0 ? 255 : 1;
+    return m.slice(0, 3).map(function (x) { return Math.round(parseFloat(x) * k); }).join(',');
+  }
+  function themeColours() { RED = rgbOf('--nc-red') || RED; BONE = rgbOf('--nc-bone') || BONE; INK = rgbOf('--nc-ink') || INK; }
 
   function size() {
+    themeColours();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = cv.width = Math.round(cv.clientWidth * dpr); H = cv.height = Math.round(cv.clientHeight * dpr);
     draw();
@@ -44,7 +55,7 @@
       var w = m * (0.35 + 0.35 * t), h = m * 0.14 * (0.4 + Math.sin(t * Math.PI));
       ctx.fillStyle = 'rgba(' + RED + ',0.85)';
       ctx.beginPath(); ctx.moveTo(cx - w, cy); ctx.quadraticCurveTo(cx, cy - h * 2, cx + w, cy); ctx.quadraticCurveTo(cx, cy + h * 2, cx - w, cy); ctx.fill();
-      ctx.fillStyle = '#0a0506'; ctx.beginPath(); ctx.arc(cx, cy, h * 0.9, 0, 7); ctx.fill();
+      ctx.fillStyle = 'rgb(' + INK + ')'; ctx.beginPath(); ctx.arc(cx, cy, h * 0.9, 0, 7); ctx.fill();
       ctx.strokeStyle = 'rgba(' + BONE + ',0.6)'; ctx.beginPath(); ctx.arc(cx, cy, h * 1.15, 0, 7); ctx.stroke();
     }
   }
@@ -53,7 +64,7 @@
     var f = progress * N, idx = Math.min(N - 1, Math.floor(f)), t = f - idx;
     ctx.clearRect(0, 0, W, H);
     var g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.max(W, H) * 0.7);
-    g.addColorStop(0, 'rgba(' + RED + ',0.28)'); g.addColorStop(1, 'rgba(10,5,6,1)');
+    g.addColorStop(0, 'rgba(' + RED + ',0.28)'); g.addColorStop(1, 'rgba(' + INK + ',1)');
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     motif(idx, t);
     chs.forEach(function (c, i) {

@@ -58,8 +58,5 @@
       "selector": ":scope .ow-btn"
     }
   ],
-  "nativeWhen": [
-    "light"
-  ],
   "reserveHeight": 800
 }

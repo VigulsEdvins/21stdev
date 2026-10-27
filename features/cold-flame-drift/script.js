@@ -8,7 +8,7 @@
   var VS = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
   var FS = [
     "precision highp float;",
-    "uniform vec2 uRes;uniform float uTime;uniform vec2 uMouse;",
+    "uniform vec2 uRes;uniform float uTime;uniform vec2 uMouse;uniform vec3 uBg,uDeep,uPale,uViolet;",
     "float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}",
     "float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);",
     " return mix(mix(h21(i),h21(i+vec2(1,0)),f.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),f.x),f.y);}",
@@ -43,14 +43,14 @@
     " float fill=step(n*.92,cover);",
     " float inner=smoothstep(.12,.4,d+(1.-u)*.12);",
     " float ink2=step(n+.15,inner*.9+(1.-u)*.35);",
-    " vec3 bg=vec3(.027,.043,.102);",
-    " vec3 deep=vec3(.12,.26,.95);",
-    " vec3 pale=vec3(.62,.93,1.);",
+    " vec3 bg=uBg;",
+    " vec3 deep=uDeep;",
+    " vec3 pale=uPale;",
     " vec3 col=mix(deep,pale,ink2);",
-    " col=mix(col,vec3(.6,.35,1.),step(.93,seed)*(1.-ink2));",
+    " col=mix(col,uViolet,step(.93,seed)*(1.-ink2));",
     " col=mix(bg,col,fill);",
     " col*=1.-.12*h21(g*1.7);",
-    " col+=vec3(.08,.12,.25)*exp(-md*md*10.)*.6;",
+    " col+=(uDeep-uBg)*.12*exp(-md*md*10.);",
     " gl_FragColor=vec4(col,1.);",
     "}"
   ].join("\n");
@@ -66,6 +66,24 @@
   var loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   var uRes = gl.getUniformLocation(pr, "uRes"), uTime = gl.getUniformLocation(pr, "uTime"), uMouse = gl.getUniformLocation(pr, "uMouse");
 
+  var uBg = gl.getUniformLocation(pr, "uBg"), uDeep = gl.getUniformLocation(pr, "uDeep"), uPale = gl.getUniformLocation(pr, "uPale"), uViolet = gl.getUniformLocation(pr, "uViolet");
+  // the field follows the page theme: --bg is the ground, --accent the main ink, --text lifts the second ink
+  function rgb(cssVar, fb) {
+    var s = document.createElement("span"); s.style.color = "var(" + cssVar + ")"; field.appendChild(s);
+    var c = getComputedStyle(s).color; field.removeChild(s);
+    var m = c.match(/[\d.]+/g) || [];
+    if (m.length < 3) return fb;
+    var k = c.indexOf("color(") === 0 ? 1 : 1 / 255;
+    return [m[0] * k, m[1] * k, m[2] * k];
+  }
+  function mixc(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function setColours() {
+    var bg = rgb("--bg", [.027, .043, .102]), deep = rgb("--accent", [.12, .26, .95]), txt = rgb("--text", [.91, .96, 1]);
+    var pale = mixc(deep, txt, .65), violet = mixc(deep, [.6, .35, 1], .75);
+    gl.uniform3f(uBg, bg[0], bg[1], bg[2]); gl.uniform3f(uDeep, deep[0], deep[1], deep[2]);
+    gl.uniform3f(uPale, pale[0], pale[1], pale[2]); gl.uniform3f(uViolet, violet[0], violet[1], violet[2]);
+  }
+
   var mx = 0, my = 0, tx = 0, ty = 0, W = 0, H = 0, running = false, raf = 0, t0 = performance.now(), tOff = 0;
   function size() {
     var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -73,7 +91,9 @@
     cv.width = W; cv.height = H; gl.viewport(0, 0, W, H);
     mx = tx = W * 0.6; my = ty = H * 0.5;
   }
+  var frame = 0;
   function draw(now) {
+    if (frame++ % 20 === 0) setColours();
     mx += (tx - mx) * 0.06; my += (ty - my) * 0.06;
     gl.uniform2f(uRes, W, H);
     gl.uniform1f(uTime, reduce ? 12 : (now - t0) / 1000 + tOff);
@@ -90,6 +110,7 @@
   });
   window.addEventListener("resize", function () { size(); draw(performance.now()); });
   size(); draw(performance.now());
+  new MutationObserver(function () { setColours(); draw(performance.now()); }).observe(document.documentElement, { attributes: true });
   if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { en[0].isIntersecting ? start() : stop(); }).observe(field);
   else start();
 })();

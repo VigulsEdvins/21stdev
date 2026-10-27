@@ -68,8 +68,5 @@
       "selector": ":scope .rb-ghost"
     }
   ],
-  "nativeWhen": [
-    "dark"
-  ],
   "reserveHeight": 800
 }

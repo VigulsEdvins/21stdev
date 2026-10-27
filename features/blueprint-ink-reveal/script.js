@@ -4,8 +4,10 @@
   var mask = document.createElement('canvas'), mx = mask.getContext('2d');
   var tmp = document.createElement('canvas'), tx = tmp.getContext('2d');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W = 0, H = 0, dpr = 1, fs = 0, active = 0, run = false, vis = true, last = null, demo = null;
-  var INK = '#14378a';
+  var W = 0, H = 0, dpr = 1, fs = 0, active = 0, run = false, vis = true, last = null, demo = null, doneP = 0, curP = 0;
+  var INK = '#14378a', pinned = false;
+  // the ink is the section's text colour, which follows the theme
+  function inkColour() { return getComputedStyle(sheet).color || INK; }
 
   function fit() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -43,17 +45,17 @@
   function render() {
     ctx.clearRect(0, 0, W, H);
     // hairline outline
-    textPath(ctx, function (g, t, x, y) { g.lineWidth = Math.max(1, dpr); g.strokeStyle = INK; g.strokeText(t, x, y); });
+    textPath(ctx, function (g, t, x, y) { g.lineWidth = Math.max(1, dpr); g.strokeStyle = inkColour(); g.strokeText(t, x, y); });
     // solid letters, cut by the ink mask
     tx.clearRect(0, 0, W, H);
-    textPath(tx, function (g, t, x, y) { g.fillStyle = INK; g.fillText(t, x, y); });
+    textPath(tx, function (g, t, x, y) { g.fillStyle = inkColour(); g.fillText(t, x, y); });
     tx.globalCompositeOperation = 'destination-in'; tx.drawImage(mask, 0, 0); tx.globalCompositeOperation = 'source-over';
     ctx.drawImage(tmp, 0, 0);
   }
   function loop() {
     run = true;
     if (demo) { demo.t += 0.012; var p = demo.t; stamp(cv.clientWidth * (0.08 + 0.84 * p), cv.clientHeight * (0.5 + Math.sin(p * 9) * 0.18)); if (p >= 1) { demo = null; last = null; } }
-    if (!reduce) { mx.globalCompositeOperation = 'destination-out'; mx.fillStyle = 'rgba(0,0,0,0.012)'; mx.fillRect(0, 0, W, H); mx.globalCompositeOperation = 'source-over'; active *= 0.995; }
+    if (!reduce && !pinned) { mx.globalCompositeOperation = 'destination-out'; mx.fillStyle = 'rgba(0,0,0,0.012)'; mx.fillRect(0, 0, W, H); mx.globalCompositeOperation = 'source-over'; active *= 0.995; }
     render();
     if (vis && (active > 0.05 || demo)) requestAnimationFrame(loop); else { run = false; }
   }
@@ -65,5 +67,33 @@
   window.addEventListener('resize', fit);
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis) schedule(); }).observe(sheet);
   fit();
-  if (!reduce) { demo = { t: 0 }; schedule(); } else render();
+  render();
+
+  // Pins the section while the page scrolls past it and reports how far through (0 to 1) the visitor is,
+  // so the animation plays through with the page scroll
+  function pinRunway(el, screens, onProgress) {
+    var run = document.createElement('div');
+    run.style.cssText = 'position:relative;height:' + screens * 100 + 'vh';
+    var pin = document.createElement('div');
+    pin.style.cssText = 'position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1fr);align-items:center';
+    el.parentNode.insertBefore(run, el); run.appendChild(pin); pin.appendChild(el);
+    el.style.alignSelf = 'stretch'; // fill the pinned screen
+    function update() {
+      var r = run.getBoundingClientRect(), total = r.height - window.innerHeight;
+      onProgress(total > 0 ? Math.max(0, Math.min(1, -r.top / total)) : 0);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+  // the ink spreads along the word as the page scrolls, and stays
+  function inkAt(p) { return [cv.clientWidth * (0.08 + 0.84 * p), cv.clientHeight * (0.5 + Math.sin(p * 9) * 0.18)]; }
+  function paintTo(v) {
+    if (v < doneP - 0.02) { mx.clearRect(0, 0, W, H); doneP = 0; }
+    last = null;
+    for (var p = doneP; p <= v; p += 0.01) { var pt = inkAt(p); stamp(pt[0], pt[1]); }
+    doneP = v; last = null; schedule();
+  }
+  pinRunway(sheet, 3, function (v) { pinned = true; curP = v; paintTo(v); });
+  window.addEventListener('resize', function () { doneP = 0; paintTo(curP); });
 })();

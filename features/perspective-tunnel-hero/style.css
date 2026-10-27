@@ -2,8 +2,8 @@
 html, body { background: var(--bg, #0a0a10); color: var(--text, #f3f4f8); }
 body { font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); overflow-x: hidden; }
 :focus-visible { outline: 2px solid var(--accent, #7c8cff); outline-offset: 3px; }
-.wc-hero { position: relative; height: 100vh; min-height: 460px; touch-action: pan-x; }
-.wc-sticky { position: relative; height: 100%; overflow: hidden; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--accent, #7c8cff) 14%, var(--bg, #0a0a10)), var(--bg, #0a0a10) 70%); perspective: 900px; }
+.wc-hero { position: relative; display: grid; min-height: clamp(520px, 92vh, 1000px); touch-action: pan-x; }
+.wc-sticky { position: relative; min-height: inherit; overflow: hidden; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--accent, #7c8cff) 14%, var(--bg, #0a0a10)), var(--bg, #0a0a10) 70%); perspective: 900px; }
 .wc-scene { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
 .wc-card { position: absolute; left: 50%; top: 50%; width: clamp(110px, 18vw, 220px); aspect-ratio: 4 / 5; margin: calc(clamp(110px, 18vw, 220px) * -0.625) 0 0 calc(clamp(110px, 18vw, 220px) / -2); border-radius: var(--radius, 14px); padding: 12px; display: flex; align-items: flex-end; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #fff; border: 1px solid rgba(255,255,255,.25); box-shadow: 0 20px 50px -20px rgba(0,0,0,.8); will-change: transform, opacity; }
 .wc-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: repeating-linear-gradient(115deg, rgba(255,255,255,.1) 0 2px, transparent 2px 14px); }

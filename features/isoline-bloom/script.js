@@ -1,12 +1,12 @@
 (function () {
   var stage = document.getElementById("ibStage"), cv = document.getElementById("ibCv");
   var gl = cv.getContext("webgl", { antialias: false, alpha: false });
-  if (!gl) { stage.style.background = "radial-gradient(circle, #3a1a7a, #06050c 60%)"; return; }
+  if (!gl) return; // without WebGL the stage keeps its CSS gradient
 
   var VS = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
   var FS = [
     "precision highp float;",
-    "uniform vec2 uRes;uniform float uT;uniform vec2 uM;uniform float uPump;uniform vec2 uLean;",
+    "uniform vec2 uRes;uniform float uT;uniform vec2 uM;uniform float uPump;uniform vec2 uLean;uniform vec3 uBg;uniform vec3 uAc;uniform vec3 uInk;",
     "float F(vec2 p){",
     "  float r2=dot(p,p);p-=uLean*.22*exp(-r2*1.2);",
     "  float r=length(p),a=atan(p.y,p.x);",
@@ -24,11 +24,11 @@
     "  float line=1.-smoothstep(0.,w*1.1+1e-4,dd);",
     "  float glow=exp(-dd*dd/(w*w*3.+1e-4))*.35;",
     "  float t=clamp(p.x*.8+.5+.1*sin(uT*.3),0.,1.);",
-    "  vec3 violet=vec3(.5,.35,1.),mag=vec3(1.,.2,.7),ember=vec3(1.,.38,.18);",
-    "  vec3 c=t<.5?mix(violet,mag,t*2.):mix(mag,ember,(t-.5)*2.);",
+    "  vec3 c=mix(uAc,uInk,t*.7);",
     "  float fade=smoothstep(1.45,.95,f);",
-    "  vec3 col=vec3(.1,.06,.3)*exp(-f*3.)*1.4;",
-    "  col+=c*(line+glow)*fade*(.6+.5*smoothstep(1.2,0.,f));",
+    "  vec3 col=mix(uBg,uAc,clamp(exp(-f*3.)*.3,0.,1.));",
+    "  float k=clamp((line+glow)*fade*(.6+.5*smoothstep(1.2,0.,f)),0.,1.);",
+    "  col=mix(col,c,k);",
     "  gl_FragColor=vec4(col,1.);}"
   ].join("\n");
   function sh(t, s) { var o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null; }
@@ -38,14 +38,27 @@
   gl.useProgram(pr);
   var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   var loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  var U = {}; ["uRes", "uT", "uM", "uPump", "uLean"].forEach(function (k) { U[k] = gl.getUniformLocation(pr, k); });
+  var U = {}; ["uRes", "uT", "uM", "uPump", "uLean", "uBg", "uAc", "uInk"].forEach(function (k) { U[k] = gl.getUniformLocation(pr, k); });
 
+  // the picture uses the theme: background, accent and text colours, read from the stage
+  function rgb01(cssVar, fallback) {
+    var s = document.createElement("span"); s.style.color = "var(" + cssVar + ")"; stage.appendChild(s);
+    var c = getComputedStyle(s).color; stage.removeChild(s);
+    var m = c.match(/[\d.]+/g) || [];
+    if (m.length < 3) return fallback;
+    var k = c.indexOf("color(") === 0 ? 1 : 1 / 255;
+    return [m[0] * k, m[1] * k, m[2] * k];
+  }
+  function setColours() {
+    var bg = rgb01("--bg", [.024, .02, .047]), ac = rgb01("--accent", [.5, .35, 1]), ink = rgb01("--text", [.93, .91, 1]);
+    gl.uniform3f(U.uBg, bg[0], bg[1], bg[2]); gl.uniform3f(U.uAc, ac[0], ac[1], ac[2]); gl.uniform3f(U.uInk, ink[0], ink[1], ink[2]);
+  }
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var mx = 5, my = 5, tx = 5, ty = 5, lx = 0, ly = 0, pump = 0, lastX = 0, lastY = 0, lastT = 0, vis = true, raf = 0, t0 = performance.now();
   function size() {
     var d = Math.min(window.devicePixelRatio || 1, 1.5) * .75;
     var w = Math.max(2, Math.round(cv.clientWidth * d)), h = Math.max(2, Math.round(cv.clientHeight * d));
-    cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); gl.uniform2f(U.uRes, w, h);
+    cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); gl.uniform2f(U.uRes, w, h); setColours();
   }
   function toField(e) {
     var r = cv.getBoundingClientRect();

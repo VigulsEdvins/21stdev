@@ -82,6 +82,5 @@
       "selector": ":scope .pw-link"
     }
   ],
-  "reserveHeight": 800,
-  "ownPalette": true
+  "reserveHeight": 800
 }

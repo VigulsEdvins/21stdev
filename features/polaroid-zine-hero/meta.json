@@ -81,8 +81,5 @@
       "selector": ":scope .sz-link"
     }
   ],
-  "nativeWhen": [
-    "dark"
-  ],
   "reserveHeight": 800
 }

@@ -1,9 +1,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #3f342c; color: #2b2622; font-family: var(--font-body, system-ui, sans-serif); }
+html, body { background: var(--bg, #3f342c); color: var(--text, #2b2622); font-family: var(--font-body, system-ui, sans-serif); }
 .fl-desk { --fl-acc: var(--accent, #e4572e); position: relative; min-height: 100vh; padding: 3rem max(1rem, calc((100% - 64rem) / 2)) 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 3rem 2rem; align-content: center; justify-items: center; overflow: hidden;
-  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0 2px, transparent 2px 90px), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 6px), linear-gradient(135deg, #5a4a3d, #3f342c); }
-.fl-hint { position: absolute; top: 0.9rem; left: 50%; transform: translateX(-50%); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.55); white-space: nowrap; }
-.fl-item { position: relative; width: 100%; max-width: 20rem; padding: 1.6rem; transform: translate(var(--x, 0px), var(--y, 0px)) rotate(var(--r, 0deg)); cursor: grab; touch-action: none; user-select: none; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25), 0 14px 24px -8px rgba(0, 0, 0, 0.5); transition: box-shadow 0.2s; }
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--text, #000) 10%, transparent) 0 2px, transparent 2px 90px), repeating-linear-gradient(0deg, color-mix(in srgb, var(--text, #fff) 3%, transparent) 0 1px, transparent 1px 6px), linear-gradient(135deg, color-mix(in srgb, var(--bg, #3f342c) 88%, var(--accent, #5a4a3d)), var(--bg, #3f342c)); }
+.fl-hint { position: absolute; top: 0.9rem; left: 50%; transform: translateX(-50%); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: color-mix(in srgb, var(--text, #fff) 55%, transparent); white-space: nowrap; }
+.fl-item { color: #2b2622; position: relative; width: 100%; max-width: 20rem; padding: 1.6rem; transform: translate(var(--x, 0px), var(--y, 0px)) rotate(var(--r, 0deg)); cursor: grab; touch-action: none; user-select: none; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25), 0 14px 24px -8px rgba(0, 0, 0, 0.5); transition: box-shadow 0.2s; }
 .fl-item.is-drag { cursor: grabbing; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25), 0 28px 40px -8px rgba(0, 0, 0, 0.6); }
 .fl-h { font: 700 0.78rem/1 var(--font-display, system-ui, sans-serif); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.9rem; }
 .fl-card { background: #f4efe6; border-radius: 10px; text-align: center; padding-top: 2rem; }

@@ -10,8 +10,9 @@ Error generating stack: `+n.message+`
 
 .main {
   --font-open-sans: "Open Sans", "Segoe UI", system-ui, sans-serif;
-  --color-white: hsla(0, 0%, 100%, 1);
-  --color-black: hsla(0, 0%, 0%, 1);
+  --color-white: var(--bg, hsla(0, 0%, 100%, 1));
+  --color-black: var(--text, hsla(0, 0%, 0%, 1));
+  color: var(--color-black);
 }
 
 .main,
@@ -28,6 +29,10 @@ Error generating stack: `+n.message+`
 }
 
 /* --- alice-scroll-story --------------------------------------------------- */
+
+.main.main.main.main .hero-reveal__content p {
+  color: var(--color-white) !important;
+}
 
 .main {
   max-width: 100vw;
@@ -48,7 +53,8 @@ Error generating stack: `+n.message+`
 }
 
 .content {
-  background-color: #fff;
+  background-color: var(--color-white);
+  color: var(--color-black);
   display: flex;
   justify-content: center;
   position: relative;
@@ -319,3 +325,12 @@ react/cjs/react-jsx-runtime.production.js:
    * LICENSE file in the root directory of this source tree.
    *)
 */
+
+// The pinned reveals measure where they start and end when the page loads. When the page around them changes
+// height afterwards (other sections, images, fonts), those positions go stale, so measure again once things settle.
+(function () {
+  function remeasure() { window.dispatchEvent(new Event('resize')); }
+  window.addEventListener('load', function () { setTimeout(remeasure, 250); });
+  setTimeout(remeasure, 700);
+  setTimeout(remeasure, 2000);
+})();

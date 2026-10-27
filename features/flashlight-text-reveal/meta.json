@@ -59,7 +59,7 @@
     }
   ],
   "nativeWhen": [
-    "dark"
+    "light"
   ],
   "lazy": true,
   "ownPalette": true

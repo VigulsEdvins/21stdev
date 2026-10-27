@@ -52,6 +52,5 @@
       "selector": ":scope .mm-title"
     }
   ],
-  "lazy": true,
-  "ownPalette": true
+  "lazy": true
 }

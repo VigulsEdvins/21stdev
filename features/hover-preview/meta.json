@@ -75,8 +75,5 @@
       "selector": ":scope .cp-list li:nth-of-type(5) .cp-name"
     }
   ],
-  "nativeWhen": [
-    "light"
-  ],
   "reserveHeight": 800
 }

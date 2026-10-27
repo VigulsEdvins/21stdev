@@ -1,11 +1,11 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #f1e9d8; color: #2a1a1e; font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
-.hn-sky { position: relative; min-height: 100vh; min-height: 100svh; display: grid; place-items: center; overflow: hidden; padding: 2rem 1.25rem; background: #f1e9d8; }
+html, body { background: var(--bg, #f1e9d8); color: var(--text, #2a1a1e); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
+.hn-sky { position: relative; min-height: 100vh; min-height: 100svh; display: grid; place-items: center; overflow: hidden; padding: 2rem 1.25rem; background: var(--bg, #f1e9d8); }
 .hn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.hn-content { position: relative; max-width: 34rem; padding: 2rem 1.8rem; text-align: center; background: #f1e9d8; border: 2px solid #2a1a1e; box-shadow: 8px 8px 0 #b3202f; }
-.hn-tag { font: 700 0.75rem/1 "Courier New", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; color: #b3202f; }
+.hn-content { position: relative; max-width: 34rem; padding: 2rem 1.8rem; text-align: center; background: var(--bg, #f1e9d8); border: 2px solid var(--text, #2a1a1e); box-shadow: 8px 8px 0 var(--accent, #b3202f); }
+.hn-tag { font: 700 0.75rem/1 "Courier New", ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, #b3202f); }
 .hn-title { margin: 0.9rem 0; font-family: var(--font-display, Georgia, serif); font-size: clamp(1.9rem, 6vw, 3.2rem); line-height: 1.04; letter-spacing: -0.02em; }
 .hn-text { line-height: 1.6; }
-.hn-btn { display: inline-block; margin-top: 1.3rem; padding: 0.7rem 1.4rem; background: #2a1a1e; color: #f1e9d8; text-decoration: none; font-weight: 700; }
-.hn-btn:hover { background: #b3202f; }
-.hn-btn:focus-visible { outline: 3px solid #b3202f; outline-offset: 3px; }
+.hn-btn { display: inline-block; margin-top: 1.3rem; padding: 0.7rem 1.4rem; background: var(--text, #2a1a1e); color: var(--bg, #f1e9d8); text-decoration: none; font-weight: 700; }
+.hn-btn:hover { background: var(--accent, #b3202f); color: #fefefe; }
+.hn-btn:focus-visible { outline: 3px solid var(--accent, #b3202f); outline-offset: 3px; }

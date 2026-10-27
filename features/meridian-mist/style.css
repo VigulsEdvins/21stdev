@@ -1,14 +1,14 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #2b1a2e; color: #fff6ea; min-height: 100%; }
-.mm-stage { position: relative; height: 100vh; height: 100svh; min-height: 380px; overflow: hidden; background: linear-gradient(135deg, #f6c79a, #c8456a 55%, #2b1a2e); }
+html, body { background: var(--bg, #2b1a2e); color: var(--text, #fff6ea); min-height: 100%; }
+.mm-stage { position: relative; height: 100vh; height: 100svh; min-height: 380px; overflow: hidden; color: var(--text, #fff6ea); background: linear-gradient(135deg, color-mix(in srgb, var(--accent, #f6c79a) 40%, var(--bg, #2b1a2e)), color-mix(in srgb, var(--accent, #c8456a) 70%, var(--bg, #2b1a2e)) 55%, var(--bg, #2b1a2e)); }
 .mm-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .mm-guides { position: absolute; inset: 0; pointer-events: none; }
-.mm-v, .mm-h { position: absolute; background: rgba(255,246,234,.45); }
+.mm-v, .mm-h { position: absolute; background: color-mix(in srgb, var(--text, #fff6ea) 45%, transparent); }
 .mm-v { top: 0; bottom: 0; width: 1px; } .mm-h { left: 0; right: 0; height: 1px; }
 .mm-v1 { left: 33.3%; } .mm-v2 { left: 66.6%; }
 .mm-h1 { top: 25%; } .mm-h2 { top: 50%; } .mm-h3 { top: 75%; }
-.mm-ring { position: absolute; border: 1px solid rgba(255,246,234,.5); border-radius: 50%; aspect-ratio: 1; }
+.mm-ring { position: absolute; border: 1px solid color-mix(in srgb, var(--text, #fff6ea) 50%, transparent); border-radius: 50%; aspect-ratio: 1; }
 .mm-r1 { width: 52vmin; left: 18%; top: 14%; } .mm-r2 { width: 52vmin; left: 34%; top: 30%; }
 .mm-copy { position: absolute; left: 6%; right: 6%; bottom: 8%; max-width: 560px; }
 .mm-kicker { font-family: ui-monospace, Menlo, monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; opacity: .85; margin-bottom: 10px; }
-.mm-title { font-family: var(--font-display, Georgia, serif); font-size: clamp(28px, 6vw, 52px); font-weight: 500; line-height: 1.05; text-shadow: 0 2px 18px rgba(43,26,46,.5); }
+.mm-title { font-family: var(--font-display, Georgia, serif); font-size: clamp(28px, 6vw, 52px); font-weight: 500; line-height: 1.05; text-shadow: 0 2px 18px color-mix(in srgb, var(--bg, #2b1a2e) 55%, transparent); }

@@ -3,7 +3,7 @@
   var gl = cv.getContext("webgl", { antialias: false, alpha: false, powerPreference: "low-power" });
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var pos = { x: 0.5, y: 0.5 }, target = { x: 0.5, y: 0.5 };
-  var lastMove = -1e9, visible = true, raf = 0, t0 = performance.now();
+  var driven = false, lastMove = -1e9, visible = true, raf = 0, t0 = performance.now();
 
   var prog, uR, uT, uL;
   if (gl) {
@@ -51,7 +51,7 @@
     if (!visible) return;
     var t = (now - t0) / 1000;
     // idle: the light wanders by itself
-    if (now - lastMove > 2500 && !reduce) {
+    if (now - lastMove > 2500 && !reduce && !driven) {
       target.x = 0.5 + 0.32 * Math.sin(t * 0.55) + 0.1 * Math.sin(t * 1.3);
       target.y = 0.5 + 0.26 * Math.cos(t * 0.43 + 1);
     }
@@ -75,4 +75,30 @@
   if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; kick(); }).observe(room);
   window.addEventListener("resize", function () { size(); kick(); });
   size(); kick();
+
+  // Pins the section while the page scrolls past it and reports how far through (0 to 1) the visitor is,
+  // so the animation plays through with the page scroll
+  function pinRunway(el, screens, onProgress) {
+    var run = document.createElement('div');
+    run.style.cssText = 'position:relative;height:' + screens * 100 + 'vh';
+    var pin = document.createElement('div');
+    pin.style.cssText = 'position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1fr);align-items:center';
+    el.parentNode.insertBefore(run, el); run.appendChild(pin); pin.appendChild(el);
+    el.style.alignSelf = 'stretch'; // fill the pinned screen
+    function update() {
+      var r = run.getBoundingClientRect(), total = r.height - window.innerHeight;
+      onProgress(total > 0 ? Math.max(0, Math.min(1, -r.top / total)) : 0);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+  // the light sweeps across the wall as the page scrolls
+  pinRunway(room, 3, function (v) {
+    driven = true;
+    target.x = 0.1 + 0.8 * v;
+    target.y = 0.5 + 0.28 * Math.sin(v * Math.PI * 3);
+    lastMove = performance.now();
+    kick();
+  });
 })();

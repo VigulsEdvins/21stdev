@@ -3,6 +3,9 @@
   var again = document.getElementById('nsAgain'), cv = document.getElementById('nsRain'), ctx = cv.getContext('2d');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var glyphs = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789'.split('');
+  function tok(n, f) { var s = document.createElement('span'); s.style.color = 'var(' + n + ', ' + f + ')'; root.appendChild(s); var c = getComputedStyle(s).color; root.removeChild(s); return c; }
+  var cBg = '#05040a', cWhite = '#ffffff', cPink = '#ff2e93', cCyan = '#25f4ee', nRain = 0;
+  function colours() { cBg = tok('--bg', '#05040a'); cWhite = tok('--text', '#ffffff'); cPink = tok('--pink', '#ff2e93'); cCyan = tok('--cyan', '#25f4ee'); }
   var cols = [], fs = 16, rafRain = 0, visible = true, last = 0;
 
   function size() {
@@ -10,18 +13,19 @@
     cv.width = r.width * dpr; cv.height = r.height * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     var n = Math.ceil(r.width / fs); cols = [];
     for (var i = 0; i < n; i++) cols.push(Math.random() * -40);
-    ctx.fillStyle = '#05040a'; ctx.fillRect(0, 0, r.width, r.height);
+    colours(); ctx.fillStyle = cBg; ctx.fillRect(0, 0, r.width, r.height);
   }
   function rain(t) {
     rafRain = 0;
     if (t - last > 60) {
       last = t;
       var w = cv.clientWidth, h = cv.clientHeight;
-      ctx.fillStyle = 'rgba(5,4,10,.14)'; ctx.fillRect(0, 0, w, h);
+      if (nRain++ % 40 === 0) colours();
+      ctx.globalAlpha = .14; ctx.fillStyle = cBg; ctx.fillRect(0, 0, w, h); ctx.globalAlpha = 1;
       ctx.font = fs + 'px monospace';
       for (var i = 0; i < cols.length; i++) {
         var y = cols[i] * fs;
-        ctx.fillStyle = Math.random() > .96 ? '#ffffff' : (i % 5 === 0 ? '#ff2e93' : '#25f4ee');
+        ctx.fillStyle = Math.random() > .96 ? cWhite : (i % 5 === 0 ? cPink : cCyan);
         ctx.fillText(glyphs[(Math.random() * glyphs.length) | 0], i * fs, y);
         cols[i] = y > h && Math.random() > .96 ? 0 : cols[i] + 1;
       }

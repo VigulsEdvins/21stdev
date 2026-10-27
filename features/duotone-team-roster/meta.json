@@ -74,9 +74,7 @@
       "selector": ":scope .tc-pause"
     }
   ],
-  "nativeWhen": [
-    "light"
-  ],
+  "nativeWhen": [],
   "reserveHeight": 800,
   "ownPalette": true
 }

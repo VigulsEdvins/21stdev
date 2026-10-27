@@ -1,7 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #f1f4f6); color: var(--text, #101214); font-family: var(--font-body, "Helvetica Neue", Arial, system-ui, sans-serif); }
-.sh-page { --sh-ink: #ff5a1f; --sh-black: #101214; --sh-paper: #f1f4f6; background: var(--sh-paper); color: var(--sh-black); min-height: 100vh; overflow: hidden;
-  background-image: linear-gradient(#0000000f 1px, transparent 1px), linear-gradient(90deg, #0000000f 1px, transparent 1px); background-size: 32px 32px; }
+.sh-page { --sh-ink: var(--accent, #ff5a1f); --sh-black: var(--text, #101214); --sh-paper: var(--bg, #f1f4f6); background: var(--sh-paper); color: var(--sh-black); min-height: 100vh; overflow: hidden;
+  background-image: linear-gradient(color-mix(in srgb, var(--sh-black) 6%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--sh-black) 6%, transparent) 1px, transparent 1px); background-size: 32px 32px; }
 .sh-page[data-mode="cold"] { --sh-ink: #101214; }
 a { color: inherit; }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--sh-ink); outline-offset: 3px; }
@@ -27,7 +27,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--sh-ink); outlin
 .sh-temp b { font-size: 2.4rem; font-variant-numeric: tabular-nums; }
 .sh-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
 .sh-cell { padding: 1.6rem 1.2rem; border-right: 2px solid var(--sh-black); border-bottom: 2px solid var(--sh-black); min-height: 11rem; }
-.sh-cell:last-child { border-right: 0; }
+.sh-cell:last-child { border-right: 0; grid-column: 1 / -1; }
 .sh-wide { grid-column: span 2; }
 .sh-ink { background: var(--sh-black); color: var(--sh-paper); }
 .sh-cell h2 { font-size: 1.5rem; margin-bottom: 0.6rem; letter-spacing: -0.02em; }

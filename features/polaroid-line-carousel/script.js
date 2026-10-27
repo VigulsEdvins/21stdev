@@ -1,7 +1,12 @@
 (function () {
-  var line = document.getElementById('plLine'), path = document.getElementById('plPath');
-  var items = Array.prototype.slice.call(document.querySelectorAll('.pl-print'));
-  var nameEl = document.getElementById('plName'), countEl = document.getElementById('plCount');
+  // The builder can place this carousel on a page more than once: look elements up inside this copy's own section
+  var host = window.__activeSectionRegisteringId && document.getElementById(window.__activeSectionRegisteringId);
+  var scope = host || document;
+  function $(sel) { return scope.querySelector(sel); }
+  var line = $('#plLine'), path = $('#plPath');
+  if (!line || !path) return;
+  var items = Array.prototype.slice.call(scope.querySelectorAll('.pl-print'));
+  var nameEl = $('#plName'), countEl = $('#plCount');
   var n = items.length, off = 0, target = 0, vel = 0, sway = items.map(function () { return { a: 0, v: 0 }; });
   var dragging = false, lx = 0, moved = 0, visible = true, raf = 0, t0 = performance.now(), W = 0, H = 0, sag = 70, spacing = 280;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -14,6 +19,7 @@
   }
   function yAt(x) { var u = x / W; return H * 0.2 + sag * 2 * 2 * u * (1 - u); } // quadratic curve at u
   function render(now) {
+    if (!W || !H) { measure(); if (!W || !H) return; }
     var total = n * spacing, breeze = reduce ? 0 : 1;
     items.forEach(function (it, i) {
       var x = ((i * spacing - off) % total + total * 1.5) % total - total / 2 + W / 2;
@@ -47,13 +53,16 @@
   line.addEventListener('pointerup', up); line.addEventListener('pointercancel', up);
   line.addEventListener('click', function (e) {
     if (moved > 6) return; var it = null; document.elementsFromPoint(e.clientX, e.clientY).some(function (el) { it = el.closest && el.closest('.pl-print'); return it; }); if (!it) return;
-    var i = items.indexOf(it), cur = Math.round(off / spacing), d = (((i - cur) % n) + n * 1.5) % n - n / 2;
+    var i = items.indexOf(it); if (i < 0) return; var cur = Math.round(off / spacing), d = (((i - cur) % n) + n * 1.5) % n - n / 2;
     snap(cur + Math.round(d));
   });
   line.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { snap(Math.round(target / spacing) + 1); e.preventDefault(); } if (e.key === 'ArrowLeft') { snap(Math.round(target / spacing) - 1); e.preventDefault(); } });
-  document.getElementById('plPrev').addEventListener('click', function () { snap(Math.round(target / spacing) - 1); });
-  document.getElementById('plNext').addEventListener('click', function () { snap(Math.round(target / spacing) + 1); });
-  window.addEventListener('resize', function () { var i = off / spacing; measure(); off = target = i * spacing; kick(); });
-  new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) kick(); }).observe(line);
+  $('#plPrev').addEventListener('click', function () { snap(Math.round(target / spacing) - 1); });
+  $('#plNext').addEventListener('click', function () { snap(Math.round(target / spacing) + 1); });
+  function remeasure() { var i = spacing ? off / spacing : 0; measure(); if (W && H) { off = target = i * spacing; kick(); } }
+  window.addEventListener('resize', remeasure);
+  // The line can be laid out after the script runs (hidden section, preview width change): measure again whenever its size changes
+  if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(line);
+  new IntersectionObserver(function (es) { visible = es[es.length - 1].isIntersecting; if (visible) kick(); }).observe(line);
   measure(); kick();
 })();

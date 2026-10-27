@@ -68,6 +68,5 @@
       "type": "text",
       "selector": ":scope .pf-flip"
     }
-  ],
-  "ownPalette": true
+  ]
 }

@@ -5,24 +5,23 @@ html, body { background: var(--bg, #14120f); color: var(--text, #f2ede4); }
   min-height: 100vh;
   min-height: 100svh;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto auto;
   justify-items: center;
   align-content: center;
   gap: 22px;
   padding: 32px 16px;
-  background: radial-gradient(90% 70% at 50% 40%, #2a2620, #14120f);
+  background: radial-gradient(90% 70% at 50% 40%, color-mix(in srgb, var(--text, #f2ede4) 8%, var(--bg, #14120f)), var(--bg, #14120f));
   font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif);
-  color: #f2ede4;
+  color: var(--text, #f2ede4);
   overflow: hidden;
 }
 .pk-stage {
   position: relative;
-  align-self: end;
   width: min(92vw, 640px);
   aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 4px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 30px 60px color-mix(in srgb, var(--text, #000) 28%, transparent);
   touch-action: pan-y;
   cursor: grab;
   background: #ddd;
@@ -30,7 +29,7 @@ html, body { background: var(--bg, #14120f); color: var(--text, #f2ede4); }
   -webkit-user-select: none;
 }
 .pk-stage:active { cursor: grabbing; }
-.pk-stage:focus-visible { outline: 2px solid #ffcf70; outline-offset: 5px; }
+.pk-stage:focus-visible { outline: 2px solid var(--accent, #ffcf70); outline-offset: 5px; }
 .pk-sheet, .pk-shadow { position: absolute; inset: 0; transform-origin: 0 0; }
 .pk-flap {
   background-color: #efe7d6;
@@ -72,11 +71,11 @@ html, body { background: var(--bg, #14120f); color: var(--text, #f2ede4); }
 .pk-btn {
   width: 44px; height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(242, 237, 228, 0.4);
+  border: 1px solid color-mix(in srgb, var(--text, #f2ede4) 40%, transparent);
   background: transparent;
   color: inherit;
   font-size: 1.1rem;
   cursor: pointer;
 }
-.pk-btn:hover { background: rgba(242, 237, 228, 0.12); }
-.pk-btn:focus-visible { outline: 2px solid #ffcf70; outline-offset: 3px; }
+.pk-btn:hover { background: color-mix(in srgb, var(--text, #f2ede4) 12%, transparent); }
+.pk-btn:focus-visible { outline: 2px solid var(--accent, #ffcf70); outline-offset: 3px; }

@@ -75,9 +75,5 @@
       "type": "text",
       "selector": ":scope .bh-phone"
     }
-  ],
-  "nativeWhen": [
-    "dark"
-  ],
-  "ownPalette": true
+  ]
 }

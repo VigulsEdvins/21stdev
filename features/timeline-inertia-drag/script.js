@@ -187,4 +187,27 @@
     },
     { passive: false }
   );
+
+  // Pins the section while the page scrolls past it and reports how far through (0 to 1) the visitor is,
+  // so the animation plays through with the page scroll
+  function pinRunway(el, screens, onProgress) {
+    var run = document.createElement('div');
+    run.style.cssText = 'position:relative;height:' + screens * 100 + 'vh';
+    var pin = document.createElement('div');
+    pin.style.cssText = 'position:sticky;top:0;height:100vh;display:grid;grid-template-columns:minmax(0,1fr);align-items:center';
+    el.parentNode.insertBefore(run, el); run.appendChild(pin); pin.appendChild(el);
+    el.style.alignSelf = 'stretch'; // fill the pinned screen
+    function update() {
+      var r = run.getBoundingClientRect(), total = r.height - window.innerHeight;
+      onProgress(total > 0 ? Math.max(0, Math.min(1, -r.top / total)) : 0);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+  pinRunway(viewport.closest('.tl-root') || viewport, 3, function (v) {
+    targetX = v * Math.max(0, track.scrollWidth - viewport.clientWidth);
+    clampTarget();
+    startAnimation();
+  });
 })();

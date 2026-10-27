@@ -1,7 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #14161f); color: var(--text, #f1e8d6); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
 
-.bh-hero { --bh-cream: #f1e8d6; --bh-red: #ff5a3c; position: relative; display: grid; grid-template-rows: auto 1fr auto; min-height: 36rem; height: 100vh; max-height: 54rem; padding: clamp(1rem, 4vw, 3rem); overflow: hidden; color: var(--bh-cream); background: radial-gradient(ellipse at 50% 40%, #232744 0%, #14161f 70%); }
+.bh-hero { --bh-cream: var(--text, #f1e8d6); --bh-red: var(--accent, #ff5a3c); position: relative; display: grid; grid-template-rows: auto 1fr auto; min-height: 36rem; height: 100vh; max-height: 54rem; padding: clamp(1rem, 4vw, 3rem); overflow: hidden; color: var(--bh-cream); background: radial-gradient(ellipse at 50% 40%, color-mix(in srgb, var(--accent, #7c8cff) 14%, var(--bg, #14161f)) 0%, var(--bg, #14161f) 70%); }
 .bh-defs { position: absolute; }
 .bh-grain { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
@@ -31,7 +31,7 @@ html, body { background: var(--bg, #14161f); color: var(--text, #f1e8d6); font-f
 @keyframes bh-wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 
 .bh-replay { margin-top: 1.4rem; padding: 0.6rem 1.2rem; border: 2px solid var(--bh-cream); border-radius: 99px; background: transparent; color: inherit; font: 600 0.78rem/1 var(--font-body, sans-serif); letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, color 0.2s; }
-.bh-replay:hover { background: var(--bh-cream); color: #14161f; }
+.bh-replay:hover { background: var(--bh-cream); color: var(--bg, #14161f); }
 
 @media (max-width: 560px) { .bh-bar { font-size: 0.7rem; padding: 0.7rem; } .bh-dots { display: none; } .bh-role b { display: block; } .bh-swash { margin-top: -0.6rem; } }
 @media (prefers-reduced-motion: reduce) { .is-painting .bh-paint, .is-painting .bh-swash path { animation-duration: 0.01s; animation-delay: 0s; } }

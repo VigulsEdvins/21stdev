@@ -66,6 +66,5 @@
     }
   ],
   "reserveHeight": 800,
-  "palette": "designed",
-  "ownPalette": true
+  "palette": "designed"
 }

@@ -7,6 +7,20 @@ Array.prototype.forEach.call(document.querySelectorAll('.ether-viewport'), (root
   const btnPulse = root.querySelector('.ether-btn.primary');
   const btnTheme = root.querySelector('.ether-btn.secondary');
   const themeLabel = root.querySelector('.ether-theme-label');
+
+  // start in the palette that matches the page: a dark page background gives the dark palette (the button still switches)
+  (function () {
+    const host = root.closest('.page-section') || document.body;
+    const c = getComputedStyle(host).backgroundColor;
+    const m = (c.match(/[\d.]+/g) || []).map(Number);
+    if (m.length < 3 || (m[3] !== undefined && m[3] < 0.5)) return;
+    const k = c.indexOf('color(') === 0 ? 255 : 1;
+    const dark = (0.2126 * m[0] + 0.7152 * m[1] + 0.0722 * m[2]) * k / 255 < 0.45;
+    root.classList.toggle('theme-dark', dark);
+    root.classList.toggle('theme-light', !dark);
+    if (btnTheme) btnTheme.setAttribute('aria-pressed', String(dark));
+    if (themeLabel) themeLabel.textContent = dark ? 'Light Theme' : 'Dark Theme';
+  })();
   const statFps = root.querySelector('.stat-fps');
   const statRipples = root.querySelector('.stat-ripples');
 

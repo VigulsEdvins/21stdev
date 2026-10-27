@@ -13,8 +13,9 @@ const styles = `
 
 .main {
   --font-open-sans: "Open Sans", "Segoe UI", system-ui, sans-serif;
-  --color-white: hsla(0, 0%, 100%, 1);
-  --color-black: hsla(0, 0%, 0%, 1);
+  --color-white: var(--bg, hsla(0, 0%, 100%, 1));
+  --color-black: var(--text, hsla(0, 0%, 0%, 1));
+  color: var(--color-black);
 }
 
 .main,
@@ -31,6 +32,10 @@ const styles = `
 }
 
 /* --- alice-scroll-story --------------------------------------------------- */
+
+.main.main.main.main .hero-reveal__content p {
+  color: var(--color-white) !important;
+}
 
 .main {
   max-width: 100vw;
@@ -51,7 +56,8 @@ const styles = `
 }
 
 .content {
-  background-color: #fff;
+  background-color: var(--color-white);
+  color: var(--color-black);
   display: flex;
   justify-content: center;
   position: relative;

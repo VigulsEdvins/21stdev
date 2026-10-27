@@ -63,7 +63,5 @@
     }
   ],
   "themeReviewed": "Coordinate readout is decorative drafting text (2.6:1). Checked 2026-10-24.",
-  "reserveHeight": 800,
-  "ownPalette": true,
-  "nativeWhen": []
+  "reserveHeight": 800
 }

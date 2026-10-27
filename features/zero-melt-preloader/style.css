@@ -1,29 +1,29 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg, #05070d); color: var(--text, #eaf2ff); font-family: var(--font-body, system-ui, -apple-system, "Segoe UI", sans-serif); }
-.tg-root { --tg-cx: 50%; --tg-cy: 50%; --tg-r: 0px; position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: #f4efe4; transition: opacity .6s ease; color: #101420; }
+.tg-root { --tg-cx: 50%; --tg-cy: 50%; --tg-r: 0px; position: relative; width: 100%; min-height: 100vh; min-height: 100dvh; overflow: hidden; background: color-mix(in srgb, var(--accent, #f4efe4) 16%, var(--bg, #f4efe4)); transition: opacity .6s ease; color: var(--text, #101420); }
 .tg-site { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 1rem; text-align: center; padding: 1.5rem; }
-.tg-small { font: 600 0.72rem/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.2em; text-transform: uppercase; color: #d64a2a; }
+.tg-small { font: 600 0.72rem/1 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent, #d64a2a); }
 .tg-site-title { font-family: var(--font-display, Georgia, "Times New Roman", serif); font-weight: 500; font-size: clamp(2.2rem, 7vw, 5rem); line-height: 1; letter-spacing: -0.03em; }
 .tg-root.is-exiting { opacity: 0; pointer-events: none; }
 .tg-replay[hidden] { display: none; }
-.tg-replay { position: fixed; top: 16px; right: 16px; z-index: 5; padding: 0.6rem 1.1rem; border: 1.5px solid #101420; background: #f4efe4; border-radius: 99px; color: #101420; font: 600 0.85rem/1 var(--font-body, system-ui, sans-serif); cursor: pointer; transition: background 0.2s, color 0.2s; }
-.tg-replay:hover { background: #101420; color: #f4efe4; }
-.tg-replay:focus-visible, .tg-skip:focus-visible { outline: 2px solid #5ee0c8; outline-offset: 3px; }
+.tg-replay { position: fixed; top: 16px; right: 16px; z-index: 5; padding: 0.6rem 1.1rem; border: 1.5px solid var(--text, #101420); background: color-mix(in srgb, var(--accent, #f4efe4) 16%, var(--bg, #f4efe4)); border-radius: 99px; color: var(--text, #101420); font: 600 0.85rem/1 var(--font-body, system-ui, sans-serif); cursor: pointer; transition: background 0.2s, color 0.2s; }
+.tg-replay:hover { background: var(--text, #101420); color: color-mix(in srgb, var(--accent, #f4efe4) 16%, var(--bg, #f4efe4)); }
+.tg-replay:focus-visible, .tg-skip:focus-visible { outline: 2px solid var(--accent, #5ee0c8); outline-offset: 3px; }
 
-.tg-gate { position: absolute; inset: 0; z-index: 2; background: radial-gradient(120% 90% at 50% 100%, #14203a, #05070d 70%); color: #eaf2ff; -webkit-mask: radial-gradient(circle at var(--tg-cx) var(--tg-cy), transparent var(--tg-r), #000 calc(var(--tg-r) + 1px)); mask: radial-gradient(circle at var(--tg-cx) var(--tg-cy), transparent var(--tg-r), #000 calc(var(--tg-r) + 1px)); }
+.tg-gate { position: absolute; inset: 0; z-index: 2; background: radial-gradient(120% 90% at 50% 100%, color-mix(in srgb, var(--accent, #14203a) 28%, var(--bg, #05070d)), var(--bg, #05070d) 70%); color: var(--text, #eaf2ff); -webkit-mask: radial-gradient(circle at var(--tg-cx) var(--tg-cy), transparent var(--tg-r), #000 calc(var(--tg-r) + 1px)); mask: radial-gradient(circle at var(--tg-cx) var(--tg-cy), transparent var(--tg-r), #000 calc(var(--tg-r) + 1px)); }
 .tg-root[data-phase="done"] .tg-gate, .tg-root[data-phase="shown"] .tg-gate { display: none; }
 .tg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: default; }
 .tg-root[data-phase="draw"] .tg-canvas { cursor: crosshair; }
 .tg-center { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 1.1rem; pointer-events: none; padding: 1.5rem; text-align: center; }
 .tg-count { font-family: var(--font-display, ui-monospace, Menlo, Consolas, monospace); font-weight: 200; font-size: clamp(5rem, 22vw, 14rem); line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; transition: opacity 0.6s, transform 0.6s; }
-.tg-bar { width: min(18rem, 70vw); height: 2px; background: rgba(234, 242, 255, 0.16); overflow: hidden; transition: opacity 0.4s; }
-.tg-bar i { display: block; width: 100%; height: 100%; background: #5ee0c8; transform: scaleX(0); transform-origin: left; }
-.tg-msg { min-height: 1.4em; font: 0.78rem/1.4 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(234, 242, 255, 0.7); }
-.tg-skip { pointer-events: auto; padding: 0.5rem 0.9rem; border: 0; background: none; color: rgba(234, 242, 255, 0.55); font: 0.8rem/1 var(--font-body, system-ui, sans-serif); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; opacity: 0; transition: opacity 0.5s; }
+.tg-bar { width: min(18rem, 70vw); height: 2px; background: color-mix(in srgb, var(--text, #eaf2ff) 16%, transparent); overflow: hidden; transition: opacity 0.4s; }
+.tg-bar i { display: block; width: 100%; height: 100%; background: var(--accent, #5ee0c8); transform: scaleX(0); transform-origin: left; }
+.tg-msg { min-height: 1.4em; font: 0.78rem/1.4 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.18em; text-transform: uppercase; color: color-mix(in srgb, var(--text, #eaf2ff) 70%, transparent); }
+.tg-skip { pointer-events: auto; padding: 0.5rem 0.9rem; border: 0; background: none; color: color-mix(in srgb, var(--text, #eaf2ff) 55%, transparent); font: 0.8rem/1 var(--font-body, system-ui, sans-serif); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; opacity: 0; transition: opacity 0.5s; }
 .tg-root[data-phase="draw"] .tg-skip { opacity: 1; }
 .tg-root[data-phase="draw"] .tg-count { opacity: 0.12; transform: scale(0.9); }
 .tg-root[data-phase="draw"] .tg-bar { opacity: 0; }
-.tg-root[data-phase="draw"] .tg-msg { color: #5ee0c8; font-size: 0.95rem; }
+.tg-root[data-phase="draw"] .tg-msg { color: var(--accent, #5ee0c8); font-size: 0.95rem; }
 .tg-msg.is-bad { color: #ff7a59 !important; animation: tg-shake 0.35s; }
 @keyframes tg-shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 @media (prefers-reduced-motion: reduce) { .tg-msg.is-bad { animation: none; } .tg-count { transition: none; } .tg-root { transition-duration: .15s; } }

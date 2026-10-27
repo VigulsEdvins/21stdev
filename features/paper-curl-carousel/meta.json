@@ -38,6 +38,5 @@
   "updatedAt": "2026-10-25",
   "customizable": [],
   "reserveHeight": 800,
-  "lazy": true,
-  "ownPalette": true
+  "lazy": true
 }

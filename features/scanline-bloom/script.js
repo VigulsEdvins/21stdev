@@ -6,7 +6,7 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var vs = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
   var fs = [
-    'precision mediump float;uniform vec2 R;uniform float T;uniform float D;',
+    'precision mediump float;uniform vec2 R;uniform float T;uniform float D;uniform vec3 uBg;uniform vec3 uInk;',
     'float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}',
     'float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}',
     'float bloom(vec2 p,float k,float rad,float ph){float a=atan(p.y,p.x),d=length(p);',
@@ -33,7 +33,7 @@
     ' float mixk=smoothstep(.0,-.4,uv.y);float ink=mix(line,dots,mixk);',
     ' vec2 q=fc/R;float fr=step(.045,q.x)*step(q.x,.955)*step(.04,q.y)*step(q.y,.96);float fo=step(.05,q.x)*step(q.x,.95)*step(.045,q.y)*step(q.y,.955);ink=max(ink,fr-fo);',
     ' ink*=1.-.25*h(fc+T);',
-    ' vec3 col=mix(vec3(.03,.012,.012),vec3(.95,.2,.17),ink);col+=(h(fc*1.3)-.5)*.03;gl_FragColor=vec4(col,1.);}'
+    ' vec3 col=mix(uBg,uInk,ink);col+=(h(fc*1.3)-.5)*.03;gl_FragColor=vec4(col,1.);}'
   ].join('\n');
   function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
   var pr = gl.createProgram();
@@ -45,11 +45,25 @@
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
   var uR = gl.getUniformLocation(pr, 'R'), uT = gl.getUniformLocation(pr, 'T'), uD = gl.getUniformLocation(pr, 'D');
+  var uBg = gl.getUniformLocation(pr, 'uBg'), uInk = gl.getUniformLocation(pr, 'uInk');
+  // the print uses the theme: the sheet is the background colour and the ink is the accent, read from the stage
+  function rgb01(cssVar, fallback) {
+    var s = document.createElement('span'); s.style.color = 'var(' + cssVar + ')'; stage.appendChild(s);
+    var c = getComputedStyle(s).color; stage.removeChild(s);
+    var m = c.match(/[\d.]+/g) || [];
+    if (m.length < 3) return fallback;
+    var k = c.indexOf('color(') === 0 ? 1 : 1 / 255;
+    return [m[0] * k, m[1] * k, m[2] * k];
+  }
+  function setColours() {
+    var bg = rgb01('--bg', [.03, .012, .012]), ink = rgb01('--accent', [.95, .2, .17]);
+    gl.uniform3f(uBg, bg[0], bg[1], bg[2]); gl.uniform3f(uInk, ink[0], ink[1], ink[2]);
+  }
   var dpr = Math.min(window.devicePixelRatio || 1, 1.5), visible = true, raf = 0, t0 = performance.now();
   function size() {
     var r = stage.getBoundingClientRect();
     cv.width = Math.max(1, Math.round(r.width * dpr)); cv.height = Math.max(1, Math.round(r.height * dpr));
-    gl.viewport(0, 0, cv.width, cv.height);
+    gl.viewport(0, 0, cv.width, cv.height); setColours();
   }
   function draw(now) {
     raf = 0;
