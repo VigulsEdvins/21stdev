@@ -12,7 +12,7 @@ plan that follows the table is kept as written, so the original intent stays vis
 | C4 Prune duplicates | **done as analysis**: `find-duplicates` finds no near-identical pairs worth removing, so nothing was deleted |
 | C5 Kits | **done**: six reviewed kits in the Projects modal, test fails if a kit rots |
 | C6 Search | **done**: synonyms (plans → pricing, navbar → header, gdpr → cookie); fuzzy, favourites, recents and "similar" already existed |
-| D1 Split big modules | **partly**: `canvas.js` 1,425 → 340 lines (3 new modules). `export-panel.js` 711 → 563 lines (page checks and reviewer comments in `export-notes.js`, React download in `export-react-download.js`); the ZIP builder is still inside it |
+| D1 Split big modules | **partly**: `canvas.js` 1,425 → 340 lines (3 new modules). `export-panel.js` 711 → 489 lines (page checks and reviewer comments in `export-notes.js`, React download in `export-react-download.js`, ZIP and multi-page packaging plus the content-editor build in `export-zip.js`) |
 | D2 Section tools | **done**: lock, hide, copy / paste between projects, Alt+Arrow reorder with announcements; sizing panels stay open |
 | D3 Multi-page | **done**: page tabs, links to pages, header / footer to all pages, one HTML + CSS + JS per page in the ZIP, per-page sitemap, saved in projects (format v4), undo history. Single-file export and the code viewer show the open page only |
 | D4 Images | **done**: picture descriptions (alt) in the Content tab, size warning. Upload already shrank to WebP |
@@ -32,12 +32,18 @@ plan that follows the table is kept as written, so the original intent stays vis
 | H1 – H7 | **done**: `npm run ci`, Firefox and WebKit smoke both pass (`npm run setup-webkit-libs` fetches the few libraries the cached WebKit needs on a newer Linux, no root), flaky log, sync-registry test, one-off scripts removed, docs refreshed, unused-asset finder |
 | I | decision notes below |
 
+## Round 3 (2026-10-27)
+- **Real-GPU frame times**: `GPU=1 npm run measure-frames` (Intel UHD 620, ANGLE over OpenGL) writes `reports/frames-gpu.json`. On the card, 232 of 235 components hold 60 fps; the software-rendering list of 62 slow ones was a renderer artefact. Fixed the real ones: `comeback-poster` (30 → 60 fps: flower heads are drawn once into sprites, stems batched) and `onward-summit-template` (35% → 7% slow frames: arrows batched by opacity). Still occasionally dropping to 30 fps: `murmuration-wordmark` (14% slow frames, 1,400+ particles).
+- **Tokens**: 210 of 235 read the tokens; the other 25 (canvas/WebGL/preloader art, print paper, physical objects, brand pages) are reviewed and recorded with `palette: "designed"` and a `paletteNote`.
+- **React export**: now wraps plain features (nearly all, since only one feature still has a React source): markup in `src/legacy/`, scoped CSS, script run once after mount (`src/lib/plain.ts`). All 235 bundle with esbuild; a browser run of four of them showed no script errors. Not carried over: the builder's theme engine, so a light-native section under a dark page theme can have pale text.
+- **Single-file export** inlines the Latin and Latin Extended subsets of the page fonts.
+
 ## Epic I decisions
 - **I1 Optional backend: not now.** Revisit only if the vault goes public; the review copy covers client feedback without a server.
 - **I2 Contribution flow: not now.** No contributors; `new-feature` + `check-features` already describe the process.
 - **I3 AI assist: not now.** Needs key handling and cost limits; prototype as a local dev tool first if wanted.
-- **I4 Token import: later**, small (read colours / fonts / radius from JSON into the page theme).
-- **I5 Internationalisation: later**; start with `lang` per page now that pages exist.
+- **I4 Token import: done 2026-10-27.** "Import design tokens (JSON)" in Page Settings (`scripts/builder/token-import.js`): reads background / text / accent, heading and body font, and corner radius from a plain or W3C-style token file into the custom theme and page settings (new `radius` setting writes `--radius`). Undo reverts it.
+- **I5 Internationalisation: first step done 2026-10-27.** Each page has its own language code (field next to the page tabs; empty = site language) used in `<html lang>` of the ZIP and of the open-page exports. Still later: `hreflang` links between translations, per-language content.
 
 ---
 
