@@ -14,7 +14,7 @@
     W = cv.clientWidth; H = cv.clientHeight;
     cv.width = W * dpr; cv.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    N = Math.round(Math.min(2400, Math.max(700, W * H / 330)));
+    N = Math.round(Math.min(1600, Math.max(600, W * H / 500)));
     px = new Float32Array(N); py = new Float32Array(N); vx = new Float32Array(N); vy = new Float32Array(N);
     tx = new Float32Array(N); ty = new Float32Array(N); has = new Uint8Array(N);
     for (var i = 0; i < N; i++) { px[i] = Math.random() * W; py[i] = Math.random() * H * 0.8; vx[i] = Math.random() - 0.5; vy[i] = Math.random() - 0.5; }
@@ -60,7 +60,7 @@
       }
       var damp = phase === "hold" ? 0.86 : 0.99 - pull * 0.08;
       vx[i] = (vx[i] + ax * k) * damp; vy[i] = (vy[i] + ay * k) * damp;
-      var sp = Math.hypot(vx[i], vy[i]), max = 3.2;
+      var sp = Math.sqrt(vx[i] * vx[i] + vy[i] * vy[i]), max = 3.2;
       if (sp > max) { vx[i] *= max / sp; vy[i] *= max / sp; }
       px[i] += vx[i] * k; py[i] += vy[i] * k;
       if (pull === 0) { if (px[i] < -20) px[i] = W + 20; else if (px[i] > W + 20) px[i] = -20; if (py[i] < -20) py[i] = H * 0.85; else if (py[i] > H * 0.9) py[i] = -10; }
@@ -83,9 +83,8 @@
       ctx.lineWidth = pass ? 1 : 2.2;
       ctx.beginPath();
       for (var i = pass; i < N; i += pass ? 3 : 1) {
-        var l = 2 + Math.min(Math.hypot(vx[i], vy[i]) * 2.2, 7);
-        var a = Math.atan2(vy[i], vx[i]);
-        ctx.moveTo(px[i], py[i]); ctx.lineTo(px[i] - Math.cos(a) * l, py[i] - Math.sin(a) * l);
+        var sp = Math.sqrt(vx[i] * vx[i] + vy[i] * vy[i]), l = 2 + Math.min(sp * 2.2, 7), inv = sp > 1e-6 ? l / sp : 0;
+        ctx.moveTo(px[i], py[i]); ctx.lineTo(px[i] - vx[i] * inv, py[i] - vy[i] * inv);
       }
       ctx.stroke();
     }
