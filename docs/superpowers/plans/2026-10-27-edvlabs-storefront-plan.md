@@ -1,0 +1,350 @@
+# edvlabs storefront — epics, tasks and subtasks
+
+Written 2026-10-27. Design and decisions: [../specs/2026-10-27-edvlabs-storefront-design.md](../specs/2026-10-27-edvlabs-storefront-design.md). Read that first; the decisions D1–D8 there are assumed here.
+Status: **plan only, nothing built.** Items marked **[decision]** wait for you.
+
+Size: S ≤ 0.5 day, M ≈ 1–2 days, L ≈ 3–5 days, XL > 1 week (split before starting). Priority: **P0** needed for the first public sale, **P1** needed for the self-serve path, **P2** after launch.
+Every task has a **Done when** line. Nothing counts as done unless it is checked in a browser as the visitor would use it, and `npm run verify`, `npm test` and `npm run test:e2e` still pass.
+
+---
+
+## How the work is ordered
+
+| Phase | Result | Epics | Rough size |
+|---|---|---|---|
+| **0. Decide and prepare** | Decisions D1–D8 answered, accounts opened, repo and environments ready, design direction chosen | E0, E1 (direction only) | 1–2 weeks |
+| **1. Sell by hand (done-for-you)** | A public site you can send people to. A visitor answers the questions and leaves a contact. You get the whole brief by email and see it in a simple list. No accounts, no payments | E1, E2, E3, E9 (lead part), E12 (minimum), E13, E14 | 5–7 weeks |
+| **2. Sell self-serve** | Registration, the redesigned beginner builder, saved projects, price calculator, Stripe checkout, download after payment | E4, E5, E6, E7, E8, E10, E11 | 8–12 weeks |
+| **3. Harden and grow** | Server-side export (real paywall), hosting, quotes as PDF, translations, analytics-driven fixes | E15 | ongoing |
+
+Why this order: the done-for-you path needs only email, and it is the path where you earn more per customer. It will also show which questions people answer, which sections they ask for and what they are willing to pay, before the self-serve half (the expensive half) is built.
+
+Dependency sketch (arrow = "needs"):
+`E0 → everything` · `E1 → E2, E3, E6, E10` · `E3 → E9, E5` · `E4 → E7, E8, E10` · `E5 → E3 (price preview), E6, E8` · `E7 → E8` · `E12 → E14` · `E13` runs alongside all.
+
+---
+
+## E0 — Foundations and decisions (P0)
+
+Goal: nothing is started on guesses; accounts, repositories and environments exist.
+
+- **E0.1 Answer the decisions D1–D8 (S) [decision].**
+  - Subtasks: read the design doc §7; confirm or change each proposal; write the final answers into the design doc; note the date.
+  - Done when: every decision has a "decided on <date>" line.
+- **E0.2 Legal and tax set-up (M) [decision].**
+  - Subtasks: confirm the legal form you will sell under and its VAT status with an accountant; decide the company name, address and contact shown on the site and on invoices; decide the invoice numbering and currency (EUR); decide whether you are the seller or you use a merchant of record (Paddle, Lemon Squeezy); write down the refund rule you want to offer; check whether selling digital goods to consumers in the EU needs the withdrawal-right waiver at checkout (it normally does).
+  - Done when: a one-page "how we sell" note exists (seller, VAT, refunds, invoices) that E8 and E12 can use. This is not legal advice; a professional reviews it.
+- **E0.3 Name, domain and email (S).**
+  - Subtasks: choose the public domain (edvlabs.com or other); buy it; set up DNS at the CDN; create `hello@`, `sales@` and `noreply@` addresses; set SPF, DKIM and DMARC so email does not land in spam.
+  - Done when: an email sent from `noreply@` to a Gmail and an Outlook inbox arrives in the inbox with passing SPF/DKIM.
+- **E0.4 Accounts for services (S).**
+  - Subtasks: Supabase project (EU region); Stripe account in test mode; email service (Resend or Postmark); CDN / hosting (Cloudflare Pages or Netlify); error tracking (Sentry free tier); privacy-friendly analytics (Plausible or Umami); a password manager entry for every secret.
+  - Done when: each account exists, test credentials are stored safely, and no secret is in the repository.
+- **E0.5 Repositories and environments (M).**
+  - Subtasks: decide repo layout (keep the vault in this repo; add `site/` for the storefront and `server/` for functions and database migrations); create three environments (local, staging, production) with separate databases and Stripe modes; add `.env.example` listing every variable; extend `.gitignore` for secrets; add a deploy workflow to `.github/workflows` that deploys staging on every push to a branch and production on a tag; keep the private remote private (do **not** push without asking).
+  - Done when: a change to a page appears on the staging URL within five minutes of being pushed.
+- **E0.6 Prepare the three outside templates for deployment (M).**
+  - Subtasks: copy `edv-yearbook`, `edv-arena`, `edv-roster` (and, if they are to be sold, `mom` and `cvmaker`) into the repo or into a build step; remove the sibling-folder routing from `scripts/serve.js` for production; or hide those templates from the public catalogue; check every file path they use.
+  - Done when: the "Full Websites" category opens correctly from the staging site, with the server running from the repo alone.
+- **E0.7 Project board (S).** Create one board with the epics below as labels, a column per phase, and one card per task; add the size and priority to each card. Done when: all tasks from this plan are cards.
+
+---
+
+## E1 — Brand and design system: editorial, warm (P0)
+
+Goal: a look that a person designed, applied through tokens so it can be used on the public site, the wizard, the builder and the emails.
+
+- **E1.1 Research and moodboard (M).**
+  - Subtasks: collect 15–20 references of editorial and independent-studio sites (print magazines, small agencies, zines), noting what makes each feel hand-made; collect 5 negative references (the AI look) and write what to avoid; write a one-page brand note: voice (plain, warm, a little dry), three words that describe it, three words it must never be.
+  - Done when: the moodboard and brand note are in `docs/brand/` and you have approved them.
+- **E1.2 Two design directions as mock-ups, you choose one (L) [decision].**
+  - Subtasks: build two static HTML mock-ups of the same three screens (home, the first wizard question, one builder screen) in two different editorial takes (for example "paper and ink with a clay accent" and "newsprint with a bold type grid"); put them side by side; review with you; record the choice and the reasons.
+  - Done when: one direction is chosen in writing. Nothing else in this epic starts before this.
+- **E1.3 Tokens and type (M).**
+  - Subtasks: define colour tokens (paper, ink, muted ink, line, accent, accent hover, success, warning, error) with contrast checked at WCAG AA for every text pairing; define the type scale (display, h1–h4, body, small, label) and line lengths; pick and self-host the fonts (licences recorded; subset to the languages needed; `font-display: swap`); define spacing, radius (small and few), border and shadow rules (almost no shadows); define motion rules (short, purposeful, respects `prefers-reduced-motion`); write them as CSS variables in one `site/styles/tokens.css` and as a table in `docs/brand/tokens.md`.
+  - Done when: a token test page shows every colour pair with its measured contrast and every type size; all pairs pass AA.
+- **E1.4 The "not AI-made" checklist (S).**
+  - Subtasks: turn the design doc §8 list into a reviewable checklist (no gradient headlines, no glow or orbs, no glassmorphism, no purple-blue gradients, no emoji icons, no identical three-card rows used as the default layout, no eyebrow-pill on every section, no "supercharge / seamless / unlock / effortless" words, no stock imagery); add a banned-words list for copy; add the checklist to `CONTRIBUTING.md`.
+  - Done when: every new page is reviewed against it before merge.
+- **E1.5 Components of the system (L).**
+  - Subtasks: buttons (primary, secondary, text link, destructive), links, form controls (text, email, phone, select, radio cards, checkbox, textarea, file) with visible labels and error states; the "question card" used by the wizard; price meter; progress indicator; modal; toast; table; empty state; footer; header; section rules and numbering; focus styles that are visible and on-brand; a print stylesheet for the brief.
+  - Done when: a living style page at `/style` shows each component in every state, keyboard focus included.
+- **E1.6 Imagery and illustration (M).**
+  - Subtasks: take real screenshots of 8–12 of the best templates and of the builder at each step (using the existing thumbnail pipeline at fixed size); crop and frame them consistently (thin border, slight offset, paper shadow); commission or draw a small set of marks (stamps, underlines, arrows) in the chosen style; write alt text for each; optimise to WebP/AVIF with sizes.
+  - Done when: every image on the home page is a real screenshot or an original mark, none is stock.
+- **E1.7 Voice and microcopy guide (S).**
+  - Subtasks: a glossary that maps developer words to everyday ones (section → "block of your page", widget → "small extra", mood → "feel", weight → "how heavy", export → "get your site", content editor → "the editor"); rules for button labels (verbs, no "Submit"); tone examples for success, error and waiting messages; plain-language reading level target (about 8th grade).
+  - Done when: the glossary is used in the style page and in E2/E3/E6 copy.
+
+---
+
+## E2 — Public website (P0)
+
+Goal: pages that explain what you sell, show the work, state prices honestly and lead into the questions.
+
+- **E2.1 Site map and page outlines (S).**
+  - Subtasks: pages: Home, How it works, Examples, Pricing, FAQ, About, Contact, Start (the questions), Sign in, Terms, Privacy, Cookies (only if cookies are used), Refunds, 404; write one outline per page (purpose, the one action, sections); decide the navigation (max five links + "Start your page").
+  - Done when: outlines approved.
+- **E2.2 Home page (L).**
+  - Subtasks: first screen says in one sentence what it is and for whom, with one primary action ("Start your page") and one quiet second ("See examples"); how it works in three honest steps with a real screenshot each; examples strip with 6 real templates; the two ways to get a page (do it yourself / we do it) side by side with prices from E5; a short note from you with a photo or a signature; FAQ highlights; footer with company details.
+  - Done when: the page passes the E1.4 checklist and a person who never saw the product can say in ten seconds what it is (tested with 5 people, E13.6).
+- **E2.3 How it works (M).** Subtasks: the two paths explained step by step; what you get at the end (files, deploy guide, editor if chosen); what you do **not** get (hosting, domain, copywriting unless asked); time expectations for done-for-you; real timeline graphic. Done when: no step uses a word from the glossary's "banned" column.
+- **E2.4 Examples page (L).**
+  - Subtasks: turn the 235-item catalogue into 12–20 **complete example pages** grouped by purpose (restaurant, studio, portfolio, event, service business, shop), each opening in a full-screen preview with "Use this as my starting point" which carries the choice into the wizard; separate "all sections" browsing (the old catalogue) behind a quieter link; fast thumbnails (existing `thumbs/`, lazy-loaded); filter by purpose only.
+  - Done when: each example loads in under 3 seconds on a mid-range phone and the start button preselects the template.
+- **E2.5 Pricing page (M).** Subtasks: show the formula in words ("a base price, a small price per section, an optional editor"); show three worked examples (small, medium, large page) with exact prices; show the done-for-you price as "the same plus our work from €X" with what the work includes; live calculator (reuses E5) where a visitor sets the number of sections and the editor yes/no; VAT line; refund summary linking to the policy. Done when: every number comes from the single price table in E5 and a test fails if the page and the table disagree.
+- **E2.6 FAQ (S).** Subtasks: 15–20 real questions (can I change it later, do I need hosting, what is the editor, who owns it, what if I do not know what I need, can you translate it); each answer short; schema.org FAQ markup. Done when: reviewed by two non-technical readers.
+- **E2.7 About and Contact (S).** Subtasks: who you are, why you built it, where you are based; contact form (name, email, message, anti-spam) and direct email; response-time promise you can keep. Done when: a test message reaches your inbox and the sender gets an automatic acknowledgement.
+- **E2.8 SEO and sharing (S).** Subtasks: unique titles and descriptions per page; Open Graph images drawn in the brand style; sitemap and robots; canonical URLs; JSON-LD for the organisation. Done when: Lighthouse SEO is 100 on every public page.
+- **E2.9 Performance and accessibility of the public site (M).** Subtasks: budget (home under 300 KB transferred, LCP under 2.5 s on mobile throttling); no layout shift; keyboard path through every page; skip link; landmarks; reduced-motion; screen-reader pass on the wizard and pricing. Done when: Lighthouse performance ≥ 90 and accessibility 100 on every public page, plus a manual keyboard-only and screen-reader pass recorded.
+
+---
+
+## E3 — The guided questions ("brief") and recommendation (P0)
+
+Goal: a short conversation that collects what you need, never blocks someone who does not know, and ends in a clear choice.
+
+- **E3.1 Write the questions (M) [decision].**
+  - Subtasks: draft about 10 questions, each with a plain explanation and an **"I don't know yet"** answer that is a first-class choice (never an error); proposed list: (1) What is the page for: my business / myself / an event / a product / something else; (2) What kind of business or work; (3) What should a visitor do on the page (call, book, buy, sign up, read about me, see my work); (4) Which blocks of the page do you want — shown as simple cards with a one-line explanation and a tiny picture (opening banner, about, services, prices, gallery, reviews, questions and answers, contact form, map and opening hours, newsletter sign-up, team, process, footer) plus "not sure, suggest for me"; (5) Do you want to be able to change the text yourself later (the editor): yes / no / not sure (with a plain explanation of what it is); (6) Do you already have text, photos and a logo: all / some / none; (7) Feel and style: pick up to three words and optionally paste links of sites you like; (8) How many languages; (9) Do you already have a domain and hosting; (10) When do you need it and what budget range; (11) Last: **Do you want to build it yourself (no code) or should edvlabs do the work for you?** with the price shown for each.
+  - Done when: you approved the final wording; every question has an "I don't know" path.
+- **E3.2 Data model for an answer (S).** Subtasks: define the brief as one JSON document with a version number (`brief_v1`), each answer as `{ value, unknown: true|false, note }`; define the allowed values for each question; write a JSON schema; write sample briefs (complete, mostly "I don't know", contradictory). Done when: the schema validates all samples and rejects malformed ones.
+- **E3.3 Wizard screen flow (L).**
+  - Subtasks: one question per screen with a progress indicator, "Back" and "Skip", answers kept in the browser as the visitor goes (survive refresh and the back button); keyboard and screen-reader friendly (radio cards are real radios); mobile first; a "save and finish later" that emails a link (Phase 2) or keeps it in the browser (Phase 1); a summary screen where each answer can be edited; clear wording at the choice point (E3.7).
+  - Done when: a test visitor finishes the questions in under 4 minutes on a phone, including at least three "I don't know" answers.
+- **E3.4 Recommendation rules (L).**
+  - Subtasks: map (purpose × industry × goal) to a starting list of sections, reusing `scripts/builder/starters.js` and the registry's industry and mood tags; when the visitor says "I don't know", choose the safest set (opening banner, about, services, reviews, contact); add or remove sections according to answers (a booking goal adds a booking or contact block; a shop goal adds product cards); stay within a sensible count; explain each suggestion in one line ("because you want people to call you"); keep rules in a table (data, not code) so you can change them.
+  - Done when: ten different sample briefs each give a sensible page of 5–9 sections and a test checks that every recommended section exists, is not a draft and is not `heavy`.
+- **E3.5 Live price preview inside the wizard (M).** Subtasks: show a running estimate from question 4 onward ("about €X for yourself, from €Y if we do it"); explain it in a sentence; never show a price the calculator (E5) did not produce. Done when: the estimate in the wizard equals the quote at the end for the same inputs (test).
+- **E3.6 Storing and sending the brief (M).**
+  - Phase 1 (done-for-you only): on submit, send the brief to a form endpoint (a Supabase table through a small function, or a hosted form service as a stop-gap) and email it to you; store it in the lead list (E9).
+  - Phase 2: the brief is attached to the account and pre-fills the builder (E6.1).
+  - Subtasks: validation on the server; rate limiting and a spam check (honeypot plus Cloudflare Turnstile); consent checkbox with a link to the privacy notice; save a copy of what the visitor agreed to; confirmation screen and email to the visitor.
+  - Done when: a submitted brief appears in the owner's inbox and list within a minute, with every answer readable and "I don't know" marked clearly.
+- **E3.7 The fork: do it yourself or we do it (S).** Subtasks: two equal choices with plain text, what you get, what it costs, how long it takes, what you need to do; the chosen path decides the next screen (register for self-serve; contact details for done-for-you); a third quiet link "I want to talk first". Done when: tested with five people who understand the difference without help.
+- **E3.8 Done-for-you contact step (S).** Subtasks: ask for an email **or** a phone number (at least one); preferred way and time to be contacted; optional name; one consent checkbox; thank-you page that says exactly what happens next and when. Done when: submission with only a phone number works and the owner email shows how to reach them.
+
+---
+
+## E4 — Accounts and platform (P1)
+
+Goal: people can register, sign in, and keep their work safely; the owner can manage everything.
+
+- **E4.1 Database design (M).**
+  - Subtasks: tables: `profiles` (user id, name, email, created), `briefs` (id, owner or null, json, source, created), `projects` (id, owner, name, state json, sections count, has_editor, version, updated), `project_versions` (snapshots, retention limit), `quotes` (id, brief, price breakdown json, price table version), `orders` (id, owner, project, amount, currency, Stripe ids, status, invoice ref), `leads` (id, brief, contact, status, notes, assigned, timestamps), `pricing_config` (versioned), `events` (audit log); row-level security so a customer sees only their rows and only the owner role sees leads and orders; indexes; migrations stored in `server/migrations/`; seed data for local testing.
+  - Done when: a test suite proves a customer cannot read or change another customer's rows, and an anonymous visitor can only insert a brief.
+- **E4.2 Registration and sign-in (M).**
+  - Subtasks: email + password with email verification, plus "email me a sign-in link" (no password) and optionally Google sign-in; password rules and breach check (provided by the auth service); sign-in, sign-out, forgot password, change email, change password, delete account (links to E12.5); friendly errors; the pages follow the design system; session lifetime and refresh; protection against brute force; owner role assigned by hand.
+  - Done when: all flows work end to end in a browser, a wrong password gives a neutral message, and verification emails arrive.
+- **E4.3 Server functions / API (L).**
+  - Subtasks: functions for: submit brief, create lead, get price quote, create checkout session, receive payment webhook, get entitlement for a project, request download, owner list/update leads, owner edit pricing; input validation with schemas; consistent error format; no secrets in the browser; CORS limited to your domains; structured logs without personal data.
+  - Done when: each function has tests (valid, invalid, unauthorised) that run in CI.
+- **E4.4 Email (M).**
+  - Subtasks: templates in the brand style for: brief received (visitor), new lead (owner), welcome and verify, sign-in link, quote, payment receipt, download ready, project reminder ("you left something unfinished"), password and account notices; plain-text versions; unsubscribe for non-essential mail; a send log; test mode that writes mails to a file instead of sending.
+  - Done when: every template renders correctly in Gmail, Outlook and Apple Mail (checked with screenshots) and passes spam checks.
+- **E4.5 File storage (S).** Subtasks: a private bucket for customer uploads (logos, photos used in their site) with size and type limits, virus scan or type sniffing, image shrinking (the builder already shrinks uploads to WebP); a public bucket for the storefront's own images; signed URLs for downloads. Done when: an upload over the limit is refused with a clear message and a customer cannot open another customer's file.
+- **E4.6 Environment, backups and monitoring (M).** Subtasks: automatic daily database backups with a tested restore; uptime check on the site and the API; error tracking; alerts to your email or phone; a short runbook ("site is down", "payments not arriving", "emails not sending"). Done when: you restored a backup into staging once and the alert fires in a test.
+
+---
+
+## E5 — Price model and calculator (P0 for display, P1 for charging)
+
+Goal: one source of truth for prices; the visitor sees the same number in the wizard, on the pricing page, in the builder, at checkout and in emails.
+
+- **E5.1 Define the price model (M) [decision].**
+  - Subtasks: write the formula you want (proposal: base + per-section price above N included sections + admin-editor add-on + optional extras: multi-page, extra language, review copy); decide volume steps; decide what counts as a section (each block in the builder's list; hidden sections do not count; the header and footer count or are included); decide the done-for-you work fee (per section by complexity: `light / medium / heavy` weight already exists in the registry, plus fixed fees for the editor and for each extra page and language); decide discounts and promo codes; decide VAT display; decide currency and rounding; decide what happens when someone adds sections after paying (pays the difference).
+  - Done when: a worked-example table (10 cases) is signed off by you.
+- **E5.2 Price table as data (S).** Subtasks: a versioned `pricing_config` row and a JSON file with the same shape for local use; every price in euro cents; all labels in one place; a changelog; you can edit it in the owner admin (E9.5) without code. Done when: changing a value changes every place that shows a price (test).
+- **E5.3 One calculator module (M).**
+  - Subtasks: a small pure JavaScript module `price.js` used by the wizard, the pricing page, the builder meter, the quote email and the server; inputs: number of sections, editor yes/no, extras, path (self / done-for-you), voucher; output: line items, subtotal, VAT, total, and the price-table version; unit tests including edge cases (0 sections, many sections, hidden sections, rounding); a test that runs the same cases against the browser build and the server build.
+  - Done when: the cases from E5.1 pass and the browser and server give identical numbers.
+- **E5.4 Quotes (M).** Subtasks: store a quote with its inputs and the price-table version so it can be honoured for 14 days; show it as a page and email it; the quote is what checkout charges (recomputed on the server from the project, never trusted from the browser). Done when: tampering with the price in the browser does not change the charged amount (test).
+- **E5.5 Section counter and live meter in the builder (S).** Subtasks: count visible sections; show "7 blocks · €X" with a one-line breakdown on hover; warn before a change crosses a price step; show it in the export step. Done when: adding, hiding, removing and undoing sections updates the meter immediately.
+
+---
+
+## E6 — The builder for non-technical people (P1; the redesign of `index.html` and `builder.html`)
+
+Goal: a stranger can choose blocks, write their text and set the look without help. The current screen shows everything at once (255 items, mood/industry/weight filters, "Target section", "Widgets vs Sections"); the new default shows a guided path, and the old power is behind an "Advanced" switch.
+
+- **E6.1 Entry: start from the brief (M).**
+  - Subtasks: open the builder with the recommended sections from the brief (E3.4) or from a chosen example (E2.4); a "start from scratch" option; a short first-time message instead of the current tour; project is created in the account automatically.
+  - Done when: from the end of the wizard to a filled builder takes one click.
+- **E6.2 The guided path: five steps with a simple progress bar (L) [design first].**
+  1. *Blocks*: choose and order the blocks of the page.
+  2. *Words*: write your text and add your photos.
+  3. *Look*: pick a colour set, a font pair, the roundness.
+  4. *Check*: preview on desktop, tablet and phone; checklist of problems.
+  5. *Get it*: price, choose the editor yes/no, pay, download.
+  - Subtasks: each step is one screen with one job and a visible "Next"; the user can jump back; the existing advanced panels (Elements, Sections, Styling, Content) are reachable from an **Advanced** switch and remember the choice; keyboard shortcuts stay.
+  - Done when: five people who never saw it can finish a page with their own text without asking anything (E13.6).
+- **E6.3 Step 1 — Blocks: a plain block picker (L).**
+  - Subtasks: rename the 15 categories to everyday names (Heroes → "Opening banner", Headers & Nav → "Top menu", Cards & Tiles → "Services and features", Galleries & Bento → "Photos and work", Footers & Endings → "Bottom of the page", and so on) with one-line explanations; show each block as a real thumbnail with a plain description and "Add"; group by **what it is for**, not by tech; hide `heavy` blocks and drafts unless "Advanced"; hide mood/industry/weight filters (replace with "Recommended for you" from the brief and a simple search); show a short list first (the best 3–6 per category, chosen by you via a `featured` flag in `meta.json`); reorder by drag and by up/down buttons (keyboard); remove with undo; show "needs photos / needs text" hints per block; the section counter and price meter (E5.5) always visible.
+  - Done when: a visitor can add, reorder and remove blocks using only the mouse, only the keyboard, and on a phone.
+- **E6.4 Step 2 — Words: guided text editing (L).**
+  - Subtasks: a clear list of blocks, each with its editable fields in human labels (Headline, Short text, Button text, Photo, Link) built from `customizable` and the auto-detected fields; **click-to-edit directly on the preview** with a small toolbar (text, link, replace photo); highlight the field being edited; photo upload with automatic shrinking and alt-text prompt; placeholder text marked clearly ("sample text — replace me") and a counter of how many samples are still left; "Write it for me / I'll send it later" option that marks a field as "to be supplied" and adds it to the done-for-you hand-off; character guidance; autosave to the account; undo.
+  - Done when: a visitor can replace every visible text and photo of a 7-block page without leaving this step, and the sample counter reaches zero.
+- **E6.5 Step 3 — Look: simple customising (M).**
+  - Subtasks: replace the theme dropdown and custom colour pickers with 6–8 designed colour sets (named by feel, previewed on the real page) and a "make my own" with three pickers and an automatic contrast check; 4–6 font pairs (self-hosted, named by feel); roundness (sharp / soft / round) wired to the new radius setting; logo upload; page title, description and favicon (the SEO form in plain words); languages if more than one (uses the new per-page language and translation links).
+  - Done when: each option changes the preview within a second and none can produce unreadable text (contrast guard).
+- **E6.6 Step 4 — Check (M).**
+  - Subtasks: reuse the page checks (alt text, headings, empty links, unlabelled fields, default title, sample text left) rewritten in plain words with a "take me there" button; mobile, tablet, desktop preview toggle; "see it like a visitor" full-screen preview without builder chrome; a weight note ("loads fast / a bit heavy") based on the weight report.
+  - Done when: every check explains what is wrong, why it matters and fixes it in one click where possible.
+- **E6.7 Step 5 — Get it (M).** Subtasks: summary of what they built; price with breakdown and the editor choice; sign-in or register right here if not yet; payment (E8); after payment, the downloads (E7). Done when: the page shown is the same price as the meter.
+- **E6.8 "Ask edvlabs to do it" from inside the builder (M).** Subtasks: a visible, calm button at every step; it turns the current project into a done-for-you lead with a snapshot of the project, the section list and the quote attached (E9); a message box. Done when: the owner receives the project's section list and a link to open the project read-only.
+- **E6.9 Catalogue page redesign (M).** Subtasks: replace the developer catalogue with the Examples page (E2.4); keep the full section browser as "Browse all blocks" for the advanced switch only; remove developer language and the source list; keep search. Done when: a first-time visitor never sees the words registry, workbench, vault, component or widget.
+- **E6.10 Help and safety nets (M).** Subtasks: a small "?" on each step with a 20-second explanation (text, not video first); a "start over" with confirmation; autosave status shown plainly ("Saved 2 minutes ago"); an offline/lost-connection message; unsaved work warning; undo/redo visible; a "Contact us" that opens the done-for-you form with the project attached.
+  - Done when: closing the tab and coming back later restores the project in the account, and a failed save shows a clear message and keeps a local copy (the existing autosave recovery is reused).
+- **E6.11 Performance of the builder (M).** Subtasks: lazy-load thumbnails and block previews; keep the preview fast with 10+ blocks (existing offscreen pause); budget the first load; split the large scripts; test on a mid-range phone and an older laptop. Done when: the builder is interactive in under 4 seconds on a mid-range laptop on a normal connection.
+- **E6.12 Mobile builder (L) [decision].** Subtasks: decide whether to support building on a phone or to show a friendly "please use a computer, or send yourself the link" message for steps 1–3 while allowing preview and checkout on a phone; if supported, a bottom-sheet block picker and a full-screen editor. Done when: the decision is recorded and the chosen behaviour works.
+
+---
+
+## E7 — Saved projects and getting the site (P1)
+
+Goal: work is saved to the account; the paid site can be taken only after payment.
+
+- **E7.1 Projects in the account (L).**
+  - Subtasks: replace browser-only storage with an API plus the existing local cache (local stays as the offline fallback); autosave with conflict handling (two tabs); the project list in the dashboard (E10.1); project limit per account; version history with a retention limit; import/export of the existing project file format (already versioned) so old local projects can be uploaded after sign-in; migration step when someone signs in with local projects present.
+  - Done when: the same project opens on two computers and keeps its content; an old local project can be moved into the account.
+- **E7.2 Entitlements (M).** Subtasks: an `entitlement` per project (`none`, `paid`, `paid-editor`), its section limit and its price-table version, expiry (12 months of edits, D7); a function that returns the entitlement for a project; the builder asks it before enabling download buttons. Done when: removing a block after paying is allowed, and adding blocks beyond the paid count offers the difference.
+- **E7.3 Soft paywall (M) (Phase 2a).**
+  - Subtasks: before payment, the export buttons are replaced by "Get your site"; exports contain nothing; preview stays free but carries a small, tasteful "Preview — not published" ribbon that is not in the download; after payment the ZIP, single file and review copy become available; a download link is time-limited and signed; the sold ZIP includes `DEPLOY.md`, the README, and, if bought, the editor.
+  - Done when: an unpaid account has no working download button and the API refuses a download without a paid entitlement.
+- **E7.4 Real paywall: build the site on the server (XL, split) (Phase 3) [decision].**
+  - Subtasks: move the export code that is pure (assembler, export bundle, asset bundling, font hosting, CMS build) so it runs in Node as well as in the browser (it already runs in Node in tests); a server worker that, after payment, builds the ZIP from the saved project and stores it for download; handle the pieces that need the browser (canvas favicon PNGs → render on the server); queue, timeouts and size limits; cache by project version; test that the server ZIP and the browser ZIP are the same.
+  - Done when: no export can be produced without a paid entitlement because the browser can no longer produce it.
+- **E7.5 Licence and credits file in every sold ZIP (S).** Subtasks: a `LICENSE.txt` that states the customer owns the output and lists third-party material (fonts under OFL, any media with its terms); generated from the registry's `origin` data. Done when: every ZIP contains it and a test checks it.
+
+---
+
+## E8 — Checkout and orders (P1)
+
+Goal: a safe, simple payment that unlocks the download and produces a correct invoice.
+
+- **E8.1 Choose the payment set-up (S) [decision].** Subtasks: compare Stripe Checkout plus Stripe Tax against a merchant of record (Paddle, Lemon Squeezy) for VAT handling, fees, payout time, invoices and refunds; confirm accepted payment methods (cards, Apple Pay, Google Pay, local bank methods); decide on invoices. Done when: one option is chosen with the reasons written down.
+- **E8.2 Create the checkout (M).** Subtasks: server function builds a Stripe Checkout session from the recomputed quote (E5.4); metadata links the order to project and user; success and cancel pages; the checkbox for the digital-content withdrawal waiver with the exact wording from E0.2; collect country and VAT number for business buyers; show total including VAT before paying.
+  - Done when: a test-mode payment completes and returns the user to the downloads page.
+- **E8.3 Webhooks and order state (M).** Subtasks: verify the signature; handle `paid`, `failed`, `refunded`, `disputed`; make processing idempotent (the same event twice does nothing twice); create the entitlement; send the receipt and "download ready" emails; write an audit event; a retry-safe design so a lost webhook is repaired by a nightly reconcile job.
+  - Done when: replaying the same event ten times leaves one order and one entitlement.
+- **E8.4 Invoices and receipts (M).** Subtasks: numbered invoices that meet the rules of your country (done with your accountant); a PDF with your company details, buyer details, line items, VAT; stored and re-downloadable in the dashboard; monthly export for the accountant (CSV). Done when: the accountant has accepted a sample invoice.
+- **E8.5 Refunds and cancellations (S).** Subtasks: a clear refund rule on the page; the owner can refund from the admin; a refund removes the entitlement and revokes active download links; the buyer gets an email. Done when: refunding a test order removes access within a minute.
+- **E8.6 Promo codes and discounts (S, P2).** Subtasks: percent or fixed codes with expiry and use limits; applied by the calculator so the quote shows them; abuse limits. Done when: a code lowers the quote and the charge identically.
+- **E8.7 Payment security and testing (M).** Subtasks: never log card data (Stripe handles it); test cards for every outcome; test mode banner in staging; a go-live checklist that switches keys and webhooks and makes one real small payment and refunds it. Done when: the go-live checklist has been run once end to end.
+
+---
+
+## E9 — Done-for-you leads and the owner's back office (P0 for leads, P1 for the rest)
+
+Goal: you see every brief clearly, you can answer fast, and prices can be changed without a developer.
+
+- **E9.1 Lead intake (M).** Subtasks: a lead is created from a brief plus contact (E3.8) and from "Ask edvlabs to do it" (E6.8); deduplicate by email or phone; store the consent; attach the quote for the done-for-you price (self-serve price + work fee); send you an instant email and (optional) a phone notification (Telegram, SMS or a push service). Done when: a lead arrives in under a minute with the contact details in the subject line.
+- **E9.2 The brief as a readable page and email (M).** Subtasks: a one-page layout of every answer with the section list, the style words, the links the visitor pasted, the languages, the timeline and budget; "I don't know" answers marked and grouped under "to discuss"; the quote and the line items; a link to open the project in read-only (Phase 2); print-friendly. Done when: you can read a brief on your phone in 60 seconds and know what to ask.
+- **E9.3 Owner login and the lead list (M).** Subtasks: a protected owner area with a list of leads (newest first), filters by status, search by name/email/phone; status pipeline: new → contacted → quote sent → won → lost (with a reason); notes per lead with date; reminders ("call back on…"); one-click "reply" template emails; export to CSV. Done when: moving a lead through the statuses is possible without leaving the list.
+- **E9.4 Orders view (S).** Subtasks: list of paid orders with buyer, project, amount, date, invoice; open the project read-only; refund button (E8.5). Done when: every paid order can be found by email in two clicks.
+- **E9.5 Price table editor (M).** Subtasks: a form that edits the price table (E5.2) with validation, a preview of the examples (E5.1) before saving, and a version history; saving creates a new version, old quotes keep the old version. Done when: changing the section price shows the new number on the pricing page within a minute and does not change existing quotes.
+- **E9.6 Quote document for done-for-you (M, P2).** Subtasks: from a lead, generate a branded PDF with the scope, price, timeline and terms; send by email; record "quote sent". Done when: you can turn a lead into a sent quote in under 5 minutes.
+- **E9.7 Stop-gap before the back office exists (S, Phase 1).** If the back office is not ready for the first launch: leads go to your email and to a Google Sheet or an Airtable table through the function; the owner area follows in Phase 2. Done when: a lead is never lost even if the back office is not built.
+
+---
+
+## E10 — Customer dashboard and after the sale (P1)
+
+- **E10.1 Dashboard (M).** Subtasks: "My pages" list with a thumbnail, name, status (draft / paid), last edited, price paid; open, duplicate, rename, delete (with confirmation and undo for 30 days); "Start a new page" (back into the questions); empty state with a friendly first action.
+- **E10.2 Downloads and invoices (S).** Subtasks: every paid project shows its downloads (ZIP, single file, React project, review copy), invoice PDF, deploy guide; links are signed and short-lived; re-download as often as wanted within the edit period.
+- **E10.3 Account settings (S).** Subtasks: name, email, password, billing details and VAT number, email preferences, delete account.
+- **E10.4 Post-purchase emails and help (S).** Subtasks: "your site is ready and here is how to put it online" with the deploy guide steps for the three most common hosts; a check-in email after 7 days ("did it go well? reply to this email"); a support address that reaches you.
+- **E10.5 Reminders for unfinished work (S, P2).** Subtasks: one email after 3 days to someone who started but did not pay; no more than two; one-click unsubscribe. Done when: the unsubscribe works and is honoured immediately.
+- **E10.6 Done when (epic):** a customer can return a month later, find the page, change a sentence, and download again.
+
+---
+
+## E11 — The editor / "admin panel" as a product (P1 for packaging, P2 for hosted)
+
+- **E11.1 Be exact about what it is (S) [decision D5].** Subtasks: describe in plain words what the shipped editor does today (opens `admin.html`, changes text and photos locally, produces a content file that replaces the one on the site); decide the name ("Editor"); write the customer instructions with screenshots; list the limits.
+- **E11.2 Price and switch (S).** Subtasks: the add-on in the price table (E5); a yes/no in step 5; the export includes or omits the editor files accordingly (already a toggle in the export panel).
+- **E11.3 Editor handover guide (M).** Subtasks: a one-page guide in the ZIP and in the dashboard ("how to change a sentence in three steps") with real screenshots; a 2-minute screen recording; a test with three non-technical people who change text and put the new file on a test host.
+- **E11.4 Hosted editor with login (XL, P2) [decision].** Subtasks: if customers expect to log in on the web to change text, design a small hosted service (content stored per site, published to the site by a build or an API, user login for the customer's own users); price it separately; do not start before real demand shows. Done when: a separate design document exists and you decided "do it / not now".
+
+---
+
+## E12 — Legal, privacy and trust (P0; written or reviewed by a professional)
+
+- **E12.1 Terms of sale and use (M).** Subtasks: what is sold, what is not, who owns the output, acceptable use, limits of liability, refunds and the withdrawal right for digital content, delivery, support, changes to the terms; professional review.
+- **E12.2 Privacy notice (M).** Subtasks: what is collected (briefs, emails, phone numbers, account data, payment metadata), why, the legal basis, how long it is kept, who processes it (Supabase, Stripe, email service, hosting, analytics), where (EU), rights and how to use them, contact; list of processors with links; professional review.
+- **E12.3 Cookies and consent (S).** Subtasks: use only strictly necessary storage (session, wizard progress) and privacy-friendly analytics without cookies so that no banner is needed; if anything else is added, a proper consent choice with equal "accept" and "refuse" buttons; list of storage used.
+- **E12.4 Consent records and lead handling (S).** Subtasks: store what each person agreed to and when; never send marketing email without a separate, unticked consent; retention: delete unconverted leads after a set time (proposal: 12 months) with a monthly job.
+- **E12.5 Access, export and deletion (M).** Subtasks: "download my data" and "delete my account and data" in settings; deletion removes projects, uploads, briefs and profile, and anonymises orders where the law requires keeping invoices; documented in the privacy notice; a runbook for requests that arrive by email.
+- **E12.6 Final content and licence check (M).** Subtasks: re-run the licence audit over all 235 components, the images and media in `assets/library/`, and the fonts; make sure no real company names, real-site links or third-party code remain (this follows the earlier rebrand decisions); confirm the five outside-folder templates are the owner's own work; record the result in `docs/licence-audit/` and the licence file generated for each ZIP (E7.5).
+- **E12.7 Accessibility statement (S).** Subtasks: state the standard aimed at (WCAG 2.2 AA), known gaps and a contact for problems.
+- **E12.8 Security review (M).** Subtasks: threat list (account takeover, price tampering, download without payment, injection through the brief or project import, file-upload abuse, scraping, spam); fix or accept each; a strict Content Security Policy for the storefront and builder (the builder already has one); dependency audit; secrets rotation plan; the project import sanitiser (exists) tested with hostile files again.
+
+---
+
+## E13 — Quality: tests, accessibility, performance, analytics (P0, runs through everything)
+
+- **E13.1 Test strategy and CI (M).** Subtasks: extend the existing CI with jobs for the storefront and the functions; unit tests for the price calculator, brief schema, recommendation rules, entitlement; API tests with a test database; browser tests for the wizard, registration, checkout (Stripe test mode), download, owner list; the existing export matrix and Lighthouse jobs stay.
+- **E13.2 End-to-end journeys (L).** Subtasks: automate: (a) visitor answers all questions with several "I don't know" and chooses done-for-you → lead appears; (b) visitor chooses self-serve, registers, builds, pays in test mode, downloads, the ZIP opens; (c) price tampering is refused; (d) an unpaid account cannot download; (e) refund removes access; (f) delete account removes data.
+- **E13.3 Accessibility checks (M).** Subtasks: automated checks on every page (axe through the existing Lighthouse runs); manual keyboard-only pass; screen reader pass on wizard, builder steps, checkout; colour-contrast tests from the tokens.
+- **E13.4 Performance budgets (S).** Subtasks: budgets per page in CI; image formats and sizes; font loading; the builder's first-load budget.
+- **E13.5 Analytics and funnel (M).** Subtasks: privacy-friendly analytics (no personal data); events: visited home, started questions, answered each question, "I don't know" counts, chose path, registered, reached step N of the builder, paid, downloaded; a simple dashboard of drop-off per step; use it to improve questions and copy.
+- **E13.6 Usability tests with real people (M).** Subtasks: recruit 5 people who have never seen it (a friend with a bakery, a freelancer, a relative); give each a task without help ("make a page for your business and tell me what you would change"); record where they hesitate; fix the top issues; repeat once before launch. Done when: 4 of 5 finish without asking a question.
+- **E13.7 Content and copy review (S).** Subtasks: read every page aloud; remove banned words; check reading level; have a native speaker proofread.
+
+---
+
+## E14 — Launch (P0)
+
+- **E14.1 Staging with real content (S).** Subtasks: every page filled with final copy; test accounts; test payments; the owner area.
+- **E14.2 Production deployment (M).** Subtasks: domain and TLS; CDN caching rules for the large `assets/library` and `thumbs`; headers (CSP, HSTS, referrer policy); the outside-folder templates present (E0.6); redirects; a 404 page; backups and monitoring on (E4.6).
+- **E14.3 Soft launch (M).** Subtasks: invite 10–20 people by hand (Phase 1: done-for-you only); watch the funnel; fix what breaks; answer every lead personally within a day; collect their words for the site (testimonials with permission).
+- **E14.4 Pre-launch checklist (S).** Subtasks: legal pages live; privacy notice matches what is collected; test email deliverability; one real payment and refund (Phase 2); accessibility and performance budgets met; error tracking quiet; backup restore tested; you know the support routine.
+- **E14.5 Public launch (S).** Subtasks: announce; a short launch post in your own voice; links from your other profiles; monitor for a week.
+- **E14.6 Support routine (S).** Subtasks: one support inbox; a template for the ten most common questions; a weekly 30-minute review of leads, orders and problems; a changelog page.
+
+---
+
+## E15 — After launch (P2, in the order demand shows)
+
+- **E15.1 Hosting and domain service:** publish to `name.edvlabs.site` or the customer's domain, managed SSL, one-click updates, monthly price.
+- **E15.2 Server-side export for everything** (if not already done in E7.4) and a build history per project.
+- **E15.3 Hosted editor with login** (E11.4).
+- **E15.4 Quote PDFs, contracts and e-signature** (E9.6).
+- **E15.5 Storefront translations** (the storefront itself in other languages, using the per-page language and translation links already built).
+- **E15.6 Template marketplace:** more complete example pages, seasonal sets; sell individual templates.
+- **E15.7 Referral and affiliate codes.**
+- **E15.8 Agency mode:** many client projects, client review links (exists), team seats.
+- **E15.9 Customer gallery / case studies** (with permission).
+- **E15.10 Revisit the existing roadmap "not now" items:** I1 (backend) becomes part of E4; I2 (contribution flow) stays closed.
+
+---
+
+## Milestones and what "done" looks like
+
+| Milestone | When it is reached | Proof |
+|---|---|---|
+| **M0 Decisions made** | End of Phase 0 | D1–D8 written; accounts open; staging deploys on push |
+| **M1 Look chosen** | Phase 0/1 | One design direction approved (E1.2); tokens and style page live |
+| **M2 First lead** | Phase 1 | A stranger answers the questions and you receive a readable brief |
+| **M3 Public launch of the done-for-you path** | End of Phase 1 | Legal pages live, soft launch done, usability test passed |
+| **M4 First self-serve sale (test)** | Phase 2 | A test account builds, pays in test mode and downloads |
+| **M5 First real self-serve sale** | Phase 2 | One real payment, invoice accepted by the accountant, refund tested |
+| **M6 Real paywall** | Phase 3 | Exports can only be produced on the server after payment |
+
+## Risks and what to do about them
+
+| Risk | Why it matters | Plan |
+|---|---|---|
+| Browser-side export can be bypassed | A paid site could be taken without paying | Soft paywall first (E7.3), server build later (E7.4); watermark unpaid previews |
+| Tax and invoice rules for selling digital goods in the EU | A mistake costs money and trust | Accountant before the first sale (E0.2); consider a merchant of record (E8.1) |
+| Personal data in briefs and accounts | Fines and loss of trust | Minimal collection, clear notice, deletion path, EU region (E12) |
+| Done-for-you work grows without limit | Time is your most expensive resource | Fixed scope per price line; "what is not included" on the page; revision limit in the terms |
+| "Admin panel" is understood as a login CMS | Disappointed customers and refunds | Name it "Editor", describe it exactly (E11.1) |
+| The redesign takes longer than the rest | The product looks unfinished | Choose the direction early (E1.2); tokens first; reuse the builder, redesign its skin and flow, not its engine |
+| Too many options confuse beginners | They leave | The five-step path hides advanced options; usability tests (E13.6) |
+| Outside-folder templates missing in production | Broken "Full Websites" | E0.6 and a deploy check |
+| One-person bottleneck | Slow replies lose sales | Support routine, templates, a response-time promise you can keep (E14.6) |
+| Vendor lock-in | Hard to move later | Plain Postgres, exportable data, no proprietary formats for projects |
+
+## Rough effort (one experienced developer working on it full-time)
+
+Phase 0: 1–2 weeks · Phase 1: 5–7 weeks · Phase 2: 8–12 weeks · Phase 3: ongoing. Design work (E1) sits mostly in Phase 0–1 and is the part most likely to need your decisions repeatedly. These are estimates; the first real number comes after E0 and E1.2.
