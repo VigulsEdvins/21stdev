@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>edvlabs — two design directions</title>
+<style>
+  :root { --bg: #f4f2ec; --ink: #1b1b19; --rule: #cfcabb; --muted: #5d5a50; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font: 16px/1.55 system-ui, sans-serif; background: var(--bg); color: var(--ink); padding: 40px 24px 80px; }
+  .w { max-width: 1280px; margin: 0 auto; }
+  h1 { font: 700 34px/1.1 Georgia, serif; margin-bottom: 8px; }
+  .lede { color: var(--muted); max-width: 46em; margin-bottom: 36px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  h2 { font: 700 22px/1.2 Georgia, serif; margin-bottom: 4px; }
+  .dir p { color: var(--muted); margin-bottom: 14px; font-size: 15px; }
+  .shots { display: grid; gap: 14px; }
+  .shots a { display: block; border: 1px solid var(--ink); background: #fff; text-decoration: none; color: inherit; }
+  .shots img { width: 100%; display: block; }
+  .shots span { display: block; padding: 8px 12px; font-size: 14px; border-top: 1px solid var(--rule); }
+  ul { margin: 12px 0 0 18px; font-size: 15px; }
+  .check { margin-top: 44px; border-top: 2px solid var(--ink); padding-top: 18px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; margin-top: 12px; }
+  th, td { text-align: left; padding: 8px 10px; border-top: 1px solid var(--rule); vertical-align: top; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>Two editorial directions for edvlabs</h1>
+  <p class="lede">The same three screens in two looks: the home page, question 4 of the questionnaire (“Which parts should your page have?”), and step 2 of the builder (“Words”). All text and prices are samples; the screenshots are real pages from the vault. Click a picture to open the live mock-up.</p>
+  <div class="grid">
+    <section class="dir">
+      <h2>A — Paper and ink</h2>
+      <p>Calm and warm. A soft serif for headlines, plain sans for the interface, one clay-red accent, thin rules, offset “paper” shadows, numbered sections and a hand-drawn underline.</p>
+      <div class="shots">
+        <a href="a/home.html"><img src="previews/a-home.jpg" alt="Direction A home page"><span>Home</span></a>
+        <a href="a/question.html"><img src="previews/a-question.jpg" alt="Direction A question screen"><span>Question 4 of 10</span></a>
+        <a href="a/builder.html"><img src="previews/a-builder.jpg" alt="Direction A builder"><span>Builder, step 2: Words (steps along the top)</span></a>
+      </div>
+      <ul><li>Fonts: Young Serif and Public Sans (open licence, self-hosted files)</li><li>Feels like: an independent print studio</li><li>Risk: can slide toward “cosy craft”; the round stamp needs a real meaning or should go</li></ul>
+    </section>
+    <section class="dir">
+      <h2>B — Newsprint grid</h2>
+      <p>Confident and loud. Heavy black rules, a very large wordmark, tight heavy headlines, italic serif for the human voice, mono labels, a signal red, and prices set out like a ledger.</p>
+      <div class="shots">
+        <a href="b/home.html"><img src="previews/b-home.jpg" alt="Direction B home page"><span>Home</span></a>
+        <a href="b/question.html"><img src="previews/b-question.jpg" alt="Direction B question screen"><span>Question 4 of 10 (live receipt on the right)</span></a>
+        <a href="b/builder.html"><img src="previews/b-builder.jpg" alt="Direction B builder"><span>Builder, step 2: Words (steps down the left)</span></a>
+      </div>
+      <ul><li>Fonts: Libre Franklin, Libre Caslon Text and IBM Plex Mono (open licence, self-hosted files)</li><li>Feels like: a newspaper front page that explains its prices</li><li>Risk: loud; “Vol. 1 No. 1” is a gimmick that needs to earn its place</li></ul>
+    </section>
+  </div>
+
+  <section class="check">
+    <h2>Checked against the “does not look AI-made” list</h2>
+    <table>
+      <tr><th>Rule</th><th>A</th><th>B</th></tr>
+      <tr><td>No gradient headlines, glow, orbs, glass</td><td>Pass</td><td>Pass</td></tr>
+      <tr><td>No purple-to-blue gradients, one accent only</td><td>Pass (clay red)</td><td>Pass (signal red; yellow only marks sample text)</td></tr>
+      <tr><td>No emoji or generic icon set</td><td>Pass (small line wireframes)</td><td>Pass (same wireframes)</td></tr>
+      <tr><td>Not three identical rounded cards by default</td><td>Partly: three numbered steps and a three-image row</td><td>Partly: three columns with rules, but a table and a ledger break the pattern</td></tr>
+      <tr><td>No “eyebrow pill” on everything</td><td>Pass (plain small caps)</td><td>Pass (mono labels)</td></tr>
+      <tr><td>Real screenshots, no stock images</td><td>Pass</td><td>Pass</td></tr>
+      <tr><td>Plain words, no “seamless / unlock / supercharge”</td><td>Pass</td><td>Pass</td></tr>
+      <tr><td>Contrast and keyboard focus</td><td>To be measured in E1.3</td><td>To be measured in E1.3</td></tr>
+    </table>
+    <p style="margin-top:14px;color:var(--muted);font-size:14px">Not yet designed in either direction: phone layouts of the builder, error and empty states, the checkout, the dashboard and the emails. Those come after you choose.</p>
+  </section>
+</div>
+</body>
+</html>
