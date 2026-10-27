@@ -24,6 +24,8 @@
       const pageLinks = Object.fromEntries(pages.map(p => [p.id, fileOf(p)]));
       const pageFiles = pages.map(fileOf);
       const alternates = (window.BuilderSinglePages ? window.BuilderSinglePages.translationAlternates(pages, state.page) : {});
+      const groups = (window.BuilderSinglePages ? window.BuilderSinglePages.translationGroups(pages, state.page.lang) : {});
+      const fileOfMember = (m) => (m.index === 0 ? 'index.html' : `${m.slug}.html`);
       const out = { files: {}, assets: {} };
       for (const p of pages) {
         const home = p.slug === 'index';
@@ -31,6 +33,9 @@
         if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
         const settings = { ...state.page, title: home ? state.page.title : `${p.title} | ${state.page.title}`, description: p.description || state.page.description, lang: p.lang || state.page.lang, alternates: alternates[p.id] || [] };
         const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles });
+        // a language switcher header lists this page's translations and opens them
+        const wired = groups[p.id] ? window.BuilderSinglePages.wireLanguageSwitcher(bundle['index.html'], groups[p.id], p.id, fileOfMember) : null;
+        if (wired) { bundle['index.html'] = wired.html; bundle['script.js'] += wired.js; }
         const extraAssets = Array.from(new Set(p.stack.flatMap(s => exportAssets[s.slug] || [])));
         const bundled = await assetBundler.bundle({ files: bundle, singleHtml: '', extraAssets });
         Object.assign(out.assets, bundled.assets);

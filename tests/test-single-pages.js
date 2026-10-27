@@ -30,3 +30,19 @@ const head = A.renderPageHead({ lang: 'lv', alternates: alt.h.concat([{ lang: 'b
 assert((head.match(/rel="alternate" hreflang=/g) || []).length === 3, 'three valid alternates: ' + head);
 assert(head.includes('hreflang="x-default" href="https://site.example/"'));
 console.log('✅ Single-file page router tests passed!');
+
+// language switcher wiring
+{
+  const { wireLanguageSwitcher, translationGroups } = require('../scripts/builder/single-pages.js');
+  const pages = [{ id: 'h', slug: 'index', lang: '' }, { id: 'l', slug: 'sakums', lang: 'lv', translationOf: 'h' }, { id: 'o', slug: 'other', lang: '' }];
+  const groups = translationGroups(pages, 'en');
+  assert(groups.h && groups.l && !groups.o, 'only the translation group is listed');
+  const html = '<div><span class="lsw-code">EN</span><ul class="lsw-menu" role="listbox" hidden><li data-lang="en">English</li><li data-lang="de">Deutsch</li></ul></div>';
+  const out = wireLanguageSwitcher(html, groups.l, 'l', m => (m.index === 0 ? 'index.html' : m.slug + '.html'));
+  assert(/data-lang="lv" data-href="sakums\.html" aria-selected="true">Latviešu/.test(out.html) && /data-lang="en" data-href="index\.html" aria-selected="false">English/.test(out.html));
+  assert(/<span class="lsw-code">LV<\/span>/.test(out.html) && !/Deutsch/.test(out.html), 'old options replaced, code updated');
+  assert(/data-href/.test(out.js));
+  assert.strictEqual(wireLanguageSwitcher('<p>no switcher</p>', groups.l, 'l', () => 'x'), null);
+  assert.strictEqual(wireLanguageSwitcher(html, undefined, 'l', () => 'x'), null);
+  console.log('✅ Language switcher wiring tests passed!');
+}

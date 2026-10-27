@@ -49,7 +49,11 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.fill('#pageOwnLangInput', 'not a code');
   await page.press('#pageOwnLangInput', 'Tab');
   assert.strictEqual(await page.inputValue('#pageOwnLangInput'), 'de', 'a bad language code is refused and the old one stays');
+  // a language switcher on both pages lists the two languages and opens the other page
+  await sm('addSection', ['multilingual-lang-switcher']);
   await page.click('#pageTabs .page-tab:has-text("Home")');
+  await page.waitForFunction(() => window.builderPreview.stackManager.getActivePageId() === window.builderPreview.stackManager.getPages()[0].id);
+  await sm('addSection', ['multilingual-lang-switcher']);
 
   // page settings for a canonical address so the sitemap is written
   await page.click('#tabStylingBtn');
@@ -68,6 +72,9 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert(/<html lang="de"/.test(aboutHtml), 'the About page carries its own language');
   const homeHtml = await zip.file('index.html').async('string');
   assert(/<html lang="en"/.test(homeHtml), 'the home page keeps the site language');
+  assert(/data-lang="de" data-href="about-us\.html" aria-selected="false">Deutsch/.test(homeHtml) && /data-lang="en" data-href="index\.html" aria-selected="true">English/.test(homeHtml), 'home switcher lists English (current) and Deutsch');
+  assert(/data-lang="de" data-href="about-us\.html" aria-selected="true">Deutsch/.test(aboutHtml) && /class="lsw-code">DE</.test(aboutHtml), 'about switcher shows DE as current');
+  assert(/data-href/.test(await zip.file('script.js').async('string')) && /data-href/.test(await zip.file('about-us.js').async('string')), 'the link-following script ships with each page');
   for (const [name, html] of [['index.html', homeHtml], ['about-us.html', aboutHtml]]) {
     assert(html.includes('hreflang="en" href="https://site.example/"') && html.includes('hreflang="de" href="https://site.example/about-us.html"') && html.includes('hreflang="x-default" href="https://site.example/"'), name + ' lists the translations');
   }
@@ -100,7 +107,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert(homeCount > 0, 'home sections shown: ' + homeCount + ' in ' + oneHtml.length + ' bytes, sections ' + (oneHtml.match(/class="page-section/g) || []).length + ', title ' + await reader.title());
   await reader.goto('file://' + onePath + '#about-us');
   await reader.waitForFunction(() => document.title.startsWith('About us | '));
-  assert.strictEqual(await visible(), 1, 'only the About section is shown');
+  assert.strictEqual(await visible(), 2, 'only the two About sections are shown');
   assert.deepStrictEqual(readerErrors, [], readerErrors.join('; '));
   await reader.close();
   fs.unlinkSync(onePath);
