@@ -131,7 +131,7 @@
 .work li { position: relative; }
 .work-open { margin-top: var(--s-2); font-weight: 600; color: var(--text); text-decoration: underline; text-underline-offset: 4px; }
 .work-open::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius-l); }
-.work-open::before { content: "→ "; text-decoration: none; display: inline-block; }
+.work-open::before { content: "↗ "; text-decoration: none; display: inline-block; }
 .work li:hover figure { box-shadow: 0 4px 0 var(--ink); transform: translateY(-2px); }
 .work li:hover .work-open { color: var(--rust); }
 .work-open:focus-visible { outline: none; }

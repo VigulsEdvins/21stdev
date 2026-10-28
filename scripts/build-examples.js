@@ -15,7 +15,7 @@ const OUT = path.join(ROOT, 'site', 'examples');
 // Whole websites. They live in folders next to this repo (plan E0.6); the published name is the key.
 const SITES = { yearbook: 'edv-yearbook', arena: 'edv-arena', roster: 'edv-roster' };
 const SLUGS = ['cargo-freight-landing', 'cobalt-toile-landing', 'blossom-dusk-template', 'ridgeline-trek-landing', 'bento-portfolio-template', 'iris-folio-template'];
-const BAR = '<div class="edv-sample-bar" role="region" aria-label="About this sample page"><span>A sample page made with edvlabs</span><a href="../../">Back to edvlabs</a><a href="../../start/" class="edv-sample-bar__go">Start your page</a></div>';
+const BAR = '<div class="edv-sample-bar" role="region" aria-label="About this sample page"><span>A sample page made with edvlabs</span><a href="../../">Visit edvlabs</a><a href="../../start/" class="edv-sample-bar__go">Start your page</a></div>';
 
 function wrap(html) {
   if (!/<\/head>/i.test(html) || !/<\/body>/i.test(html)) throw new Error('page has no head or body to add to');

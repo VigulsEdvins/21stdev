@@ -91,13 +91,15 @@ const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/'];
   await page.waitForFunction(() => [...document.querySelectorAll('#work img')].every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 8000 });
   shots.forEach((x) => { assert(x.alt.length > 30 && x.w && x.h, 'each example has a real description and a size: ' + x.src); const slug = path.basename(x.src, '.webp'); const f = feats.find((q) => q.slug === slug); assert(f && f.origin && f.origin.source === 'edvlabs', slug + ' is one of our own pages'); });
   assert.strictEqual(new Set(shots.map((x) => x.src)).size, 9, 'nine different examples');
-  const cards = await page.$$eval('#work li', (li) => li.map((l) => ({ img: l.querySelector('img').getAttribute('src'), href: l.querySelector('a.work-open').getAttribute('href'), text: l.querySelector('a.work-open').textContent })));
+  const cards = await page.$$eval('#work li', (li) => li.map((l) => ({ img: l.querySelector('img').getAttribute('src'), href: l.querySelector('a.work-open').getAttribute('href'), target: l.querySelector('a.work-open').target, rel: l.querySelector('a.work-open').rel, text: l.querySelector('a.work-open').textContent })));
   assert.strictEqual(cards.length, 9);
   const { SITES } = require('../../scripts/build-examples.js');
   for (const c of cards) {
     const slug = path.basename(c.img, '.webp');
     const site = Object.keys(SITES).find((n) => 'template-' + n === slug);
     assert.strictEqual(c.href, 'examples/' + (site || slug) + '/', 'each card opens its own full page');
+    assert.strictEqual(c.target, '_blank', 'opens in a new tab: ' + c.href); assert(/noopener/.test(c.rel), 'and cannot reach back to this page');
+    assert(/opens in a new tab/.test(c.text), 'screen readers are told it opens in a new tab');
     assert(/Open the (full page|whole website)/.test(c.text) && /sample/.test(c.text), 'link text says what it opens: ' + c.text);
     assert(fs.existsSync(path.join(SITE, 'examples', site || slug, 'index.html')), slug + ' full page is published');
   }
@@ -105,16 +107,19 @@ const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/'];
   const first = cards[0];
   await page.locator('#work li').first().scrollIntoViewIfNeeded();
   const box = await page.locator('#work li').first().locator('img').boundingBox();
-  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); // a click anywhere on the card, not only on the link text
-  await page.waitForURL('**/site/examples/' + path.basename(first.img, '.webp') + '/**');
-  assert(await page.isVisible('.edv-sample-bar'), 'the sample page shows its bar');
-  await page.click('.edv-sample-bar a:has-text("Back to edvlabs")');
-  await page.waitForURL(/\/site\/(index\.html)?$/);
-  await page.goto(srv.url + '/site/examples/' + path.basename(first.img, '.webp') + '/');
-  await page.click('.edv-sample-bar__go');
-  await page.waitForURL('**/site/start/**');
-  await page.goto(srv.url + '/site/index.html');
-  console.log('  ✓ each example card opens its full sample page, which links back and on to the questions');
+  const homeUrl = page.url();
+  const [tab] = await Promise.all([page.context().waitForEvent('page'), page.mouse.click(box.x + box.width / 2, box.y + box.height / 2)]); // a click anywhere on the card
+  await tab.waitForLoadState('load');
+  assert(tab.url().includes('/site/examples/' + path.basename(first.img, '.webp') + '/'), 'the sample opened in a new tab: ' + tab.url());
+  assert.strictEqual(page.url(), homeUrl, 'this tab stays on the home page');
+  assert(await tab.isVisible('.edv-sample-bar'), 'the sample page shows its bar');
+  await tab.click('.edv-sample-bar a:has-text("Visit edvlabs")');
+  await tab.waitForURL(/\/site\/(index\.html)?$/);
+  await tab.goto(srv.url + '/site/examples/' + path.basename(first.img, '.webp') + '/');
+  await tab.click('.edv-sample-bar__go');
+  await tab.waitForURL('**/site/start/**');
+  await tab.close();
+  console.log('  ✓ each example card opens its sample in a new tab, which links to the home page and on to the questions');
   console.log('  ✓ home page: nine examples of our own pages with descriptions, and the 200+ claim is true');
 
   // phone width: no sideways scroll on any page, and the menu button still reachable
