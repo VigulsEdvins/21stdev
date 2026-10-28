@@ -197,13 +197,36 @@
       h('p', null, h('a', { class: 'link', href: '../' }, 'Back to the home page')));
   }
 
+  /* ---------- welcome back ---------- */
+  /* Someone who already answered (in this browser, or restored from their account) is not sent back to question 1: they choose. Nothing is cleared,
+     so "go through the questions again" shows the old answers ready to change, and the account's copy never comes back by surprise. */
+  const isAnswered = (q) => { const a = brief.answers[q.id]; return !!a && (a.unknown || (Array.isArray(a.value) ? a.value.length > 0 : !!a.value)); };
+  const answeredCount = () => QUESTIONS.filter(isAnswered).length;
+  function welcomeScreen() {
+    const n = answeredCount(), total = QUESTIONS.length, done = n === total;
+    const firstOpen = QUESTIONS.findIndex((q) => !isAnswered(q));
+    const toBuilder = () => { brief.path = 'self'; save(); openAccount(); };
+    const lead = done ? 'You have answered all ' + total + ' questions.' : 'You answered ' + n + ' of ' + total + ' questions earlier.';
+    return h('div', null, h('h1', { id: 'q-title', tabindex: '-1', text: 'Welcome back.' }),
+      h('p', { class: 'lead', text: lead + ' Your answers are still here, so there is no need to start over.' }),
+      brief.sent ? h('p', { class: 'hint', text: 'We already have a copy of your answers.' }) : null,
+      h('div', { class: 'btn-row' },
+        done ? btn('Open the builder', '', toBuilder, { id: 'w-build' }) : btn('Carry on with the questions', '', () => go('q' + (firstOpen + 1)), { id: 'w-carry' }),
+        done ? null : btn('Open the builder', 'btn--secondary', toBuilder, { id: 'w-build' }),
+        btn('Look at my answers', 'btn--secondary', () => go('check'), { id: 'w-look' }),
+        btn('Go through the questions again', 'btn--secondary', () => go('q1'), { id: 'w-again' })),
+      h('p', { class: 'hint mt-5', text: 'Going through them again shows your answers, ready to change. Nothing is erased.' }));
+  }
+
   /* ---------- routing ---------- */
   function go(hash) { if (location.hash === '#' + hash) render(); else location.hash = hash; }
   function render() {
-    const hash = location.hash.replace('#', '') || 'q1';
+    const hash = location.hash.replace('#', '') || (answeredCount() > 0 ? 'welcome' : 'q1');
     let screen, qi = -1;
     const m = /^q(\d+)$/.exec(hash);
-    if (m && QUESTIONS[Number(m[1]) - 1]) { qi = Number(m[1]) - 1; screen = questionScreen(qi); }
+    if (hash === 'welcome' && answeredCount() === 0) { location.replace('#q1'); return; }
+    if (hash === 'welcome') screen = welcomeScreen(); // arriving at the bare address with answers already saved
+    else if (m && QUESTIONS[Number(m[1]) - 1]) { qi = Number(m[1]) - 1; screen = questionScreen(qi); }
     else if (hash === 'check') screen = checkScreen();
     else if (hash === 'choose') screen = chooseScreen();
     else if (hash === 'contact') screen = contactScreen();
@@ -211,12 +234,12 @@
     else { location.replace('#q1'); return; }
     root.replaceChildren(screen);
     const total = QUESTIONS.length;
-    dots.replaceChildren(...QUESTIONS.map((_, i) => h('i', { class: qi < 0 || i < qi ? 'is-done' : (i === qi ? 'is-now' : '') })));
-    dots.setAttribute('aria-label', qi >= 0 ? 'Question ' + (qi + 1) + ' of ' + total : 'All ' + total + ' questions answered');
-    count.textContent = qi >= 0 ? 'Question ' + (qi + 1) + ' of ' + total : (hash === 'check' ? 'Check your answers' : 'Last step');
-    document.title = (qi >= 0 ? 'Question ' + (qi + 1) + ' of ' + total : 'Start your page') + ' · edvlabs';
+    dots.replaceChildren(...QUESTIONS.map((q, i) => h('i', { class: hash === 'welcome' ? (isAnswered(q) ? 'is-done' : '') : qi < 0 || i < qi ? 'is-done' : (i === qi ? 'is-now' : '') })));
+    dots.setAttribute('aria-label', hash === 'welcome' ? total + ' questions, ' + answeredCount() + ' answered' : qi >= 0 ? 'Question ' + (qi + 1) + ' of ' + total : 'All ' + total + ' questions answered');
+    count.textContent = qi >= 0 ? 'Question ' + (qi + 1) + ' of ' + total : (hash === 'welcome' ? 'Welcome back' : hash === 'check' ? 'Check your answers' : 'Last step');
+    document.title = (qi >= 0 ? 'Question ' + (qi + 1) + ' of ' + total : hash === 'welcome' ? 'Welcome back' : 'Start your page') + ' · edvlabs';
     showPrice(qi >= 0 ? qi : total);
-    if (hash === 'thanks') priceBox.replaceChildren();
+    if (hash === 'thanks' || hash === 'welcome') priceBox.replaceChildren();
     const t = document.getElementById('q-title'); if (t) t.focus({ preventScroll: false });
   }
   window.addEventListener('hashchange', render);
