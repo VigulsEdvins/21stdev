@@ -63,3 +63,22 @@ body.is-guided .words-status { display: block; }
 .words-nav { display: none; gap: 8px; margin: 8px 0; }
 body.is-guided .words-nav { display: flex; }
 body.is-guided .admin-open-card, body.is-guided .widgets-catalog-header, body.is-guided .quick-edit > summary { display: none; }
+
+/* guided step 3: look picker replaces the classic Styling controls */
+.look-picker { display: none; padding: 14px; }
+body.is-guided .look-picker { display: block; }
+body.is-guided #paneStyling .widgets-catalog-header, body.is-guided #paneStyling .styling-group:not(#pageSettingsGroup), body.is-guided #paneStyling .universal-theming-callout, body.is-guided #paneStyling .adv-only, body.is-guided #paneStyling datalist { display: none; }
+.lk-h { font: 400 20px / 1.2 var(--font-display); margin: 6px 0 10px; color: var(--text-main); }
+.lk-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+.lk-btn { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 10px; border: 2px solid var(--text-main); border-radius: 12px; background: transparent; color: var(--text-main); font: 600 14px / 1.2 var(--font-body); cursor: pointer; text-align: left; }
+.lk-btn:hover { background: var(--mustard); }
+.lk-btn.is-on { background: var(--teal); border-color: var(--teal); color: var(--text-on-teal); }
+.lk-swatch { position: relative; flex: none; display: grid; place-items: center; width: 44px; height: 32px; border: 3px solid; border-radius: 8px; font: 600 14px / 1 var(--font-body); }
+.lk-swatch i { font-style: normal; }
+.lk-swatch u { position: absolute; right: -5px; bottom: -5px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--bg-0, #fff); }
+.lk-font { flex: none; display: grid; place-items: center; width: 36px; height: 32px; border-radius: 8px; background: var(--bg-0, #fff); color: var(--text-main); font: 400 20px / 1 var(--font-display); }
+.lk-corner { flex: none; width: 30px; height: 30px; border: 3px solid currentColor; border-right: 0; border-bottom: 0; border-top-left-radius: 10px; }
+.lk-guard { margin: 0 0 8px; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--teal); font-size: 14px; color: var(--text-main); }
+.lk-guard.is-bad { border-color: var(--rust); background: rgba(200, 85, 61, 0.1); }
+.lk-fix { margin-bottom: 16px; }
+.lk-fix[hidden] { display: none; }
