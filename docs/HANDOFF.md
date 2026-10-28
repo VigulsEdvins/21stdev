@@ -64,6 +64,8 @@ edvlabs sells landing pages and small websites at **edvlabs.com** (domain owned,
 
 - **Passwords (2026-10-28):** `site/js/password.js` (rules, Low/Medium/High scoring, advice; `tests/test-password.js`), enforced by `site/js/auth.js` for sign up and new passwords, and shown on the account page as a strength bar with a live checklist, Show/Hide buttons on every password box (they reset when the view changes) and a "passwords match" line. Owner step: set the same rules in Supabase (Email provider: minimum length 10, require lowercase, uppercase, digits, symbols; leaked-password check is Pro only), see `docs/deploy/accounts.md`.
 
+- **Knowledge graph (2026-10-28):** `graphify-out/` (git-ignored) was refreshed with `graphify update .` (code only, no model calls): about 10,600 nodes, 15,000 edges, 675 communities, including `site/js`, the guided builder, the Worker and the tests. Community names are not refreshed (`graphify label` needs a model), and documents and images are not in the graph (the last full run had no semantic extraction either; 293 documents and 417 images would be hundreds of model calls). The status of the whole project is in `docs/superpowers/plans/2026-10-28-launch-scope.md`.
+
 ## Next steps (in order)
 
 1. **Owner steps (Claude cannot do these):** Cloudflare Pages with staging at staging.edvlabs.com (E0.8, E0.5), then the lead-intake settings in `docs/deploy/lead-intake.md` and the `lead-endpoint` meta tag; run `npm run check-headers -- https://staging.edvlabs.com` against staging. Answer the open questions below.
