@@ -70,6 +70,7 @@ edvlabs sells landing pages and small websites at **edvlabs.com** (domain owned,
 
 ## Open questions for the owner
 
+- Sign-in: email and password, an emailed link, Google and GitHub are decided (plan E4.2). Owner to create a Google OAuth app (needs the privacy page and a verified domain) and a GitHub OAuth app, then put the keys in the auth service settings.
 - Wording of the ten questions (plan E3.1) and what "done for you" includes (revision rounds, timing, what is not included).
 - Prices after three real local quotes; the refund rule; the invoice set-up with the accountant.
 - Decisions D2, D4, D5, D6 in the design doc (defaults are written there).
