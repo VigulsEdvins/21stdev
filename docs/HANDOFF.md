@@ -107,6 +107,7 @@ Parked on purpose (owner's decision, 2026-10-28; see "Backlog" in `docs/superpow
 
 ## Open questions for the owner
 
+- Send to GitHub after buying (plan E7.6, decided 2026-10-28: both a new repo and an existing one): owner to register a GitHub App (Contents read/write, Metadata read) in their GitHub account when E7.6 starts; keys go only into environment settings.
 - Sign-in: email and password, an emailed link, Google and GitHub are decided (plan E4.2). Owner to create a Google OAuth app (needs the privacy page and a verified domain) and a GitHub OAuth app, then put the keys in the auth service settings.
 - Wording of the ten questions (plan E3.1) and what "done for you" includes (revision rounds, timing, what is not included).
 - Prices after three real local quotes; the refund rule; the invoice set-up with the accountant.
