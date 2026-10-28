@@ -10,10 +10,10 @@ const id = () => crypto.randomUUID();
 
 function start(opts = {}) {
   const anonKey = 'anon-test-key';
-  const state = { confirmEmails: opts.confirmEmails !== false, requireCaptcha: !!opts.requireCaptcha, captchaToken: 'test-captcha-token', otps: new Map(), users: new Map(), outbox: [], codes: new Map(), sessions: new Map(), refresh: new Map(), anonKey, calls: [] };
+  const state = { confirmEmails: opts.confirmEmails !== false, requireCaptcha: !!opts.requireCaptcha, captchaToken: 'test-captcha-token', otps: new Map(), users: new Map(), outbox: [], codes: new Map(), sessions: new Map(), refresh: new Map(), briefs: new Map(), anonKey, calls: [] };
   const err = (res, status, error_code, msg) => send(res, status, { code: status, error_code, msg });
   function send(res, status, body) {
-    res.writeHead(status, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'apikey, authorization, content-type', 'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS' });
+    res.writeHead(status, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'apikey, authorization, content-type, prefer', 'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS' });
     res.end(body === undefined ? '' : JSON.stringify(body));
   }
   const publicUser = (u) => ({ id: u.id, email: u.email, app_metadata: { provider: u.provider, providers: [u.provider] }, email_confirmed_at: u.confirmed ? 'now' : null });
@@ -118,6 +118,18 @@ function start(opts = {}) {
           if (body.password) u.password = body.password;
           return send(res, 200, publicUser(u));
         }
+      }
+      if (url.pathname === '/rest/v1/briefs') { // the saved answers, one row per person; only the owner's own token reaches it (like the row level security in the migration)
+        const owner = state.sessions.get(bearer); const me = owner && state.users.get(owner);
+        if (!me) return err(res, 401, 'PGRST301', 'JWT expired or missing');
+        state.calls.push('briefs as ' + me.email);
+        if (req.method === 'GET') { const row = state.briefs.get(me.id); return send(res, 200, row ? [{ brief: row.brief }] : []); }
+        if (req.method === 'POST') {
+          if (body.user_id !== me.id) return err(res, 403, '42501', 'new row violates row-level security policy for table "briefs"');
+          if (!body.brief || typeof body.brief !== 'object' || JSON.stringify(body.brief).length > 20000) return err(res, 400, '23514', 'violates check constraint');
+          state.briefs.set(me.id, { brief: body.brief, updated_at: body.updated_at }); return send(res, 201);
+        }
+        return err(res, 405, 'not_allowed', 'method not allowed');
       }
       if (url.pathname === '/auth/v1/logout' && req.method === 'POST') { state.sessions.delete(bearer); return send(res, 204); }
       return err(res, 404, 'not_found', 'not found');

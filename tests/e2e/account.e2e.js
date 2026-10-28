@@ -148,6 +148,30 @@ const { start } = require('../lib/fake-supabase.js');
   assert(/GitHub/.test(await page.textContent('#i-how'))); await page.click('#b-out');
   console.log('  ✓ Continue with Google and Continue with GitHub sign in and say which was used');
 
+  // 7b. "I will build it" on the questions page sends people here with ?from=start; after signing in they go on to the builder, once
+  await page.route('**/builder/', (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '<title>builder</title>' }));
+  await page.goto(url + '?from=start'); await page.waitForSelector('#a-out:not([hidden])');
+  assert(/build your page/.test(await page.textContent('#a-title')), 'the page says why they are here');
+  await page.fill('#p-email', 'anna@example.com'); await page.fill('#p-pass', 'Correct-Horse-1!'); await page.click('#p-go');
+  await page.waitForURL('**/builder/', { timeout: 8000 });
+  await page.goto(url); await page.waitForSelector('#a-in:not([hidden])');
+  assert(/account/.test(await page.textContent('#a-lead')), 'the wish was used up: a later visit stays on the account page'); await page.click('#b-out');
+  console.log('  ✓ coming from "I will build it", signing in continues to the builder, and only once');
+
+  // 7c. the answers from the questions are saved to the account when signing in, and come back in another browser
+  const mine = { v: 1, path: 'self', answers: { purpose: { value: 'business', unknown: false } } };
+  await page.goto(url); await page.evaluate((b) => localStorage.setItem('edvlabs.brief_v1', JSON.stringify(b)), mine); await page.goto(url + '?from=start'); await page.waitForSelector('#a-out:not([hidden])');
+  await page.fill('#p-email', 'anna@example.com'); await page.fill('#p-pass', 'Correct-Horse-1!'); await page.click('#p-go');
+  await page.waitForURL('**/builder/', { timeout: 8000 });
+  assert.deepStrictEqual([...fake.briefs.values()].pop().brief, mine, 'the answers are in the account row');
+  const ctx2 = await browser.newContext({ viewport: { width: 1100, height: 900 } }); const page2 = await ctx2.newPage(); await page2.route('**/api/config', config());
+  await page2.goto(url); await page2.waitForSelector('#a-out:not([hidden])');
+  await page2.fill('#p-email', 'anna@example.com'); await page2.fill('#p-pass', 'Correct-Horse-1!'); await page2.click('#p-go'); await page2.waitForSelector('#a-in:not([hidden])');
+  await page2.waitForFunction(() => /saved answers/.test(document.getElementById('a-notice').textContent));
+  assert.deepStrictEqual(await page2.evaluate(() => JSON.parse(localStorage.getItem('edvlabs.brief_v1'))), mine, 'a browser with no answers gets them back');
+  await ctx2.close(); await page.goto(url); await page.waitForSelector('#a-in:not([hidden])'); await page.click('#b-out');
+  console.log('  ✓ answers are saved to the account at sign-in and restored in a browser that has none');
+
   // 8. forgot password with a code and a repeated new password
   await page.fill('#p-email', 'anna@example.com'); await page.click('#l-forgot');
   assert(await vis('#f-mail') && !(await vis('#f-pass')) && (await page.inputValue('#m-email')) === 'anna@example.com', 'email carried over');

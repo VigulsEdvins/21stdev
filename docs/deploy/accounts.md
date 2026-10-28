@@ -52,7 +52,7 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 
 ## Not built yet
 
-- Nothing links to the account page from the menu yet (it is reachable at `/account/`, and marked noindex). Add the link when the builder needs an account.
+- The menu and footer link to the account page ("Sign in" / "Account"). "I will build it" on the questions page sends people to `/account/?from=start` when accounts are on, and after signing in on to `/builder/`.
 - Accounts do not own anything yet: projects, orders and downloads (plan E4, E7, E10) and the database rules that keep each customer's rows private (E4.1).
 - Delete account and change email (plan E4.2, E12.5).
 - The terms and privacy text to agree to when creating an account (E12). Turnstile on the contact and question forms (the lead receiver already supports `TURNSTILE_SECRET`; the widget is not on those forms yet).
@@ -80,3 +80,11 @@ npm run dev:site                    # http://localhost:4173/  (PORT=... to chang
 - `.dev.vars` is never committed. Do not paste its contents into chat.
 - Tests that need no real accounts: `npm run test:auth` and `node tests/e2e/account.e2e.js` use the pretend Supabase.
 
+## Saved answers (the `briefs` table)
+
+The answers from the questions are saved to the account at sign-in so the builder can offer them on any device.
+
+1. Apply `supabase/migrations/20261028150000_briefs.sql` to the project (SQL editor: paste and run; or `supabase db push` from a linked checkout). It creates `public.briefs` with row level security: anonymous visitors have no access, a signed-in person reads and writes only their own row.
+2. Check: Table editor -> `briefs` shows "RLS enabled"; Advisors (Security) lists no warning for it.
+3. No new Cloudflare variable. The `/account/*` policy already allows the Supabase address; the builder's own policy allows https: addresses.
+4. Until the table exists, saving fails quietly: the account page and the builder work as before and the answers stay in the browser.

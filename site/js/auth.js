@@ -59,6 +59,17 @@
     }
     const toSession = (j) => (j && j.access_token ? { access_token: j.access_token, refresh_token: j.refresh_token, expires_at: j.expires_at || (now() + (j.expires_in || 3600)), user: j.user || null } : null);
     function saveSession(j) { const s = toSession(j); if (s) write(store, SESSION_KEY, s); return s; }
+    /** The stored session, refreshed when it is about to run out; null (and forgotten) when it cannot be. */
+    async function fresh() {
+      let s = read(store, SESSION_KEY);
+      if (!s || !s.access_token) return null;
+      if (s.expires_at - now() < 60) {
+        const r = await call('POST', '/auth/v1/token?grant_type=refresh_token', { refresh_token: s.refresh_token });
+        if (!r.ok) { drop(store, SESSION_KEY); return null; }
+        s = saveSession(r.json);
+      }
+      return s;
+    }
 
     async function newPkce(extra) {
       const verifier = randomVerifier();
@@ -161,17 +172,14 @@
       },
       /** The signed-in visitor, refreshing the session when it is about to run out. null when nobody is signed in. */
       async current() {
-        let s = read(store, SESSION_KEY);
-        if (!s || !s.access_token) return null;
-        if (s.expires_at - now() < 60) {
-          const r = await call('POST', '/auth/v1/token?grant_type=refresh_token', { refresh_token: s.refresh_token });
-          if (!r.ok) { drop(store, SESSION_KEY); return null; }
-          s = saveSession(r.json);
-        }
+        const s = await fresh();
+        if (!s) return null;
         const u = await call('GET', '/auth/v1/user', undefined, s.access_token); // the server decides; the stored copy is not trusted
         if (!u.ok) { drop(store, SESSION_KEY); return null; }
         return { email: u.json.email, provider: (u.json.app_metadata && u.json.app_metadata.provider) || 'email', id: u.json.id };
       },
+      /** The signed-in visitor's access token (refreshed when about to run out), for calls to the database under their own name. null when nobody is signed in. */
+      async accessToken() { const s = await fresh(); return s ? s.access_token : null; },
       async signOut() {
         const s = read(store, SESSION_KEY); drop(store, SESSION_KEY); drop(temp, PKCE_KEY);
         if (s && s.access_token) await call('POST', '/auth/v1/logout', undefined, s.access_token); // best effort: the local session is already gone

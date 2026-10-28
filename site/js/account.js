@@ -5,7 +5,7 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const A = window.EdvAuth;
-  let auth = null, mode = 'in', mailKind = null, pending = null, captcha = null, lastSent = 0, knownEmail = '';
+  let auth = null, answersSync = null, mode = 'in', mailKind = null, pending = null, captcha = null, lastSent = 0, knownEmail = '';
 
   const VIEWS = ['a-loading', 'a-closed', 'a-out', 'f-code', 'a-in', 'f-new'];
   const view = (name) => { VIEWS.forEach((id) => { $(id).hidden = id !== name; }); hideAllPasswords(); };
@@ -104,12 +104,29 @@
     return false;
   }
 
-  function showSignedIn(who) {
+  async function showSignedIn(who) {
     const how = { google: 'Signed in with Google.', github: 'Signed in with GitHub.', email: 'Signed in with your email address.' }[who.provider] || 'Signed in.';
     knownEmail = who.email; $('i-who').textContent = who.email; $('i-how').textContent = how; $('b-newpass').hidden = who.provider !== 'email'; // a Google or GitHub account has no password of its own here
     title('You are signed in.', 'This is your edvlabs account.'); view('a-in'); focusTitle();
+    const toBuilder = takeBuilderIntent();
+    if (toBuilder) title('You are signed in.', 'Opening the builder…');
+    // the answers from the questions: this browser's go to the account, or the account's come back here (site/js/brief-sync.js)
+    const r = answersSync ? await answersSync.sync({ userId: who.id }) : { action: 'none' };
+    if (r.action === 'saved') notice('Your answers are saved to your account.', 'ok');
+    else if (r.action === 'restored') notice('We found your saved answers and put them back in this browser.', 'ok');
+    if (toBuilder) window.location.assign(BUILDER_URL);
   }
-  function showSignedOut() { title('Sign in or create an account.', 'Use Google, GitHub or your email address.'); view('a-out'); setMode('in'); showPass(); }
+  /* "I will build it" on the questions page sends people here with ?from=start. The wish is remembered in this browser, so it also survives the
+     round trip through Google or GitHub (which comes back without the query); once signed in they go on to the builder, once. */
+  const BUILDER_URL = '/builder/', INTENT_KEY = 'edvlabs.after_login';
+  const store = () => { try { return window.localStorage; } catch (_) { return null; } };
+  const fromStart = new URLSearchParams(window.location.search).get('from') === 'start';
+  if (fromStart) { const st = store(); if (st) { try { st.setItem(INTENT_KEY, 'builder'); } catch (_) { /* storage blocked: they can still open the builder by hand */ } } }
+  function takeBuilderIntent() {
+    const st = store(); if (!st) return false;
+    try { if (st.getItem(INTENT_KEY) !== 'builder') return false; st.removeItem(INTENT_KEY); return true; } catch (_) { return false; }
+  }
+  function showSignedOut() { title(fromStart ? 'Sign in to build your page.' : 'Sign in or create an account.', fromStart ? 'We save your answers to your account, so you can carry on from any device. Use Google, GitHub or your email address.' : 'Use Google, GitHub or your email address.'); view('a-out'); setMode('in'); showPass(); }
 
   function setMode(m) {
     mode = m;
@@ -200,6 +217,7 @@
     const safe = (k) => { try { return window[k]; } catch (_) { return null; } };
     const mem = () => { const m = new Map(); return { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => { m.set(k, String(v)); }, removeItem: (k) => { m.delete(k); } }; };
     auth = A.createAuth({ url: cfg.supabaseUrl, anonKey: cfg.anonKey, storage: safe('localStorage') || mem(), tempStorage: safe('sessionStorage') || mem(), origin: window.location.origin, returnTo: window.location.origin + window.location.pathname.replace(/index\.html$/, '') });
+    answersSync = window.EdvBriefSync ? window.EdvBriefSync.create({ url: cfg.supabaseUrl, anonKey: cfg.anonKey, token: () => auth.accessToken(), storage: safe('localStorage') || mem() }) : null;
     captcha = makeCaptcha(cfg.turnstileSiteKey);
     ['p-pass', 'p-pass2', 'n-pass', 'n-pass2'].forEach(addToggle);
     meters.sign = addMeter('p-pass', () => $('p-email').value); meters.fresh = addMeter('n-pass', () => knownEmail || (pending && pending.email) || '');

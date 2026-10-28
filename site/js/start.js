@@ -118,10 +118,15 @@
       h('p', { class: 'lead', text: 'Check it over. Anything marked “not answered” or “I don’t know yet” is fine; we help with it.' }), dl,
       h('div', { class: 'q-nav' }, btn('Back', 'btn--secondary', () => go('q' + QUESTIONS.length)), h('span', { class: 'spacer' }), btn('Choose who makes it', '', () => go('choose'))));
   }
+  /* "You build it" needs an account. If accounts are not switched on yet (no /api/config answer), fall back to the "tell me when it opens" form. */
+  function openAccount() {
+    fetch('/api/config', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+      .then((cfg) => { if (cfg && cfg.supabaseUrl && cfg.anonKey) location.assign('../account/?from=start'); else go('contact'); });
+  }
   function chooseScreen() {
     const b = blockCount(brief.answers), ed = wantsEditor(brief.answers);
     const way = (cls, kicker, title, price, small, items, label, path) => h('div', { class: 'way ' + cls }, h('span', { class: 'kicker', text: kicker }), h('h2', { class: 'h3', text: title }),
-      h('div', { class: 'price' }, price, ' ', h('small', { text: small })), h('ul', null, items.map((t) => h('li', { text: t }))), btn(label, '', () => { brief.path = path; save(); go('contact'); }));
+      h('div', { class: 'price' }, price, ' ', h('small', { text: small })), h('ul', null, items.map((t) => h('li', { text: t }))), btn(label, '', () => { brief.path = path; save(); if (path === 'self') openAccount(); else go('contact'); }));
     return h('div', null, h('h1', { id: 'q-title', tabindex: '-1', text: 'Who should make your page?' }),
       h('p', { class: 'lead', text: 'Both give you the same finished files. Prices are worked out for ' + b + ' blocks' + (ed ? ' and the editor.' : '.') }),
       h('div', { class: 'fork' },
