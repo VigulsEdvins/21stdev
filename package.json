@@ -14,7 +14,7 @@
     "new-feature": "node scripts/new-feature.js",
     "check-features": "node scripts/check-features.js",
     "thumbs": "node scripts/make-thumbs.js",
-    "test": "node tests/test-builder-integration.js && npm run -s test:brief && npm run -s test:lead && npm run -s test:recommend && npm run -s test:blockkinds && npm run -s test:looksets",
+    "test": "node tests/test-builder-integration.js && npm run -s test:brief && npm run -s test:lead && npm run -s test:recommend && npm run -s test:blockkinds && npm run -s test:looksets && npm run -s test:guidedcheck",
     "bundle-demo": "node scripts/bundle-demo.js",
     "clean-features": "node scripts/clean-features.js",
     "test:e2e": "node tests/e2e/run-all.js",
@@ -57,7 +57,8 @@
     "check-innerhtml": "node scripts/check-innerhtml.js",
     "test:recommend": "node tests/test-recommend.js",
     "test:blockkinds": "node tests/test-block-kinds.js",
-    "test:looksets": "node tests/test-look-sets.js"
+    "test:looksets": "node tests/test-look-sets.js",
+    "test:guidedcheck": "node tests/test-guided-check.js"
   },
   "keywords": [],
   "author": "",

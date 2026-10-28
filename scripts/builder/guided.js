@@ -12,7 +12,7 @@
     { id: 'blocks', label: 'Blocks', hint: 'Choose the blocks of your page and put them in order.', tab: 'tabElementsBtn' },
     { id: 'words', label: 'Words', hint: 'Write your own words and add your photos.', tab: 'tabContentBtn' },
     { id: 'look', label: 'Look', hint: 'Pick colours and type.', tab: 'tabStylingBtn' },
-    { id: 'check', label: 'Check', hint: 'See what still needs doing before you take your page.', modal: 'checks' },
+    { id: 'check', label: 'Check', hint: 'See what still needs doing before you take your page.', pane: 'check' },
     { id: 'get', label: 'Get it', hint: 'Take your finished page.', modal: 'download' }
   ];
 
@@ -88,7 +88,10 @@
       if (i < 0 || i >= STEPS.length) return;
       current = i;
       const s = STEPS[i];
+      const check = win.builderGuidedCheck;
+      if (check && s.pane !== 'check') check.hide();
       if (s.tab) { const t = doc.getElementById(s.tab); if (t) t.click(); }
+      if (s.pane === 'check' && check) check.show();
       if (s.modal) openModal(s.modal);
       render();
     }
