@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "path": "done",
+  "answers": {
+    "feel": {
+      "value": [
+        "calm",
+        "warm",
+        "bold",
+        "playful"
+      ],
+      "unknown": false
+    }
+  }
+}

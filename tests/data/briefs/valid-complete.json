@@ -1,0 +1,59 @@
+{
+  "v": 1,
+  "path": "done",
+  "answers": {
+    "purpose": {
+      "value": "business",
+      "unknown": false
+    },
+    "kind": {
+      "value": "Hair salon in Riga",
+      "unknown": false
+    },
+    "action": {
+      "value": [
+        "book",
+        "call"
+      ],
+      "unknown": false
+    },
+    "blocks": {
+      "value": [
+        "banner",
+        "about",
+        "services",
+        "prices",
+        "contact"
+      ],
+      "unknown": false
+    },
+    "editor": {
+      "value": "yes",
+      "unknown": false
+    },
+    "content": {
+      "value": "some",
+      "unknown": false
+    },
+    "feel": {
+      "value": [
+        "warm",
+        "simple"
+      ],
+      "unknown": false
+    },
+    "languages": {
+      "value": "2",
+      "unknown": false
+    },
+    "hosting": {
+      "value": "neither",
+      "unknown": false
+    },
+    "when": {
+      "value": "month",
+      "unknown": false,
+      "note": "Before the spring opening"
+    }
+  }
+}

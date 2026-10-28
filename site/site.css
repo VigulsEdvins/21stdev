@@ -86,3 +86,5 @@
 }
 @media (max-width: 560px) { .q-options, .q-options.is-blocks { grid-template-columns: 1fr; } .sec { padding: var(--s-8) 0; } }
 .q-options .option b { padding-right: 34px; }
+.trap { position: absolute; left: -9999px; }
+.mt-5 { margin-top: var(--s-5); }

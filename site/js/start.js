@@ -9,6 +9,7 @@
   const dots = document.getElementById('q-dots');
   const count = document.getElementById('q-count');
   const UNKNOWN = "I don’t know yet";
+  const CONSENT = 'It is fine to contact me about this page.';
 
   let brief = load();
   function load() {
@@ -126,7 +127,7 @@
       h('div', { class: 'fork' },
         way('', 'You build it', 'We guide you.', P.eur(P.self(b, ed)), 'about', ['You choose blocks, write your words and pick the look', 'Free to try before you pay', 'You download the files when you pay'], 'I will build it', 'self'),
         way('way--teal', 'We build it', 'You talk. We make.', P.eur(P.done(b, ed)), 'from, agreed first', ['We read your answers and get in touch', 'You send the words and photos you have', 'The same files, ready to put online'], 'Ask edvlabs to do it', 'done')),
-      h('p', { style: 'margin-top:var(--s-5)' }, h('a', { class: 'link', href: '#contact', onclick: () => { brief.path = 'talk'; save(); } }, 'I want to talk first')),
+      h('p', { class: 'mt-5' }, h('a', { class: 'link', href: '#contact', onclick: () => { brief.path = 'talk'; save(); } }, 'I want to talk first')),
       h('div', { class: 'q-nav' }, btn('Back', 'btn--secondary', () => go('check'))));
   }
   function contactScreen() {
@@ -141,6 +142,7 @@
     const name = h('input', { class: 'input', id: 'c-name', type: 'text', autocomplete: 'name' });
     const how = h('select', { class: 'select', id: 'c-how' }, ['Any way is fine', 'Email', 'Phone call', 'Text message'].map((t) => h('option', { text: t })));
     const consent = h('input', { type: 'checkbox', id: 'c-consent' });
+    const trap = h('input', { type: 'text', name: 'website', tabindex: '-1', autocomplete: 'off' });
     const err = h('span', { class: 'error-text', id: 'c-err', role: 'alert' });
     const consentErr = h('span', { class: 'error-text', id: 'c-cerr', role: 'alert' });
     const f1 = h('div', { class: 'field' }, h('label', { for: 'c-email', text: 'Email address' }), email);
@@ -158,12 +160,13 @@
       else if (ph && !phOk) { err.textContent = 'That does not look like a phone number. Use digits, and a + for the country code.'; f2.classList.add('has-error'); phone.setAttribute('aria-invalid', 'true'); ok = false; }
       if (!consent.checked) { consentErr.textContent = 'Tick the box so we know we may contact you.'; f4.classList.add('has-error'); ok = false; }
       if (!ok) { (document.querySelector('.has-error input, .has-error select') || email).focus(); return; }
-      lead({ path, email: em, phone: ph, name: name.value.trim(), how: how.value, brief });
+      lead({ path, email: em, phone: ph, name: name.value.trim(), how: how.value, brief, consent: true, consentText: CONSENT, website: trap.value });
     }
     const form = h('form', { class: 'stack', novalidate: true, onsubmit: submit },
       f1, f2, h('div', { class: 'field' }, h('label', { for: 'c-name', text: 'Your name (optional)' }), name),
       h('div', { class: 'field' }, h('label', { for: 'c-how', text: 'How would you like us to reach you?' }), how),
-      h('label', { class: 'choice' }, consent, 'It is fine to contact me about this page.'), f4,
+      h('label', { class: 'choice' }, consent, CONSENT), f4,
+      h('div', { 'aria-hidden': 'true', class: 'trap' }, h('label', null, 'Leave this empty', trap)),
       h('div', { class: 'q-nav' }, btn('Back', 'btn--secondary', () => go(path === 'talk' ? 'choose' : 'choose')), h('span', { class: 'spacer' }), h('button', { class: 'btn', type: 'submit', text: copy[2] })));
     return h('div', null, h('h1', { id: 'q-title', tabindex: '-1', text: copy[0] }), h('p', { class: 'lead', text: copy[1] }), form);
   }

@@ -1,0 +1,46 @@
+{
+  "v": 1,
+  "path": "talk",
+  "answers": {
+    "purpose": {
+      "value": null,
+      "unknown": true
+    },
+    "kind": {
+      "value": "",
+      "unknown": true
+    },
+    "action": {
+      "value": [],
+      "unknown": true
+    },
+    "blocks": {
+      "value": [],
+      "unknown": true
+    },
+    "editor": {
+      "value": null,
+      "unknown": true
+    },
+    "content": {
+      "value": null,
+      "unknown": true
+    },
+    "feel": {
+      "value": [],
+      "unknown": true
+    },
+    "languages": {
+      "value": null,
+      "unknown": true
+    },
+    "hosting": {
+      "value": null,
+      "unknown": true
+    },
+    "when": {
+      "value": null,
+      "unknown": true
+    }
+  }
+}

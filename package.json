@@ -14,7 +14,7 @@
     "new-feature": "node scripts/new-feature.js",
     "check-features": "node scripts/check-features.js",
     "thumbs": "node scripts/make-thumbs.js",
-    "test": "node tests/test-builder-integration.js",
+    "test": "node tests/test-builder-integration.js && npm run -s test:brief && npm run -s test:lead",
     "bundle-demo": "node scripts/bundle-demo.js",
     "clean-features": "node scripts/clean-features.js",
     "test:e2e": "node tests/e2e/run-all.js",
@@ -50,7 +50,9 @@
     "setup-hooks": "git config core.hooksPath .githooks",
     "audit": "npm audit --omit=dev --audit-level=high",
     "check-brand": "node scripts/check-brand-contrast.js",
-    "security": "npm run check-secrets && npm run audit && npm run check-code-safety"
+    "security": "npm run check-secrets && npm run audit && npm run check-code-safety",
+    "test:brief": "node tests/test-brief.js",
+    "test:lead": "node tests/test-lead.js"
   },
   "keywords": [],
   "author": "",
