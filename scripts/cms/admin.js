@@ -8,6 +8,8 @@
  */
 (function () {
   'use strict';
+  // the admin and its preview are the same site; a page with an opaque origin (file://, sandbox) cannot name it, so only there any origin is accepted
+  var TARGET = location.origin && location.origin !== 'null' ? location.origin : '*'; // postmessage-ok: an opaque origin (file://, sandbox) cannot be named
 
   var C = window.EDV_CMS;
   var $ = function (id) { return document.getElementById(id); };
@@ -207,11 +209,11 @@
   }
   function pushPreview() {
     if (!previewReady || !frame.contentWindow) return;
-    frame.contentWindow.postMessage({ type: 'edv-cms:values', values: draft }, '*');
+    frame.contentWindow.postMessage({ type: 'edv-cms:values', values: draft }, TARGET);
   }
   function focusPreview(secId, fieldId) {
     if (!previewReady || !frame.contentWindow) return;
-    frame.contentWindow.postMessage({ type: 'edv-cms:focus', section: secId, field: fieldId || '' }, '*');
+    frame.contentWindow.postMessage({ type: 'edv-cms:focus', section: secId, field: fieldId || '' }, TARGET);
   }
   window.addEventListener('message', function (e) {
     if (e.source !== frame.contentWindow || !e.data || typeof e.data !== 'object') return;

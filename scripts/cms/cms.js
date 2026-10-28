@@ -8,6 +8,8 @@
  */
 (function () {
   'use strict';
+  // the admin and its preview are the same site; a page with an opaque origin (file://, sandbox) cannot name it, so only there any origin is accepted
+  var TARGET = location.origin && location.origin !== 'null' ? location.origin : '*'; // postmessage-ok: an opaque origin (file://, sandbox) cannot be named
   var C = window.EDV_CMS;
   if (!C || !Array.isArray(C.pages) || !window.__setOverrides) return;
 
@@ -138,14 +140,13 @@
     var hit = fieldAt(e.target);
     if (!hit) {
       var sec = e.target.closest && e.target.closest('.page-section');
-      if (sec) fromAdmin.postMessage({ type: 'edv-cms:pick', page: file, section: sec.id }, '*');
+      if (sec) fromAdmin.postMessage({ type: 'edv-cms:pick', page: file, section: sec.id }, TARGET);
       return;
     }
     e.preventDefault();
     e.stopPropagation();
-    // only ids travel in this message, so any origin may receive it
-    fromAdmin.postMessage({ type: 'edv-cms:pick', page: file, section: hit.sec.id, field: hit.f.id }, '*');
+    fromAdmin.postMessage({ type: 'edv-cms:pick', page: file, section: hit.sec.id, field: hit.f.id }, TARGET);
   }, true);
 
-  fromAdmin.postMessage({ type: 'edv-cms:ready', page: file }, '*');
+  fromAdmin.postMessage({ type: 'edv-cms:ready', page: file }, TARGET);
 })();

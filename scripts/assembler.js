@@ -379,8 +379,11 @@ function renderEmptyPreview(theme) {
   </div>
   <script>
     window.addEventListener('message', function (event) {
+      if (event.source !== window.parent) return; // only the builder that framed this preview may restyle it
       if (event.data && event.data.type === 'UPDATE_THEME' && event.data.theme) {
         var t = event.data.theme;
+        var okColour = function (v) { return typeof v === 'string' && /^(#[0-9a-fA-F]{3,8}|(rgb|hsl)a?\\([0-9\\s.,%\\/-]+\\)|[a-zA-Z]{3,20})$/.test(v.trim()) ? v.trim() : ''; };
+        t = { bg: okColour(t.bg), text: okColour(t.text), accent: okColour(t.accent), cardBg: okColour(t.cardBg), border: okColour(t.border) };
         if (t.bg) document.documentElement.style.setProperty('--preview-bg', t.bg);
         if (t.text) document.documentElement.style.setProperty('--preview-text', t.text);
         if (t.accent) document.documentElement.style.setProperty('--preview-accent', t.accent);
@@ -2233,8 +2236,11 @@ ${allHtml}
     (function () {
       // Dynamic live theme updates via postMessage
       window.addEventListener('message', function (event) {
+        if (event.source !== window.parent) return; // only the builder that framed this preview may restyle it
         if (event.data && event.data.type === 'UPDATE_THEME' && event.data.theme) {
           var t = event.data.theme;
+          var okColour = function (v) { return typeof v === 'string' && /^(#[0-9a-fA-F]{3,8}|(rgb|hsl)a?\\([0-9\\s.,%\\/-]+\\)|[a-zA-Z]{3,20})$/.test(v.trim()) ? v.trim() : ''; };
+          t = { bg: okColour(t.bg), text: okColour(t.text), accent: okColour(t.accent), cardBg: okColour(t.cardBg), border: okColour(t.border) };
           var isDark = t.bg ? (function(hex) {
             hex = String(hex).replace('#', '');
             if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
@@ -2383,7 +2389,7 @@ ${allHtml}
       document.addEventListener('click', function (e) {
         var sec = e.target.closest('.page-section');
         if (sec && sec.id && window.parent) {
-          window.parent.postMessage({ type: 'SECTION_CLICKED', sectionId: sec.id }, '*');
+          window.parent.postMessage({ type: 'SECTION_CLICKED', sectionId: sec.id }, '*'); // postmessage-ok: only a section id, and the preview's origin can be opaque
         }
       });
 

@@ -458,6 +458,7 @@
 
     // Listen for section clicks inside live preview frame
     window.addEventListener('message', (event) => {
+      if (!previewFrame || event.source !== previewFrame.contentWindow) return; // only the preview frame may pick a section
       if (event.data && event.data.type === 'SECTION_CLICKED' && event.data.sectionId) {
         setActiveSection(event.data.sectionId);
       }

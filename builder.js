@@ -466,7 +466,8 @@
         const loaded = historyCtl.autosave.load();
         if (loaded.status === 'recovered') showToast('Your last save could not be read, so the one before it was restored.', 6000);
         if (loaded.status === 'corrupt') showToast('Your saved work could not be read. A copy was kept in this browser; starting a new page.', 7000);
-        const parsed = loaded.state;
+        // what the browser kept is cleaned the same way as an imported project: no javascript: links, no odd ids
+        const parsed = loaded.state && window.ProjectSanitize ? window.ProjectSanitize.sanitizeState(loaded.state).state : loaded.state;
         {
           if (parsed && Array.isArray(parsed.stack) && (parsed.stack.length > 0 || (Array.isArray(parsed.pages) && parsed.pages.length > 1))) {
             const prevApplying = historyCtl.state.applying;

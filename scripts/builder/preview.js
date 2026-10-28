@@ -30,7 +30,7 @@
           previewFrame.contentWindow.postMessage({
             type: 'UPDATE_THEME',
             theme: theme
-          }, '*');
+          }, '*'); // postmessage-ok: theme colours only, and the preview's origin can be opaque
         } catch (_) {}
       }
 

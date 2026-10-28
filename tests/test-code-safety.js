@@ -1,6 +1,6 @@
 // The safety scan catches the patterns it promises to, and the vault is clean.
 const assert = require('assert');
-const { scan, scanText, isBundle } = require('../scripts/check-code-safety.js');
+const { scan, scanText, scanOwn, scanProject, isBundle } = require('../scripts/check-code-safety.js');
 
 const rules = (t) => scanText('x.js', t).map(f => f.rule).sort();
 assert.deepStrictEqual(rules('eval("1")'), ['eval']);
@@ -13,6 +13,16 @@ assert.deepStrictEqual(rules('window.addEventListener("message", e => { run(e.da
 assert.deepStrictEqual(rules('window.addEventListener("message", e => { if (e.origin !== location.origin) return; });'), []);
 assert(isBundle('(()=>{var a=1;})()') && !isBundle('const x = 1;'));
 assert.deepStrictEqual(rules('retrieval(); evaluate(1)'), [], 'words that merely contain eval are fine');
+
+const own = (t) => scanOwn('x.js', t).map(f => f.rule).sort();
+assert.deepStrictEqual(own('window.addEventListener("message", e => { run(e.data); });'), ['message-origin']);
+assert.deepStrictEqual(own('window.addEventListener("message", e => { if (e.source !== window.parent) return; });'), []);
+assert.deepStrictEqual(own('win.postMessage({a:1}, "*");'), ['post-any-origin']);
+assert.deepStrictEqual(own('win.postMessage({a:1}, "*"); // postmessage-ok: only an id'), []);
+assert.deepStrictEqual(own('win.postMessage({a:1}, location.origin);'), []);
+const proj = scanProject();
+assert.deepStrictEqual(proj.filter(f => !f.waived).map(f => `${f.file}: ${f.msg}`), [], 'the project code has no open safety findings');
+assert(proj.filter(f => f.waived).every(f => f.reason.length > 30), 'every waiver carries its reason');
 
 const open = scan().filter(f => !f.waived);
 assert.deepStrictEqual(open.map(f => `${f.file}: ${f.msg}`), [], 'the vault has no open safety findings');
