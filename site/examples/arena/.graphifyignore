@@ -1,0 +1,2 @@
+# Exclude minified third-party vendor bundles from AST symbol extraction
+assets/vendor/*.min.js

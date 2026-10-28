@@ -14,19 +14,31 @@ function parseHeaders(text) {
   for (const raw of text.split('\n')) {
     if (!raw.trim() || raw.trim().startsWith('#')) continue;
     if (!/^\s/.test(raw)) { cur = raw.trim(); out[cur] = out[cur] || {}; continue; }
+    const t = raw.trim();
+    if (t.startsWith('!')) { (out[cur]['!detach'] = out[cur]['!detach'] || []).push(t.slice(1).trim().toLowerCase()); continue; } // "! Header": drop what earlier rules set
     const i = raw.indexOf(':'); out[cur][raw.slice(0, i).trim().toLowerCase()] = raw.slice(i + 1).trim();
   }
   return out;
 }
+/** The headers a path really gets: the rules that match, in file order, with "!" removing what came before. */
+function effective(rules, rulePath) {
+  const h = Object.assign({}, rules['/*']);
+  const gone = (rules[rulePath] || {})['!detach'] || [];
+  gone.forEach((n) => { delete h[n]; });
+  for (const [k, v] of Object.entries(rules[rulePath] || {})) if (k !== '!detach') h[k] = v;
+  return h;
+}
 function parseCsp(value) { const m = {}; for (const part of value.split(';')) { const [k, ...v] = part.trim().split(/\s+/); if (k) m[k.toLowerCase()] = v; } return m; }
 
 /** Returns a list of problems with a header set (keys lowercase). */
-function problems(h, { strictStyles = true } = {}) {
+function problems(h, { strictStyles = true, frameAncestors = ["'none'"] } = {}) {
   const errs = [];
   for (const k of REQUIRED) if (!h[k]) errs.push('missing header: ' + k);
   if (h['content-security-policy']) {
     const c = parseCsp(h['content-security-policy']);
-    for (const [d, want] of Object.entries(CSP_MUST)) if (JSON.stringify(c[d]) !== JSON.stringify(want)) errs.push(`CSP ${d} must be ${want.join(' ')}`);
+    const must = Object.assign({}, CSP_MUST, { 'frame-ancestors': frameAncestors });
+    for (const [d, want] of Object.entries(must)) if (JSON.stringify(c[d]) !== JSON.stringify(want)) errs.push(`CSP ${d} must be ${want.join(' ')}`);
+    for (const d of ['img-src', 'media-src', 'font-src', 'connect-src', 'frame-src', 'style-src']) { const v = c[d] || []; for (const bad of ['*', 'https:', 'http:']) if (v.includes(bad)) errs.push(`CSP ${d} must not allow ${bad}`); }
     for (const d of ['script-src', 'script-src-elem', 'script-src-attr']) {
       const v = c[d] || []; for (const bad of ["'unsafe-inline'", "'unsafe-eval'", '*', 'https:', 'http:', 'data:']) if (v.includes(bad)) errs.push(`CSP ${d} must not allow ${bad}`);
     }
@@ -42,18 +54,23 @@ async function main() {
   const arg = process.argv[2];
   let errs = [];
   if (arg) {
-    for (const p of ['/', '/pricing/', '/start/']) {
+    for (const p of ['/', '/pricing/', '/start/', '/examples/yearbook/']) {
       const r = await fetch(new URL(p, arg), { redirect: 'follow' });
       const h = {}; r.headers.forEach((v, k) => { h[k] = v; });
-      errs = errs.concat(problems(h).map((e) => `${p}: ${e}`));
+      errs = errs.concat(problems(h, p.startsWith('/examples/') ? { strictStyles: false, frameAncestors: ["'self'"] } : {}).map((e) => `${p}: ${e}`));
     }
   } else {
     const rules = parseHeaders(fs.readFileSync(path.join(__dirname, '..', 'site', '_headers'), 'utf8'));
     errs = problems(rules['/*'] || {}).map((e) => '/*: ' + e);
-    if (rules['/style/*']) errs = errs.concat(problems(Object.assign({}, rules['/*'], rules['/style/*']), { strictStyles: false }).map((e) => '/style/*: ' + e));
+    if (rules['/style/*']) errs = errs.concat(problems(effective(rules, '/style/*'), { strictStyles: false }).map((e) => '/style/*: ' + e));
+    for (const r of Object.keys(rules).filter((k) => /^\/examples\/[a-z]+\/\*$/.test(k))) {
+      errs = errs.concat(problems(effective(rules, r), { strictStyles: false, frameAncestors: ["'self'"] }).map((e) => r + ': ' + e));
+      if (!(rules[r]['!detach'] || []).includes('content-security-policy')) errs.push(r + ': must detach the strict policy first, or the browser applies both');
+    }
+    if (rules['/style/*'] && !(rules['/style/*']['!detach'] || []).includes('content-security-policy')) errs.push('/style/*: must detach the strict policy first, or the browser applies both');
   }
   if (errs.length) { console.error(errs.join('\n')); process.exit(1); }
   console.log('✓ headers: CSP without unsafe-inline or unsafe-eval for scripts, HSTS, nosniff, referrer, permissions, opener' + (arg ? ' (live: ' + arg + ')' : ''));
 }
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });
-module.exports = { parseHeaders, parseCsp, problems };
+module.exports = { parseHeaders, parseCsp, problems, effective };

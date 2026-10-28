@@ -1,0 +1,8 @@
+assets/fonts/
+assets/videos/
+assets/video/
+assets/audio/
+assets/images/
+.superpowers/
+.git/
+node_modules/

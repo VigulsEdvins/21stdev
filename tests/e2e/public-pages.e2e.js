@@ -86,19 +86,22 @@ const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/'];
   const homeText = await page.textContent('main');
   assert(/more than 200 ready-made blocks/.test(homeText) && /More than 200 blocks to choose from/.test(await page.textContent('.band')), 'home page says the library has more than 200 blocks');
   const shots = await page.$$eval('#work img', (im) => im.map((i) => ({ src: i.getAttribute('src'), alt: i.alt, ok: i.complete && i.naturalWidth > 0, w: i.getAttribute('width'), h: i.getAttribute('height') })));
-  assert.strictEqual(shots.length, 6, 'six examples');
+  assert.strictEqual(shots.length, 9, 'six sample pages and three whole websites');
   await page.evaluate(() => document.querySelectorAll('#work img').forEach((i) => { i.loading = 'eager'; }));
   await page.waitForFunction(() => [...document.querySelectorAll('#work img')].every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 8000 });
   shots.forEach((x) => { assert(x.alt.length > 30 && x.w && x.h, 'each example has a real description and a size: ' + x.src); const slug = path.basename(x.src, '.webp'); const f = feats.find((q) => q.slug === slug); assert(f && f.origin && f.origin.source === 'edvlabs', slug + ' is one of our own pages'); });
-  assert.strictEqual(new Set(shots.map((x) => x.src)).size, 6, 'six different examples');
+  assert.strictEqual(new Set(shots.map((x) => x.src)).size, 9, 'nine different examples');
   const cards = await page.$$eval('#work li', (li) => li.map((l) => ({ img: l.querySelector('img').getAttribute('src'), href: l.querySelector('a.work-open').getAttribute('href'), text: l.querySelector('a.work-open').textContent })));
-  assert.strictEqual(cards.length, 6);
+  assert.strictEqual(cards.length, 9);
+  const { SITES } = require('../../scripts/build-examples.js');
   for (const c of cards) {
     const slug = path.basename(c.img, '.webp');
-    assert.strictEqual(c.href, 'examples/' + slug + '/', 'each card opens its own full page');
-    assert(/Open the full page/.test(c.text) && /sample/.test(c.text), 'link text says what it opens: ' + c.text);
-    assert(fs.existsSync(path.join(SITE, 'examples', slug, 'index.html')), slug + ' full page is published');
+    const site = Object.keys(SITES).find((n) => 'template-' + n === slug);
+    assert.strictEqual(c.href, 'examples/' + (site || slug) + '/', 'each card opens its own full page');
+    assert(/Open the (full page|whole website)/.test(c.text) && /sample/.test(c.text), 'link text says what it opens: ' + c.text);
+    assert(fs.existsSync(path.join(SITE, 'examples', site || slug, 'index.html')), slug + ' full page is published');
   }
+  assert.strictEqual(cards.filter((c) => /whole website/.test(c.text)).length, 3, 'three whole websites');
   const first = cards[0];
   await page.locator('#work li').first().scrollIntoViewIfNeeded();
   const box = await page.locator('#work li').first().locator('img').boundingBox();
@@ -112,7 +115,7 @@ const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/'];
   await page.waitForURL('**/site/start/**');
   await page.goto(srv.url + '/site/index.html');
   console.log('  ✓ each example card opens its full sample page, which links back and on to the questions');
-  console.log('  ✓ home page: six examples of our own pages with descriptions, and the 200+ claim is true');
+  console.log('  ✓ home page: nine examples of our own pages with descriptions, and the 200+ claim is true');
 
   // phone width: no sideways scroll on any page, and the menu button still reachable
   await page.setViewportSize({ width: 375, height: 800 });

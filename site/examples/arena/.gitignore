@@ -1,0 +1,9 @@
+# OS & editor artifacts
+.DS_Store
+Thumbs.db
+*.log
+
+# graphify machine-local paths & cache
+graphify-out/.graphify_python
+graphify-out/.graphify_root
+graphify-out/cache/

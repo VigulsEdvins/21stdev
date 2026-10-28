@@ -6,3 +6,6 @@
 .edv-sample-bar__go { padding: 6px 14px; border-radius: 999px; background: #b8432b; color: #fff !important; text-decoration: none !important; }
 .edv-sample-bar__go:hover { background: #1d2a33; }
 @media (max-width: 520px) { .edv-sample-bar { border-radius: 999px; bottom: 8px; padding: 6px 12px; gap: 6px 14px; } .edv-sample-bar > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } }
+/* stand-ins for the few inline styles the whole websites carried (inline styles are not allowed by the site's policy) */
+.edv-mt-1 { margin-top: 1rem; }
+.edv-mt-3 { margin-top: 3rem; }

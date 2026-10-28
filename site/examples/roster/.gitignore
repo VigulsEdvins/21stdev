@@ -1,0 +1,27 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor and IDE Files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and Runtime Data
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Graphify Local Caches and Machine-Specific State
+graphify-out/cache/
+graphify-out/.graphify_*
+graphify-out/.needs_update

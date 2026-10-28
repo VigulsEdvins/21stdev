@@ -14,8 +14,11 @@ const H = require('../../scripts/check-headers.js');
 
   const srv = await startServer(); const browser = await launchBrowser();
   const page = await (await browser.newContext({ viewport: { width: 1280, height: 900 } })).newPage();
+  const policyFor = (url) => { const m = /\/site\/examples\/(yearbook|arena|roster)\//.exec(url); return m ? H.effective(rules, '/examples/' + m[1] + '/*')['content-security-policy'].replace('; upgrade-insecure-requests', '') : csp; };
+  assert.deepStrictEqual(H.problems(H.effective(rules, '/examples/yearbook/*'), { strictStyles: false, frameAncestors: ["'self'"] }), []);
+  assert(H.problems(Object.assign({}, rules['/*'], { 'content-security-policy': H.effective(rules, '/examples/yearbook/*')['content-security-policy'].replace("script-src 'self'", "script-src 'self' 'unsafe-inline'") }), { strictStyles: false, frameAncestors: ["'self'"] }).length, 'a weakened whole-website policy is caught');
   await page.route('**/site/**', async (route) => {
-    const res = await route.fetch(); const headers = { ...res.headers(), 'content-security-policy': csp };
+    const res = await route.fetch(); const headers = { ...res.headers(), 'content-security-policy': policyFor(route.request().url()) };
     await route.fulfill({ response: res, headers });
   });
   const violations = [];
@@ -37,9 +40,17 @@ const H = require('../../scripts/check-headers.js');
     assert(await page.isVisible('.edv-sample-bar'), slug + ': the sample bar shows under the policy');
     assert(await page.evaluate(() => document.querySelector('meta[name=robots]').content.includes('noindex')), slug + ': noindex');
   }
+  for (const name of ['yearbook', 'arena', 'roster']) {
+    for (const f of ['index', 'admin']) {
+      await page.goto(srv.url + '/site/examples/' + name + '/' + f + '.html'); await page.waitForLoadState('load'); await page.waitForTimeout(1500);
+      assert((await page.title()).length > 3, name + ' ' + f + ' has a title');
+    }
+    await page.goto(srv.url + '/site/examples/' + name + '/index.html'); await page.waitForTimeout(500);
+    assert(await page.isVisible('.edv-sample-bar'), name + ': the sample bar shows');
+  }
   assert.deepStrictEqual(violations, [], 'no policy violations: ' + violations.join(' | '));
   assert.deepStrictEqual(errors, []);
-  console.log('  ✓ six pages and six full sample pages work under the policy with zero violations');
+  console.log('  ✓ six pages, six sample pages and three whole websites (with their admin pages) work under their policies with zero violations');
   await browser.close(); srv.close && srv.close();
   console.log('CSP passed');
 })().catch(e => { console.error(e); process.exit(1); });
