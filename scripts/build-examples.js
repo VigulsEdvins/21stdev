@@ -51,6 +51,13 @@ function fixPolicy(html, label) {
   return out;
 }
 
+/**
+ * The three sites now share one web address, so their browser-storage and sync-channel names must not collide (arena and roster
+ * both used edv_site_data_v1 and friends, so an edit in one would have shown in the other). Each name gets the sample's own prefix.
+ */
+const SHARED_NAMES = /(['"])edv_((?:site_data|site_draft|custom_uploads|admin_mode|media_db|cms_sync_channel)[A-Za-z0-9_]*)\1/g;
+function namespaceStorage(js, name) { return js.replace(SHARED_NAMES, (m, q, rest) => q + 'edv_' + name + '_' + rest + q); }
+
 function siteFiles() {
   const out = {};
   for (const [name, dirName] of Object.entries(SITES)) {
@@ -82,7 +89,8 @@ function siteBuffers() {
       html = html.replace(/<\/head>/i, '  <link rel="stylesheet" href="../bar.css">\n</head>');
       if (/\/index\.html$/.test(file)) html = html.replace(/<\/body>/i, BAR + '\n</body>');
       out[file] = Buffer.from(html);
-    } else out[file] = fs.readFileSync(src);
+    } else if (/\.js$/.test(file) && !/\/assets\/vendor\//.test(file)) out[file] = Buffer.from(namespaceStorage(fs.readFileSync(src, 'utf8'), file.split('/')[0]));
+    else out[file] = fs.readFileSync(src);
   }
   return out;
 }
@@ -102,4 +110,4 @@ if (require.main === module) {
     console.log(`wrote ${Object.keys(want).length} files to site/examples/`);
   }
 }
-module.exports = { SLUGS, SITES, files, wrap, fixPolicy };
+module.exports = { SLUGS, SITES, files, wrap, fixPolicy, namespaceStorage };

@@ -10,9 +10,9 @@
 (function () {
   'use strict';
 
-  const STORAGE_KEY = 'edv_site_data_v1';
-  const DRAFT_STORAGE_KEY = 'edv_site_draft_v1';
-  const CHANNEL_NAME = 'edv_cms_sync_channel';
+  const STORAGE_KEY = 'edv_arena_site_data_v1';
+  const DRAFT_STORAGE_KEY = 'edv_arena_site_draft_v1';
+  const CHANNEL_NAME = 'edv_arena_cms_sync_channel';
 
   const RAW_MEDIA_LIBRARY = [
   {
@@ -886,7 +886,7 @@
 
     getCustomUploads() {
       try {
-        const raw = localStorage.getItem('edv_custom_uploads_v1');
+        const raw = localStorage.getItem('edv_arena_custom_uploads_v1');
         const list = raw ? JSON.parse(raw) : [];
         if (!Array.isArray(list)) return [];
         return list
@@ -920,7 +920,7 @@
           custom: true,
         };
         list.unshift(entry);
-        localStorage.setItem('edv_custom_uploads_v1', JSON.stringify(list));
+        localStorage.setItem('edv_arena_custom_uploads_v1', JSON.stringify(list));
         return entry;
       } catch (err) {
         console.warn('Could not store uploaded media (storage quota reached):', err);
@@ -935,7 +935,7 @@
     deleteCustomUpload(srcOrId) {
       try {
         const list = this.getCustomUploads().filter((item) => item.id !== srcOrId && item.src !== srcOrId);
-        localStorage.setItem('edv_custom_uploads_v1', JSON.stringify(list));
+        localStorage.setItem('edv_arena_custom_uploads_v1', JSON.stringify(list));
         return true;
       } catch (_) {
         return false;

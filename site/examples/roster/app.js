@@ -41,7 +41,7 @@
       const isVisible =
         params.has('admin') ||
         window.location.hash === '#admin' ||
-        localStorage.getItem('edv_admin_mode') === 'true';
+        localStorage.getItem('edv_roster_admin_mode') === 'true';
       if (adminBtn) {
         adminBtn.classList.toggle('is-visible', isVisible);
       }
@@ -51,8 +51,8 @@
     window.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
         e.preventDefault();
-        const current = localStorage.getItem('edv_admin_mode') === 'true';
-        localStorage.setItem('edv_admin_mode', String(!current));
+        const current = localStorage.getItem('edv_roster_admin_mode') === 'true';
+        localStorage.setItem('edv_roster_admin_mode', String(!current));
         syncAdminBtnVisibility();
       }
     });

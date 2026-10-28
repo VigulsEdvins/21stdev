@@ -10,10 +10,10 @@
 (function () {
   'use strict';
 
-  const STORAGE_KEY = 'edv_site_data_v1';
-  const DRAFT_STORAGE_KEY = 'edv_site_draft_v1';
-  const UPLOADS_STORAGE_KEY = 'edv_custom_uploads_v1';
-  const CHANNEL_NAME = 'edv_cms_sync_channel';
+  const STORAGE_KEY = 'edv_roster_site_data_v1';
+  const DRAFT_STORAGE_KEY = 'edv_roster_site_draft_v1';
+  const UPLOADS_STORAGE_KEY = 'edv_roster_custom_uploads_v1';
+  const CHANNEL_NAME = 'edv_roster_cms_sync_channel';
 
   const EDV_MEDIA_LIBRARY = [
   {
@@ -1240,7 +1240,7 @@
   /* ==========================================================================
      IndexedDB Storage Engine for Custom Media (Bypasses ~5MB localStorage quota)
      ========================================================================== */
-  const IDB_NAME = 'edv_media_db_v1';
+  const IDB_NAME = 'edv_roster_media_db_v1';
   const IDB_STORE = 'uploads';
   let idbInstance = null;
   let cachedUploads = null;
