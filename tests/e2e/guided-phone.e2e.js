@@ -45,6 +45,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert.strictEqual(w[0], w[1], 'no sideways scroll on a phone (' + w + ')');
   assert(await page.isVisible('#blockPicker') && !(await page.isVisible('.builder-viewport')), 'panel first, preview hidden');
   assert(await page.isVisible('#guidedAsk') && await page.isVisible('#guidedFlip'), 'help link and the flip button are there');
+  assert.strictEqual(await page.getAttribute('#guidedStep-look', 'aria-label'), 'Step 3: Look', 'step buttons keep a name when the labels are hidden');
   const box = await page.locator('.bp-btn.bp-add').first().boundingBox();
   assert(box.height >= 40 && box.width >= 40, 'touch targets are big enough');
   await page.click('#guidedFlip');

@@ -39,7 +39,7 @@
 
     const stepButtons = STEPS.map((s, i) => {
       const num = el(doc, 'span', { class: 'guided-num', 'aria-hidden': 'true', text: String(i + 1) });
-      const b = el(doc, 'button', { type: 'button', class: 'guided-step', id: 'guidedStep-' + s.id, 'data-step': String(i + 1) }, num, el(doc, 'span', { class: 'guided-label', text: s.label }));
+      const b = el(doc, 'button', { type: 'button', class: 'guided-step', id: 'guidedStep-' + s.id, 'data-step': String(i + 1), 'aria-label': 'Step ' + (i + 1) + ': ' + s.label }, num, el(doc, 'span', { class: 'guided-label', text: s.label }));
       b.addEventListener('click', () => go(i));
       return b;
     });
