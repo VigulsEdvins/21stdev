@@ -53,7 +53,7 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 ## Not built yet
 
 - The menu and footer link to the account page ("Sign in" / "Account"). "I will build it" on the questions page sends people to `/account/?from=start` when accounts are on, and after signing in on to `/builder/`.
-- The account page lists saved pages, shows the answers, changes the email and deletes the account. The migration `supabase/migrations/20261028180000_projects_and_delete_account.sql` (the `projects` table and the `delete_my_account()` function) must be applied to the real project first. Nothing saves a page into the account yet (plan E7.1); orders and downloads come with checkout (E8, E10.2).
+- The account page lists saved pages, shows the answers, changes the email and deletes the account. The migration `supabase/migrations/20261028180000_projects_and_delete_account.sql` (the `projects` table and the `delete_my_account()` function) was applied to the real project on 2026-10-28. Nothing saves a page into the account yet (plan E7.1); orders and downloads come with checkout (E8, E10.2).
 - Delete account and change email (plan E4.2, E12.5).
 - The terms and privacy text to agree to when creating an account (E12). Turnstile on the contact and question forms (the lead receiver already supports `TURNSTILE_SECRET`; the widget is not on those forms yet).
 
