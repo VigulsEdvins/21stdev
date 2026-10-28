@@ -82,6 +82,7 @@ function ownFiles() {
   walk(path.join(root, 'scripts'), n => n.endsWith('.js') && !/^check-|^\.tmp/.test(n));
   walk(path.join(root, 'site', 'js'), n => n.endsWith('.js'));
   walk(path.join(root, 'functions'), n => n.endsWith('.js'));
+  walk(path.join(root, 'src'), n => n.endsWith('.js'));
   return out;
 }
 

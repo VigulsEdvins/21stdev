@@ -100,6 +100,9 @@ const Q = require('../../site/js/questions.js');
   assert((await page.innerText('#c-err-phone')).includes('does not look like a phone number'));
   assert.strictEqual(await page.innerText('#c-err-email'), '', 'no email message when the email is empty and the phone is the problem');
   await page.fill('#c-phone', '+371 20000000');
+  // the page carries the address of the lead receiver; take it away to test the "sending is off" wording
+  assert.strictEqual(await page.getAttribute('meta[name="lead-endpoint"]', 'content'), '/api/lead', 'the page points at the lead receiver');
+  await page.evaluate(() => document.querySelector('meta[name="lead-endpoint"]').remove());
   await page.getByRole('button', { name: 'Send my answers' }).click();
   await page.waitForSelector('text=Nothing has left your browser');
   assert(page.url().endsWith('#thanks'));

@@ -71,6 +71,8 @@ const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/'];
   assert.strictEqual(await page.innerText('#k-err-phone'), '', 'the phone box carries no email message');
   await page.fill('#k-phone', 'abc'); await page.click('button[type=submit]');
   assert((await page.innerText('#k-err-email')).includes('does not look like an email') && (await page.innerText('#k-err-phone')).includes('does not look like a phone number'), 'both problems are named, each under its own box');
+  assert.strictEqual(await page.getAttribute('meta[name="lead-endpoint"]', 'content'), '/api/lead', 'the contact page points at the lead receiver');
+  await page.evaluate(() => document.querySelector('meta[name="lead-endpoint"]').remove()); // test the "sending is off" wording first
   await page.fill('#k-email', ''); await page.fill('#k-phone', '+371 20000000'); await page.click('button[type=submit]');
   await page.waitForSelector('text=Nothing has left your browser');
   // with an endpoint, the lead is posted as a "talk" lead with the honeypot empty

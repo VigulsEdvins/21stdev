@@ -1,11 +1,14 @@
 {
-  // Cloudflare deploy: publish only the public site (site/), never the repository root with node_modules.
-  // site/_headers (security headers) and site/404.html are picked up from that folder.
-  // The lead intake in functions/ uses the Pages Functions layout and is not part of this static deploy yet (docs/deploy/lead-intake.md).
+  // Cloudflare deploy: the public site (site/) as static assets, plus a small Worker (src/worker.js) that receives leads at /api/lead.
+  // Never publish the repository root (it holds node_modules). site/_headers (security headers) and site/404.html are read from site/.
+  // Settings are added in the Cloudflare dashboard, not here: LEAD_TO_EMAIL, LEAD_FROM_EMAIL, RESEND_API_KEY (secret); optional KV binding LEADS, TURNSTILE_SECRET.
   "name": "21stdev",
+  "main": "src/worker.js",
   "compatibility_date": "2026-10-28",
   "assets": {
     "directory": "./site",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
   }
 }

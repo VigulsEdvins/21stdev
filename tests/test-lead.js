@@ -77,8 +77,8 @@ const deps = (o) => Object.assign({ to: 'owner@test.invalid', from: 'site@test.i
 (async () => {
   const vm = require('vm');
   const src = fs.readFileSync(path.join(__dirname, '..', 'functions', 'api', 'lead.js'), 'utf8')
-    .replace("import lead from '../lib/lead.js';", "const lead = require('../lib/lead.js');")
-    .replace('export async function onRequestPost', 'async function onRequestPost').replace('export const onRequest ', 'const onRequest ') + '\n;({ onRequestPost, onRequest })';
+    .replace("import http from '../lib/lead-http.js';", "const http = require('../lib/lead-http.js');")
+    .replace('export const onRequestPost', 'const onRequestPost').replace('export const onRequest ', 'const onRequest ') + '\n;({ onRequestPost, onRequest })';
   const fns = vm.runInNewContext(src, { require: (p) => require(path.join(__dirname, '..', 'functions', 'api', p)), Response, URL, URLSearchParams, JSON, fetch: async () => { throw new Error('no network in tests'); } });
   const env = { LEAD_TO_EMAIL: 'o@t.invalid', LEAD_FROM_EMAIL: 'f@t.invalid', RESEND_API_KEY: 'k' };
   const req = (o = {}) => new Request('https://edvlabs.test/api/lead', { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json', Origin: 'https://edvlabs.test' }, o.headers), body: o.body === undefined ? '{}' : o.body });
