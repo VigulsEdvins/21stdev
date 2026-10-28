@@ -33,6 +33,14 @@ const { start } = require('../lib/fake-supabase.js');
   await page.waitForSelector('#a-out:not([hidden])');
   assert(await vis('#b-google') && await vis('#b-github') && await vis('#f-pass'), 'Google, GitHub and the email form are there');
   assert(!(await vis('#p-pass2')), 'no repeat box when signing in');
+  for (const id of ['b-google', 'b-github']) {
+    const logo = await page.$eval('#' + id + ' svg.brand-logo', (e) => ({ hidden: e.getAttribute('aria-hidden'), w: e.getBoundingClientRect().width, h: e.getBoundingClientRect().height, style: e.hasAttribute('style') }));
+    assert(logo.hidden === 'true' && logo.w >= 18 && logo.h >= 18 && !logo.style, id + ' has its logo, hidden from screen readers, visible, and no inline style');
+    const name = await page.$eval('#' + id, (e) => e.textContent.trim()); assert(/^Continue with (Google|GitHub)$/.test(name), 'the words stay: ' + name);
+  }
+  assert.strictEqual(await page.$$eval('#b-google svg path', (p) => p.map((x) => x.getAttribute('fill')).join(',')), '#EA4335,#4285F4,#FBBC05,#34A853', 'the Google G keeps its four brand colours');
+  assert.strictEqual(await page.$eval('#b-github svg', (e) => e.getAttribute('fill')), 'currentColor', 'the GitHub mark follows the text colour');
+  console.log('  ✓ Google and GitHub buttons carry their logos next to the words');
 
   // 2. each problem under its own box
   await page.click('#p-go');

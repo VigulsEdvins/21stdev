@@ -28,3 +28,7 @@ The three whole-website samples (`yearbook`, `arena`, `roster`) are copies of th
 
 The yearbook has no library files. Google Fonts links in the arena page are removed by the build (no requests to Google; the page uses its own fallback fonts). Fonts under `roster/assets/fonts/` and images, audio and SVG in the three folders are the owner's own.
 
+## Logos on the sign-in buttons (2026-10-28)
+
+`site/account/index.html` carries two inline SVG marks on "Continue with Google" and "Continue with GitHub". The Google "G" is Google's own four-colour mark, used as Google's sign-in branding guidelines allow for a sign-in button next to the words "Continue with Google"; keep its colours and do not change the shape. The GitHub mark is the Octicons `mark-github` icon (MIT licence, GitHub), used as GitHub's logo guidelines allow for sign-in with GitHub. Both are inline (no request to either company, so the strict policy is unchanged) and hidden from screen readers because the words next to them say the same thing. If the buttons are restyled, check the current Google and GitHub brand pages first.
+
