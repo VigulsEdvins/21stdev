@@ -9,3 +9,6 @@ node_modules/
 ruvector.db
 reports/
 agentdb.rvf*
+
+# local settings for npm run dev:site (private values)
+.dev.vars

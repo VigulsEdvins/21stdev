@@ -40,3 +40,18 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 
 Open `https://edvlabs.com/api/config` in a browser. It answers with the names of the settings the running Worker cannot see, for example `{"missing":["SUPABASE_URL","SUPABASE_ANON_KEY"]}` (the same works for `/api/lead`, which lists the lead settings). The usual causes: the variables were added under Build instead of the Worker's Variables and Secrets; a name has a typo or a stray space; or a deploy removed plain variables (`wrangler.jsonc` now has `keep_vars: true` to prevent that; adding them as **Secrets** also makes them survive). After changing variables, redeploy and reload. Browsers keep styles and scripts only until they check with the server (`site/_headers`), so a stale page after a deploy fixes itself on reload.
 
+## Test it on your own computer
+
+```bash
+cp .dev.vars.example .dev.vars      # then open .dev.vars and fill in the values (git ignores this file)
+npm run dev:site                    # http://localhost:4173/  (PORT=... to change)
+```
+
+`scripts/dev-site.js` serves `site/` with the headers from `site/_headers` (so a policy mistake shows up here, not only live) and answers `/api/config` and `/api/lead` with the same code as the live Worker. It prints which settings it found. Open `http://localhost:4173/account/` to try Google, GitHub and email sign-in for real.
+
+- Supabase must allow the address: Authentication → URL Configuration → Redirect URLs must include `http://localhost:4173/**` (and the port you use, if you change it).
+- Google and GitHub need nothing extra: their callback goes to Supabase, which then returns to localhost.
+- Fill the three lead settings only if you want the contact form to send a real email from your computer. Leave them empty to see how the form behaves unconfigured.
+- `.dev.vars` is never committed. Do not paste its contents into chat.
+- Tests that need no real accounts: `npm run test:auth` and `node tests/e2e/account.e2e.js` use the pretend Supabase.
+

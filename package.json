@@ -64,7 +64,8 @@
     "test:guidedbrief": "node tests/test-guided-brief.js",
     "test:leadhttp": "node tests/test-lead-http.js",
     "test:auth": "node tests/test-auth.js",
-    "check-examples": "node scripts/build-examples.js --check"
+    "check-examples": "node scripts/build-examples.js --check",
+    "dev:site": "node scripts/dev-site.js"
   },
   "keywords": [],
   "author": "",

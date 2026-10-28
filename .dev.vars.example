@@ -1,0 +1,11 @@
+# Copy this file to .dev.vars (git ignores that one) and fill in what you want to test. The names are the same as on Cloudflare.
+# Never put real values in THIS example file, and never commit .dev.vars.
+
+# Accounts (the sign-in page at /account/). Both are public values from Supabase: Project Settings -> API Keys.
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+
+# Lead email (the question flow and the contact form). With all three filled, a form you submit here REALLY sends an email.
+LEAD_TO_EMAIL=
+LEAD_FROM_EMAIL=
+RESEND_API_KEY=
