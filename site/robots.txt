@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /style/
+
+Sitemap: https://edvlabs.com/sitemap.xml

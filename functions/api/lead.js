@@ -21,7 +21,7 @@ export async function onRequestPost({ request, env }) {
   const ip = request.headers.get('CF-Connecting-IP') || '';
   if (env.TURNSTILE_SECRET && !(await turnstileOk(body && body.turnstile, env.TURNSTILE_SECRET, ip))) return json(403, { ok: false, errors: ['The spam check failed. Please try again.'] });
   const store = env.LEADS ? { get: (k) => env.LEADS.get(k), put: (k, v, o) => env.LEADS.put(k, v, { expirationTtl: Math.max(60, o.ttl) }) } : null;
-  const r = await handle({ body, ip, honeypot: body && body.website }, { mailer: resendMailer(env.RESEND_API_KEY), store, to: env.LEAD_TO_EMAIL, from: env.LEAD_FROM_EMAIL });
+  const r = await handle({ body, ip, honeypot: body && body.website }, { mailer: resendMailer(env.RESEND_API_KEY), store, to: env.LEAD_TO_EMAIL, from: env.LEAD_FROM_EMAIL, ack: env.LEAD_ACK === '1' });
   return json(r.status, r.json);
 }
 export const onRequest = () => json(405, { ok: false, errors: ['Use POST.'] }); // any method except POST

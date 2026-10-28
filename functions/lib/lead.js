@@ -35,6 +35,8 @@ function parse(body) {
 /** One stable key per person: the email if there is one, else the phone number. */
 const dedupeKey = (l) => (l.email ? 'e:' + l.email : 'p:' + l.phone);
 
+const hasAnswersOf = (l) => Object.keys(l.brief.answers || {}).length > 0;
+
 /** The price shown to the owner, always recomputed here from the answers and the one price table. */
 function quote(brief) {
   const blocks = Q.blockCount(brief.answers), editor = Q.wantsEditor(brief.answers);
@@ -45,9 +47,10 @@ function quote(brief) {
 
 /** Email text. The contact is in the subject line; answers are grouped, and “I don’t know yet” goes under “To discuss”. */
 function renderEmail(lead, repeat) {
+  const hasAnswers = Object.keys(lead.brief.answers || {}).length > 0;
   const q = quote(lead.brief);
   const contact = lead.name || lead.email || lead.phone;
-  const subject = clean(`${repeat ? 'Again: ' : 'New lead: '}${contact} (${lead.email || lead.phone}) · ${PATH_LABEL[lead.path] || lead.path} · about ${Prices.eur(lead.path === 'self' ? q.self : q.done)}`, 200);
+  const subject = clean(`${repeat ? 'Again: ' : 'New lead: '}${contact} (${lead.email || lead.phone}) · ${PATH_LABEL[lead.path] || lead.path}${hasAnswers ? ' · about ' + Prices.eur(lead.path === 'self' ? q.self : q.done) : ''}`, 200);
   const rows = Brief.readable(lead.brief);
   const part = (state) => rows.filter((r) => r.state === state);
   const line = (r) => `- ${r.question}\n  ${r.text}${r.note ? '\n  Note: ' + r.note : ''}`;
@@ -55,11 +58,11 @@ function renderEmail(lead, repeat) {
     `${PATH_LABEL[lead.path] || lead.path}${repeat ? ' (this person has written before)' : ''}`, '',
     'CONTACT', lead.name ? `Name: ${lead.name}` : null, lead.email ? `Email: ${lead.email}` : null, lead.phone ? `Phone: ${lead.phone}` : null,
     lead.how ? `Prefers: ${lead.how}` : null, '',
-    'PRICE', `${q.blocks} blocks${q.guessedBlocks ? ' (assumed: they did not choose)' : ''}${q.editor ? ', with the editor' : ''}`,
+    ...(hasAnswers ? ['PRICE', `${q.blocks} blocks${q.guessedBlocks ? ' (assumed: they did not choose)' : ''}${q.editor ? ', with the editor' : ''}`,
     `Build it themselves: ${Prices.eur(q.self)}`, `If we do it: ${Prices.eur(q.done)}`, '',
     'ANSWERED', ...part('answered').map(line), '',
     'TO DISCUSS (they said “I don’t know yet”)', ...part('unknown').map((r) => `- ${r.question}`), '',
-    'SKIPPED', ...part('skipped').map((r) => `- ${r.question}`), '',
+    'SKIPPED', ...part('skipped').map((r) => `- ${r.question}`), ''] : []),
     lead.message ? 'MESSAGE\n' + lead.message + '\n' : null,
     `They agreed: “${lead.consent.text || 'It is fine to contact me about this page.'}” at ${lead.consent.at}`
   ].filter((x) => x !== null);
@@ -90,6 +93,10 @@ async function handle(request, deps) {
   try { await deps.mailer.send({ to: deps.to, from: deps.from, subject: mail.subject, text: mail.text, replyTo: lead.email || undefined }); }
   catch (e) { return { status: 502, json: { ok: false, errors: ['We could not send that just now. Please try again in a minute.'] } }; }
   if (deps.store) await deps.store.put('lead:' + key, now.toISOString(), { ttl: 60 * 60 * 24 * 90 });
+  // an automatic acknowledgement to the sender, only when switched on (deps.ack) and only to an email address they gave
+  if (deps.ack && lead.email) {
+    try { await deps.mailer.send({ to: lead.email, from: deps.from, subject: 'We have your message', text: 'Thank you. We have your message' + (hasAnswersOf(lead) ? ' and your answers' : '') + ' and will get in touch. If you did not write to us, you can ignore this email.' }); } catch (e) { /* the lead is already with the owner */ }
+  }
   return { status: 200, json: { ok: true, repeat } };
 }
 

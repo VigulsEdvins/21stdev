@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prices · edvlabs</title>
+<meta name="description" content="A base price, a small price for each extra block and an optional editor. Work out your own price here.">
+<link rel="canonical" href="https://edvlabs.com/pricing/">
+<meta property="og:title" content="Prices · edvlabs"><meta property="og:description" content="A base price, a small price for each extra block and an optional editor. Work out your own price here."><meta property="og:type" content="website"><meta property="og:url" content="https://edvlabs.com/pricing/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Ccircle cx=%2717%27 cy=%2717%27 r=%2717%27 fill=%27%23e2a627%27/%3E%3Cpath d=%27M0 17a17 17 0 0 0 34 0z%27 fill=%27%23c4522a%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../site.css">
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="wrap"><header class="site-header">
+  <a class="logo" href="../"><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="17" fill="#e2a627"/><path d="M0 17a17 17 0 0 0 34 0z" fill="#c4522a"/></svg>edvlabs</a>
+  <nav class="nav" aria-label="Main"><a href="../how-it-works/">How it works</a><a href="../pricing/" aria-current="page">Prices</a><a href="../faq/">Questions</a><a href="../contact/">Contact</a></nav>
+  <a class="btn btn--small" href="../start/">Start your page</a>
+</header></div>
+<main id="main">
+
+<div class="wrap page-head"><span class="kicker">Prices</span><h1>A base price, a small price per block, an optional editor.</h1><p class="lead">Your page costs the base price and includes <span data-price="included">3</span> blocks. Each extra block is <span data-price="extra">€9</span>. The editor, to change the words yourself later, is <span data-price="editor">€39</span>.</p></div>
+<section class="wrap sec sec--flush"><h2 class="h2">Work out your price</h2>
+<div class="calc">
+  <form class="stack" novalidate>
+    <div class="field"><label for="calc-blocks">How many blocks?</label><span class="hint">Between 1 and 30.</span><input class="input" id="calc-blocks" type="number" inputmode="numeric" min="1" max="30" value="5"></div>
+    <label class="choice"><input type="checkbox" id="calc-editor"> Add the editor, to change the words later</label>
+  </form>
+  <div class="results" role="status" aria-live="polite">
+    <div class="receipt" aria-label="Build it yourself"><div><span>Base, <span id="calc-incl">3</span> blocks included</span><span id="calc-base">€39</span></div><div><span><span id="calc-extra-n">2</span> extra blocks</span><span id="calc-extra">€18</span></div><div><span>Editor</span><span id="calc-ed">not chosen</span></div><div class="sum"><span>You build it</span><span id="calc-self">€57</span></div></div>
+    <div class="price-panel"><span>If we build it, from</span><b id="calc-done">€382</b><span class="small" id="calc-done-why">the price above, plus the set-up and our work on each block</span></div>
+  </div>
+</div></section>
+<section class="wrap sec"><h2 class="h2">Three examples</h2>
+<table class="table"><caption class="visually-hidden">Three example pages and what each costs</caption><thead><tr><th scope="col">The page</th><th scope="col" class="num">You build it</th><th scope="col" class="num">We build it, from</th></tr></thead><tbody>
+<tr><td>Small: 3 blocks</td><td class="num"><span data-price="self" data-blocks="3" data-editor="0">€0</span></td><td class="num"><span data-price="done" data-blocks="3" data-editor="0">€0</span></td></tr><tr><td>Medium: 7 blocks, with the editor</td><td class="num"><span data-price="self" data-blocks="7" data-editor="1">€0</span></td><td class="num"><span data-price="done" data-blocks="7" data-editor="1">€0</span></td></tr><tr><td>Large: 12 blocks, with the editor</td><td class="num"><span data-price="self" data-blocks="12" data-editor="1">€0</span></td><td class="num"><span data-price="done" data-blocks="12" data-editor="1">€0</span></td></tr>
+</tbody></table>
+<p class="small muted mt-5">If we build it, the price is the one you build it for, plus <span data-price="setup">€150</span> to set up and <span data-price="perblock">€35</span> for each block. We agree it with you before we start. Prices are in euros. A domain name and hosting are not included.</p>
+<div class="btn-row mt-5"><a class="btn" href="../start/">Start your page</a><a class="btn btn--secondary" href="../faq/">Read the questions</a></div></section>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-row"><a class="logo logo--on-ink" href="../">edvlabs</a><nav aria-label="Footer" class="foot-links"><a href="../how-it-works/">How it works</a><a href="../pricing/">Prices</a><a href="../faq/">Questions</a><a href="../contact/">Contact</a><a href="../start/">Start your page</a></nav></div><small>edvlabs · Latvia</small></div></footer>
+<script src="../js/prices.js"></script><script src="../js/price-fill.js"></script><script src="../js/calculator.js"></script>
+</body>
+</html>
