@@ -105,6 +105,14 @@ const codeOf = (link) => new URL(link).searchParams.get('code');
   for (const m of ['invalid_credentials', 'weak_password', 'user_already_exists', 'email_not_confirmed']) assert(!/_/.test(A.friendly(400, { error_code: m }).message), 'no codes in messages');
   console.log('  ✓ service down and rate limits give plain messages, never raw codes');
 
+  // the public key is sent as apikey only; Authorization appears only with a person's own token (works for both anon and sb_publishable_ keys)
+  const seen = [];
+  const spy = A.createAuth({ url: fake.url, anonKey: fake.anonKey, storage: mem(), tempStorage: mem(), origin: 'https://edvlabs.test', fetchImpl: (u, i) => { seen.push({ u, h: i.headers }); return fetch(u, i); } });
+  await spy.signIn('anna@example.com', 'a brand new pass 9'); await spy.current();
+  assert(seen[0].u.includes('grant_type=password') && seen[0].h.apikey === fake.anonKey && !('Authorization' in seen[0].h), 'anonymous calls send the key as apikey only');
+  const userCalls = seen.filter((c) => /\/auth\/v1\/user$/.test(c.u)); assert(userCalls.length === 1 && /^Bearer access-/.test(userCalls[0].h.Authorization) && userCalls[0].h.Authorization !== 'Bearer ' + fake.anonKey, 'the signed-in call carries the person\'s own token');
+  console.log('  ✓ the public key goes in apikey only, so both key styles work');
+
   await fake.close();
   console.log('auth ok');
 })().catch((e) => { console.error(e); process.exit(1); });

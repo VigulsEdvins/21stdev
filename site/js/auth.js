@@ -41,7 +41,8 @@
     const store = deps.storage, temp = deps.tempStorage;
     const now = deps.now || (() => Math.floor(Date.now() / 1000));
     const origin = deps.origin;
-    const headers = (token) => ({ 'Content-Type': 'application/json', apikey: deps.anonKey, Authorization: 'Bearer ' + (token || deps.anonKey) });
+    // The public key goes in `apikey`. `Authorization` carries only a signed-in person's own token: the newer sb_publishable_ keys are not tokens and must not be sent there.
+    const headers = (token) => Object.assign({ 'Content-Type': 'application/json', apikey: deps.anonKey }, token ? { Authorization: 'Bearer ' + token } : {});
     const read = (s, k) => { try { return JSON.parse(s.getItem(k)); } catch (_) { return null; } };
     const write = (s, k, v) => { try { s.setItem(k, JSON.stringify(v)); } catch (_) { /* private window: the session lasts until the page closes */ } };
     const drop = (s, k) => { try { s.removeItem(k); } catch (_) { /* nothing to drop */ } };
