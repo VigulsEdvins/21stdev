@@ -48,12 +48,12 @@ Local storage: every key and what reads it was listed. Settings keys (`web_build
 
 `npm run security:static` runs ESLint (`eslint.config.js`) with `eslint-plugin-no-unsanitized` (`innerHTML`, `insertAdjacentHTML` and similar with input that is not constant or escaped), `eslint-plugin-security` (unsafe and non-literal regular expressions, `child_process`, unsafe buffers; file names built from input only in the servers) and the core rules against `eval`, `new Function`, string timers and `javascript:` addresses. It covers `builder.js`, `app.js`, `scripts/`, `site/js/`, `functions/` and `src/`; library components in `features/` are covered by `check-code-safety`. It runs in about 3 seconds and is part of `npm run security` and the CI `security` job.
 
-**Baseline.** `eslint-suppressions.json` holds the findings that were looked at on the first run (135). CI fails on any finding not in that file. Fixing one is welcome (the stale entry is ignored; `npx eslint . --prune-suppressions` removes it). Never run `--suppress-all` to make a new finding go away: put the reason here first.
+**Baseline.** `eslint-suppressions.json` holds the findings that were looked at on the first run (109). CI fails on any finding not in that file. Fixing one is welcome (the stale entry is ignored; `npx eslint . --prune-suppressions` removes it). Never run `--suppress-all` to make a new finding go away: put the reason here first.
 
 | Group (count) | Verdict |
 |---|---|
 | `innerHTML` / `insertAdjacentHTML` (34) | Accepted. Every site already has a verdict in `docs/security/innerhtml-verdicts.json` (`npm run check-innerhtml`); the analyser cannot see that a value is escaped, so these stay in the baseline. A new site fails both checks. |
-| File names from a request (`scripts/serve.js`, `scripts/dev-site.js`, 90) | Accepted. Both servers resolve the path inside their folder first (path guard, tested in `tests/test-dev-site.js`); they serve a developer's machine and are not deployed. |
+| File names from a request (`scripts/serve.js`, `scripts/dev-site.js`, 40) | Accepted. Both servers resolve the path inside their folder first (path guard, tested in `tests/test-dev-site.js`); they serve a developer's machine and are not deployed. |
 | Regular expressions flagged unsafe (26) | Checked one by one, then timed on 200,000-character hostile input: all finish in under 10 ms (anchored, bounded repeats, or a group that must start with a fixed character). They only look dangerous to the analyser. |
 | Regular expressions built from variables (9) | Accepted. The variable is a fixed word list or an escaped library name, never visitor text. |
 | **Fixed: script-source pattern** | `[^>]*` in the pattern that lists the hosts a section's `<script src>` loads (`scripts/assembler.js`, `scripts/check-code-safety.js`) was quadratic: 25,000 repeated `<script ` took 5 seconds. Now bounded (`[^>]{0,500}`), 65 ms. Its input is library section HTML, not customer text. |
