@@ -122,10 +122,10 @@ const codeOf = (link) => new URL(link).searchParams.get('code');
 
   // the emailed code: wrong code, right code, only digits, per-kind
   let mails2 = await outbox(fake); const dora = mails2.filter((m) => m.to === 'dora@example.com').pop();
-  assert(/^\d{6}$/.test(dora.code), 'the email carries a 6-digit code');
+  assert(/^\d{8}$/.test(dora.code), 'the email carries a code');
   r = await mine.auth.verifyCode('dora@example.com', 'abc123', 'signup'); assert(!r.ok && r.field === 'code' && /digits only/.test(r.message));
-  r = await mine.auth.verifyCode('dora@example.com', dora.code === '111111' ? '222222' : '111111', 'signup'); assert(!r.ok && r.field === 'code' && /wrong or has expired/.test(r.message) && !/otp/i.test(r.message), r.message);
-  r = await mine.auth.verifyCode('dora@example.com', ' ' + dora.code.slice(0, 3) + ' ' + dora.code.slice(3) + ' ', 'signup'); assert(r.ok && r.kind === 'signup' && r.session.user.email === 'dora@example.com', 'spaces in a pasted code are ignored');
+  r = await mine.auth.verifyCode('dora@example.com', dora.code === '11111111' ? '22222222' : '11111111', 'signup'); assert(!r.ok && r.field === 'code' && /wrong or has expired/.test(r.message) && !/otp/i.test(r.message), r.message);
+  r = await mine.auth.verifyCode('dora@example.com', ' ' + dora.code.slice(0, 4) + ' ' + dora.code.slice(4) + ' ', 'signup'); assert(r.ok && r.kind === 'signup' && r.session.user.email === 'dora@example.com', 'spaces in a pasted code are ignored');
   assert((await mine.auth.current()).email === 'dora@example.com');
   r = await mine.auth.verifyCode('dora@example.com', dora.code, 'signup'); assert(!r.ok, 'a code works once');
   r = await mine.auth.verifyCode('dora@example.com', dora.code, 'nonsense'); assert(!r.ok);

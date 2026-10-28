@@ -84,7 +84,7 @@
   /** The "type the code from the email" step. kind: 'signup', 'link' or 'recovery'. */
   function showCode(email, kind) {
     pending = { email, kind }; lastSent = Date.now(); clearErrors(); $('c-code').value = '';
-    $('c-intro').textContent = 'We sent a 6-digit code to ' + email + '. Type it here, or press the link in the same email. It can take a minute to arrive; look in your spam folder too.';
+    $('c-intro').textContent = 'We sent a code to ' + email + '. Type it here, or press the link in the same email. It can take a minute to arrive; look in your spam folder too.';
     $('c-note').hidden = kind !== 'signup'; // the service says nothing about whether an address is registered, so the page tells the person what to do if no email comes
     title('Check your email.', 'One more step.'); view('f-code'); captcha.mount('c-captcha'); $('c-code').focus();
   }

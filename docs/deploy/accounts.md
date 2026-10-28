@@ -28,7 +28,7 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 <p>Or press this link on the same device: <a href="{{ .ConfirmationURL }}">Continue</a></p>
 <p>If you did not ask for this, you can ignore this email.</p>
 ```
-- In **Authentication → Sign In / Providers → Email** the code length is 6 by default (the page accepts 6 to 10 digits) and it expires after an hour by default. Keep "Confirm email" on.
+- In **Authentication → Sign In / Providers → Email** the code length is 8 digits by default (the page accepts 6 to 10 digits, so changing it needs no change here) and it expires after an hour by default. Keep "Confirm email" on.
 - Until custom SMTP is set (see above) Supabase's own sender is limited to a few emails an hour, which is enough for testing and not for launch.
 
 **2. Turn on the spam check (Cloudflare Turnstile), optional but recommended before launch.**

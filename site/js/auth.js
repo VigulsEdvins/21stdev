@@ -113,7 +113,7 @@
         const r = await call('POST', '/auth/v1/recover?redirect_to=' + back(), Object.assign({ email, code_challenge: p.challenge, code_challenge_method: p.method }, sec(opts.captchaToken)));
         return r.ok ? { ok: true } : r; // the answer does not say whether the address has an account
       },
-      /** The 6-digit code from the email, typed by hand. kind: 'signup' (new account), 'link' (emailed sign-in) or 'recovery' (forgot password).
+      /** The code from the email (8 digits by default, 6 to 10 allowed), typed by hand. kind: 'signup' (new account), 'link' (emailed sign-in) or 'recovery' (forgot password).
           Works on any device, so it also covers an email opened on a phone. */
       async verifyCode(email, code, kind) {
         const token = String(code || '').replace(/\s+/g, '');

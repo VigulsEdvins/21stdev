@@ -24,8 +24,8 @@ function start(opts = {}) {
   }
   // a one-time code tied to the PKCE challenge the browser sent
   function issueCode(email, challenge) { const code = 'code-' + id(); state.codes.set(code, { email, challenge }); return code; }
-  // a 6-digit code per person and kind, like the real service (signup, email = emailed sign-in, recovery)
-  function issueOtp(email, type) { const code = String(Math.floor(100000 + Math.random() * 900000)); state.otps.set(email + '|' + type, code); return code; }
+  // an 8-digit code per person and kind, like the real service does by default (signup, email = emailed sign-in, recovery); the length can be 6 to 10
+  function issueOtp(email, type) { const code = String(Math.floor(10000000 + Math.random() * 90000000)); state.otps.set(email + '|' + type, code); return code; }
   const captchaBad = (body) => state.requireCaptcha && !(body.gotrue_meta_security && body.gotrue_meta_security.captcha_token === state.captchaToken);
   const upsert = (email, provider, password, confirmed) => { let u = state.users.get(email); if (!u) { u = { id: id(), email, provider, password, confirmed: !!confirmed }; state.users.set(email, u); } return u; };
 

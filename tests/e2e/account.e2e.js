@@ -51,15 +51,15 @@ const { start } = require('../lib/fake-supabase.js');
   assert.strictEqual(await page.evaluate(() => document.activeElement.id), 'p-pass2');
   await page.fill('#p-pass2', 'correct horse 1'); await page.click('#p-go');
   await page.waitForSelector('#f-code:not([hidden])');
-  assert(/anna@example\.com/.test(await page.textContent('#c-intro')) && /6-digit code/.test(await page.textContent('#c-intro')), 'asks for the code and names the address');
+  assert(/anna@example\.com/.test(await page.textContent('#c-intro')) && / code to /.test(await page.textContent('#c-intro')), 'asks for the code and names the address');
   assert(await vis('#c-note') && /already has an account/.test(await page.textContent('#c-note')), 'after creating an account the page explains why no email arrives for an address that is already registered');
   assert.strictEqual(await page.getAttribute('#c-code', 'autocomplete'), 'one-time-code'); assert.strictEqual(await page.getAttribute('#c-code', 'inputmode'), 'numeric');
   assert(!(await vis('#a-in')), 'not signed in before the address is confirmed');
-  const mail = await lastMail('anna@example.com'); assert(/^\d{6}$/.test(mail.code));
+  const mail = await lastMail('anna@example.com'); assert(/^\d{8}$/.test(mail.code));
   await page.fill('#c-code', 'abcdef'); await page.click('#c-go'); await waitText('#c-code-err', /digits only/);
-  await page.fill('#c-code', mail.code === '123456' ? '654321' : '123456'); await page.click('#c-go'); await waitText('#c-code-err', /wrong or has expired/);
+  await page.fill('#c-code', mail.code === '12345678' ? '87654321' : '12345678'); await page.click('#c-go'); await waitText('#c-code-err', /wrong or has expired/);
   assert(!/otp/i.test(await page.textContent('#c-code-err')), 'no codes in the message');
-  await page.fill('#c-code', mail.code.slice(0, 3) + ' ' + mail.code.slice(3)); await page.click('#c-go'); // a code pasted with a space still works
+  await page.fill('#c-code', mail.code.slice(0, 4) + ' ' + mail.code.slice(4)); await page.click('#c-go'); // a code pasted with a space still works
   await page.waitForSelector('#a-in:not([hidden])');
   assert.strictEqual(await page.textContent('#i-who'), 'anna@example.com'); assert(/email address/.test(await page.textContent('#i-how')) && await vis('#b-newpass'));
   console.log('  ✓ create account: repeat password, emailed code (wrong codes explained), signed in');
