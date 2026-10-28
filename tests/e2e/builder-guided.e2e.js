@@ -37,12 +37,10 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   console.log('  ✓ Next, Back and a direct click move between steps and show the right pane');
 
   await page.click('#guidedStep-get');
-  assert(await page.evaluate(() => { const m = document.querySelector('#exportModal, .export-modal, [aria-labelledby*="xport"]'); return !!m; }), 'export window exists');
-  await page.waitForTimeout(300);
-  assert(await page.locator('#tabZip').isVisible(), 'step 5 opens the download window');
+  assert(await page.locator('#paneGet').isVisible(), 'step 5 shows the Get it panel');
   assert(!(await page.locator('#guidedNext').isVisible()), 'no Next on the last step');
-  await page.keyboard.press('Escape');
-  console.log('  ✓ step 5 opens the download window');
+  assert(await page.locator('#guidedAsk').isVisible(), 'Ask edvlabs is in the step bar');
+  console.log('  ✓ step 5 shows the price panel; Ask edvlabs is in the bar');
 
   // advanced switch: classic tools return, the choice survives a reload
   await page.click('.guided-switch');
