@@ -120,13 +120,14 @@
      round trip through Google or GitHub (which comes back without the query); once signed in they go on to the builder, once. */
   const BUILDER_URL = '/builder/', INTENT_KEY = 'edvlabs.after_login';
   const store = () => { try { return window.localStorage; } catch (_) { return null; } };
-  const fromStart = new URLSearchParams(window.location.search).get('from') === 'start';
+  const from = new URLSearchParams(window.location.search).get('from');
+  const fromStart = from === 'start' || from === 'builder'; // sent here by "I will build it" on the questions page, or by a locked block in the builder; either way on to the builder after signing in
   if (fromStart) { const st = store(); if (st) { try { st.setItem(INTENT_KEY, 'builder'); } catch (_) { /* storage blocked: they can still open the builder by hand */ } } }
   function takeBuilderIntent() {
     const st = store(); if (!st) return false;
     try { if (st.getItem(INTENT_KEY) !== 'builder') return false; st.removeItem(INTENT_KEY); return true; } catch (_) { return false; }
   }
-  function showSignedOut() { title(fromStart ? 'Sign in to build your page.' : 'Sign in or create an account.', fromStart ? 'We save your answers to your account, so you can carry on from any device. Use Google, GitHub or your email address.' : 'Use Google, GitHub or your email address.'); view('a-out'); setMode('in'); showPass(); }
+  function showSignedOut() { title(from === 'builder' ? 'Sign in to unlock every block.' : fromStart ? 'Sign in to build your page.' : 'Sign in or create an account.', from === 'builder' ? 'A free account unlocks every block. Your page stays as it is. Use Google, GitHub or your email address.' : fromStart ? 'We save your answers to your account, so you can carry on from any device. Use Google, GitHub or your email address.' : 'Use Google, GitHub or your email address.'); view('a-out'); setMode('in'); showPass(); }
 
   function setMode(m) {
     mode = m;

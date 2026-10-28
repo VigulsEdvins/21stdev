@@ -2,6 +2,7 @@
   "name": "Storyline Timeline",
   "title": "Storyline Timeline",
   "slug": "storyline-timeline",
+  "access": "free",
   "category": "Scroll & Parallax",
   "source": "edvlabs",
   "type": "component",

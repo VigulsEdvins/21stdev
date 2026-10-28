@@ -2,6 +2,7 @@
   "name": "Blobby Studio Hero",
   "title": "Blobby Studio Hero",
   "slug": "mascot-portfolio-hero",
+  "access": "free",
   "category": "Heroes",
   "source": "edvlabs",
   "type": "component",

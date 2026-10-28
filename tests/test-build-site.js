@@ -10,6 +10,8 @@ assert.deepStrictEqual(cssDeps('@import url("site/styles/tokens.css"); a{backgro
 assert.deepStrictEqual(cssDeps('src:url(../fonts/f.woff2)', 'site/styles/fonts.css'), ['site/fonts/f.woff2']);
 const page = stageBuilderPage('<head></head><a href="index.html"><a href="index.html?mode=workbench"><a href="builder.html">');
 assert(/href="\.\.\/"/.test(page) && !/index\.html/.test(page) && /href="\.\/"/.test(page) && /name="contact-url" content="\.\.\/contact\/"/.test(page), 'links and contact tag');
+assert(/<meta name="access-gate" content="on"/.test(page), 'the staged page turns the free-blocks lock on');
+assert(!/access-gate/.test(require('fs').readFileSync(require('path').join(__dirname, '..', 'builder.html'), 'utf8')), 'the repository copy of the page has no lock');
 console.log('  ✓ page and stylesheet scanning, link rewrite, contact tag');
 
 const out = fs.mkdtempSync(path.join(os.tmpdir(), 'edv-dist-'));

@@ -209,6 +209,11 @@
      * resolves to the same result as addOrReplaceLandingSection, or null when the person says no.
      */
     async function addWithTemplateGuard(slug, extraProps = {}, preferredIndex = null) {
+      const access = typeof window !== 'undefined' ? window.BuilderAccess : null;
+      if (access && access.locked(slug)) { // a block that needs a free account (scripts/builder/access.js): invite, add nothing
+        access.prompt(extraProps.title || (featuresMap.get(slug) || {}).title || slug);
+        return null;
+      }
       const existing = stackManager.getStack();
       if (!isFullWebsite(slug) || existing.length === 0) {
         return addOrReplaceLandingSection(slug, extraProps, preferredIndex);

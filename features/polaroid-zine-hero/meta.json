@@ -2,6 +2,7 @@
   "name": "Scrapbook Snapshot Hero",
   "title": "Scrapbook Snapshot Hero",
   "slug": "polaroid-zine-hero",
+  "access": "free",
   "category": "Heroes",
   "source": "edvlabs",
   "type": "component",

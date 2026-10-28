@@ -42,7 +42,7 @@
     next.addEventListener('click', () => stepBy(1));
 
     function refresh() {
-      const stack = sm.getStack();
+      const stack = sm.getStack().filter((s) => s.slug !== 'multilingual-lang-switcher'); // the language switcher is added for you; it has no words of yours to write
       const done = stack.filter((s) => own(s) > 0).length;
       status.textContent = !stack.length ? 'Add blocks first (step 1), then write your words here.'
         : done === 0 ? 'None of your ' + stack.length + ' blocks has your own words yet. They still show sample text.'

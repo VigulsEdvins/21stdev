@@ -2,6 +2,7 @@
   "name": "Index Card Inquiry",
   "title": "Index Card Inquiry",
   "slug": "wirebound-inquiry",
+  "access": "free",
   "category": "Cards & Tiles",
   "source": "edvlabs",
   "type": "component",

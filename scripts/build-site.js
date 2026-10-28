@@ -6,8 +6,8 @@
  * The builder's own page (builder.html) becomes dist/builder/index.html. The scripts and styles it lists are copied at the same relative
  * paths, so nothing in the builder needs to know it moved. Plus the folders it reads at run time: features/ and thumbs/ next to it, and
  * assets/library/ at the top of the site (the components' own files point there with an absolute path).
- * Three small changes are made to the copy of the page: links to the old catalogue page go to the home page, the link to itself becomes
- * "./", and a contact-url tag tells the guided bar where "Ask edvlabs to do it" goes.
+ * Four small changes are made to the copy of the page: links to the old catalogue page go to the home page, the link to itself becomes
+ * "./", a contact-url tag tells the guided bar where "Ask edvlabs to do it" goes, and an access-gate tag turns on the free-blocks lock.
  */
 const fs = require('fs');
 const path = require('path');
@@ -55,6 +55,7 @@ function stageBuilderPage(html) {
     .replace(/href="builder\.html"/g, 'href="./"')
     .replace(/href="index\.html(?:\?[^"]*)?"/g, 'href="../"');
   if (!/<meta name="contact-url"/.test(out)) out = out.replace('</head>', '  <meta name="contact-url" content="../contact/" />\n</head>');
+  if (!/<meta name="access-gate"/.test(out)) out = out.replace('</head>', '  <meta name="access-gate" content="on" />\n</head>'); // turns on the free-blocks lock (scripts/builder/access.js)
   return out;
 }
 

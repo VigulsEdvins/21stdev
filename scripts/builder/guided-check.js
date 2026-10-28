@@ -25,13 +25,14 @@
   /** Pure part: turns the raw findings into the list shown. items: { id, text, kind, sectionId?, fix? } */
   function buildItems({ stack, issues, colours, page }) {
     const items = [];
-    if (!stack.length) return [{ id: 'empty', text: 'Your page has no blocks yet.', kind: 'blocks' }];
+    const mine = stack.filter((s) => s.slug !== 'multilingual-lang-switcher'); // added for you by the Languages box
+    if (!mine.length) return [{ id: 'empty', text: 'Your page has no blocks yet.', kind: 'blocks' }];
     (issues || []).forEach((i) => {
       if (!WORDS[i.id]) return;
       items.push({ id: i.id, text: WORDS[i.id], kind: i.id === 'page-title' ? 'title' : i.id === 'page-description' ? 'description' : 'block', sectionId: i.sectionId });
     });
     Sets.check(colours || {}).forEach((p) => items.push({ id: 'contrast-' + p.kind, text: p.kind === 'text' ? 'Your text is hard to read on this background.' : 'Your buttons and links are hard to see on this background.', kind: 'contrast', fix: p.fix }));
-    stack.forEach((s) => { if (own(s) === 0) items.push({ id: 'sample-' + s.id, text: (s.title || s.slug) + ' still shows sample text.', kind: 'words', sectionId: s.id }); });
+    mine.forEach((s) => { if (own(s) === 0) items.push({ id: 'sample-' + s.id, text: (s.title || s.slug) + ' still shows sample text.', kind: 'words', sectionId: s.id }); });
     return items;
   }
 

@@ -310,7 +310,7 @@
           const blank = { stack: [], theme: kit.theme || 'midnight-dark', customColors: {}, page: { ...(root.StackManager && root.StackManager.DEFAULT_PAGE), title: kit.title }, viewport: 'desktop' };
           store.create({ name, state: blank });
           ctx.applyState(blank);
-          kit.sections.forEach(s => sm.addSection(s.slug, { title: s.title, category: s.category }));
+          kit.sections.filter(s => !(root.BuilderAccess && root.BuilderAccess.locked(s.slug))).forEach(s => sm.addSection(s.slug, { title: s.title, category: s.category }));
           refreshLabel(); renderProjects(); ctx.showToast(`Started “${name}” from the ${kit.label.toLowerCase()} kit`);
         } catch (e) { ctx.showToast(e.message); }
       });
@@ -326,7 +326,7 @@
           const blank = { stack: [], theme: 'midnight-dark', customColors: {}, page: { ...(root.StackManager && root.StackManager.DEFAULT_PAGE) }, viewport: 'desktop' };
           store.create({ name, state: blank });
           ctx.applyState(blank);
-          starter.sections.forEach(s => sm.addSection(s.slug, { title: s.title, category: s.category }));
+          starter.sections.filter(s => !(root.BuilderAccess && root.BuilderAccess.locked(s.slug))).forEach(s => sm.addSection(s.slug, { title: s.title, category: s.category }));
           refreshLabel(); renderProjects(); ctx.showToast(`Started “${name}” from the ${starter.label.toLowerCase()} starter`);
         } catch (e) { ctx.showToast(e.message); }
       });

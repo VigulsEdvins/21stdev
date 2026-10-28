@@ -66,6 +66,8 @@
         if (kind && kind.variants.length > 1) {
           tools.append(btn('bp-look', 'Another look', 'Show another look for ' + name, () => {
             const next = Kinds.nextVariant(kind.id, s.slug);
+            const access = (doc.defaultView || window).BuilderAccess;
+            if (next && access && access.locked(next)) { access.prompt('More looks for ' + name); say('More looks need a free account.'); return; }
             if (next && sm.replaceSection(s.id, next, { title: kind.label })) say(name + ' has a new look');
           }, locked));
         }

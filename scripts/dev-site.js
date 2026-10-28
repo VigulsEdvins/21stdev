@@ -59,8 +59,21 @@ function fileFor(pathname, dir = SITE) {
   return fs.existsSync(f) && fs.statSync(f).isFile() ? f : null;
 }
 
-function createServer(env, { applyHeaders = true, dir = SITE } = {}) {
-  const rules = parseHeaders(fs.readFileSync(path.join(dir, '_headers'), 'utf8'));
+/** Calls `onChange(firstChangedName)` once after a burst of changes (a save writes several files) in any of the folders or files; returns a function that stops watching. */
+function watchSources({ dirs = [], files = [], onChange, wait = 300 } = {}) {
+  let timer = null, first = null;
+  const fire = (name) => { if (first === null) first = name; clearTimeout(timer); timer = setTimeout(() => { const n = first; first = null; onChange(n); }, wait); };
+  const open = [];
+  const add = (target, opts, keep) => { try { open.push(fs.watch(target, opts, (_, name) => { if (name && keep(String(name))) fire(path.join(path.relative(ROOT, target), String(name))); })); } catch (_) { /* a folder that does not exist is not watched */ } };
+  dirs.forEach((d) => add(d, { recursive: true }, (n) => !/(^|[\/])(\.[^\\/]+|node_modules|dist(\.tmp)?)([\\/]|$)|~$|\.sw[a-z]$/.test(n)));
+  const byDir = new Map(); files.forEach((f) => { const d = path.dirname(f); byDir.set(d, (byDir.get(d) || new Set()).add(path.basename(f))); });
+  byDir.forEach((names, d) => add(d, {}, (n) => names.has(n)));
+  return () => { clearTimeout(timer); open.forEach((w) => w.close()); };
+}
+
+function createServer(env, { applyHeaders = true, dir = SITE, live = false } = {}) {
+  // live (the local server): every answer says "check with me again", and site/_headers is read again for each request, so a change shows on the next reload
+  let rules = parseHeaders(fs.readFileSync(path.join(dir, '_headers'), 'utf8'));
   return http.createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     try {
@@ -73,7 +86,9 @@ function createServer(env, { applyHeaders = true, dir = SITE } = {}) {
       }
       let f = fileFor(url.pathname, dir), status = 200;
       if (!f) { f = path.join(dir, '404.html'); status = 404; }
+      if (live) { try { rules = parseHeaders(fs.readFileSync(path.join(dir, '_headers'), 'utf8')); } catch (_) { /* mid-rebuild: keep the last rules */ } }
       const headers = Object.assign({ 'Content-Type': TYPES[path.extname(f)] || 'application/octet-stream' }, applyHeaders ? headersFor(rules, url.pathname) : {});
+      if (live) headers['cache-control'] = 'no-cache';
       res.writeHead(status, headers); fs.createReadStream(f).pipe(res);
     } catch (e) { res.writeHead(500, { 'Content-Type': 'text/plain' }); res.end('Something went wrong in the local server: ' + e.message); }
   });
@@ -83,13 +98,36 @@ if (require.main === module) {
   const port = Number(process.env.PORT || 4173);
   const env = loadEnv(path.join(ROOT, '.dev.vars'), process.env);
   const has = (k) => (env[k] ? 'set' : 'NOT SET');
-  const staged = require('./build-site.js').buildSite(); // the same folder Cloudflare publishes: the site plus /builder/
-  createServer(env, { dir: staged.out }).listen(port, '127.0.0.1', () => {
+  const { buildSite } = require('./build-site.js');
+  const staged = buildSite(); // the same folder Cloudflare publishes: the site plus /builder/
+  const server = createServer(env, { dir: staged.out, live: true });
+  server.on('error', (e) => { // the usual cause: an older copy of this server is still running
+    if (e.code === 'EADDRINUSE') console.error(`Port ${port} is already in use, most likely by an older copy of this server.\nStop it, then start again:\n  pkill -f "node scripts/dev-site.js"\n  npm run dev:site\n(or use another port: PORT=4174 npm run dev:site)`);
+    else console.error(e.message);
+    process.exit(1);
+  });
+  server.listen(port, '127.0.0.1', () => {
     console.log(`edvlabs site on http://localhost:${port}/   (staged in dist/ from site/ and the builder; headers from site/_headers; builder at /builder/)`);
+    console.log('  watching: a saved change rebuilds dist/ by itself; reload the page to see it (no restart, no hard reload needed)');
     console.log(`  accounts  : SUPABASE_URL ${has('SUPABASE_URL')}, SUPABASE_ANON_KEY ${has('SUPABASE_ANON_KEY')}  ->  http://localhost:${port}/account/`);
     console.log(`  lead email: LEAD_TO_EMAIL ${has('LEAD_TO_EMAIL')}, LEAD_FROM_EMAIL ${has('LEAD_FROM_EMAIL')}, RESEND_API_KEY ${has('RESEND_API_KEY')}  ->  forms really send mail only when all three are set`);
     if (!fs.existsSync(path.join(ROOT, '.dev.vars'))) console.log('  (no .dev.vars file yet: copy .dev.vars.example to .dev.vars and fill it in)');
     console.log(`  Supabase must allow this address: Authentication -> URL Configuration -> Redirect URLs: http://localhost:${port}/**`);
   });
+  // rebuild into a side folder and swap it in, so a page request never meets a half-written dist/
+  let building = false, again = false;
+  const rebuild = (what) => {
+    if (building) { again = true; return; }
+    building = true;
+    const tmp = staged.out + '.tmp';
+    try {
+      const r = buildSite({ out: tmp });
+      fs.rmSync(staged.out, { recursive: true, force: true }); fs.renameSync(tmp, staged.out);
+      console.log(`[${new Date().toLocaleTimeString()}] ${what} changed: dist/ rebuilt (${r.files} files). Reload the page.`);
+    } catch (e) { fs.rmSync(tmp, { recursive: true, force: true }); console.error(`[${new Date().toLocaleTimeString()}] rebuild failed (the last good dist/ is still served): ${e.message}`); }
+    building = false;
+    if (again) { again = false; rebuild('more files'); }
+  };
+  watchSources({ dirs: ['site', 'scripts', 'features', 'thumbs', 'assets/library'].map((d) => path.join(ROOT, d)), files: ['builder.html', 'builder.js', 'builder.css', 'builder-e.css', 'builder-guided.css', 'styles.css', 'registry.js'].map((f) => path.join(ROOT, f)), onChange: rebuild });
 }
-module.exports = { createServer, parseVars, loadEnv, headersFor, fileFor };
+module.exports = { createServer, parseVars, loadEnv, headersFor, fileFor, watchSources };

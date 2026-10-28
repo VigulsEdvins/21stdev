@@ -1,5 +1,7 @@
 # edvlabs — Agent & Developer Feature Vault Guide
 
+> How a change travels to production (branches, checks, deploy, rollback, database changes): [docs/WORKFLOW.md](docs/WORKFLOW.md).
+
 This directory (`/home/edvins/features-for-web/web-for-options`) is a self-contained **Feature, Component & Design Registry** built for edvlabs. Every item is pre-extracted into clean, standalone, 100% functional code so humans and AI coding agents can immediately copy or integrate any feature into a target project—or add new features to this vault.
 
 ---

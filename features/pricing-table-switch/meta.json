@@ -1,6 +1,7 @@
 {
   "name": "Pricing Table With Billing Switch",
   "slug": "pricing-table-switch",
+  "access": "free",
   "title": "Pricing Table With Billing Switch",
   "category": "Cards & Tiles",
   "source": "custom",

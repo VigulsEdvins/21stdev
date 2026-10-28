@@ -70,6 +70,7 @@ function validateMeta(meta) {
   if (!meta.origin || typeof meta.origin !== 'object' || !meta.origin.source || !meta.origin.license) errors.push('origin must be { source, license }');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(meta.updatedAt || '')) errors.push('updatedAt must be YYYY-MM-DD');
   if (meta.nativeWhen !== undefined && (!Array.isArray(meta.nativeWhen) || meta.nativeWhen.some(x => x !== 'light' && x !== 'dark'))) errors.push('nativeWhen must be a list of "light" and/or "dark"');
+  if (meta.access !== undefined && meta.access !== 'free' && meta.access !== 'account') errors.push('access must be "free" (anyone may use it in the builder) or "account" (needs a free account); leave it out for "account"');
   if (meta.ownPalette !== undefined && typeof meta.ownPalette !== 'boolean') errors.push('ownPalette must be true or false');
   if (meta.exportAssets !== undefined && (!Array.isArray(meta.exportAssets) || meta.exportAssets.some(x => typeof x !== 'string' || !x.startsWith('/')))) errors.push('exportAssets must be a list of root-relative paths such as "/features/<slug>/img/a.webp"');
   if (!Array.isArray(meta.customizable)) errors.push('customizable must be an array (may be empty)');

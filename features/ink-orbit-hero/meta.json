@@ -2,6 +2,7 @@
   "name": "Orbiting Ink Hero",
   "title": "Orbiting Ink Hero",
   "slug": "ink-orbit-hero",
+  "access": "free",
   "category": "Heroes",
   "source": "edvlabs",
   "type": "component",

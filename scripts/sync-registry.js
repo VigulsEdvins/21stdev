@@ -99,6 +99,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       mood: Array.isArray(meta.mood) ? meta.mood : [],
       industry: Array.isArray(meta.industry) ? meta.industry : [],
       weight: meta.weight || 'light',
+      access: meta.access === 'free' ? 'free' : 'account', // the builder's signed-out visitors may use only the free ones (scripts/builder/access.js)
       needsAssets: !!meta.needsAssets,
       origin: meta.origin || null,
       updatedAt: meta.updatedAt || null,
@@ -156,6 +157,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       mood: item.mood,
       industry: item.industry,
       weight: item.weight,
+      access: item.access,
       needsAssets: item.needsAssets,
       origin: item.origin,
       updatedAt: item.updatedAt,

@@ -20,3 +20,5 @@ agentdb.rvf*
 
 # staged site for Cloudflare (npm run build:site)
 dist/
+
+dist.tmp/

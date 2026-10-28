@@ -48,7 +48,7 @@
     aside.append(pane);
 
     function render() {
-      const n = sm.getStack().filter((s) => !s.hidden).length;
+      const n = sm.getStack().filter((s) => !s.hidden && s.slug !== 'multilingual-lang-switcher').length; // the language switcher is added for you, so it is not a block you pay for
       const m = meter(P, n, edBox.checked);
       head.textContent = n ? 'Your page has ' + n + ' block' + (n === 1 ? '' : 's') : 'Your page has no blocks yet';
       lines.replaceChildren();

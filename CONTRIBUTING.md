@@ -1,6 +1,6 @@
 # Contributing a component
 
-The full workflow is in [AGENT_GUIDE.md](AGENT_GUIDE.md) (section 2). This page is the short version and the checklist for a pull request.
+How a change reaches production is in [docs/WORKFLOW.md](docs/WORKFLOW.md). The full workflow is in [AGENT_GUIDE.md](AGENT_GUIDE.md) (section 2). Set `"access": "free"` in `meta.json` only for a component that signed-out visitors may use in the builder; leave it out otherwise. This page is the short version and the checklist for a pull request.
 
 ## Steps
 

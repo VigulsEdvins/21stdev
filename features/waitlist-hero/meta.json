@@ -2,6 +2,7 @@
   "name": "Orbit Waitlist Hero",
   "title": "Orbit Waitlist Hero",
   "slug": "waitlist-hero",
+  "access": "free",
   "category": "Heroes",
   "source": "edvlabs",
   "type": "component",

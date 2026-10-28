@@ -2,6 +2,7 @@
   "name": "Folder Stack Cards",
   "title": "Folder Stack Cards",
   "slug": "file-card-collections",
+  "access": "free",
   "category": "Cards & Tiles",
   "source": "edvlabs",
   "type": "component",

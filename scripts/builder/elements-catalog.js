@@ -80,6 +80,7 @@
       if (quickRecentBtn) { quickRecentBtn.classList.toggle('is-active', elementsQuick === 'recents'); quickRecentBtn.setAttribute('aria-pressed', String(elementsQuick === 'recents')); }
       renderElementsCatalog();
     }
+    if (window.BuilderAccess) window.BuilderAccess.subscribe(() => renderElementsCatalog()); // "Free blocks only" or signing in changes what is listed
     if (quickFavBtn) quickFavBtn.addEventListener('click', () => setQuick('favourites'));
     if (quickRecentBtn) quickRecentBtn.addEventListener('click', () => setQuick('recents'));
 
@@ -181,7 +182,8 @@
         const matchesCat = item.isWidget
           ? (elementsCategory === 'all' || matchesCategory({ category: item.category }, elementsCategory))
           : matchesCategory(item, elementsCategory);
-        return matchesCat && catalogSearch.matchesFilters(item, attrFilters);
+        if (!matchesCat || !catalogSearch.matchesFilters(item, attrFilters)) return false;
+        return item.isWidget || !(window.BuilderAccess && window.BuilderAccess.freeOnlyNow()) || item.access === 'free'; // signed out with "Free blocks only" on: just the free ones
       });
 
       const similarBase = elementsSimilarTo ? registry.find(f => f.slug === elementsSimilarTo) : null;
@@ -252,7 +254,8 @@
             : isLanding ? '<span class="element-scope-badge scope-landing">Landing page</span>'
               : '<span class="element-scope-badge scope-section">Section</span>';
 
-        const btnLabel = item.isWidget ? '+ Add to Section' : isWebsite ? '+ Add Full Website' : isLanding ? '+ Add Landing Page' : '+ Add Section';
+        const needsAccount = !!(window.BuilderAccess && window.BuilderAccess.locked(item.slug));
+        const btnLabel = needsAccount ? '🔒 Free account needed' : item.isWidget ? '+ Add to Section' : isWebsite ? '+ Add Full Website' : isLanding ? '+ Add Landing Page' : '+ Add Section';
 
         // Preview box HTML: rendered widget preview for widgets, live iframe box for sections
         const useThumb = item.thumb && thumbsMatchTheme();
@@ -274,6 +277,7 @@
               <div style="display:flex;align-items:center;gap:6px;">
                 ${scopeBadgeHtml}
                 <span class="element-card-badge ${badgeClass}">${escapeHtml(normCat)}</span>
+                ${needsAccount ? '<span class="element-lock-badge" title="Needs a free account">🔒 Account</span>' : ''}
                 ${(!item.isWidget && item.origin && item.origin.license === 'unverified') ? '<span class="element-license-badge" title="The source licence of this component has not been verified. Check it before using it for a paying client.">Licence?</span>' : ''}
               </div>
               <div class="element-card-actions">

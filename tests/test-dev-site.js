@@ -1,7 +1,7 @@
 /* The local site server (scripts/dev-site.js): reads private settings, serves site/ with the headers of site/_headers, answers /api/* like the Worker. */
 const assert = require('assert');
 const http = require('http');
-const { createServer, parseVars, loadEnv } = require('../scripts/dev-site.js');
+const { createServer, parseVars, loadEnv, watchSources } = require('../scripts/dev-site.js');
 
 // settings file format
 assert.deepStrictEqual(parseVars('# note\n\nA=1\nB = "two words"\nC=x=y\nbad line\nD=\n'), { A: '1', B: 'two words', C: 'x=y', D: '' });
@@ -43,5 +43,19 @@ const listen = (srv) => new Promise((r) => srv.listen(0, '127.0.0.1', () => r(sr
     p = await fetch(base(pf) + '/api/lead'); assert.strictEqual(p.status, 405);
     console.log('  ✓ /api/config and /api/lead answer like the live Worker, naming what is missing');
   } finally { none.close(); full.close(); }
+  // watching: a burst of saves is one rebuild; hidden, editor and node_modules files are ignored; the live server never lets a browser keep a copy
+  const wdir = fs.mkdtempSync(path.join(os.tmpdir(), 'edv-watch-'));
+  fs.mkdirSync(path.join(wdir, 'sub')); fs.mkdirSync(path.join(wdir, 'node_modules'));
+  const seen = [];
+  const stop = watchSources({ dirs: [wdir], onChange: (n) => seen.push(n), wait: 80 });
+  fs.writeFileSync(path.join(wdir, '.hidden'), '1'); fs.writeFileSync(path.join(wdir, 'node_modules', 'x.js'), '1'); fs.writeFileSync(path.join(wdir, 'a.js~'), '1'); fs.writeFileSync(path.join(wdir, '.a.js.swp'), '1');
+  await new Promise((r) => setTimeout(r, 300)); assert.strictEqual(seen.length, 0, 'ignored files do not rebuild: ' + seen.join(','));
+  fs.writeFileSync(path.join(wdir, 'a.js'), '1'); fs.writeFileSync(path.join(wdir, 'sub', 'b.css'), '1'); fs.writeFileSync(path.join(wdir, 'a.js'), '2');
+  await new Promise((r) => setTimeout(r, 400)); assert.strictEqual(seen.length, 1, 'a burst of saves is one rebuild: ' + seen.length);
+  stop(); fs.writeFileSync(path.join(wdir, 'c.js'), '1'); await new Promise((r) => setTimeout(r, 250)); assert.strictEqual(seen.length, 1, 'stopped means stopped');
+  fs.rmSync(wdir, { recursive: true, force: true });
+  const liveSrv = createServer({}, { live: true }); const pl = await listen(liveSrv);
+  r = await raw(pl, '/site.css'); assert.strictEqual(r.headers['cache-control'], 'no-cache', 'the local server asks the browser to check every time'); liveSrv.close();
+  console.log('  ✓ watching: one rebuild per burst, noise ignored, no stale copies in the browser');
   console.log('✅ Local site server tests passed!');
 })().catch((e) => { console.error(e); process.exit(1); });

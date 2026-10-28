@@ -407,7 +407,7 @@
       const prevApplying = historyCtl.state.applying;
       historyCtl.state.applying = true;
       stackManager.clearStack();
-      STARTER_SECTIONS.forEach(item => {
+      STARTER_SECTIONS.filter(item => !(window.BuilderAccess && window.BuilderAccess.locked(item.slug))).forEach(item => {
         stackManager.addSection(item.slug, {
           title: item.title,
           category: item.category

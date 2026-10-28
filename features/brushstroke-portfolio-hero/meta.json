@@ -2,6 +2,7 @@
   "name": "Painted Folio Hero",
   "title": "Painted Folio Hero",
   "slug": "brushstroke-portfolio-hero",
+  "access": "free",
   "category": "Heroes",
   "source": "edvlabs",
   "type": "component",

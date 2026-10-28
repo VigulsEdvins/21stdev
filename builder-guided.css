@@ -139,3 +139,37 @@ body.is-guided .brief-offer[hidden] { display: none; }
 .bp-over-row [hidden] { display: none; }
 .bp-sure { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 @media (max-width: 700px) { body.is-guided .guided-hint { display: block; } }
+
+/* languages: the box under the blocks in step 1 and the "Writing in" row in step 2 (scripts/builder/languages.js); Advanced uses the page tabs */
+.languages-box, .lang-bar { display: none; }
+body.is-guided .languages-box { display: block; padding: 0 14px 14px; }
+body.is-guided .lang-bar:not([hidden]) { display: flex; }
+.lg-lead, .lg-note { margin: 0 0 10px; font-size: 15px; color: var(--text-muted); }
+.lg-label { display: block; margin: 10px 0 4px; font: 600 14px / 1.2 var(--font-body); color: var(--text-main); }
+.lg-select { width: 100%; min-height: 44px; padding: 0 10px; border: 2px solid var(--text-main); border-radius: 12px; background: var(--bg-1, transparent); color: var(--text-main); font: 400 15px var(--font-body); }
+.lg-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.lg-row .lg-select { flex: 1 1 160px; width: auto; }
+.lg-add { background: var(--teal); border-color: var(--teal); color: var(--text-on-teal); }
+.lg-list { list-style: none; margin: 12px 0; padding: 0; display: grid; gap: 8px; }
+.lg-item { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px; border: 2px solid var(--text-main); border-radius: 12px; background: var(--bg-1, transparent); }
+.lg-item b { font: 600 16px / 1.25 var(--font-body); color: var(--text-main); }
+.lg-item small { color: var(--text-muted); font-size: 14px; flex: 1 1 auto; }
+.lg-here { margin-left: auto; font: 600 13px / 1 var(--font-body); padding: 6px 10px; border-radius: 999px; background: var(--mustard); color: var(--text-main); }
+.lg-sure { flex: 1 1 100%; font-size: 14px; color: var(--text-main); }
+.lang-bar { align-items: center; gap: 6px; flex-wrap: wrap; margin: 0 0 12px; }
+.lb-label { font: 600 14px / 1 var(--font-body); color: var(--text-main); margin-right: 4px; }
+.lb-btn { font: 600 14px / 1 var(--font-body); min-height: 40px; padding: 0 14px; border: 2px solid var(--text-main); border-radius: 999px; background: transparent; color: var(--text-main); cursor: pointer; }
+.lb-btn:hover:not(.is-here) { background: var(--mustard); }
+.lb-btn.is-here { background: var(--text-main); color: var(--bg-0); }
+
+/* free blocks and account blocks (scripts/builder/access.js): a link beside the catalogue title, a filter pill, a lock on the cards that need an account, a note that floats */
+.access-pill { flex: none; margin-left: auto; font: 600 13px / 1 var(--font-body, inherit); padding: 9px 14px; border-radius: 999px; background: var(--rust, #c4522a); color: #fff; text-decoration: none; white-space: nowrap; }
+.access-pill:hover { filter: brightness(1.1); }
+.access-pill[hidden], #accessFreeBtn[hidden] { display: none; }
+.access-toast { position: fixed; top: 74px; left: 50%; transform: translateX(-50%); z-index: 1200; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; width: min(440px, calc(100vw - 24px)); padding: 12px 14px; border: 2px solid var(--text-main, #222); border-radius: 12px; background: var(--mustard, #e2a627); color: var(--text-main, #222); box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
+.access-toast[hidden] { display: none; }
+.at-text { margin: 0; flex: 1 1 200px; font: 600 14px / 1.35 var(--font-body, inherit); }
+.at-go { flex: none; font: 600 13px / 1 var(--font-body, inherit); padding: 9px 14px; border-radius: 999px; background: var(--text-main, #222); color: var(--bg-0, #fff); text-decoration: none; }
+.at-no { flex: none; font: 600 13px / 1 var(--font-body, inherit); padding: 9px 12px; border: 2px solid var(--text-main, #222); border-radius: 999px; background: transparent; color: var(--text-main, #222); cursor: pointer; }
+
+.element-lock-badge { font: 600 11px / 1 var(--font-body, inherit); padding: 4px 8px; border-radius: 999px; background: var(--mustard, #e2a627); color: var(--text-main, #222); white-space: nowrap; }

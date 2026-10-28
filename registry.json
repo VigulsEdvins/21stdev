@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T07:58:29.432Z",
+  "generatedAt": "2026-10-28T14:45:41.062Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 235,
   "categories": [
@@ -40,6 +40,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -123,6 +124,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -217,6 +219,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "imported",
@@ -319,6 +322,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -388,6 +392,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -458,6 +463,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -541,6 +547,7 @@
         "media"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "imported",
@@ -714,6 +721,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -850,6 +858,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -932,6 +941,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1002,6 +1012,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1073,6 +1084,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1176,6 +1188,7 @@
         "hospitality"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1278,6 +1291,7 @@
         "portfolio"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1426,6 +1440,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1556,6 +1571,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1657,6 +1673,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1760,6 +1777,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1860,6 +1878,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -1930,6 +1949,7 @@
         "hospitality"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2031,6 +2051,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2180,6 +2201,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2262,6 +2284,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2381,6 +2404,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2492,6 +2516,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2591,6 +2616,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2691,6 +2717,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2790,6 +2817,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -2933,6 +2961,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -3035,6 +3064,7 @@
         "hospitality"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -3140,6 +3170,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -3232,6 +3263,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -3332,6 +3364,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -3401,6 +3434,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -3464,6 +3498,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": true,
       "origin": {
         "source": "edvlabs",
@@ -3578,6 +3613,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": true,
       "origin": {
         "source": "edvlabs",
@@ -3692,6 +3728,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": true,
       "origin": {
         "source": "edvlabs",
@@ -3804,6 +3841,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": true,
       "origin": {
         "source": "mom",
@@ -3950,6 +3988,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "cvmaker",
@@ -4065,6 +4104,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": true,
       "origin": {
         "source": "mom",
@@ -4167,6 +4207,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -4243,6 +4284,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": true,
       "origin": {
         "source": "mom",
@@ -4369,6 +4411,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": true,
       "origin": {
         "source": "mom",
@@ -4488,6 +4531,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "cvmaker",
@@ -4591,6 +4635,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "cvmaker",
@@ -4693,6 +4738,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "cvmaker",
@@ -4795,6 +4841,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "cvmaker",
@@ -4897,6 +4944,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -4962,6 +5010,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5033,6 +5082,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5109,6 +5159,7 @@
         "general"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5192,6 +5243,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5279,6 +5331,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5361,6 +5414,7 @@
         "general"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5425,6 +5479,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5513,6 +5568,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5595,6 +5651,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5671,6 +5728,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "imported",
@@ -5772,6 +5830,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5844,6 +5903,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5896,6 +5956,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -5960,6 +6021,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6011,6 +6073,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6106,6 +6169,7 @@
         "education"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6224,6 +6288,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6318,6 +6383,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6394,6 +6460,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6483,6 +6550,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6584,6 +6652,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6692,6 +6761,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6768,6 +6838,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6832,6 +6903,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6920,6 +6992,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7014,6 +7087,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7078,6 +7152,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7160,6 +7235,7 @@
         "media"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7229,6 +7305,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7289,6 +7366,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7353,6 +7431,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7423,6 +7502,7 @@
         "hospitality"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7499,6 +7579,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7618,6 +7699,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7676,6 +7758,7 @@
         "hospitality"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7727,6 +7810,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7809,6 +7893,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7873,6 +7958,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -7943,6 +8029,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8019,6 +8106,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8107,6 +8195,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8213,6 +8302,7 @@
         "saas"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8264,6 +8354,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8346,6 +8437,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8410,6 +8502,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8473,6 +8566,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8555,6 +8649,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8631,6 +8726,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8706,6 +8802,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8793,6 +8890,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -8899,6 +8997,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9005,6 +9104,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9075,6 +9175,7 @@
         "media"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9156,6 +9257,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9226,6 +9328,7 @@
         "general"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9298,6 +9401,7 @@
         "education"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9392,6 +9496,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9498,6 +9603,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9562,6 +9668,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9644,6 +9751,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9695,6 +9803,7 @@
         "hospitality"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9789,6 +9898,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9859,6 +9969,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9924,6 +10035,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -9993,6 +10105,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10068,6 +10181,7 @@
         "general"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10126,6 +10240,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10227,6 +10342,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10309,6 +10425,7 @@
         "agency"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10391,6 +10508,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10509,6 +10627,7 @@
         "general"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10560,6 +10679,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10642,6 +10762,7 @@
         "media"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10694,6 +10815,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10788,6 +10910,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10845,6 +10968,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10908,6 +11032,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -10966,6 +11091,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11072,6 +11198,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11165,6 +11292,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11297,6 +11425,7 @@
         "ecommerce"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11409,6 +11538,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11497,6 +11627,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11610,6 +11741,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11675,6 +11807,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11732,6 +11865,7 @@
         "hospitality"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11838,6 +11972,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11908,6 +12043,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -11996,6 +12132,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12077,6 +12214,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12135,6 +12273,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12205,6 +12344,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12317,6 +12457,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12435,6 +12576,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12547,6 +12689,7 @@
         "hospitality"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12629,6 +12772,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12712,6 +12856,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12788,6 +12933,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12852,6 +12998,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -12970,6 +13117,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13065,6 +13213,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13129,6 +13278,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13193,6 +13343,7 @@
         "portfolio"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13243,6 +13394,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13301,6 +13453,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13364,6 +13517,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13445,6 +13599,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13503,6 +13658,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13598,6 +13754,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13673,6 +13830,7 @@
         "hospitality"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13754,6 +13912,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13805,6 +13964,7 @@
         "media"
       ],
       "weight": "heavy",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13864,6 +14024,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13923,6 +14084,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -13999,6 +14161,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14069,6 +14232,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14163,6 +14327,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14275,6 +14440,7 @@
         "fintech"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14370,6 +14536,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14482,6 +14649,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14546,6 +14714,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14641,6 +14810,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14729,6 +14899,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14801,6 +14972,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14907,6 +15079,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -14958,6 +15131,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15016,6 +15190,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15080,6 +15255,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15138,6 +15314,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15213,6 +15390,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15277,6 +15455,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15342,6 +15521,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15441,6 +15621,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15505,6 +15686,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15568,6 +15750,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15643,6 +15826,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15742,6 +15926,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15842,6 +16027,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15893,6 +16079,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -15981,6 +16168,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16039,6 +16227,7 @@
         "agency"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16157,6 +16346,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16222,6 +16412,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16303,6 +16494,7 @@
         "general"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16368,6 +16560,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16456,6 +16649,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16541,6 +16735,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16605,6 +16800,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16669,6 +16865,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16758,6 +16955,7 @@
         "hospitality"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16840,6 +17038,7 @@
         "portfolio"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16904,6 +17103,7 @@
         "media"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -16977,6 +17177,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17036,6 +17237,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17100,6 +17302,7 @@
         "portfolio"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17187,6 +17390,7 @@
         "saas"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17252,6 +17456,7 @@
         "media"
       ],
       "weight": "medium",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17328,6 +17533,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17391,6 +17597,7 @@
         "agency"
       ],
       "weight": "medium",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17474,6 +17681,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17556,6 +17764,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17626,6 +17835,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -17692,6 +17902,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -17753,6 +17964,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -17849,6 +18061,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -17935,6 +18148,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18025,6 +18239,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18109,6 +18324,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18199,6 +18415,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18343,6 +18560,7 @@
         "education"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18415,6 +18633,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18511,6 +18730,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18602,6 +18822,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18681,6 +18902,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18753,6 +18975,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18819,6 +19042,7 @@
         "ecommerce"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -18908,6 +19132,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19064,6 +19289,7 @@
         "saas"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19129,6 +19355,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19225,6 +19452,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19311,6 +19539,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19397,6 +19626,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19469,6 +19699,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19560,6 +19791,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19638,6 +19870,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19758,6 +19991,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
@@ -19830,6 +20064,7 @@
         "general"
       ],
       "weight": "light",
+      "access": "account",
       "needsAssets": false,
       "origin": {
         "source": "custom",
