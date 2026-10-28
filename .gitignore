@@ -12,3 +12,8 @@ agentdb.rvf*
 
 # local settings for npm run dev:site (private values)
 .dev.vars
+
+# editor swap and backup files (they can hold copies of private files such as .dev.vars)
+*.swp
+*.swo
+*~
