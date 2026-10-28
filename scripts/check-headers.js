@@ -54,7 +54,7 @@ async function main() {
   const arg = process.argv[2];
   let errs = [];
   if (arg) {
-    for (const p of ['/', '/pricing/', '/start/', '/examples/yearbook/']) {
+    for (const p of ['/', '/pricing/', '/start/', '/account/', '/examples/yearbook/']) {
       const r = await fetch(new URL(p, arg), { redirect: 'follow' });
       const h = {}; r.headers.forEach((v, k) => { h[k] = v; });
       errs = errs.concat(problems(h, p.startsWith('/examples/') ? { strictStyles: false, frameAncestors: ["'self'"] } : {}).map((e) => `${p}: ${e}`));
@@ -66,6 +66,13 @@ async function main() {
     for (const r of Object.keys(rules).filter((k) => /^\/examples\/[a-z]+\/\*$/.test(k))) {
       errs = errs.concat(problems(effective(rules, r), { strictStyles: false, frameAncestors: ["'self'"] }).map((e) => r + ': ' + e));
       if (!(rules[r]['!detach'] || []).includes('content-security-policy')) errs.push(r + ': must detach the strict policy first, or the browser applies both');
+    }
+    if (rules['/account/*']) {
+      errs = errs.concat(problems(effective(rules, '/account/*')).map((e) => '/account/*: ' + e)); // as strict as everywhere, only connect-src names one more address
+      const c = parseCsp(effective(rules, '/account/*')['content-security-policy'] || '');
+      const extra = (c['connect-src'] || []).filter((x) => x !== "'self'");
+      if (extra.length !== 1 || !/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(extra[0])) errs.push('/account/*: connect-src may add only the one Supabase address');
+      if (!(rules['/account/*']['!detach'] || []).includes('content-security-policy')) errs.push('/account/*: must detach the strict policy first, or the browser applies both');
     }
     if (rules['/style/*'] && !(rules['/style/*']['!detach'] || []).includes('content-security-policy')) errs.push('/style/*: must detach the strict policy first, or the browser applies both');
   }

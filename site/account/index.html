@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your account · edvlabs</title>
+<meta name="description" content="Sign in to edvlabs or create an account.">
+<meta name="robots" content="noindex">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Ccircle cx=%2717%27 cy=%2717%27 r=%2717%27 fill=%27%23e2a627%27/%3E%3Cpath d=%27M0 17a17 17 0 0 0 34 0z%27 fill=%27%23c4522a%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../site.css">
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="wrap"><header class="site-header">
+  <a class="logo" href="../"><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="17" fill="#e2a627"/><path d="M0 17a17 17 0 0 0 34 0z" fill="#c4522a"/></svg>edvlabs</a>
+  <nav class="nav" aria-label="Main"><a href="../how-it-works/">How it works</a><a href="../pricing/">Prices</a><a href="../faq/">Questions</a><a href="../contact/">Contact</a></nav>
+  <a class="btn btn--small" href="../start/">Start your page</a>
+</header></div>
+<main id="main">
+<div class="wrap page-head"><span class="kicker">Your account</span><h1 id="a-title" tabindex="-1">Sign in or create an account.</h1><p class="lead" id="a-lead">Use Google, GitHub or your email address.</p></div>
+<section class="wrap sec sec--flush"><div class="contact-card acct" id="acct">
+  <div id="a-notice" role="status" aria-live="polite"></div>
+  <p id="a-loading">One moment…</p>
+
+  <div id="a-closed" hidden><p>Accounts are not open yet. Please check back soon, or <a href="../contact/">write to us</a>.</p></div>
+
+  <div id="a-out" hidden>
+    <div class="acct-social">
+      <button class="btn btn--secondary" type="button" id="b-google" data-provider="google">Continue with Google</button>
+      <button class="btn btn--secondary" type="button" id="b-github" data-provider="github">Continue with GitHub</button>
+    </div>
+    <p class="acct-or"><span>or use your email</span></p>
+    <div class="acct-tabs" role="group" aria-label="Have an account?">
+      <button type="button" class="acct-tab" id="t-in" aria-pressed="true">Sign in</button>
+      <button type="button" class="acct-tab" id="t-up" aria-pressed="false">Create account</button>
+    </div>
+    <form class="stack" id="f-pass" novalidate>
+      <div class="field"><label for="p-email">Email address</label><input class="input" id="p-email" type="email" autocomplete="email" aria-describedby="p-email-err"><span class="error-text" id="p-email-err" role="alert"></span></div>
+      <div class="field"><label for="p-pass">Password</label><span class="hint" id="p-hint" hidden>At least 8 characters.</span><input class="input" id="p-pass" type="password" autocomplete="current-password" aria-describedby="p-pass-err"><span class="error-text" id="p-pass-err" role="alert"></span></div>
+      <div><button class="btn" type="submit" id="p-go">Sign in</button></div>
+      <p class="acct-links"><button type="button" class="linklike" id="l-forgot">Forgot your password?</button> <button type="button" class="linklike" id="l-link">Email me a sign-in link instead</button></p>
+    </form>
+    <form class="stack" id="f-mail" novalidate hidden>
+      <p id="m-intro"></p>
+      <div class="field"><label for="m-email">Email address</label><input class="input" id="m-email" type="email" autocomplete="email" aria-describedby="m-email-err"><span class="error-text" id="m-email-err" role="alert"></span></div>
+      <div><button class="btn" type="submit" id="m-go">Send</button> <button class="btn btn--secondary" type="button" id="m-back">Back</button></div>
+    </form>
+  </div>
+
+  <div id="a-in" hidden>
+    <p id="i-who"></p>
+    <p id="i-how" class="hint"></p>
+    <div class="btn-row"><button class="btn" type="button" id="b-out">Sign out</button> <button class="btn btn--secondary" type="button" id="b-newpass" hidden>Change password</button></div>
+  </div>
+
+  <form class="stack" id="f-new" novalidate hidden>
+    <p>Choose a new password.</p>
+    <div class="field"><label for="n-pass">New password</label><span class="hint">At least 8 characters.</span><input class="input" id="n-pass" type="password" autocomplete="new-password" aria-describedby="n-pass-err"><span class="error-text" id="n-pass-err" role="alert"></span></div>
+    <div><button class="btn" type="submit">Save password</button></div>
+  </form>
+</div></section>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-row"><a class="logo logo--on-ink" href="../">edvlabs</a><nav aria-label="Footer" class="foot-links"><a href="../how-it-works/">How it works</a><a href="../pricing/">Prices</a><a href="../faq/">Questions</a><a href="../contact/">Contact</a><a href="../start/">Start your page</a></nav></div><small>edvlabs · Latvia</small></div></footer>
+<script src="../js/auth.js"></script>
+<script src="../js/account.js"></script>
+</body>
+</html>

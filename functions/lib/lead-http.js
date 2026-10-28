@@ -28,10 +28,12 @@ async function receive(request, env) {
   return json(r.status, r.json);
 }
 
-/** Routes a request: /api/lead takes leads (POST only), any other /api path is not found, everything else is the static site. */
+/** Routes a request: /api/lead takes leads (POST only), /api/config hands out the public sign-in settings, any other /api path is not found, everything else is the static site. */
 async function route(request, env, serveAsset) {
   const path = new URL(request.url).pathname;
   if (path === '/api/lead') return request.method === 'POST' ? receive(request, env) : json(405, { ok: false, errors: ['Use POST.'] }, { Allow: 'POST' });
+  // The Supabase address and the public (anon) key, so the static pages hold neither. Both are meant to be public; the secret key never goes here.
+  if (path === '/api/config') return request.method === 'GET' ? (env.SUPABASE_URL && env.SUPABASE_ANON_KEY ? json(200, { supabaseUrl: env.SUPABASE_URL, anonKey: env.SUPABASE_ANON_KEY }, { 'Cache-Control': 'no-store' }) : json(503, { ok: false, errors: ['Accounts are not set up yet.'] })) : json(405, { ok: false, errors: ['Use GET.'] }, { Allow: 'GET' });
   if (path.startsWith('/api/')) return json(404, { ok: false, errors: ['Not found.'] });
   return serveAsset(request);
 }

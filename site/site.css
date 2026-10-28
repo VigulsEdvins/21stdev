@@ -137,3 +137,20 @@
 .work-open:focus-visible { outline: none; }
 .work li:focus-within figure { outline: 3px solid var(--focus); outline-offset: 3px; }
 @media (prefers-reduced-motion: no-preference) { .work figure { transition: transform .15s, box-shadow .15s; } }
+
+/* account page */
+.acct { max-width: 560px; }
+.acct-social { display: grid; gap: var(--s-3); }
+.acct-or { display: flex; align-items: center; gap: var(--s-3); margin: var(--s-5) 0; color: var(--text-muted); }
+.acct-or::before, .acct-or::after { content: ""; flex: 1; border-top: 2px solid var(--ink); opacity: .25; }
+.acct-tabs { display: flex; gap: var(--s-2); margin-bottom: var(--s-4); }
+.acct-tab { flex: 1; min-height: 44px; border: var(--border); border-radius: var(--radius-pill); background: transparent; color: var(--text); font: 600 16px / 1 var(--font-body); cursor: pointer; }
+.acct-tab[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: var(--text-on-teal); }
+.acct-links { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); margin: 0; }
+.linklike { padding: 4px 0; border: 0; background: none; color: var(--text); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.linklike:hover { color: var(--rust); }
+.linklike:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+#a-notice:not(:empty) { margin-bottom: var(--s-4); }
+
+/* the hidden attribute always hides, even on elements whose own style sets a display */
+[hidden] { display: none !important; }
