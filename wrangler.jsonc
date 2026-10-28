@@ -1,0 +1,11 @@
+{
+  // Cloudflare deploy: publish only the public site (site/), never the repository root with node_modules.
+  // site/_headers (security headers) and site/404.html are picked up from that folder.
+  // The lead intake in functions/ uses the Pages Functions layout and is not part of this static deploy yet (docs/deploy/lead-intake.md).
+  "name": "21stdev",
+  "compatibility_date": "2026-10-28",
+  "assets": {
+    "directory": "./site",
+    "not_found_handling": "404-page"
+  }
+}

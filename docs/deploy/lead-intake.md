@@ -13,3 +13,8 @@ The code is done and tested (`npm run test:lead`). Switching it on needs three t
 Test: submit the questions on staging with your own phone number. The email should arrive within a minute, with the contact in the subject.
 
 The Turnstile widget itself is not on the contact form yet: when you create the site key, ask for it to be added.
+
+## What Cloudflare publishes
+
+`wrangler.jsonc` at the repository root tells Cloudflare to publish only `site/` (the public pages, `_headers`, `404.html`). Without it Cloudflare picked the whole repository and the deploy failed with "Asset too large" on a file in `node_modules`. The Worker name in that file (`21stdev`) must match the Worker's name in the Cloudflare dashboard; if the build says the names differ, change one to match the other. The lead intake in `functions/` is not part of this static deploy yet: it needs the Pages Functions layout or a small Worker entry before the contact forms can send.
+
