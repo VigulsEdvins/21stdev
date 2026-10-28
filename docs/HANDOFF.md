@@ -71,6 +71,8 @@ edvlabs sells landing pages and small websites at **edvlabs.com** (domain owned,
 3. Remaining security in E16: `postMessage` handlers, `localStorage` uses, the preview-frame decision, a hostile-input test file (the rest of E16.5), static analysis (E16.4), the builder's CSP (E16.7).
 4. Then self-serve: accounts, price table as data, quotes, checkout (E4, E5, E8).
 
+Parked on purpose (owner's decision, 2026-10-28; see "Backlog" in `docs/superpowers/plans/2026-10-28-launch-scope.md`): verify the brand with Google so the sign-in screen says "edvlabs" instead of the Supabase address (needs the privacy and terms pages, a logo, Search Console). Do not start without being asked.
+
 ## Rules to keep
 
 - **Commit locally only. Never push, and never rename the GitHub remote (`VigulsEdvins/21stdev`), without asking.**

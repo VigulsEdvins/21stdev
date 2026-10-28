@@ -48,3 +48,12 @@ Account logins (Cloudflare, Supabase, Stripe, Resend), real payments, the legal 
 ## Decisions still open (defaults in the design doc apply if unanswered)
 
 Revision rounds and timing for "we build it"; the VAT rule; the refund rule; mobile building (default: preview and checkout on a phone, building on a computer); D2, D4, D5, D6.
+
+## Backlog: parked on purpose, not started
+
+Items the owner has seen and decided to leave for later. Do not start one without being asked.
+
+- **B1. Google's sign-in screen shows the long Supabase address (parked 2026-10-28).** Google's account chooser says "continue to idvirglyjvqneaudnsuu.supabase.co" instead of "edvlabs". Supabase's documentation names two fixes:
+  1. **Verify the brand with Google (free, recommended; takes a few business days).** In Google Auth Platform → Branding set app name `edvlabs`, a square 120×120 logo, home page `https://edvlabs.com`, privacy policy and terms links, authorized domains (`edvlabs.com` and the full Supabase project domain `<ref>.supabase.co`, not the bare `supabase.co`), developer contact email; prove ownership of `edvlabs.com` in Google Search Console (one TXT record in Cloudflare DNS); keep the app "In production"; then press "Verify branding" in the Verification Center. Needs from Claude when it is taken up: a **Privacy policy page** and a **Terms page** on the site, clearly marked as drafts for a professional to review (these are E12.1 and E12.2 in the storefront plan; Google needs the privacy page before it will verify), footer links to both, and a **120×120 logo** made from the sun-and-circle mark. Needs from the owner: the Search Console verification, the Branding form, and the review wait.
+  2. **A custom domain for Supabase (paid).** A Supabase Pro plan add-on (about $10 a month) lets the project answer on a domain such as `auth.edvlabs.com`; Google then shows that instead. The callback address in the Google and GitHub apps and in `docs/deploy/accounts.md` would change. Worth doing later if everything should sit under the owner's own domain.
+  Until then the sign-in works as it is; the long address is only cosmetic.
