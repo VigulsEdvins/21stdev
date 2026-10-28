@@ -14,7 +14,7 @@
     "new-feature": "node scripts/new-feature.js",
     "check-features": "node scripts/check-features.js",
     "thumbs": "node scripts/make-thumbs.js",
-    "test": "node tests/test-builder-integration.js && npm run -s test:brief && npm run -s test:lead && npm run -s test:recommend && npm run -s test:blockkinds && npm run -s test:looksets && npm run -s test:guidedcheck && npm run -s test:guidedget && npm run -s test:guidedbrief",
+    "test": "node tests/test-builder-integration.js && npm run -s test:brief && npm run -s test:lead && npm run -s test:recommend && npm run -s test:blockkinds && npm run -s test:looksets && npm run -s test:guidedcheck && npm run -s test:guidedget && npm run -s test:guidedbrief && npm run -s check-examples",
     "bundle-demo": "node scripts/bundle-demo.js",
     "clean-features": "node scripts/clean-features.js",
     "test:e2e": "node tests/e2e/run-all.js",
@@ -61,7 +61,8 @@
     "test:looksets": "node tests/test-look-sets.js",
     "test:guidedcheck": "node tests/test-guided-check.js",
     "test:guidedget": "node tests/test-guided-get.js",
-    "test:guidedbrief": "node tests/test-guided-brief.js"
+    "test:guidedbrief": "node tests/test-guided-brief.js",
+    "check-examples": "node scripts/build-examples.js --check"
   },
   "keywords": [],
   "author": "",

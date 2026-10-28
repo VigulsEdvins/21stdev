@@ -31,9 +31,15 @@ const H = require('../../scripts/check-headers.js');
     const fonts = await page.evaluate(async () => { await document.fonts.ready; return document.fonts.check('400 20px Gloock'); });
     assert(fonts, p + ': fonts load under the policy');
   }
+  const { SLUGS } = require('../../scripts/build-examples.js');
+  for (const slug of SLUGS) {
+    await page.goto(srv.url + '/site/examples/' + slug + '/index.html'); await page.waitForLoadState('networkidle');
+    assert(await page.isVisible('.edv-sample-bar'), slug + ': the sample bar shows under the policy');
+    assert(await page.evaluate(() => document.querySelector('meta[name=robots]').content.includes('noindex')), slug + ': noindex');
+  }
   assert.deepStrictEqual(violations, [], 'no policy violations: ' + violations.join(' | '));
   assert.deepStrictEqual(errors, []);
-  console.log('  ✓ six pages, their scripts, styles, fonts and forms all work under the policy with zero violations');
+  console.log('  ✓ six pages and six full sample pages work under the policy with zero violations');
   await browser.close(); srv.close && srv.close();
   console.log('CSP passed');
 })().catch(e => { console.error(e); process.exit(1); });
