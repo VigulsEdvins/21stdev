@@ -37,6 +37,15 @@ const call = (req, env) => http.route(req, env || ENV, asset);
     calls = []; await call(post(Object.assign({}, good, { website: 'http://spam.example' }))); assert.strictEqual(calls.length, 0, 'a filled honeypot sends nothing');
     console.log('  ✓ missing settings, another origin, wrong type, too large, broken JSON, spam trap and no consent all send nothing');
 
+    // a missing setting is named (names only), so the owner can see what to add
+    r = await call(post(good), { LEAD_TO_EMAIL: 'a@b.c' }); const miss = await r.json();
+    assert.deepStrictEqual(miss.missing, ['LEAD_FROM_EMAIL', 'RESEND_API_KEY']); assert(!JSON.stringify(miss).includes('a@b.c'), 'no value is echoed');
+    r = await call(new Request('https://edvlabs.test/api/config'), {}); assert.strictEqual(r.status, 503); assert.deepStrictEqual((await r.json()).missing, ['SUPABASE_URL', 'SUPABASE_ANON_KEY']);
+    r = await call(new Request('https://edvlabs.test/api/config'), { SUPABASE_URL: 'https://x.supabase.co', SUPABASE_ANON_KEY: 'public-key' });
+    assert.strictEqual(r.status, 200); assert.deepStrictEqual(await r.json(), { supabaseUrl: 'https://x.supabase.co', anonKey: 'public-key' });
+    r = await call(new Request('https://edvlabs.test/api/config', { method: 'POST' }), { SUPABASE_URL: 'u', SUPABASE_ANON_KEY: 'k' }); assert.strictEqual(r.status, 405);
+    console.log('  ✓ missing settings are named without their values; /api/config hands out only the two public values');
+
     // routing
     r = await call(new Request('https://edvlabs.test/api/lead', { method: 'GET' })); assert.strictEqual(r.status, 405); assert.strictEqual(r.headers.get('Allow'), 'POST');
     r = await call(new Request('https://edvlabs.test/api/other', { method: 'POST' })); assert.strictEqual(r.status, 404);

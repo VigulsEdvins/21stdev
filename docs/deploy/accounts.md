@@ -10,7 +10,7 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 - **Email:** keep "Confirm email" on. Supabase links accounts that share a verified email.
 - Emails (confirmation, sign-in link, password reset) are sent by Supabase's built-in sender at first, which is rate limited and meant for testing. Before launch set **custom SMTP** in Supabase using the verified Resend domain, and edit the email templates in plain words.
 
-**Cloudflare (Settings, Variables and Secrets), plain variables, not secrets**
+**Cloudflare: the Worker's own Settings → Variables and Secrets** (the runtime ones, NOT the "Build" section, whose variables are only for the build step and never reach the running Worker). Plain variables:
 - `SUPABASE_URL`: the project address, for example `https://<project-ref>.supabase.co`
 - `SUPABASE_ANON_KEY`: the public key (labelled anon or publishable). Both are public by design.
 - **Never** put the service_role (secret) key in the site or in chat. It belongs only in Cloudflare as a secret when a server step needs it.
@@ -35,3 +35,8 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 ## Tests
 
 `npm run test:auth` (the library against the pretend service), `tests/e2e/account.e2e.js` (the page end to end, including Google and GitHub redirects, a replayed link and password reset), and `tests/e2e/csp.e2e.js` (the page under its own policy with zero violations).
+
+## If the page says "Accounts are not open yet"
+
+Open `https://edvlabs.com/api/config` in a browser. It answers with the names of the settings the running Worker cannot see, for example `{"missing":["SUPABASE_URL","SUPABASE_ANON_KEY"]}` (the same works for `/api/lead`, which lists the lead settings). The usual causes: the variables were added under Build instead of the Worker's Variables and Secrets; a name has a typo or a stray space; or a deploy removed plain variables (`wrangler.jsonc` now has `keep_vars: true` to prevent that; adding them as **Secrets** also makes them survive). After changing variables, redeploy and reload. Browsers keep styles and scripts only until they check with the server (`site/_headers`), so a stale page after a deploy fixes itself on reload.
+

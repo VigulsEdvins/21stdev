@@ -67,6 +67,8 @@ async function main() {
       errs = errs.concat(problems(effective(rules, r), { strictStyles: false, frameAncestors: ["'self'"] }).map((e) => r + ': ' + e));
       if (!(rules[r]['!detach'] || []).includes('content-security-policy')) errs.push(r + ': must detach the strict policy first, or the browser applies both');
     }
+    // a rule that sets its own Cache-Control must first remove the general one, or the browser receives both
+    for (const [r, h] of Object.entries(rules)) if (r !== '/*' && h['cache-control'] && !(h['!detach'] || []).includes('cache-control')) errs.push(r + ': sets Cache-Control without removing the general one first ("! Cache-Control")');
     if (rules['/account/*']) {
       errs = errs.concat(problems(effective(rules, '/account/*')).map((e) => '/account/*: ' + e)); // as strict as everywhere, only connect-src names one more address
       const c = parseCsp(effective(rules, '/account/*')['content-security-policy'] || '');

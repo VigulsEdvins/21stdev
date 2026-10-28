@@ -12,14 +12,19 @@
   Cross-Origin-Resource-Policy: same-origin
   Cache-Control: public, max-age=300, must-revalidate
 
+# "! Cache-Control" first: without it Cloudflare ADDS these to the 300 seconds set for everything, and the browser gets two conflicting values.
 /fonts/*
+  ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
 
+# Scripts and styles are checked with the server on every load (a cheap "not modified" answer when nothing changed), so a new deploy shows at once.
 /js/*
-  Cache-Control: public, max-age=3600, must-revalidate
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
 
 /*.css
-  Cache-Control: public, max-age=3600, must-revalidate
+  ! Cache-Control
+  Cache-Control: public, max-age=0, must-revalidate
 
 /style/*
   X-Robots-Tag: noindex

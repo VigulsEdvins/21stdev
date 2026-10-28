@@ -14,7 +14,8 @@ async function turnstileOk(token, secret, ip) {
 }
 
 async function receive(request, env) {
-  if (!env.LEAD_TO_EMAIL || !env.LEAD_FROM_EMAIL || !env.RESEND_API_KEY) return json(503, { ok: false, errors: ['Sending is not set up yet.'] });
+  const missingLead = ['LEAD_TO_EMAIL', 'LEAD_FROM_EMAIL', 'RESEND_API_KEY'].filter((k) => !env[k]);
+  if (missingLead.length) return json(503, { ok: false, errors: ['Sending is not set up yet.'], missing: missingLead }); // names only, never values: it tells the owner what to add
   const origin = request.headers.get('Origin');
   if (origin && origin !== new URL(request.url).origin) return json(403, { ok: false, errors: ['Not allowed.'] });
   if (!(request.headers.get('Content-Type') || '').includes('application/json')) return json(415, { ok: false, errors: ['Send JSON.'] });
@@ -33,7 +34,7 @@ async function route(request, env, serveAsset) {
   const path = new URL(request.url).pathname;
   if (path === '/api/lead') return request.method === 'POST' ? receive(request, env) : json(405, { ok: false, errors: ['Use POST.'] }, { Allow: 'POST' });
   // The Supabase address and the public (anon) key, so the static pages hold neither. Both are meant to be public; the secret key never goes here.
-  if (path === '/api/config') return request.method === 'GET' ? (env.SUPABASE_URL && env.SUPABASE_ANON_KEY ? json(200, { supabaseUrl: env.SUPABASE_URL, anonKey: env.SUPABASE_ANON_KEY }, { 'Cache-Control': 'no-store' }) : json(503, { ok: false, errors: ['Accounts are not set up yet.'] })) : json(405, { ok: false, errors: ['Use GET.'] }, { Allow: 'GET' });
+  if (path === '/api/config') return request.method === 'GET' ? (env.SUPABASE_URL && env.SUPABASE_ANON_KEY ? json(200, { supabaseUrl: env.SUPABASE_URL, anonKey: env.SUPABASE_ANON_KEY }, { 'Cache-Control': 'no-store' }) : json(503, { ok: false, errors: ['Accounts are not set up yet.'], missing: ['SUPABASE_URL', 'SUPABASE_ANON_KEY'].filter((k) => !env[k]) })) : json(405, { ok: false, errors: ['Use GET.'] }, { Allow: 'GET' });
   if (path.startsWith('/api/')) return json(404, { ok: false, errors: ['Not found.'] });
   return serveAsset(request);
 }

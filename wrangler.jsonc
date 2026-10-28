@@ -5,6 +5,9 @@
   "name": "21stdev",
   "main": "src/worker.js",
   "compatibility_date": "2026-10-28",
+  // Plain-text variables added in the Cloudflare dashboard (SUPABASE_URL, SUPABASE_ANON_KEY, LEAD_TO_EMAIL, LEAD_FROM_EMAIL) would be deleted by every
+  // deploy that does not list them here. keep_vars keeps them. Secrets (RESEND_API_KEY) are never deleted.
+  "keep_vars": true,
   "assets": {
     "directory": "./site",
     "binding": "ASSETS",
