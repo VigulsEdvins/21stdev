@@ -41,16 +41,56 @@ const { start } = require('../lib/fake-supabase.js');
   await waitText('#p-pass-err', /Type your password/); assert((await page.textContent('#p-email-err')) === '');
   console.log('  ✓ problems appear under the box they are about');
 
+  // 2b. show/hide the password, so it can be checked while typing
+  await page.fill('#p-pass', 'My-Secret-Pass-1!');
+  assert.strictEqual(await page.getAttribute('#p-pass', 'type'), 'password', 'hidden by default');
+  assert.strictEqual(await page.getAttribute('.pw-toggle[aria-controls="p-pass"]', 'aria-label'), 'Show password');
+  await page.click('.pw-toggle[aria-controls="p-pass"]');
+  assert.strictEqual(await page.getAttribute('#p-pass', 'type'), 'text', 'shown after pressing Show'); assert.strictEqual(await page.inputValue('#p-pass'), 'My-Secret-Pass-1!');
+  assert.strictEqual(await page.getAttribute('.pw-toggle[aria-controls="p-pass"]', 'aria-label'), 'Hide password'); assert.strictEqual(await page.textContent('.pw-toggle[aria-controls="p-pass"]'), 'Hide');
+  await page.click('.pw-toggle[aria-controls="p-pass"]'); assert.strictEqual(await page.getAttribute('#p-pass', 'type'), 'password');
+  await page.click('.pw-toggle[aria-controls="p-pass"]'); // left showing on purpose: it must hide again when the view changes (checked after the next step)
+  assert(!(await vis('#p-pass-meter')), 'no strength bar when signing in: an existing password is not judged');
+  console.log('  ✓ Show and Hide buttons let the password be checked; no judging when signing in');
+
+  // 2c. choosing a password: strength bar, checklist, and the weak ones refused
+  await page.click('#t-up'); await page.fill('#p-pass', '');
+  assert(await vis('#p-pass-meter') && (await page.textContent('#p-pass-meter .pw-label')) === '', 'the bar is there, with no judgement of an empty box');
+  const level = () => page.getAttribute('#p-pass-meter .pw-bar', 'data-level');
+  const done = () => page.$$eval('#p-pass-meter .pw-rules li[data-ok="true"]', (e) => e.length);
+  await page.fill('#p-pass', 'abc'); assert.strictEqual(await level(), 'low'); assert(/Low/.test(await page.textContent('#p-pass-meter .pw-label'))); assert.strictEqual(await done(), 1, 'only the lowercase rule is met');
+  await page.fill('#p-pass', 'Tr1cky-Pass'); assert.strictEqual(await level(), 'medium'); assert(/Medium/.test(await page.textContent('#p-pass-meter .pw-label'))); assert.strictEqual(await done(), 5);
+  assert(/longer password is stronger/.test(await page.textContent('#p-pass-meter .pw-notes')), 'tells how to reach High');
+  await page.fill('#p-pass', 'Tr1cky-Pass-Yes'); assert.strictEqual(await level(), 'high'); assert(/High/.test(await page.textContent('#p-pass-meter .pw-label')));
+  await page.fill('#p-pass', 'Password123!'); assert.strictEqual(await level(), 'low'); assert(/very common word/.test(await page.textContent('#p-pass-meter .pw-notes')));
+  assert.strictEqual(await page.getAttribute('#p-pass-meter .pw-rules li[data-rule="symbol"]', 'data-ok'), 'true');
+  const marks = await page.$$eval('#p-pass-meter .pw-rules li', (e) => e.map((x) => x.textContent)); assert(marks.every((m) => /^(✓|○)(Done|Still needed): /.test(m)), 'each rule says met or not in words too: ' + marks[0]);
+  await page.fill('#p-email', 'edvinsviguls@example.com'); await page.fill('#p-pass', 'Edvinsviguls-Rides-92!');
+  assert(/email address/.test(await page.textContent('#p-pass-meter .pw-notes')) && (await level()) !== 'high', 'the email name inside the password lowers it');
+  console.log('  ✓ strength bar goes Low, Medium, High with the checklist and plain advice');
+
+  await page.fill('#p-email', 'weak@example.com'); await page.fill('#p-pass', 'Password123!'); await page.fill('#p-pass2', 'Password123!'); const c0 = fake.calls.length; await page.click('#p-go');
+  await waitText('#p-pass-err', /too easy to guess/); assert.strictEqual(fake.calls.length, c0, 'a guessable password is refused before anything is sent');
+  await page.fill('#p-pass', 'abcdefghijkl'); await page.fill('#p-pass2', 'abcdefghijkl'); await page.click('#p-go');
+  await waitText('#p-pass-err', /still needs: a capital letter.*a number.*a symbol/); assert.strictEqual(fake.calls.length, c0);
+  await page.fill('#p-pass', 'Blue-Kettle-Rides-93!'); await page.fill('#p-pass2', 'Blue-Kettle');
+  assert.strictEqual(await page.textContent('.pw-match'), 'Not the same yet.'); await page.fill('#p-pass2', 'Blue-Kettle-Rides-93!'); assert.strictEqual(await page.textContent('.pw-match'), 'The passwords match.');
+  await page.fill('#p-email', ''); await page.fill('#p-pass', ''); await page.fill('#p-pass2', '');
+  console.log('  ✓ weak passwords are refused under the box with what is missing; a live "passwords match" line');
+
   // 3. create an account: repeat password, then the emailed code
-  await page.click('#t-up');
+  await page.click('#t-up'); await page.fill('#p-email', 'anna@example.com');
   assert(await vis('#p-pass2') && await vis('#p-hint') && !(await vis('#l-forgot')), 'create account shows the repeat box');
   await page.fill('#p-pass', 'short'); await page.fill('#p-pass2', 'short'); await page.click('#p-go');
-  await waitText('#p-pass-err', /8 characters/);
-  await page.fill('#p-pass', 'correct horse 1'); await page.fill('#p-pass2', 'correct horse 2'); const callsBefore = fake.calls.length; await page.click('#p-go');
+  await waitText('#p-pass-err', /still needs/);
+  await page.fill('#p-pass', 'Correct-Horse-1!'); await page.fill('#p-pass2', 'Correct-Horse-2!'); const callsBefore = fake.calls.length; await page.click('#p-go');
   await waitText('#p-pass2-err', /not the same/); assert((await page.textContent('#p-pass-err')) === '' && fake.calls.length === callsBefore, 'a mismatch is named under the repeat box and nothing is sent');
   assert.strictEqual(await page.evaluate(() => document.activeElement.id), 'p-pass2');
-  await page.fill('#p-pass2', 'correct horse 1'); await page.click('#p-go');
+  await page.fill('#p-pass2', 'Correct-Horse-1!'); await page.click('#p-go');
   await page.waitForSelector('#f-code:not([hidden])');
+  await page.click('#c-other'); await page.waitForSelector('#a-out:not([hidden])');
+  assert.strictEqual(await page.getAttribute('#p-pass', 'type'), 'password', 'a password left showing is hidden again when the view changes');
+  await page.click('#t-up'); await page.fill('#p-email', 'anna@example.com'); await page.fill('#p-pass', 'Correct-Horse-1!'); await page.fill('#p-pass2', 'Correct-Horse-1!'); await page.click('#p-go'); await page.waitForSelector('#f-code:not([hidden])');
   assert(/anna@example\.com/.test(await page.textContent('#c-intro')) && / code to /.test(await page.textContent('#c-intro')), 'asks for the code and names the address');
   assert(await vis('#c-note') && /already has an account/.test(await page.textContent('#c-note')), 'after creating an account the page explains why no email arrives for an address that is already registered');
   assert.strictEqual(await page.getAttribute('#c-code', 'autocomplete'), 'one-time-code'); assert.strictEqual(await page.getAttribute('#c-code', 'inputmode'), 'numeric');
@@ -66,7 +106,7 @@ const { start } = require('../lib/fake-supabase.js');
 
   // 4. the emailed link still works too, and the code does not stay in the address bar
   await page.click('#b-out'); await page.waitForSelector('#a-out:not([hidden])');
-  await page.click('#t-up'); await page.fill('#p-email', 'ben@example.com'); await page.fill('#p-pass', 'another pass 22'); await page.fill('#p-pass2', 'another pass 22'); await page.click('#p-go');
+  await page.click('#t-up'); await page.fill('#p-email', 'ben@example.com'); await page.fill('#p-pass', 'Another-Pass-22!'); await page.fill('#p-pass2', 'Another-Pass-22!'); await page.click('#p-go');
   await page.waitForSelector('#f-code:not([hidden])');
   await page.goto(asDevLink((await lastMail('ben@example.com')).link));
   await page.waitForSelector('#a-in:not([hidden])'); assert.strictEqual(await page.textContent('#i-who'), 'ben@example.com');
@@ -84,13 +124,13 @@ const { start } = require('../lib/fake-supabase.js');
   await page.click('#b-out'); await page.waitForSelector('#a-out:not([hidden])');
   assert(/signed out/.test(await page.textContent('#a-notice')));
   await page.reload(); await page.waitForSelector('#a-out:not([hidden])');
-  await page.click('#t-up'); await page.fill('#p-email', 'cara@example.com'); await page.fill('#p-pass', 'cara pass 1234'); await page.fill('#p-pass2', 'cara pass 1234'); await page.click('#p-go');
+  await page.click('#t-up'); await page.fill('#p-email', 'cara@example.com'); await page.fill('#p-pass', 'Cara-Blue-Lamp-71!'); await page.fill('#p-pass2', 'Cara-Blue-Lamp-71!'); await page.click('#p-go');
   await page.waitForSelector('#f-code:not([hidden])'); await page.click('#c-other'); await page.waitForSelector('#a-out:not([hidden])');
-  await page.fill('#p-email', 'cara@example.com'); await page.fill('#p-pass', 'cara pass 1234'); await page.click('#p-go');
+  await page.fill('#p-email', 'cara@example.com'); await page.fill('#p-pass', 'Cara-Blue-Lamp-71!'); await page.click('#p-go');
   await waitText('#p-email-err', /not confirmed yet/);
   await page.fill('#p-email', 'anna@example.com'); await page.fill('#p-pass', 'wrong wrong 1'); await page.click('#p-go');
   await waitText('#p-pass-err', /do not match/); assert((await page.textContent('#p-email-err')) === '');
-  await page.fill('#p-pass', 'correct horse 1'); await page.click('#p-go'); await page.waitForSelector('#a-in:not([hidden])'); await page.click('#b-out');
+  await page.fill('#p-pass', 'Correct-Horse-1!'); await page.click('#p-go'); await page.waitForSelector('#a-in:not([hidden])'); await page.click('#b-out');
   console.log('  ✓ sign out ends the session; unconfirmed and wrong passwords are explained under the right box');
 
   // 7. Google and GitHub
@@ -107,13 +147,15 @@ const { start } = require('../lib/fake-supabase.js');
   await page.fill('#m-email', 'anna@example.com'); await page.click('#m-go'); await page.waitForSelector('#f-code:not([hidden])');
   const rec = await lastMail('anna@example.com'); assert.strictEqual(rec.kind, 'recovery');
   await page.fill('#c-code', rec.code); await page.click('#c-go'); await page.waitForSelector('#f-new:not([hidden])');
-  await page.fill('#n-pass', 'a brand new pass 9'); await page.fill('#n-pass2', 'a different one 9'); await page.click('#f-new button[type=submit]');
+  assert(await vis('#n-pass-meter') && await vis('.pw-toggle[aria-controls="n-pass2"]'), 'the new-password form has the bar, the rules and the Show buttons too');
+  await page.fill('#n-pass', 'Tr1cky-Pass'); assert.strictEqual(await page.getAttribute('#n-pass-meter .pw-bar', 'data-level'), 'medium'); await page.fill('#n-pass', '');
+  await page.fill('#n-pass', 'A-Brand-New-Pass-9!'); await page.fill('#n-pass2', 'A-Different-One-9!'); await page.click('#f-new button[type=submit]');
   await waitText('#n-pass2-err', /not the same/);
-  await page.fill('#n-pass2', 'a brand new pass 9'); await page.click('#f-new button[type=submit]');
+  await page.fill('#n-pass2', 'A-Brand-New-Pass-9!'); await page.click('#f-new button[type=submit]');
   await page.waitForFunction(() => /password is changed/.test(document.getElementById('a-notice').textContent));
-  await page.click('#b-out'); await page.fill('#p-email', 'anna@example.com'); await page.fill('#p-pass', 'correct horse 1'); await page.click('#p-go');
+  await page.click('#b-out'); await page.fill('#p-email', 'anna@example.com'); await page.fill('#p-pass', 'Correct-Horse-1!'); await page.click('#p-go');
   await waitText('#p-pass-err', /do not match/); // the old password no longer works
-  await page.fill('#p-pass', 'a brand new pass 9'); await page.click('#p-go'); await page.waitForSelector('#a-in:not([hidden])');
+  await page.fill('#p-pass', 'A-Brand-New-Pass-9!'); await page.click('#p-go'); await page.waitForSelector('#a-in:not([hidden])');
   console.log('  ✓ forgot password: code, new password typed twice, old one stops working');
 
   // 9. emailed sign-in with a code, and asking for a new code
@@ -126,7 +168,7 @@ const { start } = require('../lib/fake-supabase.js');
 
   // 10. the honeypot: a filled hidden box looks like success and sends nothing
   await page.click('#b-out'); await page.waitForSelector('#a-out:not([hidden])');
-  await page.click('#t-up'); await page.fill('#p-email', 'bot@example.com'); await page.fill('#p-pass', 'bot password 1'); await page.fill('#p-pass2', 'bot password 1');
+  await page.click('#t-up'); await page.fill('#p-email', 'bot@example.com'); await page.fill('#p-pass', 'Bot-Orange-Table-1!'); await page.fill('#p-pass2', 'Bot-Orange-Table-1!');
   await page.evaluate(() => { document.getElementById('p-trap').value = 'http://spam.example'; });
   const before = fake.calls.length; await page.click('#p-go'); await page.waitForSelector('#f-code:not([hidden])');
   assert.strictEqual(fake.calls.length, before, 'nothing was sent to the service'); assert(!fake.users.has('bot@example.com'), 'no account was made');
@@ -145,7 +187,7 @@ const { start } = require('../lib/fake-supabase.js');
   await p2.route('https://challenges.cloudflare.com/**', (r) => r.fulfill({ status: 200, contentType: 'text/javascript', body: "window.turnstile={n:0,render:function(el,o){el.setAttribute('data-widget','1');setTimeout(function(){o.callback('" + guarded.captchaToken + "')},50);return 'w'+(++this.n)},reset:function(){}};" }));
   await p2.goto(url); await p2.waitForSelector('#a-out:not([hidden])');
   await p2.waitForSelector('#p-captcha[data-widget]', { state: 'attached' }); assert(await p2.evaluate(() => !document.getElementById('p-captcha').hidden), 'the spam check is shown when a site key is configured');
-  await p2.click('#t-up'); await p2.fill('#p-email', 'turn@example.com'); await p2.fill('#p-pass', 'turnstile pass 1'); await p2.fill('#p-pass2', 'turnstile pass 1');
+  await p2.click('#t-up'); await p2.fill('#p-email', 'turn@example.com'); await p2.fill('#p-pass', 'Turnstile-Pass-1!'); await p2.fill('#p-pass2', 'Turnstile-Pass-1!');
   await p2.waitForTimeout(200); await p2.click('#p-go'); await p2.waitForSelector('#f-code:not([hidden])', { timeout: 8000 });
   assert(guarded.users.has('turn@example.com'), 'sign up went through with the token');
   await p2.click('#c-other'); await p2.waitForSelector('#a-out:not([hidden])');
@@ -153,7 +195,7 @@ const { start } = require('../lib/fake-supabase.js');
   assert.deepStrictEqual(errs2, [], errs2.join(' | '));
 
   // and without the token the service refuses, in plain words (a bot that skips the page and calls the service directly)
-  const direct = await fetch(guarded.url + '/auth/v1/signup', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: guarded.anonKey }, body: JSON.stringify({ email: 'direct@example.com', password: 'a long enough pass 1' }) });
+  const direct = await fetch(guarded.url + '/auth/v1/signup', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: guarded.anonKey }, body: JSON.stringify({ email: 'direct@example.com', password: 'Example-Long-Pass-1!' }) });
   assert.strictEqual(direct.status, 400); assert(!guarded.users.has('direct@example.com'), 'the service itself refuses a direct call without the token');
   await guarded.close();
   console.log('  ✓ without the token the service refuses, so skipping the page does not help');

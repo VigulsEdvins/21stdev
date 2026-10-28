@@ -38,6 +38,8 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 
 **What each defence does.** The *honeypot* (a hidden box on every form; people never see it, bots that fill every box do) catches simple form-filling bots and costs nothing, but a bot that talks to Supabase directly never touches the page, so it cannot be stopped there. Only the *spam check verified by Supabase* stops that. Supabase also rate-limits emails per address and per hour, whatever the page does.
 
+**Password rules.** The page (`site/js/password.js`) requires a new password to have 10 to 72 characters with a lowercase letter, a capital, a number and a symbol, and refuses ones built on a very common word or pattern (`Password123!`). A live bar shows Low, Medium or High: longer is stronger (12 or more reaches High when every kind is used), and repeats, runs like `1234` or `qwer`, and your own email name lower it. Show and Hide buttons let people check what they typed. These checks are only a convenience in the browser: a bot can call Supabase directly, so **set the same rules in Supabase itself**: Authentication → Sign In / Providers → Email → **Minimum password length 10** and **Password requirements: lowercase, uppercase, digits and symbols**. ("Prevent use of leaked passwords", which checks a password against known breaches, is a Supabase Pro plan feature; turn it on when the plan allows.) The 72-character top limit matches what the service keeps of a password.
+
 **Repeat password.** Creating an account and choosing a new password both ask for the password twice and refuse if the two differ, before anything is sent.
 
 ## How it works

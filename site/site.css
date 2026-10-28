@@ -157,3 +157,25 @@
 
 .input--code { max-width: 14em; font-variant-numeric: tabular-nums; letter-spacing: .2em; font-size: 1.25rem; }
 .captcha { min-height: 0; }
+
+/* show/hide button, strength bar, rules and match hint on password boxes */
+.pw-wrap { position: relative; display: flex; }
+.pw-wrap .input { flex: 1; padding-right: 5.5rem; }
+.pw-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); min-height: 40px; padding: 0 12px; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text); font: 600 15px / 1 var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.pw-toggle:hover { color: var(--rust); }
+.pw-toggle:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.pw-meter { margin-top: var(--s-3); }
+.pw-bar { display: flex; gap: 6px; }
+.pw-bar span { flex: 1; height: 12px; border: 2px solid var(--ink); border-radius: 6px; background: transparent; }
+.pw-bar[data-level="low"] span:nth-child(1) { background: var(--rust); }
+.pw-bar[data-level="medium"] span:nth-child(-n+2) { background: var(--mustard); }
+.pw-bar[data-level="high"] span { background: var(--teal); }
+.pw-label { margin: var(--s-2) 0 var(--s-2); min-height: 1.4em; color: var(--text); }
+.pw-rules { list-style: none; margin: 0 0 var(--s-2); padding: 0; display: grid; gap: 4px; }
+.pw-rules li { display: flex; gap: var(--s-2); align-items: baseline; color: var(--text-muted); }
+.pw-rules li[data-ok="true"] { color: var(--text); font-weight: 600; }
+.pw-mark { display: inline-block; width: 1.2em; text-align: center; }
+.pw-rules li[data-ok="true"] .pw-mark { color: var(--teal); }
+.pw-notes { margin: 0; color: var(--text-muted); font-size: .95rem; }
+.pw-match { margin: var(--s-2) 0 0; }
+.pw-match[data-state="same"] { color: var(--teal); font-weight: 600; }

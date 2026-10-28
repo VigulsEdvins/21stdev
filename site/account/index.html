@@ -38,7 +38,7 @@
     </div>
     <form class="stack" id="f-pass" novalidate>
       <div class="field"><label for="p-email">Email address</label><input class="input" id="p-email" type="email" autocomplete="email" aria-describedby="p-email-err"><span class="error-text" id="p-email-err" role="alert"></span></div>
-      <div class="field"><label for="p-pass">Password</label><span class="hint" id="p-hint" hidden>At least 8 characters.</span><input class="input" id="p-pass" type="password" autocomplete="current-password" aria-describedby="p-pass-err"><span class="error-text" id="p-pass-err" role="alert"></span></div>
+      <div class="field"><label for="p-pass">Password</label><span class="hint" id="p-hint" hidden>Choose a strong one. The list below shows what it needs.</span><input class="input" id="p-pass" type="password" autocomplete="current-password" aria-describedby="p-pass-err"><span class="error-text" id="p-pass-err" role="alert"></span></div>
       <div class="field" id="p-pass2-field" hidden><label for="p-pass2">Repeat the password</label><input class="input" id="p-pass2" type="password" autocomplete="new-password" aria-describedby="p-pass2-err"><span class="error-text" id="p-pass2-err" role="alert"></span></div>
       <div class="trap" aria-hidden="true"><label>Leave this empty <input type="text" id="p-trap" tabindex="-1" autocomplete="off"></label></div>
       <div class="captcha" id="p-captcha" hidden></div>
@@ -71,13 +71,14 @@
 
   <form class="stack" id="f-new" novalidate hidden>
     <p>Choose a new password.</p>
-    <div class="field"><label for="n-pass">New password</label><span class="hint">At least 8 characters.</span><input class="input" id="n-pass" type="password" autocomplete="new-password" aria-describedby="n-pass-err"><span class="error-text" id="n-pass-err" role="alert"></span></div>
+    <div class="field"><label for="n-pass">New password</label><span class="hint">Choose a strong one. The list below shows what it needs.</span><input class="input" id="n-pass" type="password" autocomplete="new-password" aria-describedby="n-pass-err"><span class="error-text" id="n-pass-err" role="alert"></span></div>
     <div class="field"><label for="n-pass2">Repeat the new password</label><input class="input" id="n-pass2" type="password" autocomplete="new-password" aria-describedby="n-pass2-err"><span class="error-text" id="n-pass2-err" role="alert"></span></div>
     <div><button class="btn" type="submit">Save password</button></div>
   </form>
 </div></section>
 </main>
 <footer class="site-footer"><div class="wrap"><div class="foot-row"><a class="logo logo--on-ink" href="../">edvlabs</a><nav aria-label="Footer" class="foot-links"><a href="../how-it-works/">How it works</a><a href="../pricing/">Prices</a><a href="../faq/">Questions</a><a href="../contact/">Contact</a><a href="../start/">Start your page</a></nav></div><small>edvlabs · Latvia</small></div></footer>
+<script src="../js/password.js"></script>
 <script src="../js/auth.js"></script>
 <script src="../js/account.js"></script>
 </body>

@@ -4,9 +4,9 @@
    The Supabase address and the public (anon) key come from /api/config at run time, so nothing is in git.
    Every method returns { ok: true, ... } or { ok: false, message, field? } with a plain-words message. */
 (function (root, factory) {
-  const api = factory();
+  const api = factory(typeof module === 'object' && module.exports ? require('./password.js') : root.EdvPassword);
   if (typeof module === 'object' && module.exports) module.exports = api; else root.EdvAuth = api;
-})(typeof self !== 'undefined' ? self : this, function () {
+})(typeof self !== 'undefined' ? self : this, function (PW) {
   const SESSION_KEY = 'edvlabs.session', PKCE_KEY = 'edvlabs.pkce';
   const PROVIDERS = ['google', 'github'];
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -22,7 +22,7 @@
     if (code === 'invalid_credentials' || /invalid login credentials/.test(msg)) return { message: 'That email and password do not match. Check them, or use “Forgot your password?”.', field: 'password' };
     if (code === 'email_not_confirmed' || /not confirmed/.test(msg)) return { message: 'Your email address is not confirmed yet. Open the email we sent you and press the link in it.', field: 'email' };
     if (code === 'user_already_exists' || /already registered/.test(msg)) return { message: 'There is already an account with that email address. Sign in instead, or use “Forgot your password?”.', field: 'email' };
-    if (code === 'weak_password' || /password should be|weak/.test(msg)) return { message: 'Choose a longer password: at least 8 characters, and not one that is easy to guess.', field: 'password' };
+    if (code === 'weak_password' || /password should be|weak/.test(msg)) return { message: 'That password is not accepted. Make it longer, and use capital letters, small letters, numbers and symbols.', field: 'password' };
     if (code === 'over_email_send_rate_limit' || code === 'over_request_rate_limit' || status === 429) return { message: 'Too many tries just now. Wait a few minutes and try again.' };
     if (code === 'validation_failed' || /unable to validate email|invalid email/.test(msg)) return { message: 'That does not look like an email address. It should look like name@example.com.', field: 'email' };
     if (code === 'otp_expired' || /token has expired or is invalid|otp.*expired/.test(msg)) return { message: 'That code is wrong or has expired. Check it, or ask for a new one.', field: 'code' };
@@ -69,6 +69,12 @@
     // Supabase checks this token itself when its CAPTCHA protection is on, so a bot cannot skip the page and call the service directly
     const sec = (t) => (t ? { gotrue_meta_security: { captcha_token: t } } : {});
     const CODE_TYPES = { signup: 'signup', link: 'email', recovery: 'recovery' }; // what Supabase calls each kind of emailed code
+    // a NEW password must meet the shared rules (site/js/password.js); an existing one is only checked by the service when signing in
+    const weakPassword = (password, email) => {
+      if (!PW) return !password || password.length < 8 ? { ok: false, message: 'Choose a longer password: at least 8 characters.', field: 'password' } : null;
+      const bad = PW.problem(password, { email });
+      return bad ? { ok: false, message: bad, field: 'password' } : null;
+    };
     const mismatch = (a, b) => (b !== undefined && a !== b ? { ok: false, message: 'The two passwords are not the same. Type the same password in both boxes.', field: 'password2' } : null);
     const back = () => encodeURIComponent(deps.returnTo || (origin + '/account/'));
 
@@ -83,7 +89,7 @@
       async signUp(email, password, opts) {
         opts = opts || {};
         if (!EMAIL_RE.test(email || '')) return { ok: false, message: 'That does not look like an email address. It should look like name@example.com.', field: 'email' };
-        if (!password || password.length < 8) return { ok: false, message: 'Choose a longer password: at least 8 characters.', field: 'password' };
+        const weak = weakPassword(password, email); if (weak) return weak;
         const same = mismatch(password, opts.repeat); if (same) return same;
         const p = await newPkce('signup');
         const r = await call('POST', '/auth/v1/signup?redirect_to=' + back(), Object.assign({ email, password, code_challenge: p.challenge, code_challenge_method: p.method }, sec(opts.captchaToken)));
@@ -146,10 +152,10 @@
       },
       async setPassword(password, opts) {
         opts = opts || {};
+        const weak = weakPassword(password, opts.email); if (weak) return weak;
+        const same = mismatch(password, opts.repeat); if (same) return same;
         const s = read(store, SESSION_KEY);
         if (!s) return { ok: false, message: 'Please sign in again first.' };
-        if (!password || password.length < 8) return { ok: false, message: 'Choose a longer password: at least 8 characters.', field: 'password' };
-        const same = mismatch(password, opts.repeat); if (same) return same;
         const r = await call('PUT', '/auth/v1/user', { password }, s.access_token);
         return r.ok ? { ok: true } : r;
       },

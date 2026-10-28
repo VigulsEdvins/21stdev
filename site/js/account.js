@@ -5,10 +5,10 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const A = window.EdvAuth;
-  let auth = null, mode = 'in', mailKind = null, pending = null, captcha = null, lastSent = 0;
+  let auth = null, mode = 'in', mailKind = null, pending = null, captcha = null, lastSent = 0, knownEmail = '';
 
   const VIEWS = ['a-loading', 'a-closed', 'a-out', 'f-code', 'a-in', 'f-new'];
-  const view = (name) => { VIEWS.forEach((id) => { $(id).hidden = id !== name; }); };
+  const view = (name) => { VIEWS.forEach((id) => { $(id).hidden = id !== name; }); hideAllPasswords(); };
   const notice = (text, kind) => {
     const n = $('a-notice'); n.replaceChildren();
     if (!text) return;
@@ -16,6 +16,51 @@
   };
   const title = (t, lead) => { $('a-title').textContent = t; $('a-lead').textContent = lead; };
   const focusTitle = () => { $('a-title').focus(); };
+
+  /** Show/hide button on a password box, so the person can check what they typed. Every box starts hidden again whenever the view changes. */
+  const boxes = [];
+  function addToggle(id) {
+    const input = $(id); if (!input || input.parentElement.classList.contains('pw-wrap')) return;
+    const wrap = document.createElement('div'); wrap.className = 'pw-wrap'; input.replaceWith(wrap); wrap.append(input);
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'pw-toggle'; b.setAttribute('aria-controls', id);
+    const set = (show) => { input.type = show ? 'text' : 'password'; b.textContent = show ? 'Hide' : 'Show'; b.setAttribute('aria-label', (show ? 'Hide' : 'Show') + ' ' + (input.closest('.field').querySelector('label').textContent.toLowerCase())); };
+    b.addEventListener('click', () => { set(input.type === 'password'); input.focus(); });
+    wrap.append(b); set(false); boxes.push({ input, set });
+  }
+  const hideAllPasswords = () => boxes.forEach((x) => x.set(false));
+
+  /** Strength bar, a checklist of the rules and a line of advice under a password box. Used when a NEW password is chosen. */
+  function addMeter(id, getEmail) {
+    const input = $(id), field = input.closest('.field'), errEl = $(id + '-err');
+    const meter = document.createElement('div'); meter.className = 'pw-meter'; meter.id = id + '-meter'; meter.hidden = true;
+    const bar = document.createElement('div'); bar.className = 'pw-bar'; bar.setAttribute('aria-hidden', 'true'); for (let i = 0; i < 3; i++) bar.append(document.createElement('span'));
+    const label = document.createElement('p'); label.className = 'pw-label'; label.setAttribute('aria-live', 'polite');
+    const list = document.createElement('ul'); list.className = 'pw-rules';
+    const items = window.EdvPassword.RULES.map((r) => { const li = document.createElement('li'); li.dataset.rule = r.id; const mark = document.createElement('span'); mark.className = 'pw-mark'; mark.setAttribute('aria-hidden', 'true'); const sr = document.createElement('span'); sr.className = 'sr-only'; const t = document.createElement('span'); t.textContent = r.label; li.append(mark, sr, t); list.append(li); return { li, mark, sr }; });
+    const notes = document.createElement('p'); notes.className = 'pw-notes';
+    meter.append(bar, label, list, notes);
+    field.insertBefore(meter, errEl);
+    let lastLevel = '';
+    function update() {
+      const c = window.EdvPassword.check(input.value, { email: getEmail() });
+      bar.dataset.level = c.level;
+      if (c.level !== lastLevel) { lastLevel = c.level; label.replaceChildren(); if (c.level !== 'empty') { label.append('Password strength: '); const strong = document.createElement('strong'); strong.textContent = { low: 'Low', medium: 'Medium', high: 'High' }[c.level]; label.append(strong); } }
+      c.rules.forEach((r, i) => { items[i].li.dataset.ok = String(r.ok); items[i].mark.textContent = r.ok ? '✓' : '○'; items[i].sr.textContent = r.ok ? 'Done: ' : 'Still needed: '; });
+      notes.textContent = c.notes[0] || '';
+    }
+    input.addEventListener('input', update);
+    return { update, show(on) { meter.hidden = !on; if (on) update(); } };
+  }
+
+  /** "The passwords match" / "Not the same yet" under a repeat box, as the person types. */
+  function addMatch(repeatId, firstId) {
+    const rep = $(repeatId), first = $(firstId), field = rep.closest('.field');
+    const hint = document.createElement('p'); hint.className = 'hint pw-match'; hint.setAttribute('aria-live', 'polite'); field.insertBefore(hint, $(repeatId + '-err'));
+    const update = () => { hint.textContent = !rep.value ? '' : rep.value === first.value ? 'The passwords match.' : 'Not the same yet.'; hint.dataset.state = !rep.value ? '' : rep.value === first.value ? 'same' : 'different'; };
+    rep.addEventListener('input', update); first.addEventListener('input', update);
+    return update;
+  }
+  let meters = {}, matchers = [];
 
   // each problem is shown under the box it is about
   function clearErrors() {
@@ -61,7 +106,7 @@
 
   function showSignedIn(who) {
     const how = { google: 'Signed in with Google.', github: 'Signed in with GitHub.', email: 'Signed in with your email address.' }[who.provider] || 'Signed in.';
-    $('i-who').textContent = who.email; $('i-how').textContent = how; $('b-newpass').hidden = who.provider !== 'email'; // a Google or GitHub account has no password of its own here
+    knownEmail = who.email; $('i-who').textContent = who.email; $('i-how').textContent = how; $('b-newpass').hidden = who.provider !== 'email'; // a Google or GitHub account has no password of its own here
     title('You are signed in.', 'This is your edvlabs account.'); view('a-in'); focusTitle();
   }
   function showSignedOut() { title('Sign in or create an account.', 'Use Google, GitHub or your email address.'); view('a-out'); setMode('in'); showPass(); }
@@ -72,6 +117,7 @@
     $('p-go').textContent = m === 'in' ? 'Sign in' : 'Create account';
     $('p-pass').autocomplete = m === 'in' ? 'current-password' : 'new-password';
     $('p-hint').hidden = m === 'in'; $('p-pass2-field').hidden = m === 'in'; $('l-forgot').hidden = m === 'up';
+    if (meters.sign) meters.sign.show(m === 'up'); // the rules and the bar are for choosing a password, not for typing an existing one
     clearErrors();
   }
   function showPass() { $('f-pass').hidden = false; $('f-mail').hidden = true; captcha.mount('p-captcha'); }
@@ -127,7 +173,7 @@
     e.preventDefault(); clearErrors(); notice('');
     const r = await auth.verifyCode(pending.email, $('c-code').value, pending.kind);
     if (!r.ok) return problem(r, { code: 'c-code' });
-    if (r.kind === 'recovery') { title('Choose a new password.', ''); view('f-new'); $('n-pass').focus(); return; }
+    if (r.kind === 'recovery') { title('Choose a new password.', ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); return; }
     const who = await auth.current(); who ? showSignedIn(who) : showSignedOut();
   }
   async function resendCode() {
@@ -141,7 +187,7 @@
   }
   async function submitNew(e) {
     e.preventDefault(); clearErrors(); notice('');
-    const r = await auth.setPassword($('n-pass').value, { repeat: $('n-pass2').value });
+    const r = await auth.setPassword($('n-pass').value, { repeat: $('n-pass2').value, email: knownEmail || (pending && pending.email) || '' });
     if (!r.ok) return problem(r, { password: 'n-pass', password2: 'n-pass2' });
     $('n-pass').value = ''; $('n-pass2').value = ''; notice('Your password is changed.', 'ok');
     const who = await auth.current(); who ? showSignedIn(who) : showSignedOut();
@@ -155,6 +201,10 @@
     const mem = () => { const m = new Map(); return { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => { m.set(k, String(v)); }, removeItem: (k) => { m.delete(k); } }; };
     auth = A.createAuth({ url: cfg.supabaseUrl, anonKey: cfg.anonKey, storage: safe('localStorage') || mem(), tempStorage: safe('sessionStorage') || mem(), origin: window.location.origin, returnTo: window.location.origin + window.location.pathname.replace(/index\.html$/, '') });
     captcha = makeCaptcha(cfg.turnstileSiteKey);
+    ['p-pass', 'p-pass2', 'n-pass', 'n-pass2'].forEach(addToggle);
+    meters.sign = addMeter('p-pass', () => $('p-email').value); meters.fresh = addMeter('n-pass', () => knownEmail || (pending && pending.email) || '');
+    matchers = [addMatch('p-pass2', 'p-pass'), addMatch('n-pass2', 'n-pass')];
+    $('p-pass').maxLength = window.EdvPassword.MAX; $('n-pass').maxLength = window.EdvPassword.MAX;
 
     $('b-google').addEventListener('click', () => oauth('google')); $('b-github').addEventListener('click', () => oauth('github'));
     $('t-in').addEventListener('click', () => setMode('in')); $('t-up').addEventListener('click', () => setMode('up'));
@@ -162,7 +212,7 @@
     $('l-forgot').addEventListener('click', () => showMail('reset')); $('l-link').addEventListener('click', () => showMail('link'));
     $('m-back').addEventListener('click', () => { notice(''); clearErrors(); showPass(); $('p-email').focus(); });
     $('c-resend').addEventListener('click', resendCode); $('c-other').addEventListener('click', () => { notice(''); showSignedOut(); });
-    $('b-newpass').addEventListener('click', () => { notice(''); title('Change your password.', ''); view('f-new'); $('n-pass').focus(); });
+    $('b-newpass').addEventListener('click', () => { notice(''); title('Change your password.', ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); });
     $('b-out').addEventListener('click', async () => { await auth.signOut(); notice('You are signed out.', 'ok'); showSignedOut(); });
 
     // coming back from Google, GitHub or an emailed link: ?code=… (or ?error=…)
@@ -173,7 +223,7 @@
       else {
         const r = await auth.finishFromCode(q.get('code'));
         if (!r.ok) notice(r.message, 'error');
-        else if (r.kind === 'recovery') { title('Choose a new password.', ''); view('f-new'); $('n-pass').focus(); return; }
+        else if (r.kind === 'recovery') { title('Choose a new password.', ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); return; }
       }
     }
     const who = await auth.current();

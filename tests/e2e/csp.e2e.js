@@ -67,7 +67,7 @@ const { start: startFake } = require('../lib/fake-supabase.js');
   await accountPage.addInitScript(() => document.addEventListener('securitypolicyviolation', (e) => window.reportAccount(`${e.violatedDirective} ${e.blockedURI}`)));
   await accountPage.route('**/api/config', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ supabaseUrl: fake.url, anonKey: fake.anonKey }) }));
   await accountPage.goto(proxied + '/site/account/index.html'); await accountPage.waitForSelector('#a-out:not([hidden])');
-  await accountPage.click('#t-up'); await accountPage.fill('#p-email', 'csp@example.com'); await accountPage.fill('#p-pass', 'a long enough pass 1'); await accountPage.fill('#p-pass2', 'a long enough pass 1'); await accountPage.click('#p-go');
+  await accountPage.click('#t-up'); await accountPage.fill('#p-email', 'csp@example.com'); await accountPage.fill('#p-pass', 'A-Long-Enough-Pass-1!'); await accountPage.fill('#p-pass2', 'A-Long-Enough-Pass-1!'); await accountPage.click('#p-go');
   await accountPage.waitForSelector('#a-in:not([hidden])'); await accountPage.click('#b-out'); await accountPage.waitForSelector('#a-out:not([hidden])');
   await accountPage.click('#b-google'); await accountPage.waitForSelector('#a-in:not([hidden])', { timeout: 15000 });
   assert(/google/i.test(await accountPage.textContent('#i-how')), 'Google sign-in completes under the policy');
