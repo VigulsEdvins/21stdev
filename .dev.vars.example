@@ -9,3 +9,6 @@ SUPABASE_ANON_KEY=
 LEAD_TO_EMAIL=
 LEAD_FROM_EMAIL=
 RESEND_API_KEY=
+
+# Optional spam check on the account page (Cloudflare Turnstile). The PUBLIC site key only; the secret goes into Supabase (Authentication -> Attack Protection).
+TURNSTILE_SITE_KEY=

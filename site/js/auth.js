@@ -25,6 +25,8 @@
     if (code === 'weak_password' || /password should be|weak/.test(msg)) return { message: 'Choose a longer password: at least 8 characters, and not one that is easy to guess.', field: 'password' };
     if (code === 'over_email_send_rate_limit' || code === 'over_request_rate_limit' || status === 429) return { message: 'Too many tries just now. Wait a few minutes and try again.' };
     if (code === 'validation_failed' || /unable to validate email|invalid email/.test(msg)) return { message: 'That does not look like an email address. It should look like name@example.com.', field: 'email' };
+    if (code === 'otp_expired' || /token has expired or is invalid|otp.*expired/.test(msg)) return { message: 'That code is wrong or has expired. Check it, or ask for a new one.', field: 'code' };
+    if (code === 'captcha_failed' || /captcha/.test(msg)) return { message: 'The spam check did not pass. Please try again.' };
     if (code === 'bad_code_verifier' || code === 'flow_state_not_found' || code === 'flow_state_expired' || /code verifier|flow state/.test(msg)) return { message: 'That sign-in link has expired or was opened in a different browser. Please start again.' };
     if (code === 'signup_disabled' || /signups not allowed/.test(msg)) return { message: 'New accounts are not open yet.' };
     if (status >= 500) return { message: 'Something went wrong on our side. Please try again in a minute.' };
@@ -64,6 +66,10 @@
       return { verifier, challenge: await challengeOf(verifier), method: 's256' };
     }
     // where Supabase sends the visitor back to: this account page (deps.returnTo), or origin + /account/
+    // Supabase checks this token itself when its CAPTCHA protection is on, so a bot cannot skip the page and call the service directly
+    const sec = (t) => (t ? { gotrue_meta_security: { captcha_token: t } } : {});
+    const CODE_TYPES = { signup: 'signup', link: 'email', recovery: 'recovery' }; // what Supabase calls each kind of emailed code
+    const mismatch = (a, b) => (b !== undefined && a !== b ? { ok: false, message: 'The two passwords are not the same. Type the same password in both boxes.', field: 'password2' } : null);
     const back = () => encodeURIComponent(deps.returnTo || (origin + '/account/'));
 
     return {
@@ -73,33 +79,62 @@
         const p = await newPkce('login');
         return { ok: true, url: base + '/auth/v1/authorize?provider=' + provider + '&redirect_to=' + back() + '&code_challenge=' + p.challenge + '&code_challenge_method=' + p.method };
       },
-      async signUp(email, password) {
+      /** opts: { repeat } the second password box (must be the same), { captchaToken } from the spam check */
+      async signUp(email, password, opts) {
+        opts = opts || {};
         if (!EMAIL_RE.test(email || '')) return { ok: false, message: 'That does not look like an email address. It should look like name@example.com.', field: 'email' };
         if (!password || password.length < 8) return { ok: false, message: 'Choose a longer password: at least 8 characters.', field: 'password' };
+        const same = mismatch(password, opts.repeat); if (same) return same;
         const p = await newPkce('signup');
-        const r = await call('POST', '/auth/v1/signup?redirect_to=' + back(), { email, password, code_challenge: p.challenge, code_challenge_method: p.method });
+        const r = await call('POST', '/auth/v1/signup?redirect_to=' + back(), Object.assign({ email, password, code_challenge: p.challenge, code_challenge_method: p.method }, sec(opts.captchaToken)));
         if (!r.ok) return r;
         const s = saveSession(r.json); // confirmation switched off: signed in at once
         return s ? { ok: true, session: s } : { ok: true, checkEmail: true };
       },
-      async signIn(email, password) {
+      async signIn(email, password, opts) {
+        opts = opts || {};
         if (!EMAIL_RE.test(email || '')) return { ok: false, message: 'That does not look like an email address. It should look like name@example.com.', field: 'email' };
         if (!password) return { ok: false, message: 'Type your password.', field: 'password' };
-        const r = await call('POST', '/auth/v1/token?grant_type=password', { email, password });
+        const r = await call('POST', '/auth/v1/token?grant_type=password', Object.assign({ email, password }, sec(opts.captchaToken)));
         if (!r.ok) return r;
         return { ok: true, session: saveSession(r.json) };
       },
-      async emailLink(email) {
+      async emailLink(email, opts) {
+        opts = opts || {};
         if (!EMAIL_RE.test(email || '')) return { ok: false, message: 'That does not look like an email address. It should look like name@example.com.', field: 'email' };
         const p = await newPkce('link');
-        const r = await call('POST', '/auth/v1/otp?redirect_to=' + back(), { email, create_user: true, code_challenge: p.challenge, code_challenge_method: p.method });
+        const r = await call('POST', '/auth/v1/otp?redirect_to=' + back(), Object.assign({ email, create_user: true, code_challenge: p.challenge, code_challenge_method: p.method }, sec(opts.captchaToken)));
         return r.ok ? { ok: true } : r;
       },
-      async forgotPassword(email) {
+      async forgotPassword(email, opts) {
+        opts = opts || {};
         if (!EMAIL_RE.test(email || '')) return { ok: false, message: 'That does not look like an email address. It should look like name@example.com.', field: 'email' };
         const p = await newPkce('recovery');
-        const r = await call('POST', '/auth/v1/recover?redirect_to=' + back(), { email, code_challenge: p.challenge, code_challenge_method: p.method });
+        const r = await call('POST', '/auth/v1/recover?redirect_to=' + back(), Object.assign({ email, code_challenge: p.challenge, code_challenge_method: p.method }, sec(opts.captchaToken)));
         return r.ok ? { ok: true } : r; // the answer does not say whether the address has an account
+      },
+      /** The 6-digit code from the email, typed by hand. kind: 'signup' (new account), 'link' (emailed sign-in) or 'recovery' (forgot password).
+          Works on any device, so it also covers an email opened on a phone. */
+      async verifyCode(email, code, kind) {
+        const token = String(code || '').replace(/\s+/g, '');
+        if (!EMAIL_RE.test(email || '')) return { ok: false, message: 'Start again: type your email address first.', field: 'email' };
+        if (!CODE_TYPES[kind]) return { ok: false, message: 'That did not work. Please try again.' };
+        if (!/^\d{6,10}$/.test(token)) return { ok: false, message: 'Type the code from the email. It is made of digits only.', field: 'code' };
+        const r = await call('POST', '/auth/v1/verify', { type: CODE_TYPES[kind], email, token });
+        if (!r.ok) return r;
+        const s = saveSession(r.json);
+        return s ? { ok: true, session: s, kind } : { ok: false, message: 'That did not work. Please try again.' };
+      },
+      /** Sends the email again (a new code and a new link). The service allows one a minute. */
+      async resend(email, kind, opts) {
+        opts = opts || {};
+        if (kind === 'signup') {
+          if (!EMAIL_RE.test(email || '')) return { ok: false, message: 'That does not look like an email address.', field: 'email' };
+          const p = await newPkce('signup');
+          const r = await call('POST', '/auth/v1/resend?redirect_to=' + back(), Object.assign({ type: 'signup', email, code_challenge: p.challenge, code_challenge_method: p.method }, sec(opts.captchaToken)));
+          return r.ok ? { ok: true } : r;
+        }
+        return kind === 'recovery' ? this.forgotPassword(email, opts) : this.emailLink(email, opts);
       },
       /** Called on the account page when the address carries ?code=…: swaps it for a session. kind says what the visitor was doing. */
       async finishFromCode(code) {
@@ -109,10 +144,12 @@
         if (!r.ok) return r;
         return { ok: true, session: saveSession(r.json), kind: kept.kind };
       },
-      async setPassword(password) {
+      async setPassword(password, opts) {
+        opts = opts || {};
         const s = read(store, SESSION_KEY);
         if (!s) return { ok: false, message: 'Please sign in again first.' };
         if (!password || password.length < 8) return { ok: false, message: 'Choose a longer password: at least 8 characters.', field: 'password' };
+        const same = mismatch(password, opts.repeat); if (same) return same;
         const r = await call('PUT', '/auth/v1/user', { password }, s.access_token);
         return r.ok ? { ok: true } : r;
       },

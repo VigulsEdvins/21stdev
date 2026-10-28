@@ -113,6 +113,50 @@ const codeOf = (link) => new URL(link).searchParams.get('code');
   const userCalls = seen.filter((c) => /\/auth\/v1\/user$/.test(c.u)); assert(userCalls.length === 1 && /^Bearer access-/.test(userCalls[0].h.Authorization) && userCalls[0].h.Authorization !== 'Bearer ' + fake.anonKey, 'the signed-in call carries the person\'s own token');
   console.log('  ✓ the public key goes in apikey only, so both key styles work');
 
+  // repeat password: both boxes must match, and nothing is sent when they do not
+  let mine = mk(); let c0 = fake.calls.length;
+  r = await mine.auth.signUp('dora@example.com', 'a long enough pass 1', { repeat: 'a long enough pass 2' });
+  assert(!r.ok && r.field === 'password2' && /not the same/.test(r.message) && fake.calls.length === c0, 'a mismatch is named under the repeat box and sends nothing');
+  r = await mine.auth.signUp('dora@example.com', 'a long enough pass 1', { repeat: 'a long enough pass 1' }); assert(r.ok && r.checkEmail);
+  console.log('  ✓ repeat password must match before anything is sent');
+
+  // the emailed code: wrong code, right code, only digits, per-kind
+  let mails2 = await outbox(fake); const dora = mails2.filter((m) => m.to === 'dora@example.com').pop();
+  assert(/^\d{6}$/.test(dora.code), 'the email carries a 6-digit code');
+  r = await mine.auth.verifyCode('dora@example.com', 'abc123', 'signup'); assert(!r.ok && r.field === 'code' && /digits only/.test(r.message));
+  r = await mine.auth.verifyCode('dora@example.com', dora.code === '111111' ? '222222' : '111111', 'signup'); assert(!r.ok && r.field === 'code' && /wrong or has expired/.test(r.message) && !/otp/i.test(r.message), r.message);
+  r = await mine.auth.verifyCode('dora@example.com', ' ' + dora.code.slice(0, 3) + ' ' + dora.code.slice(3) + ' ', 'signup'); assert(r.ok && r.kind === 'signup' && r.session.user.email === 'dora@example.com', 'spaces in a pasted code are ignored');
+  assert((await mine.auth.current()).email === 'dora@example.com');
+  r = await mine.auth.verifyCode('dora@example.com', dora.code, 'signup'); assert(!r.ok, 'a code works once');
+  r = await mine.auth.verifyCode('dora@example.com', dora.code, 'nonsense'); assert(!r.ok);
+  console.log('  ✓ the emailed code signs in, once, with a plain message when wrong');
+
+  // emailed sign-in code and recovery code, and resend gives a fresh one
+  mine = mk(); await mine.auth.emailLink('eve@example.com');
+  let e1 = (await outbox(fake)).filter((m) => m.to === 'eve@example.com').pop();
+  r = await mine.auth.resend('eve@example.com', 'link'); assert(r.ok); const e2 = (await outbox(fake)).filter((m) => m.to === 'eve@example.com').pop();
+  assert(e2 !== e1, 'resend sends another email');
+  r = await mine.auth.verifyCode('eve@example.com', e2.code, 'link'); assert(r.ok && r.session.user.email === 'eve@example.com');
+  mine = mk(); await mine.auth.forgotPassword('eve@example.com'); const rec = (await outbox(fake)).filter((m) => m.to === 'eve@example.com' && m.kind === 'recovery').pop();
+  r = await mine.auth.verifyCode('eve@example.com', rec.code, 'recovery'); assert(r.ok && r.kind === 'recovery');
+  r = await mine.auth.setPassword('a new password 33', { repeat: 'another one 44' }); assert(!r.ok && r.field === 'password2');
+  r = await mine.auth.setPassword('a new password 33', { repeat: 'a new password 33' }); assert(r.ok);
+  mine = mk(); await mine.auth.signUp('fay@example.com', 'a long enough pass 1'); r = await mine.auth.resend('fay@example.com', 'signup'); assert(r.ok);
+  const fay = (await outbox(fake)).filter((m) => m.to === 'fay@example.com'); assert.strictEqual(fay.length, 2, 'resend for a new account sends a second email');
+  r = await mine.auth.verifyCode('fay@example.com', fay[1].code, 'signup'); assert(r.ok, 'the newest code works');
+  console.log('  ✓ emailed sign-in code, recovery code with a repeated new password, and resend');
+
+  // spam check: the token travels in the body Supabase checks, and a missing one is refused in plain words
+  const guarded = await start({ confirmEmails: false, requireCaptcha: true });
+  const g = A.createAuth({ url: guarded.url, anonKey: guarded.anonKey, storage: mem(), tempStorage: mem(), origin: 'https://edvlabs.test' });
+  r = await g.signUp('gina@example.com', 'a long enough pass 1'); assert(!r.ok && /spam check did not pass/.test(r.message) && !/captcha/i.test(r.message), 'no token: ' + r.message);
+  r = await g.signUp('gina@example.com', 'a long enough pass 1', { captchaToken: guarded.captchaToken }); assert(r.ok, 'with the token it works');
+  r = await g.signIn('gina@example.com', 'a long enough pass 1'); assert(!r.ok); r = await g.signIn('gina@example.com', 'a long enough pass 1', { captchaToken: guarded.captchaToken }); assert(r.ok);
+  r = await g.emailLink('gina@example.com'); assert(!r.ok); r = await g.emailLink('gina@example.com', { captchaToken: guarded.captchaToken }); assert(r.ok);
+  r = await g.forgotPassword('gina@example.com'); assert(!r.ok); r = await g.forgotPassword('gina@example.com', { captchaToken: guarded.captchaToken }); assert(r.ok);
+  await guarded.close();
+  console.log('  ✓ the spam-check token is sent with sign up, sign in, emailed link and reset');
+
   await fake.close();
   console.log('auth ok');
 })().catch((e) => { console.error(e); process.exit(1); });

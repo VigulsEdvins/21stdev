@@ -74,6 +74,10 @@ async function main() {
       const c = parseCsp(effective(rules, '/account/*')['content-security-policy'] || '');
       const extra = (c['connect-src'] || []).filter((x) => x !== "'self'");
       if (extra.length !== 1 || !/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(extra[0])) errs.push('/account/*: connect-src may add only the one Supabase address');
+      const only = (d, host) => { const v = (c[d] || []).filter((x) => x !== "'self'"); return v.length === 0 || (v.length === 1 && v[0] === host); };
+      if (!only('script-src', 'https://challenges.cloudflare.com')) errs.push('/account/*: script-src may add only https://challenges.cloudflare.com (the spam check)');
+      if (!only('frame-src', 'https://challenges.cloudflare.com')) errs.push('/account/*: frame-src may only be https://challenges.cloudflare.com (the spam check)');
+      if ((c['style-src'] || []).some((x) => x !== "'self'")) errs.push('/account/*: style-src must stay as strict as everywhere');
       if (!(rules['/account/*']['!detach'] || []).includes('content-security-policy')) errs.push('/account/*: must detach the strict policy first, or the browser applies both');
     }
     if (rules['/style/*'] && !(rules['/style/*']['!detach'] || []).includes('content-security-policy')) errs.push('/style/*: must detach the strict policy first, or the browser applies both');

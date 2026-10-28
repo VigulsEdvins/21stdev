@@ -16,7 +16,7 @@ const { parseHeaders } = require('./check-headers.js');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.wav': 'audio/wav', '.mp3': 'audio/mpeg', '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml', '.ico': 'image/x-icon' };
-const KNOWN = ['SUPABASE_URL', 'SUPABASE_ANON_KEY', 'LEAD_TO_EMAIL', 'LEAD_FROM_EMAIL', 'RESEND_API_KEY', 'TURNSTILE_SECRET', 'LEAD_ACK'];
+const KNOWN = ['SUPABASE_URL', 'SUPABASE_ANON_KEY', 'LEAD_TO_EMAIL', 'LEAD_FROM_EMAIL', 'RESEND_API_KEY', 'TURNSTILE_SECRET', 'TURNSTILE_SITE_KEY', 'LEAD_ACK'];
 
 /** KEY=value lines (the .dev.vars format Cloudflare's own tool uses). Comments and blank lines are ignored; quotes around a value are removed. */
 function parseVars(text) {

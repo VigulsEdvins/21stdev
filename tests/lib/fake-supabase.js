@@ -10,7 +10,7 @@ const id = () => crypto.randomUUID();
 
 function start(opts = {}) {
   const anonKey = 'anon-test-key';
-  const state = { confirmEmails: opts.confirmEmails !== false, users: new Map(), outbox: [], codes: new Map(), sessions: new Map(), refresh: new Map(), anonKey, calls: [] };
+  const state = { confirmEmails: opts.confirmEmails !== false, requireCaptcha: !!opts.requireCaptcha, captchaToken: 'test-captcha-token', otps: new Map(), users: new Map(), outbox: [], codes: new Map(), sessions: new Map(), refresh: new Map(), anonKey, calls: [] };
   const err = (res, status, error_code, msg) => send(res, status, { code: status, error_code, msg });
   function send(res, status, body) {
     res.writeHead(status, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'apikey, authorization, content-type', 'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS' });
@@ -24,6 +24,9 @@ function start(opts = {}) {
   }
   // a one-time code tied to the PKCE challenge the browser sent
   function issueCode(email, challenge) { const code = 'code-' + id(); state.codes.set(code, { email, challenge }); return code; }
+  // a 6-digit code per person and kind, like the real service (signup, email = emailed sign-in, recovery)
+  function issueOtp(email, type) { const code = String(Math.floor(100000 + Math.random() * 900000)); state.otps.set(email + '|' + type, code); return code; }
+  const captchaBad = (body) => state.requireCaptcha && !(body.gotrue_meta_security && body.gotrue_meta_security.captcha_token === state.captchaToken);
   const upsert = (email, provider, password, confirmed) => { let u = state.users.get(email); if (!u) { u = { id: id(), email, provider, password, confirmed: !!confirmed }; state.users.set(email, u); } return u; };
 
   const server = http.createServer((req, res) => {
@@ -49,24 +52,38 @@ function start(opts = {}) {
         res.writeHead(302, { Location: redirectTo + (redirectTo.includes('?') ? '&' : '?') + 'code=' + code });
         return res.end();
       }
+      const guarded = ['/auth/v1/signup', '/auth/v1/otp', '/auth/v1/recover', '/auth/v1/resend'].includes(url.pathname) || (url.pathname === '/auth/v1/token' && url.searchParams.get('grant_type') === 'password');
+      if (req.method === 'POST' && guarded && captchaBad(body)) return err(res, 400, 'captcha_failed', 'captcha protection: request disallowed (invalid-input-response)');
       if (url.pathname === '/auth/v1/signup' && req.method === 'POST') {
         if (!body.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) return err(res, 422, 'validation_failed', 'Unable to validate email address: invalid format');
         if (!body.password || body.password.length < 8) return err(res, 422, 'weak_password', 'Password should be at least 8 characters.');
         if (state.users.has(body.email) && state.users.get(body.email).confirmed) return err(res, 422, 'user_already_exists', 'User already registered');
         const u = upsert(body.email, 'email', body.password, !state.confirmEmails);
         if (!state.confirmEmails) return send(res, 200, newSession(u));
-        state.outbox.push({ to: u.email, kind: 'confirm', link: redirectTo + '?code=' + issueCode(u.email, body.code_challenge), confirmUser: u.email });
+        state.outbox.push({ to: u.email, kind: 'confirm', link: redirectTo + '?code=' + issueCode(u.email, body.code_challenge), code: issueOtp(u.email, 'signup'), confirmUser: u.email });
         return send(res, 200, publicUser(u));
       }
       if (url.pathname === '/auth/v1/otp' && req.method === 'POST') {
         const u = upsert(body.email, 'email', null, true);
-        state.outbox.push({ to: u.email, kind: 'link', link: redirectTo + '?code=' + issueCode(u.email, body.code_challenge) });
+        state.outbox.push({ to: u.email, kind: 'link', link: redirectTo + '?code=' + issueCode(u.email, body.code_challenge), code: issueOtp(u.email, 'email') });
         return send(res, 200, {});
       }
       if (url.pathname === '/auth/v1/recover' && req.method === 'POST') {
         const u = state.users.get(body.email);
-        if (u) state.outbox.push({ to: u.email, kind: 'recovery', link: redirectTo + '?code=' + issueCode(u.email, body.code_challenge) });
+        if (u) state.outbox.push({ to: u.email, kind: 'recovery', link: redirectTo + '?code=' + issueCode(u.email, body.code_challenge), code: issueOtp(u.email, 'recovery') });
         return send(res, 200, {}); // same answer whether or not the address has an account
+      }
+      if (url.pathname === '/auth/v1/verify' && req.method === 'POST') {
+        const want = state.otps.get(body.email + '|' + body.type);
+        if (!want || want !== body.token) return err(res, 403, 'otp_expired', 'Token has expired or is invalid');
+        state.otps.delete(body.email + '|' + body.type);
+        const u = state.users.get(body.email); if (!u) return err(res, 403, 'otp_expired', 'Token has expired or is invalid');
+        u.confirmed = true; return send(res, 200, newSession(u));
+      }
+      if (url.pathname === '/auth/v1/resend' && req.method === 'POST') {
+        const u = state.users.get(body.email); if (!u) return send(res, 200, {});
+        state.outbox.push({ to: u.email, kind: 'confirm', link: redirectTo + '?code=' + issueCode(u.email, body.code_challenge), code: issueOtp(u.email, 'signup'), confirmUser: u.email });
+        return send(res, 200, { message_id: id() });
       }
       if (url.pathname === '/auth/v1/token' && req.method === 'POST') {
         const grant = url.searchParams.get('grant_type');

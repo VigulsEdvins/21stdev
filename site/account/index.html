@@ -39,15 +39,28 @@
     <form class="stack" id="f-pass" novalidate>
       <div class="field"><label for="p-email">Email address</label><input class="input" id="p-email" type="email" autocomplete="email" aria-describedby="p-email-err"><span class="error-text" id="p-email-err" role="alert"></span></div>
       <div class="field"><label for="p-pass">Password</label><span class="hint" id="p-hint" hidden>At least 8 characters.</span><input class="input" id="p-pass" type="password" autocomplete="current-password" aria-describedby="p-pass-err"><span class="error-text" id="p-pass-err" role="alert"></span></div>
+      <div class="field" id="p-pass2-field" hidden><label for="p-pass2">Repeat the password</label><input class="input" id="p-pass2" type="password" autocomplete="new-password" aria-describedby="p-pass2-err"><span class="error-text" id="p-pass2-err" role="alert"></span></div>
+      <div class="trap" aria-hidden="true"><label>Leave this empty <input type="text" id="p-trap" tabindex="-1" autocomplete="off"></label></div>
+      <div class="captcha" id="p-captcha" hidden></div>
       <div><button class="btn" type="submit" id="p-go">Sign in</button></div>
       <p class="acct-links"><button type="button" class="linklike" id="l-forgot">Forgot your password?</button> <button type="button" class="linklike" id="l-link">Email me a sign-in link instead</button></p>
     </form>
     <form class="stack" id="f-mail" novalidate hidden>
       <p id="m-intro"></p>
       <div class="field"><label for="m-email">Email address</label><input class="input" id="m-email" type="email" autocomplete="email" aria-describedby="m-email-err"><span class="error-text" id="m-email-err" role="alert"></span></div>
+      <div class="trap" aria-hidden="true"><label>Leave this empty <input type="text" id="m-trap" tabindex="-1" autocomplete="off"></label></div>
+      <div class="captcha" id="m-captcha" hidden></div>
       <div><button class="btn" type="submit" id="m-go">Send</button> <button class="btn btn--secondary" type="button" id="m-back">Back</button></div>
     </form>
   </div>
+
+  <form class="stack" id="f-code" novalidate hidden>
+    <p id="c-intro"></p>
+    <div class="field"><label for="c-code">Code from the email</label><span class="hint">Digits only. Paste it as it is.</span><input class="input input--code" id="c-code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="12" autocomplete="one-time-code" aria-describedby="c-code-err"><span class="error-text" id="c-code-err" role="alert"></span></div>
+    <div class="captcha" id="c-captcha" hidden></div>
+    <div><button class="btn" type="submit" id="c-go">Verify</button></div>
+    <p class="acct-links"><button type="button" class="linklike" id="c-resend">Send a new code</button> <button type="button" class="linklike" id="c-other">Use a different email</button></p>
+  </form>
 
   <div id="a-in" hidden>
     <p id="i-who"></p>
@@ -58,6 +71,7 @@
   <form class="stack" id="f-new" novalidate hidden>
     <p>Choose a new password.</p>
     <div class="field"><label for="n-pass">New password</label><span class="hint">At least 8 characters.</span><input class="input" id="n-pass" type="password" autocomplete="new-password" aria-describedby="n-pass-err"><span class="error-text" id="n-pass-err" role="alert"></span></div>
+    <div class="field"><label for="n-pass2">Repeat the new password</label><input class="input" id="n-pass2" type="password" autocomplete="new-password" aria-describedby="n-pass2-err"><span class="error-text" id="n-pass2-err" role="alert"></span></div>
     <div><button class="btn" type="submit">Save password</button></div>
   </form>
 </div></section>

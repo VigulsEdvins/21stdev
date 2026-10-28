@@ -154,3 +154,6 @@
 
 /* the hidden attribute always hides, even on elements whose own style sets a display */
 [hidden] { display: none !important; }
+
+.input--code { max-width: 14em; font-variant-numeric: tabular-nums; letter-spacing: .2em; font-size: 1.25rem; }
+.captcha { min-height: 0; }

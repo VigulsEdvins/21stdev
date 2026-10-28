@@ -17,6 +17,29 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 
 **Google:** consent screen set to "In production" (while it says Testing only listed test users can sign in), authorized domains `edvlabs.com` and the full project domain `<project-ref>.supabase.co` (Google refuses the bare `supabase.co`), the OAuth client's redirect URI as above. Add the privacy-policy and terms links to Branding when those pages exist.
 
+## Emailed code, spam check, repeat password (owner steps)
+
+**1. Make the emails show the code.** In Supabase, open **Authentication → Email Templates** and edit three templates so each shows the code and keeps the link. The page asks for the code Supabase puts in `{{ .Token }}`:
+
+- **Confirm signup**, **Magic Link** and **Reset Password** (subject lines in plain words, for example "Your edvlabs code"). Body, for each (change the heading and the last sentence to fit):
+```html
+<h2>Your edvlabs code</h2>
+<p>Type this code on the page: <strong style="font-size:24px;letter-spacing:4px">{{ .Token }}</strong></p>
+<p>Or press this link on the same device: <a href="{{ .ConfirmationURL }}">Continue</a></p>
+<p>If you did not ask for this, you can ignore this email.</p>
+```
+- In **Authentication → Sign In / Providers → Email** the code length is 6 by default (the page accepts 6 to 10 digits) and it expires after an hour by default. Keep "Confirm email" on.
+- Until custom SMTP is set (see above) Supabase's own sender is limited to a few emails an hour, which is enough for testing and not for launch.
+
+**2. Turn on the spam check (Cloudflare Turnstile), optional but recommended before launch.**
+1. Cloudflare dashboard → **Turnstile → Add widget**. Hostnames: `edvlabs.com` (and `localhost` for local testing). Mode: Managed. It gives a **site key** (public) and a **secret key** (private).
+2. Supabase → **Authentication → Attack Protection** → switch on **CAPTCHA protection**, provider **Cloudflare Turnstile**, paste the **secret key** there (never in git or Cloudflare variables). From then on Supabase itself refuses sign-up, sign-in, emailed code and reset requests that carry no valid spam-check token, even from a bot that skips the page and calls the service directly.
+3. Add the **site key** (public) as the plain variable `TURNSTILE_SITE_KEY` in the Worker's Variables and Secrets (and in `.dev.vars` for local testing). The page then shows the check and sends its token. Turn **step 2 on before or together with step 3**: if the page shows the check but Supabase's protection is off, nothing breaks; if Supabase's protection is on but the page has no site key, every sign-in is refused.
+
+**What each defence does.** The *honeypot* (a hidden box on every form; people never see it, bots that fill every box do) catches simple form-filling bots and costs nothing, but a bot that talks to Supabase directly never touches the page, so it cannot be stopped there. Only the *spam check verified by Supabase* stops that. Supabase also rate-limits emails per address and per hour, whatever the page does.
+
+**Repeat password.** Creating an account and choosing a new password both ask for the password twice and refuse if the two differ, before anything is sent.
+
 ## How it works
 
 - `site/account/index.html` and `site/js/account.js` are the page; `site/js/auth.js` talks to Supabase over `fetch`, with no third-party library.
@@ -30,7 +53,7 @@ The pages and code are built and tested against a pretend Supabase (`tests/lib/f
 - Nothing links to the account page from the menu yet (it is reachable at `/account/`, and marked noindex). Add the link when the builder needs an account.
 - Accounts do not own anything yet: projects, orders and downloads (plan E4, E7, E10) and the database rules that keep each customer's rows private (E4.1).
 - Delete account and change email (plan E4.2, E12.5).
-- Cloudflare Turnstile on sign-up, and the terms and privacy text to agree to (E12).
+- The terms and privacy text to agree to when creating an account (E12). Turnstile on the contact and question forms (the lead receiver already supports `TURNSTILE_SECRET`; the widget is not on those forms yet).
 
 ## Tests
 

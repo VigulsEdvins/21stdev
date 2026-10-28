@@ -1,7 +1,7 @@
 /* The HTTP side of lead intake: POST /api/lead. Used by the Cloudflare Worker (src/worker.js) and by the Pages Function
    (functions/api/lead.js), so the behaviour is the same in both and can be tested here without a network.
    Settings (never in git): LEAD_TO_EMAIL, LEAD_FROM_EMAIL, RESEND_API_KEY; optional KV binding LEADS (rate limit and repeat marking),
-   optional TURNSTILE_SECRET, optional LEAD_ACK=1. All the lead rules are in ./lead.js. */
+   optional TURNSTILE_SECRET, optional LEAD_ACK=1; optional TURNSTILE_SITE_KEY (public) switches on the spam check on the account page (its secret goes into Supabase, not here). All the lead rules are in ./lead.js. */
 const lead = require('./lead.js');
 const { handle, resendMailer } = lead;
 
@@ -34,7 +34,7 @@ async function route(request, env, serveAsset) {
   const path = new URL(request.url).pathname;
   if (path === '/api/lead') return request.method === 'POST' ? receive(request, env) : json(405, { ok: false, errors: ['Use POST.'] }, { Allow: 'POST' });
   // The Supabase address and the public (anon) key, so the static pages hold neither. Both are meant to be public; the secret key never goes here.
-  if (path === '/api/config') return request.method === 'GET' ? (env.SUPABASE_URL && env.SUPABASE_ANON_KEY ? json(200, { supabaseUrl: env.SUPABASE_URL, anonKey: env.SUPABASE_ANON_KEY }, { 'Cache-Control': 'no-store' }) : json(503, { ok: false, errors: ['Accounts are not set up yet.'], missing: ['SUPABASE_URL', 'SUPABASE_ANON_KEY'].filter((k) => !env[k]) })) : json(405, { ok: false, errors: ['Use GET.'] }, { Allow: 'GET' });
+  if (path === '/api/config') return request.method === 'GET' ? (env.SUPABASE_URL && env.SUPABASE_ANON_KEY ? json(200, Object.assign({ supabaseUrl: env.SUPABASE_URL, anonKey: env.SUPABASE_ANON_KEY }, env.TURNSTILE_SITE_KEY ? { turnstileSiteKey: env.TURNSTILE_SITE_KEY } : {}), { 'Cache-Control': 'no-store' }) : json(503, { ok: false, errors: ['Accounts are not set up yet.'], missing: ['SUPABASE_URL', 'SUPABASE_ANON_KEY'].filter((k) => !env[k]) })) : json(405, { ok: false, errors: ['Use GET.'] }, { Allow: 'GET' });
   if (path.startsWith('/api/')) return json(404, { ok: false, errors: ['Not found.'] });
   return serveAsset(request);
 }
