@@ -56,3 +56,10 @@ body.is-guided #paneElements .elements-catalog-header, body.is-guided #elementsC
 .bp-kind.is-added .bp-add { background: transparent; color: var(--text-main); border-color: var(--text-main); }
 .bp-kind.is-later { border-style: dashed; }
 .bp-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+/* guided step 2: one block at a time, no admin panel */
+.words-status { display: none; margin: 0 0 12px; padding: 10px 12px; border: 2px dashed var(--text-main); border-radius: 12px; font-size: 15px; color: var(--text-main); }
+body.is-guided .words-status { display: block; }
+.words-nav { display: none; gap: 8px; margin: 8px 0; }
+body.is-guided .words-nav { display: flex; }
+body.is-guided .admin-open-card, body.is-guided .widgets-catalog-header, body.is-guided .quick-edit > summary { display: none; }
