@@ -12,6 +12,7 @@ npm run security
 | Secrets in history | `npm run check-secrets -- --history` | Same scan over every commit's added lines | Rotate the key; history rewriting is a separate decision |
 | Dependencies | `npm run audit` | `npm audit` for production dependencies, fails at high and critical | Update the package, or replace it |
 | Code safety | `npm run check-code-safety` | No `eval`, `new Function`, `document.write`, unlisted remote scripts, `message` listeners without an origin check (in `features/`) | Remove the pattern, or add `safetyReviewed` with a reason to that feature's `meta.json` |
+| Response headers | `npm run check-headers` (file) or `npm run check-headers -- https://staging.edvlabs.com` (live) | `site/_headers` has a strict Content Security Policy (no inline or eval scripts), HSTS, nosniff, referrer, permissions and opener policies; `tests/e2e/csp.e2e.js` loads every public page under that policy | Fix the header file; never loosen `script-src` to make a page work, change the page |
 
 Before every commit (once per clone):
 

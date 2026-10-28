@@ -50,9 +50,10 @@
     "setup-hooks": "git config core.hooksPath .githooks",
     "audit": "npm audit --omit=dev --audit-level=high",
     "check-brand": "node scripts/check-brand-contrast.js",
-    "security": "npm run check-secrets && npm run audit && npm run check-code-safety",
+    "security": "npm run check-secrets && npm run audit && npm run check-code-safety && npm run check-headers",
     "test:brief": "node tests/test-brief.js",
-    "test:lead": "node tests/test-lead.js"
+    "test:lead": "node tests/test-lead.js",
+    "check-headers": "node scripts/check-headers.js"
   },
   "keywords": [],
   "author": "",
