@@ -33,9 +33,14 @@ edvlabs sells landing pages and small websites at **edvlabs.com** (domain owned,
 - Design system: `site/styles/tokens.css`, `site/styles/components.css`, self-hosted fonts in `site/fonts/`, living style page `site/style/index.html`, contrast check `npm run check-brand`.
 - Tests: `npm test`, `npm run test:e2e` (44+ files), `npm run check-exports`; all passing at the last run.
 
+- **Public home page and question flow (2026-10-28):** `site/index.html` (home), `site/start/index.html` (ten questions, summary, fork, contact step), `site/site.css`, `site/js/prices.js` (the one price table), `site/js/questions.js` (DRAFT wording), `site/js/start.js`. Tested by `tests/e2e/storefront.e2e.js`. No innerHTML.
+  - Sending a lead is not connected: the form posts to the URL in `<meta name="lead-endpoint">` once one is added to `site/start/index.html`; until then it says nothing left the browser. Payload shape is in `lead()` in `start.js`.
+  - "Self-build" ends on a "tell me when it opens" screen because accounts and the builder do not exist yet.
+  - Home page has no example screenshots, owner note, company details, or real FAQ review yet (E2.2 remainder, E2.4, E2.6). "Prices include VAT" is copied from the mock-up: confirm with the owner.
+
 ## Next steps (in order)
 
-1. **Build the real public home page and the question flow** from the style page components (plan E2.2, E3.3). The wording of the ten questions (E3.1) needs the owner's review before it goes live.
+1. **Owner review of the wording** of the ten questions (E3.1) and the home page text; then examples strip with real screenshots, owner note, company details in the footer.
 2. Set up Cloudflare Pages with the owner (E0.8, E0.5): staging at staging.edvlabs.com, a lead test reaching the owner's email. The owner runs the account steps; Claude cannot log in.
 3. Lead intake and the owner's lead list (E3.6, E9).
 4. Remaining security tasks in E16 (static analysis, the 58 `innerHTML` sites, preview-frame isolation, headers/CSP).
