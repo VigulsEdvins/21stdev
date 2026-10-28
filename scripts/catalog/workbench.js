@@ -58,10 +58,10 @@
       const tplLinks = document.getElementById('wbTemplateLinks');
       tplLinks.innerHTML = '';
       if (activeItem.liveSiteUrl) {
-        tplLinks.innerHTML += `<a class="subtle-btn" href="${activeItem.liveSiteUrl}" target="_blank" rel="noopener">Launch Live Site &nearr;</a> `;
+        tplLinks.innerHTML += `<a class="subtle-btn" href="${escapeHtml(activeItem.liveSiteUrl)}" target="_blank" rel="noopener">Launch Live Site &nearr;</a> `;
       }
       if (activeItem.adminUrl) {
-        tplLinks.innerHTML += `<a class="subtle-btn" href="${activeItem.adminUrl}" target="_blank" rel="noopener">Open Admin CMS &nearr;</a>`;
+        tplLinks.innerHTML += `<a class="subtle-btn" href="${escapeHtml(activeItem.adminUrl)}" target="_blank" rel="noopener">Open Admin CMS &nearr;</a>`;
       }
 
       if (wbPreviewFrame.getAttribute('data-loaded-slug') !== activeItem.slug) {

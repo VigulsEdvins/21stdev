@@ -25,3 +25,7 @@ This runs the secret scan on the staged files and refuses a commit that adds a s
 CI runs the same checks in the `security` job on every pull request and nightly. Installs use the committed lock file (`npm ci`).
 
 The full plan for security work, with what is still to do, is epic E16 in `docs/superpowers/plans/2026-10-27-edvlabs-storefront-plan.md`.
+
+## HTML-string sites (plan E16.5)
+
+`npm run check-innerhtml` lists every `innerHTML =`, `outerHTML =` and `insertAdjacentHTML` in the builder and catalogue code (`npm run check-innerhtml -- --list` shows all of them). A site passes when it only clears an element, assigns a constant, or wraps every dynamic part in `escapeHtml`. Anything else needs an entry in `docs/security/innerhtml-verdicts.json` with a verdict (`safe`, `fixed` or `waived`) and a reason, so a new risky site cannot slip in. First full review: 2026-10-28, 64 sites, 8 fixed (see the file). Still to do from E16.5: the `postMessage` handlers, the `localStorage` uses, the preview-frame decision and a hostile-input test file.

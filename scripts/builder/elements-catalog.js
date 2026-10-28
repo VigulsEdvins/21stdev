@@ -260,7 +260,7 @@
         const previewBoxHtml = item.isWidget
           ? `<div class="element-widget-preview">${item.previewHtml || ''}</div>`
           : `
-            <div class="element-card-preview-box" data-slug="${item.slug}"${useThumb ? ` data-thumb="${escapeHtml(item.thumb)}"` : ''}${themeBg ? ` style="background:${escapeHtml(themeBg)}"` : ''}>
+            <div class="element-card-preview-box" data-slug="${escapeHtml(item.slug)}"${useThumb ? ` data-thumb="${escapeHtml(item.thumb)}"` : ''}${themeBg ? ` style="background:${escapeHtml(themeBg)}"` : ''}>
               ${useThumb
                 ? `<img class="element-card-thumb" src="${escapeHtml(item.thumb)}" alt="" width="512" height="320" loading="lazy" decoding="async" /><span class="element-card-live-hint">Hover for live preview</span>`
                 : `<div class="element-card-preview-placeholder"><div class="spinner-ring"></div><span>Live Preview</span></div>`}

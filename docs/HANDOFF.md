@@ -38,12 +38,18 @@ edvlabs sells landing pages and small websites at **edvlabs.com** (domain owned,
   - "Self-build" ends on a "tell me when it opens" screen because accounts and the builder do not exist yet.
   - Home page has no example screenshots, owner note, company details, or real FAQ review yet (E2.2 remainder, E2.4, E2.6). "Prices include VAT" is copied from the mock-up: confirm with the owner.
 
+- **Added later on 2026-10-28:**
+  - Pages: `site/how-it-works/`, `pricing/` (calculator, three worked examples), `faq/` (15 questions plus schema.org markup), `contact/`, `404.html`, `sitemap.xml`, `robots.txt`. `site/js/price-fill.js` fills every price from `site/js/prices.js`; `tests/e2e/public-pages.e2e.js` fails if a page disagrees with the table.
+  - Data and leads: `site/js/brief.js` (the `brief_v1` checker, same code in browser and server), `docs/schema/brief_v1.schema.json`, sample briefs in `tests/data/briefs/`, `functions/lib/lead.js` and `functions/api/lead.js` (Cloudflare Pages Function `POST /api/lead`: validation, honeypot, 5 per hour per address, repeat detection, owner email with the price recomputed on the server, optional acknowledgement). Tests: `npm run test:brief`, `npm run test:lead`. Owner set-up steps: `docs/deploy/lead-intake.md`.
+  - Security: `site/_headers` (strict CSP without inline scripts or styles, HSTS, nosniff, referrer, permissions, opener), `npm run check-headers` (file, or live with a URL), `tests/e2e/csp.e2e.js`; `npm run check-innerhtml` and `docs/security/innerhtml-verdicts.json` (all 64 HTML-string sites reviewed, 8 fixed). Both are part of `npm run security`.
+  - Wording decisions: "Prices include VAT" was replaced by "Prices are in euros" until the owner confirms the VAT rule. The ten questions and the home page text were read through with the owner and accepted as written.
+
 ## Next steps (in order)
 
-1. **Owner review of the wording** of the ten questions (E3.1) and the home page text; then examples strip with real screenshots, owner note, company details in the footer.
-2. Set up Cloudflare Pages with the owner (E0.8, E0.5): staging at staging.edvlabs.com, a lead test reaching the owner's email. The owner runs the account steps; Claude cannot log in.
-3. Lead intake and the owner's lead list (E3.6, E9).
-4. Remaining security tasks in E16 (static analysis, the 58 `innerHTML` sites, preview-frame isolation, headers/CSP).
+1. **Owner steps (Claude cannot do these):** Cloudflare Pages with staging at staging.edvlabs.com (E0.8, E0.5), then the lead-intake settings in `docs/deploy/lead-intake.md` and the `lead-endpoint` meta tag; run `npm run check-headers -- https://staging.edvlabs.com` against staging. Answer the open questions below.
+2. Examples page with real screenshots of the owner's own templates (E2.4), the owner's note and About page (E2.7), company details in the footer, Open Graph images (E2.8), Lighthouse budget run on the new pages (E2.9).
+3. Remaining security in E16: `postMessage` handlers, `localStorage` uses, the preview-frame decision, a hostile-input test file (the rest of E16.5), static analysis (E16.4), the builder's CSP (E16.7).
+4. Then self-serve: accounts, price table as data, quotes, checkout (E4, E5, E8).
 
 ## Rules to keep
 

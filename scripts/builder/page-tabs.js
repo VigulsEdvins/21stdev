@@ -106,7 +106,8 @@
         const select = doc.createElement('select');
         select.id = 'pageTranslationSelect';
         select.title = 'Mark this page as a translation of another page; with a live address set, the exported pages link to each other with hreflang.';
-        select.innerHTML = '<option value="">None</option>' + originals.map(p => `<option value="${p.id}">${String(p.title).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])}</option>`).join('');
+        const esc = (v) => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+        select.innerHTML = '<option value="">None</option>' + originals.map(p => `<option value="${esc(p.id)}">${esc(p.title)}</option>`).join('');
         select.value = (current && current.translationOf) || '';
         select.addEventListener('change', () => sm.setPageMeta(active, { translationOf: select.value }));
         trLabel.appendChild(select);

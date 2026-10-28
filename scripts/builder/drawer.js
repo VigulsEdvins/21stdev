@@ -148,7 +148,7 @@
         const badgeNeed = singletonDef ? (isOptional ? ' · Optional' : ' · Essential') : '';
 
         card.innerHTML = `
-          <div class="drawer-card-preview-box" data-slug="${feature.slug}">
+          <div class="drawer-card-preview-box" data-slug="${escapeHtml(feature.slug)}">
             <div class="drawer-card-preview-placeholder">Live Preview</div>
           </div>
           <div class="drawer-card-body">

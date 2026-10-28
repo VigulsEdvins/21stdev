@@ -160,8 +160,8 @@
             </div>
             <div class="sizing-row custom-height-row" style="${sizing.heightMode === 'custom' ? 'display:flex;' : 'display:none;'}">
               <span class="sizing-label">Height (px):</span>
-              <input type="range" class="custom-height-slider" min="200" max="1400" step="20" value="${sizing.customHeight || 600}" />
-              <span class="custom-height-val">${sizing.customHeight || 600}px</span>
+              <input type="range" class="custom-height-slider" min="200" max="1400" step="20" value="${Number(sizing.customHeight) || 600}" />
+              <span class="custom-height-val">${Number(sizing.customHeight) || 600}px</span>
             </div>
             <div class="sizing-row">
               <span class="sizing-label">Padding:</span>

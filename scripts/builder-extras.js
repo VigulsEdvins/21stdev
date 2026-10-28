@@ -236,8 +236,8 @@
                   <span class="proj-meta">${escapeHtml(p.client || 'No client')} · ${p.sections} sections · ${p.snapshots} snapshots · ${escapeHtml(fmtDate(p.updatedAt))}</span>
                 </div>
                 <div class="proj-item-actions">
-                  ${active && p.id === active.id ? '<span class="proj-badge">Open</span>' : `<button type="button" class="builder-btn-subtle" data-open="${p.id}">Open</button>`}
-                  <button type="button" class="builder-btn-subtle proj-danger" data-delete="${p.id}" aria-label="Delete ${escapeHtml(p.name)}">Delete</button>
+                  ${active && p.id === active.id ? '<span class="proj-badge">Open</span>' : `<button type="button" class="builder-btn-subtle" data-open="${escapeHtml(p.id)}">Open</button>`}
+                  <button type="button" class="builder-btn-subtle proj-danger" data-delete="${escapeHtml(p.id)}" aria-label="Delete ${escapeHtml(p.name)}">Delete</button>
                 </div>
               </li>`).join('')}
           </ul>
@@ -249,8 +249,8 @@
             <li class="proj-item">
               <div class="proj-item-main"><strong>${escapeHtml(s.label)}</strong><span class="proj-meta">${s.sections} sections · ${escapeHtml(fmtDate(s.at))}</span></div>
               <div class="proj-item-actions">
-                <button type="button" class="builder-btn-subtle" data-restore="${s.id}">Restore</button>
-                <button type="button" class="builder-btn-subtle proj-danger" data-delete-snap="${s.id}">Delete</button>
+                <button type="button" class="builder-btn-subtle" data-restore="${escapeHtml(s.id)}">Restore</button>
+                <button type="button" class="builder-btn-subtle proj-danger" data-delete-snap="${escapeHtml(s.id)}">Delete</button>
               </div>
             </li>`).join('')}</ul>` : '<p class="content-empty">No snapshots yet. Save one before sending a version to the client.</p>'}
         </section>` : ''}`;

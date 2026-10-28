@@ -32,10 +32,10 @@
       const tplBtns = document.getElementById('inspTemplateBtns');
       tplBtns.innerHTML = '';
       if (item.liveSiteUrl) {
-        tplBtns.innerHTML += `<a class="subtle-btn" href="${item.liveSiteUrl}" target="_blank" rel="noopener">Full Site &nearr;</a> `;
+        tplBtns.innerHTML += `<a class="subtle-btn" href="${escapeHtml(item.liveSiteUrl)}" target="_blank" rel="noopener">Full Site &nearr;</a> `;
       }
       if (item.adminUrl) {
-        tplBtns.innerHTML += `<a class="subtle-btn" href="${item.adminUrl}" target="_blank" rel="noopener">Admin CMS &nearr;</a>`;
+        tplBtns.innerHTML += `<a class="subtle-btn" href="${escapeHtml(item.adminUrl)}" target="_blank" rel="noopener">Admin CMS &nearr;</a>`;
       }
 
       const tagsEl = document.getElementById('inspTags');

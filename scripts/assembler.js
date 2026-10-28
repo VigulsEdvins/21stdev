@@ -421,15 +421,15 @@ function renderSectionOverlayHtml(elements) {
   if (!Array.isArray(elements) || elements.length === 0) return '';
 
   const elementHtmls = elements.map(el => {
-    const id = el.id || 'el';
+    const id = escapeHtml(String(el.id || 'el'));
     const left = typeof el.x === 'number' ? `${el.x}%` : '50%';
     const top = typeof el.y === 'number' ? `${el.y}%` : '50%';
     let styleAttr = `left: ${left}; top: ${top};`;
     if (el.width !== undefined && el.width !== null && el.width !== '') {
-      styleAttr += ` width: ${typeof el.width === 'number' ? el.width + 'px' : el.width};`;
+      styleAttr += ` width: ${typeof el.width === 'number' ? el.width + 'px' : escapeHtml(String(el.width))};`;
     }
     if (el.height !== undefined && el.height !== null && el.height !== '') {
-      styleAttr += ` height: ${typeof el.height === 'number' ? el.height + 'px' : el.height};`;
+      styleAttr += ` height: ${typeof el.height === 'number' ? el.height + 'px' : escapeHtml(String(el.height))};`;
     }
 
     if (el.type === 'table') {
@@ -2960,14 +2960,15 @@ const REVIEW_RUNTIME = `(function () {
     list.setAttribute('role', 'dialog'); list.setAttribute('aria-label', 'Comments');
     var html = '<h2>Comments (' + comments.length + ')</h2>' + (comments.length ? '<ol>' : '<p class="rv-empty">Switch on Review, then click anything on the page to comment on it.</p>');
     comments.forEach(function (c, i) {
-      html += '<li class="rv-item"><span><b>' + (i + 1) + '.</b> <span data-t></span></span><small>' + (c.section.slug || 'page') + (c.author ? ' &middot; ' + c.author : '') + '</small><button type="button" data-del="' + i + '">Delete</button></li>';
+      html += '<li class="rv-item"><span><b>' + (i + 1) + '.</b> <span data-t></span></span><small data-s></small><button type="button" data-del="' + i + '">Delete</button></li>';
     });
     html += comments.length ? '</ol>' : '';
     html += '<div class="rv-row" style="margin-top:10px"><button type="button" class="rv-btn rv-ghost" data-act="copy">Copy text</button><button type="button" class="rv-btn" data-act="download">Download comments</button></div>';
     html += '<p class="rv-note" style="margin:8px 0 0;font-size:11px;opacity:.7">Comments are saved only in this browser until you download them. Nothing is sent anywhere.</p>';
     list.innerHTML = html;
     var spans = list.querySelectorAll('[data-t]');
-    comments.forEach(function (c, i) { spans[i].textContent = c.comment; });
+    var metas = list.querySelectorAll('[data-s]');
+    comments.forEach(function (c, i) { spans[i].textContent = c.comment; metas[i].textContent = (c.section.slug || 'page') + (c.author ? ' \u00b7 ' + c.author : ''); });
     list.addEventListener('click', function (e) {
       var d = e.target.getAttribute && e.target.getAttribute('data-del');
       if (d !== null && d !== undefined) { comments.splice(Number(d), 1); save(); label(); placePins(); openList(); return; }

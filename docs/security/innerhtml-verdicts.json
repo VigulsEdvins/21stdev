@@ -1,0 +1,155 @@
+{
+  "note": "Verdicts for HTML-string sites that the scanner (scripts/check-innerhtml.js) cannot clear by shape. Reviewed by hand 2026-10-28. A changed site needs a new verdict.",
+  "verdicts": [
+    {
+      "file": "app.js",
+      "key": ".innerHTML = `${state.collectionType === 'template' ? 'Templates' : 'Components'} <button ",
+      "verdict": "safe",
+      "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
+    },
+    {
+      "file": "app.js",
+      "key": ".innerHTML = ` <div class=\"preview-Overlay-bar\"> <div class=\"badge-group\"> <span class=\"so",
+      "verdict": "safe",
+      "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
+    },
+    {
+      "file": "app.js",
+      "key": ".innerHTML = ` <div> <div class=\"card-title-row\"> <h2 class=\"card-title\">${escapeHtml(item",
+      "verdict": "safe",
+      "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
+    },
+    {
+      "file": "scripts/assembler.js",
+      "key": ".innerHTML = (on ? 'Reviewing' : 'Review') + ' <b>' + comments.length + '</b>'",
+      "verdict": "fixed",
+      "reason": "Review panel in the exported page: only numbers and constant text go through innerHTML; the section name, the reviewer name and the comment are set with textContent (changed 2026-10-28)."
+    },
+    {
+      "file": "scripts/assembler.js",
+      "key": ".innerHTML = html",
+      "verdict": "fixed",
+      "reason": "Review panel in the exported page: only numbers and constant text go through innerHTML; the section name, the reviewer name and the comment are set with textContent (changed 2026-10-28)."
+    },
+    {
+      "file": "scripts/assembler.js",
+      "key": ".innerHTML = value",
+      "verdict": "safe",
+      "reason": "Restores the HTML the element held before an override touched it (read from the same element), never an outside value."
+    },
+    {
+      "file": "scripts/builder/canvas-toolbar-inputs.js",
+      "key": ".innerHTML = features.map(f => `<li><span class=\"feature-check\">✓</span> ${escapeHtml(f)}<",
+      "verdict": "safe",
+      "reason": "Every dynamic part is wrapped in escapeHtml or is a number."
+    },
+    {
+      "file": "scripts/builder/drawer.js",
+      "key": ".innerHTML = ` <div class=\"drawer-card-preview-box\" data-slug=\"${escapeHtml(feature.slug)}",
+      "verdict": "fixed",
+      "reason": "The slug in data-slug is now escaped (2026-10-28); titles, descriptions, tags and thumbnails already were; widget preview HTML comes from the repository's own widget list."
+    },
+    {
+      "file": "scripts/builder/drawer.js",
+      "key": ".innerHTML = res && res.replaced ? `<span>✓ Replaced!</span>` : `<span>✓ Added!</span>`",
+      "verdict": "safe",
+      "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
+    },
+    {
+      "file": "scripts/builder/drawer.js",
+      "key": ".innerHTML = addBtn.dataset.originalHtml",
+      "verdict": "safe",
+      "reason": "Puts back the button's own markup that was read from the same element a moment earlier; no outside data."
+    },
+    {
+      "file": "scripts/builder/elements-catalog.js",
+      "key": ".innerHTML = ` ${previewBoxHtml} <div class=\"element-card-content\"> <div class=\"element-ca",
+      "verdict": "fixed",
+      "reason": "The slug in data-slug is now escaped (2026-10-28); titles, descriptions, tags and thumbnails already were; widget preview HTML comes from the repository's own widget list."
+    },
+    {
+      "file": "scripts/builder/elements-catalog.js",
+      "key": ".innerHTML = addBtn.dataset.originalHtml",
+      "verdict": "safe",
+      "reason": "Puts back the button's own markup that was read from the same element a moment earlier; no outside data."
+    },
+    {
+      "file": "scripts/builder/export-zip.js",
+      "key": ".innerHTML = originalBtnText",
+      "verdict": "safe",
+      "reason": "Puts back the button's own markup that was read from the same element a moment earlier; no outside data."
+    },
+    {
+      "file": "scripts/builder/export-zip.js",
+      "key": ".innerHTML = originalBtnText",
+      "verdict": "safe",
+      "reason": "Puts back the button's own markup that was read from the same element a moment earlier; no outside data."
+    },
+    {
+      "file": "scripts/builder/page-tabs.js",
+      "key": ".innerHTML = '<option value=\"\">None</option>' + originals.map(p => `<option value=\"${esc(p",
+      "verdict": "fixed",
+      "reason": "The page id in the option value was not escaped; both id and title now go through one escape function (2026-10-28)."
+    },
+    {
+      "file": "scripts/builder/preview-patch.js",
+      "key": ".innerHTML = overlayHtml.trim()",
+      "verdict": "fixed",
+      "reason": "Overlay elements are rendered by renderSectionOverlayHtml, which escapes every text value; id, width and height are now escaped too (2026-10-28), and the import sanitiser already limits them."
+    },
+    {
+      "file": "scripts/builder/stack-list.js",
+      "key": ".innerHTML = ` <div class=\"stack-item-top-row\"> <div class=\"stack-item-main\"> <span class=",
+      "verdict": "fixed",
+      "reason": "Titles and categories were escaped; the custom height is now forced to a number before it enters the markup (2026-10-28); the rest are fixed strings and booleans."
+    },
+    {
+      "file": "scripts/builder-extras.js",
+      "key": ".innerHTML = ` ${active ? ` <section class=\"proj-section\"> <h3 class=\"proj-heading\">Curren",
+      "verdict": "fixed",
+      "reason": "Names, clients, notes and labels were already escaped; the project and snapshot ids in data attributes are now escaped too (2026-10-28)."
+    },
+    {
+      "file": "scripts/builder-extras.js",
+      "key": ".innerHTML = stack.map((s, i) => `<option value=\"${escapeHtml(s.id)}\">${i + 1}. ${escapeHt",
+      "verdict": "safe",
+      "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
+    },
+    {
+      "file": "scripts/builder-extras.js",
+      "key": ".innerHTML = hint",
+      "verdict": "safe",
+      "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
+    },
+    {
+      "file": "scripts/builder-extras.js",
+      "key": ".innerHTML = ` <label class=\"ps-field\"> <span>${escapeHtml(f.label)}${ov ? ' <em class=\"co",
+      "verdict": "safe",
+      "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
+    },
+    {
+      "file": "scripts/builder-extras.js",
+      "key": ".insertAdjacentHTML('beforeend', CURRENCIES.map(c => `<option value=\"${escapeHtml(c[0])}\">",
+      "verdict": "safe",
+      "reason": "Every dynamic part is wrapped in escapeHtml or is a number."
+    },
+    {
+      "file": "scripts/builder-extras.js",
+      "key": ".innerHTML = '<option value=\"\">Or link to a page…</option>' + sitePages.map(p => `<option ",
+      "verdict": "safe",
+      "reason": "Every dynamic part is wrapped in escapeHtml or is a number."
+    },
+    {
+      "file": "scripts/builder-extras.js",
+      "key": ".insertAdjacentHTML('beforeend', ' <em class=\"content-edited-dot\" title=\"Edited\">●</em>')",
+      "verdict": "safe",
+      "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
+    },
+    {
+      "file": "scripts/catalog/inspector.js",
+      "key": ".innerHTML = (item.tags || []).map((t) => `<span class=\"tag-chip\">#${escapeHtml(t)}</span>",
+      "verdict": "safe",
+      "reason": "Every dynamic part is wrapped in escapeHtml or is a number."
+    }
+  ]
+}
