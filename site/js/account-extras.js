@@ -23,6 +23,7 @@
       const name = el('span', 'pg-name', page.name);
       const tag = el('span', 'pg-tag', page.status === 'paid' ? 'Paid' : 'Draft'); tag.dataset.status = page.status;
       const meta = el('span', 'pg-meta', page.updatedAt ? 'Edited ' + when(page.updatedAt) : '');
+      const open = el('a', 'btn btn--small', 'Open'); open.href = '/builder/?project=' + encodeURIComponent(page.id); open.setAttribute('aria-label', 'Open ' + page.name + ' in the builder');
       const rename = el('button', 'btn btn--secondary btn--small', 'Rename'); rename.type = 'button';
       const del = el('button', 'btn btn--secondary btn--small', 'Delete'); del.type = 'button';
       rename.setAttribute('aria-label', 'Rename ' + page.name); del.setAttribute('aria-label', 'Delete ' + page.name);
@@ -33,7 +34,7 @@
         await load();
         msg('“' + page.name + '” is deleted. It stays for 30 days.', 'ok', async () => { const b = await deps.pages.restore(page.id); await load(); msg(b.ok ? '“' + page.name + '” is back.' : b.message, b.ok ? 'ok' : 'error'); });
       });
-      li.append(name, tag, meta, rename, del);
+      li.append(name, tag, meta, open, rename, del);
       return li;
     }
 

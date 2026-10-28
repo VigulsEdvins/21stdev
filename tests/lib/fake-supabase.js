@@ -136,18 +136,34 @@ function start(opts = {}) {
         }
         return err(res, 405, 'not_allowed', 'method not allowed');
       }
-      if (url.pathname === '/rest/v1/projects') { // saved pages: only the owner's rows; status and user_id cannot be changed by the browser (column grants in the migration)
+      if (url.pathname === '/rest/v1/projects') { // saved pages: only the owner's rows; status and owner cannot be set from the browser (column grants), 25 pages at most (trigger)
         const owner = state.sessions.get(bearer); const me = owner && state.users.get(owner);
         if (!me) return err(res, 401, 'PGRST301', 'JWT expired or missing');
         state.calls.push('projects ' + req.method + ' as ' + me.email);
-        const mine = [...state.projects.values()].filter((p) => p.user_id === me.id);
-        if (req.method === 'GET') return send(res, 200, mine.filter((p) => !p.deleted_at).sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at))).map((p) => ({ id: p.id, name: p.name, status: p.status, updated_at: p.updated_at })));
+        const prefer = String(req.headers.prefer || '');
+        const fields = (url.searchParams.get('select') || 'id,name,status,updated_at').split(',');
+        const shape = (p) => Object.fromEntries(fields.filter((k) => k in p).map((k) => [k, p[k]]));
+        const mine = () => [...state.projects.values()].filter((p) => p.user_id === me.id);
+        const filtered = () => mine().filter((p) => [...url.searchParams].every(([k, v]) => {
+          if (['select', 'order', 'limit'].includes(k)) return true;
+          if (v === 'is.null') return p[k] === null || p[k] === undefined;
+          if (v.startsWith('eq.')) return String(p[k]) === v.slice(3);
+          return true;
+        }));
+        if (req.method === 'GET') return send(res, 200, filtered().sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at))).map(shape));
+        if (req.method === 'POST') {
+          if (Object.keys(body).some((k) => !['user_id', 'name', 'state'].includes(k))) return err(res, 403, '42501', 'permission denied for table projects');
+          if (!body.name || body.name.length > 120 || !body.state || typeof body.state !== 'object' || JSON.stringify(body.state).length > 1500000) return err(res, 400, '23514', 'violates check constraint');
+          if (mine().filter((p) => !p.deleted_at).length >= 25) return err(res, 400, 'P0001', 'too many saved pages');
+          const row = { id: crypto.randomUUID(), user_id: me.id, name: body.name, status: 'draft', state: body.state, revision: 1, created_at: new Date().toISOString(), updated_at: new Date().toISOString(), deleted_at: null };
+          state.projects.set(row.id, row);
+          return /return=representation/.test(prefer) ? send(res, 201, [shape(row)]) : send(res, 201);
+        }
         if (req.method === 'PATCH') {
-          const want = (url.searchParams.get('id') || '').replace(/^eq\./, '');
-          if (Object.keys(body).some((k) => !['name', 'state', 'deleted_at', 'updated_at'].includes(k))) return err(res, 403, '42501', 'permission denied for table projects');
-          const row = mine.find((p) => p.id === want);
-          if (row) Object.assign(row, body);
-          return send(res, 204); // a row that is not yours simply matches nothing, like row level security
+          if (Object.keys(body).some((k) => !['name', 'state', 'deleted_at', 'updated_at', 'revision'].includes(k))) return err(res, 403, '42501', 'permission denied for table projects');
+          const rows = filtered(); // a row that is not yours, or whose revision no longer matches, simply matches nothing
+          rows.forEach((row) => Object.assign(row, body));
+          return /return=representation/.test(prefer) ? send(res, 200, rows.map(shape)) : send(res, 204);
         }
         return err(res, 405, 'not_allowed', 'method not allowed');
       }
@@ -168,7 +184,7 @@ function start(opts = {}) {
   return new Promise((resolve) => server.listen(0, '127.0.0.1', () => resolve(Object.assign(state, {
     url: 'http://127.0.0.1:' + server.address().port,
     close: () => new Promise((r) => server.close(r)),
-    addProject(email, name, extra) { const u = state.users.get(email); const row = Object.assign({ id: crypto.randomUUID(), user_id: u.id, name, status: 'draft', updated_at: new Date().toISOString(), deleted_at: null }, extra || {}); state.projects.set(row.id, row); return row; },
+    addProject(email, name, extra) { const u = state.users.get(email); const row = Object.assign({ id: crypto.randomUUID(), user_id: u.id, name, status: 'draft', state: { stack: [] }, revision: 1, updated_at: new Date().toISOString(), deleted_at: null }, extra || {}); state.projects.set(row.id, row); return row; },
     confirmEmailChange(email) { const u = state.users.get(email); if (u && u.newEmail) { state.users.delete(email); u.email = u.newEmail; delete u.newEmail; state.users.set(u.email, u); [...state.sessions].forEach(([a, e]) => { if (e === email) state.sessions.set(a, u.email); }); [...state.refresh].forEach(([r, e]) => { if (e === email) state.refresh.set(r, u.email); }); } },
     confirm(email) { const u = state.users.get(email); if (u) u.confirmed = true; }
   }))));

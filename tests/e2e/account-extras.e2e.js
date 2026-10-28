@@ -54,6 +54,7 @@ const { start } = require('../lib/fake-supabase.js');
   assert.strictEqual(await page.locator('#pg-list b').count(), 0, 'a page name never becomes markup');
   assert.strictEqual(await page.getAttribute('#pg-list li:first-child .pg-tag', 'data-status'), 'paid');
   assert(/Edited 25 October 2026/.test(await text('#pg-list li:first-child')), 'edit date in words');
+  assert.strictEqual(await page.getAttribute('#pg-list li:first-child a:has-text("Open")', 'href').then((h) => /^\/builder\/\?project=[0-9a-f-]{36}$/.test(h)), true, 'Open goes to the builder with the page id');
   assert(/answered 3 questions/.test(await text('#an-text')), 'answers counted');
   assert(!(await page.content()).includes('Ben secret'), "someone else's page is not on the page");
   console.log('  ✓ my pages lists only my pages, newest first, names as plain text; my answers counts them');
