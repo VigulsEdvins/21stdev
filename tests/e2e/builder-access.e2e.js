@@ -18,6 +18,14 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const open = async () => { await page.goto(srv.url + '/builder.html'); await page.waitForSelector('#blockPicker', { state: 'attached' }); await page.evaluate(() => window.builderManager.clearStack()); };
   console.log('Free and account blocks');
 
+  // a first visit, signed out: the page to start from is the six-section starter, because every one of its blocks is free
+  const first = await ctx.newPage();
+  await first.route('**/builder.html', async (r) => { const res = await r.fetch(); await r.fulfill({ response: res, body: (await res.text()).replace('</head>', '<meta name="access-gate" content="on"></head>') }); });
+  await first.goto(srv.url + '/builder.html'); await first.waitForFunction(() => window.builderManager && window.builderManager.getStack().length > 0);
+  assert.deepStrictEqual(await first.evaluate(() => window.builderManager.getStack().map((x) => x.slug)), ['responsive-burger-menu', 'oklch-ambient-glow-hero', 'cylindrical-3d-carousel', 'pricing-table-switch', 'contact-form-validated', 'beam-wordmark-footer'], 'first visit: header, hero, 3D cylinder, pricing, contact form, footer');
+  await first.close();
+  console.log('  ✓ first visit signed out: the starter page is six sections, header, hero, 3D cylinder, pricing, form, footer');
+
   await open();
   assert(/Sign in free/.test(await page.textContent('#accessPill')), 'signed out: a small sign-in link beside the catalogue title');
   assert((await page.evaluate(() => document.querySelector('.builder-actions').contains(document.getElementById('accessPill')))) === false, 'not in the crowded top bar');

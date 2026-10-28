@@ -388,19 +388,15 @@
       });
     }
 
-    // Complete High-Converting Landing Page Architecture (10 Sections)
-    // Structure: 1 Header (top) -> 1 Hero -> Social Proof Marquee -> Features -> Showcase -> Testimonials -> Pricing -> FAQ -> Final CTA -> 1 Footer (bottom)
+    // The page a visitor starts with: six sections, all of them free blocks so it is the same page signed in or out (scripts/builder/access.js).
+    // Structure: Header (top) -> Hero -> 3D cylinder -> Pricing -> Contact form -> Footer (bottom)
     const STARTER_SECTIONS = [
       { slug: 'responsive-burger-menu', title: 'Morphing Burger & Staggered Overlay Menu', category: 'Headers & Nav' },
       { slug: 'oklch-ambient-glow-hero', title: 'OKLCH Ambient Aurora Hero', category: 'Heroes' },
-      { slug: 'client-logo-marquee', title: 'Infinite Dual-Direction Partner Logo Marquee', category: 'Galleries & Bento' },
-      { slug: 'ink-orbit-features', title: 'Ink Orbit Features & Benefits', category: 'Interactions & Physics' },
-      { slug: 'polaroid-string-carousel', title: 'Polaroid Sagging String & Breeze Physics Carousel', category: '3D & Carousels' },
-      { slug: 'stagger-testimonials', title: 'Staggered Customer Testimonials', category: 'Cards & Tiles' },
-      { slug: 'ink-orbit-pricing', title: 'Interactive Tiered Pricing Matrix', category: 'Pricing & Tables' },
-      { slug: 'faq-accordion-smooth', title: 'Editorial Smooth-Height FAQ Accordion', category: 'Buttons & UI' },
-      { slug: 'postmark-cta', title: 'Postmark High-Conversion Final CTA', category: 'Buttons & UI' },
-      { slug: 'beam-wordmark-footer', title: 'Beam Wordmark Footer', category: 'Footers & Endings' }
+      { slug: 'cylindrical-3d-carousel', title: '3D Cylindrical Drag & Velocity Carousel', category: '3D & Carousels' },
+      { slug: 'pricing-table-switch', title: 'Pricing Table With Billing Switch', category: 'Cards & Tiles' },
+      { slug: 'contact-form-validated', title: 'Contact Form With Validation', category: 'Buttons & UI' },
+      { slug: 'beam-wordmark-footer', title: 'Light Beam Footer', category: 'Footers & Endings' }
     ];
 
     function loadStarterTemplate(silent = false) {
@@ -417,7 +413,7 @@
       pushHistorySnapshot();
       saveStateToStorage();
       if (!silent) {
-        showToast('Loaded complete 10-section landing page template');
+        showToast('Loaded the 6-section starter page: header, hero, 3D cylinder, pricing, contact form and footer');
       }
     }
 

@@ -1,6 +1,7 @@
 {
   "name": "OKLCH Ambient Aurora Hero",
   "slug": "oklch-ambient-glow-hero",
+  "access": "free",
   "category": "Heroes",
   "source": "edvlabs",
   "type": "component",

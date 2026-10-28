@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T14:45:41.062Z",
+  "generatedAt": "2026-10-28T15:06:02.259Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 235,
   "categories": [
@@ -1673,7 +1673,7 @@
         "general"
       ],
       "weight": "light",
-      "access": "account",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -3064,7 +3064,7 @@
         "hospitality"
       ],
       "weight": "light",
-      "access": "account",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -3170,7 +3170,7 @@
         "general"
       ],
       "weight": "medium",
-      "access": "account",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",
@@ -6460,7 +6460,7 @@
         "agency"
       ],
       "weight": "light",
-      "access": "account",
+      "access": "free",
       "needsAssets": false,
       "origin": {
         "source": "edvlabs",

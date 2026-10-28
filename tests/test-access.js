@@ -12,7 +12,11 @@ assert(reg.every((i) => i.access === 'free' || i.access === 'account'), 'every c
 assert.strictEqual(by['multilingual-lang-switcher'].access, 'free', 'the language switcher is added for the visitor, so it is free');
 const kindSlugs = K.KINDS.flatMap((k) => k.variants);
 kindSlugs.forEach((v) => assert.strictEqual(by[v].access, 'free', v + ': every look of every everyday block kind is free'));
-assert.deepStrictEqual(free.slice().sort(), [...new Set(kindSlugs.concat(['multilingual-lang-switcher']))].sort(), 'the free list is exactly: every look of the everyday block kinds plus the language switcher');
+const STARTER = ['responsive-burger-menu', 'oklch-ambient-glow-hero', 'cylindrical-3d-carousel', 'beam-wordmark-footer']; // the starter page's header, hero, 3D section and footer (builder.js STARTER_SECTIONS); its pricing and form are everyday kinds
+assert.deepStrictEqual(free.slice().sort(), [...new Set(kindSlugs.concat(['multilingual-lang-switcher'], STARTER))].sort(), 'the free list is exactly: every look of the everyday block kinds, the language switcher and the header, hero, 3D section and footer of the starter page');
+const src = fs.readFileSync(path.join(__dirname, '..', 'builder.js'), 'utf8');
+const starter = eval(src.match(/const STARTER_SECTIONS = (\[[\s\S]*?\]);/)[1]);
+starter.forEach((x) => assert.strictEqual(by[x.slug].access, 'free', x.slug + ': every section of the starter page is free, so signed-out visitors get the whole page'));
 assert(reg.filter((i) => i.access === 'account').length > 150, 'the rest of the library needs an account');
 console.log('  ✓ the free list: every look of each everyday kind (' + kindSlugs.length + ') and the language switcher');
 

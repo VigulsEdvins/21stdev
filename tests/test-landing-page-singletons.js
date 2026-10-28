@@ -17,7 +17,11 @@ assert(starterMatch, 'Must find STARTER_SECTIONS in builder.js');
 const starterSections = eval(starterMatch[1]);
 
 console.log(`  ✓ Found ${starterSections.length} sections in starter landing page template`);
-assert.strictEqual(starterSections.length, 10, 'Starter landing page must have 10 sections covering the full landing page structure');
+assert.strictEqual(starterSections.length, 6, 'Starter page must have 6 sections: header, hero, 3D cylinder, pricing, contact form, footer');
+assert.deepStrictEqual(starterSections.map((x) => x.category), ['Headers & Nav', 'Heroes', '3D & Carousels', 'Cards & Tiles', 'Buttons & UI', 'Footers & Endings']);
+assert(/cylindrical/.test(starterSections[2].slug), 'the third section is the 3D cylindrical section');
+assert(/pricing/.test(starterSections[3].slug), 'the fourth section is pricing');
+assert(/contact/.test(starterSections[4].slug), 'the fifth section is the contact form');
 
 // Verify Section 1 is Header
 assert(
@@ -31,9 +35,9 @@ assert(
   'Second section must be a Hero section'
 );
 
-// Verify Section 10 is Footer
+// Verify the last section is the Footer
 assert(
-  starterSections[9].category.includes('Footer') || starterSections[9].slug.includes('footer'),
+  starterSections[starterSections.length - 1].category.includes('Footer') || starterSections[starterSections.length - 1].slug.includes('footer'),
   'Last section must be a Footer'
 );
 
@@ -48,7 +52,7 @@ assert.strictEqual(footers.length, 1, 'Landing page template must contain exactl
 
 console.log('  ✓ Verified exactly 1 Header, 1 Hero, and 1 Footer in starter template');
 
-// 2. Verify Assembler Preview & Export generation with the complete 10-section landing page
+// 2. Verify Assembler Preview & Export generation with the complete 6-section starter page
 const path = require('path');
 const featuresData = {};
 starterSections.forEach(s => {
@@ -72,7 +76,7 @@ assert(bundle['index.html'] && bundle['index.html'].length > 500, 'Export bundle
 assert(bundle['style.css'] && bundle['style.css'].length > 1000, 'Export bundle must contain style.css');
 assert(bundle['script.js'], 'Export bundle must contain script.js');
 
-console.log('  ✓ Full 10-section landing page preview & bundle generated successfully');
+console.log('  ✓ Full 6-section starter page preview & bundle generated successfully');
 
 // 3. Test stackManager replaceSection capability
 const sm = createStackManager();
