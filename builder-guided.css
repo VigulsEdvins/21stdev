@@ -106,3 +106,13 @@ body.is-guided #paneStyling .widgets-catalog-header, body.is-guided #paneStyling
 .gt-done { margin: 0; font-size: 15px; color: var(--text-main); }
 .guided-ask { font: 600 14px / 1 var(--font-body); color: var(--text-main); text-decoration: underline; text-underline-offset: 3px; padding: 8px 4px; white-space: nowrap; }
 .guided-ask:hover { color: var(--rust); }
+
+/* entry from the questions: the offer to start from the visitor's answers */
+.brief-offer { display: none; margin: 14px 14px 0; padding: 14px; border: 2px solid var(--rust); border-radius: 14px; background: rgba(200, 85, 61, 0.08); }
+body.is-guided .brief-offer { display: block; }
+body.is-guided .brief-offer[hidden] { display: none; }
+.bo-lead { margin: 0 0 8px; font-size: 15px; color: var(--text-main); }
+.bo-list { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 4px; font-size: 15px; color: var(--text-main); }
+.bo-list small { font-size: 14px; color: var(--text-muted); }
+.bo-missing, .bo-warn { margin: 0 0 10px; font-size: 14px; color: var(--text-muted); }
+.bo-actions { display: flex; gap: 8px; flex-wrap: wrap; }
