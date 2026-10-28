@@ -177,3 +177,4 @@ jobs:
       - run: npm run check-secrets -- --history
       - run: npm run audit
       - run: npm run check-code-safety
+      - run: npm run security:static

@@ -1,0 +1,175 @@
+{
+  "app.js": {
+    "no-unsanitized/property": {
+      "count": 9
+    }
+  },
+  "scripts/assembler.js": {
+    "security/detect-non-literal-regexp": {
+      "count": 3
+    },
+    "security/detect-unsafe-regex": {
+      "count": 6
+    }
+  },
+  "scripts/build-site.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/build-tailwind.js": {
+    "security/detect-non-literal-regexp": {
+      "count": 1
+    }
+  },
+  "scripts/builder-extras.js": {
+    "no-unsanitized/method": {
+      "count": 1
+    },
+    "no-unsanitized/property": {
+      "count": 6
+    },
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/builder/canvas-toolbar-inputs.js": {
+    "no-unsanitized/property": {
+      "count": 1
+    }
+  },
+  "scripts/builder/drawer.js": {
+    "no-unsanitized/property": {
+      "count": 3
+    }
+  },
+  "scripts/builder/elements-catalog.js": {
+    "no-unsanitized/property": {
+      "count": 2
+    }
+  },
+  "scripts/builder/export-assets.js": {
+    "security/detect-non-literal-regexp": {
+      "count": 1
+    },
+    "security/detect-unsafe-regex": {
+      "count": 2
+    }
+  },
+  "scripts/builder/export-zip.js": {
+    "no-unsanitized/property": {
+      "count": 2
+    }
+  },
+  "scripts/builder/languages.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/builder/page-checks.js": {
+    "security/detect-non-literal-regexp": {
+      "count": 2
+    }
+  },
+  "scripts/builder/page-tabs.js": {
+    "no-unsanitized/property": {
+      "count": 1
+    },
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/builder/preview-patch.js": {
+    "no-unsanitized/property": {
+      "count": 1
+    }
+  },
+  "scripts/builder/react-export.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/builder/stack-list.js": {
+    "no-unsanitized/property": {
+      "count": 1
+    }
+  },
+  "scripts/builder/token-import.js": {
+    "security/detect-unsafe-regex": {
+      "count": 3
+    }
+  },
+  "scripts/builder/ui-helpers.js": {
+    "no-unsanitized/property": {
+      "count": 1
+    }
+  },
+  "scripts/catalog/inspector.js": {
+    "no-unsanitized/property": {
+      "count": 3
+    }
+  },
+  "scripts/catalog/workbench.js": {
+    "no-unsanitized/property": {
+      "count": 3
+    }
+  },
+  "scripts/check-code-safety.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/check-contrast.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/check-cross-browser.js": {
+    "security/detect-non-literal-regexp": {
+      "count": 1
+    }
+  },
+  "scripts/check-innerhtml.js": {
+    "security/detect-unsafe-regex": {
+      "count": 2
+    }
+  },
+  "scripts/dev-site.js": {
+    "security/detect-non-literal-fs-filename": {
+      "count": 10
+    },
+    "security/detect-non-literal-regexp": {
+      "count": 1
+    }
+  },
+  "scripts/lint-tokens.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/new-feature.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/project-sanitize.js": {
+    "security/detect-unsafe-regex": {
+      "count": 2
+    }
+  },
+  "scripts/schema.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  },
+  "scripts/serve.js": {
+    "security/detect-non-literal-fs-filename": {
+      "count": 30
+    }
+  },
+  "scripts/stack-manager.js": {
+    "security/detect-unsafe-regex": {
+      "count": 1
+    }
+  }
+}

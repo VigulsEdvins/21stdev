@@ -23,7 +23,7 @@ function isBundle(text) {
 function scanText(file, text) {
   const findings = [];
   RULES.forEach(r => { if (r.re.test(text)) findings.push({ file, rule: r.id, msg: r.msg }); });
-  const re = /<script\b[^>]*\bsrc\s*=\s*["'](https?:)?\/\/([^/"']+)/gi;
+  const re = /<script\b[^>]{0,500}\bsrc\s*=\s*["'](https?:)?\/\/([^/"']+)/gi;
   let m;
   while ((m = re.exec(text))) {
     if (!ALLOWED_SCRIPT_HOSTS.includes(m[2].toLowerCase())) findings.push({ file, rule: 'remote-script', msg: 'script from ' + m[2] });

@@ -2574,7 +2574,7 @@ function renderJsonLd(page = {}, title = '') {
 function renderCsp(indexHtml = '', scriptJs = '') {
   const reasons = [];
   const hosts = new Set();
-  const scriptSrcRe = /<script\b[^>]*\bsrc\s*=\s*["'](?:https?:)?\/\/([^/"']+)/gi;
+  const scriptSrcRe = /<script\b[^>]{0,500}\bsrc\s*=\s*["'](?:https?:)?\/\/([^/"']+)/gi;
   let m;
   while ((m = scriptSrcRe.exec(indexHtml))) hosts.add(m[1].toLowerCase());
   const importRe = /\bimport\s*\(\s*["'`]https?:\/\/([^/"'`]+)/g;
