@@ -2784,10 +2784,18 @@ function renderPageHead(page = {}, fallbackTitle = 'Assembled Web Page', opts = 
  */
 function collectOverrides(sections) {
   const out = [];
+  // javascript:, vbscript: and non-image data: addresses never reach a link or an image, whoever typed them
+  // (an imported project is cleaned the same way by scripts/project-sanitize.js)
+  const safeUrl = (v) => {
+    const probe = v.replace(/[\u0000- \u007f-\u009f]+/g, '').toLowerCase();
+    return /^(javascript|vbscript):/.test(probe) || (/^data:/.test(probe) && !/^data:image\/(png|jpe?g|gif|webp|avif|svg\+xml);/.test(probe)) ? '#' : v;
+  };
   (Array.isArray(sections) ? sections : []).forEach(sec => {
     Object.entries(sec.overrides || {}).forEach(([fieldId, o]) => {
       if (o && typeof o === 'object' && o.selector && o.value !== undefined && o.value !== '') {
-        out.push({ section: sec.id, field: fieldId, selector: o.selector, type: o.type || 'text', attr: o.attr || '', value: String(o.value) });
+        const type = o.type || 'text';
+        const value = type === 'link' || type === 'image' ? safeUrl(String(o.value)) : String(o.value);
+        out.push({ section: sec.id, field: fieldId, selector: o.selector, type, attr: o.attr || '', value });
       }
     });
   });
