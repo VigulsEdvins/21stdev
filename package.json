@@ -14,7 +14,7 @@
     "new-feature": "node scripts/new-feature.js",
     "check-features": "node scripts/check-features.js",
     "thumbs": "node scripts/make-thumbs.js",
-    "test": "node tests/test-builder-integration.js && npm run -s test:brief && npm run -s test:lead",
+    "test": "node tests/test-builder-integration.js && npm run -s test:brief && npm run -s test:lead && npm run -s test:recommend",
     "bundle-demo": "node scripts/bundle-demo.js",
     "clean-features": "node scripts/clean-features.js",
     "test:e2e": "node tests/e2e/run-all.js",
@@ -54,7 +54,8 @@
     "test:brief": "node tests/test-brief.js",
     "test:lead": "node tests/test-lead.js",
     "check-headers": "node scripts/check-headers.js",
-    "check-innerhtml": "node scripts/check-innerhtml.js"
+    "check-innerhtml": "node scripts/check-innerhtml.js",
+    "test:recommend": "node tests/test-recommend.js"
   },
   "keywords": [],
   "author": "",

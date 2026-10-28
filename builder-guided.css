@@ -1,0 +1,37 @@
+/* The guided path of the builder (direction E). Pairs with scripts/builder/guided.js. */
+.guided-bar { background: var(--bg-0); border-bottom: 2px solid var(--text-main); padding: 10px 14px 8px; }
+.guided-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.guided-steps { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.guided-step { display: inline-flex; align-items: center; gap: 8px; font: 600 15px / 1 var(--font-body); padding: 7px 16px 7px 8px; border: 2px solid var(--text-main); border-radius: var(--radius-pill); background: transparent; color: var(--text-main); cursor: pointer; }
+.guided-step:hover { background: rgba(29, 42, 51, 0.08); }
+.guided-num { display: grid; place-items: center; width: 26px; height: 26px; border: 2px solid currentColor; border-radius: 50%; font: 400 15px / 1 var(--font-display); }
+.guided-step:nth-child(even) .guided-num { border-radius: 13px 13px 0 0; }
+.guided-step.is-done .guided-num { background: var(--teal); border-color: var(--teal); color: var(--text-on-teal); }
+.guided-step.is-current { background: var(--rust); border-color: var(--rust); color: #fff; }
+.guided-step.is-current .guided-num { background: #fff; border-color: #fff; color: var(--rust); }
+html[data-ui-theme="dark"] .guided-step.is-current { background: var(--mustard); border-color: var(--mustard); color: var(--ink); }
+html[data-ui-theme="dark"] .guided-step.is-current .guided-num { background: var(--ink); border-color: var(--ink); color: var(--mustard); }
+html[data-ui-theme="dark"] .guided-step.is-done .guided-num { background: var(--accent-secondary); border-color: var(--accent-secondary); color: var(--ink); }
+.guided-actions { display: flex; align-items: center; gap: 8px; }
+.guided-switch { display: inline-flex; align-items: center; gap: 8px; font: 600 14px / 1 var(--font-body); cursor: pointer; margin-right: 4px; color: var(--text-main); white-space: nowrap; }
+.guided-switch input { appearance: none; width: 42px; height: 24px; border: 2px solid var(--text-main); border-radius: 999px; background: transparent; position: relative; cursor: pointer; }
+.guided-switch input::after { content: ""; position: absolute; left: 2px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--text-main); transition: transform 150ms; }
+.guided-switch input:checked { background: var(--teal); }
+.guided-switch input:checked::after { transform: translateX(18px); background: #fff; }
+.guided-hint { margin: 6px 0 0; font-size: 14px; color: var(--text-muted); }
+.guided-bar[hidden] { display: none; }
+.guided-next[hidden] { display: none; }
+
+/* guided mode: only what the current step needs */
+body.is-guided .mode-switcher,
+body.is-guided .theme-select-wrapper,
+body.is-guided #openInTabBtn,
+body.is-guided .elements-scope-toggle,
+body.is-guided .elements-attr-row,
+body.is-guided .elements-quick-row .quick-check,
+body.is-guided .brand-tag { display: none !important; }
+body.is-guided .sidebar-tab-btn[data-tab="styling"], body.is-guided .sidebar-tab-btn[data-tab="content"] { display: none; }
+body.is-guided:not([data-step="1"]) .sidebar-tab-switcher { display: none; }
+body.is-guided[data-step="1"] #tabElementsBtn span:not(.tab-badge) { font-size: 0; }
+body.is-guided[data-step="1"] #tabElementsBtn span:not(.tab-badge)::after { content: "Add blocks"; font-size: 14px; }
+@media (max-width: 800px) { .guided-label { display: none; } .guided-step { padding-right: 8px; } }

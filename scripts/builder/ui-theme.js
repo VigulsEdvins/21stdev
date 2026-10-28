@@ -1,5 +1,5 @@
 /**
- * Light/dark switch for the builder's own interface (not the page being built). Dark is the default; the choice is
+ * Light/dark switch for the builder's own interface (not the page being built). Light (the edvlabs paper look) is the default; the choice is
  * kept in localStorage. The light look inverts the shell and turns the preview, pictures and video back, so the page
  * under construction always shows its real colours.
  */
@@ -9,7 +9,7 @@
   const KEY = 'web_builder_ui_theme';
 
   function read() {
-    try { return localStorage.getItem(KEY) === 'light' ? 'light' : 'dark'; } catch (_) { return 'dark'; }
+    try { return localStorage.getItem(KEY) === 'dark' ? 'dark' : 'light'; } catch (_) { return 'light'; }
   }
 
   function apply(mode, doc = document) {

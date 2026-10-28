@@ -26,7 +26,20 @@ function findCachedChromium() {
   return null;
 }
 
-async function launchBrowser() {
+/** Existing tests drive the classic builder layout, so every context starts in the builder's Advanced mode.
+    A test of the guided path sets web_builder_mode to 'guided' itself (its script runs after this one). */
+function defaultToAdvancedBuilder(browser) {
+  const initScript = () => { try { if (localStorage.getItem('web_builder_mode') === null) localStorage.setItem('web_builder_mode', 'advanced'); } catch (e) { /* storage blocked */ } };
+  const newContext = browser.newContext.bind(browser);
+  browser.newContext = async (...args) => { const ctx = await newContext(...args); await ctx.addInitScript(initScript); return ctx; };
+  const newPage = browser.newPage.bind(browser);
+  browser.newPage = async (...args) => { const page = await newPage(...args); await page.context().addInitScript(initScript); return page; };
+  return browser;
+}
+
+async function launchBrowser() { return defaultToAdvancedBuilder(await launchRawBrowser()); }
+
+async function launchRawBrowser() {
   // BROWSER=firefox or BROWSER=webkit runs the same scripts and tests in another engine (see scripts/check-cross-browser.js)
   const engine = process.env.BROWSER;
   if (engine === 'webkit') return require('playwright-core').webkit.launch({ headless: true, executablePath: require('./webkit').webkitExecutable() });

@@ -1,4 +1,4 @@
-/** The builder's own light/dark switch: default dark, toggles, remembered, and the preview keeps its real colours. */
+/** The builder's own light/dark switch: default light (the edvlabs paper look), toggles to dark, remembered, and the preview keeps its real colours. */
 const assert = require('assert');
 const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 
@@ -11,11 +11,15 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   console.log('Builder light/dark UI');
   await page.goto(srv.url + '/builder.html');
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.querySelector('.page-section'));
-  assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'dark', 'dark by default');
-  await page.click('#uiThemeBtn');
-  assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'light');
+  assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'light', 'light by default');
   assert.strictEqual(await page.getAttribute('#uiThemeBtn', 'aria-pressed'), 'true');
-  // the light look is a set of variables, not an inverted filter: panels are light, the preview is not touched
+  const lum0 = c => { const [r, g, b] = (c.match(/[\d.]+/g) || []).map(Number); return 0.299 * r + 0.587 * g + 0.114 * b; };
+  const first = await page.evaluate(() => ({ panel: getComputedStyle(document.querySelector('.builder-header')).backgroundColor, text: getComputedStyle(document.body).color }));
+  assert(lum0(first.panel) > 200 && lum0(first.text) < 80, 'light panels, dark text by default: ' + JSON.stringify(first));
+  await page.click('#uiThemeBtn');
+  assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'dark');
+  assert.strictEqual(await page.getAttribute('#uiThemeBtn', 'aria-pressed'), 'false');
+  // the dark look is a set of variables, not an inverted filter: panels are dark, the preview is not touched
   const look = await page.evaluate(() => ({
     filter: getComputedStyle(document.body).filter,
     frameFilter: getComputedStyle(document.querySelector('iframe')).filter,
@@ -25,12 +29,12 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert.strictEqual(look.filter, 'none', 'no filter hack');
   assert.strictEqual(look.frameFilter, 'none');
   const lum = c => { const [r, g, b] = (c.match(/[\d.]+/g) || []).map(Number); return 0.299 * r + 0.587 * g + 0.114 * b; };
-  assert(lum(look.panel) > 200 && lum(look.text) < 80, 'light panels, dark text: ' + JSON.stringify(look));
+  assert(lum(look.panel) < 80 && lum(look.text) > 200, 'dark panels, light text: ' + JSON.stringify(look));
   await page.reload();
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.querySelector('.page-section'));
-  assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'light', 'remembered across a reload');
+  assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'dark', 'remembered across a reload');
   await page.click('#uiThemeBtn');
-  assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'dark');
+  assert.strictEqual(await page.getAttribute('html', 'data-ui-theme'), 'light');
   console.log('  ✓ toggles, remembered, preview untouched');
   assert.deepStrictEqual(errors, [], errors.join('; '));
   await browser.close();
