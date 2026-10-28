@@ -79,6 +79,20 @@ const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/'];
   assert.strictEqual(posted.path, 'talk'); assert.strictEqual(posted.phone, '+371 20000000'); assert.strictEqual(posted.message, 'Hello'); assert.strictEqual(posted.consent, true); assert.strictEqual(posted.website, '');
   console.log('  ✓ contact form: problems named in words, honest when sending is off, posts a “talk” lead when on');
 
+  // home page: examples of our work and the library size, both checked against the real library
+  await page.goto(srv.url + '/site/index.html');
+  const reg = require('../../registry.json'); const feats = reg.features || reg.items || Object.values(reg).find(Array.isArray);
+  assert(feats.length > 200, 'the library really has more than 200 blocks (' + feats.length + ')');
+  const homeText = await page.textContent('main');
+  assert(/more than 200 ready-made blocks/.test(homeText) && /More than 200 blocks to choose from/.test(await page.textContent('.band')), 'home page says the library has more than 200 blocks');
+  const shots = await page.$$eval('#work img', (im) => im.map((i) => ({ src: i.getAttribute('src'), alt: i.alt, ok: i.complete && i.naturalWidth > 0, w: i.getAttribute('width'), h: i.getAttribute('height') })));
+  assert.strictEqual(shots.length, 6, 'six examples');
+  await page.evaluate(() => document.querySelectorAll('#work img').forEach((i) => { i.loading = 'eager'; }));
+  await page.waitForFunction(() => [...document.querySelectorAll('#work img')].every((i) => i.complete && i.naturalWidth > 0), null, { timeout: 8000 });
+  shots.forEach((x) => { assert(x.alt.length > 30 && x.w && x.h, 'each example has a real description and a size: ' + x.src); const slug = path.basename(x.src, '.webp'); const f = feats.find((q) => q.slug === slug); assert(f && f.origin && f.origin.source === 'edvlabs', slug + ' is one of our own pages'); });
+  assert.strictEqual(new Set(shots.map((x) => x.src)).size, 6, 'six different examples');
+  console.log('  ✓ home page: six examples of our own pages with descriptions, and the 200+ claim is true');
+
   // phone width: no sideways scroll on any page, and the menu button still reachable
   await page.setViewportSize({ width: 375, height: 800 });
   for (const p of PAGES) { await page.goto(srv.url + '/site/' + p + 'index.html'); assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'sideways scroll at 375px on /' + p); }

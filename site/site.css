@@ -116,3 +116,12 @@
   .site-header { flex-wrap: wrap; gap: var(--s-3) var(--s-4); }
   .site-header .nav { display: flex; flex-wrap: wrap; order: 3; width: 100%; gap: var(--s-2) var(--s-5); font-size: var(--fs-small); }
 }
+
+/* examples of our work on the home page */
+.work { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-6); list-style: none; padding: 0; margin: var(--s-6) 0 0; }
+.work figure { margin: 0; border: var(--border); border-radius: var(--radius-l); overflow: hidden; background: var(--paper-raised); height: 100%; display: flex; flex-direction: column; }
+.work img { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; object-fit: cover; border-bottom: var(--border); background: var(--paper); }
+.work figcaption { display: grid; gap: var(--s-1); padding: var(--s-4) var(--s-5) var(--s-5); }
+.work figcaption span { color: var(--text-muted); }
+@media (max-width: 900px) { .work { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .work { grid-template-columns: 1fr; } }
