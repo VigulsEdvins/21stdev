@@ -30,7 +30,7 @@ const H = require('../../scripts/check-headers.js');
     await page.goto(srv.url + '/site/' + p + 'index.html'); await page.waitForLoadState('networkidle');
     if (p === 'pricing/') { await page.fill('#calc-blocks', '8'); await page.check('#calc-editor'); assert((await page.textContent('#calc-self')).startsWith('€')); }
     if (p === 'start/') { await page.getByText('My business').click(); assert.strictEqual(await page.locator('.option input:checked').count(), 1); await page.click('text=Next'); await page.waitForSelector('text=Question 2 of 10'); }
-    if (p === 'contact/') { await page.click('button[type=submit]'); assert((await page.innerText('#k-err')).includes('email')); }
+    if (p === 'contact/') { await page.click('button[type=submit]'); assert((await page.innerText('#k-err-email')).includes('email')); }
     const fonts = await page.evaluate(async () => { await document.fonts.ready; return document.fonts.check('400 20px Gloock'); });
     assert(fonts, p + ': fonts load under the policy');
   }

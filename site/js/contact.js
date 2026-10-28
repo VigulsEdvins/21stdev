@@ -12,14 +12,18 @@
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const em = $('k-email').value.trim(), ph = $('k-phone').value.trim();
-    const phoneField = $('k-phone').closest('.field'), consentField = $('k-cerr').closest('.field');
-    phoneField.classList.remove('has-error'); consentField.classList.remove('has-error');
+    const emailField = $('k-email').closest('.field'), phoneField = $('k-phone').closest('.field'), consentField = $('k-cerr').closest('.field');
+    [emailField, phoneField, consentField].forEach((f) => f.classList.remove('has-error'));
+    ['k-err-email', 'k-err-phone', 'k-cerr'].forEach((id) => { $(id).textContent = ''; });
     $('k-email').removeAttribute('aria-invalid'); $('k-phone').removeAttribute('aria-invalid');
-    let problem = '', focusEl = null;
-    if (!em && !ph) { problem = 'Leave an email address or a phone number.'; focusEl = $('k-email'); }
-    else if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { problem = 'That does not look like an email address. It should look like name@example.com.'; focusEl = $('k-email'); $('k-email').setAttribute('aria-invalid', 'true'); }
-    else if (ph && !/^\+?[0-9 ()-]{6,}$/.test(ph)) { problem = 'That does not look like a phone number. Use digits, and a + for the country code.'; focusEl = $('k-phone'); $('k-phone').setAttribute('aria-invalid', 'true'); }
-    $('k-err').textContent = problem; if (problem) phoneField.classList.add('has-error');
+    let focusEl = null;
+    const bad = (input, field, msgId, msg) => { $(msgId).textContent = msg; field.classList.add('has-error'); input.setAttribute('aria-invalid', 'true'); focusEl = focusEl || input; };
+    // each problem is shown under the box it is about; "leave one of the two" sits under the first box
+    if (!em && !ph) bad($('k-email'), emailField, 'k-err-email', 'Leave an email address or a phone number.');
+    else {
+      if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) bad($('k-email'), emailField, 'k-err-email', 'That does not look like an email address. It should look like name@example.com.');
+      if (ph && !/^\+?[0-9 ()-]{6,}$/.test(ph)) bad($('k-phone'), phoneField, 'k-err-phone', 'That does not look like a phone number. Use digits, and a + for the country code.');
+    }
     if (!$('k-consent').checked) { $('k-cerr').textContent = 'Tick the box so we know we may contact you.'; consentField.classList.add('has-error'); focusEl = focusEl || $('k-consent'); }
     if (focusEl) { focusEl.focus(); return; }
     const meta = document.querySelector('meta[name="lead-endpoint"]');

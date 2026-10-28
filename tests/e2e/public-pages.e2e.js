@@ -64,10 +64,13 @@ const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/'];
   // contact form
   await page.goto(srv.url + '/site/contact/index.html');
   await page.click('button[type=submit]');
-  assert((await page.innerText('#k-err')).includes('email address or a phone'));
+  assert((await page.innerText('#k-err-email')).includes('email address or a phone'));
   assert((await page.innerText('#k-cerr')).includes('Tick the box'));
   await page.fill('#k-email', 'nope'); await page.check('#k-consent'); await page.click('button[type=submit]');
-  assert((await page.innerText('#k-err')).includes('does not look like an email'));
+  assert((await page.innerText('#k-err-email')).includes('does not look like an email'));
+  assert.strictEqual(await page.innerText('#k-err-phone'), '', 'the phone box carries no email message');
+  await page.fill('#k-phone', 'abc'); await page.click('button[type=submit]');
+  assert((await page.innerText('#k-err-email')).includes('does not look like an email') && (await page.innerText('#k-err-phone')).includes('does not look like a phone number'), 'both problems are named, each under its own box');
   await page.fill('#k-email', ''); await page.fill('#k-phone', '+371 20000000'); await page.click('button[type=submit]');
   await page.waitForSelector('text=Nothing has left your browser');
   // with an endpoint, the lead is posted as a "talk" lead with the honeypot empty

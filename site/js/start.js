@@ -137,29 +137,34 @@
       talk: ['How can we reach you?', 'Leave an email address or a phone number and we will talk before anything is decided.', 'Ask us to talk'],
       self: ['The builder is being finished.', 'The do-it-yourself builder is not open yet. Leave an email address or a phone number and we will tell you the day it opens. Your answers are kept in this browser until then.', 'Tell me when it opens']
     }[path];
-    const email = h('input', { class: 'input', id: 'c-email', type: 'email', autocomplete: 'email', 'aria-describedby': 'c-err' });
-    const phone = h('input', { class: 'input', id: 'c-phone', type: 'tel', autocomplete: 'tel', 'aria-describedby': 'c-err' });
+    const email = h('input', { class: 'input', id: 'c-email', type: 'email', autocomplete: 'email', 'aria-describedby': 'c-err-email' });
+    const phone = h('input', { class: 'input', id: 'c-phone', type: 'tel', autocomplete: 'tel', 'aria-describedby': 'c-err-phone' });
     const name = h('input', { class: 'input', id: 'c-name', type: 'text', autocomplete: 'name' });
     const how = h('select', { class: 'select', id: 'c-how' }, ['Any way is fine', 'Email', 'Phone call', 'Text message'].map((t) => h('option', { text: t })));
     const consent = h('input', { type: 'checkbox', id: 'c-consent' });
     const trap = h('input', { type: 'text', name: 'website', tabindex: '-1', autocomplete: 'off' });
-    const err = h('span', { class: 'error-text', id: 'c-err', role: 'alert' });
+    const errEmail = h('span', { class: 'error-text', id: 'c-err-email', role: 'alert' });
+    const errPhone = h('span', { class: 'error-text', id: 'c-err-phone', role: 'alert' });
     const consentErr = h('span', { class: 'error-text', id: 'c-cerr', role: 'alert' });
-    const f1 = h('div', { class: 'field' }, h('label', { for: 'c-email', text: 'Email address' }), email);
-    const f2 = h('div', { class: 'field' }, h('label', { for: 'c-phone', text: 'Phone number' }), h('span', { class: 'hint', text: 'Use a + and the country code.' }), phone, err);
+    const f1 = h('div', { class: 'field' }, h('label', { for: 'c-email', text: 'Email address' }), email, errEmail);
+    const f2 = h('div', { class: 'field' }, h('label', { for: 'c-phone', text: 'Phone number' }), h('span', { class: 'hint', text: 'Use a + and the country code.' }), phone, errPhone);
     const f4 = h('div', { class: 'field' }, consentErr);
     function submit(e) {
       e.preventDefault();
       const em = email.value.trim(), ph = phone.value.trim();
       let ok = true;
       [f1, f2, f4].forEach((f) => f.classList.remove('has-error'));
+      [errEmail, errPhone, consentErr].forEach((x) => { x.textContent = ''; });
       email.removeAttribute('aria-invalid'); phone.removeAttribute('aria-invalid');
       const emOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em), phOk = /^\+?[0-9 ()-]{6,}$/.test(ph);
-      if (!em && !ph) { err.textContent = 'Leave an email address or a phone number.'; f2.classList.add('has-error'); ok = false; }
-      else if (em && !emOk) { err.textContent = 'That does not look like an email address. It should look like name@example.com.'; f2.classList.add('has-error'); email.setAttribute('aria-invalid', 'true'); ok = false; }
-      else if (ph && !phOk) { err.textContent = 'That does not look like a phone number. Use digits, and a + for the country code.'; f2.classList.add('has-error'); phone.setAttribute('aria-invalid', 'true'); ok = false; }
+      // each problem is shown under the box it is about; "leave one of the two" sits under the first box
+      if (!em && !ph) { errEmail.textContent = 'Leave an email address or a phone number.'; f1.classList.add('has-error'); email.setAttribute('aria-invalid', 'true'); ok = false; }
+      else {
+        if (em && !emOk) { errEmail.textContent = 'That does not look like an email address. It should look like name@example.com.'; f1.classList.add('has-error'); email.setAttribute('aria-invalid', 'true'); ok = false; }
+        if (ph && !phOk) { errPhone.textContent = 'That does not look like a phone number. Use digits, and a + for the country code.'; f2.classList.add('has-error'); phone.setAttribute('aria-invalid', 'true'); ok = false; }
+      }
       if (!consent.checked) { consentErr.textContent = 'Tick the box so we know we may contact you.'; f4.classList.add('has-error'); ok = false; }
-      if (!ok) { (document.querySelector('.has-error input, .has-error select') || email).focus(); return; }
+      if (!ok) { (email.getAttribute('aria-invalid') ? email : phone.getAttribute('aria-invalid') ? phone : consent).focus(); return; }
       lead({ path, email: em, phone: ph, name: name.value.trim(), how: how.value, brief, consent: true, consentText: CONSENT, website: trap.value });
     }
     const form = h('form', { class: 'stack', novalidate: true, onsubmit: submit },
