@@ -131,6 +131,7 @@ const { start } = require('../lib/fake-supabase.js');
   // 6. sign out; sign in, with the unconfirmed case explained
   await page.click('#b-out'); await page.waitForSelector('#a-out:not([hidden])');
   assert(/signed out/.test(await page.textContent('#a-notice')));
+  assert.strictEqual((await page.innerText('.nav a[href$="account/"]')).trim(), 'Sign in', 'the menu goes back to Sign in after signing out');
   await page.reload(); await page.waitForSelector('#a-out:not([hidden])');
   await page.click('#t-up'); await page.fill('#p-email', 'cara@example.com'); await page.fill('#p-pass', 'Cara-Blue-Lamp-71!'); await page.fill('#p-pass2', 'Cara-Blue-Lamp-71!'); await page.click('#p-go');
   await page.waitForSelector('#f-code:not([hidden])'); await page.click('#c-other'); await page.waitForSelector('#a-out:not([hidden])');
@@ -145,6 +146,7 @@ const { start } = require('../lib/fake-supabase.js');
   await page.click('#b-google'); await page.waitForSelector('#a-in:not([hidden])', { timeout: 15000 });
   assert.strictEqual(await page.textContent('#i-who'), 'google.user@example.com'); assert(/Google/.test(await page.textContent('#i-how'))); assert(!(await vis('#b-newpass')), 'no password change for a Google account'); assert(!/code=/.test(page.url()));
   await page.click('#b-out'); await page.click('#b-github'); await page.waitForSelector('#a-in:not([hidden])', { timeout: 15000 });
+  assert.strictEqual((await page.innerText('.nav a[href$="account/"]')).trim(), 'My account', 'the menu says My account once signed in');
   assert(/GitHub/.test(await page.textContent('#i-how'))); await page.click('#b-out');
   console.log('  ✓ Continue with Google and Continue with GitHub sign in and say which was used');
 

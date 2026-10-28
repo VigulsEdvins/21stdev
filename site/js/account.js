@@ -105,6 +105,7 @@
   }
 
   async function showSignedIn(who) {
+    if (window.EdvNav) window.EdvNav.refresh();
     const how = { google: 'Signed in with Google.', github: 'Signed in with GitHub.', email: 'Signed in with your email address.' }[who.provider] || 'Signed in.';
     knownEmail = who.email; $('i-who').textContent = who.email; $('i-how').textContent = how; $('b-newpass').hidden = who.provider !== 'email'; // a Google or GitHub account has no password of its own here
     title('You are signed in.', 'This is your edvlabs account.'); view('a-in'); focusTitle();
@@ -127,7 +128,7 @@
     const st = store(); if (!st) return false;
     try { if (st.getItem(INTENT_KEY) !== 'builder') return false; st.removeItem(INTENT_KEY); return true; } catch (_) { return false; }
   }
-  function showSignedOut() { title(from === 'builder' ? 'Sign in to unlock every block.' : fromStart ? 'Sign in to build your page.' : 'Sign in or create an account.', from === 'builder' ? 'A free account unlocks every block. Your page stays as it is. Use Google, GitHub or your email address.' : fromStart ? 'We save your answers to your account, so you can carry on from any device. Use Google, GitHub or your email address.' : 'Use Google, GitHub or your email address.'); view('a-out'); setMode('in'); showPass(); }
+  function showSignedOut() { if (window.EdvNav) window.EdvNav.refresh(); title(from === 'builder' ? 'Sign in to unlock every block.' : fromStart ? 'Sign in to build your page.' : 'Sign in or create an account.', from === 'builder' ? 'A free account unlocks every block. Your page stays as it is. Use Google, GitHub or your email address.' : fromStart ? 'We save your answers to your account, so you can carry on from any device. Use Google, GitHub or your email address.' : 'Use Google, GitHub or your email address.'); view('a-out'); setMode('in'); showPass(); }
 
   function setMode(m) {
     mode = m;
