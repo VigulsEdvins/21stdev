@@ -35,3 +35,24 @@ body.is-guided:not([data-step="1"]) .sidebar-tab-switcher { display: none; }
 body.is-guided[data-step="1"] #tabElementsBtn span:not(.tab-badge) { font-size: 0; }
 body.is-guided[data-step="1"] #tabElementsBtn span:not(.tab-badge)::after { content: "Add blocks"; font-size: 14px; }
 @media (max-width: 800px) { .guided-label { display: none; } .guided-step { padding-right: 8px; } }
+
+/* guided step 1: the plain block picker replaces the full catalogue (Advanced brings the catalogue back) */
+.block-picker { display: none; padding: 14px; }
+body.is-guided .block-picker { display: block; }
+body.is-guided #paneElements .elements-catalog-header, body.is-guided #elementsCatalogScroll { display: none; }
+.bp-h { font: 400 20px / 1.2 var(--font-display); margin: 6px 0 10px; color: var(--text-main); }
+.bp-list, .bp-kinds { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 8px; }
+.bp-empty { margin: 0 0 14px; color: var(--text-muted); font-size: 15px; }
+.bp-item, .bp-kind { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 12px; border: 2px solid var(--text-main); border-radius: 12px; background: var(--bg-1, transparent); }
+.bp-name, .bp-kind-text b { font: 600 16px / 1.25 var(--font-body); color: var(--text-main); }
+.bp-kind-text { display: grid; gap: 2px; min-width: 0; flex: 1 1 160px; }
+.bp-kind-text small { font-size: 14px; color: var(--text-muted); }
+.bp-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+.bp-btn { font: 600 14px / 1 var(--font-body); min-height: 40px; min-width: 40px; padding: 0 12px; border: 2px solid var(--text-main); border-radius: 999px; background: transparent; color: var(--text-main); cursor: pointer; }
+.bp-btn:hover:not(:disabled) { background: var(--mustard); }
+.bp-btn:disabled { opacity: .4; cursor: default; }
+.bp-add { background: var(--teal); border-color: var(--teal); color: var(--text-on-teal); }
+.bp-add:hover:not(:disabled) { background: var(--rust); border-color: var(--rust); color: #fff; }
+.bp-kind.is-added .bp-add { background: transparent; color: var(--text-main); border-color: var(--text-main); }
+.bp-kind.is-later { border-style: dashed; }
+.bp-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
