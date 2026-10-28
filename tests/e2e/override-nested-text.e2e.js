@@ -14,7 +14,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.evaluate(() => window.builderPreview.stackManager.setStack([{ id: 'a', slug: 'responsive-burger-menu', title: 'Menu', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } }]));
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.querySelector('#a .burger-btn'), null, { timeout: 20000 });
   await page.evaluate(() => window.builderPreview.stackManager.setSectionOverride('a', 'btn', 'SEC', { selector: ':scope .burger-btn', type: 'text' }));
-  await page.waitForFunction(() => /^\s*SEC\s*$/.test(document.querySelector('iframe').contentDocument.querySelector('#a .burger-label').textContent), null, { timeout: 8000 });
+  await page.waitForFunction(() => /^\s*SEC\s*$/.test(((document.querySelector('iframe').contentDocument.querySelector('#a .burger-label')) || {}).textContent || ''), null, { timeout: 8000 });
   const text = await page.evaluate(() => document.querySelector('iframe').contentDocument.querySelector('#a .burger-btn').textContent.replace(/\s+/g, ' ').trim());
   assert.strictEqual(text, 'SEC', 'the button shows SEC only, got: ' + text);
   console.log('  ✓ the label is replaced, not added to');

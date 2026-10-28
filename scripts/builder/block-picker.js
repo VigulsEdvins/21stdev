@@ -23,12 +23,22 @@
     const yourList = el(doc, 'ol', { class: 'bp-list', id: 'bpYourPage' });
     const empty = el(doc, 'p', { class: 'bp-empty', id: 'bpEmpty', text: 'Nothing here yet. Add your first block below.' });
     const addList = el(doc, 'ul', { class: 'bp-kinds', id: 'bpKinds' });
+    const startOver = el(doc, 'button', { type: 'button', class: 'bp-btn bp-over', id: 'bpStartOver', text: 'Start over' });
+    const sure = el(doc, 'span', { class: 'bp-sure', id: 'bpSure', hidden: '' }, el(doc, 'span', { text: 'Clear every block? You can undo it. ' }),
+      el(doc, 'button', { type: 'button', class: 'bp-btn', id: 'bpOverYes', text: 'Yes, clear it' }), el(doc, 'button', { type: 'button', class: 'bp-btn', id: 'bpOverNo', text: 'Keep my page' }));
     const live = el(doc, 'p', { class: 'bp-live', id: 'bpLive', role: 'status', 'aria-live': 'polite' });
     const root = el(doc, 'section', { class: 'block-picker', id: 'blockPicker', 'aria-label': 'Blocks of your page' },
       el(doc, 'h3', { class: 'bp-h', text: 'Your page' }), empty, yourList,
-      el(doc, 'h3', { class: 'bp-h', text: 'Add a block' }), addList, live);
+      el(doc, 'h3', { class: 'bp-h', text: 'Add a block' }), addList, el(doc, 'div', { class: 'bp-over-row' }, startOver, sure), live);
     host.insertBefore(root, host.firstChild);
 
+    startOver.addEventListener('click', () => { startOver.hidden = true; sure.hidden = false; doc.getElementById('bpOverNo').focus(); });
+    doc.getElementById('bpOverNo').addEventListener('click', () => { sure.hidden = true; startOver.hidden = false; startOver.focus(); });
+    doc.getElementById('bpOverYes').addEventListener('click', () => {
+      const api = (doc.defaultView || window).builderPreview; // one history step, so one Undo brings the page back
+      if (api && api.serializeState && api.applyState) { const snap = api.serializeState(); snap.stack = []; api.applyState(snap); } else sm.clearStack();
+      sure.hidden = true; startOver.hidden = false; say('Your page is empty. Undo brings it back.');
+    });
     const say = (t) => { live.textContent = t; };
     const stack = () => (sm.getState().stack || []);
     const nameOf = (s) => { const k = Kinds.kindOf(s.slug); return k ? k.label : (s.title || s.slug); };
@@ -43,6 +53,7 @@
     function render() {
       const items = stack();
       empty.hidden = items.length > 0;
+      startOver.disabled = items.length === 0;
       yourList.replaceChildren();
       items.forEach((s, i) => {
         const kind = Kinds.kindOf(s.slug), name = nameOf(s), locked = !!s.locked;

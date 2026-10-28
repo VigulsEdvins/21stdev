@@ -116,3 +116,26 @@ body.is-guided .brief-offer[hidden] { display: none; }
 .bo-list small { font-size: 14px; color: var(--text-muted); }
 .bo-missing, .bo-warn { margin: 0 0 10px; font-size: 14px; color: var(--text-muted); }
 .bo-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* phone: panel and preview take turns, header slimmed down */
+.guided-flip { display: none; }
+@media (max-width: 700px) {
+  body.is-guided .guided-flip { display: block; position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 400; min-height: 48px; padding: 0 22px; border: 2px solid var(--text-main); border-radius: 999px; background: var(--rust); color: #fff; font: 600 16px / 1 var(--font-body); box-shadow: 0 4px 0 var(--text-main); cursor: pointer; }
+  body.is-guided .builder-header .header-center, body.is-guided #openExportModalBtn { display: none; }
+  body.is-guided .builder-workspace { flex-direction: column; }
+  body.is-guided .builder-sidebar { width: 100%; min-width: 0; max-width: none; flex: 1 1 auto; min-height: 0; border-right: 0; padding-bottom: 76px; }
+  body.is-guided .builder-viewport { display: none; width: 100%; flex: 1 1 auto; min-height: 0; }
+  body.is-guided.show-preview .builder-sidebar { display: none; }
+  body.is-guided.show-preview .builder-viewport { display: block; }
+  body.is-guided .guided-hint { display: none; }
+  .guided-inner { gap: 8px; }
+}
+
+/* help and start over */
+.guided-helpbtn { margin: 4px 0 0; padding: 4px 0; border: 0; background: none; color: var(--text-main); font: 600 14px / 1 var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.guided-help { margin: 6px 0 0; padding: 10px 12px; max-width: 70ch; border: 2px dashed var(--text-main); border-radius: 12px; font-size: 15px; line-height: 1.45; color: var(--text-main); }
+.guided-help[hidden] { display: none; }
+.bp-over-row { margin: 0 0 14px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 14px; color: var(--text-main); }
+.bp-over-row [hidden] { display: none; }
+.bp-sure { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+@media (max-width: 700px) { body.is-guided .guided-hint { display: block; } }

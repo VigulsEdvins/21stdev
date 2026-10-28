@@ -9,11 +9,11 @@
 
   const KEY = 'web_builder_mode';
   const STEPS = [
-    { id: 'blocks', label: 'Blocks', hint: 'Choose the blocks of your page and put them in order.', tab: 'tabElementsBtn' },
-    { id: 'words', label: 'Words', hint: 'Write your own words and add your photos.', tab: 'tabContentBtn' },
-    { id: 'look', label: 'Look', hint: 'Pick colours and type.', tab: 'tabStylingBtn' },
-    { id: 'check', label: 'Check', hint: 'See what still needs doing before you take your page.', pane: 'check' },
-    { id: 'get', label: 'Get it', hint: 'See the price and take your finished page.', pane: 'get' }
+    { id: 'blocks', label: 'Blocks', hint: 'Choose the blocks of your page and put them in order.', help: 'A block is one part of your page, like the opening banner or the prices. Press Add to put one on your page, use the arrows to move it, and Another look if you want a different style. You can always change your mind later.', tab: 'tabElementsBtn' },
+    { id: 'words', label: 'Words', hint: 'Write your own words and add your photos.', help: 'The text on your page is sample text for now. Pick a block, then type your own words in the boxes. Click a block in the preview to pick it. Pictures can be uploaded from your computer.', tab: 'tabContentBtn' },
+    { id: 'look', label: 'Look', hint: 'Pick colours and type.', help: 'Choose a set of colours, a pair of fonts and how round the corners are. Everything changes in the preview straight away. If your text is hard to read, we will tell you and fix it with one click.', tab: 'tabStylingBtn' },
+    { id: 'check', label: 'Check', hint: 'See what still needs doing before you take your page.', help: 'This list shows what is still missing, in plain words. You do not have to fix everything, and you can go on whenever you like.', pane: 'check' },
+    { id: 'get', label: 'Get it', hint: 'See the price and take your finished page.', help: 'The price depends on how many blocks you use, and on whether you add the editor. Prefer not to do it yourself? Press Ask edvlabs to do it.', pane: 'get' }
   ];
 
   function readMode(win) {
@@ -47,6 +47,9 @@
     stepButtons.forEach((b) => list.append(el(doc, 'li', null, b)));
 
     const hint = el(doc, 'p', { class: 'guided-hint', id: 'guidedHint', 'aria-live': 'polite' });
+    const helpBtn = el(doc, 'button', { type: 'button', class: 'guided-helpbtn', id: 'guidedHelpBtn', 'aria-expanded': 'false', 'aria-controls': 'guidedHelp', text: 'Need help?' });
+    const helpText = el(doc, 'p', { class: 'guided-help', id: 'guidedHelp', hidden: '' });
+    helpBtn.addEventListener('click', () => { const open = helpText.hidden; helpText.hidden = !open; helpBtn.setAttribute('aria-expanded', String(open)); });
     const prev = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle guided-prev', id: 'guidedPrev', text: 'Back' });
     const next = el(doc, 'button', { type: 'button', class: 'builder-btn-primary guided-next', id: 'guidedNext', text: 'Next' });
     prev.addEventListener('click', () => go(current - 1));
@@ -62,7 +65,7 @@
 
     const bar = el(doc, 'nav', { class: 'guided-bar', id: 'guidedBar', 'aria-label': 'Steps to your page' },
       el(doc, 'div', { class: 'guided-inner' }, list, el(doc, 'div', { class: 'guided-actions' }, prev, next)),
-      hint);
+      hint, helpBtn, helpText);
     header.insertAdjacentElement('afterend', bar);
 
     function openModal(kind) {
@@ -72,6 +75,16 @@
       win.setTimeout(() => { if (target && target.scrollIntoView) target.scrollIntoView({ block: 'center' }); if (target && target.focus && kind !== 'checks') target.focus(); }, 60);
     }
 
+    // on a phone the panel and the preview take turns: one button flips between them
+    const flip = el(doc, 'button', { type: 'button', class: 'guided-flip', id: 'guidedFlip', 'aria-pressed': 'false', text: 'See your page' });
+    flip.addEventListener('click', () => {
+      const on = !body.classList.contains('show-preview');
+      body.classList.toggle('show-preview', on);
+      flip.setAttribute('aria-pressed', String(on));
+      flip.textContent = on ? 'Back to editing' : 'See your page';
+    });
+    body.append(flip);
+
     function render() {
       stepButtons.forEach((b, i) => {
         b.classList.toggle('is-current', i === current);
@@ -79,6 +92,7 @@
         if (i === current) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
       });
       hint.textContent = 'Step ' + (current + 1) + ' of ' + STEPS.length + '. ' + STEPS[current].hint;
+      helpText.textContent = STEPS[current].help;
       prev.disabled = current === 0;
       next.hidden = current === STEPS.length - 1;
       body.setAttribute('data-step', String(current + 1));
