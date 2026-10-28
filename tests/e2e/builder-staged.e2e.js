@@ -31,9 +31,14 @@ const { createServer } = require('../../scripts/dev-site.js');
   assert.strictEqual((await fetch(base + '/builder.html')).status, 404, 'the old address is not published');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/index.html')).status, 200, 'features are published');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/component.tsx')).status, 404, 'React sources are not');
+  const feat = await fetch(base + '/builder/features/a4-resume-previewer/index.html');
+  assert(/^frame-ancestors 'self'$/.test(feat.headers.get('content-security-policy')), 'catalogue previews may be framed by the builder itself: ' + feat.headers.get('content-security-policy'));
   console.log('  ✓ served at /builder/ with its own headers; sources stay home');
 
   await page.goto(base + '/builder/');
+  // a catalogue card preview is a component framed by the builder: it must load, not show the browser's "blocked" page
+  const framed = await page.evaluate((src) => new Promise((resolve) => { const f = document.createElement('iframe'); f.onload = () => { let ok = false; try { ok = !!f.contentDocument && f.contentDocument.body && f.contentDocument.body.children.length > 0 && !/^chrome-error:/.test(f.contentWindow.location.href); } catch (e) { ok = false; } resolve(ok); }; f.src = src; document.body.append(f); setTimeout(() => resolve(false), 8000); }), 'features/a4-resume-previewer/index.html');
+  assert(framed, 'a component preview frame shows the component');
   await page.waitForSelector('#blockPicker', { state: 'attached' });
   await page.evaluate(() => window.builderManager.clearStack());
   await page.click('[data-kind="banner"] .bp-add');

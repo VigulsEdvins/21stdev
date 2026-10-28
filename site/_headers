@@ -63,3 +63,9 @@
   X-Robots-Tag: noindex
   ! Content-Security-Policy
   Content-Security-Policy: frame-ancestors 'none'
+
+# The catalogue cards in the builder show each component in a small frame of the builder itself (features/<slug>/index.html), so those files may be framed by
+# the same site, and only by it. Without this rule the framing ban above blocks them too and every card preview shows "blocked".
+/builder/features/*
+  ! Content-Security-Policy
+  Content-Security-Policy: frame-ancestors 'self'

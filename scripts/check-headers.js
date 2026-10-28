@@ -85,6 +85,11 @@ async function main() {
       if (!(b['!detach'] || []).includes('content-security-policy')) errs.push('/builder/*: must detach the strict policy first, or the browser applies both');
       if (!/frame-ancestors 'none'/.test(b['content-security-policy'] || '')) errs.push("/builder/*: must keep frame-ancestors 'none'");
     }
+    if (rules['/builder/features/*']) { // the catalogue previews: framed by the same site only
+      const f = rules['/builder/features/*'];
+      if (!(f['!detach'] || []).includes('content-security-policy')) errs.push('/builder/features/*: must detach the framing ban of /builder/* first');
+      if (!/^frame-ancestors 'self'$/.test((f['content-security-policy'] || '').trim())) errs.push("/builder/features/*: must be exactly frame-ancestors 'self'");
+    } else if (rules['/builder/*']) errs.push('/builder/features/*: missing; the catalogue previews are framed by the builder and need frame-ancestors \'self\'');
     if (rules['/style/*'] && !(rules['/style/*']['!detach'] || []).includes('content-security-policy')) errs.push('/style/*: must detach the strict policy first, or the browser applies both');
   }
   if (errs.length) { console.error(errs.join('\n')); process.exit(1); }
