@@ -67,6 +67,37 @@
     <p id="i-who"></p>
     <p id="i-how" class="hint"></p>
     <div class="btn-row"><button class="btn" type="button" id="b-out">Sign out</button> <button class="btn btn--secondary" type="button" id="b-newpass" hidden>Change password</button></div>
+
+    <div class="acct-sec" aria-labelledby="pg-h">
+      <h2 id="pg-h">My pages</h2>
+      <p id="pg-empty" hidden>You have no saved pages yet. When you build a page, it is saved here.</p>
+      <ul class="pg-list" id="pg-list"></ul>
+      <div id="pg-msg" role="status" aria-live="polite"></div>
+      <p><a class="btn btn--secondary" href="../start/">Start your page</a></p>
+    </div>
+
+    <div class="acct-sec" aria-labelledby="an-h">
+      <h2 id="an-h">My answers</h2>
+      <p id="an-text"></p>
+      <p><a class="btn btn--secondary" href="../start/">Look at or change my answers</a></p>
+    </div>
+
+    <form class="acct-sec stack" id="f-email" aria-labelledby="em-h" novalidate hidden>
+      <h2 id="em-h">Email address</h2>
+      <p class="hint">We email a link to the new address. Your sign-in address changes once you press it.</p>
+      <div class="field"><label for="em-new">New email address</label><input class="input" id="em-new" type="email" autocomplete="email" aria-describedby="em-new-err"><span class="error-text" id="em-new-err" role="alert"></span></div>
+      <div><button class="btn btn--secondary" type="submit">Send the link</button></div>
+    </form>
+
+    <div class="acct-sec" aria-labelledby="dl-h">
+      <h2 id="dl-h">Delete my account</h2>
+      <p>This deletes your account, your saved answers and every saved page. It cannot be undone.</p>
+      <p><button class="btn btn--secondary" type="button" id="b-del">Delete my account…</button></p>
+      <form class="stack" id="f-del" novalidate hidden>
+        <div class="field"><label for="dl-email">Type your email address to confirm</label><input class="input" id="dl-email" type="email" autocomplete="off" aria-describedby="dl-email-err"><span class="error-text" id="dl-email-err" role="alert"></span></div>
+        <div class="btn-row"><button class="btn" type="submit" id="dl-go">Delete my account for good</button> <button class="btn btn--secondary" type="button" id="dl-cancel">Keep my account</button></div>
+      </form>
+    </div>
   </div>
 
   <form class="stack" id="f-new" novalidate hidden>
@@ -84,6 +115,8 @@
 <script src="../js/brief.js"></script>
 <script src="../js/brief-sync.js"></script>
 <script src="../js/nav-auth.js"></script>
+<script src="../js/my-pages.js"></script>
+<script src="../js/account-extras.js"></script>
 <script src="../js/account.js"></script>
 </body>
 </html>

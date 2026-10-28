@@ -10,7 +10,7 @@ const id = () => crypto.randomUUID();
 
 function start(opts = {}) {
   const anonKey = 'anon-test-key';
-  const state = { confirmEmails: opts.confirmEmails !== false, requireCaptcha: !!opts.requireCaptcha, captchaToken: 'test-captcha-token', otps: new Map(), users: new Map(), outbox: [], codes: new Map(), sessions: new Map(), refresh: new Map(), briefs: new Map(), anonKey, calls: [] };
+  const state = { confirmEmails: opts.confirmEmails !== false, requireCaptcha: !!opts.requireCaptcha, captchaToken: 'test-captcha-token', otps: new Map(), users: new Map(), outbox: [], codes: new Map(), sessions: new Map(), refresh: new Map(), briefs: new Map(), projects: new Map(), anonKey, calls: [] };
   const err = (res, status, error_code, msg) => send(res, status, { code: status, error_code, msg });
   function send(res, status, body) {
     res.writeHead(status, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'apikey, authorization, content-type, prefer', 'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS' });
@@ -116,7 +116,12 @@ function start(opts = {}) {
         if (req.method === 'PUT') {
           if (body.password && body.password.length < 8) return err(res, 422, 'weak_password', 'Password should be at least 8 characters.');
           if (body.password) u.password = body.password;
-          return send(res, 200, publicUser(u));
+          if (body.email) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email)) return err(res, 422, 'validation_failed', 'Unable to validate email address: invalid format');
+            if (state.users.has(body.email)) return err(res, 422, 'email_exists', 'A user with this email address has already been registered');
+            u.newEmail = body.email; state.outbox.push({ to: body.email, kind: 'email-change' }); // the address changes when the emailed link is pressed (state.confirmEmailChange)
+          }
+          return send(res, 200, Object.assign(publicUser(u), u.newEmail ? { new_email: u.newEmail } : {}));
         }
       }
       if (url.pathname === '/rest/v1/briefs') { // the saved answers, one row per person; only the owner's own token reaches it (like the row level security in the migration)
@@ -131,6 +136,31 @@ function start(opts = {}) {
         }
         return err(res, 405, 'not_allowed', 'method not allowed');
       }
+      if (url.pathname === '/rest/v1/projects') { // saved pages: only the owner's rows; status and user_id cannot be changed by the browser (column grants in the migration)
+        const owner = state.sessions.get(bearer); const me = owner && state.users.get(owner);
+        if (!me) return err(res, 401, 'PGRST301', 'JWT expired or missing');
+        state.calls.push('projects ' + req.method + ' as ' + me.email);
+        const mine = [...state.projects.values()].filter((p) => p.user_id === me.id);
+        if (req.method === 'GET') return send(res, 200, mine.filter((p) => !p.deleted_at).sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at))).map((p) => ({ id: p.id, name: p.name, status: p.status, updated_at: p.updated_at })));
+        if (req.method === 'PATCH') {
+          const want = (url.searchParams.get('id') || '').replace(/^eq\./, '');
+          if (Object.keys(body).some((k) => !['name', 'state', 'deleted_at', 'updated_at'].includes(k))) return err(res, 403, '42501', 'permission denied for table projects');
+          const row = mine.find((p) => p.id === want);
+          if (row) Object.assign(row, body);
+          return send(res, 204); // a row that is not yours simply matches nothing, like row level security
+        }
+        return err(res, 405, 'not_allowed', 'method not allowed');
+      }
+      if (url.pathname === '/rest/v1/rpc/delete_my_account' && req.method === 'POST') {
+        const owner = state.sessions.get(bearer); const me = owner && state.users.get(owner);
+        if (!me) return err(res, 401, 'PGRST301', 'JWT expired or missing');
+        state.calls.push('delete_my_account as ' + me.email);
+        state.users.delete(me.email); state.briefs.delete(me.id);
+        [...state.projects.values()].filter((p) => p.user_id === me.id).forEach((p) => state.projects.delete(p.id));
+        [...state.sessions].filter(([, e]) => e === me.email).forEach(([a]) => state.sessions.delete(a));
+        [...state.refresh].filter(([, e]) => e === me.email).forEach(([r]) => state.refresh.delete(r));
+        return send(res, 204);
+      }
       if (url.pathname === '/auth/v1/logout' && req.method === 'POST') { state.sessions.delete(bearer); return send(res, 204); }
       return err(res, 404, 'not_found', 'not found');
     });
@@ -138,6 +168,8 @@ function start(opts = {}) {
   return new Promise((resolve) => server.listen(0, '127.0.0.1', () => resolve(Object.assign(state, {
     url: 'http://127.0.0.1:' + server.address().port,
     close: () => new Promise((r) => server.close(r)),
+    addProject(email, name, extra) { const u = state.users.get(email); const row = Object.assign({ id: crypto.randomUUID(), user_id: u.id, name, status: 'draft', updated_at: new Date().toISOString(), deleted_at: null }, extra || {}); state.projects.set(row.id, row); return row; },
+    confirmEmailChange(email) { const u = state.users.get(email); if (u && u.newEmail) { state.users.delete(email); u.email = u.newEmail; delete u.newEmail; state.users.set(u.email, u); [...state.sessions].forEach(([a, e]) => { if (e === email) state.sessions.set(a, u.email); }); [...state.refresh].forEach(([r, e]) => { if (e === email) state.refresh.set(r, u.email); }); } },
     confirm(email) { const u = state.users.get(email); if (u) u.confirmed = true; }
   }))));
 }

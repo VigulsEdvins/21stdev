@@ -170,6 +170,24 @@
         const r = await call('PUT', '/auth/v1/user', { password }, s.access_token);
         return r.ok ? { ok: true } : r;
       },
+      /** Asks to change the sign-in email address. The service emails a link to the new address; the address changes once it is pressed. */
+      async changeEmail(email) {
+        email = String(email || '').trim();
+        if (!EMAIL_RE.test(email)) return { ok: false, message: 'That does not look like an email address. It should look like name@example.com.', field: 'email' };
+        const s = await fresh();
+        if (!s) return { ok: false, message: 'Please sign in again first.' };
+        const r = await call('PUT', '/auth/v1/user', { email }, s.access_token);
+        return r.ok ? { ok: true } : r;
+      },
+      /** Deletes the signed-in person's account and everything saved in it (the database function public.delete_my_account), then forgets the session. */
+      async deleteAccount() {
+        const s = await fresh();
+        if (!s) return { ok: false, message: 'Please sign in again first.' };
+        const r = await call('POST', '/rest/v1/rpc/delete_my_account', {}, s.access_token);
+        if (!r.ok) return { ok: false, message: 'We could not delete the account just now. Nothing was changed. Please try again, or write to us from the contact page.' };
+        drop(store, SESSION_KEY); drop(temp, PKCE_KEY);
+        return { ok: true };
+      },
       /** The signed-in visitor, refreshing the session when it is about to run out. null when nobody is signed in. */
       async current() {
         const s = await fresh();
