@@ -55,3 +55,11 @@
   X-Robots-Tag: noindex
   ! Content-Security-Policy
   Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://idvirglyjvqneaudnsuu.supabase.co; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+# The builder (staged under /builder/ by scripts/build-site.js). Its page carries its own Content-Security-Policy tag, which allows inline scripts and
+# styles and a few script hosts; that is the policy for now (E16.7 tightens it). The strict policy is removed here because the builder cannot run
+# under it, and what a header can do that a tag cannot is kept: nobody may frame the builder, and search engines skip it.
+/builder/*
+  X-Robots-Tag: noindex
+  ! Content-Security-Policy
+  Content-Security-Policy: frame-ancestors 'none'

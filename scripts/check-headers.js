@@ -80,6 +80,11 @@ async function main() {
       if ((c['style-src'] || []).some((x) => x !== "'self'")) errs.push('/account/*: style-src must stay as strict as everywhere');
       if (!(rules['/account/*']['!detach'] || []).includes('content-security-policy')) errs.push('/account/*: must detach the strict policy first, or the browser applies both');
     }
+    if (rules['/builder/*']) { // the page's own policy tag applies; the header must still forbid framing and detach the strict policy first
+      const b = rules['/builder/*'];
+      if (!(b['!detach'] || []).includes('content-security-policy')) errs.push('/builder/*: must detach the strict policy first, or the browser applies both');
+      if (!/frame-ancestors 'none'/.test(b['content-security-policy'] || '')) errs.push("/builder/*: must keep frame-ancestors 'none'");
+    }
     if (rules['/style/*'] && !(rules['/style/*']['!detach'] || []).includes('content-security-policy')) errs.push('/style/*: must detach the strict policy first, or the browser applies both');
   }
   if (errs.length) { console.error(errs.join('\n')); process.exit(1); }

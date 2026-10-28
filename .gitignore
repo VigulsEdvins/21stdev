@@ -17,3 +17,6 @@ agentdb.rvf*
 *.swp
 *.swo
 *~
+
+# staged site for Cloudflare (npm run build:site)
+dist/

@@ -50,17 +50,17 @@ function headersFor(rules, pathname) {
   return h;
 }
 
-function fileFor(pathname) {
+function fileFor(pathname, dir = SITE) {
   let p; try { p = decodeURIComponent(pathname); } catch (_) { return null; }
   if (p.includes('\0')) return null;
-  let f = path.join(SITE, p.endsWith('/') ? p + 'index.html' : p);
-  if (!f.startsWith(SITE + path.sep) && f !== SITE) return null;
+  let f = path.join(dir, p.endsWith('/') ? p + 'index.html' : p);
+  if (!f.startsWith(dir + path.sep) && f !== dir) return null;
   if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
   return fs.existsSync(f) && fs.statSync(f).isFile() ? f : null;
 }
 
-function createServer(env, { applyHeaders = true } = {}) {
-  const rules = parseHeaders(fs.readFileSync(path.join(SITE, '_headers'), 'utf8'));
+function createServer(env, { applyHeaders = true, dir = SITE } = {}) {
+  const rules = parseHeaders(fs.readFileSync(path.join(dir, '_headers'), 'utf8'));
   return http.createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     try {
@@ -71,8 +71,8 @@ function createServer(env, { applyHeaders = true } = {}) {
         const r = await route(request, env, async () => new Response('Not found', { status: 404 }));
         res.writeHead(r.status, Object.fromEntries(r.headers)); return res.end(Buffer.from(await r.arrayBuffer()));
       }
-      let f = fileFor(url.pathname), status = 200;
-      if (!f) { f = path.join(SITE, '404.html'); status = 404; }
+      let f = fileFor(url.pathname, dir), status = 200;
+      if (!f) { f = path.join(dir, '404.html'); status = 404; }
       const headers = Object.assign({ 'Content-Type': TYPES[path.extname(f)] || 'application/octet-stream' }, applyHeaders ? headersFor(rules, url.pathname) : {});
       res.writeHead(status, headers); fs.createReadStream(f).pipe(res);
     } catch (e) { res.writeHead(500, { 'Content-Type': 'text/plain' }); res.end('Something went wrong in the local server: ' + e.message); }
@@ -83,8 +83,9 @@ if (require.main === module) {
   const port = Number(process.env.PORT || 4173);
   const env = loadEnv(path.join(ROOT, '.dev.vars'), process.env);
   const has = (k) => (env[k] ? 'set' : 'NOT SET');
-  createServer(env).listen(port, '127.0.0.1', () => {
-    console.log(`edvlabs site on http://localhost:${port}/   (pages from site/, headers from site/_headers)`);
+  const staged = require('./build-site.js').buildSite(); // the same folder Cloudflare publishes: the site plus /builder/
+  createServer(env, { dir: staged.out }).listen(port, '127.0.0.1', () => {
+    console.log(`edvlabs site on http://localhost:${port}/   (staged in dist/ from site/ and the builder; headers from site/_headers; builder at /builder/)`);
     console.log(`  accounts  : SUPABASE_URL ${has('SUPABASE_URL')}, SUPABASE_ANON_KEY ${has('SUPABASE_ANON_KEY')}  ->  http://localhost:${port}/account/`);
     console.log(`  lead email: LEAD_TO_EMAIL ${has('LEAD_TO_EMAIL')}, LEAD_FROM_EMAIL ${has('LEAD_FROM_EMAIL')}, RESEND_API_KEY ${has('RESEND_API_KEY')}  ->  forms really send mail only when all three are set`);
     if (!fs.existsSync(path.join(ROOT, '.dev.vars'))) console.log('  (no .dev.vars file yet: copy .dev.vars.example to .dev.vars and fill it in)');

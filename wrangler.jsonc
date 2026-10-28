@@ -1,6 +1,6 @@
 {
-  // Cloudflare deploy: the public site (site/) as static assets, plus a small Worker (src/worker.js) that receives leads at /api/lead.
-  // Never publish the repository root (it holds node_modules). site/_headers (security headers) and site/404.html are read from site/.
+  // Cloudflare deploy: the public site (site/) plus the page builder (/builder/), staged into dist/ by `npm run build:site` (run it before deploying), as static assets, plus a small Worker (src/worker.js) that receives leads at /api/lead.
+  // Never publish the repository root (it holds node_modules). site/_headers (security headers) and site/404.html are copied into dist/ and read from there.
   // Settings are added in the Cloudflare dashboard, not here: LEAD_TO_EMAIL, LEAD_FROM_EMAIL, RESEND_API_KEY (secret); optional KV binding LEADS, TURNSTILE_SECRET.
   "name": "21stdev",
   "main": "src/worker.js",
@@ -9,7 +9,7 @@
   // deploy that does not list them here. keep_vars keeps them. Secrets (RESEND_API_KEY) are never deleted.
   "keep_vars": true,
   "assets": {
-    "directory": "./site",
+    "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
     "run_worker_first": ["/api/*"]

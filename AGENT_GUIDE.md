@@ -63,6 +63,7 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
 | `npm start` | Serves the vault at http://localhost:4173 (`VAULT_STRICT=1` serves only vault files) |
 | `npm test` | All unit and structure tests (`tests/test-*.js`) |
 | `npm run test:e2e` | Playwright end-to-end tests of builder.html (search, preview, content, projects, ZIP export) |
+| `npm run build:site` | Stages `dist/` (the public site plus the builder at `/builder/`), the folder Cloudflare publishes; `npm run deploy:site` builds and deploys it |
 | `npm run sync` | Regenerate `registry.json` / `registry.js` from `features/*/meta.json` |
 | `npm run new-feature -- <slug>` | Scaffold a new feature |
 | `npm run check-blank` | Adds every feature alone in the builder and fails if a section renders nothing (4 known-empty features are listed in the script). `verify` also fails when `script.js` is a stub and the real code is inline in `index.html` |

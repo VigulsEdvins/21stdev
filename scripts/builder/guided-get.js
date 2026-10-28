@@ -7,7 +7,8 @@
   'use strict';
 
   const EDITOR_KEY = 'web_builder_editor';
-  const HELP_URL = 'site/contact/'; // where "Ask edvlabs to do it" goes; the deployed site puts the builder next to this page
+  // where "Ask edvlabs to do it" goes: the staged page (scripts/build-site.js) names it in a contact-url tag; from the repository root it is site/contact/
+  const HELP_URL = (typeof document !== 'undefined' && (document.querySelector('meta[name="contact-url"]') || {}).content) || 'site/contact/';
 
   /** Pure part: the lines of the price meter for a block count and the editor choice. */
   function meter(P, blocks, editor) {

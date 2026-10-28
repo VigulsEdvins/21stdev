@@ -18,6 +18,6 @@ assert(/max-age=300/.test(rules['/*']['cache-control']), 'pages are cached for f
 
 const wrangler = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'wrangler.jsonc'), 'utf8').replace(/^\s*\/\/.*$/gm, ''));
 assert.strictEqual(wrangler.keep_vars, true, 'plain variables set in the dashboard must survive a deploy');
-assert.strictEqual(wrangler.assets.directory, './site', 'only site/ is published');
+assert.strictEqual(wrangler.assets.directory, './dist', 'only the staged folder (site/ plus the builder, scripts/build-site.js) is published, never the repository root');
 assert.deepStrictEqual(wrangler.assets.run_worker_first, ['/api/*']);
 console.log('✅ Headers file and wrangler.jsonc tests passed!');
