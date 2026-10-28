@@ -56,6 +56,7 @@
 
   <form class="stack" id="f-code" novalidate hidden>
     <p id="c-intro"></p>
+    <p class="hint" id="c-note" hidden>Nothing arrived? If this address already has an account (for example you signed in with Google or GitHub before), we do not send another code. Choose “Use a different email” and sign in instead, or use “Forgot your password?”.</p>
     <div class="field"><label for="c-code">Code from the email</label><span class="hint">Digits only. Paste it as it is.</span><input class="input input--code" id="c-code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="12" autocomplete="one-time-code" aria-describedby="c-code-err"><span class="error-text" id="c-code-err" role="alert"></span></div>
     <div class="captcha" id="c-captcha" hidden></div>
     <div><button class="btn" type="submit" id="c-go">Verify</button></div>

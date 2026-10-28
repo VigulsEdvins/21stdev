@@ -52,6 +52,7 @@ const { start } = require('../lib/fake-supabase.js');
   await page.fill('#p-pass2', 'correct horse 1'); await page.click('#p-go');
   await page.waitForSelector('#f-code:not([hidden])');
   assert(/anna@example\.com/.test(await page.textContent('#c-intro')) && /6-digit code/.test(await page.textContent('#c-intro')), 'asks for the code and names the address');
+  assert(await vis('#c-note') && /already has an account/.test(await page.textContent('#c-note')), 'after creating an account the page explains why no email arrives for an address that is already registered');
   assert.strictEqual(await page.getAttribute('#c-code', 'autocomplete'), 'one-time-code'); assert.strictEqual(await page.getAttribute('#c-code', 'inputmode'), 'numeric');
   assert(!(await vis('#a-in')), 'not signed in before the address is confirmed');
   const mail = await lastMail('anna@example.com'); assert(/^\d{6}$/.test(mail.code));
