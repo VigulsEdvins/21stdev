@@ -12,6 +12,8 @@ const Q = require('../../site/js/questions.js');
   const browser = await launchBrowser();
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await ctx.newPage();
+  // the plain dev server has no Worker: answer the spam-check key request the way a Worker without keys does (nothing is shown, nothing is sent)
+  await page.route('**/api/form-check', (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{}' }));
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
