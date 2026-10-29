@@ -3,7 +3,7 @@ const assert = require('assert');
 const fs = require('fs');
 const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 const complete = JSON.parse(fs.readFileSync(__dirname + '/../data/briefs/valid-complete.json', 'utf8'));
-complete.answers.blocks.value = ['banner', 'about', 'services', 'map', 'contact']; // map has no component yet
+complete.answers.blocks.value = ['banner', 'about', 'services', 'map', 'contact']; // every kind has a component now
 
 (async () => {
   const srv = await startServer();
@@ -33,20 +33,20 @@ complete.answers.blocks.value = ['banner', 'about', 'services', 'map', 'contact'
   const { page } = t;
   await page.waitForSelector('#briefOffer', { state: 'visible' });
   assert(/chose/.test(await page.textContent('.bo-lead')));
-  assert(/Map and opening hours/.test(await page.textContent('.bo-missing')), 'the block with no component is named');
+  assert.strictEqual(await page.locator('.bo-missing').count(), 0, 'nothing is missing: every chosen kind has a component');
   assert(/replaces/.test(await page.textContent('#briefWarn')), 'warns when the page already has blocks');
   const before = await page.evaluate(() => window.builderManager.getStack().length);
   await page.click('#briefUse');
   const st = await page.evaluate(() => { const s = window.builderManager.getState(); return { titles: s.stack.map(x => x.title), theme: s.theme, bg: s.customColors.bg, fd: s.page.fontDisplay }; });
-  assert.deepStrictEqual(st.titles, ['Opening banner', 'About you', 'What you offer', 'Contact form']);
+  assert.deepStrictEqual(st.titles, ['Opening banner', 'About you', 'What you offer', 'Map and opening hours', 'Contact form']);
   assert.strictEqual(st.theme, 'custom'); assert.strictEqual(st.bg.toLowerCase(), '#f6efe0'); assert.strictEqual(st.fd, 'Fraunces');
   assert(!(await page.isVisible('#briefOffer')), 'offer goes away once used');
-  assert(/4 blocks added/.test(await page.textContent('#briefLive')));
-  console.log('  ✓ one click builds the page from the answers (blocks, colours, fonts); the missing block is named');
+  assert(/5 blocks added/.test(await page.textContent('#briefLive')));
+  console.log('  ✓ one click builds the page from the answers (blocks, colours, fonts); every chosen kind is found');
 
   await page.click('#guidedStep-get');
   assert.strictEqual(await page.isChecked('#getEditor'), true, 'editor answer carried over');
-  assert(/4 blocks/.test(await page.textContent('#getHead')));
+  assert(/5 blocks/.test(await page.textContent('#getHead')));
   console.log('  ✓ the editor answer reaches the price panel');
 
   assert(before >= 0);
@@ -54,7 +54,7 @@ complete.answers.blocks.value = ['banner', 'about', 'services', 'map', 'contact'
   await page.click('#undoBtn');
   await page.waitForTimeout(400);
   const after = await page.evaluate(() => window.builderManager.getStack().length);
-  assert.strictEqual(after, before, 'one undo gives the old page back (' + before + ' -> 4 -> ' + after + ')');
+  assert.strictEqual(after, before, 'one undo gives the old page back (' + before + ' -> 5 -> ' + after + ')');
   console.log('  ✓ undo brings the old page back');
   assert.deepStrictEqual(t.errors, [], t.errors.join(' | '));
   await browser.close(); await srv.close();

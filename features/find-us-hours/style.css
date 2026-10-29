@@ -1,0 +1,23 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.fuh-demo { background: var(--bg, #fbf6ea); color: var(--text, #1d2a33); font-family: var(--font-body, system-ui, sans-serif); padding: 5rem 1.5rem; }
+.fuh-wrap { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+.fuh-title { font-family: var(--font-display, inherit); font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 .75rem; line-height: 1.1; }
+.fuh-address { font-size: 1.2rem; font-weight: 600; margin: 0 0 .35rem; }
+.fuh-note { margin: 0 0 1.5rem; color: color-mix(in srgb, var(--text, #1d2a33) 72%, transparent); line-height: 1.6; }
+.fuh-hours { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.fuh-hours-caption { text-align: left; font-weight: 700; padding-bottom: .5rem; }
+.fuh-hours th, .fuh-hours td { text-align: left; padding: .6rem 0; border-top: 1px solid color-mix(in srgb, var(--text, #1d2a33) 20%, transparent); font-weight: 400; }
+.fuh-hours th { padding-right: 1rem; }
+.fuh-hours td { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fuh-link { display: inline-block; font-weight: 600; padding: 12px 22px; border-radius: 999px; background: var(--accent, #c4522a); color: #fff; text-decoration: none; }
+.fuh-link:hover { opacity: .9; }
+.fuh-link:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent, #c4522a) 60%, #fff); outline-offset: 3px; }
+.fuh-map { width: 100%; height: auto; border-radius: calc(var(--radius, 16px) * 1.4); border: 2px solid var(--text, #1d2a33); display: block; }
+.fuh-land { fill: color-mix(in srgb, var(--text, #1d2a33) 6%, var(--bg, #fbf6ea)); }
+.fuh-water { fill: color-mix(in srgb, var(--accent, #c4522a) 18%, var(--bg, #fbf6ea)); }
+.fuh-park { fill: color-mix(in srgb, var(--accent, #c4522a) 10%, var(--bg, #fbf6ea)); }
+.fuh-street { fill: none; stroke: color-mix(in srgb, var(--text, #1d2a33) 28%, var(--bg, #fbf6ea)); stroke-width: 6; stroke-linecap: round; }
+.fuh-street--wide { stroke-width: 12; }
+.fuh-pin path { fill: var(--accent, #c4522a); }
+.fuh-pin circle { fill: var(--bg, #fbf6ea); }
+@media (max-width: 760px) { .fuh-wrap { grid-template-columns: 1fr; } }

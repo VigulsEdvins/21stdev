@@ -1,0 +1,64 @@
+{
+  "slug": "about-story",
+  "title": "About you, a short story",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "A short story about who you are: a poster-style shape, a heading, a paragraph and three facts with big numbers. Plain words, no animation, easy to rewrite.",
+  "tags": [
+    "about",
+    "story",
+    "team",
+    "facts",
+    "trust"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "agency",
+    "portfolio"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-29",
+  "customizable": [
+    {
+      "id": "kicker",
+      "label": "Small label",
+      "type": "text",
+      "selector": ":scope .abs-kicker"
+    },
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .abs-title"
+    },
+    {
+      "id": "story",
+      "label": "Your story",
+      "type": "text",
+      "selector": ":scope .abs-story"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .abs-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 999,
+  "access": "free"
+}

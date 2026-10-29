@@ -1,0 +1,13 @@
+/* Standard tokens so themes apply: --bg, --text, --accent, --radius, --font-display, --font-body */
+.hws-demo { background: var(--bg, #fbf6ea); color: var(--text, #1d2a33); font-family: var(--font-body, system-ui, sans-serif); padding: 5rem 1.5rem; }
+.hws-wrap { max-width: 1040px; margin: 0 auto; }
+.hws-title { font-family: var(--font-display, inherit); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 .5rem; }
+.hws-intro { margin: 0 0 2.5rem; font-size: 1.1rem; color: color-mix(in srgb, var(--text, #1d2a33) 72%, transparent); }
+.hws-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; counter-reset: none; }
+.hws-step { border-top: 2px solid var(--text, #1d2a33); padding-top: 1.25rem; }
+.hws-num { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent, #c4522a); color: #fff; font-family: var(--font-display, inherit); font-size: 1.3rem; margin-bottom: 1rem; }
+.hws-step:nth-child(even) .hws-num { border-radius: 22px 22px 0 0; }
+.hws-step-title { font-size: 1.15rem; margin: 0 0 .4rem; line-height: 1.3; }
+.hws-step-text { margin: 0; line-height: 1.6; color: color-mix(in srgb, var(--text, #1d2a33) 78%, transparent); }
+@media (max-width: 900px) { .hws-steps { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .hws-steps { grid-template-columns: 1fr; } }

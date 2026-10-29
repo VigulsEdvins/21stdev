@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-28T15:06:02.259Z",
+  "generatedAt": "2026-10-29T05:57:01.724Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 235,
+  "totalFeatures": 238,
   "categories": [
     "Heroes",
     "Headers & Nav",
@@ -20106,6 +20106,246 @@
       "relativePath": "features/toggle-switch-set",
       "previewUrl": "features/toggle-switch-set/index.html",
       "thumb": "thumbs/toggle-switch-set.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "about-story",
+      "title": "About you, a short story",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "agency",
+        "portfolio"
+      ],
+      "weight": "light",
+      "access": "free",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-29",
+      "customizable": [
+        {
+          "id": "kicker",
+          "label": "Small label",
+          "type": "text",
+          "selector": ":scope .abs-kicker"
+        },
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .abs-title"
+        },
+        {
+          "id": "story",
+          "label": "Your story",
+          "type": "text",
+          "selector": ":scope .abs-story"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .abs-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "A short story about who you are: a poster-style shape, a heading, a paragraph and three facts with big numbers. Plain words, no animation, easy to rewrite.",
+      "tags": [
+        "about",
+        "story",
+        "team",
+        "facts",
+        "trust"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/about-story",
+      "relativePath": "features/about-story",
+      "previewUrl": "features/about-story/index.html",
+      "thumb": "thumbs/about-story.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "find-us-hours",
+      "title": "Find us and opening hours",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "hospitality",
+        "ecommerce"
+      ],
+      "weight": "light",
+      "access": "free",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-29",
+      "customizable": [
+        {
+          "id": "address",
+          "label": "Address",
+          "type": "text",
+          "selector": ":scope .fuh-address"
+        },
+        {
+          "id": "note",
+          "label": "Note",
+          "type": "text",
+          "selector": ":scope .fuh-note"
+        },
+        {
+          "id": "link",
+          "label": "Map button link",
+          "type": "link",
+          "selector": ":scope .fuh-link"
+        },
+        {
+          "id": "button",
+          "label": "Map button text",
+          "type": "text",
+          "selector": ":scope .fuh-link"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .fuh-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Where to find you: an address, a short note, a table of opening hours and a simple drawn map with a pin. Nothing is loaded from a map service, so it is fast and private; the button opens a map in a new page.",
+      "tags": [
+        "map",
+        "address",
+        "opening-hours",
+        "contact",
+        "local"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/find-us-hours",
+      "relativePath": "features/find-us-hours",
+      "previewUrl": "features/find-us-hours/index.html",
+      "thumb": "thumbs/find-us-hours.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "how-we-work-steps",
+      "title": "How we work, step by step",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "agency",
+        "saas"
+      ],
+      "weight": "light",
+      "access": "free",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-10-29",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .hws-title"
+        },
+        {
+          "id": "intro",
+          "label": "Intro",
+          "type": "text",
+          "selector": ":scope .hws-intro"
+        },
+        {
+          "id": "accent",
+          "label": "Accent colour",
+          "type": "color",
+          "selector": ":scope .hws-demo",
+          "attr": "--accent"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Your way of working in four numbered steps, each with a short title and one line. Plain, readable, no animation; steps stack on a phone.",
+      "tags": [
+        "process",
+        "steps",
+        "how-it-works",
+        "workflow",
+        "trust"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/how-we-work-steps",
+      "relativePath": "features/how-we-work-steps",
+      "previewUrl": "features/how-we-work-steps/index.html",
+      "thumb": "thumbs/how-we-work-steps.webp",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,

@@ -1,0 +1,58 @@
+{
+  "slug": "how-we-work-steps",
+  "title": "How we work, step by step",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "Your way of working in four numbered steps, each with a short title and one line. Plain, readable, no animation; steps stack on a phone.",
+  "tags": [
+    "process",
+    "steps",
+    "how-it-works",
+    "workflow",
+    "trust"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "agency",
+    "saas"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-29",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .hws-title"
+    },
+    {
+      "id": "intro",
+      "label": "Intro",
+      "type": "text",
+      "selector": ":scope .hws-intro"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .hws-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 999,
+  "access": "free"
+}

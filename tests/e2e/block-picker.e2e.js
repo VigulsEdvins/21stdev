@@ -23,8 +23,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const kinds = await page.$$eval('#bpKinds .bp-kind b', (e) => e.map((x) => x.textContent));
   assert.strictEqual(kinds.length, 12);
   assert(kinds.includes('About you') && kinds.includes('Questions and answers'), 'plain names');
-  assert.strictEqual(await page.isDisabled('[data-kind="map"] .bp-add'), true, 'a kind with no component is disabled');
-  console.log('  ✓ twelve plain names, empty page, unavailable kind disabled');
+  assert.strictEqual(await page.isDisabled('[data-kind="map"] .bp-add'), false, 'every kind has a component now, the map too');
+  console.log('  ✓ twelve plain names, empty page, every kind can be added');
 
   await page.click('[data-kind="banner"] .bp-add');
   await page.click('[data-kind="faq"] .bp-add');

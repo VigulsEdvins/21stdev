@@ -1,0 +1,70 @@
+{
+  "slug": "find-us-hours",
+  "title": "Find us and opening hours",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "Where to find you: an address, a short note, a table of opening hours and a simple drawn map with a pin. Nothing is loaded from a map service, so it is fast and private; the button opens a map in a new page.",
+  "tags": [
+    "map",
+    "address",
+    "opening-hours",
+    "contact",
+    "local"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "hospitality",
+    "ecommerce"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-10-29",
+  "customizable": [
+    {
+      "id": "address",
+      "label": "Address",
+      "type": "text",
+      "selector": ":scope .fuh-address"
+    },
+    {
+      "id": "note",
+      "label": "Note",
+      "type": "text",
+      "selector": ":scope .fuh-note"
+    },
+    {
+      "id": "link",
+      "label": "Map button link",
+      "type": "link",
+      "selector": ":scope .fuh-link"
+    },
+    {
+      "id": "button",
+      "label": "Map button text",
+      "type": "text",
+      "selector": ":scope .fuh-link"
+    },
+    {
+      "id": "accent",
+      "label": "Accent colour",
+      "type": "color",
+      "selector": ":scope .fuh-demo",
+      "attr": "--accent"
+    }
+  ],
+  "order": 999,
+  "access": "free"
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find us and opening hours</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="fuh-demo">
+  <div class="fuh-wrap">
+    <div class="fuh-info">
+      <h2 class="fuh-title">Find us</h2>
+      <p class="fuh-address">12 Example Street, Riga</p>
+      <p class="fuh-note">Ring the bell on the left. Parking is free in the yard.</p>
+      <table class="fuh-hours">
+        <caption class="fuh-hours-caption">Opening hours</caption>
+        <tbody>
+          <tr><th scope="row">Monday to Friday</th><td>9:00 – 18:00</td></tr>
+          <tr><th scope="row">Saturday</th><td>10:00 – 14:00</td></tr>
+          <tr><th scope="row">Sunday</th><td>Closed</td></tr>
+        </tbody>
+      </table>
+      <a class="fuh-link" href="https://www.openstreetmap.org/search?query=Riga">Open in a map</a>
+    </div>
+    <svg class="fuh-map" viewBox="0 0 400 300" role="img" aria-label="A simple map with a pin showing where we are">
+      <rect width="400" height="300" class="fuh-land"/>
+      <path class="fuh-water" d="M0 230 C80 200 140 260 220 235 S350 210 400 240 V300 H0Z"/>
+      <path class="fuh-street fuh-street--wide" d="M-10 120 H410"/>
+      <path class="fuh-street fuh-street--wide" d="M170 -10 V310"/>
+      <path class="fuh-street" d="M-10 60 L410 90 M60 -10 L90 310 M300 -10 L270 310 M-10 190 L410 170"/>
+      <rect class="fuh-park" x="205" y="140" width="70" height="55" rx="10"/>
+      <g class="fuh-pin" transform="translate(170 120)">
+        <path d="M0 0 C-22 -30 -22 -52 0 -52 C22 -52 22 -30 0 0Z"/>
+        <circle cx="0" cy="-36" r="7"/>
+      </g>
+    </svg>
+  </div>
+</section>
+  <script src="script.js"></script>
+</body>
+</html>

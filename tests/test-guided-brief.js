@@ -11,8 +11,13 @@ let p = B.plan(brief({ blocks: { value: ['contact', 'banner', 'faq'], unknown: f
 assert.deepStrictEqual(p.blocks.map((b) => b.id), ['banner', 'faq', 'contact']);
 assert(p.chosen && p.blocks.every((b) => deps.Kinds.byId[b.id].variants[0] === b.slug));
 // a kind with no component is reported, not silently dropped
-p = B.plan(brief({ blocks: { value: ['banner', 'map', 'contact'], unknown: false } }), deps);
+const gap = JSON.parse(JSON.stringify(deps.Kinds.KINDS)).map((k) => (k.id === 'map' ? Object.assign(k, { variants: [] }) : k)); // pretend the map block does not exist
+const depsGap = Object.assign({}, deps, { Kinds: Object.assign({}, deps.Kinds, { KINDS: gap, byId: Object.fromEntries(gap.map((k) => [k.id, k])) }) });
+p = B.plan(brief({ blocks: { value: ['banner', 'map', 'contact'], unknown: false } }), depsGap);
 assert.deepStrictEqual(p.missing.map((m) => m.id), ['map']); assert.deepStrictEqual(p.blocks.map((b) => b.id), ['banner', 'contact']);
+// with the real catalogue the map block is there
+p = B.plan(brief({ blocks: { value: ['banner', 'map', 'contact'], unknown: false } }), deps);
+assert.deepStrictEqual(p.missing, []); assert.deepStrictEqual(p.blocks.map((b) => b.id), ['banner', 'map', 'contact']);
 // unknown answers give the safe set, no look, no editor
 p = B.plan(brief({ blocks: { unknown: true }, feel: { unknown: true }, editor: { unknown: true } }), deps);
 assert(!p.chosen && p.blocks.length >= 5 && !p.colours && !p.fonts && p.editor === false);

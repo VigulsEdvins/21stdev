@@ -26,5 +26,8 @@ assert.strictEqual(K.kindOf('faq-accordion-smooth').id, 'faq');
 assert.strictEqual(K.kindOf('nope'), null);
 assert.strictEqual(K.nextVariant('faq', 'faq-accordion-smooth'), 'slit-type-faq');
 assert.strictEqual(K.nextVariant('faq', 'slit-type-faq'), 'faq-accordion-smooth');
-assert.strictEqual(K.nextVariant('map', 'x'), null);
+// every everyday kind now has a block of its own (map, about and process used to be missing or borrowed)
+assert.strictEqual(K.nextVariant('map', 'x'), 'find-us-hours');
+assert.deepStrictEqual(K.KINDS.filter((k) => !k.variants.length).map((k) => k.id), [], 'no kind is left without a block');
+assert.strictEqual(K.byId.about.variants[0], 'about-story'); assert.strictEqual(K.byId.process.variants[0], 'how-we-work-steps');
 console.log('block kinds ok: ' + K.KINDS.filter((k) => k.variants.length).length + ' of ' + K.KINDS.length + ' kinds have a component');

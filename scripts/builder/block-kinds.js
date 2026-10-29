@@ -10,17 +10,17 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   const KINDS = [
     { id: 'banner', label: 'Opening banner', about: 'The first thing people see.', variants: ['brushstroke-portfolio-hero', 'ink-orbit-hero', 'polaroid-zine-hero', 'mascot-portfolio-hero', 'waitlist-hero'] },
-    { id: 'about', label: 'About you', about: 'A short story about who you are.', variants: ['seam-history-timeline', 'pigment-experience-ledger'] },
+    { id: 'about', label: 'About you', about: 'A short story about who you are.', variants: ['about-story', 'seam-history-timeline', 'pigment-experience-ledger'] },
     { id: 'services', label: 'What you offer', about: 'The things you do or sell.', variants: ['feature-grid-icons', 'file-card-collections', 'glass-folder-cards'] },
     { id: 'prices', label: 'Prices', about: 'What things cost.', variants: ['pricing-table-switch', 'plan-comparison-matrix'] },
     { id: 'gallery', label: 'Gallery', about: 'Photos of your work.', variants: ['hairline-bento-portfolio', 'hover-expand-gallery', 'spotlight-bento-grid', 'news-3col-masonry'] },
     { id: 'reviews', label: 'What customers say', about: 'A few kind words from others.', variants: ['stagger-testimonials', 'checker-quilt-testimonials', 'glass-fan-testimonials', 'testimonial-v2'] },
     { id: 'faq', label: 'Questions and answers', about: 'The things people always ask.', variants: ['faq-accordion-smooth', 'slit-type-faq'] },
     { id: 'contact', label: 'Contact form', about: 'A way to write to you.', variants: ['contact-form-validated', 'wirebound-inquiry'] },
-    { id: 'map', label: 'Map and opening hours', about: 'Where you are and when.', variants: [] },
+    { id: 'map', label: 'Map and opening hours', about: 'Where you are and when.', variants: ['find-us-hours'] },
     { id: 'newsletter', label: 'Newsletter sign-up', about: 'Collect email addresses.', variants: ['wordmark-newsletter-signup'] },
     { id: 'team', label: 'Your team', about: 'Who people will meet.', variants: ['team-grid-simple'] },
-    { id: 'process', label: 'How you work', about: 'Your steps, one by one.', variants: ['storyline-timeline', 'timeline-inertia-drag'] }
+    { id: 'process', label: 'How you work', about: 'Your steps, one by one.', variants: ['how-we-work-steps', 'storyline-timeline', 'timeline-inertia-drag'] }
   ];
   const byId = Object.fromEntries(KINDS.map((k) => [k.id, k]));
   /** the kind a slug belongs to, or null (a block from the full catalogue) */
