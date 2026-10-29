@@ -22,6 +22,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const off = await page.evaluate(() => Array.from(document.querySelectorAll('.builder-header button, .builder-header a, .builder-header select')).filter((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1); }).map((e) => e.id || e.className));
   assert.deepStrictEqual(off, [], 'header controls off screen: ' + off.join(', '));
   assert(await page.isVisible('#openExportModalBtn'), 'the Download button is reachable');
+  assert(!(await page.isVisible('.viewport-mode-switcher')), 'no desktop / tablet / mobile switch on a phone');
   console.log('  ✓ one column, panel first, no sideways page, floating button on screen');
 
   await page.click('#guidedFlip');
@@ -29,6 +30,9 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert(await page.isVisible('.builder-viewport') && !(await page.isVisible('.builder-sidebar')), 'preview shown, panel hidden');
   assert(fr.width >= 388 && fr.height > 500, 'the preview is the page at full size (' + Math.round(fr.width) + 'x' + Math.round(fr.height) + ')');
   assert(!(await page.isVisible('.viewport-browser-bar')), 'no fake browser window');
+  await page.evaluate(() => { document.getElementById('viewportStage').setAttribute('data-active-viewport', 'tablet'); }); // a size chosen earlier on a bigger screen
+  assert((await page.locator('#previewFrame').boundingBox()).width >= 388, 'a remembered tablet size does not shrink the phone preview');
+  await page.evaluate(() => { document.getElementById('viewportStage').setAttribute('data-active-viewport', 'desktop'); });
   assert.strictEqual(await page.textContent('#guidedFlip'), 'Back to editing');
   await page.click('#guidedFlip');
   assert(await page.isVisible('.builder-sidebar') && !(await page.isVisible('.builder-viewport')), 'back to the panel');

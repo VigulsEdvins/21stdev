@@ -255,3 +255,10 @@ body.is-guided #contentSectionSelect { min-height: 44px; font-size: 16px; }
   .builder-header .header-center { flex-wrap: wrap; max-width: 100%; }
   #accountSaveNote, .builder-header .save-note { flex-basis: 100%; }
 }
+
+/* phone: the preview is already the page at the phone's own width, so the desktop / tablet / mobile switch has nothing to offer */
+@media (max-width: 700px) {
+  .viewport-mode-switcher { display: none; }
+  /* a size picked earlier on a bigger screen must not shrink the phone preview */
+  .viewport-stage[data-active-viewport] .viewport-frame-wrapper { width: 100% !important; max-width: none !important; height: 100% !important; border-radius: 0 !important; }
+}
