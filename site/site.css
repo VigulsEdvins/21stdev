@@ -206,3 +206,17 @@
 .guide .checklist { list-style: none; padding: 0; }
 .guide code { background: rgba(0,0,0,.06); padding: 0 .3em; }
 .guide, .guide td, .guide li { overflow-wrap: anywhere; }
+
+/* phone: the header is one row (logo, Sign in, the main button) and the yellow band is one short line; the other links are in the footer and on the page */
+@media (max-width: 560px) {
+  .site-header { flex-wrap: nowrap; gap: var(--s-3); padding: 14px 0; }
+  .site-header .nav { display: flex; order: 0; width: auto; margin-left: auto; font-size: var(--fs-small); }
+  .site-header .nav a:not(:last-child) { display: none; }
+  .site-header .nav a { white-space: nowrap; }
+  .site-header .logo { gap: 8px; }
+  .site-header .logo svg { width: 30px; height: 30px; }
+  .site-header .btn { white-space: nowrap; padding-inline: 14px; }
+  .site-header .logo { font-size: 26px; }
+  .band .wrap { flex-wrap: nowrap; gap: var(--s-4); padding: var(--s-3) 0; font-size: 18px; }
+  .band .wrap span:nth-child(n+3) { display: none; }
+}
