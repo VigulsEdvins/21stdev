@@ -2,7 +2,11 @@
 
 Goal: after "I will build it" and signing in, the visitor lands in the working builder at `https://edvlabs.com/builder/`.
 
-## Where things stand
+## Status 2026-10-29
+
+Steps 1 to 6 are **done and pushed**: `npm run build:site` stages `dist/` with the builder at `/builder/` (plus `preview-frame/` and `scripts/cms/`, the content editor files the admin panel and the editor add-on fetch; both were missing from the first version and are now checked by `tests/test-build-site.js` and `tests/e2e/builder-staged.e2e.js`); `wrangler.jsonc` publishes `./dist`; the dev server serves it with the real headers; `BUILDER_URL` points at `/builder/`. **Step 3 (headers) is done and stricter than planned:** the builder page runs under `script-src 'self'` with no cdnjs (JSZip is hosted and loaded on the first download), and the preview and the admin panel load through `preview-frame/`, which has its own policy (`docs/security/builder-csp.md`). Step 7 (sign-in check) is not built. **Step 8 remains:** run `npm run check-headers` and `node scripts/check-builder-csp.js` against the live address after the first deploy (reminder in `docs/HANDOFF.md`). The builder's speed score on a throttled phone is now 85 to 88, not 55 (`npm run check-builder-speed`).
+
+## Where things stood on 2026-10-28 (before the work above)
 
 - `wrangler.jsonc` publishes only `site/`. The builder lives at the repository root (`builder.html`, `builder.js`, `builder*.css`, `registry.js`, `scripts/`, `features/`, `assets/library/`, `thumbs/`, `styles.css`), so online `/builder.html` is a 404. Nothing has been deployed yet, so the layout is still free to choose.
 - The builder reaches its files by relative path: `features/<slug>/...` (fetched at run time), `registry.js`, `scripts/...`, `thumbs/`, `assets/library/`, and the shared price and question scripts as `site/js/*.js`. `scripts/builder/guided-get.js` links "Ask edvlabs to do it" to `site/contact/`.

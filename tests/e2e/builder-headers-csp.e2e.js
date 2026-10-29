@@ -10,7 +10,7 @@ const H = require('../../scripts/check-headers.js');
   const rules = H.parseHeaders(fs.readFileSync(path.join(__dirname, '../../site/_headers'), 'utf8'));
   const strip = (v) => v.replace('; upgrade-insecure-requests', '');
   const pageCsp = strip(H.effective(rules, '/builder/*')['content-security-policy']);
-  const frameCsp = strip(H.effective(rules, '/builder/preview-frame.html')['content-security-policy']);
+  const frameCsp = strip(H.effective(rules, '/builder/preview-frame/')['content-security-policy']);
   console.log('Builder under its real headers');
   // the builder page: strict. No inline or eval scripts, no hosts, only our own files
   assert(!/script-src[^;]*('unsafe-inline'|'unsafe-eval'|https?:|\*)/.test(pageCsp), 'the builder page policy allows no inline, eval or remote scripts: ' + pageCsp);
@@ -20,7 +20,7 @@ const H = require('../../scripts/check-headers.js');
 
   const srv = await startServer(); const browser = await launchBrowser();
   const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, acceptDownloads: true })).newPage();
-  const policyFor = (url) => (/\/preview-frame\.html/.test(url) ? frameCsp : /\/builder\.html/.test(url) ? pageCsp : null);
+  const policyFor = (url) => (/\/preview-frame\//.test(url) ? frameCsp : /\/builder\.html/.test(url) ? pageCsp : null);
   await page.route('**/*', async (route) => {
     const pol = policyFor(route.request().url());
     if (!pol) return route.continue();

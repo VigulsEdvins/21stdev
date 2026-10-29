@@ -84,7 +84,13 @@ function createServer(env, { applyHeaders = true, dir = SITE, live = false } = {
         const r = await route(request, env, async () => new Response('Not found', { status: 404 }));
         res.writeHead(r.status, Object.fromEntries(r.headers)); return res.end(Buffer.from(await r.arrayBuffer()));
       }
-      let f = fileFor(url.pathname, dir), status = 200;
+      // Cloudflare tidies addresses: /x.html is redirected to /x and /x/index.html to /x/. Doing the same here means a page that names a .html address
+      // (and a header rule written for it) fails on this machine exactly as it would online. /x is served from x.html.
+      if (['GET', 'HEAD'].includes(req.method) && /\.html$/.test(url.pathname) && !/(^|\/)404\.html$/.test(url.pathname)) {
+        const clean = url.pathname.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+        res.writeHead(307, { Location: clean + url.search, 'cache-control': 'no-cache' }); return res.end();
+      }
+      let f = fileFor(url.pathname, dir) || (!/\/$/.test(url.pathname) && !path.extname(url.pathname) ? fileFor(url.pathname + '.html', dir) : null), status = 200;
       if (!f) { f = path.join(dir, '404.html'); status = 404; }
       if (live) { try { rules = parseHeaders(fs.readFileSync(path.join(dir, '_headers'), 'utf8')); } catch (_) { /* mid-rebuild: keep the last rules */ } }
       const headers = Object.assign({ 'Content-Type': TYPES[path.extname(f)] || 'application/octet-stream' }, applyHeaders ? headersFor(rules, url.pathname) : {});

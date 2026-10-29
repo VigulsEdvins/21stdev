@@ -28,12 +28,16 @@ const { createServer } = require('../../scripts/dev-site.js');
   assert.strictEqual(r.status, 200);
   assert(/frame-ancestors 'none'/.test(r.headers.get('content-security-policy')) && /script-src 'self';/.test(r.headers.get('content-security-policy')), 'the builder page runs under the strict policy (no inline scripts); the framing rule only');
   assert.strictEqual(r.headers.get('x-robots-tag'), 'noindex');
-  assert.strictEqual((await fetch(base + '/builder.html')).status, 404, 'the old address is not published');
+  assert.notStrictEqual((await fetch(base + '/builder.html', { redirect: 'manual' })).status, 200, 'the old address is not published as a page of its own (a host may redirect it)');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/index.html')).status, 200, 'features are published');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/component.tsx')).status, 404, 'React sources are not');
   for (const f of ['admin.html', 'admin.css', 'admin.js', 'cms.js']) assert.strictEqual((await fetch(base + '/builder/scripts/cms/' + f)).status, 200, 'the content editor file ' + f + ' is published (the admin panel and the editor in a download fetch it)');
   const feat = await fetch(base + '/builder/features/a4-resume-previewer/index.html');
   assert(/^frame-ancestors 'self'$/.test(feat.headers.get('content-security-policy')), 'catalogue previews may be framed by the builder itself: ' + feat.headers.get('content-security-policy'));
+  // the preview frame page: served at a directory address that no host redirects, with its own wider policy (Cloudflare turns /x.html into /x, which the header rule would not match)
+  const fr = await fetch(base + '/builder/preview-frame/', { redirect: 'manual' });
+  assert.strictEqual(fr.status, 200, 'the preview frame page is served without a redirect');
+  assert(/script-src[^;]*'unsafe-inline'/.test(fr.headers.get('content-security-policy')) && /frame-ancestors 'self'/.test(fr.headers.get('content-security-policy')), 'the frame page carries the frame policy: ' + fr.headers.get('content-security-policy'));
   console.log('  ✓ served at /builder/ with its own headers; sources stay home');
 
   await page.goto(base + '/builder/');
@@ -47,6 +51,8 @@ const { createServer } = require('../../scripts/dev-site.js');
   await page.waitForFunction(() => window.builderManager.getState().stack.length === 2);
   await page.waitForFunction(() => document.querySelectorAll('iframe').length > 0 || document.querySelector('#canvas, #previewFrame'), null, { timeout: 8000 }).catch(() => {});
   await page.waitForTimeout(1500);
+  // the preview itself must show the blocks under the published policies (it did not once: the frame page was redirected to an address the header rule did not match)
+  await page.waitForFunction(() => { const d = document.getElementById('previewFrame').contentDocument; return d && d.querySelectorAll('.page-section').length === 2; }, null, { timeout: 15000 });
   assert.deepStrictEqual(missing.filter((m) => !/favicon/.test(m)), [], 'every file the builder asks for is published: ' + missing.join(', '));
   const ask = await page.$eval('#guidedAsk', (a) => a.href);
   assert.strictEqual(ask, base + '/contact/', 'Ask edvlabs to do it goes to the public contact page');

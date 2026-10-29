@@ -19,8 +19,12 @@ const listen = (srv) => new Promise((r) => srv.listen(0, '127.0.0.1', () => r(sr
   const base = (p) => 'http://127.0.0.1:' + p;
   try {
     // pages
-    for (const [p, re] of [['/', /edvlabs/i], ['/account/', /Your account/], ['/pricing/', /rice/], ['/examples/arena/index.html', /<html/i]]) { const r = await raw(pn, p); assert.strictEqual(r.status, 200, p); assert(re.test(r.body), p); }
-    let r = await raw(pn, '/nope/'); assert.strictEqual(r.status, 404); assert(/<html/i.test(r.body), 'the site\'s own 404 page');
+    for (const [p, re] of [['/', /edvlabs/i], ['/account/', /Your account/], ['/pricing/', /rice/], ['/examples/arena/', /<html/i]]) { const r = await raw(pn, p); assert.strictEqual(r.status, 200, p); assert(re.test(r.body), p); }
+    // like Cloudflare: a .html address is redirected to the tidy one, and the tidy one serves the file
+    let r = await raw(pn, '/pricing/index.html'); assert.strictEqual(r.status, 307); assert.strictEqual(r.headers.location, '/pricing/');
+    r = await raw(pn, '/examples/arena/admin.html'); assert.strictEqual(r.status, 307); assert.strictEqual(r.headers.location, '/examples/arena/admin');
+    r = await raw(pn, '/examples/arena/admin'); assert.strictEqual(r.status, 200, 'the tidy address serves admin.html'); assert(/<html/i.test(r.body));
+    r = await raw(pn, '/nope/'); assert.strictEqual(r.status, 404); assert(/<html/i.test(r.body), 'the site\'s own 404 page');
     for (const evil of ['/..%2fpackage.json', '/%2e%2e/package.json', '/..%2f..%2f.dev.vars', '/%00']) { r = await raw(pn, evil); assert(r.status === 404 && !/"scripts"/.test(r.body), 'cannot read outside site/: ' + evil); }
     console.log('  ✓ pages, the 404 page, and no way out of site/');
 
@@ -29,7 +33,7 @@ const listen = (srv) => new Promise((r) => srv.listen(0, '127.0.0.1', () => r(sr
     assert(/script-src 'self'(;|$)/.test(csp) && !/unsafe-inline/.test(csp.match(/script-src[^;]*/)[0]) && !/upgrade-insecure/.test(csp), 'strict policy, without the https-only part');
     assert(!r.headers['strict-transport-security'], 'no HSTS on http'); assert.strictEqual(r.headers['x-content-type-options'], 'nosniff');
     r = await raw(pn, '/account/'); csp = r.headers['content-security-policy']; assert(/connect-src 'self' https:\/\/[a-z0-9]+\.supabase\.co/.test(csp), 'account page may reach Supabase'); assert.strictEqual(r.headers['content-security-policy'].split("default-src").length, 2, 'one policy only');
-    r = await raw(pn, '/examples/yearbook/index.html'); assert(/style-src 'self' 'unsafe-inline'/.test(r.headers['content-security-policy']) && /frame-ancestors 'self'/.test(r.headers['content-security-policy']), 'whole websites get their own policy');
+    r = await raw(pn, '/examples/yearbook/'); assert(/style-src 'self' 'unsafe-inline'/.test(r.headers['content-security-policy']) && /frame-ancestors 'self'/.test(r.headers['content-security-policy']), 'whole websites get their own policy');
     r = await raw(pn, '/js/auth.js'); assert.strictEqual(r.headers['cache-control'], 'public, max-age=0, must-revalidate', 'scripts are revalidated, one value');
     r = await raw(pn, '/site.css'); assert.strictEqual(r.headers['cache-control'], 'public, max-age=0, must-revalidate');
     console.log('  ✓ headers per path match site/_headers (one policy, one cache rule)');

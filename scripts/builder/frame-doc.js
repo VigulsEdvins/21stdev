@@ -1,7 +1,7 @@
 /**
  * Puts a page into a preview iframe without `srcdoc` (plan E16.7, step 3 of docs/security/builder-csp.md).
  * A `srcdoc` frame inherits the Content-Security-Policy of the builder page, so the builder page could never be strict: the preview
- * needs inline scripts and styles. A frame loaded from its own address (preview-frame.html) has its own policy, sent with that file
+ * needs inline scripts and styles. A frame loaded from its own address (preview-frame/) has its own policy, sent with that file
  * (see site/_headers), and keeps it when the page is written into it with document.open/write/close. The frame stays on our own
  * origin, so the canvas editing code still reaches into it exactly as before.
  *
@@ -12,7 +12,9 @@
  */
 (function () {
   'use strict';
-  const FRAME_URL = 'preview-frame.html';
+  // a directory address: hosts that tidy up `.html` addresses (Cloudflare redirects /x.html to /x) leave `x/` alone, so the frame is always
+  // served from the address the header rule names
+  const FRAME_URL = 'preview-frame/';
 
   // document.open() gives the document the address of the page that called it, so once a page is written the address no longer says
   // that the window is blank: remember that instead.
@@ -20,7 +22,7 @@
 
   function blankReady(iframe) {
     try {
-      return !used.has(iframe) && !!iframe.contentWindow && iframe.contentWindow.location.href.indexOf(FRAME_URL) !== -1 && !!iframe.contentDocument && iframe.contentDocument.readyState !== 'loading';
+      return !used.has(iframe) && !!iframe.contentWindow && iframe.contentWindow.location.href.indexOf('/preview-frame/') !== -1 && !!iframe.contentDocument && iframe.contentDocument.readyState !== 'loading';
     } catch (_) { return false; }
   }
 

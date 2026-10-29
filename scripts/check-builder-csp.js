@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Probe for the builder's Content-Security-Policy (plan E16.7). Loads builder.html from the local vault server with the policies from
- * site/_headers added as Content-Security-Policy-Report-Only (the builder page and, for preview-frame.html, the frame's own policy), walks the guided steps and the preview, and prints every violation grouped by
+ * site/_headers added as Content-Security-Policy-Report-Only (the builder page and, for preview-frame/, the frame's own policy), walks the guided steps and the preview, and prints every violation grouped by
  * directive. It never fails the build by itself; docs/security/builder-csp.md records the result and the order of fixes.
  *   node scripts/check-builder-csp.js           print the report
  *   node scripts/check-builder-csp.js --json    machine-readable
@@ -14,13 +14,13 @@ const H = require('./check-headers.js');
 // the policies the site really sends (site/_headers): the builder page, and the preview frame's own page
 const RULES = H.parseHeaders(fs.readFileSync(path.join(__dirname, '..', 'site', '_headers'), 'utf8'));
 const CANDIDATE = H.effective(RULES, '/builder/*')['content-security-policy'].replace('; upgrade-insecure-requests', '');
-const FRAME = H.effective(RULES, '/builder/preview-frame.html')['content-security-policy'].replace('; upgrade-insecure-requests', '');
+const FRAME = H.effective(RULES, '/builder/preview-frame/')['content-security-policy'].replace('; upgrade-insecure-requests', '');
 
 (async () => {
   const srv = await startServer(); const browser = await launchBrowser();
   const page = await (await browser.newContext({ viewport: { width: 1360, height: 900 } })).newPage();
   await page.route('**/builder.html*', async (route) => { const res = await route.fetch(); await route.fulfill({ response: res, headers: { ...res.headers(), 'content-security-policy-report-only': CANDIDATE } }); });
-  await page.route('**/preview-frame.html*', async (route) => { const res = await route.fetch(); await route.fulfill({ response: res, headers: { ...res.headers(), 'content-security-policy-report-only': FRAME } }); });
+  await page.route('**/preview-frame/*', async (route) => { const res = await route.fetch(); await route.fulfill({ response: res, headers: { ...res.headers(), 'content-security-policy-report-only': FRAME } }); });
   const seen = new Map();
   await page.exposeFunction('reportViolation', (v) => { const k = v.directive + ' | ' + v.blocked; seen.set(k, (seen.get(k) || 0) + 1); });
   await page.addInitScript(() => document.addEventListener('securitypolicyviolation', (e) => { if (e.disposition === 'report') window.reportViolation({ directive: e.effectiveDirective, blocked: (e.blockedURI || 'inline').replace(/^(https?:\/\/[^/]+).*/, '$1').slice(0, 60) + (e.sample ? ' [' + e.sample.slice(0, 40).replace(/\s+/g, ' ') + ']' : '') + ' in ' + (window === window.top ? 'the builder page' : 'a frame (' + (e.documentURI.startsWith('about:srcdoc') || e.documentURI.startsWith('http') && /srcdoc/.test(e.documentURI) ? 'preview' : e.documentURI.slice(-30)) + ')') }); }));
