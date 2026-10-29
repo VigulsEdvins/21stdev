@@ -100,7 +100,8 @@ edvlabs sells landing pages and small websites at **edvlabs.com** (domain owned,
 
 ## Next steps (in order)
 
-1. **Owner steps:** Cloudflare build command and the `briefs` migration are done (2026-10-28). Staging at staging.edvlabs.com is not needed now. Still open: the lead-intake settings in `docs/deploy/lead-intake.md` and the `lead-endpoint` meta tag; run `npm run check-headers -- https://staging.edvlabs.com` against staging. Answer the open questions below.
+1. **After the first deploy (owner asked for a reminder, 2026-10-29):** run `npm run check-headers -- https://staging.edvlabs.com` and `node scripts/check-builder-csp.js`, then open `/builder/` once and confirm the preview renders and a download works under the real Cloudflare headers (the strict builder policy and `preview-frame.html`'s own policy were only tested with simulated headers). Also set the repository variable `STAGING_URL` so the nightly ZAP scan starts.
+   **Owner steps:** Cloudflare build command and the `briefs` migration are done (2026-10-28). Staging at staging.edvlabs.com is not needed now. Still open: the lead-intake settings in `docs/deploy/lead-intake.md` and the `lead-endpoint` meta tag; run `npm run check-headers -- https://staging.edvlabs.com` against staging. Answer the open questions below.
 2. Builder: load `registry.js` on demand and move the preview frame (see `docs/security/builder-csp.md`), a pass with five real people (E15), then the remaining storefront work below. Examples page with real screenshots of the owner's own templates (E2.4), the owner's note and About page (E2.7), company details in the footer. (Open Graph images and the Lighthouse run on the public pages are done.)
 3. Remaining security in E16: CodeQL (a Git host setting, owner), E16.6 regression tests for the server pieces once accounts own data, E16.8 dynamic testing, E16.14 pre-launch review.
 4. Then self-serve: accounts, price table as data, quotes, checkout (E4, E5, E8).
