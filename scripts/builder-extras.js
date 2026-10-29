@@ -427,6 +427,7 @@
       bizType: doc.getElementById('pageBizTypeInput'),
       bizName: doc.getElementById('pageBizNameInput'),
       bizPhone: doc.getElementById('pageBizPhoneInput'),
+      bizEmail: doc.getElementById('pageBizEmailInput'),
       bizAddress: doc.getElementById('pageBizAddressInput')
     };
     let pageTimer = null;

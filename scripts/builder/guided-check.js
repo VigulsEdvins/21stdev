@@ -18,7 +18,18 @@
     'link-empty': 'A link goes nowhere yet.',
     'button-name': 'A button has no label.',
     'field-label': 'A form box has no label.',
-    'heading-empty': 'A heading is empty.'
+    'heading-empty': 'A heading is empty.',
+    'form-no-target': 'A contact form has nowhere to send its messages. A page made of plain files cannot receive them: use a form service, your own server, or an email link instead.',
+    // "ready for Google" (PageChecks.checkSearchReady)
+    'noindex': 'Search engines are told NOT to list this page. Turn that off in the page settings.',
+    'address-missing': 'Your web address is not set, so the download has no sitemap. Add it when you know it, or after the site is online.',
+    'address-not-https': 'Your web address starts with http://. Use https:// so visitors see the padlock.',
+    'title-long': 'Your page title is long. Search results cut it off at about 60 characters.',
+    'description-long': 'Your page description is long. Search results cut it off at about 160 characters.',
+    'share-image': 'No share picture is set, so links to your page look plain when shared.',
+    'lang-missing': 'The page language is not set.',
+    'contact-phone': 'The phone number in your settings is not on the page.',
+    'contact-email': 'The email address in your settings is not on the page.'
   };
   const own = (s) => Object.values(s.overrides || {}).filter((v) => v && v.type !== 'alt' && v.value !== '' && v.value != null).length;
 
@@ -29,7 +40,7 @@
     if (!mine.length) return [{ id: 'empty', text: 'Your page has no blocks yet.', kind: 'blocks' }];
     (issues || []).forEach((i) => {
       if (!WORDS[i.id]) return;
-      items.push({ id: i.id, text: WORDS[i.id], kind: i.id === 'page-title' ? 'title' : i.id === 'page-description' ? 'description' : 'block', sectionId: i.sectionId });
+      items.push({ id: i.id, text: WORDS[i.id], kind: i.id === 'page-title' ? 'title' : i.id === 'page-description' ? 'description' : i.id === 'address-missing' || i.id === 'address-not-https' ? 'address' : i.sectionId ? 'block' : 'note', sectionId: i.sectionId, severity: i.severity });
     });
     Sets.check(colours || {}).forEach((p) => items.push({ id: 'contrast-' + p.kind, text: p.kind === 'text' ? 'Your text is hard to read on this background.' : 'Your buttons and links are hard to see on this background.', kind: 'contrast', fix: p.fix }));
     mine.forEach((s) => { if (own(s) === 0) items.push({ id: 'sample-' + s.id, text: (s.title || s.slug) + ' still shows sample text.', kind: 'words', sectionId: s.id }); });
@@ -84,7 +95,7 @@
           if (html) {
             const altFixed = {};
             st.stack.forEach((s) => { const n = Object.values(s.overrides || {}).filter((o) => o && o.type === 'alt' && o.value).length; if (n) altFixed[s.id] = n; });
-            issues = win.PageChecks.checkPage(html, st.page, altFixed);
+            issues = win.PageChecks.checkPage(html, st.page, altFixed).concat(win.PageChecks.checkSearchReady(html, st.page));
           }
         } catch (_) { /* the list still shows the checks that need no export */ }
       }
@@ -102,6 +113,7 @@
         const act = el(doc, 'span', { class: 'ck-act' });
         if (it.kind === 'title' || it.kind === 'description') act.append(...field(it.kind));
         else if (it.kind === 'contrast') act.append(btn('Fix it for me', 'Make the colours easier to read', () => { sm.setCustomColors(Object.assign({ bg: c.bg, text: c.text, accent: c.accent }, it.fix)); if (st.theme !== 'custom') sm.setTheme('custom'); }));
+        else if (it.kind === 'address') act.append(btn('Add the address', 'Go to step 5 and type your web address', () => guided() && guided().go(4)));
         else if (it.kind === 'blocks') act.append(btn('Add blocks', 'Go to step 1 and add blocks', () => guided() && guided().go(0)));
         else if (it.kind === 'words') act.append(btn('Write your words', 'Write your own words in ' + it.text, () => toBlock(it.sectionId, 1)));
         else if (it.sectionId) act.append(btn('Show the block', 'Show the block this is about', () => toBlock(it.sectionId, 1)));

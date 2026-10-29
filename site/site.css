@@ -194,3 +194,15 @@
 .pg-tag { padding: 2px 10px; border: 2px solid var(--ink); border-radius: var(--radius-pill); font-size: 0.85em; font-weight: 600; }
 .pg-tag[data-status="paid"] { background: var(--mustard); color: var(--text-on-mustard); }
 .pg-item .input { flex: 1 1 12em; }
+
+/* guide page (E7.8): numbered steps with a "you should now see" line */
+.guide { max-width: 46em; }
+.guide section { margin-top: var(--s-7); }
+.guide h2 { font: 400 var(--fs-h2, 32px) / 1.2 var(--font-display); }
+.guide .checked { color: var(--ink-soft, #555); font-size: 14px; margin-top: 0; }
+.guide .see { display: block; margin: var(--s-2) 0 var(--s-4); font-size: 15px; color: var(--teal, #0e5a5a); }
+.guide table { border-collapse: collapse; width: 100%; }
+.guide td, .guide th { border: 2px solid var(--ink); padding: var(--s-2) var(--s-3); text-align: left; vertical-align: top; }
+.guide .checklist { list-style: none; padding: 0; }
+.guide code { background: rgba(0,0,0,.06); padding: 0 .3em; }
+.guide, .guide td, .guide li { overflow-wrap: anywhere; }

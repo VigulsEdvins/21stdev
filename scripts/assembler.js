@@ -2562,6 +2562,7 @@ function renderJsonLd(page = {}, title = '') {
   if (absolute(page.shareImage)) data.image = absolute(page.shareImage);
   if (String(page.description || '').trim()) data.description = String(page.description).trim();
   if (String(page.bizPhone || '').trim()) data.telephone = String(page.bizPhone).trim();
+  if (validEmail(page.bizEmail)) data.email = String(page.bizEmail).trim();
   if (String(page.bizAddress || '').trim()) data.address = String(page.bizAddress).trim();
   // '<' is escaped so no value can close the script tag
   return '<script type="application/ld+json">' + JSON.stringify(data).replace(/</g, '\\u003c') + '</script>';
@@ -2638,8 +2639,40 @@ function mapPageLinks(sections, links = {}) {
   });
 }
 
+/** The shared guide text (scripts/deploy-guide.js): a require in Node, a script tag in the builder. */
+function deployGuide() {
+  return (typeof module !== 'undefined' && module.exports) ? require('./deploy-guide.js') : window.DeployGuide;
+}
+
+/** Web address of the live page when it is a plain https:// or http:// address, else ''. */
+function originOf(canonical) {
+  const c = String(canonical || '').trim();
+  return /^https?:\/\/[^\s"'<>]+$/i.test(c) ? c.replace(/^(https?:\/\/[^/]+).*$/i, '$1') : '';
+}
+
+function validEmail(v) {
+  return /^[^\s@<>"',;:]+@[^\s@<>"',;:]+\.[^\s@<>"',;:]+$/.test(String(v || '').trim()) && !/[\r\n]/.test(String(v));
+}
+
+/** A "page not found" page the host shows for unknown addresses. Absolute links, because it is served at any path. */
+function render404(page = {}) {
+  const name = escapeHtml((page.title || '').trim() || 'This site');
+  const lang = escapeHtml((page.lang || 'en').trim() || 'en');
+  return `<!DOCTYPE html>\n<html lang="${lang}">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <meta name="robots" content="noindex">\n  <title>Page not found | ${name}</title>\n  <link rel="stylesheet" href="/style.css">\n</head>\n<body>\n  <main style="max-width:36rem;margin:15vh auto;padding:0 1rem;text-align:center">\n    <h1>Page not found</h1>\n    <p>The page you were looking for is not here. It may have moved.</p>\n    <p><a href="/">Go to the home page</a></p>\n  </main>\n</body>\n</html>\n`;
+}
+
+/** RFC 9116 contact file. Needs a valid email; expires one year after the export so it never goes stale unnoticed. */
+function renderSecurityTxt(page = {}, now = new Date()) {
+  const d = new Date(now); d.setUTCFullYear(d.getUTCFullYear() + 1);
+  const origin = originOf(page.canonical);
+  return `Contact: mailto:${String(page.bizEmail).trim()}\nExpires: ${d.toISOString().replace(/\.\d+Z$/, 'Z')}\nPreferred-Languages: ${String(page.lang || 'en').trim() || 'en'}\n` + (origin ? `Canonical: ${origin}/.well-known/security.txt\n` : '');
+}
+
+/** Names of the helper files that ride along with index.html in every download (the ZIP code copies whichever exist). */
+const SITE_EXTRA_FILES = ['robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md', 'DEPLOY.html', '404.html', '.well-known/security.txt'];
+
 /** Host helper files: cache and security headers for Netlify / Cloudflare Pages, and plain deploy steps. */
-function renderDeployFiles() {
+function renderDeployFiles(page = {}, opts = {}) {
   const headers = `/*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -2651,28 +2684,16 @@ function renderDeployFiles() {
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 `;
-  const deploy = `# Putting the site online
-
-These files are ready to upload as they are. Nothing needs to be built.
-
-## Netlify
-1. Open https://app.netlify.com/drop
-2. Drag the unzipped folder onto the page. You get a web address in a few seconds.
-3. \`_headers\` is picked up automatically (caching and basic security headers).
-
-## Cloudflare Pages
-1. Workers & Pages > Create > Pages > Upload assets.
-2. Upload the unzipped folder. \`_headers\` works here too.
-
-## Any ordinary web host
-Upload everything (keep the \`assets\` folder next to \`index.html\`) to the folder your host serves, usually \`public_html\`.
-\`_headers\` is ignored by hosts that do not know it; that is harmless.
-
-## After it is online
-- Set "Live page address" in the builder's Page Settings and export again so \`sitemap.xml\` and the canonical link carry the real address.
-- Submit \`https://your-address/sitemap.xml\` in Google Search Console.
-`;
-  return { '_headers': headers, 'DEPLOY.md': deploy };
+  const guide = deployGuide();
+  const addr = originOf(page.canonical);
+  const files = {
+    '_headers': headers,
+    'DEPLOY.md': guide.markdown({ address: addr }),
+    'DEPLOY.html': guide.html({ address: addr }),
+    '404.html': render404(page)
+  };
+  if (validEmail(page.bizEmail)) files['.well-known/security.txt'] = renderSecurityTxt(page, opts.now);
+  return files;
 }
 
 /** robots.txt and sitemap.xml for a single-page export. The sitemap needs the live address, so it is skipped without one. */
@@ -3486,7 +3507,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
     'style.css': styleCss,
     'script.js': scriptJs,
     'README.md': readmeMd + cspNote
-  }, renderSiteFiles(pageOpts, options.pageFiles), renderDeployFiles());
+  }, renderSiteFiles(pageOpts, options.pageFiles), renderDeployFiles(pageOpts));
 }
 
 /**
@@ -3699,6 +3720,9 @@ if (typeof module !== 'undefined' && module.exports) {
     renderSiteFiles,
     renderPreviewSectionScripts,
     renderDeployFiles,
+    render404,
+    renderSecurityTxt,
+    SITE_EXTRA_FILES,
     resolvePageLink,
     mapPageLinks,
     renderCsp,
@@ -3732,6 +3756,8 @@ if (typeof window !== 'undefined') {
     renderPageHead,
     renderJsonLd,
     renderSiteFiles,
+    renderDeployFiles,
+    SITE_EXTRA_FILES,
     renderPreviewSectionScripts,
     renderNativePaletteCss,
     collectOverrides,

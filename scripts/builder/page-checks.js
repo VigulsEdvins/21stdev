@@ -109,6 +109,11 @@
         const tag = '<button' + m[1] + '>';
         if (!visibleText(m[2]) && !attr(tag, 'aria-label') && !attr(tag, 'title') && !attr(tag, 'aria-labelledby')) add('button-name', 'error', 'A button has no text or aria-label.', sec);
       }
+      // forms: a static page cannot process a form, so one without a target address goes nowhere
+      (sec.html.match(/<form\b[^>]*>/gi) || []).forEach(tag => {
+        const act = (attr(tag, 'action') || '').trim();
+        if (!act || act === '#') add('form-no-target', 'warning', 'A form has no address to send to. A page made of plain files cannot receive messages: use a form service (such as Formspree or Netlify Forms) or your own server, or replace it with an email link.', sec);
+      });
       // form fields
       const labelFor = new Set();
       (sec.html.match(/<label\b[^>]*>/gi) || []).forEach(t => { const f = attr(t, 'for'); if (f) labelFor.add(f); });
@@ -125,7 +130,34 @@
     return issues.sort((a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]);
   }
 
-  const api = { checkPage, splitSections };
+  /**
+   * "Ready for Google" list (plan E7.7): what to settle before the page goes online. Kept apart from checkPage so the
+   * everyday check stays about the page itself. Same issue shape.
+   */
+  function checkSearchReady(indexHtml, page = {}) {
+    const issues = [];
+    const add = (id, severity, message) => issues.push({ id, severity, message });
+    const html = String(indexHtml || '');
+    const clean = stripNoise(html);
+    const title = String(page.title || '').trim();
+    const desc = String(page.description || '').trim();
+    if (page.robots === 'noindex') add('noindex', 'error', 'This page asks search engines NOT to list it ("noindex"). Turn that off in Page Settings or Google will never show it.');
+    const canon = String(page.canonical || '').trim();
+    if (/^http:\/\/[^\s"'<>]+$/i.test(canon)) add('address-not-https', 'warning', 'Your web address starts with http://. Use https:// so visitors see the padlock.');
+    else if (!/^https:\/\/[^\s"'<>]+$/i.test(canon)) add('address-missing', 'warning', 'Your web address is not set. Without it the download has no sitemap and no canonical link. Type it above, or set it after the site is online and download again.');
+    if (title.length > 60) add('title-long', 'info', 'The page title is long (' + title.length + ' characters). Search results cut it off at about 60.');
+    if (desc.length > 160) add('description-long', 'info', 'The page description is long (' + desc.length + ' characters). Search results cut it off at about 160.');
+    if (!/^https:\/\/[^\s"'<>]+$/i.test(String(page.shareImage || '').trim())) add('share-image', 'info', 'No share picture is set, so links to your page look plain when shared.');
+    if (!String(page.lang || '').trim()) add('lang-missing', 'warning', 'The page language is not set.');
+    if (page.bizType && !String(page.bizName || '').trim()) add('ld-name', 'info', 'You chose a business type but no business name, so no business data is written for search engines.');
+    const text = visibleText(clean);
+    const digits = (v) => String(v || '').replace(/\D/g, '');
+    if (String(page.bizPhone || '').trim() && !digits(clean).includes(digits(page.bizPhone)) && !/href="tel:/i.test(clean)) add('contact-phone', 'info', 'The business phone in Page Settings does not appear on the page. Visitors and search engines should see the same number.');
+    if (String(page.bizEmail || '').trim() && !text.includes(String(page.bizEmail).trim()) && !clean.includes('mailto:' + String(page.bizEmail).trim())) add('contact-email', 'info', 'The business email in Page Settings does not appear on the page. Visitors and search engines should see the same address.');
+    return issues.sort((a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]);
+  }
+
+  const api = { checkPage, checkSearchReady, splitSections };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.PageChecks = api;
 })(typeof window !== 'undefined' ? window : this);

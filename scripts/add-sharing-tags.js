@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const SITE = path.resolve(__dirname, '..', 'site');
-const PAGES = ['index.html', 'how-it-works/index.html', 'pricing/index.html', 'faq/index.html', 'contact/index.html', 'start/index.html'];
+const PAGES = ['index.html', 'how-it-works/index.html', 'pricing/index.html', 'faq/index.html', 'contact/index.html', 'start/index.html', 'guide/index.html', 'about/index.html'];
 const START = '<!-- sharing:start -->', END = '<!-- sharing:end -->';
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const unesc = (s) => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');

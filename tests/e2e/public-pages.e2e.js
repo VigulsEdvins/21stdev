@@ -8,7 +8,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 const P = require('../../site/js/prices.js');
 
 const SITE = path.join(__dirname, '../../site');
-const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/'];
+const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/', 'guide/', 'about/'];
 
 (async () => {
   const srv = await startServer();

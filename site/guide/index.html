@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Put your page online yourself · edvlabs</title>
+<meta name="description" content="A step-by-step guide to putting a page online: Netlify, Cloudflare Pages, GitHub Pages or an ordinary web host, your own domain, Google and contact forms.">
+<link rel="canonical" href="https://edvlabs.com/guide/">
+<!-- sharing:start -->
+<meta property="og:site_name" content="edvlabs">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Put your page online yourself · edvlabs">
+<meta property="og:description" content="A step-by-step guide to putting a page online: Netlify, Cloudflare Pages, GitHub Pages or an ordinary web host, your own domain, Google and contact forms.">
+<meta property="og:url" content="https://edvlabs.com/guide/">
+<meta property="og:image" content="https://edvlabs.com/img/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="edvlabs: a good page for a good small business, with a sun over an arch">
+<meta name="twitter:card" content="summary_large_image">
+<!-- sharing:end -->
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 34 34%27%3E%3Ccircle cx=%2717%27 cy=%2717%27 r=%2717%27 fill=%27%23e2a627%27/%3E%3Cpath d=%27M0 17a17 17 0 0 0 34 0z%27 fill=%27%23c4522a%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="wrap"><header class="site-header">
+  <a class="logo" href="../"><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="17" fill="#e2a627"/><path d="M0 17a17 17 0 0 0 34 0z" fill="#c4522a"/></svg>edvlabs</a>
+  <nav class="nav" aria-label="Main"><a href="../how-it-works/">How it works</a><a href="../pricing/">Prices</a><a href="../faq/">Questions</a><a href="../contact/">Contact</a><a href="../account/">Sign in</a></nav>
+  <a class="btn btn--small" href="../start/">Start your page</a>
+</header></div>
+<main id="main">
+
+<div class="wrap page-head"><span class="kicker">Guide</span><h1>Put your page online yourself.</h1></div>
+<section class="wrap sec sec--flush guide">
+<p>The same guide is inside every download. You do not need to buy anything from us to read it. It takes about 30 minutes the first time, and it never asks you to send us a password, API key or card number.</p>
+<nav aria-label="Chapters"><ol><li><a href="#need">What you need</a></li><li><a href="#netlify">Route 1: Netlify Drop (easiest)</a></li><li><a href="#cloudflare">Route 2: Cloudflare Pages (free, with your own domain)</a></li><li><a href="#github">Route 3: GitHub Pages</a></li><li><a href="#host">Route 4: An ordinary web host (cPanel, FTP, file manager)</a></li><li><a href="#domain">Connect your own domain</a></li><li><a href="#after">After it is online</a></li><li><a href="#form">Contact forms on a static site</a></li><li><a href="#mail">Email on your own domain</a></li><li><a href="#update">Updating later</a></li><li><a href="#trouble">If something goes wrong</a></li></ol></nav>
+<section id="need"><h2>What you need</h2><p class="checked">Last checked: 2026-10-29</p>
+<p>Nothing to install. About 30 minutes for your first time.</p>
+<ul><li><strong>The unzipped folder.</strong> Open the ZIP you downloaded and extract it (right-click, "Extract all" on Windows; double-click on a Mac). The folder holds <code>index.html</code>, <code>style.css</code>, <code>script.js</code> and an <code>assets</code> folder. Keep them together.</li><li><strong>A hosting account.</strong> This is the computer that shows your site to visitors. Free ones are named below; you do not need to pay for hosting to start.</li><li><strong>A domain name (optional at first).</strong> The address people type, like <code>yourname.com</code>. Buying one costs roughly 8 to 20 euros a year. Without one you get a free address like <code>yourname.netlify.app</code>, which is fine for trying it out.</li><li><strong>An email address</strong> you can read, for the host to send you a confirmation.</li></ul>
+<p>Which route? <strong>No experience:</strong> Netlify Drop (Route 1). <strong>Want it free with your own domain:</strong> Cloudflare Pages (Route 2). <strong>You already have a host with a file manager:</strong> Route 4, upload.</p>
+</section>
+<section id="netlify"><h2>Route 1: Netlify Drop (easiest)</h2><p class="checked">Last checked: 2026-10-29</p>
+<ol><li>Open <a href="https://app.netlify.com/drop" rel="noopener noreferrer">https://app.netlify.com/drop</a> in your browser.<span class="see"><b>You should now see:</b> A page with a large box that says to drag and drop a folder.</span></li><li>Drag the unzipped folder (the one holding <code>index.html</code>) onto the box. Drag the folder, not the ZIP file.<span class="see"><b>You should now see:</b> A progress bar, then your site with a web address ending in <code>.netlify.app</code>.</span></li><li>Click the address. Your page opens in a new tab.<span class="see"><b>You should now see:</b> Your page, with its pictures. If it is blank, see "If something goes wrong" below.</span></li><li>Create a free Netlify account when it asks, so the site is not deleted after an hour.<span class="see"><b>You should now see:</b> The site listed under "Sites" in your Netlify account.</span></li></ol>
+<p>Netlify reads the <code>_headers</code> file in your folder, so the security and caching rules are applied for you.</p>
+</section>
+<section id="cloudflare"><h2>Route 2: Cloudflare Pages (free, with your own domain)</h2><p class="checked">Last checked: 2026-10-29</p>
+<ol><li>Create a free account at <a href="https://dash.cloudflare.com/sign-up" rel="noopener noreferrer">https://dash.cloudflare.com/sign-up</a> and confirm your email.<span class="see"><b>You should now see:</b> The Cloudflare dashboard.</span></li><li>In the left menu choose "Workers &amp; Pages", then "Create", then the "Pages" tab, then "Upload assets".<span class="see"><b>You should now see:</b> A form asking for a project name.</span></li><li>Type a project name (letters and dashes only). This becomes <code>name.pages.dev</code>. Click "Create project".<span class="see"><b>You should now see:</b> A box to drop files.</span></li><li>Drag the unzipped folder into the box, or use "Select from computer" and choose the folder. Click "Deploy site".<span class="see"><b>You should now see:</b> A "Success" message and a <code>.pages.dev</code> address.</span></li><li>Click the address to open your site.<span class="see"><b>You should now see:</b> Your page.</span></li></ol>
+<p>Cloudflare reads <code>_headers</code> too. To update later, open the project and choose "Create new deployment" to upload the new folder.</p>
+<p><strong>Sent to GitHub?</strong> Already sent the files to your GitHub account from edvlabs? Choose "Connect to Git" instead of "Upload assets", pick your repository, leave the build command empty and set the output folder to <code>/</code>. Each new commit then goes online by itself.</p>
+</section>
+<section id="github"><h2>Route 3: GitHub Pages</h2><p class="checked">Last checked: 2026-10-29</p>
+<ol><li>Create a free account at <a href="https://github.com" rel="noopener noreferrer">https://github.com</a> and make a new repository (the "+" at the top, "New repository"). Choose Public.<span class="see"><b>You should now see:</b> An empty repository.</span></li><li>Click "uploading an existing file", drag in the contents of the unzipped folder (the files and the <code>assets</code> folder, not the folder around them), and click "Commit changes".<span class="see"><b>You should now see:</b> The files listed in the repository.</span></li><li>Open the repository "Settings", then "Pages". Under "Build and deployment" choose "Deploy from a branch", branch <code>main</code>, folder <code>/ (root)</code>, and Save.<span class="see"><b>You should now see:</b> After a minute or two the page shows "Your site is live at ...".</span></li><li>Open that address.<span class="see"><b>You should now see:</b> Your page.</span></li></ol>
+<p>GitHub Pages ignores the <code>_headers</code> file, so the extra security and caching rules are not applied there. It works, but Netlify and Cloudflare Pages protect your visitors a little better.</p>
+</section>
+<section id="host"><h2>Route 4: An ordinary web host (cPanel, FTP, file manager)</h2><p class="checked">Last checked: 2026-10-29</p>
+<ol><li>Log in to your hosting control panel and open "File Manager" (or connect with an FTP program using the details your host emailed you).<span class="see"><b>You should now see:</b> A list of folders. Look for one called <code>public_html</code>, <code>www</code> or <code>htdocs</code>.</span></li><li>Open that folder. If it holds a placeholder page such as <code>index.php</code> or <code>default.html</code>, delete or rename it.<span class="see"><b>You should now see:</b> An empty folder.</span></li><li>Upload everything from inside the unzipped folder: <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, the <code>assets</code> folder and the rest. Keep the folder structure.<span class="see"><b>You should now see:</b> The same files listed, with <code>assets</code> still a folder.</span></li><li>Open your domain in a browser.<span class="see"><b>You should now see:</b> Your page.</span></li></ol>
+<p><code>_headers</code> is ignored by most ordinary hosts. That is harmless.</p>
+</section>
+<section id="domain"><h2>Connect your own domain</h2><p class="checked">Last checked: 2026-10-29</p>
+<ol><li>Buy a domain from a registrar (for example Cloudflare Registrar, Namecheap, or a local one). Choose a short name; <code>.com</code> or your country ending.<span class="see"><b>You should now see:</b> The domain listed in your registrar account.</span></li><li>In your host (Netlify: "Domain management"; Cloudflare Pages: "Custom domains"), click "Add a domain" and type it, for example <code>yourname.com</code>.<span class="see"><b>You should now see:</b> The host shows what to change: either two name servers, or two DNS records (an A or CNAME record).</span></li><li>In your registrar, either replace the name servers with the two the host gave you, or add the DNS records exactly as shown. Save.<span class="see"><b>You should now see:</b> The registrar shows the new values.</span></li><li>Wait. It usually takes minutes, sometimes up to a few hours. The host turns on HTTPS (the padlock) by itself.<span class="see"><b>You should now see:</b> The host shows the domain as "Active" or "Verified" and the address opens with a padlock.</span></li><li>Choose <code>www</code> or no <code>www</code> as the main address, and let the host redirect the other one to it.<span class="see"><b>You should now see:</b> Typing either version lands on the same page.</span></li></ol>
+<p>If it still does not work after an hour: check you copied the values with no extra spaces, that you changed them at the registrar where the domain is registered, and that old records for the same name were removed. Then ask your host's support; they see the same screen you do.</p>
+</section>
+<section id="after"><h2>After it is online</h2><p class="checked">Last checked: 2026-10-29</p>
+<ol><li>In the builder, open Step 5 and type your real web address when asked ("What will your web address be?"). Download again and upload the new folder.<span class="see"><b>You should now see:</b> The new <code>sitemap.xml</code> and the right address inside the page.</span></li><li>Open Google Search Console at <a href="https://search.google.com/search-console" rel="noopener noreferrer">https://search.google.com/search-console</a>, add your site, and submit <code><a href="https://your-address/sitemap.xml" rel="noopener noreferrer">https://your-address/sitemap.xml</a></code> under "Sitemaps". Do the same at <a href="https://www.bing.com/webmasters" rel="noopener noreferrer">https://www.bing.com/webmasters</a>.<span class="see"><b>You should now see:</b> "Success" next to the sitemap.</span></li><li>Open your site on your phone, on mobile data, not your home wifi.<span class="see"><b>You should now see:</b> The page looks right and loads in a few seconds.</span></li><li>Click every link and button. Send yourself a message through the contact form, if you have one.<span class="see"><b>You should now see:</b> Everything goes where it should (see the form note below).</span></li></ol>
+<p>What to expect from Google: it takes days to a few weeks to list a new site. Where you appear depends on your content, your links and your competition. edvlabs cannot promise a ranking and nobody honest can.</p>
+</section>
+<section id="form"><h2>Contact forms on a static site</h2><p class="checked">Last checked: 2026-10-29</p>
+<p>A page made of plain files has no back end, so a contact form on its own cannot send anything. Do one of these, or the form goes nowhere:</p>
+<ul><li><strong>Use a form service.</strong> Formspree, Web3Forms and Netlify Forms catch the form and email it to you. They have free plans.</li><li><strong>Link to an email address or a WhatsApp number</strong> instead of a form.</li><li><strong>Use your own back end</strong> if you have a developer.</li></ul>
+<p>Example with Formspree: create a free account at <a href="https://formspree.io" rel="noopener noreferrer">https://formspree.io</a>, make a new form, copy its address (it looks like <code><a href="https://formspree.io/f/abcdwxyz" rel="noopener noreferrer">https://formspree.io/f/abcdwxyz</a></code>), then in the builder open the form block and paste that address as the form's action. Send a test message and look for it in your inbox.</p>
+</section>
+<section id="mail"><h2>Email on your own domain</h2><p class="checked">Last checked: 2026-10-29</p>
+<p>Email like <code>hello@yourname.com</code> is not part of the website. Get it from your registrar, Google Workspace, Zoho or Fastmail. Be careful: if you move your domain to a new host and change the <strong>MX records</strong> by accident, your email stops arriving. Only touch the A, CNAME or name-server settings the host tells you to.</p>
+</section>
+<section id="update"><h2>Updating later</h2><p class="checked">Last checked: 2026-10-29</p>
+<ol><li>Change the page in the builder (or, if you bought the editor, in the editor page) and download again.<span class="see"><b>You should now see:</b> A new ZIP.</span></li><li>Upload it the same way as the first time: Netlify "Deploys", Cloudflare "Create new deployment", GitHub commit, or the file manager.<span class="see"><b>You should now see:</b> The change visible after a minute. If you still see the old page, refresh the page hard (Ctrl+Shift+R, or Cmd+Shift+R on a Mac).</span></li></ol>
+<p>Keep the first ZIP. It is your backup.</p>
+</section>
+<section id="trouble"><h2>If something goes wrong</h2><p class="checked">Last checked: 2026-10-29</p>
+<table><thead><tr><th>Problem</th><th>What to do</th></tr></thead><tbody><tr><td>Blank white page</td><td>You uploaded the ZIP itself or the outer folder. Upload the files inside the folder, with <code>index.html</code> at the top.</td></tr><tr><td>Pictures or styles missing</td><td>The <code>assets</code> folder or <code>style.css</code> was left out, or renamed. Upload them again, keeping the names.</td></tr><tr><td>"404 Not Found" when you refresh a page</td><td>The file name is different from the link. Check names are lower case and match exactly.</td></tr><tr><td>You still see the old version</td><td>Your browser kept a copy. Hard-refresh, or open the address in a private window.</td></tr><tr><td>"Not secure" warning</td><td>The address starts with <code>http://</code>. Use <code>https://</code>. For your own domain, wait for the host to finish turning HTTPS on.</td></tr><tr><td>The domain shows a host's parking page</td><td>The DNS change has not spread yet, or the records are wrong. See "Connect your own domain".</td></tr></tbody></table>
+<p>Still stuck? Write to the support address on edvlabs.com/contact and include: the address of your site, which route you followed, the step you are on, and a screenshot. Never send us a password, API key or card number. We will never ask for one.</p>
+</section>
+<section id="checklist"><h2>Checklist</h2><ul class="checklist"><li><label><input type="checkbox"> Files uploaded</label></li><li><label><input type="checkbox"> Address opens</label></li><li><label><input type="checkbox"> HTTPS (padlock) works</label></li><li><label><input type="checkbox"> Checked on a phone</label></li><li><label><input type="checkbox"> Sitemap sent to Google</label></li><li><label><input type="checkbox"> Contact form tested</label></li><li><label><input type="checkbox"> Backup copy of the ZIP kept</label></li></ul></section>
+<div class="btn-row mt-5"><a class="btn" href="../start/">Start your page</a><a class="btn btn--secondary" href="../contact/">Ask us for help</a></div>
+</section>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="foot-row"><a class="logo logo--on-ink" href="../">edvlabs</a><nav aria-label="Footer" class="foot-links"><a href="../how-it-works/">How it works</a><a href="../pricing/">Prices</a><a href="../faq/">Questions</a><a href="../contact/">Contact</a><a href="../guide/">Guide</a><a href="../about/">About</a><a href="../account/">Account</a><a href="../start/">Start your page</a></nav></div><small>edvlabs · Latvia</small></div></footer>
+
+<script src="../js/nav-auth.js"></script>
+</body>
+</html>

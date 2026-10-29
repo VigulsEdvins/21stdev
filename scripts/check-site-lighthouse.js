@@ -10,7 +10,7 @@ const path = require('path');
 const http = require('http');
 
 const SITE = path.resolve(__dirname, '..', 'site');
-const PAGES = { home: '/', start: '/start/', 'how-it-works': '/how-it-works/', pricing: '/pricing/', faq: '/faq/', contact: '/contact/', account: '/account/' };
+const PAGES = { home: '/', start: '/start/', 'how-it-works': '/how-it-works/', pricing: '/pricing/', faq: '/faq/', contact: '/contact/', guide: '/guide/', about: '/about/', account: '/account/' };
 // pages that are deliberately not for search engines (noindex) are not held to the SEO score
 const NOINDEX = new Set(['account']);
 const BUDGET = { performance: 0.9, accessibility: 0.95, 'best-practices': 0.95, seo: 0.95 };

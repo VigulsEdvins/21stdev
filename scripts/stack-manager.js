@@ -22,6 +22,7 @@ const DEFAULT_PAGE = {
   bizType: '', // '' | 'Organization' | 'LocalBusiness': writes JSON-LD for search engines
   bizName: '',
   bizPhone: '',
+  bizEmail: '', // public contact address: goes into security.txt and the business data
   bizAddress: ''
 };
 

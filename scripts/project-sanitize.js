@@ -12,7 +12,7 @@
   const MAX_TEXT = 5000;
   const ID_RE = /^[A-Za-z0-9_-]{1,80}$/;
   const SLUG_RE = /^[a-z0-9][a-z0-9-]{0,99}$/i;
-  const PAGE_KEYS = ['title', 'description', 'favicon', 'fontDisplay', 'fontBody', 'lang', 'radius', 'shareImage', 'canonical', 'robots', 'bizType', 'bizName', 'bizPhone', 'bizAddress'];
+  const PAGE_KEYS = ['title', 'description', 'favicon', 'fontDisplay', 'fontBody', 'lang', 'radius', 'shareImage', 'canonical', 'robots', 'bizType', 'bizName', 'bizPhone', 'bizEmail', 'bizAddress'];
   const URL_KEYS = /^(link|ctaLink|imageUrl|href|src|url)$/i;
 
   function newCounter() { return { n: 0 }; }

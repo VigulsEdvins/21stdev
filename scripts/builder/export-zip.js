@@ -45,7 +45,7 @@
           if (fonts.hosted) Object.assign(out.assets, fonts.assets);
         }
         if (home) {
-          ['index.html', 'style.css', 'script.js', 'README.md', 'robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md'].forEach(n => { if (bundle[n] !== undefined) out.files[n] = bundle[n]; });
+          ['index.html', 'style.css', 'script.js', 'README.md', ...window.Assembler.SITE_EXTRA_FILES].forEach(n => { if (bundle[n] !== undefined) out.files[n] = bundle[n]; });
           out.files['README.md'] += `\n## Pages\n\n${pages.map(p2 => `- **${p2.title}**: \`${fileOf(p2)}\``).join('\n')}\n\nEach page has its own stylesheet and script (\`<page>.css\`, \`<page>.js\`); shared images and fonts are in \`assets/\`.\n`;
         } else {
           out.files[`${p.slug}.html`] = bundle['index.html'].replace('href="style.css"', `href="${p.slug}.css"`).replace('src="script.js"', `src="${p.slug}.js"`);
@@ -201,7 +201,7 @@
           zip.file('style.css', getBundle()['style.css']);
           zip.file('script.js', getBundle()['script.js']);
           zip.file('README.md', getBundle()['README.md']);
-          ['robots.txt', 'sitemap.xml', 'favicon.svg', 'site.webmanifest', '_headers', 'DEPLOY.md', ...Object.keys(cmsFiles)].forEach(n => { if (getBundle()[n]) zip.file(n, getBundle()[n]); });
+          [...window.Assembler.SITE_EXTRA_FILES, ...Object.keys(cmsFiles)].forEach(n => { if (getBundle()[n]) zip.file(n, getBundle()[n]); });
           Object.entries(getAssets()).forEach(([name, bytes]) => zip.file(name, bytes));
           const blob = await zip.generateAsync({ type: 'blob' });
           triggerDownload(blob, zipFilename, 'application/zip');
