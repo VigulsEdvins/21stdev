@@ -120,20 +120,20 @@ body.is-guided .brief-offer[hidden] { display: none; }
 /* phone: panel and preview take turns, header slimmed down */
 .guided-flip { display: none; }
 @media (max-width: 700px) {
-  body.is-guided .guided-flip { display: block; position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 400; min-height: 48px; padding: 0 22px; border: 2px solid var(--text-main); border-radius: 999px; background: var(--rust); color: #fff; font: 600 16px / 1 var(--font-body); box-shadow: 0 4px 0 var(--text-main); cursor: pointer; }
+  body .guided-flip { display: block; position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 400; min-height: 48px; padding: 0 22px; border: 2px solid var(--text-main); border-radius: 999px; background: var(--rust); color: #fff; font: 600 16px / 1 var(--font-body); box-shadow: 0 4px 0 var(--text-main); cursor: pointer; }
   body.is-guided .builder-header .header-center, body.is-guided #openExportModalBtn { display: none; }
-  body.is-guided .builder-workspace { flex-direction: column; }
-  body.is-guided .builder-sidebar { width: 100%; min-width: 0; max-width: none; flex: 1 1 auto; min-height: 0; border-right: 0; padding-bottom: 76px; }
-  body.is-guided .builder-viewport { display: none; width: 100%; flex: 1 1 auto; min-height: 0; }
-  body.is-guided.show-preview .builder-sidebar { display: none; }
-  body.is-guided.show-preview .builder-viewport { display: flex; }
+  body .builder-workspace { flex-direction: column; }
+  body .builder-sidebar { width: 100%; min-width: 0; max-width: none; flex: 1 1 auto; min-height: 0; border-right: 0; padding-bottom: 76px; }
+  body .builder-viewport { display: none; width: 100%; flex: 1 1 auto; min-height: 0; }
+  body.show-preview .builder-sidebar { display: none; }
+  body.show-preview .builder-viewport { display: flex; }
   /* the preview is the real page at the phone's own width: no fake browser window, no frame, the whole height */
-  body.is-guided .viewport-stage { padding: 0; align-items: stretch; }
-  body.is-guided .viewport-frame-wrapper { width: 100%; max-width: none; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
-  body.is-guided .viewport-browser-bar { display: none; }
-  body.is-guided .live-preview-iframe { flex: 1 1 auto; min-height: 0; }
+  body .viewport-stage { padding: 0; align-items: stretch; }
+  body .viewport-frame-wrapper { width: 100%; max-width: none; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  body .viewport-browser-bar { display: none; }
+  body .live-preview-iframe { flex: 1 1 auto; min-height: 0; }
   /* the flip button steps aside while a window is open */
-  body.is-guided:has(.export-modal.is-open) .guided-flip { display: none; }
+  body:has(.export-modal.is-open) .guided-flip { display: none; }
   /* a short step bar: the hint and the long help stay one tap away */
   body.is-guided .guided-bar { padding: 8px 12px 6px; }
   body.is-guided .guided-steps { gap: 4px; }
@@ -241,3 +241,9 @@ body.is-guided .content-field .ps-field input[type="text"], body.is-guided .cont
 @media (max-width: 700px) { body.is-guided .content-fields { gap: 14px; padding-bottom: 12px; } }
 body.is-guided .content-field .ps-field input[type="text"], body.is-guided .content-field .ps-field textarea { font-weight: 400; }
 body.is-guided #contentSectionSelect { min-height: 44px; font-size: 16px; }
+
+/* a phone must never get a sideways page: the soft glow blobs and the slide-in drawer sit partly outside the screen and made the page 500px wide */
+@media (max-width: 700px) {
+  html, body.builder-body { overflow-x: hidden; max-width: 100vw; }
+  .ambient-aurora, .component-drawer { overflow: hidden; }
+}
