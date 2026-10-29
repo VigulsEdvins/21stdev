@@ -27,9 +27,16 @@
     const sure = el(doc, 'span', { class: 'bp-sure', id: 'bpSure', hidden: '' }, el(doc, 'span', { text: 'Clear every block? You can undo it. ' }),
       el(doc, 'button', { type: 'button', class: 'bp-btn', id: 'bpOverYes', text: 'Yes, clear it' }), el(doc, 'button', { type: 'button', class: 'bp-btn', id: 'bpOverNo', text: 'Keep my page' }));
     const live = el(doc, 'p', { class: 'bp-live', id: 'bpLive', role: 'status', 'aria-live': 'polite' });
+    // "Add a block": on a wide screen it is the list under your page; on a phone the same list is a sheet that slides up from the bottom
+    const openSheet = el(doc, 'button', { type: 'button', class: 'builder-btn-primary bp-open-sheet', id: 'bpOpenSheet', 'aria-haspopup': 'dialog', 'aria-expanded': 'false', 'aria-controls': 'bpSheet', text: 'Add a block' });
+    const closeSheet = el(doc, 'button', { type: 'button', class: 'bp-btn bp-close-sheet', id: 'bpCloseSheet', 'aria-label': 'Close the list of blocks', text: 'Done' });
+    const grabber = el(doc, 'div', { class: 'bp-grabber', 'aria-hidden': 'true' });
+    const sheet = el(doc, 'div', { class: 'bp-sheet', id: 'bpSheet', role: 'group', 'aria-labelledby': 'bpSheetTitle' },
+      grabber, el(doc, 'div', { class: 'bp-sheet-head' }, el(doc, 'h3', { class: 'bp-h', id: 'bpSheetTitle', text: 'Add a block' }), closeSheet), addList);
+    const backdrop = el(doc, 'div', { class: 'bp-backdrop', id: 'bpBackdrop', 'aria-hidden': 'true' });
     const root = el(doc, 'section', { class: 'block-picker', id: 'blockPicker', 'aria-label': 'Blocks of your page' },
-      el(doc, 'h3', { class: 'bp-h', text: 'Your page' }), empty, yourList,
-      el(doc, 'h3', { class: 'bp-h', text: 'Add a block' }), addList, el(doc, 'div', { class: 'bp-over-row' }, startOver, sure), live);
+      el(doc, 'h3', { class: 'bp-h', text: 'Your page' }), empty, yourList, openSheet,
+      sheet, backdrop, el(doc, 'div', { class: 'bp-over-row' }, startOver, sure), live);
     host.insertBefore(root, host.firstChild);
 
     startOver.addEventListener('click', () => { startOver.hidden = true; sure.hidden = false; doc.getElementById('bpOverNo').focus(); });
@@ -40,6 +47,37 @@
       sure.hidden = true; startOver.hidden = false; say('Your page is empty. Undo brings it back.');
     });
     const say = (t) => { live.textContent = t; };
+    const win = doc.defaultView || window;
+    const phone = () => !!(win.matchMedia && win.matchMedia('(max-width: 700px)').matches);
+    function setSheet(open) {
+      if (open && !phone()) return;
+      const was = sheet.classList.contains('is-open');
+      sheet.classList.toggle('is-open', open); backdrop.classList.toggle('is-open', open); doc.body.classList.toggle('bp-sheet-open', open);
+      openSheet.setAttribute('aria-expanded', String(open));
+      if (open) { sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.scrollTop = 0; closeSheet.focus(); }
+      else { sheet.setAttribute('role', 'group'); sheet.removeAttribute('aria-modal'); if (was) openSheet.focus(); }
+    }
+    openSheet.addEventListener('click', () => setSheet(true));
+    closeSheet.addEventListener('click', () => setSheet(false));
+    backdrop.addEventListener('click', () => setSheet(false));
+    doc.addEventListener('keydown', (e) => {
+      if (!sheet.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); setSheet(false); return; }
+      if (e.key === 'Tab') { // keep the focus inside the open sheet
+        const f = Array.from(sheet.querySelectorAll('button:not(:disabled)')); if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && doc.activeElement === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && doc.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    // swipe the handle down to close
+    grabber.addEventListener('pointerdown', (e) => {
+      const y0 = e.clientY; let dy = 0; try { grabber.setPointerCapture(e.pointerId); } catch (_) { /* fine */ }
+      sheet.classList.add('is-pulling');
+      const mv = (ev) => { dy = Math.max(0, ev.clientY - y0); sheet.style.transform = 'translateY(' + dy + 'px)'; };
+      const up = () => { grabber.removeEventListener('pointermove', mv); grabber.removeEventListener('pointerup', up); grabber.removeEventListener('pointercancel', up); sheet.classList.remove('is-pulling'); sheet.style.transform = ''; if (dy > 80) setSheet(false); };
+      grabber.addEventListener('pointermove', mv); grabber.addEventListener('pointerup', up); grabber.addEventListener('pointercancel', up);
+    });
+    if (win.matchMedia) { const mq = win.matchMedia('(max-width: 700px)'); const leave = () => { if (!mq.matches) setSheet(false); }; if (mq.addEventListener) mq.addEventListener('change', leave); }
     const stack = () => (sm.getState().stack || []);
     const nameOf = (s) => { const k = Kinds.kindOf(s.slug); return k ? k.label : (s.title || s.slug); };
 
@@ -134,6 +172,7 @@
         const b = btn('bp-add', has ? 'Added' : 'Add', label, () => {
           sm.addSection(k.variants[0], { title: k.label });
           say(k.label + ' added to your page');
+          if (sheet.classList.contains('is-open')) setSheet(false); // on a phone the sheet closes so you see the block arrive
         }, has || !ready);
         li.append(text, b);
         addList.append(li);

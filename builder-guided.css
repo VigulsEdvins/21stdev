@@ -209,3 +209,22 @@ body.is-guided .lang-bar:not([hidden]) { display: flex; }
 
 /* every guided panel scrolls by finger or wheel (the base rule hides overflow, which left the lower part of a long step out of reach on a phone) */
 body.is-guided .sidebar-tab-pane { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+/* "Add a block": the list on a wide screen, a sheet from the bottom on a phone */
+.bp-open-sheet, .bp-grabber, .bp-close-sheet, .bp-backdrop { display: none; }
+.bp-sheet-head { display: block; }
+@media (max-width: 700px) {
+  .bp-open-sheet { display: block; width: 100%; min-height: 48px; margin: 0 0 18px; }
+  .bp-sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 460; max-height: 78vh; max-height: 78dvh; overflow-y: auto; overscroll-behavior: contain; box-sizing: border-box; padding: 8px 14px 24px; background: var(--bg-0); border: 2px solid var(--text-main); border-bottom: 0; border-radius: 22px 22px 0 0; box-shadow: 0 -10px 30px rgba(29, 42, 51, .3); transform: translateY(105%); visibility: hidden; transition: transform .22s ease, visibility 0s linear .22s; }
+  .bp-sheet.is-open { transform: translateY(0); visibility: visible; transition: transform .22s ease; }
+  .bp-sheet.is-pulling { transition: none; }
+  .bp-grabber { display: block; width: 48px; height: 6px; margin: 4px auto 10px; border-radius: 3px; background: var(--text-muted); touch-action: none; cursor: grab; padding: 10px 0; background-clip: content-box; box-sizing: content-box; }
+  .bp-sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; position: sticky; top: -8px; background: var(--bg-0); padding-bottom: 6px; }
+  .bp-sheet-head .bp-h { margin: 0; }
+  .bp-close-sheet { display: inline-block; }
+  .bp-backdrop { display: block; position: fixed; inset: 0; z-index: 450; background: rgba(29, 42, 51, .45); opacity: 0; visibility: hidden; transition: opacity .22s ease, visibility 0s linear .22s; }
+  .bp-backdrop.is-open { opacity: 1; visibility: visible; transition: opacity .22s ease; }
+  body.is-guided.bp-sheet-open .guided-flip { display: none; }
+  .bp-sheet .bp-kinds { margin-bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .bp-sheet, .bp-backdrop { transition: none !important; } }
