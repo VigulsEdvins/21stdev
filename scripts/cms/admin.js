@@ -43,6 +43,7 @@
   var historyTimer = null;
   var pickTarget = null; // { sec, f, setValue } while the picture picker is open
   var previewReady = false;
+  var frameSizes = {}; // 'section/field' -> [width, height] of each picture's real frame, reported by the preview
   var toastTimer = null;
 
   /* ---------------- storage ---------------- */
@@ -77,10 +78,11 @@
     var v = draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id];
     return typeof v === 'string' ? v : f.value;
   }
-  function setVal(file, sec, f, value) {
-    if (value === f.value) {
+  /** Stores or clears one draft key (a field, or a picture's "<id>__fit"): a value equal to the original is no edit. */
+  function setKey(file, sec, key, value, original) {
+    if (value === original) {
       if (draft[file] && draft[file][sec.id]) {
-        delete draft[file][sec.id][f.id];
+        delete draft[file][sec.id][key];
         if (!Object.keys(draft[file][sec.id]).length) delete draft[file][sec.id];
         if (!Object.keys(draft[file]).length) delete draft[file];
       }
@@ -88,9 +90,16 @@
     }
     draft[file] = draft[file] || {};
     draft[file][sec.id] = draft[file][sec.id] || {};
-    draft[file][sec.id][f.id] = value;
+    draft[file][sec.id][key] = value;
   }
-  function isEdited(file, sec, f) { return getVal(file, sec, f) !== f.value; }
+  function setVal(file, sec, f, value) { setKey(file, sec, f.id, value, f.value); }
+  /** How a picture fills its frame: "cover|x|y|zoom" or "contain|x|y|zoom" (x, y = focus in %, zoom in %). */
+  function getFit(file, sec, f) {
+    var v = draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id + '__fit'];
+    return typeof v === 'string' ? v : f.fit;
+  }
+  function setFit(file, sec, f, value) { setKey(file, sec, f.id + '__fit', value, f.fit); }
+  function isEdited(file, sec, f) { return getVal(file, sec, f) !== f.value || (!!f.fit && getFit(file, sec, f) !== f.fit); }
   function editedCount(file, sec) { return sec.fields.filter(function (f) { return isEdited(file, sec, f); }).length; }
 
   /** Only addresses a page may load: web, mail, phone, in-page and relative paths (and small embedded pictures). */
@@ -184,6 +193,14 @@
         synced[key] = want;
         bridge.setOverride(sec.id, f.id, want, { selector: f.selector, type: f.type, attr: f.attr });
       });
+      sec.fields.forEach(function (f) {
+        if (f.type !== 'image' || !f.fit) return;
+        var wantFit = (draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id + '__fit']) || '';
+        var fitKey = sec.id + '/' + f.id + '__fit';
+        if ((synced[fitKey] || '') === wantFit) return;
+        synced[fitKey] = wantFit;
+        bridge.setOverride(sec.id, f.id + '__fit', wantFit, { selector: f.selector, type: 'fit' });
+      });
     });
   }
 
@@ -217,6 +234,7 @@
   }
   window.addEventListener('message', function (e) {
     if (e.source !== frame.contentWindow || !e.data || typeof e.data !== 'object') return;
+    if (e.data.type === 'edv-cms:frames' && e.data.page === page().file && e.data.sizes) { frameSizes = e.data.sizes; document.querySelectorAll('.cms-fit').forEach(function (b) { if (b.repaint) b.repaint(true); }); }
     if (e.data.type === 'edv-cms:ready') { previewReady = true; pushPreview(); }
     if (e.data.type === 'edv-cms:pick' && e.data.page === page().file) {
       if (!findSection(e.data.section)) return;
@@ -288,12 +306,84 @@
   }
 
   /* ---------------- field editors ---------------- */
+  /** Crop or fit a picture, move its focus and zoom, with a small copy of the picture's frame you can drag. */
+  function fitEditor(sec, f, getSrc, onChange) {
+    var file = page().file;
+    var cur = String(getFit(file, sec, f)).split('|');
+    var words = { center: [50, 50], top: [50, 0], bottom: [50, 100], left: [0, 50], right: [100, 50] };
+    var start = words[cur[1]] || [Number(cur[1]), Number(cur[2])];
+    var st = { mode: cur[0] === 'contain' ? 'contain' : 'cover', x: isNaN(start[0]) ? 50 : start[0], y: isNaN(start[1]) ? 50 : start[1], z: Number(cur[3]) || 100 };
+    var ratio = 4 / 3;
+    function frameRatio() { var sz = frameSizes[sec.id + '/' + f.id]; return sz && sz[0] > 0 && sz[1] > 0 ? sz[0] / sz[1] : ratio; }
+    var crop = el('div', { class: 'cms-crop', title: 'Drag to move the picture, scroll to zoom' });
+    crop.style.aspectRatio = String(frameRatio());
+    var nat = null;
+    var mode = el('select', { class: 'cms-input', 'aria-label': f.label + ': size' }, [el('option', { value: 'cover', text: 'Fill the frame (crop)' }), el('option', { value: 'contain', text: 'Fit whole picture' })]);
+    function range(label, min, max, key) {
+      var input = el('input', { type: 'range', min: String(min), max: String(max), step: '1', 'aria-label': f.label + ': ' + label });
+      return { input: input, node: el('label', { class: 'cms-range' }, [el('span', { text: label }), input]) };
+    }
+    var rx = range('Move left / right', 0, 100), ry = range('Move up / down', 0, 100), rz = range('Zoom', 100, 300);
+    function paint() {
+      crop.style.aspectRatio = String(frameRatio());
+      crop.style.width = Math.round(Math.min(280, 240 * frameRatio())) + 'px';
+      var src = safeUrl(getSrc() || f.value, 'image');
+      if (!src) { crop.hidden = true; return; }
+      crop.hidden = false;
+      crop.style.backgroundImage = 'url("' + src.replace(/"/g, '%22') + '")';
+      if (!nat || nat.src !== src) {
+        var im = new Image();
+        im.onload = function () { nat = { w: im.naturalWidth, h: im.naturalHeight, src: src }; paint(); };
+        im.src = src;
+        return;
+      }
+      var W = crop.clientWidth, H = crop.clientHeight;
+      var k = st.mode === 'contain' ? Math.min(W / nat.w, H / nat.h) : Math.max(W / nat.w, H / nat.h) * st.z / 100;
+      crop.style.backgroundSize = (nat.w * k) + 'px ' + (nat.h * k) + 'px';
+      crop.style.backgroundPosition = st.x + '% ' + st.y + '%';
+      crop.setAttribute('data-over', JSON.stringify([nat.w * k - W, nat.h * k - H]));
+    }
+    function sync() { mode.value = st.mode; rx.input.value = st.x; ry.input.value = st.y; rz.input.value = st.z; rz.input.disabled = st.mode === 'contain'; }
+    function save() {
+      var plain = st.mode === 'cover' && st.x === 50 && st.y === 50 && st.z === 100;
+      setFit(file, sec, f, plain ? 'cover|50|50|100' : st.mode + '|' + st.x + '|' + st.y + '|' + st.z);
+      sync(); paint(); onChange();
+    }
+    mode.addEventListener('change', function () { st.mode = mode.value; save(); });
+    rx.input.addEventListener('input', function () { st.x = +rx.input.value; save(); });
+    ry.input.addEventListener('input', function () { st.y = +ry.input.value; save(); });
+    rz.input.addEventListener('input', function () { st.z = +rz.input.value; save(); });
+    var drag = null;
+    crop.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, px: st.x, py: st.y }; crop.setPointerCapture(e.pointerId); e.preventDefault(); });
+    crop.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      var over = JSON.parse(crop.getAttribute('data-over') || '[0,0]');
+      if (over[0] > 1) st.x = Math.max(0, Math.min(100, Math.round(drag.px - (e.clientX - drag.x) / over[0] * 100)));
+      if (over[1] > 1) st.y = Math.max(0, Math.min(100, Math.round(drag.py - (e.clientY - drag.y) / over[1] * 100)));
+      save();
+    });
+    crop.addEventListener('pointerup', function () { drag = null; });
+    crop.addEventListener('pointercancel', function () { drag = null; });
+    crop.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      st.z = Math.max(100, Math.min(300, st.z + (e.deltaY < 0 ? 10 : -10)));
+      if (st.mode === 'contain') st.mode = 'cover';
+      save();
+    }, { passive: false });
+    sync();
+    setTimeout(paint, 0);
+    var box = el('div', { class: 'cms-fit' }, [crop, el('label', { class: 'cms-range' }, [el('span', { text: 'Picture size' }), mode]), rx.node, ry.node, rz.node,
+      el('p', { class: 'cms-hint', text: 'Drag the picture in the frame (scroll to zoom), or use the sliders, until the main part sits in the frame.' })]);
+    box.repaint = function () { paint(); };
+    return box;
+  }
+
   function fieldCard(sec, f, index) {
     var file = page().file;
     var value = getVal(file, sec, f);
     var card = el('div', { class: 'cms-card' + (isEdited(file, sec, f) ? ' is-edited' : ''), 'data-field': f.id, 'data-index': String(index) });
     var reset = el('button', { type: 'button', class: 'cms-reset', text: 'Reset', title: 'Back to the original', on: { click: function () {
-      setVal(file, sec, f, f.value); snapshot(); changed(true);
+      setVal(file, sec, f, f.value); if (f.fit) setFit(file, sec, f, f.fit); snapshot(); changed(true);
     } } });
     function syncReset() { reset.hidden = !isEdited(file, sec, f); }
     card.appendChild(el('div', { class: 'cms-card-head' }, [
@@ -304,7 +394,8 @@
 
     if (f.type === 'image') {
       var thumb = el('img', { class: 'cms-thumb', alt: '' });
-      function paintThumb(v) { var u = safeUrl(v, 'image'); if (u) thumb.src = u; else thumb.removeAttribute('src'); }
+      var fitBox = null;
+      function paintThumb(v) { var u = safeUrl(v, 'image'); if (u) thumb.src = u; else thumb.removeAttribute('src'); if (fitBox) fitBox.repaint(u || f.value); }
       paintThumb(value);
       var urlInput = el('input', { type: 'text', class: 'cms-input', autocomplete: 'off', 'aria-label': f.label + ' address' });
       urlInput.value = /^data:/.test(value) ? '(uploaded picture)' : value;
@@ -321,6 +412,7 @@
         } });
       } } });
       card.appendChild(el('div', { class: 'cms-image-row' }, [thumb, el('div', { class: 'cms-image-side' }, [urlInput, el('div', { class: 'cms-inline' }, [choose])])]));
+      if (f.fit) { fitBox = fitEditor(sec, f, function () { return getVal(file, sec, f); }, function () { syncReset(); edited(); }); card.appendChild(fitBox); }
     } else if (f.type === 'color') {
       var picker = el('input', { type: 'color', 'aria-label': f.label });
       var hex = el('input', { type: 'text', class: 'cms-input', maxlength: '7', autocomplete: 'off', 'aria-label': f.label + ' (hex)' });
@@ -416,6 +508,11 @@
         var rs = rp[sec.id];
         if (!rs || typeof rs !== 'object') return;
         sec.fields.forEach(function (f) {
+          var fv = rs[f.id + '__fit'];
+          if (f.type === 'image' && f.fit && typeof fv === 'string' && fv !== f.fit && /^(cover|contain)[|0-9]{0,16}$/.test(fv)) {
+            out[p.file] = out[p.file] || {}; out[p.file][sec.id] = out[p.file][sec.id] || {};
+            out[p.file][sec.id][f.id + '__fit'] = fv; kept++;
+          }
           var v = rs[f.id];
           if (typeof v !== 'string' || v === f.value) return;
           if (f.type === 'image' || f.type === 'link') { v = safeUrl(v, f.type); if (!v) return; }

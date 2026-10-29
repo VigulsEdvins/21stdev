@@ -3072,6 +3072,7 @@ const OVERRIDES_RUNTIME = `(function () {
     else if (key === 'alt' || key === 'aria-label' || key === 'role') { if (value === null) el.removeAttribute(key); else el.setAttribute(key, value); }
     else if (key === 'srcset') { if (value === null) el.removeAttribute('srcset'); else el.setAttribute('srcset', value); }
     else if (key === 'href') { if (value === null) el.removeAttribute('href'); else el.setAttribute('href', value); }
+    else if (key === 'svgpic') { if (value && value.parentNode) value.parentNode.removeChild(value); el.__cmsPic = null; }
     else if (key.indexOf('style:') === 0) { if (value) el.style.setProperty(key.slice(6), value); else el.style.removeProperty(key.slice(6)); }
   }
   // Replaces the words of an element without destroying elements inside it (a link, an icon, another editable field):
@@ -3091,8 +3092,92 @@ const OVERRIDES_RUNTIME = `(function () {
     texts[0].nodeValue = value;
     for (var i = 1; i < texts.length; i++) texts[i].nodeValue = '';
   }
+  // A picture's fit, from "cover", "contain" or "cover|50|20|150" (mode, focus x %, focus y %, zoom %).
+  // The older words top, bottom, left, right and center still work as the focus.
+  function fitFor(o) {
+    var parts = String(o.value || '').split('|');
+    var words = { center: [50, 50], top: [50, 0], bottom: [50, 100], left: [0, 50], right: [100, 50] };
+    var x = 50, y = 50, z = 100;
+    if (words[parts[1]]) { x = words[parts[1]][0]; y = words[parts[1]][1]; }
+    else if (parts.length > 2) {
+      x = Math.max(0, Math.min(100, Number(parts[1]))); y = Math.max(0, Math.min(100, Number(parts[2]))); z = Math.max(100, Math.min(400, Number(parts[3]) || 100));
+      if (x !== x) x = 50; if (y !== y) y = 50;
+    }
+    return { mode: parts[0] === 'contain' ? 'contain' : 'cover', x: x, y: y, z: z };
+  }
+  // <img> (or the photo that replaced an SVG drawing): crop or fit, move the focus, zoom
+  function fitImg(img, fit, track, keys) {
+    var props = { 'object-fit': fit.mode, 'object-position': fit.x + '% ' + fit.y + '%' };
+    if (fit.z > 100 && fit.mode === 'cover') { props['transform'] = 'scale(' + fit.z / 100 + ')'; props['transform-origin'] = fit.x + '% ' + fit.y + '%'; props['clip-path'] = 'inset(0)'; }
+    else if (track) { props['transform'] = ''; props['transform-origin'] = ''; props['clip-path'] = ''; }
+    Object.keys(props).forEach(function (prop) {
+      if (track) { remember(img, 'style:' + prop, function () { return img.style.getPropertyValue(prop); }); keys.push([img, 'style:' + prop]); }
+      if (props[prop]) img.style.setProperty(prop, props[prop]); else img.style.removeProperty(prop);
+    });
+  }
+  // top-level comma split of a computed background-image
+  function bgLayers(value) {
+    var out = [], depth = 0, cur = '';
+    for (var i = 0; i < value.length; i++) {
+      var c = value.charAt(i);
+      if (c === '(') depth++; else if (c === ')') depth--;
+      if (c === ',' && depth === 0) { out.push(cur.trim()); cur = ''; } else cur += c;
+    }
+    if (cur.trim()) out.push(cur.trim());
+    return out.filter(function (l) { return l && l !== 'none'; });
+  }
+  var painted = [];
+  // An element painted with a background image: set or keep its picture, keep the dark overlay a card has on top
+  // of its photo, then crop or fit it, move the focus and zoom.
+  function paintBg(el, url, fit, keys) {
+    if (!el.__cmsBg) el.__cmsBg = bgLayers(el.ownerDocument.defaultView.getComputedStyle(el).backgroundImage || '');
+    var layers = el.__cmsBg;
+    var photo = url ? 'url("' + url.replace(/"/g, '%22') + '")' : layers.filter(function (l) { return l.indexOf('url(') === 0; })[0];
+    if (!photo) return;
+    var hasPhoto = layers.some(function (l) { return l.indexOf('url(') === 0; });
+    var overlays = url && !hasPhoto ? [] : layers.filter(function (l) { return l.indexOf('url(') !== 0; });
+    if (!hasPhoto) overlays = [];
+    ['background-image', 'background-size', 'background-position', 'background-repeat'].forEach(function (prop) {
+      remember(el, 'style:' + prop, function () { return el.style.getPropertyValue(prop); });
+      keys.push([el, 'style:' + prop]);
+    });
+    function put(sizeText) {
+      el.style.setProperty('background-image', overlays.concat(photo).join(', '));
+      el.style.setProperty('background-size', overlays.map(function () { return 'auto'; }).concat(sizeText).join(', '));
+      el.style.setProperty('background-position', overlays.map(function () { return '0 0'; }).concat(fit.x + '% ' + fit.y + '%').join(', '));
+      el.style.setProperty('background-repeat', overlays.map(function () { return 'repeat'; }).concat('no-repeat').join(', '));
+    }
+    var addr = photo.slice(4, -1);
+    if (addr.charAt(0) === '"' || addr.charAt(0) === "'") addr = addr.slice(1, -1);
+    el.__cmsRefresh = null;
+    if (fit.mode === 'contain') put('contain');
+    else if (fit.z <= 100) put('cover');
+    else {
+      put('cover');
+      var im = new Image();
+      var size = function () {
+        if (!im.naturalWidth) return;
+        var box = el.getBoundingClientRect();
+        var k = Math.max(box.width / im.naturalWidth, box.height / im.naturalHeight) * fit.z / 100;
+        put(Math.round(im.naturalWidth * k) + 'px ' + Math.round(im.naturalHeight * k) + 'px');
+      };
+      im.onload = size;
+      im.src = addr.replace(/%22/g, '"');
+      if (im.complete) size();
+      el.__cmsRefresh = size;
+      painted.push(el);
+    }
+  }
+  window.addEventListener('resize', function () { painted.forEach(function (el) { if (el.__cmsRefresh) el.__cmsRefresh(); }); });
+  // the fit chosen for a picture field, if any
+  function fitOverride(o, field) {
+    var found = null;
+    list.forEach(function (a) { if (a.section === o.section && a.field === field + '__fit') found = a; });
+    return fitFor(found || { value: '' });
+  }
   function apply() {
     var active = [];
+    painted = [];
     list.forEach(function (o) {
       var root = document.getElementById(o.section);
       if (!root) return;
@@ -3106,11 +3191,34 @@ const OVERRIDES_RUNTIME = `(function () {
           remember(el, 'src', function () { return el.getAttribute('src'); });
           active.push([el, 'srcset'], [el, 'src']);
           el.removeAttribute('srcset'); el.src = o.value;
+          if (list.some(function (a) { return a.section === o.section && a.field === o.field + '__fit'; })) fitImg(el, fitOverride(o, o.field), true, active);
+        } else if (el.namespaceURI === 'http://www.w3.org/2000/svg') {
+          // an inline SVG drawing: hide it and show the photo in its place, at the drawing's size
+          var pic = el.__cmsPic;
+          if (!pic) {
+            var box = el.getBoundingClientRect();
+            pic = document.createElement('img');
+            pic.className = 'cms-svg-pic';
+            pic.style.cssText = 'display:block;width:100%;max-width:' + Math.round(box.width) + 'px;aspect-ratio:' + Math.round(box.width) + '/' + Math.round(box.height) + ';object-fit:cover;margin:0 auto';
+            el.parentNode.insertBefore(pic, el.nextSibling);
+            el.__cmsPic = pic;
+          }
+          remember(el, 'svgpic', function () { return pic; });
+          key = remember(el, 'style:display', function () { return el.style.getPropertyValue('display'); });
+          active.push([el, 'svgpic'], [el, key]);
+          el.style.setProperty('display', 'none');
+          pic.src = o.value;
+          pic.alt = '';
+          list.forEach(function (a) { if (a.section === o.section && a.field === o.field + '__alt') pic.alt = a.value; });
+          fitImg(pic, fitOverride(o, o.field), false);
         } else {
-          key = remember(el, 'style:background-image', function () { return el.style.getPropertyValue('background-image'); });
-          active.push([el, key]);
-          el.style.backgroundImage = 'url("' + o.value.replace(/"/g, '%22') + '")';
+          paintBg(el, o.value, fitOverride(o, o.field), active);
         }
+      } else if (o.type === 'fit') {
+        // how a picture fills its frame (see fitFor); a picture that is also replaced is painted by its image override
+        var replaced = list.some(function (a) { return a.section === o.section && a.field + '__fit' === o.field && a.type === 'image'; });
+        if (el.tagName === 'IMG') fitImg(el, fitFor(o), true, active);
+        else if (el.namespaceURI !== 'http://www.w3.org/2000/svg' && !replaced) paintBg(el, '', fitFor(o), active);
       } else if (o.type === 'alt') {
         // the picture's description: alt on an <img>, aria-label on anything painted with a background image
         if (el.tagName === 'IMG') {

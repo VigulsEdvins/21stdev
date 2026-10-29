@@ -3294,6 +3294,10 @@ select option {
 /* Admin panel opened from the Content tab */
 .admin-overlay { position: fixed; inset: 0; z-index: 2000; background: #111214; }
 .admin-overlay[hidden] { display: none; }
+/* a reload at #adminOverlay shows the dark panel at once (before any script runs); the editor fills it a moment later */
+.admin-overlay[hidden]:target:not(.is-closed) { display: grid; place-items: center; color: #9aa0a6; font: 14px system-ui, sans-serif; }
+.admin-overlay[hidden]:target:not(.is-closed)::before { content: "Opening the admin panel…"; }
+html:has(#adminOverlay:target:not(.is-closed)) { overflow: hidden; }
 .admin-overlay iframe { width: 100%; height: 100%; border: 0; display: block; }
 .admin-open-card { display: grid; gap: 10px; padding: 14px; margin-bottom: 14px; border: 1px solid var(--ui-line, rgba(127, 127, 127, 0.3)); border-radius: 10px; }
 .admin-open-card p { margin: 0; font-size: 12.5px; line-height: 1.5; }

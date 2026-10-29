@@ -90,6 +90,11 @@
       if (typeof document === 'undefined') return;
       let bar = document.getElementById('storageWarning');
       if (status.ok) { if (bar) bar.remove(); return; }
+      // stored pictures are the usual reason for a full browser storage: make them smaller and save again
+      const extras = window.BuilderExtras;
+      if (status.reason === 'full' && extras && typeof extras.shrinkStoredPictures === 'function') {
+        extras.shrinkStoredPictures().then(n => { if (n) saveStateToStorage(); });
+      }
       const why = status.reason === 'full'
         ? 'The browser storage is full, so your latest changes are not being saved.'
         : 'This browser is not letting the builder save, so your latest changes are not being kept (a private window?).';

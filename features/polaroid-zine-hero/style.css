@@ -14,8 +14,9 @@ html, body { background: var(--bg, #efe6d2); color: var(--text, #2b2118); }
 .sz-stack { position: relative; width: min(300px, 70vw); aspect-ratio: 4 / 5; }
 .sz-snap { position: absolute; inset: 0; background: #fffdf6; padding: 12px 12px 0; box-shadow: 0 10px 24px rgba(40,25,10,.28); transition: transform .6s cubic-bezier(.3,.9,.3,1), opacity .5s; display: flex; flex-direction: column; }
 .sz-snap::before { content: ""; position: absolute; top: -10px; left: 50%; width: 70px; height: 20px; margin-left: -35px; background: rgba(255,255,255,.55); border: 1px solid rgba(0,0,0,.08); transform: rotate(-4deg); }
-.sz-pic { flex: 1; background: linear-gradient(160deg, var(--c1), var(--c2)); display: grid; place-items: end center; overflow: hidden; }
+.sz-pic { flex: 1; background: linear-gradient(160deg, var(--c1), var(--c2)) center / cover; display: grid; place-items: end center; overflow: hidden; }
 .sz-pic svg { width: 100%; fill: rgba(255,255,255,.55); }
+.sz-pic[style*="background-image"] svg { display: none; }
 .sz-snap figcaption { font-family: "Brush Script MT", cursive; font-size: 1.5rem; text-align: center; padding: 10px 0 12px; }
 .sz-snap[data-pos="0"] { transform: rotate(-2deg); z-index: 4; }
 .sz-snap[data-pos="1"] { transform: translate(46px, 8px) rotate(5deg); z-index: 3; }

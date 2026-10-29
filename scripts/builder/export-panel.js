@@ -441,11 +441,20 @@
     function closeAdmin() {
       if (!adminOverlay || adminOverlay.hidden) return;
       adminOverlay.hidden = true;
+      adminOverlay.classList.add('is-closed'); // replaceState does not update :target, so the "opening" screen must be switched off by class
       const old = adminFrame.src;
       adminFrame.src = 'about:blank'; // stops the editor's scripts
       if (old && old.startsWith('blob:')) URL.revokeObjectURL(old);
       delete window.__cmsBridge;
       document.body.style.overflow = '';
+      setAdminHash(false);
+    }
+    // The panel has no page of its own, so its address carries #adminOverlay (the overlay's id, so CSS can show it at once): a reload (or a shared link) opens it again
+    function setAdminHash(on) {
+      try {
+        if ((location.hash === '#adminOverlay') === on) return;
+        history.replaceState(null, '', location.pathname + location.search + (on ? '#adminOverlay' : ''));
+      } catch (_) { /* the address stays as it is */ }
     }
     async function openAdmin() {
       const btn = document.getElementById('openAdminBtn');
@@ -465,8 +474,10 @@
         // the editor page needs inline scripts and styles: it goes into the frame page that has its own policy (frame-doc.js), not a blob: URL, which would take the builder page's strict one
         if (window.FrameDoc) await window.FrameDoc.write(adminFrame, html);
         else adminFrame.src = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+        adminOverlay.classList.remove('is-closed');
         adminOverlay.hidden = false;
         document.body.style.overflow = 'hidden';
+        setAdminHash(true);
       } catch (err) {
         console.error('Admin panel could not be opened:', err);
         showToast('The admin panel could not be opened.', 4000);
@@ -476,6 +487,14 @@
     }
     const openAdminBtn = document.getElementById('openAdminBtn');
     if (openAdminBtn) openAdminBtn.addEventListener('click', openAdmin);
+    // after a reload at #admin: wait for the saved page to load, then reopen the panel
+    if (location.hash === '#adminOverlay') {
+      let tries = 0;
+      const reopen = setInterval(() => {
+        if (stackManager.getState().stack.some(s => !s.hidden)) { clearInterval(reopen); openAdmin(); }
+        else if (++tries > 40) { clearInterval(reopen); adminOverlay.classList.add('is-closed'); setAdminHash(false); }
+      }, 250);
+    }
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && adminOverlay && !adminOverlay.hidden) closeAdmin(); });
 
 

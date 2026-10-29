@@ -89,7 +89,8 @@
         const sections = p.stack.filter(s => !s.hidden).map((s, i) => ({
           id: s.id || `sec-${i + 1}`,
           slug: s.slug,
-          title: s.title || (featuresData[s.slug] && (featuresData[s.slug].title || featuresData[s.slug].name)) || s.slug
+          title: s.title || (featuresData[s.slug] && (featuresData[s.slug].title || featuresData[s.slug].name)) || s.slug,
+          overrides: inPlace ? {} : s.overrides
         }));
         pages.push({
           file: p.file,
@@ -103,7 +104,7 @@
         pagesIn.forEach((p, i) => p.stack.forEach(sec => {
           const known = (pages[i].sections.find(x => x.id === sec.id) || { fields: [] }).fields;
           Object.entries(sec.overrides || {}).forEach(([fieldId, o]) => {
-            if (!o || o.value === undefined || !known.some(f => f.id === fieldId)) return;
+            if (!o || o.value === undefined || !known.some(f => f.id === fieldId || (f.type === 'image' && fieldId === f.id + '__fit'))) return;
             ((published[p.file] = published[p.file] || {})[sec.id] = published[p.file][sec.id] || {})[fieldId] = String(o.value);
           });
         }));

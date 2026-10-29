@@ -80,6 +80,54 @@
       "label": "Button link 2",
       "type": "link",
       "selector": ":scope .sz-link"
+    },
+    {
+      "id": "snapshot-1-photo",
+      "label": "Snapshot 1 photo",
+      "type": "image",
+      "selector": ":scope .sz-snap:nth-of-type(1) .sz-pic"
+    },
+    {
+      "id": "snapshot-1-caption",
+      "label": "Snapshot 1 caption",
+      "type": "text",
+      "selector": ":scope .sz-snap:nth-of-type(1) figcaption"
+    },
+    {
+      "id": "snapshot-2-photo",
+      "label": "Snapshot 2 photo",
+      "type": "image",
+      "selector": ":scope .sz-snap:nth-of-type(2) .sz-pic"
+    },
+    {
+      "id": "snapshot-2-caption",
+      "label": "Snapshot 2 caption",
+      "type": "text",
+      "selector": ":scope .sz-snap:nth-of-type(2) figcaption"
+    },
+    {
+      "id": "snapshot-3-photo",
+      "label": "Snapshot 3 photo",
+      "type": "image",
+      "selector": ":scope .sz-snap:nth-of-type(3) .sz-pic"
+    },
+    {
+      "id": "snapshot-3-caption",
+      "label": "Snapshot 3 caption",
+      "type": "text",
+      "selector": ":scope .sz-snap:nth-of-type(3) figcaption"
+    },
+    {
+      "id": "snapshot-4-photo",
+      "label": "Snapshot 4 photo",
+      "type": "image",
+      "selector": ":scope .sz-snap:nth-of-type(4) .sz-pic"
+    },
+    {
+      "id": "snapshot-4-caption",
+      "label": "Snapshot 4 caption",
+      "type": "text",
+      "selector": ":scope .sz-snap:nth-of-type(4) figcaption"
     }
   ],
   "reserveHeight": 800

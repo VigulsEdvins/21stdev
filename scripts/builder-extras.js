@@ -96,6 +96,14 @@
     return m ? '#' + [m[1], m[2], m[3]].map(n => Number(n).toString(16).padStart(2, '0')).join('') : '';
   }
 
+  /** The address of the first url() in an element's computed background-image, or '' (gradients do not count). */
+  function backgroundUrl(el, view) {
+    let bg = '';
+    try { bg = view.getComputedStyle(el).backgroundImage || ''; } catch (_) { return ''; }
+    const m = /url\(\s*(["']?)(.*?)\1\s*\)/.exec(bg);
+    return m ? m[2] : '';
+  }
+
   function discoverFields(sectionEl, explicit, opts = {}) {
     if (!sectionEl) return [];
     const maxText = opts.limit || MAX_TEXT_FIELDS;
@@ -111,7 +119,7 @@
         try { el = sectionEl.querySelector(def.selector); } catch (_) { /* bad selector in meta */ }
         if (!el) return;
         const type = def.type || 'text';
-        const current = type === 'image' ? (el.getAttribute('src') || '') : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? currentColor(el, def.attr || 'color') : el.textContent.trim();
+        const current = type === 'image' ? (el.getAttribute('src') || backgroundUrl(el, sectionEl.ownerDocument.defaultView || window)) : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? currentColor(el, def.attr || 'color') : el.textContent.trim();
         fields.push({ id: def.id, label: def.label || def.id, type, selector: def.selector, attr: def.attr, current, auto: false });
         if (type !== 'color') named.push(el); // a colour field styles a whole block; its content stays editable
       });
@@ -150,6 +158,38 @@
       imgCount++;
     });
 
+    // Pictures painted with a CSS background image (cards, galleries, trails) are edited the same way as an <img>:
+    // the override sets the element's background-image. The same picture repeated on many elements is listed once.
+    if (imgCount < maxImages) {
+      const seen = new Set(fields.filter(f => f.type === 'image').map(f => f.current));
+      const view = sectionEl.ownerDocument.defaultView || window;
+      sectionEl.querySelectorAll('*').forEach(el => {
+        if (imgCount >= maxImages || isHidden(el, sectionEl) || taken(el) || el.tagName === 'IMG') return;
+        const url = backgroundUrl(el, view);
+        if (!url || seen.has(url) || /^data:image\/svg/.test(url)) return;
+        const r = el.getBoundingClientRect();
+        if (r.width < 60 || r.height < 60) return;
+        seen.add(url);
+        const selector = selectorFor(el, sectionEl);
+        fields.push({ id: `auto-${shortHash(selector + 'image')}`, label: `Image: ${snippet(url.split('/').pop() || 'background image', 30)}`, type: 'image', selector, current: url, auto: true });
+        imgCount++;
+      });
+    }
+
+    // A section whose pictures are inline SVG drawings (no <img>, no background image): each large drawing can be
+    // swapped for a photo. The override hides the drawing and shows the photo in its place (see OVERRIDES_RUNTIME).
+    if (imgCount === 0) {
+      sectionEl.querySelectorAll('svg').forEach(svg => {
+        if (imgCount >= maxImages || taken(svg) || svg.parentElement.closest('svg') || svg.closest('button, a, nav, header, footer, [data-cms-skip], .section-overlay-layer')) return;
+        const r = svg.getBoundingClientRect();
+        if (r.width < 120 || r.height < 80) return;
+        const hint = svg.getAttribute('aria-label') || (svg.querySelector('title') || {}).textContent || svg.parentElement.getAttribute('aria-label') || String(svg.parentElement.className || '').split(' ')[0] || 'picture';
+        const selector = selectorFor(svg, sectionEl);
+        fields.push({ id: `auto-${shortHash(selector + 'image')}`, label: `Picture: ${snippet(hint, 30)}`, type: 'image', selector, current: '', auto: true });
+        imgCount++;
+      });
+    }
+
     let linkCount = 0;
     sectionEl.querySelectorAll('a[href]').forEach(a => {
       if (linkCount >= maxLinks || isHidden(a, sectionEl) || taken(a)) return;
@@ -160,6 +200,8 @@
 
     return fields;
   }
+
+  const api = { create, discoverFields, selectorFor, onlyNumber };
 
   function create(ctx) {
     const doc = root.document;
@@ -480,14 +522,19 @@
           const img = new root.Image();
           img.onerror = () => reject(new Error('That file is not a usable image'));
           img.onload = () => {
-            const max = 1400;
-            const scale = Math.min(1, max / Math.max(img.width, img.height));
-            const canvas = doc.createElement('canvas');
-            canvas.width = Math.round(img.width * scale);
-            canvas.height = Math.round(img.height * scale);
-            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-            const uri = canvas.toDataURL('image/webp', 0.85);
-            if (uri.length > 900 * 1024) reject(new Error(`That image is still ${Math.round(uri.length / 1024)} KB after shrinking, too big to keep in the browser. Host it and paste its URL instead.`));
+            // Browser storage holds about 5 MB for everything, and a page is saved more than once (autosave and the
+            // project), so a picture is shrunk until it is about 200 KB: smaller dimensions first, then lower quality.
+            let uri = '';
+            for (const [max, quality] of [[1400, 0.82], [1200, 0.72], [1000, 0.62], [800, 0.55], [640, 0.5]]) {
+              const scale = Math.min(1, max / Math.max(img.width, img.height));
+              const canvas = doc.createElement('canvas');
+              canvas.width = Math.max(1, Math.round(img.width * scale));
+              canvas.height = Math.max(1, Math.round(img.height * scale));
+              canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+              uri = canvas.toDataURL('image/webp', quality);
+              if (uri.length <= 200 * 1024) break;
+            }
+            if (uri.length > 600 * 1024) reject(new Error(`That image is still ${Math.round(uri.length / 1024)} KB after shrinking, too big to keep in the browser. Host it and paste its URL instead.`));
             else resolve(uri);
           };
           img.src = reader.result;
@@ -495,6 +542,50 @@
         reader.readAsDataURL(file);
       });
     }
+
+    /** Re-encodes one stored picture until it is at most `limit` characters; returns the original when it cannot get smaller. */
+    function shrinkDataUri(uri, limit) {
+      return new Promise(resolve => {
+        const img = new root.Image();
+        img.onerror = () => resolve(uri);
+        img.onload = () => {
+          let best = uri;
+          for (const [max, quality] of [[1000, 0.7], [800, 0.6], [640, 0.5]]) {
+            const scale = Math.min(1, max / Math.max(img.width, img.height));
+            const canvas = doc.createElement('canvas');
+            canvas.width = Math.max(1, Math.round(img.width * scale));
+            canvas.height = Math.max(1, Math.round(img.height * scale));
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            const next = canvas.toDataURL('image/webp', quality);
+            if (next.length < best.length) best = next;
+            if (best.length <= limit) break;
+          }
+          resolve(best);
+        };
+        img.src = uri;
+      });
+    }
+
+    // Pictures kept from before pictures were shrunk (up to 900 KB each) can fill the browser storage on their own.
+    // When a save fails for lack of room, every large stored picture is re-encoded smaller, then the page is saved again.
+    let shrinking = false;
+    async function shrinkStoredPictures() {
+      if (shrinking) return 0;
+      shrinking = true;
+      let changed = 0;
+      try {
+        for (const sec of sm.getStack()) {
+          for (const [fid, o] of Object.entries(sec.overrides || {})) {
+            if (!o || o.type !== 'image' || typeof o.value !== 'string' || !/^data:image\//.test(o.value) || o.value.length <= 220 * 1024) continue;
+            const smaller = await shrinkDataUri(o.value, 200 * 1024);
+            if (smaller.length < o.value.length) { sm.setSectionOverride(sec.id, fid, smaller, { selector: o.selector, type: 'image' }); changed++; }
+          }
+        }
+      } finally { shrinking = false; }
+      if (changed) ctx.showToast(`Made ${changed} stored picture${changed > 1 ? 's' : ''} smaller to free browser storage`, 6000);
+      return changed;
+    }
+    api.shrinkStoredPictures = shrinkStoredPictures;
 
     let renderRetries = 0;
     /** Rough size of everything this origin keeps in localStorage (UTF-16, so 2 bytes per character). */
@@ -562,7 +653,8 @@
             <span>${escapeHtml(f.label)}${ov ? ' <em class="content-edited-dot" title="Edited">●</em>' : ''}</span>
             ${long ? `<textarea rows="3"></textarea>` : `<input type="${f.type === 'image' || f.type === 'link' ? 'text' : f.type === 'color' ? 'color' : 'text'}" autocomplete="off" />`}
           </label>
-          ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}" /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><label class="ps-field content-alt"><span>Picture description (alt text)</span><input type="text" class="content-alt-input" autocomplete="off" maxlength="200" placeholder="Describe what the picture shows" /></label><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above. The description is read by screen readers and search engines.</p>` : ''}
+          ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}"${value ? '' : ' hidden'} /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><label class="ps-field content-alt"><span>Picture description (alt text)</span><input type="text" class="content-alt-input" autocomplete="off" maxlength="200" placeholder="Describe what the picture shows" /></label><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above. The description is read by screen readers and search engines.</p>` : ''}
+          ${f.type === 'image' ? `<div class="content-fit-row"><div class="content-crop" hidden title="Drag to move the picture, scroll to zoom"></div><label class="ps-field"><span>Picture size</span><select class="builder-select content-fit"><option value="cover">Fill the frame (crop)</option><option value="contain">Fit whole picture</option></select></label><label class="ps-field"><span>Move left / right</span><input type="range" class="content-fx" min="0" max="100" step="1" /></label><label class="ps-field"><span>Move up / down</span><input type="range" class="content-fy" min="0" max="100" step="1" /></label><label class="ps-field"><span>Zoom</span><input type="range" class="content-fz" min="100" max="300" step="5" /></label><p class="content-hint">Drag the picture in the frame above (scroll to zoom), or use the sliders, until the main part sits in the frame.</p></div>` : ''}
           ${ov ? '<button type="button" class="content-reset">Reset to original</button>' : ''}`;
         let input = wrap.querySelector('textarea, input:not([type=file])');
         if (f.type === 'currency') {
@@ -617,6 +709,72 @@
         });
         const reset = wrap.querySelector('.content-reset');
         if (reset) reset.addEventListener('click', () => { sm.setSectionOverride(section.id, f.id, ''); setTimeout(renderContentFields, 50); });
+        const fitSel = wrap.querySelector('.content-fit');
+        if (fitSel) {
+          const fx = wrap.querySelector('.content-fx'), fy = wrap.querySelector('.content-fy'), fz = wrap.querySelector('.content-fz');
+          const fitId = f.id + '__fit';
+          const saved = String((overrides[fitId] && overrides[fitId].value) || 'cover|50|50|100').split('|');
+          const words = { center: [50, 50], top: [50, 0], bottom: [50, 100], left: [0, 50], right: [100, 50] };
+          const [sx, sy] = words[saved[1]] || [Number(saved[1]) || 50, Number(saved[2]) || 50];
+          fitSel.value = saved[0] === 'contain' ? 'contain' : 'cover';
+          fx.value = sx; fy.value = sy; fz.value = Number(saved[3]) || 100;
+          const sync = () => { [fx, fy, fz].forEach(r => { r.disabled = fitSel.value === 'contain' && r !== fx && r !== fy ? true : false; }); };
+          let fitTimer = null;
+          const saveFit = () => {
+            sync();
+            clearTimeout(fitTimer);
+            fitTimer = setTimeout(() => {
+              const plain = fitSel.value === 'cover' && fx.value === '50' && fy.value === '50' && fz.value === '100';
+              sm.setSectionOverride(section.id, fitId, plain ? '' : `${fitSel.value}|${fx.value}|${fy.value}|${fz.value}`, { selector: f.selector, type: 'fit' });
+            }, 120);
+          };
+          // a small copy of the picture's frame: drag the picture inside it, scroll to zoom
+          const crop = wrap.querySelector('.content-crop');
+          const frameEl = sectionEl.querySelector(f.selector);
+          const fw = frameEl ? (frameEl.offsetWidth || frameEl.getBoundingClientRect().width) : 0;
+          const fh = frameEl ? (frameEl.offsetHeight || frameEl.getBoundingClientRect().height) : 0;
+          const shownSrc = /^data:|^https?:|^[./\w-]/.test(value) ? value : '';
+          let nat = null;
+          const paintCrop = () => {
+            if (!nat) return;
+            const W = crop.clientWidth, H = crop.clientHeight, z = Number(fz.value) / 100;
+            const k = fitSel.value === 'contain' ? Math.min(W / nat.w, H / nat.h) : Math.max(W / nat.w, H / nat.h) * z;
+            crop.style.backgroundSize = `${nat.w * k}px ${nat.h * k}px`;
+            crop.style.backgroundPosition = `${fx.value}% ${fy.value}%`;
+            crop.dataset.over = JSON.stringify([nat.w * k - W, nat.h * k - H]);
+          };
+          if (crop && shownSrc && fw > 0 && fh > 0) {
+            const probe = new root.Image();
+            probe.onload = () => {
+              nat = { w: probe.naturalWidth, h: probe.naturalHeight };
+              crop.hidden = false;
+              crop.style.cssText = `width:100%;max-width:260px;aspect-ratio:${fw}/${fh};max-height:220px;margin:0 auto 8px;border-radius:8px;overflow:hidden;cursor:grab;touch-action:none;background:#222 url("${shownSrc.replace(/"/g, '%22')}") no-repeat;border:1px solid rgba(128,128,128,.5)`;
+              paintCrop();
+            };
+            probe.src = shownSrc;
+            let drag = null;
+            crop.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, px: Number(fx.value), py: Number(fy.value) }; crop.setPointerCapture(e.pointerId); crop.style.cursor = 'grabbing'; e.preventDefault(); });
+            crop.addEventListener('pointermove', e => {
+              if (!drag || !nat) return;
+              const [ox, oy] = JSON.parse(crop.dataset.over || '[0,0]');
+              if (ox > 1) fx.value = Math.max(0, Math.min(100, Math.round(drag.px - (e.clientX - drag.x) / ox * 100)));
+              if (oy > 1) fy.value = Math.max(0, Math.min(100, Math.round(drag.py - (e.clientY - drag.y) / oy * 100)));
+              paintCrop(); saveFit();
+            });
+            const end = () => { drag = null; crop.style.cursor = 'grab'; };
+            crop.addEventListener('pointerup', end);
+            crop.addEventListener('pointercancel', end);
+            crop.addEventListener('wheel', e => {
+              e.preventDefault();
+              fz.value = Math.max(100, Math.min(300, Number(fz.value) + (e.deltaY < 0 ? 10 : -10)));
+              if (fitSel.value === 'contain') fitSel.value = 'cover';
+              paintCrop(); saveFit();
+            }, { passive: false });
+            [fitSel, fx, fy, fz].forEach(c => c.addEventListener('input', paintCrop));
+          }
+          sync();
+          [fitSel, fx, fy, fz].forEach(c => c.addEventListener('input', saveFit));
+        }
         const altInput = wrap.querySelector('.content-alt-input');
         if (altInput) {
           const altId = f.id + '__alt';
@@ -680,7 +838,6 @@
     };
   }
 
-  const api = { create, discoverFields, selectorFor, onlyNumber };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.BuilderExtras = api;
 })(typeof window !== 'undefined' ? window : globalThis);

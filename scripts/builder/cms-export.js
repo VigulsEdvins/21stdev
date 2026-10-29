@@ -28,6 +28,7 @@
           fields: s.fields.map(f => {
             const out = { id: f.id, label: f.label, type: f.type, selector: f.selector, value: f.value };
             if (f.attr) out.attr = f.attr;
+            if (f.fit) out.fit = f.fit;
             return out;
           })
         }))
@@ -102,7 +103,12 @@ There is no login. Anyone who can open \`admin.html\` can edit in their own brow
           const found = root ? discoverFields(root, explicit, { limit: MAX_FIELDS_PER_SECTION }) : [];
           result.push({
             id: s.id, slug: s.slug, title: s.title,
-            fields: found.map(f => ({ id: f.id, label: f.label, type: f.type, selector: f.selector, attr: f.attr, value: String(f.current == null ? '' : f.current) }))
+            // a picture also carries how it fills its frame (crop or fit, focus, zoom), as the builder has it
+            fields: found.map(f => {
+              const out = { id: f.id, label: f.label, type: f.type, selector: f.selector, attr: f.attr, value: String(f.current == null ? '' : f.current) };
+              if (f.type === 'image') out.fit = String(((s.overrides || {})[f.id + '__fit'] || {}).value || 'cover|50|50|100');
+              return out;
+            })
           });
         }
         return result;

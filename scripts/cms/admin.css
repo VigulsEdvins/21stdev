@@ -90,6 +90,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .cms-reset:hover { color: var(--text); }
 .cms-image-row { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: start; }
 .cms-thumb { width: 96px; height: 72px; object-fit: cover; border-radius: 8px; background: var(--surface-3) center / cover; border: 1px solid var(--border); }
+.cms-fit { display: grid; gap: 8px; margin-top: 10px; }
+.cms-crop { max-width: 100%; margin: 0 auto; border-radius: 8px; overflow: hidden; cursor: grab; touch-action: none; background: var(--surface-3) no-repeat; border: 1px solid var(--border); }
+.cms-crop:active { cursor: grabbing; }
+.cms-range { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); }
+.cms-range input[type='range'] { width: 100%; }
 .cms-image-side { display: grid; gap: 8px; min-width: 0; }
 .cms-inline { display: flex; gap: 8px; flex-wrap: wrap; }
 .cms-color-row { display: flex; gap: 10px; align-items: center; }

@@ -46,6 +46,10 @@
       var vals = mine[sec.id];
       if (!vals) return;
       sec.fields.forEach(function (f) {
+        var fv = vals[f.id + '__fit'];
+        if (f.type === 'image' && f.fit && typeof fv === 'string' && fv !== f.fit && /^(cover|contain)[|0-9]{0,16}$/.test(fv)) {
+          out.push({ section: sec.id, field: f.id + '__fit', selector: f.selector, type: 'fit', attr: '', value: fv });
+        }
         if (!Object.prototype.hasOwnProperty.call(vals, f.id)) return;
         var v = vals[f.id];
         if (typeof v !== 'string' || v === f.value) return;
@@ -149,4 +153,21 @@
   }, true);
 
   fromAdmin.postMessage({ type: 'edv-cms:ready', page: file }, TARGET);
+  // the admin shows each picture in a frame of the same shape; it needs the sizes of the real frames
+  function reportFrames() {
+    var sizes = {};
+    page.sections.forEach(function (sec) {
+      sec.fields.forEach(function (f) {
+        if (f.type !== 'image') return;
+        var node = resolve(sec, f);
+        if (!node) return;
+        var w = node.offsetWidth || (node.getBoundingClientRect && node.getBoundingClientRect().width) || 0;
+        var h = node.offsetHeight || (node.getBoundingClientRect && node.getBoundingClientRect().height) || 0;
+        if (w > 0 && h > 0) sizes[sec.id + '/' + f.id] = [Math.round(w), Math.round(h)];
+      });
+    });
+    fromAdmin.postMessage({ type: 'edv-cms:frames', page: file, sizes: sizes }, TARGET);
+  }
+  setTimeout(reportFrames, 600);
+  setTimeout(reportFrames, 2000);
 })();
