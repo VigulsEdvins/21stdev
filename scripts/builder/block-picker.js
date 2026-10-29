@@ -50,6 +50,51 @@
       return b;
     }
 
+    function scroller(node) {
+      for (let n = node.parentElement; n; n = n.parentElement) { const o = (doc.defaultView || window).getComputedStyle(n).overflowY; if ((o === 'auto' || o === 'scroll') && n.scrollHeight > n.clientHeight) return n; }
+      return doc.scrollingElement || doc.documentElement;
+    }
+
+    /**
+     * Drag to reorder with a finger or a mouse (pointer events, so one code path): hold the handle, move, let go. The other blocks slide out of
+     * the way, the list scrolls when the finger nears an edge, and the move is made once, on release, as one history step. The arrows stay for
+     * keyboards and screen readers; Escape or a cancelled touch puts everything back.
+     */
+    function enableDrag(handle, li, s, name) {
+      handle.addEventListener('pointerdown', (e) => {
+        if (e.button > 0 || handle.disabled) return;
+        e.preventDefault();
+        const win = doc.defaultView || window, box = scroller(li), lis = Array.from(yourList.children), from = lis.indexOf(li);
+        const base = lis.map((x) => { const r = x.getBoundingClientRect(); return { mid: r.top + r.height / 2 + box.scrollTop, h: r.height }; });
+        const step = base[from].h + 8; // block height plus the grid gap
+        const startY = e.clientY + box.scrollTop;
+        let y = e.clientY, to = from, raf = 0, done = false;
+        try { handle.setPointerCapture(e.pointerId); } catch (_) { /* the handle still gets the events it needs */ }
+        li.classList.add('is-dragging'); yourList.classList.add('is-sorting');
+        const place = () => {
+          if (done) return;
+          const edge = 56, r = box === doc.scrollingElement || box === doc.documentElement ? { top: 0, bottom: win.innerHeight } : box.getBoundingClientRect();
+          if (y < r.top + edge) box.scrollTop -= 12; else if (y > r.bottom - edge) box.scrollTop += 12;
+          const dy = y + box.scrollTop - startY, centre = base[from].mid + dy;
+          to = base.filter((b, k) => k !== from && b.mid < centre).length; // the place among the others, by where the dragged block's middle is
+          li.style.transform = 'translateY(' + dy + 'px)'; li.setAttribute('data-drop-at', String(to + 1)); // the place it would take now
+          lis.forEach((x, i) => { if (x === li) return; x.style.transform = (from < to && i > from && i <= to) ? 'translateY(' + -step + 'px)' : (from > to && i >= to && i < from) ? 'translateY(' + step + 'px)' : ''; });
+          raf = win.requestAnimationFrame(place);
+        };
+        const finish = (apply) => {
+          if (done) return; done = true; win.cancelAnimationFrame(raf);
+          handle.removeEventListener('pointermove', onMove); handle.removeEventListener('pointerup', onUp); handle.removeEventListener('pointercancel', onCancel); doc.removeEventListener('keydown', onKey);
+          li.classList.remove('is-dragging'); yourList.classList.remove('is-sorting');
+          lis.forEach((x) => { x.style.transform = ''; });
+          if (apply && to !== from) { sm.moveSection(s.id, to - from); say(name + ' moved to place ' + (to + 1) + ' of ' + lis.length); }
+        };
+        const onMove = (ev) => { y = ev.clientY; };
+        const onUp = () => finish(true), onCancel = () => finish(false), onKey = (ev) => { if (ev.key === 'Escape') finish(false); };
+        handle.addEventListener('pointermove', onMove); handle.addEventListener('pointerup', onUp); handle.addEventListener('pointercancel', onCancel); doc.addEventListener('keydown', onKey);
+        place();
+      });
+    }
+
     function render() {
       const items = stack();
       empty.hidden = items.length > 0;
@@ -60,7 +105,10 @@
         const li = el(doc, 'li', { class: 'bp-item', 'data-id': String(s.id), 'data-slug': String(s.slug) });
         li.append(el(doc, 'span', { class: 'bp-name', text: name }));
         const tools = el(doc, 'span', { class: 'bp-tools' });
-        tools.append(
+        const grip = btn('bp-drag', '⠿', 'Drag ' + name + ' to a new place, or use the arrows', () => {}, locked);
+        grip.setAttribute('title', 'Hold and drag to move');
+        enableDrag(grip, li, s, name);
+        tools.append(grip,
           btn('bp-up', '↑', 'Move ' + name + ' up', () => { sm.moveSection(s.id, -1); say(name + ' moved up'); }, locked || i === 0),
           btn('bp-down', '↓', 'Move ' + name + ' down', () => { sm.moveSection(s.id, 1); say(name + ' moved down'); }, locked || i === items.length - 1));
         if (kind && kind.variants.length > 1) {

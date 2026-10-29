@@ -198,3 +198,14 @@ body.is-guided .lang-bar:not([hidden]) { display: flex; }
 .gt-input { width: 100%; box-sizing: border-box; min-height: 44px; padding: 8px 12px; font: 400 16px / 1.2 var(--font-body); color: var(--text-main); background: var(--bg-0); border: 2px solid var(--text-main); border-radius: 10px; }
 .gt-input[aria-invalid="true"] { border-color: var(--rust); }
 #getAddressNote { min-height: 1.2em; }
+
+/* drag to reorder (touch and mouse): the handle must not scroll the page, the other blocks slide aside */
+.bp-drag { touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; font-size: 20px; letter-spacing: -2px; }
+.bp-drag:active { cursor: grabbing; }
+.bp-item { position: relative; }
+.bp-list.is-sorting .bp-item:not(.is-dragging) { transition: transform .15s ease; }
+.bp-item.is-dragging { z-index: 5; box-shadow: 0 8px 22px rgba(29, 42, 51, .35); background: var(--mustard); }
+@media (prefers-reduced-motion: reduce) { .bp-list.is-sorting .bp-item:not(.is-dragging) { transition: none; } }
+
+/* every guided panel scrolls by finger or wheel (the base rule hides overflow, which left the lower part of a long step out of reach on a phone) */
+body.is-guided .sidebar-tab-pane { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
