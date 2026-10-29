@@ -68,6 +68,7 @@ function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
   const page = fs.readFileSync(path.join(ROOT, 'builder.html'), 'utf8');
   fs.mkdirSync(B, { recursive: true });
   fs.writeFileSync(path.join(B, 'index.html'), stageBuilderPage(page)); n++;
+  copyFile(path.join(ROOT, 'preview-frame.html'), path.join(B, 'preview-frame.html')); n++; // the preview frame's own page (scripts/builder/frame-doc.js)
   for (const rel of localAssets(page)) {
     const from = path.join(ROOT, rel);
     if (!fs.existsSync(from)) throw new Error('builder.html names ' + rel + ' but the file does not exist');

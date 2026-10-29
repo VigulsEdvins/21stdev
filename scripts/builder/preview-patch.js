@@ -75,7 +75,7 @@
     if (added.some(isPreloader)) return false;
     if (prevStack.some(s => !doc.getElementById(s.id))) return false;
 
-    const next = new DOMParser().parseFromString(html, 'text/html');
+    const next = new (win.DOMParser || DOMParser)().parseFromString(html, 'text/html'); // parsed by the preview's own window, so it follows the preview's policy and not the builder page's
     const fresh = added.map(s => next.getElementById(s.id));
     if (fresh.some(el => !el || !el.classList.contains('page-section'))) return false;
 

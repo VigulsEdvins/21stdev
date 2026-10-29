@@ -88,11 +88,10 @@ There is no login. Anyone who can open \`admin.html\` can edit in their own brow
     frame.style.cssText = 'position:fixed;left:0;top:0;width:1280px;height:16000px;border:0;opacity:0;pointer-events:none;visibility:hidden';
     doc.body.appendChild(frame);
     try {
-      await new Promise(resolve => {
-        frame.addEventListener('load', resolve, { once: true });
-        frame.srcdoc = html;
-        setTimeout(resolve, 15000);
-      });
+      await Promise.race([
+        (window.FrameDoc ? window.FrameDoc.write(frame, html) : new Promise(resolve => { frame.addEventListener('load', resolve, { once: true }); frame.srcdoc = html; })),
+        new Promise(resolve => setTimeout(resolve, 15000))
+      ]);
       await wait(900);
       const pdoc = frame.contentDocument;
       const collect = async () => {

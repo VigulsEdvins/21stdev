@@ -1,6 +1,20 @@
 # Content Security Policy for the builder (plan E16.7)
 
-## Where it stands (measured 2026-10-29 with `node scripts/check-builder-csp.js`)
+## Where it stands (updated 2026-10-29)
+
+**The builder page now runs under the strict policy**, sent as a header on `/builder/*` (`site/_headers`): `script-src 'self'` (no inline, no eval, no remote scripts), `style-src 'self'` plus inline style attributes only, `frame-ancestors 'none'`.
+
+**The live preview is its own page.** `preview-frame.html` has its own, wider header (inline scripts and styles and the three script hosts the blocks use, nothing more than the old builder policy, `frame-ancestors 'self'`). `scripts/builder/frame-doc.js` writes the assembled page into it with `document.open/write/close`; the page keeps that frame policy, so the blocks run their own inline code and the builder page does not have to allow it. Every update goes to a fresh blank window first (as `srcdoc` did, so old timers and globals die), the blank page's load event is swallowed, and one `load` event is sent when the written page has loaded, because the canvas code wires itself on it.
+
+**What this does not do:** the frame is still the same origin as the builder and still has `allow-scripts allow-same-origin`, so a block's script can reach into the builder page (and could undo the iframe sandbox). Moving the frame to an opaque origin would fix that but means rewriting the whole click-to-edit canvas, which reads the preview document directly (25 source files, about 220 test references) into a message protocol. Not done; it is a separate decision. What was gained: the builder page's own scripts are locked down, an injected script in the builder shell cannot run, and the frame policy is explicit and tested.
+
+Checks: `tests/e2e/builder-headers-csp.e2e.js` loads the builder with the real headers (page and frame), adds heavy blocks and one more in place, downloads a ZIP, and fails on any violation; `node scripts/check-builder-csp.js` prints violations under the same policies; `tests/test-build-site.js` checks the frame page is staged. The `<meta>` policy in `builder.html` stays as the fallback for hosts that send no headers (the local vault server).
+
+Gotchas found on the way: a `DOMParser` created by the builder page parses under the builder's policy, so `preview-patch.js` uses the frame's own; `document.open()` gives the frame document the builder's address and keeps the old window, which is why a fresh blank page is loaded before every write.
+
+## Older notes (before this change)
+
+### Measured before the change
 
 The storefront pages are already strict (`site/_headers`: no inline scripts or styles, own origin only, checked by `npm run check-headers` and `tests/e2e/csp.e2e.js`). The builder, `/builder/`, is not yet: its page carries its own `<meta>` policy that allows `'unsafe-inline'` scripts and styles and three script hosts, because the live preview needs them.
 

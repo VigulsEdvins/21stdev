@@ -161,7 +161,7 @@
       const prevStack = lastPreviewStack;
       lastPreviewStack = latestState.stack.map(s => JSON.parse(JSON.stringify(s)));
       if (insertionOnly && addSectionsInPlace(prevStack, latestState.stack, assembledHtml)) return;
-      previewFrame.srcdoc = assembledHtml;
+      if (window.FrameDoc) window.FrameDoc.write(previewFrame, assembledHtml).catch(() => { previewFrame.srcdoc = assembledHtml; }); // the frame page keeps its own policy; srcdoc is the fallback
     }
 
     let lastPreviewStructureKey = null;

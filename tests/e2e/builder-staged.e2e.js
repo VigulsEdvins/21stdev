@@ -26,7 +26,7 @@ const { createServer } = require('../../scripts/dev-site.js');
 
   const r = await fetch(base + '/builder/');
   assert.strictEqual(r.status, 200);
-  assert(/frame-ancestors 'none'/.test(r.headers.get('content-security-policy')) && !/script-src 'self'(?!.*unsafe)/.test(r.headers.get('content-security-policy')), 'the strict policy is replaced by the framing rule only');
+  assert(/frame-ancestors 'none'/.test(r.headers.get('content-security-policy')) && /script-src 'self';/.test(r.headers.get('content-security-policy')), 'the builder page runs under the strict policy (no inline scripts); the framing rule only');
   assert.strictEqual(r.headers.get('x-robots-tag'), 'noindex');
   assert.strictEqual((await fetch(base + '/builder.html')).status, 404, 'the old address is not published');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/index.html')).status, 200, 'features are published');

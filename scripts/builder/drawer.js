@@ -83,7 +83,7 @@
                 iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups');
                 iframe.setAttribute('loading', 'lazy');
                 if (feature.files && feature.files.combined) {
-                  iframe.srcdoc = feature.files.combined;
+                  if (window.FrameDoc) window.FrameDoc.write(iframe, feature.files.combined).catch(() => { iframe.srcdoc = feature.files.combined; }); else iframe.srcdoc = feature.files.combined;
                 } else {
                   iframe.src = `features/${slug}/index.html`;
                 }

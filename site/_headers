@@ -56,16 +56,19 @@
   ! Content-Security-Policy
   Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://idvirglyjvqneaudnsuu.supabase.co; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 
-# The builder (staged under /builder/ by scripts/build-site.js). Its page carries its own Content-Security-Policy tag, which allows inline scripts and
-# styles and a few script hosts; that is the policy for now (E16.7 tightens it). The strict policy is removed here because the builder cannot run
-# under it, and what a header can do that a tag cannot is kept: nobody may frame the builder, and search engines skip it.
-# The Report-Only line is the strict policy we want to reach (docs/security/builder-csp.md, measured by scripts/check-builder-csp.js): it blocks nothing,
-# it only shows in the browser console which parts still break it (today: only the preview frame).
+# The builder (staged under /builder/ by scripts/build-site.js). Its page also carries a fallback policy tag for hosts that send no headers; this header is the
+# real one. Nobody may frame the builder, and search engines skip it.
+# The builder page runs under the strict policy (docs/security/builder-csp.md, measured by scripts/check-builder-csp.js).
 /builder/*
   X-Robots-Tag: noindex
   ! Content-Security-Policy
-  Content-Security-Policy: frame-ancestors 'none'
-  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: data: blob:; frame-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: data: blob:; frame-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
+# The preview frame is its own page (preview-frame.html, see scripts/builder/frame-doc.js). The page written into it keeps THIS policy, which is
+# what lets the blocks run their own inline scripts and styles without weakening the builder page above. It is the old builder policy, nothing wider.
+/builder/preview-frame.html
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' data: blob: https:; frame-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
 
 # The catalogue cards in the builder show each component in a small frame of the builder itself (features/<slug>/index.html), so those files may be framed by
 # the same site, and only by it. Without this rule the framing ban above blocks them too and every card preview shows "blocked".
