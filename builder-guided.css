@@ -126,7 +126,19 @@ body.is-guided .brief-offer[hidden] { display: none; }
   body.is-guided .builder-sidebar { width: 100%; min-width: 0; max-width: none; flex: 1 1 auto; min-height: 0; border-right: 0; padding-bottom: 76px; }
   body.is-guided .builder-viewport { display: none; width: 100%; flex: 1 1 auto; min-height: 0; }
   body.is-guided.show-preview .builder-sidebar { display: none; }
-  body.is-guided.show-preview .builder-viewport { display: block; }
+  body.is-guided.show-preview .builder-viewport { display: flex; }
+  /* the preview is the real page at the phone's own width: no fake browser window, no frame, the whole height */
+  body.is-guided .viewport-stage { padding: 0; align-items: stretch; }
+  body.is-guided .viewport-frame-wrapper { width: 100%; max-width: none; height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+  body.is-guided .viewport-browser-bar { display: none; }
+  body.is-guided .live-preview-iframe { flex: 1 1 auto; min-height: 0; }
+  /* the flip button steps aside while a window is open */
+  body.is-guided:has(.export-modal.is-open) .guided-flip { display: none; }
+  /* a short step bar: the hint and the long help stay one tap away */
+  body.is-guided .guided-bar { padding: 8px 12px 6px; }
+  body.is-guided .guided-steps { gap: 4px; }
+  body.is-guided .guided-step { padding: 4px 6px 4px 4px; }
+  body.is-guided .guided-num { width: 30px; height: 30px; }
   body.is-guided .guided-hint { display: none; }
   .guided-inner { gap: 8px; }
 }
@@ -178,3 +190,11 @@ body.is-guided .lang-bar:not([hidden]) { display: flex; }
 .guided-skel { background: var(--bg-0); border-bottom: 2px solid var(--text-main); padding: 10px 14px 8px; min-height: 121px; box-sizing: border-box; }
 .guided-skel .guided-hint { margin: 48px 0 0; }
 @media (max-width: 520px) { .guided-skel { min-height: 182px; } }
+
+/* step 5 panel: room at the sides, and the web address question */
+.get-pane .ck-body { padding: 14px; }
+.gt-address { display: grid; gap: 6px; margin: 0 0 14px; font-size: 15px; color: var(--text-main); }
+.gt-address small { font-size: 14px; line-height: 1.4; color: var(--text-muted); }
+.gt-input { width: 100%; box-sizing: border-box; min-height: 44px; padding: 8px 12px; font: 400 16px / 1.2 var(--font-body); color: var(--text-main); background: var(--bg-0); border: 2px solid var(--text-main); border-radius: 10px; }
+.gt-input[aria-invalid="true"] { border-color: var(--rust); }
+#getAddressNote { min-height: 1.2em; }

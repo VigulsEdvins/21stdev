@@ -55,6 +55,25 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert(await page.isVisible('#blockPicker'), 'back to the panel');
   for (const s of ['words', 'look', 'check', 'get']) { await page.click('#guidedStep-' + s); const w2 = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]); assert.strictEqual(w2[0], w2[1], 'no sideways scroll on step ' + s); }
   console.log('  ✓ phone: no sideways scroll on any step, panel and preview take turns, touch targets 40px+');
+  // building on a phone (plan E6.12, decided 2026-10-29): the preview is the real page at full height, the whole path can be finished by thumb
+  await page.click('#guidedFlip');
+  const fr = await page.locator('#previewFrame').boundingBox(), vp = page.viewportSize();
+  assert(fr.height > vp.height * 0.6 && fr.width >= vp.width - 2, 'the preview fills the screen on a phone (' + Math.round(fr.width) + 'x' + Math.round(fr.height) + ')');
+  assert(!(await page.isVisible('.viewport-browser-bar')), 'no fake browser window on a phone');
+  await page.click('#guidedFlip');
+  await page.click('#guidedStep-get');
+  const addr = page.locator('#getAddress'); await addr.scrollIntoViewIfNeeded();
+  const ab = await addr.boundingBox(); assert(ab.height >= 40 && ab.width > 250, 'the web address box is a usable size');
+  await addr.fill('yourname.com'); await addr.blur();
+  assert.strictEqual(await page.evaluate(() => window.builderManager.getState().page.canonical), 'https://yourname.com/', 'the address is saved from a phone');
+  const go = page.locator('#getDownload'); await go.scrollIntoViewIfNeeded();
+  const gb = await go.boundingBox(), fb = await page.locator('#guidedFlip').boundingBox();
+  assert(gb.y + gb.height <= fb.y || gb.y >= fb.y + fb.height, 'the download button is not hidden behind the floating button');
+  await go.click();
+  await page.waitForSelector('#exportModal.is-open');
+  assert(!(await page.isVisible('#guidedFlip')), 'the floating button steps aside while the download window is open');
+  const w3 = await page.evaluate(() => [document.documentElement.scrollWidth, innerWidth]); assert.strictEqual(w3[0], w3[1], 'no sideways scroll in the download window');
+  console.log('  ✓ phone: full-height preview, web address and download reachable, floating button steps aside');
   assert.deepStrictEqual(errors, [], errors.join(' | '));
   await browser.close(); await srv.close();
   console.log('✅ Help, start over and phone passed!');
