@@ -89,6 +89,10 @@ global.window = {
   confirm: () => true
 };
 
+// the builder reads the address (a reload at #adminOverlay reopens the admin panel) and rewrites it
+global.location = { hash: '', pathname: '/builder.html', search: '' };
+global.history = { replaceState: () => {} };
+
 global.document = {
   getElementById: (id) => elements[id] || null,
   querySelector: () => null,
