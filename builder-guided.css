@@ -247,3 +247,11 @@ body.is-guided #contentSectionSelect { min-height: 44px; font-size: 16px; }
   html, body.builder-body { overflow-x: hidden; max-width: 100vw; }
   .ambient-aurora, .component-drawer { overflow: hidden; }
 }
+
+/* phone, Advanced: every header control stays on screen (the Download button and the account button were pushed off the right edge and then clipped) */
+@media (max-width: 700px) {
+  .builder-header { flex-wrap: wrap; height: auto; row-gap: 8px; }
+  .builder-header .header-right, .builder-header .builder-actions { flex-wrap: wrap; justify-content: flex-start; min-width: 0; max-width: 100%; row-gap: 8px; }
+  .builder-header .header-center { flex-wrap: wrap; max-width: 100%; }
+  #accountSaveNote, .builder-header .save-note { flex-basis: 100%; }
+}

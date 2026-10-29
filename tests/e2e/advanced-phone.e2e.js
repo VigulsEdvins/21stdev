@@ -18,6 +18,10 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const sb = await page.locator('.builder-sidebar').boundingBox(); assert(sb.width >= 380, 'the panel takes the full width');
   assert(!(await page.isVisible('.builder-viewport')), 'the preview waits its turn');
   assert(await page.isVisible('#paneElements'), 'the catalogue is there');
+  // every header control is on screen: nothing is pushed off the right edge (the Download button used to be)
+  const off = await page.evaluate(() => Array.from(document.querySelectorAll('.builder-header button, .builder-header a, .builder-header select')).filter((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1); }).map((e) => e.id || e.className));
+  assert.deepStrictEqual(off, [], 'header controls off screen: ' + off.join(', '));
+  assert(await page.isVisible('#openExportModalBtn'), 'the Download button is reachable');
   console.log('  ✓ one column, panel first, no sideways page, floating button on screen');
 
   await page.click('#guidedFlip');
