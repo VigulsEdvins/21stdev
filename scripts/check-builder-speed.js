@@ -7,7 +7,24 @@
 const os = require('os');
 const fs = require('fs');
 const path = require('path');
-const { startServer } = require('./lib/browser');
+const http = require('http');
+const zlib = require('zlib');
+
+const ROOT = path.resolve(__dirname, '..');
+const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.ico': 'image/x-icon' };
+const COMPRESS = new Set(['.html', '.css', '.js', '.json', '.svg']);
+/** The repository served the way Cloudflare serves it: text files compressed (gzip here, brotli there), so script weight is the weight a visitor downloads. */
+function startServer() {
+  const s = http.createServer((req, res) => {
+    let rel = decodeURIComponent(req.url.split('?')[0]); if (rel.endsWith('/')) rel += 'index.html';
+    const file = path.join(ROOT, rel);
+    if (!file.startsWith(ROOT + path.sep) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); return res.end(); }
+    const ext = path.extname(file), head = { 'Content-Type': TYPES[ext] || 'application/octet-stream', 'Cache-Control': 'no-cache' };
+    if (COMPRESS.has(ext) && /gzip/.test(req.headers['accept-encoding'] || '')) { res.writeHead(200, Object.assign(head, { 'Content-Encoding': 'gzip', Vary: 'Accept-Encoding' })); return res.end(zlib.gzipSync(fs.readFileSync(file))); }
+    res.writeHead(200, head); fs.createReadStream(file).pipe(res);
+  });
+  return new Promise((r) => s.listen(0, '127.0.0.1', () => r({ url: 'http://127.0.0.1:' + s.address().port, close: () => new Promise((c) => s.close(c)) })));
+}
 
 function chromePath() {
   if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;

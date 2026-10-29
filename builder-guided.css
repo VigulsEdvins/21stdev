@@ -187,9 +187,14 @@ body.is-guided .lang-bar:not([hidden]) { display: flex; }
 .element-lock-badge { font: 600 11px / 1 var(--font-body, inherit); padding: 4px 8px; border-radius: 999px; background: var(--mustard, #e2a627); color: var(--text-main, #222); white-space: nowrap; }
 
 /* the space of the step bar is reserved before the scripts build it, so nothing jumps when it appears (E6.12) */
-.guided-skel { background: var(--bg-0); border-bottom: 2px solid var(--text-main); padding: 10px 14px 8px; min-height: 121px; box-sizing: border-box; }
+.guided-skel { background: var(--bg-0); border-bottom: 2px solid var(--text-main); padding: 10px 14px 8px; box-sizing: border-box; }
 .guided-skel .guided-hint { margin: 48px 0 0; }
-@media (max-width: 520px) { .guided-skel { min-height: 182px; } }
+/* the placeholder and the real bar share one height per width, so swapping them moves nothing (measured: tests/e2e/builder-layout-shift.e2e.js) */
+.guided-skel, .guided-bar { min-height: 121px; box-sizing: border-box; }
+@media (max-width: 700px) { .guided-skel, .guided-bar { min-height: 153px; } }
+@media (max-width: 520px) { .guided-skel, .guided-bar { min-height: 182px; } }
+/* the header wraps to two rows on a narrow phone once the Advanced switch is added; keep that room from the first paint */
+@media (max-width: 380px) { body.is-guided .builder-header { min-height: 88px; } }
 
 /* step 5 panel: room at the sides, and the web address question */
 .get-pane .ck-body { padding: 14px; }
