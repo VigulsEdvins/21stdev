@@ -1,0 +1,27 @@
+name: Dynamic scan (OWASP ZAP baseline)
+
+# Plan E16.8. Scans the staging site every night. It does nothing until the repository variable STAGING_URL is set
+# (Settings, Secrets and variables, Actions, Variables), for example https://staging.edvlabs.com. It only reads the site: the baseline scan is passive.
+on:
+  schedule:
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write # the action opens one issue per run with the findings
+
+jobs:
+  zap:
+    name: ZAP baseline against staging
+    if: ${{ vars.STAGING_URL != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: ${{ vars.STAGING_URL }}
+          rules_file_name: .zap/rules.tsv
+          allow_issue_writing: true
+          fail_action: false # findings become an issue; a human decides (docs/security/dynamic-testing.md)

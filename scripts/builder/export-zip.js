@@ -120,6 +120,7 @@
      * Uses window.JSZip if available, otherwise uses native pure-JS zip creator.
      */
     async function handleDownloadZip(exportOptions = {}) {
+      if (window.loadJsZip) await window.loadJsZip(); // fetched on first download, not with the page
       const stack = stackManager.getStack();
       if (!Array.isArray(stack) || stack.length === 0) {
         showToast('Please add at least one section before downloading ZIP.');

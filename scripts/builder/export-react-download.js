@@ -46,6 +46,7 @@
         const entries = Object.assign({}, out.files);
         urls.forEach((u, i) => { if (fetched[i]) entries['public' + decodeURIComponent(u)] = fetched[i]; });
         let blob;
+        if (window.loadJsZip) await window.loadJsZip();
         if (typeof window.JSZip !== 'undefined') {
           const zip = new window.JSZip();
           Object.entries(entries).forEach(([name, data]) => zip.file(name, data));

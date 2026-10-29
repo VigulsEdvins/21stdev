@@ -66,6 +66,8 @@
     const bar = el(doc, 'nav', { class: 'guided-bar', id: 'guidedBar', 'aria-label': 'Steps to your page' },
       el(doc, 'div', { class: 'guided-inner' }, list, el(doc, 'div', { class: 'guided-actions' }, prev, next)),
       hint, helpBtn, helpText);
+    const skel = doc.getElementById('guidedSkel');
+    if (skel) skel.remove(); // it only held the place of the bar
     header.insertAdjacentElement('afterend', bar);
 
     function openModal(kind) {

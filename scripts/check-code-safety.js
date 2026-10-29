@@ -78,8 +78,8 @@ function scanOwn(file, text) {
 function ownFiles() {
   const root = path.join(__dirname, '..');
   const out = [path.join(root, 'builder.js')];
-  const walk = (dir, filter) => { if (!fs.existsSync(dir)) return; for (const n of fs.readdirSync(dir, { withFileTypes: true })) { const p = path.join(dir, n.name); if (n.isDirectory()) walk(p, filter); else if (filter(n.name)) out.push(p); } };
-  walk(path.join(root, 'scripts'), n => n.endsWith('.js') && !/^check-|^\.tmp/.test(n));
+  const walk = (dir, filter) => { if (!fs.existsSync(dir)) return; for (const n of fs.readdirSync(dir, { withFileTypes: true })) { const p = path.join(dir, n.name); if (n.isDirectory()) walk(p, filter); else if (filter(n.name, p)) out.push(p); } };
+  walk(path.join(root, 'scripts'), (n, p) => n.endsWith('.js') && !/^check-|^\.tmp/.test(n) && !p.includes(path.sep + 'vendor' + path.sep)); // scripts/vendor/ holds unmodified third-party files, pinned by tests/test-vendor.js
   walk(path.join(root, 'site', 'js'), n => n.endsWith('.js'));
   walk(path.join(root, 'functions'), n => n.endsWith('.js'));
   walk(path.join(root, 'src'), n => n.endsWith('.js'));

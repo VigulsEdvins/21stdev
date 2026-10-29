@@ -14,6 +14,9 @@ npm run security
 | Code safety | `npm run check-code-safety` | No `eval`, `new Function`, `document.write`, unlisted remote scripts, `message` listeners without an origin check (in `features/`) | Remove the pattern, or add `safetyReviewed` with a reason to that feature's `meta.json` |
 | Static analysis | `npm run security:static` | ESLint with `no-unsanitized` and `security` rules over the builder, site, server and scripts (see below) | Fix the new finding. Only an already-reviewed pattern may be added to the baseline, with a reason in this file |
 | Response headers | `npm run check-headers` (file) or `npm run check-headers -- https://staging.edvlabs.com` (live) | `site/_headers` has a strict Content Security Policy (no inline or eval scripts), HSTS, nosniff, referrer, permissions and opener policies; `tests/e2e/csp.e2e.js` loads every public page under that policy | Fix the header file; never loosen `script-src` to make a page work, change the page |
+| Security regression tests | `npm run test:security` | One named test (R01 to R16) per protection of the lead endpoint, the database policies, the paid-download rules and the GitHub push; see `docs/security/regression-map.md` | A protection was weakened: the test names it |
+| Fuzzing | `npm run test:fuzz` | Seeded random hostile input into the lead endpoint, the brief checker and the project import: no crash, no 5xx, no leak, no header injection | Replay with the seed it prints, fix the cause |
+| Builder policy probe | `npm run check-builder-csp` | Loads the builder under the strict policy in report-only mode and lists violations; see `docs/security/builder-csp.md` | Informational until the preview frame is moved |
 
 Before every commit (once per clone):
 
