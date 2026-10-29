@@ -7,12 +7,14 @@ The code is done and tested (`npm run test:lead`). Switching it on needs three t
    - `RESEND_API_KEY`: the key from step 1
    - `LEAD_TO_EMAIL`: the address that should receive leads
    - `LEAD_FROM_EMAIL`: a sender on the verified domain, for example one starting `leads@`
-3. **Optional, recommended:** a KV namespace bound as `LEADS` (limits one address to 5 sends an hour and marks a repeat visitor as "Again"), and Cloudflare Turnstile with the secret in `TURNSTILE_SECRET`.
+3. **Two protections, both in the code already (2026-10-29), recommended before launch:**
+   - **Rate limit and "Again" marking (storage `LEADS`).** `wrangler.jsonc` declares the binding with no ID, so the next `wrangler deploy` creates the KV namespace in your account and links it (needs **wrangler 4.45.0 or newer**; check with `wrangler --version`, update with `npm i -g wrangler`). Nothing to type. It limits one address to 5 sends an hour and marks a repeat visitor as "Again". If your deploys come from GitHub instead, the namespace is still created; its ID is then only visible in the Cloudflare dashboard (Workers KV).
+   - **Spam check (Cloudflare Turnstile) on the contact page and the start questions.** Cloudflare dashboard → **Turnstile → Add widget**, hostnames `edvlabs.com` (and `localhost` for local tests), mode Managed. It gives a **site key** (public) and a **secret key** (private). Then in the Worker's **Variables and Secrets**: `TURNSTILE_SITE_KEY` = the site key (plain variable) and `TURNSTILE_SECRET` = the secret key (secret). **Set both together**: with only the secret the receiver answers 503 "The spam check is only half set up" and names `TURNSTILE_SITE_KEY`. The same widget and site key also serve the account page (see `accounts.md`, which also needs the secret in Supabase). With both set, the two pages show the check, wait for it, and the Worker refuses a message without a passed check.
 4. The pages already carry `<meta name="lead-endpoint" content="/api/lead">` (start and contact). Without the three settings in step 2 the receiver answers "Sending is not set up yet" and the page says the message could not be sent; with them, leads arrive by email.
 
 Test: submit the questions on staging with your own phone number. The email should arrive within a minute, with the contact in the subject.
 
-The Turnstile widget itself is not on the contact form yet: when you create the site key, ask for it to be added.
+First real test after deploy (the widget and the storage are tested here only with stand-ins): open the contact page, check the widget appears and passes, send one message, then send six in a row from the same connection and see the sixth refused ("Too many tries"). `https://edvlabs.com/api/form-check` should answer `{"turnstileSiteKey":"…"}` (and `{}` before the keys are set).
 
 ## What Cloudflare publishes
 

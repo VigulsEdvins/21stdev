@@ -52,6 +52,43 @@ const call = (req, env) => http.route(req, env || ENV, asset);
     r = await call(new Request('https://edvlabs.test/pricing/')); assert.strictEqual(r.status, 200); assert((await r.text()).includes('site'), 'everything else is the static site');
     console.log('  ✓ GET is refused, other /api paths are not found, other paths are the static site');
 
+    // the spam check: the public key is handed out only with its secret, a secret alone is called out, and the token decides
+    const TS = { TURNSTILE_SITE_KEY: 'site-key-public', TURNSTILE_SECRET: 'secret-not-real' };
+    const key = (env, method) => call(new Request('https://edvlabs.test/api/form-check', { method: method || 'GET' }), Object.assign({}, ENV, env));
+    r = await key({}); assert.deepStrictEqual(await r.json(), {}); assert.strictEqual(r.headers.get('Cache-Control'), 'no-store');
+    r = await key({ TURNSTILE_SITE_KEY: 'site-key-public' }); assert.deepStrictEqual(await r.json(), {}, 'a site key alone (account page only) does not switch the lead forms on');
+    r = await key(TS); const kc = await r.text(); assert.deepStrictEqual(JSON.parse(kc), { turnstileSiteKey: 'site-key-public' }); assert(!kc.includes('secret-not-real'), 'the secret never leaves the Worker');
+    assert.strictEqual((await key(TS, 'POST')).status, 405);
+    calls = []; r = await call(post(good), Object.assign({}, ENV, { TURNSTILE_SECRET: 'secret-not-real' }));
+    assert.strictEqual(r.status, 503); assert.deepStrictEqual((await r.json()).missing, ['TURNSTILE_SITE_KEY']); assert.strictEqual(calls.length, 0, 'a half-set-up check sends nothing and asks nothing');
+    const verdicts = []; // stand-in for Cloudflare's check: only the token "good-token" passes
+    global.fetch = async (url, init) => {
+      if (String(url).includes('challenges.cloudflare.com')) { const b = new URLSearchParams(init.body); verdicts.push({ secret: b.get('secret'), response: b.get('response'), ip: b.get('remoteip') }); return new Response(JSON.stringify({ success: b.get('response') === 'good-token' }), { status: 200 }); }
+      calls.push({ url, init }); return new Response('{"id":"x"}', { status: 200 });
+    };
+    for (const [name, body, status, mails] of [['no token', good, 403, 0], ['wrong token', Object.assign({}, good, { turnstile: 'bad-token' }), 403, 0], ['passed token', Object.assign({}, good, { turnstile: 'good-token' }), 200, 1]]) {
+      calls = []; r = await call(post(body, { 'CF-Connecting-IP': '203.0.113.9' }), Object.assign({}, ENV, TS));
+      assert.strictEqual(r.status, status, name + ' gave ' + r.status); assert.strictEqual(calls.length, mails, name + ' sent ' + calls.length + ' emails');
+    }
+    assert.deepStrictEqual(verdicts[2], { secret: 'secret-not-real', response: 'good-token', ip: '203.0.113.9' }, 'Cloudflare is asked with the secret, the token and the visitor address');
+    calls = []; r = await call(post(good), ENV); assert.strictEqual(r.status, 200, 'without the check set up, messages go through as before');
+    global.fetch = async (url, init) => { calls.push({ url, init }); return new Response('{"id":"x"}', { status: 200 }); };
+    console.log('  ✓ spam check: key handed out only with its secret, half setup is named, the token decides, the secret never leaves');
+
+    // the rate limit and "again" marking through the storage binding LEADS (a stand-in with the same get/put shape)
+    const mem = new Map(), puts = [];
+    const LEADS = { get: async (k) => (mem.has(k) ? mem.get(k) : null), put: async (k, v, o) => { puts.push(o); mem.set(k, v); } };
+    const withStore = Object.assign({}, ENV, { LEADS });
+    const from = (ip, n) => call(post(Object.assign({}, good, { email: 'p' + n + '@example.com' }), { 'CF-Connecting-IP': ip }), withStore);
+    calls = [];
+    for (let n = 1; n <= 5; n++) assert.strictEqual((await from('198.51.100.1', n)).status, 200, 'send ' + n + ' is fine');
+    r = await from('198.51.100.1', 6); assert.strictEqual(r.status, 429, 'the sixth in an hour from one address is refused'); assert.strictEqual(calls.length, 5, 'and sends no email');
+    assert.strictEqual((await from('198.51.100.2', 7)).status, 200, 'another address is not affected');
+    assert(puts.every((o) => o.expirationTtl >= 60), 'KV needs a time to live of at least 60 seconds');
+    calls = []; r = await call(post(good, { 'CF-Connecting-IP': '198.51.100.3' }), withStore); const again = await (await call(post(good, { 'CF-Connecting-IP': '198.51.100.4' }), withStore)).json();
+    assert.strictEqual(again.repeat, true, 'the same person writing again is marked as such');
+    console.log('  ✓ with the LEADS binding: 5 sends an hour per address, repeat marking, and KV-safe lifetimes');
+
     // a failing mail service is reported, not hidden
     global.fetch = async () => new Response('no', { status: 500 });
     r = await call(post(good)); assert(r.status >= 500, 'a mail failure is an error response: ' + r.status);

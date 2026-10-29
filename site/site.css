@@ -228,3 +228,5 @@
 }
 /* very narrow: the icon alone stands for the name, so a signed-in header ("My account") still fits on one row */
 @media (max-width: 340px) { .site-header .logo { font-size: 0; } .site-header .logo svg { width: 32px; height: 32px; } }
+
+.spam-check { margin: 0.25rem 0; }

@@ -1,13 +1,15 @@
 {
   // Cloudflare deploy: the public site (site/) plus the page builder (/builder/), staged into dist/ by `npm run build:site` (run it before deploying), as static assets, plus a small Worker (src/worker.js) that receives leads at /api/lead.
   // Never publish the repository root (it holds node_modules). site/_headers (security headers) and site/404.html are copied into dist/ and read from there.
-  // Settings are added in the Cloudflare dashboard, not here: LEAD_TO_EMAIL, LEAD_FROM_EMAIL, RESEND_API_KEY (secret); optional KV binding LEADS, TURNSTILE_SECRET.
+  // Settings are added in the Cloudflare dashboard, not here: LEAD_TO_EMAIL, LEAD_FROM_EMAIL, RESEND_API_KEY (secret); optional TURNSTILE_SITE_KEY (public) and TURNSTILE_SECRET (secret), set together.
+  // The KV binding LEADS (5 sends an hour from one address, and "this person has written before") has no ID on purpose: wrangler 4.45.0 or newer creates the namespace on the first deploy and keeps it linked.
   "name": "21stdev",
   "main": "src/worker.js",
   "compatibility_date": "2026-10-28",
   // Plain-text variables added in the Cloudflare dashboard (SUPABASE_URL, SUPABASE_ANON_KEY, LEAD_TO_EMAIL, LEAD_FROM_EMAIL) would be deleted by every
   // deploy that does not list them here. keep_vars keeps them. Secrets (RESEND_API_KEY) are never deleted.
   "keep_vars": true,
+  "kv_namespaces": [{ "binding": "LEADS" }],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

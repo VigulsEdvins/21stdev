@@ -4,6 +4,8 @@
   const $ = (id) => document.getElementById(id);
   const CONSENT = 'It is fine to contact me about this.';
   const form = $('contact-form'), result = $('contact-result');
+  let check = null; // the Cloudflare spam check, when the site has one (js/spam-check.js)
+  if (window.SpamCheck) window.SpamCheck.setup($('k-check')).then((c) => { check = c; });
   const box = (cls, title, text) => {
     const s = document.createElement('strong'); s.textContent = title;
     const d = document.createElement('div'); d.append(s, text);
@@ -27,12 +29,13 @@
     if (!$('k-consent').checked) { $('k-cerr').textContent = 'Tick the box so we know we may contact you.'; consentField.classList.add('has-error'); focusEl = focusEl || $('k-consent'); }
     if (focusEl) { focusEl.focus(); return; }
     const meta = document.querySelector('meta[name="lead-endpoint"]');
+    if (check && check.on && !check.ready()) { box('alert--info', check.failed ? 'The spam check did not load' : 'One moment', check.failed ? 'Check your connection, switch off any blocker for this page, and reload. Or write to us by email.' : 'Please wait for the spam check above to finish, then press Send again.'); return; }
     if (!meta || !meta.content) { box('alert--info', 'Not sent yet', 'Sending is not switched on at this address yet. Nothing has left your browser.'); return; }
     try {
       const r = await fetch(meta.content, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ path: 'talk', email: em, phone: ph, name: $('k-name').value.trim(), message: $('k-msg').value.trim(), brief: { v: 1, answers: {} }, consent: true, consentText: CONSENT, website: $('k-trap').value }) });
-      if (!r.ok) throw new Error(String(r.status));
+        body: JSON.stringify({ path: 'talk', email: em, phone: ph, name: $('k-name').value.trim(), message: $('k-msg').value.trim(), turnstile: check && check.on ? check.token() : undefined, brief: { v: 1, answers: {} }, consent: true, consentText: CONSENT, website: $('k-trap').value }) });
+      if (!r.ok) { if (check) check.reset(); throw new Error(String(r.status)); }
       form.hidden = true; box('alert--ok', 'Sent', 'Thank you. We will get in touch.');
-    } catch (err) { box('alert--error', 'Could not send', 'We could not send that just now. Please try again in a minute.'); }
+    } catch (err) { if (check) check.reset(); box('alert--error', 'Could not send', 'We could not send that just now. Please try again in a minute.'); }
   });
 })();

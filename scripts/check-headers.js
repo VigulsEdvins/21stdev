@@ -80,6 +80,17 @@ async function main() {
       if ((c['style-src'] || []).some((x) => x !== "'self'")) errs.push('/account/*: style-src must stay as strict as everywhere');
       if (!(rules['/account/*']['!detach'] || []).includes('content-security-policy')) errs.push('/account/*: must detach the strict policy first, or the browser applies both');
     }
+    for (const r of ['/contact/*', '/start/*']) { // the lead forms: as strict as everywhere, only the spam check's own address is added to script-src and frame-src
+      if (!rules[r]) { errs.push(r + ': missing; the page shows the spam check and needs its address in script-src and frame-src'); continue; }
+      errs.push(...problems(effective(rules, r)).map((e) => r + ': ' + e));
+      const c = parseCsp(effective(rules, r)['content-security-policy'] || '');
+      const only = (d) => { const v = (c[d] || []).filter((x) => x !== "'self'"); return v.length === 0 || (v.length === 1 && v[0] === 'https://challenges.cloudflare.com'); };
+      if (!only('script-src')) errs.push(r + ': script-src may add only https://challenges.cloudflare.com (the spam check)');
+      if (!(c['frame-src'] || []).length || !(c['frame-src'] || []).every((x) => x === 'https://challenges.cloudflare.com')) errs.push(r + ': frame-src must be exactly https://challenges.cloudflare.com (the spam check)');
+      if (JSON.stringify(c['connect-src']) !== JSON.stringify(["'self'"])) errs.push(r + ': connect-src must stay as strict as everywhere');
+      if ((c['style-src'] || []).some((x) => x !== "'self'")) errs.push(r + ': style-src must stay as strict as everywhere');
+      if (!(rules[r]['!detach'] || []).includes('content-security-policy')) errs.push(r + ': must detach the strict policy first, or the browser applies both');
+    }
     if (rules['/builder/*']) { // the page's own policy tag applies; the header must still forbid framing and detach the strict policy first
       const b = rules['/builder/*'];
       if (!(b['!detach'] || []).includes('content-security-policy')) errs.push('/builder/*: must detach the strict policy first, or the browser applies both');

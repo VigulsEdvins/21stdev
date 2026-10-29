@@ -12,6 +12,7 @@
   const CONSENT = 'It is fine to contact me about this page.';
 
   let brief = load();
+  let check = null; // the Cloudflare spam check, when the site has one (js/spam-check.js)
   function load() {
     try { const b = JSON.parse(localStorage.getItem(KEY)); if (b && b.v === 1 && b.answers) return b; } catch (e) { /* storage may be blocked */ }
     return { v: 1, answers: {}, path: null };
@@ -154,6 +155,9 @@
     const f1 = h('div', { class: 'field' }, h('label', { for: 'c-email', text: 'Email address' }), email, errEmail);
     const f2 = h('div', { class: 'field' }, h('label', { for: 'c-phone', text: 'Phone number' }), h('span', { class: 'hint', text: 'Use a + and the country code.' }), phone, errPhone);
     const f4 = h('div', { class: 'field' }, consentErr);
+    const checkBox = h('div', { class: 'spam-check', id: 'c-check', hidden: true });
+    check = null; // started once this form is on the page
+    if (window.SpamCheck) setTimeout(() => window.SpamCheck.setup(checkBox).then((c) => { check = c; }), 0);
     function submit(e) {
       e.preventDefault();
       const em = email.value.trim(), ph = phone.value.trim();
@@ -170,13 +174,14 @@
       }
       if (!consent.checked) { consentErr.textContent = 'Tick the box so we know we may contact you.'; f4.classList.add('has-error'); ok = false; }
       if (!ok) { (email.getAttribute('aria-invalid') ? email : phone.getAttribute('aria-invalid') ? phone : consent).focus(); return; }
-      lead({ path, email: em, phone: ph, name: name.value.trim(), how: how.value, brief, consent: true, consentText: CONSENT, website: trap.value });
+      if (check && check.on && !check.ready()) { consentErr.textContent = check.failed ? 'The spam check did not load. Check your connection, switch off any blocker for this page, and reload.' : 'Please wait for the spam check above to finish, then press the button again.'; f4.classList.add('has-error'); return; }
+      lead({ path, email: em, phone: ph, name: name.value.trim(), how: how.value, brief, consent: true, consentText: CONSENT, website: trap.value, turnstile: check && check.on ? check.token() : undefined });
     }
     const form = h('form', { class: 'stack', novalidate: true, onsubmit: submit },
       f1, f2, h('div', { class: 'field' }, h('label', { for: 'c-name', text: 'Your name (optional)' }), name),
       h('div', { class: 'field' }, h('label', { for: 'c-how', text: 'How would you like us to reach you?' }), how),
       h('label', { class: 'choice' }, consent, CONSENT), f4,
-      h('div', { 'aria-hidden': 'true', class: 'trap' }, h('label', null, 'Leave this empty', trap)),
+      h('div', { 'aria-hidden': 'true', class: 'trap' }, h('label', null, 'Leave this empty', trap)), checkBox,
       h('div', { class: 'q-nav' }, btn('Back', 'btn--secondary', () => go(path === 'talk' ? 'choose' : 'choose')), h('span', { class: 'spacer' }), h('button', { class: 'btn', type: 'submit', text: copy[2] })));
     return h('div', null, h('h1', { id: 'q-title', tabindex: '-1', text: copy[0] }), h('p', { class: 'lead', text: copy[1] }), form);
   }
@@ -187,7 +192,7 @@
     if (!url) { brief.pending = true; save(); go('thanks'); return; }
     fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       .then((r) => { if (!r.ok) throw new Error(String(r.status)); brief.pending = false; brief.sent = true; save(); go('thanks'); })
-      .catch(() => { const e = document.getElementById('c-cerr'); e.textContent = 'We could not send that just now. Your answers are kept; please try again in a minute.'; e.parentNode.classList.add('has-error'); });
+      .catch(() => { if (check) check.reset(); const e = document.getElementById('c-cerr'); e.textContent = 'We could not send that just now. Your answers are kept; please try again in a minute.'; e.parentNode.classList.add('has-error'); });
   }
   function thanksScreen() {
     const sent = brief.sent, path = brief.path;
