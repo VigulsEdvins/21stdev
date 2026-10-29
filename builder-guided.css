@@ -228,3 +228,11 @@ body.is-guided .sidebar-tab-pane { overflow-y: auto; overscroll-behavior: contai
   .bp-sheet .bp-kinds { margin-bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .bp-sheet, .bp-backdrop { transition: none !important; } }
+
+/* step 2 (Words): the fields sit inside their cards with room, and read at a size a thumb and eye can use */
+body.is-guided .content-field { padding: 10px 12px 12px; }
+body.is-guided .content-field .ps-field { font-size: 14px; font-weight: 600; color: var(--text-main); gap: 6px; }
+body.is-guided .content-field .ps-field input[type="text"], body.is-guided .content-field .ps-field textarea { font-size: 16px; min-height: 44px; }
+@media (max-width: 700px) { body.is-guided .content-fields { gap: 14px; padding-bottom: 12px; } }
+body.is-guided .content-field .ps-field input[type="text"], body.is-guided .content-field .ps-field textarea { font-weight: 400; }
+body.is-guided #contentSectionSelect { min-height: 44px; font-size: 16px; }
