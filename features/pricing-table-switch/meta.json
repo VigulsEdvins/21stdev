@@ -86,10 +86,22 @@
       "selector": ":scope .ptw-card:nth-child(3) .ptw-cta"
     },
     {
+      "id": "link-1",
+      "label": "Plan 1 button link",
+      "type": "link",
+      "selector": ":scope .ptw-card:nth-child(1) .ptw-cta"
+    },
+    {
       "id": "link-2",
       "label": "Plan 2 button link",
       "type": "link",
       "selector": ":scope .ptw-card:nth-child(2) .ptw-cta"
+    },
+    {
+      "id": "link-3",
+      "label": "Plan 3 button link",
+      "type": "link",
+      "selector": ":scope .ptw-card:nth-child(3) .ptw-cta"
     },
     {
       "id": "accent",

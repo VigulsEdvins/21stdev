@@ -74,6 +74,24 @@
       "selector": ":scope .op-card:nth-child(3) .op-btn"
     },
     {
+      "id": "button-link-1",
+      "label": "Plan 1 button link",
+      "type": "link",
+      "selector": ":scope .op-card:nth-child(1) .op-btn"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Plan 2 button link",
+      "type": "link",
+      "selector": ":scope .op-card:nth-child(2) .op-btn"
+    },
+    {
+      "id": "button-link-3",
+      "label": "Plan 3 button link",
+      "type": "link",
+      "selector": ":scope .op-card:nth-child(3) .op-btn"
+    },
+    {
       "id": "plan-1-price-monthly",
       "label": "Plan 1 price per month (big number)",
       "type": "number",
