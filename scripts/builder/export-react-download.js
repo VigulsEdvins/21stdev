@@ -26,7 +26,7 @@
         const slugs = Array.from(new Set(state.stack.map(s => s.slug).filter(Boolean)));
         const sources = {};
         await Promise.all(slugs.map(async (slug) => {
-          const base = `/features/${slug}/`;
+          const base = `features/${slug}/`; // relative to the builder page: it is served from /builder/ on the site
           const [component, demo, css] = await Promise.all([text(base + 'component.tsx'), text(base + 'demo.tsx'), text(base + 'style.css')]);
           // no React source: the plain page and script are wrapped instead
           const plain = component && demo ? {} : { index: await text(base + 'index.html'), js: await text(base + 'script.js'), ownPalette: !!ownPalette[slug] };

@@ -220,3 +220,11 @@
   .band .wrap { flex-wrap: nowrap; gap: var(--s-4); padding: var(--s-3) 0; font-size: 18px; }
   .band .wrap span:nth-child(n+3) { display: none; }
 }
+@media (max-width: 400px) {
+  .site-header { gap: var(--s-2); }
+  .site-header .logo { font-size: 24px; gap: 6px; }
+  .site-header .nav { font-size: 14px; }
+  .site-header .btn { padding: 10px 12px; font-size: 14px; }
+}
+/* very narrow: the icon alone stands for the name, so a signed-in header ("My account") still fits on one row */
+@media (max-width: 340px) { .site-header .logo { font-size: 0; } .site-header .logo svg { width: 32px; height: 32px; } }

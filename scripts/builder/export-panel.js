@@ -442,7 +442,7 @@
       if (!adminOverlay || adminOverlay.hidden) return;
       adminOverlay.hidden = true;
       const old = adminFrame.src;
-      adminFrame.removeAttribute('src');
+      adminFrame.src = 'about:blank'; // stops the editor's scripts
       if (old && old.startsWith('blob:')) URL.revokeObjectURL(old);
       delete window.__cmsBridge;
       document.body.style.overflow = '';
@@ -462,7 +462,9 @@
           setOverride: (sectionId, fieldId, value, def) => stackManager.setSectionOverride(sectionId, fieldId, value, def),
           close: closeAdmin
         };
-        adminFrame.src = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+        // the editor page needs inline scripts and styles: it goes into the frame page that has its own policy (frame-doc.js), not a blob: URL, which would take the builder page's strict one
+        if (window.FrameDoc) await window.FrameDoc.write(adminFrame, html);
+        else adminFrame.src = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
         adminOverlay.hidden = false;
         document.body.style.overflow = 'hidden';
       } catch (err) {

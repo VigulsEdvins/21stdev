@@ -47,6 +47,15 @@ const H = require('../../scripts/check-headers.js');
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#downloadZipBtn')]);
   assert(await dl.path());
   console.log('  ✓ ' + slugs.length + ' heavy blocks previewed and exported under the real policies');
+
+  // the admin panel (the content editor over the builder) is its own page: styled, scripted, with its own preview of the page
+  await page.keyboard.press('Escape'); await page.waitForTimeout(300);
+  await page.evaluate(() => document.querySelector('.sidebar-tab-btn[data-tab="content"]').click());
+  await page.click('#openAdminBtn'); await page.waitForSelector('#adminOverlay:not([hidden])');
+  await page.waitForFunction(() => { const d = document.getElementById('adminFrame').contentDocument; const f = d && d.getElementById('cms-frame'); return f && f.contentDocument && f.contentDocument.querySelectorAll('.page-section').length > 0; }, null, { timeout: 15000 });
+  const admin = await page.evaluate(() => { const d = document.getElementById('adminFrame').contentDocument; return { sheets: d.styleSheets.length, inputs: d.querySelectorAll('input,textarea').length, bg: getComputedStyle(d.body).backgroundColor }; });
+  assert(admin.sheets > 0 && admin.inputs > 3 && admin.bg !== 'rgba(0, 0, 0, 0)', 'the admin panel is styled and working under the real policies: ' + JSON.stringify(admin));
+  console.log('  ✓ the admin panel opens, styled, with its own preview, under the real policies');
   assert.deepStrictEqual(violations.filter((v) => /builder page/.test(v)), [], 'the builder page has no violation: ' + violations.join(' | '));
   assert.deepStrictEqual(violations, [], 'no violation anywhere: ' + violations.join(' | '));
   assert.deepStrictEqual(errors, [], errors.join(' | '));

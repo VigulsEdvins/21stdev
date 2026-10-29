@@ -262,3 +262,5 @@ body.is-guided #contentSectionSelect { min-height: 44px; font-size: 16px; }
   /* a size picked earlier on a bigger screen must not shrink the phone preview */
   .viewport-stage[data-active-viewport] .viewport-frame-wrapper { width: 100% !important; max-width: none !important; height: 100% !important; border-radius: 0 !important; }
 }
+/* 320 px: the header's buttons take a second row; keep that room from the first paint (tests/e2e/builder-layout-shift.e2e.js) */
+@media (max-width: 340px) { body.is-guided .builder-header { min-height: 125px; } }

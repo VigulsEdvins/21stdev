@@ -31,6 +31,7 @@ const { createServer } = require('../../scripts/dev-site.js');
   assert.strictEqual((await fetch(base + '/builder.html')).status, 404, 'the old address is not published');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/index.html')).status, 200, 'features are published');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/component.tsx')).status, 404, 'React sources are not');
+  for (const f of ['admin.html', 'admin.css', 'admin.js', 'cms.js']) assert.strictEqual((await fetch(base + '/builder/scripts/cms/' + f)).status, 200, 'the content editor file ' + f + ' is published (the admin panel and the editor in a download fetch it)');
   const feat = await fetch(base + '/builder/features/a4-resume-previewer/index.html');
   assert(/^frame-ancestors 'self'$/.test(feat.headers.get('content-security-policy')), 'catalogue previews may be framed by the builder itself: ' + feat.headers.get('content-security-policy'));
   console.log('  ✓ served at /builder/ with its own headers; sources stay home');

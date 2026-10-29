@@ -13,7 +13,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const RUN_TIME_DIRS = ['thumbs', 'features']; // under /builder/, next to the page that reads them
+const RUN_TIME_DIRS = ['thumbs', 'features', 'scripts/cms']; // scripts/cms: the content editor (admin.html, admin.css, admin.js, cms.js) the builder fetches when it opens the admin panel or builds the editor for a download // under /builder/, next to the page that reads them
 const ROOT_DIRS = ['assets/library']; // the components name their pictures and fonts as /assets/library/<file>, so these sit at the top of the site
 const SKIP_IN_FEATURES = /\.(tsx|ts)$/; // React sources are for the vault; the builder reads index.html, style.css, script.js
 
