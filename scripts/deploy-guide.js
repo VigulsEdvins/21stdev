@@ -86,14 +86,37 @@
       note: 'What to expect from Google: it takes days to a few weeks to list a new site. Where you appear depends on your content, your links and your competition. edvlabs cannot promise a ranking and nobody honest can.'
     },
     {
-      id: 'form', title: 'Contact forms on a static site', checked: '2026-10-29',
-      intro: 'A page made of plain files has no back end, so a contact form on its own cannot send anything. Do one of these, or the form goes nowhere:',
+      id: 'form', title: 'Contact forms: where the messages go', checked: '2026-10-29',
+      intro: 'A page made of plain files has no back end of its own, so a form needs somewhere to send its messages. The builder sets this up for you: open the **admin panel** (Content tab, "Open admin panel"), choose **Form messages**, pick one option below, type what it asks for, and download your site. You can change it later in the `admin.html` that comes with your site: pick another option, press Publish, then download the content file from the editor\'s "Publishing & backup" tab and upload it over the old one. Every contact, newsletter, waiting-list and quote form that came with the blocks uses your choice. A form you wrote yourself in custom code is not covered, and the check step warns about it.',
       bullets: [
-        '**Use a form service.** Formspree, Web3Forms and Netlify Forms catch the form and email it to you. They have free plans.',
-        '**Link to an email address or a WhatsApp number** instead of a form.',
-        '**Use your own back end** if you have a developer.'
+        '**Netlify Forms** (only if your site is on Netlify). Nothing to type. After you upload the site, open Netlify, your site, then **Forms**: messages appear there, and you can switch on email notifications. It does not work on other hosts.',
+        '**My email** (no account). Type your email address. Messages are sent by the free FormSubmit service. The first message asks you to confirm your address: click the link in that email, and send another test message. Your address is visible to anyone who views the page source, so use one made for this.',
+        '**Formspree** (free account at https://formspree.io). Make a new form there and copy its address, which looks like `https://formspree.io/f/abcdwxyz` (the last part alone also works). Paste it in the builder.',
+        '**Web3Forms** (free account at https://web3forms.com). Enter your email there; they send you an access key that looks like `12345678-abcd-1234-abcd-1234567890ab`. Paste the key in the builder. The key is public by design: it can only send messages to your address.',
+        '**WhatsApp.** Type your number with the country code. When a visitor sends the form, their WhatsApp opens with the message already written to you, and they press send. You only receive it if they do.',
+        '**The visitor\'s email app.** Type your email address. The visitor\'s mail program opens with the message written, and they press send. It does not work for visitors who have no mail program set up.',
+        '**My own address** (advanced). A full `https://` address on your own server that accepts a JSON post and allows requests from your site. Ask your developer.'
       ],
-      example: 'Example with Formspree: create a free account at https://formspree.io, make a new form, copy its address (it looks like `https://formspree.io/f/abcdwxyz`), then in the builder open the form block and paste that address as the form\'s action. Send a test message and look for it in your inbox.'
+      steps: [
+        ['In the builder, open the admin panel, choose Form messages and pick where messages go. Type the address, number or key if it asks.', 'A note under the box explains what to type. If the value is wrong the box turns red and says why.'],
+        ['Download your site again and upload it, the same way as the first time.', 'Your site online with the new forms.'],
+        ['Open the live site and send yourself a test message through each form.', 'The thank-you message appears on the page, and the message reaches your inbox, your Netlify Forms list or your WhatsApp within a minute.'],
+        ['If nothing arrives, look just under the form.', 'A line saying the message could not be sent means the service refused it. Check the address or key, that you confirmed your email (FormSubmit), or that Forms is switched on for the site (Netlify).']
+      ],
+      note: 'Good to know: the preview inside the builder never sends anything; messages are only sent from the live site. Free plans have limits. Every form carries a hidden trap box, and a message sent the instant the page opens is ignored, which stops most simple bots. A spam message can still get through: see "Keeping your forms and editor safe" below. edvlabs never sees or stores your messages; they go from your visitor to the service you chose. If you collect personal details from visitors, put a privacy notice on your site.'
+    },
+    {
+      id: 'safe', title: 'Keeping your forms and editor safe', checked: '2026-10-29',
+      intro: 'The builder does what a page of plain files can do: it checks every address you type, ignores a form that is filled in and sent by a program in a fraction of a second, and never sends a password field. These are the parts only you can cover.',
+      bullets: [
+        '**Spam from programs that skip your page.** A program can send messages straight to the service without ever opening your page, so only the service can stop those. Netlify filters every submission for spam by default (look under Forms, "Spam submissions"), and offers a reCAPTCHA check you can switch on. Web3Forms offers an hCaptcha check on its free plan (Turnstile and reCAPTCHA are on its paid plan). Formspree and FormSubmit have their own spam settings: switch on the ones you are offered in your account.',
+        '**Your address is visible.** An email address in a form is written into the page in an encoded form, so a simple scraper does not find it, but anyone who reads the page script can decode it, and the content file of the editor holds it as plain text. Use an address made for your site, or pick Formspree or Web3Forms, where only a form code or key is in the page.',
+        '**Say who receives the messages.** The messages pass through the service you chose (the Form messages tab names it). Put that in your privacy notice, with what you do with the messages.',
+        '**The editor has no password.** Opening `admin.html` does not let anyone change your live site, because only the content file you upload does that, but it does show your editable content. Keep `admin.html` on your own computer and upload only the content file, or protect that page with your host\'s password or access feature if it has one.',
+        '**Protect your hosting and domain accounts.** Whoever can upload files to your host can change your site, including where form messages go. Use a long, unique password and two-step sign-in on both accounts.',
+        '**If you switched on the strict security policy** at download, connections are limited to your site and the form services. If you later choose another "own address" for the forms in the editor, add that address to `connect-src` in the `<meta>` tag of `index.html`.'
+      ],
+      note: 'Before you rely on a form, send one real message through it from the live site and check that it arrives (see the form steps above).'
     },
     {
       id: 'mail', title: 'Email on your own domain', checked: '2026-10-29',

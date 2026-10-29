@@ -16,7 +16,7 @@
       var ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim());
       input.setAttribute('aria-invalid', ok ? 'false' : 'true');
       msg.textContent = ok ? 'Thank you! We will be in touch.' : 'Please enter a valid email address.';
-      if (!ok) input.focus(); else input.value = '';
+      if (!ok) input.focus(); else { form.dispatchEvent(new CustomEvent('edv:submitted', { bubbles: true })); input.value = ''; }
     });
   });
 })();

@@ -6,6 +6,7 @@
 (function (root) {
   'use strict';
 
+  const FD = typeof module !== 'undefined' && module.exports ? require('../form-delivery.js') : root.FormDelivery;
   const SEVERITY_ORDER = { error: 0, warning: 1, info: 2 };
 
   function stripNoise(html) {
@@ -45,7 +46,7 @@
   }
 
   /** `altFixed` maps a section id to the number of pictures whose description is set in the Content tab (applied when the page loads, so it is not in the markup). */
-  function checkPage(indexHtml, page = {}, altFixed = {}) {
+  function checkPage(indexHtml, page = {}, altFixed = {}, linkFixed = {}) {
     const issues = [];
     const add = (id, severity, message, sec) => issues.push({ id, severity, message, sectionId: sec && sec.id || undefined, slug: sec && sec.slug || undefined });
     const clean = stripNoise(indexHtml);
@@ -60,7 +61,10 @@
 
     const sections = splitSections(clean);
     const scopes = sections.length ? sections : [{ id: '', slug: '', html: clean }];
+    const delivery = FD ? FD.fromPage(page) : { method: '', ok: true };
+    let badDeliveryShown = false;
 
+    const pageIds = new Set((clean.match(/\sid\s*=\s*["']([^"']+)["']/gi) || []).map(t => t.replace(/^\s*id\s*=\s*["']/i, '').slice(0, -1)));
     // headings
     const headings = [];
     scopes.forEach(sec => {
@@ -101,8 +105,17 @@
         const named = visibleText(m[2]) || attr(tag, 'aria-label') || attr(tag, 'title') || /<img\b[^>]*\balt="[^"]+"/i.test(m[2]);
         if (!named) add('link-name', 'error', 'A link has no readable text or aria-label.', sec);
         const href = (attr(tag, 'href') || '').trim();
-        if (href === '#' || /^javascript:/i.test(href)) add('link-empty', 'warning', `A link goes nowhere (href="${href}").`, sec);
+        if ((href === '#' || /^javascript:/i.test(href)) && !hasAttr(tag, 'data-edv-cta')) add('link-empty', 'warning', `A link goes nowhere (href="${href}").`, sec);
       }
+      // plan / call-to-action buttons (data-edv-cta) must lead somewhere: a link set in the admin panel counts, the markup's own "#" or an anchor nothing on the page has does not
+      let linkCredit = linkFixed[sec.id] || 0;
+      (sec.html.match(/<a\b[^>]*\sdata-edv-cta\b[^>]*>/gi) || []).forEach(tag => {
+        const href = (attr(tag, 'href') || '').trim();
+        const goesNowhere = !href || href === '#' || (href.charAt(0) === '#' && !pageIds.has(href.slice(1)));
+        if (!goesNowhere) return;
+        if (linkCredit > 0) { linkCredit--; return; }
+        add('cta-no-link', 'warning', 'A plan button does not lead anywhere yet. Open the admin panel (Content tab) and set “button link” on each plan to your payment or sign-up page.', sec);
+      });
       // buttons
       const btnRe = /<button\b([^>]*)>([\s\S]*?)<\/button>/gi;
       while ((m = btnRe.exec(sec.html))) {
@@ -110,9 +123,17 @@
         if (!visibleText(m[2]) && !attr(tag, 'aria-label') && !attr(tag, 'title') && !attr(tag, 'aria-labelledby')) add('button-name', 'error', 'A button has no text or aria-label.', sec);
       }
       // forms: a static page cannot process a form, so one without a target address goes nowhere
+      // (a choice in the admin panel's Form messages tab counts as a target; the export applies it)
       (sec.html.match(/<form\b[^>]*>/gi) || []).forEach(tag => {
         const act = (attr(tag, 'action') || '').trim();
-        if (!act || act === '#') add('form-no-target', 'warning', 'A form has no address to send to. A page made of plain files cannot receive messages: use a form service (such as Formspree or Netlify Forms) or your own server, or replace it with an email link.', sec);
+        const marker = attr(tag, 'data-edv-form');
+        if (marker === 'skip' || (act && act !== '#')) return;
+        if (marker === 'message' && delivery.method && delivery.ok) return;
+        if (marker === 'message' && delivery.method) {
+          if (!badDeliveryShown) { badDeliveryShown = true; add('form-delivery-invalid', 'error', 'Where form messages go is set in the admin panel (Form messages), but: ' + delivery.error, sec); }
+          return;
+        }
+        add('form-no-target', 'warning', 'A form has no address to send to. A page made of plain files cannot receive messages: choose where messages go in the admin panel under Form messages (Netlify Forms, your email, WhatsApp or a form service), or replace the form with an email link.', sec);
       });
       // form fields
       const labelFor = new Set();
@@ -157,7 +178,20 @@
     return issues.sort((a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]);
   }
 
-  const api = { checkPage, checkSearchReady, splitSections };
+  /** Per section: how many pictures got a description, and how many links got an address, in the Content tab / admin panel (applied when the page loads, so not in the markup). */
+  function overrideCounts(stack) {
+    const alt = {}, link = {};
+    (stack || []).forEach(s => {
+      const vals = Object.values(s.overrides || {}).filter(o => o && o.value);
+      const a = vals.filter(o => o.type === 'alt').length;
+      const l = vals.filter(o => o.type === 'link' && String(o.value).trim() !== '#').length;
+      if (a) alt[s.id] = a;
+      if (l) link[s.id] = l;
+    });
+    return { alt, link };
+  }
+
+  const api = { checkPage, checkSearchReady, splitSections, overrideCounts };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.PageChecks = api;
 })(typeof window !== 'undefined' ? window : this);

@@ -34,9 +34,8 @@
       const bundle = getBundle();
       const html = bundle && bundle['index.html'];
       if (!checks || !html) return;
-      const altFixed = {};
-      stackManager.getStack().forEach(s => { const n = Object.values(s.overrides || {}).filter(o => o && o.type === 'alt' && o.value).length; if (n) altFixed[s.id] = n; });
-      const issues = checks.checkPage(html, stackManager.getState().page, altFixed);
+      const fixed = checks.overrideCounts(stackManager.getStack());
+      const issues = checks.checkPage(html, stackManager.getState().page, fixed.alt, fixed.link);
       const head = document.createElement('div');
       head.className = 'export-checks-head';
       head.textContent = issues.length ? `Page check: ${issues.length} thing${issues.length === 1 ? '' : 's'} to look at (you can still export)` : 'Page check: nothing to fix';

@@ -151,7 +151,7 @@
         latestState.stack,
         themeConfig,
         featuresData,
-        { suppressPreloader, page: latestState.page, nativeMap, ownPalette, embedSites: true }
+        { suppressPreloader, page: latestState.page, nativeMap, ownPalette, embedSites: true, formNote: true }
       );
 
       // A section added to a loaded page is inserted and started on its own: reloading would restart all the others

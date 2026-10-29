@@ -72,6 +72,9 @@
   }
 
   apply(preview ? (read('draft') && read('draft').values) || published() : published());
+  // Where form messages go, if the owner changed it in the editor: the form script re-checks it before using it
+  var chosen = published().__form;
+  if (!preview && chosen && typeof chosen === 'object') window.__edvForm = { method: String(chosen.method || ''), target: String(chosen.target || '') };
   if (!preview) return;
 
   /* ---------------- admin preview only ---------------- */

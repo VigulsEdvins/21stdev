@@ -33,10 +33,12 @@
 
   var MAX_HISTORY = 60;
   var BACKUP_TAB = '__backup';
+  var FORM_TAB = '__forms';
+  var R = window.EdvFormRules; // the choices and checks for where form messages go (form-rules.js)
   var siteKey = 'edv-cms:' + location.pathname.replace(/[^/]*$/, '');
 
   var pageIndex = 0;
-  var tab = null; // section id or BACKUP_TAB
+  var tab = null; // section id, BACKUP_TAB or FORM_TAB
   var draft = {};
   var history = [];
   var cursor = -1;
@@ -101,6 +103,18 @@
   function setFit(file, sec, f, value) { setKey(file, sec, f.id + '__fit', value, f.fit); }
   function isEdited(file, sec, f) { return getVal(file, sec, f) !== f.value || (!!f.fit && getFit(file, sec, f) !== f.fit); }
   function editedCount(file, sec) { return sec.fields.filter(function (f) { return isEdited(file, sec, f); }).length; }
+
+  /* Where form messages go: one choice for the whole site, kept in the draft as `__form` only when it differs from the exported one */
+  function formDefault() { var f = C.forms || {}; return { method: String(f.method || ''), target: String(f.target || '') }; }
+  function getForm() { var f = draft.__form; return f && typeof f.method === 'string' ? { method: f.method, target: String(f.target || '') } : formDefault(); }
+  function setForm(method, target) {
+    var d = formDefault();
+    if (method === d.method && target === d.target) delete draft.__form;
+    else draft.__form = { method: method, target: target };
+  }
+  /** The error to show for the current choice, or '' when it is fine. */
+  function formProblem() { var f = getForm(); var r = R ? R.check(f.method, f.target) : { ok: true }; return r.ok ? '' : r.error; }
+  function hasForms() { return !!(C.forms && C.forms.has) && !!R; }
 
   /** Only addresses a page may load: web, mail, phone, in-page and relative paths (and small embedded pictures). */
   function safeUrl(value, type) {
@@ -204,9 +218,21 @@
     });
   }
 
+  var syncedForm = null;
+  function syncForm() {
+    var f = getForm();
+    var r = R.check(f.method, f.target);
+    if (!r.ok || !bridge.setForm) return; // an unfinished entry is not sent to the page
+    var key = r.method + '|' + r.value;
+    if (syncedForm === null) { syncedForm = formDefault().method + '|' + R.check(formDefault().method, formDefault().target).value; }
+    if (key === syncedForm) return;
+    syncedForm = key;
+    bridge.setForm(r.method, r.method ? f.target : '');
+  }
+
   function changed(rerender) {
     write('draft', { savedAt: Date.now(), values: draft });
-    if (inBuilder) { clearTimeout(syncTimer); syncTimer = setTimeout(syncBuilder, 300); }
+    if (inBuilder) { clearTimeout(syncTimer); syncTimer = setTimeout(function () { syncBuilder(); if (hasForms()) syncForm(); }, 300); }
     pushPreview();
     refreshStatus();
     if (rerender) render(); else refreshNavMeta();
@@ -264,6 +290,7 @@
       }, [el('span', { class: 'cms-nav-title', text: sectionLabel(sec, i) }), meta]));
     });
     $('cms-nav-backup').classList.toggle('is-active', tab === BACKUP_TAB);
+    $('cms-nav-forms').classList.toggle('is-active', tab === FORM_TAB);
   }
   function refreshNavMeta() {
     var items = $('cms-nav').children;
@@ -471,6 +498,8 @@
       ed.appendChild(fieldCard(sec, f, i));
       shown++;
     });
+    // a form block also carries the one site-wide choice of where its messages go
+    if (sec.form && hasForms() && (!q || 'form messages where send go'.indexOf(q) >= 0)) { ed.appendChild(formPanel(true)); shown++; }
     if (!sec.fields.length) ed.appendChild(el('p', { class: 'cms-empty', text: 'This section has no text, pictures or links the editor can change. It is part of the design.' }));
     else if (!shown) ed.appendChild(el('p', { class: 'cms-empty', text: 'No field matches “' + q + '”.' }));
   }
@@ -490,7 +519,8 @@
   }
   function publish() {
     if (historyTimer) snapshot();
-    if (inBuilder) { syncBuilder(); bridge.close(); return true; }
+    if (inBuilder) { syncBuilder(); if (hasForms()) syncForm(); bridge.close(); return true; }
+    if (hasForms() && formProblem()) { toast('Fix the form messages setting first: ' + formProblem()); return false; }
     if (!write('published', { savedAt: Date.now(), values: clone(draft) })) { toast('This browser would not save the changes. Download cms-content.js instead.'); return false; }
     refreshStatus();
     toast('Published in this browser. Download cms-content.js to put it on the live site.');
@@ -524,13 +554,64 @@
         });
       });
     });
+    var rf = raw.__form;
+    if (hasForms() && rf && typeof rf === 'object' && typeof rf.method === 'string') {
+      var rr = R.check(rf.method, rf.target), dd = formDefault();
+      if (rr.ok && (rr.method !== dd.method || rr.value !== dd.target)) { out.__form = { method: rr.method, target: rr.value }; kept++; }
+    }
     return { values: out, kept: kept };
   }
+
+  /* ---------------- form messages ---------------- */
+  /** The card with the choice and its value. `inSection`: shown under a form block's own fields (same single setting for the site). */
+  function formPanel(inSection) {
+    var f = getForm();
+    var m = R.method(f.method);
+    var valueInput = el('input', { type: 'text', class: 'cms-input', id: 'cms-form-target', maxlength: '400', autocomplete: 'off', value: f.target, placeholder: m.placeholder });
+    var valueLabel = el('label', { class: 'cms-label', for: 'cms-form-target', text: m.valueLabel });
+    var valueWrap = el('div', { class: 'cms-card-body', hidden: !m.valueLabel }, [valueLabel, valueInput]);
+    var hint = el('p', { class: 'cms-hint', id: 'cms-form-hint' });
+    var via = el('p', { class: 'cms-hint', id: 'cms-form-via' });
+    var select = el('select', { class: 'cms-input', id: 'cms-form-method' }, R.METHODS.map(function (o) { return el('option', { value: o.id, text: o.label }); }));
+    select.value = f.method;
+    function paint() {
+      var cur = getForm(), mm = R.method(cur.method), r = R.check(cur.method, cur.target);
+      var typed = cur.target.trim();
+      valueWrap.hidden = !mm.valueLabel;
+      valueLabel.textContent = mm.valueLabel;
+      valueInput.placeholder = mm.placeholder;
+      valueInput.setAttribute('aria-invalid', !r.ok && typed ? 'true' : 'false');
+      var showError = !r.ok && (typed || !mm.valueLabel);
+      hint.textContent = showError ? r.error : mm.hint;
+      hint.setAttribute('role', showError ? 'alert' : 'note');
+      hint.classList.toggle('cms-error', !!showError);
+      // who gets to see the messages on the way: the client should say so in their privacy notice
+      via.textContent = mm.via ? 'Messages pass through ' + mm.via + '. Mention this in your privacy notice.' : (mm.id === 'mailto' ? 'Messages go from the visitor\u2019s own mail program straight to you; no service sits in between.' : '');
+      via.hidden = !via.textContent;
+    }
+    select.addEventListener('change', function () {
+      setForm(select.value, R.method(select.value).valueLabel ? getForm().target : '');
+      valueInput.value = getForm().target;
+      paint(); edited();
+    });
+    valueInput.addEventListener('input', function () { setForm(getForm().method, valueInput.value); paint(); edited(); });
+    var panel = el('div', { class: 'cms-panel', id: 'cms-form-panel' }, [
+      el('h2', { text: inSection ? 'Where should this form\u2019s messages go?' : 'Where should form messages go?' }),
+      el('p', { class: 'cms-hint', text: 'Every contact, newsletter, waiting-list and quote form on the site uses this one choice. ' + (inBuilder ? 'It is saved to your page as you type.' : 'Press Publish, then download cms-content.js and upload it to change the live site.') }),
+      el('label', { class: 'cms-label', for: 'cms-form-method', text: 'Send messages' }), select,
+      valueWrap, hint, via,
+      el('p', { class: 'cms-hint', text: 'Netlify Forms only works when the site is hosted on Netlify. The preview never sends anything; messages are sent from the live site.' })
+    ]);
+    paint();
+    return panel;
+  }
+  function renderForms() { $('cms-editor').appendChild(formPanel(false)); }
 
   function renderBackup() {
     var ed = $('cms-editor');
     var total = 0;
     C.pages.forEach(function (p) { p.sections.forEach(function (s) { total += editedCount(p.file, s); }); });
+    if (draft.__form) total++;
     var importInput = el('input', { type: 'file', accept: 'application/json,.json', hidden: true });
     importInput.addEventListener('change', function () {
       var file = importInput.files && importInput.files[0];
@@ -670,8 +751,9 @@
     ed.textContent = '';
     renderNav();
     var title = $('cms-title');
-    $('cms-search').hidden = tab === BACKUP_TAB;
+    $('cms-search').hidden = tab === BACKUP_TAB || tab === FORM_TAB;
     if (tab === BACKUP_TAB) { title.textContent = 'Publishing & backup'; renderBackup(); }
+    else if (tab === FORM_TAB) { title.textContent = 'Form messages'; renderForms(); }
     else {
       var sec = findSection(tab);
       title.textContent = sec ? sec.title : page().title;
@@ -699,6 +781,7 @@
     });
   }
   $('cms-view-site').setAttribute('href', page().file);
+  $('cms-nav-forms').hidden = !hasForms();
   if (inBuilder) {
     $('cms-view-site').hidden = true;
     $('cms-nav-backup').hidden = true;
@@ -711,6 +794,7 @@
   loadPreview();
 
   $('cms-nav-backup').addEventListener('click', function () { tab = BACKUP_TAB; render(); });
+  $('cms-nav-forms').addEventListener('click', function () { tab = FORM_TAB; render(); });
   $('cms-publish').addEventListener('click', publish);
   $('cms-undo').addEventListener('click', function () { goHistory(-1); });
   $('cms-redo').addEventListener('click', function () { goHistory(1); });

@@ -70,6 +70,7 @@
       e.preventDefault();
       if (!validate(current)) return;
       if (current < steps.length - 1) { show(current + 1); return; }
+      form.dispatchEvent(new CustomEvent('edv:submitted', { bubbles: true }));
       form.hidden = true;
       done.hidden = false;
       done.setAttribute('tabindex', '-1');

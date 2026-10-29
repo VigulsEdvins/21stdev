@@ -31,7 +31,7 @@ const { createServer } = require('../../scripts/dev-site.js');
   assert.notStrictEqual((await fetch(base + '/builder.html', { redirect: 'manual' })).status, 200, 'the old address is not published as a page of its own (a host may redirect it)');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/index.html')).status, 200, 'features are published');
   assert.strictEqual((await fetch(base + '/builder/features/a4-resume-previewer/component.tsx')).status, 404, 'React sources are not');
-  for (const f of ['admin.html', 'admin.css', 'admin.js', 'cms.js']) assert.strictEqual((await fetch(base + '/builder/scripts/cms/' + f)).status, 200, 'the content editor file ' + f + ' is published (the admin panel and the editor in a download fetch it)');
+  for (const f of ['admin.html', 'admin.css', 'admin.js', 'cms.js', 'form-rules.js']) assert.strictEqual((await fetch(base + '/builder/scripts/cms/' + f)).status, 200, 'the content editor file ' + f + ' is published (the admin panel and the editor in a download fetch it)');
   const feat = await fetch(base + '/builder/features/a4-resume-previewer/index.html');
   assert(/^frame-ancestors 'self'$/.test(feat.headers.get('content-security-policy')), 'catalogue previews may be framed by the builder itself: ' + feat.headers.get('content-security-policy'));
   // the preview frame page: served at a directory address that no host redirects, with its own wider policy (Cloudflare turns /x.html into /x, which the header rule would not match)

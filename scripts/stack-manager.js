@@ -23,7 +23,9 @@ const DEFAULT_PAGE = {
   bizName: '',
   bizPhone: '',
   bizEmail: '', // public contact address: goes into security.txt and the business data
-  bizAddress: ''
+  bizAddress: '',
+  formMethod: '', // where form messages go: '' (nowhere yet) | netlify | email | formspree | web3forms | whatsapp | mailto | custom (see scripts/form-delivery.js)
+  formTarget: '' // the address, number or key that goes with formMethod
 };
 
 function createStackManager(initialConfig = {}) {

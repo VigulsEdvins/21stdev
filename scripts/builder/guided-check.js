@@ -19,7 +19,9 @@
     'button-name': 'A button has no label.',
     'field-label': 'A form box has no label.',
     'heading-empty': 'A heading is empty.',
-    'form-no-target': 'A contact form has nowhere to send its messages. A page made of plain files cannot receive them: use a form service, your own server, or an email link instead.',
+    'form-no-target': 'A form has nowhere to send its messages yet. Open the admin panel (Content tab) and, under “Form messages”, choose Netlify Forms, your email, WhatsApp or a form service. Or replace the form with an email link.',
+    'cta-no-link': 'A plan button does not lead anywhere yet. In the admin panel (Content tab) set the “button link” of each plan to your payment or sign-up page.',
+    'form-delivery-invalid': 'The choice under “Form messages” in the admin panel is not complete or not valid, so forms would still send nothing. Fix it or choose “Not yet”.',
     // "ready for Google" (PageChecks.checkSearchReady)
     'noindex': 'Search engines are told NOT to list this page. Turn that off in the page settings.',
     'address-missing': 'Your web address is not set, so the download has no sitemap. Add it when you know it, or after the site is online.',
@@ -93,9 +95,8 @@
           const r = await api.prepareExportData();
           const html = r && r.bundle && r.bundle['index.html'];
           if (html) {
-            const altFixed = {};
-            st.stack.forEach((s) => { const n = Object.values(s.overrides || {}).filter((o) => o && o.type === 'alt' && o.value).length; if (n) altFixed[s.id] = n; });
-            issues = win.PageChecks.checkPage(html, st.page, altFixed).concat(win.PageChecks.checkSearchReady(html, st.page));
+            const fixed = win.PageChecks.overrideCounts(st.stack);
+            issues = win.PageChecks.checkPage(html, st.page, fixed.alt, fixed.link).concat(win.PageChecks.checkSearchReady(html, st.page));
           }
         } catch (_) { /* the list still shows the checks that need no export */ }
       }

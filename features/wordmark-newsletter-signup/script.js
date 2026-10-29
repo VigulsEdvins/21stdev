@@ -23,6 +23,7 @@
       input.focus();
       return;
     }
+    form.dispatchEvent(new CustomEvent('edv:submitted', { bubbles: true }));
     msg.classList.remove('is-bad');
     msg.textContent = 'You are on the list. See you on Sunday.';
     sec.classList.add('is-done');

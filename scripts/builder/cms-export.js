@@ -4,16 +4,16 @@
  * - discoverPages(): renders each page off-screen and lists its editable fields (the same detection as the Content tab).
  * - buildContent(): the cms-content.js file that tells the editor and the page what can be edited.
  * - injectTags(): adds cms-content.js and cms.js after a page's own script.
- * - runtimeFiles(): admin.html, admin.css, admin.js and cms.js, fetched from scripts/cms/.
+ * - runtimeFiles(): admin.html, admin.css, admin.js, cms.js and form-rules.js, fetched from scripts/cms/.
  */
 (function () {
   'use strict';
 
-  const RUNTIME_FILES = ['admin.html', 'admin.css', 'admin.js', 'cms.js'];
+  const RUNTIME_FILES = ['admin.html', 'admin.css', 'admin.js', 'cms.js', 'form-rules.js'];
   const MAX_FIELDS_PER_SECTION = 60;
 
   /** The cms-content.js text. `pages` is [{ file, title, sections: [{ id, slug, title, fields: [...] }] }]. */
-  function buildContent({ site, pages, published = {}, updatedAt = 0 }) {
+  function buildContent({ site, pages, published = {}, updatedAt = 0, forms = null }) {
     const data = {
       v: 1,
       site: site || 'Website',
@@ -25,6 +25,7 @@
           id: s.id,
           slug: s.slug,
           title: s.title,
+          ...(s.hasForm ? { form: true } : {}),
           fields: s.fields.map(f => {
             const out = { id: f.id, label: f.label, type: f.type, selector: f.selector, value: f.value };
             if (f.attr) out.attr = f.attr;
@@ -33,6 +34,7 @@
           })
         }))
       })),
+      forms: forms && typeof forms === 'object' ? { method: String(forms.method || ''), target: String(forms.target || ''), has: !!forms.has } : { method: '', target: '', has: false },
       published
     };
     // '<' is escaped so no editable text can close a script tag
@@ -60,7 +62,7 @@ How it works:
 2. Change content and press **Publish**. The site you open in the same browser shows the changes straight away.
 3. Open **Publishing & backup**, press **Download cms-content.js** and upload that file over the old one, next to \`index.html\`. Every visitor then sees the new content.
 
-Files: \`admin.html\`, \`admin.css\`, \`admin.js\` (the editor), \`cms.js\` (applies the content on ${pageFiles.length > 1 ? 'every page' : 'the page'}) and \`cms-content.js\` (the list of editable fields and the published content).
+Files: \`admin.html\`, \`admin.css\`, \`admin.js\` (the editor), \`form-rules.js\` (the checks for the Form messages tab), \`cms.js\` (applies the content on ${pageFiles.length > 1 ? 'every page' : 'the page'}) and \`cms-content.js\` (the list of editable fields and the published content).
 
 There is no login. Anyone who can open \`admin.html\` can edit in their own browser, but only the \`cms-content.js\` you upload changes the live site. If you do not want the editor to be public, do not upload \`admin.html\`, \`admin.css\` and \`admin.js\` to the host and keep them on your own computer next to a copy of the site. Re-export from the builder when you add or remove sections, because the editor's field list is fixed at export time.
 `;
@@ -103,6 +105,8 @@ There is no login. Anyone who can open \`admin.html\` can edit in their own brow
           const found = root ? discoverFields(root, explicit, { limit: MAX_FIELDS_PER_SECTION }) : [];
           result.push({
             id: s.id, slug: s.slug, title: s.title,
+            // a section with a message form also shows the "where should messages go" card in the editor
+            hasForm: !!(root && root.querySelector('form[data-edv-form="message"]')),
             // a picture also carries how it fills its frame (crop or fit, focus, zoom), as the builder has it
             fields: found.map(f => {
               const out = { id: f.id, label: f.label, type: f.type, selector: f.selector, attr: f.attr, value: String(f.current == null ? '' : f.current) };
@@ -141,6 +145,7 @@ There is no login. Anyone who can open \`admin.html\` can edit in their own brow
     return files['admin.html']
       .replace('<link rel="stylesheet" href="admin.css">', () => `<style>${files['admin.css']}</style>`)
       .replace('<script src="cms-content.js"></script>', () => inlineScript(files['cms-content.js']) + `\n  <script>window.EDV_CMS_FRAMES=${framesJson};</script>`)
+      .replace('<script src="form-rules.js"></script>', () => inlineScript(files['form-rules.js']))
       .replace('<script src="admin.js"></script>', () => inlineScript(files['admin.js']));
   }
 

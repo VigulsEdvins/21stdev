@@ -27,6 +27,7 @@
         input.focus();
         return;
       }
+      form.dispatchEvent(new CustomEvent('edv:submitted', { bubbles: true }));
       btn.disabled = true;
       say('Subscribing...');
       // Replace this timer with a request to your own newsletter service

@@ -105,5 +105,5 @@
   start();
 
   var form = document.getElementById('mgForm'), note = document.getElementById('mgNote');
-  form.addEventListener('submit', function (e) { e.preventDefault(); note.textContent = 'Thank you. The next issue is on its way.'; form.reset(); });
+  form.addEventListener('submit', function (e) { e.preventDefault(); form.dispatchEvent(new CustomEvent('edv:submitted', { bubbles: true })); note.textContent = 'Thank you. The next issue is on its way.'; form.reset(); });
 })();

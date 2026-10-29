@@ -38,6 +38,7 @@
       // With an address in the form's action the browser sends it; without one this stays a demo.
       if (form.getAttribute('action')) return;
       e.preventDefault();
+      form.dispatchEvent(new CustomEvent('edv:submitted', { bubbles: true }));
       form.hidden = true;
       ok.hidden = false;
       ok.setAttribute('tabindex', '-1');

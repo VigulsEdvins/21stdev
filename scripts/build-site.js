@@ -87,7 +87,9 @@ function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
   for (const dir of RUN_TIME_DIRS) {
     walk(path.join(ROOT, dir), (from, rel) => {
       if (dir === 'features' && SKIP_IN_FEATURES.test(rel)) return;
-      copyFile(from, path.join(B, dir, rel)); n++;
+      const to = path.join(B, dir, rel);
+      if (fs.existsSync(to)) return; // already staged because builder.html loads it (scripts/cms/form-rules.js)
+      copyFile(from, to); n++;
     });
   }
   for (const dir of ROOT_DIRS) walk(path.join(ROOT, dir), (from, rel) => { copyFile(from, path.join(out, dir, rel)); n++; });

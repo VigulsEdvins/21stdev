@@ -469,6 +469,7 @@
         const html = window.BuilderCms.buildPreviewPage({ files: cms.files, docs: cms.docs });
         window.__cmsBridge = {
           setOverride: (sectionId, fieldId, value, def) => stackManager.setSectionOverride(sectionId, fieldId, value, def),
+          setForm: (method, target) => stackManager.setPage({ formMethod: method, formTarget: target }),
           close: closeAdmin
         };
         // the editor page needs inline scripts and styles: it goes into the frame page that has its own policy (frame-doc.js), not a blob: URL, which would take the builder page's strict one

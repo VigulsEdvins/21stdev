@@ -84,7 +84,7 @@
   var form = document.getElementById("nsForm"), mail = document.getElementById("nsMail"), msg = document.getElementById("nsMsg");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (/^\S+@\S+\.\S+$/.test(mail.value)) { msg.textContent = "Thanks, the next letter is on its way."; mail.value = ""; }
+    if (/^\S+@\S+\.\S+$/.test(mail.value)) { form.dispatchEvent(new CustomEvent("edv:submitted", { bubbles: true })); msg.textContent = "Thanks, the next letter is on its way."; mail.value = ""; }
     else msg.textContent = "Please enter a valid email address.";
   });
 })();

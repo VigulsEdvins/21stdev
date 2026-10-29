@@ -21,7 +21,7 @@
   open.addEventListener('click', function () { cur = 0; show(form); render(); open.setAttribute('aria-expanded', 'true'); var f = form.querySelector('input'); if (f) f.focus(); });
   next.addEventListener('click', function () {
     var m = valid(); if (m) { err.textContent = m; return; }
-    if (cur < steps.length - 1) { cur++; render(); } else { show(done); done.focus(); }
+    if (cur < steps.length - 1) { cur++; render(); } else { form.dispatchEvent(new CustomEvent('edv:submitted', { bubbles: true })); show(done); done.focus(); }
   });
   back.addEventListener('click', function () { if (cur > 0) { cur--; render(); } else { show(front); open.setAttribute('aria-expanded', 'false'); open.focus(); } });
   document.getElementById('icReset').addEventListener('click', function () { form.reset(); show(front); open.setAttribute('aria-expanded', 'false'); open.focus(); });

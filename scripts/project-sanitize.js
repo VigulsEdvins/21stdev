@@ -12,7 +12,8 @@
   const MAX_TEXT = 5000;
   const ID_RE = /^[A-Za-z0-9_-]{1,80}$/;
   const SLUG_RE = /^[a-z0-9][a-z0-9-]{0,99}$/i;
-  const PAGE_KEYS = ['title', 'description', 'favicon', 'fontDisplay', 'fontBody', 'lang', 'radius', 'shareImage', 'canonical', 'robots', 'bizType', 'bizName', 'bizPhone', 'bizEmail', 'bizAddress'];
+  const PAGE_KEYS = ['title', 'description', 'favicon', 'fontDisplay', 'fontBody', 'lang', 'radius', 'shareImage', 'canonical', 'robots', 'bizType', 'bizName', 'bizPhone', 'bizEmail', 'bizAddress', 'formMethod', 'formTarget'];
+  const FORM_METHODS = /^(netlify|email|formspree|web3forms|whatsapp|mailto|custom)$/; // same ids as scripts/form-delivery.js (a test keeps them equal)
   const URL_KEYS = /^(link|ctaLink|imageUrl|href|src|url)$/i;
 
   function newCounter() { return { n: 0 }; }
@@ -155,6 +156,7 @@
     const page = src.page && typeof src.page === 'object' ? src.page : {};
     PAGE_KEYS.forEach(k => { if (typeof page[k] === 'string') out.page[k] = text(page[k], 1000, counter); });
     ['shareImage', 'canonical'].forEach(k => { if (out.page[k]) out.page[k] = /^https?:\/\//i.test(out.page[k]) ? out.page[k] : (counter.n++, ''); });
+    if (out.page.formMethod && !FORM_METHODS.test(out.page.formMethod)) { out.page.formMethod = ''; out.page.formTarget = ''; counter.n++; }
     if (out.page.favicon) out.page.favicon = safeUrl(out.page.favicon, counter);
     return { state: out, removed: counter.n };
   }

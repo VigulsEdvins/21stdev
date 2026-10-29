@@ -12,6 +12,7 @@
       msg.className = "ow-msg is-err"; msg.textContent = "That email does not look right. Please check it.";
       return;
     }
+    form.dispatchEvent(new CustomEvent("edv:submitted", { bubbles: true }));
     n += 1; count.textContent = n.toLocaleString("en-US");
     msg.className = "ow-msg is-ok"; msg.textContent = "You are on the list. Thank you!";
     input.value = "";

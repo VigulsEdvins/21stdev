@@ -148,3 +148,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .cms-image-row { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .cms-card { transition: none; } }
+
+/* Form messages tab */
+.cms-card-body { display: grid; gap: 6px; }
+.cms-card-body[hidden] { display: none; }
+.cms-hint.cms-error { color: #ff8a8a; }
+.cms-input[aria-invalid="true"] { border-color: #ff8a8a; }

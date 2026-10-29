@@ -9,7 +9,7 @@
   const MAX_SNAPSHOTS = 20;
   // Version of the project file format. Bump it when the shape of a saved page changes and add a step to MIGRATIONS.
   const CURRENT_VERSION = 4;
-  const PAGE_DEFAULTS = { title: 'Assembled Web Page', description: '', favicon: '', fontDisplay: '', fontBody: '', lang: 'en', radius: '', shareImage: '', canonical: '', robots: '', bizType: '', bizName: '', bizPhone: '', bizEmail: '', bizAddress: '' };
+  const PAGE_DEFAULTS = { title: 'Assembled Web Page', description: '', favicon: '', fontDisplay: '', fontBody: '', lang: 'en', radius: '', shareImage: '', canonical: '', robots: '', bizType: '', bizName: '', bizPhone: '', bizEmail: '', bizAddress: '', formMethod: '', formTarget: '' };
 
   /**
    * Steps that bring a page state saved by an older version up to the next one, keyed by the version they start from.

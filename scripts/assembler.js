@@ -2494,7 +2494,7 @@ ${allScripts}
   <script>
 ${OVERRIDES_RUNTIME}
 window.__setOverrides(${JSON.stringify(collectOverrides(sections)).replace(/</g, '\\u003c')});
-  </script>
+  </script>${options.formNote && formDelivery() && formDelivery().previewJs(options.page) ? '\n  <script>\n' + formDelivery().previewJs(options.page) + '\n  </script>' : ''}
 </body>
 </html>`;
 }
@@ -2572,7 +2572,7 @@ function renderJsonLd(page = {}, title = '') {
  * Content-Security-Policy for the ZIP export. Scripts may only come from the page itself and the CDNs the page really
  * uses; inline event handlers, inline scripts or eval need a weaker rule and are named in `reasons` so the README can say so.
  */
-function renderCsp(indexHtml = '', scriptJs = '') {
+function renderCsp(indexHtml = '', scriptJs = '', opts = {}) {
   const reasons = [];
   const hosts = new Set();
   const scriptSrcRe = /<script\b[^>]{0,500}\bsrc\s*=\s*["'](?:https?:)?\/\/([^/"']+)/gi;
@@ -2590,6 +2590,14 @@ function renderCsp(indexHtml = '', scriptJs = '') {
     scriptSrc.push("'unsafe-eval'");
     reasons.push('eval() in a section script');
   }
+  // Connections: when the page has message forms and no section script makes network calls of its own, only this site and the known
+  // form services (plus the own address chosen for the forms) are allowed, so a script that slips in cannot send data anywhere else.
+  const ownScript = opts.runtimeJs ? String(scriptJs).split(opts.runtimeJs).join('') : String(scriptJs);
+  const networkRe = /\b(fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon)\b/;
+  const narrowConnect = !!opts.formsReady && !networkRe.test(ownScript) && !networkRe.test(body);
+  const connectSrc = narrowConnect
+    ? ["'self'", 'https://formsubmit.co', 'https://formspree.io', 'https://api.web3forms.com'].concat(opts.customHost ? [opts.customHost] : [])
+    : ["'self'", 'https:', 'data:', 'blob:'];
   const policy = [
     "default-src 'self'",
     'script-src ' + scriptSrc.join(' '),
@@ -2597,13 +2605,13 @@ function renderCsp(indexHtml = '', scriptJs = '') {
     "img-src 'self' data: blob: https:",
     "font-src 'self' data: https://fonts.gstatic.com",
     "media-src 'self' data: blob: https:",
-    "connect-src 'self' https: data: blob:",
+    'connect-src ' + connectSrc.join(' '),
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self' https:"
   ].join('; ');
-  return { policy, strict: reasons.length === 0, reasons };
+  return { policy, strict: reasons.length === 0, reasons, narrowConnect };
 }
 
 /**
@@ -2640,6 +2648,11 @@ function mapPageLinks(sections, links = {}) {
 }
 
 /** The shared guide text (scripts/deploy-guide.js): a require in Node, a script tag in the builder. */
+/** Where form messages go (scripts/form-delivery.js); null when that file is not loaded. */
+function formDelivery() {
+  return (typeof module !== 'undefined' && module.exports) ? require('./form-delivery.js') : (typeof window !== 'undefined' ? window.FormDelivery : null) || null;
+}
+
 function deployGuide() {
   return (typeof module !== 'undefined' && module.exports) ? require('./deploy-guide.js') : window.DeployGuide;
 }
@@ -3409,6 +3422,11 @@ ${OVERLAY_ELEMENT_CSS}
 ${pageHead.css ? `\n/* Page fonts */\n${pageHead.css}\n` : ''}
 ${renderNativePaletteCss(safeSections, options.nativeMap)}`;
 
+  // Forms: the chosen route for form messages (page settings) is applied to the exported page only, never to the preview
+  const fdMod = formDelivery();
+  const deliveredIndex = fdMod ? fdMod.prepareHtml(indexHtml, pageOpts) : indexHtml;
+  const deliveryJs = fdMod && deliveredIndex !== indexHtml ? fdMod.runtimeJs() : '';
+
   // 3. script.js
   const scriptJs = `/**
  * Assembled Page Scripts
@@ -3513,7 +3531,7 @@ ${allScripts || '  // No section scripts'}
 // Client content edits made in the builder (headlines, images, links). Change a value here and reload.
 ${OVERRIDES_RUNTIME}
 window.__setOverrides(${JSON.stringify(collectOverrides(safeSections), null, 2)});
-${options.review ? '\n// Review copy: lets a reviewer leave comments on the page and send them back as a file\n' + REVIEW_RUNTIME + '\n' : ''}`;
+${deliveryJs ? '\n// Form messages: sends the form to the place chosen in the builder (see DEPLOY.md, "Contact forms")\n' + deliveryJs + '\n' : ''}${options.review ? '\n// Review copy: lets a reviewer leave comments on the page and send them back as a file\n' + REVIEW_RUNTIME + '\n' : ''}`;
 
   // 4. README.md
   const unverifiedLicences = sectionInfoList.filter(sec => (options.licenseMap || {})[sec.slug] === 'unverified');
@@ -3603,12 +3621,14 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
 \`\`\`
 `;
 
-  let finalIndex = indexHtml;
+  let finalIndex = deliveredIndex;
   let cspNote = '';
   if (options.csp) {
-    const csp = renderCsp(indexHtml, scriptJs);
-    finalIndex = indexHtml.replace('<meta charset="UTF-8">', `<meta charset="UTF-8">\n  <meta http-equiv="Content-Security-Policy" content="${escapeHtml(csp.policy)}">`);
-    cspNote = `\n## Security policy\n\nindex.html carries a Content-Security-Policy that only lets scripts run from this site${csp.strict ? '' : ' (relaxed because of: ' + csp.reasons.join(', ') + ')'} and from the CDNs this page uses. If you add a new third-party script, add its address to \`script-src\` in the \`<meta http-equiv="Content-Security-Policy">\` tag.\n`;
+    const fdPage = fdMod ? fdMod.fromPage(pageOpts) : null;
+    const customHost = fdPage && fdPage.ok && fdPage.method === 'custom' ? (/^https:\/\/[^/]+/.exec(fdPage.target) || [''])[0] : '';
+    const csp = renderCsp(deliveredIndex, scriptJs, { runtimeJs: deliveryJs, formsReady: !!deliveryJs, customHost });
+    finalIndex = deliveredIndex.replace('<meta charset="UTF-8">', `<meta charset="UTF-8">\n  <meta http-equiv="Content-Security-Policy" content="${escapeHtml(csp.policy)}">`);
+    cspNote = `\n## Security policy\n\nindex.html carries a Content-Security-Policy that only lets scripts run from this site${csp.strict ? '' : ' (relaxed because of: ' + csp.reasons.join(', ') + ')'} and from the CDNs this page uses.${csp.narrowConnect ? ' Connections are limited to this site and the form services (FormSubmit, Formspree, Web3Forms, and the own address chosen for the forms): if you later pick another own address for the forms, add its address to \`connect-src\`.' : ''} If you add a new third-party script, add its address to \`script-src\` in the \`<meta http-equiv="Content-Security-Policy">\` tag.\n`;
   }
   return Object.assign({
     'index.html': finalIndex,
@@ -3623,8 +3643,11 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
   const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette, pageLinks: options.pageLinks });
-  return doc
-    .replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
+  const clean = doc.replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
+  const fd = formDelivery();
+  const delivered = fd ? fd.prepareHtml(clean, options.page) : clean;
+  if (delivered === clean) return clean;
+  return delivered.replace(/<\/body>/i, () => '<script>\n' + fd.runtimeJs() + '\n</script>\n</body>');
 }
 
 /**

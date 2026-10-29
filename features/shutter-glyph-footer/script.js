@@ -34,7 +34,7 @@
   var form = document.getElementById("weForm"), mail = document.getElementById("weMail"), msg = document.getElementById("weMsg");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (/^\S+@\S+\.\S+$/.test(mail.value)) { msg.textContent = "Noted. We will be in touch."; mail.value = ""; }
+    if (/^\S+@\S+\.\S+$/.test(mail.value)) { form.dispatchEvent(new CustomEvent("edv:submitted", { bubbles: true })); msg.textContent = "Noted. We will be in touch."; mail.value = ""; }
     else msg.textContent = "That email does not look right.";
   });
   Array.prototype.forEach.call(foot.querySelectorAll("a"), function (a) { a.addEventListener("click", function (e) { e.preventDefault(); }); });
