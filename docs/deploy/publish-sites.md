@@ -115,7 +115,7 @@ A blocked site cannot be changed by its owner. People who report a site can writ
 
 ## Renaming (added 2026-10-30)
 
-Needs the database function in `supabase/migrations/20261030210000_rename_site.sql` **before** the matching main-site code goes live (apply the file first, then push). A site can be renamed twice in 30 days; the old address redirects to the new one for 90 days and stays reserved for its owner. Nothing to set up in Cloudflare.
+Needs the database function in `supabase/migrations/20261030210000_rename_site.sql` **before** the matching main-site code goes live (apply the file first, then push). A site can be renamed twice in 30 days; the old address redirects to the new one for 90 days and stays reserved for its owner. Nothing to set up in Cloudflare. **Applied 2026-10-30 to the `edvlabs` project** and tested on the real database inside a block that always rolls back (normal rename, the old name's 90-day hold, no redirect chains, same name, name taken, held by someone else, twice-in-30-days limit, blocked site, wrong owner, renaming back to one's own held name, an expired hold taken over, the table's own name rule); nothing was left behind, and only the server's key can run the function.
 
 ## What runs by itself every hour
 
