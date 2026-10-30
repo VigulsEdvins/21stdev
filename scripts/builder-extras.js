@@ -65,6 +65,32 @@
     return Array.from(el.children).every(c => INLINE_TAGS.has(c.tagName) && !c.querySelector('*:not(br):not(b):not(i):not(em):not(strong):not(span)'));
   }
 
+  const STYLED_RUN = /^(SPAN|B|I|EM|STRONG|SMALL|MARK|U|SUB|SUP)$/;
+  // a plain styled run (the gradient half of a headline): nothing inside but more of the same and line breaks;
+  // a decorative one (an icon font glyph) is not words
+  function isStyledRun(el) {
+    if (!STYLED_RUN.test(el.tagName) || el.getAttribute('aria-hidden') === 'true' || /icon|glyph/i.test(el.getAttribute('class') || '')) return false;
+    return Array.from(el.children).every(c => c.tagName === 'BR' || isStyledRun(c));
+  }
+
+  /**
+   * The words of an element as a field shows them: one line per <br>, the source's indentation gone.
+   * It follows the same walk as setText (the override runtime in assembler.js), which gives each line back to its own
+   * part of the element: text and plain styled runs are lines of words, any other child (a link) adds its words.
+   */
+  function textWithBreaks(el) {
+    let out = '';
+    (function walk(node) {
+      node.childNodes.forEach(c => {
+        if (c.nodeType === 3) out += c.nodeValue;
+        else if (c.nodeType === 1 && c.tagName === 'BR') out += '\n';
+        else if (c.nodeType === 1 && isStyledRun(c)) walk(c);
+        else if (c.nodeType === 1 && !/^(SCRIPT|STYLE)$/.test(c.tagName)) out += c.textContent;
+      });
+    })(el);
+    return out.split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean).join('\n');
+  }
+
   function snippet(text, n = 34) {
     const t = text.replace(/\s+/g, ' ').trim();
     return t.length > n ? t.slice(0, n - 1) + '…' : t;
@@ -119,7 +145,7 @@
         try { el = sectionEl.querySelector(def.selector); } catch (_) { /* bad selector in meta */ }
         if (!el) return;
         const type = def.type || 'text';
-        const current = type === 'image' ? (el.getAttribute('src') || backgroundUrl(el, sectionEl.ownerDocument.defaultView || window)) : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? currentColor(el, def.attr || 'color') : el.textContent.trim();
+        const current = type === 'image' ? (el.getAttribute('src') || backgroundUrl(el, sectionEl.ownerDocument.defaultView || window)) : type === 'link' ? (el.getAttribute('href') || '') : type === 'color' ? currentColor(el, def.attr || 'color') : textWithBreaks(el);
         fields.push({ id: def.id, label: def.label || def.id, type, selector: def.selector, attr: def.attr, current, auto: false });
         if (type !== 'color') named.push(el); // a colour field styles a whole block; its content stays editable
       });
@@ -144,7 +170,7 @@
       // a lone currency sign becomes a currency choice, a plain number a numbers-only field
       const isCur = CURRENCIES.some(c => c[0] && c[0] === text);
       const isNum = !isCur && /^[0-9]+([.,][0-9]+)?$/.test(text) && text.length <= 8;
-      fields.push({ id: `auto-${shortHash(selector + 'text')}`, label: isCur ? 'Currency' : isNum ? `Number: ${text}` : `${TAG_LABELS[el.tagName.toLowerCase()] || 'Text'}: ${snippet(text)}`, type: isCur ? 'currency' : isNum ? 'number' : 'text', selector, current: text, auto: true });
+      fields.push({ id: `auto-${shortHash(selector + 'text')}`, label: isCur ? 'Currency' : isNum ? `Number: ${text}` : `${TAG_LABELS[el.tagName.toLowerCase()] || 'Text'}: ${snippet(text)}`, type: isCur ? 'currency' : isNum ? 'number' : 'text', selector, current: isCur || isNum ? text : textWithBreaks(el), auto: true });
       textCount++;
     });
 
@@ -646,12 +672,13 @@
         const value = ov ? ov.value : f.current;
         const wrap = doc.createElement('div');
         wrap.className = 'content-field' + (ov ? ' is-edited' : '');
-        const long = f.type === 'text' && (value.length > 60 || value.includes('\n'));
+        const long = f.type === 'text'; // a textarea, so Enter makes a new line on the page
+        const tall = long && (value.length > 60 || value.includes('\n'));
         const isData = f.type === 'image' && /^data:/.test(value);
         wrap.innerHTML = `
           <label class="ps-field">
             <span>${escapeHtml(f.label)}${ov ? ' <em class="content-edited-dot" title="Edited">●</em>' : ''}</span>
-            ${long ? `<textarea rows="3"></textarea>` : `<input type="${f.type === 'image' || f.type === 'link' ? 'text' : f.type === 'color' ? 'color' : 'text'}" autocomplete="off" />`}
+            ${long ? `<textarea rows="${tall ? 3 : 1}"></textarea>` : `<input type="${f.type === 'image' || f.type === 'link' ? 'text' : f.type === 'color' ? 'color' : 'text'}" autocomplete="off" />`}
           </label>
           ${f.type === 'image' ? `<div class="content-image-row"><img class="content-thumb" alt="" src="${escapeHtml(value)}"${value ? '' : ' hidden'} /><button type="button" class="builder-btn-subtle content-upload">Upload…</button><input type="file" accept="image/*" hidden /></div><label class="ps-field content-alt"><span>Picture description (alt text)</span><input type="text" class="content-alt-input" autocomplete="off" maxlength="200" placeholder="Describe what the picture shows" /></label><p class="content-hint">Uploads are shrunk and kept in your browser. For large photos, host them and paste the URL above. The description is read by screen readers and search engines.</p>` : ''}
           ${f.type === 'image' ? `<div class="content-fit-row"><div class="content-crop" hidden title="Drag to move the picture, scroll to zoom"></div><label class="ps-field"><span>Picture size</span><select class="builder-select content-fit"><option value="cover">Fill the frame (crop)</option><option value="contain">Fit whole picture</option></select></label><label class="ps-field"><span>Move left / right</span><input type="range" class="content-fx" min="0" max="100" step="1" /></label><label class="ps-field"><span>Move up / down</span><input type="range" class="content-fy" min="0" max="100" step="1" /></label><label class="ps-field"><span>Zoom</span><input type="range" class="content-fz" min="100" max="300" step="5" /></label><p class="content-hint">Drag the picture in the frame above (scroll to zoom), or use the sliders, until the main part sits in the frame.</p></div>` : ''}

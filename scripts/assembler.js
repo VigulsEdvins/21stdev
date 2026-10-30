@@ -3157,13 +3157,100 @@ const OVERRIDES_RUNTIME = `(function () {
     else if (key === 'svgpic') { if (value && value.parentNode) value.parentNode.removeChild(value); el.__cmsPic = null; }
     else if (key.indexOf('style:') === 0) { if (value) el.style.setProperty(key.slice(6), value); else el.style.removeProperty(key.slice(6)); }
   }
+  var STYLED = /^(SPAN|B|I|EM|STRONG|SMALL|MARK|U|SUB|SUP)$/;
+  // A child whose words belong to the field: a plain styled run (the gradient half of a headline), nothing inside it
+  // but more of the same and line breaks. Decorative runs (an icon font glyph) are not words; links, buttons, icons
+  // and pictures stay as they are too.
+  function styledRun(c) {
+    if (!STYLED.test(c.tagName) || c.getAttribute('aria-hidden') === 'true' || /icon|glyph/i.test(c.getAttribute('class') || '')) return false;
+    for (var k = c.firstElementChild; k; k = k.nextElementSibling) if (k.tagName !== 'BR' && !styledRun(k)) return false;
+    return true;
+  }
+  // What an element says in reading order, in lines that a <br> ends. A part is a text node we may change, or
+  // { fixed: words } for an element that keeps its own words (a link): it counts as text but is never changed.
+  function textLines(el, lines) {
+    lines = lines || [[]];
+    for (var n = el.firstChild; n; n = n.nextSibling) {
+      if (n.nodeType === 3) lines[lines.length - 1].push(n);
+      else if (n.nodeType === 1 && n.tagName === 'BR') lines.push([]);
+      else if (n.nodeType === 1 && styledRun(n)) textLines(n, lines);
+      else if (n.nodeType === 1 && !/^(SCRIPT|STYLE)$/.test(n.tagName)) lines[lines.length - 1].push({ fixed: n.textContent, node: n });
+    }
+    return lines;
+  }
+  function wordsOf(part) { return part.fixed !== undefined ? part.fixed : part.nodeValue; }
+  // Puts newText where the old words were: what the old and new text share at the start and end stays where it was
+  // (so a bold word nobody touched stays bold, a link stays), the part in between goes into the text node it starts in.
+  function patchParts(parts, newText) {
+    var old = parts.map(wordsOf).join('');
+    if (old === newText) return;
+    var p = 0, max = Math.min(old.length, newText.length);
+    while (p < max && old.charAt(p) === newText.charAt(p)) p++;
+    var s = 0;
+    while (s < max - p && old.charAt(old.length - 1 - s) === newText.charAt(newText.length - 1 - s)) s++;
+    var cutFrom = p, cutTo = old.length - s, insert = newText.slice(p, newText.length - s);
+    var spans = [], at = 0;
+    parts.forEach(function (t) { var w = wordsOf(t); spans.push({ t: t, from: at, to: at + w.length }); at += w.length; });
+    var editable = spans.filter(function (x) { return x.t.fixed === undefined; });
+    var target = null;
+    // words replaced: the run the old words started in; words only added: the run they follow
+    editable.forEach(function (x) { if (!target && x.from <= cutFrom && (cutFrom < x.to || (cutTo === cutFrom && cutFrom === x.to))) target = x; });
+    if (!target) editable.forEach(function (x) { if (!target && x.from >= cutFrom) target = x; });
+    if (!target) target = editable[editable.length - 1];
+    editable.forEach(function (x) {
+      var v = x.t.nodeValue, a = Math.min(Math.max(cutFrom, x.from) - x.from, v.length), b = Math.max(Math.min(cutTo, x.to) - x.from, 0);
+      if (x === target) x.t.nodeValue = v.slice(0, a) + insert + v.slice(Math.max(a, b));
+      else if (b > a) x.t.nodeValue = v.slice(0, a) + v.slice(b);
+    });
+  }
+  // The line breaks and lines that an earlier edit added are ours to remove before the next edit.
+  function dropMade(el) {
+    Array.prototype.slice.call(el.childNodes).forEach(function (n) {
+      if (n.__cmsMade) el.removeChild(n);
+      else if (n.nodeType === 1) dropMade(n);
+    });
+  }
+  // Adds each line after the node "after" (or at the end of "parent" when there is none), a <br> before every one.
+  function addLines(parent, after, rows) {
+    var at = after ? after.nextSibling : null, box = after ? after.parentNode : parent;
+    rows.forEach(function (row, i) {
+      var nodes = [];
+      if (after || i) nodes.push(document.createElement('br'));
+      nodes.push(document.createTextNode(row));
+      nodes.forEach(function (n) { n.__cmsMade = true; box.insertBefore(n, at); });
+    });
+  }
   // Replaces the words of an element without destroying elements inside it (a link, an icon, another editable field):
-  // when it has child elements, only its own text nodes change.
+  // when it has child elements, the words in its own text and in plain styled runs (a gradient <span>) change.
+  // A line break in the value goes to the next part of the text, the way the field shows it (one line per <br>).
   function setText(el, value) {
-    if (!el.children.length) { el.textContent = value; return; }
-    var texts = [];
-    for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && n.nodeValue.trim()) texts.push(n);
-    if (!texts.length) {
+    dropMade(el);
+    if (!el.children.length) {
+      // no element inside: a new line in the value is a line break on the page
+      var rows = String(value).split(/\\r?\\n/);
+      if (rows.length === 1) { el.textContent = value; return; }
+      el.textContent = '';
+      addLines(el, null, rows);
+      return;
+    }
+    // every edit starts from the words the page came with, not from the previous edit (the field is applied again
+    // on each keystroke, and the changes of two edits would otherwise pile up)
+    textLines(el).forEach(function (parts) {
+      parts.forEach(function (t) {
+        if (t.fixed !== undefined) return;
+        if (t.__cmsWords === undefined) t.__cmsWords = t.nodeValue; else t.nodeValue = t.__cmsWords;
+      });
+    });
+    // the blank source indentation at the ends of a line is not words; spaces between two parts are
+    var lines = [];
+    textLines(el).forEach(function (parts) {
+      var from = 0, to = parts.length;
+      while (from < to && !wordsOf(parts[from]).trim()) from++;
+      while (to > from && !wordsOf(parts[to - 1]).trim()) to--;
+      if (to > from) lines.push(parts.slice(from, to));
+    });
+    var editable = lines.filter(function (parts) { return parts.some(function (t) { return t.fixed === undefined; }); });
+    if (!editable.length) {
       // the words live in a child (a button whose label is a <span>): change those, not add a second set next to them
       for (var c = el.firstElementChild; c; c = c.nextElementSibling) {
         if (c.textContent.trim()) { setText(c, value); return; }
@@ -3171,8 +3258,28 @@ const OVERRIDES_RUNTIME = `(function () {
       el.insertBefore(document.createTextNode(value), el.firstChild);
       return;
     }
-    texts[0].nodeValue = value;
-    for (var i = 1; i < texts.length; i++) texts[i].nodeValue = '';
+    var said = String(value).split(/\\r?\\n/);
+    // more lines than the heading has: each extra one becomes a new line after the last, with a line break
+    var extra = said.slice(lines.length);
+    lines.forEach(function (parts, i) {
+      if (parts.every(function (t) { return t.fixed !== undefined; })) return;
+      var text = (i < said.length ? said[i] : '').replace(/\\s+/g, ' ').trim();
+      if (parts.map(wordsOf).join('').replace(/\\s+/g, ' ').trim() === text) return;
+      // work on the words alone: collapse the whitespace the way the page shows it, then patch
+      var first = parts[0], last = parts[parts.length - 1];
+      var lead = first.fixed === undefined && /^\\s/.test(first.nodeValue), tail = last.fixed === undefined && /\\s$/.test(last.nodeValue);
+      parts.forEach(function (t) { if (t.fixed === undefined) t.nodeValue = t.nodeValue.replace(/\\s+/g, ' '); });
+      if (first.fixed === undefined) first.nodeValue = first.nodeValue.replace(/^ /, '');
+      if (last.fixed === undefined) last.nodeValue = last.nodeValue.replace(/ $/, '');
+      patchParts(parts, text);
+      if (lead) first.nodeValue = ' ' + first.nodeValue;
+      if (tail) last.nodeValue = last.nodeValue + ' ';
+    });
+    if (extra.length) {
+      var end = lines[lines.length - 1];
+      end = end[end.length - 1];
+      addLines(null, end.fixed !== undefined ? end.node : end, extra);
+    }
   }
   // A picture's fit, from "cover", "contain" or "cover|50|20|150" (mode, focus x %, focus y %, zoom %).
   // The older words top, bottom, left, right and center still work as the focus.
