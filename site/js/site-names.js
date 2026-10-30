@@ -14,7 +14,8 @@
     'billing', 'checkout', 'status', 'support', 'help', 'contact', 'about', 'legal', 'privacy', 'terms', 'account', 'accounts', 'login', 'signin', 'signup',
     'register', 'auth', 'oauth', 'sso', 'dashboard', 'builder', 'editor', 'preview', 'demo', 'test', 'staging', 'dev', 'beta', 'sandbox', 'localhost',
     'edvlabs', 'edv', 'sites', 'site', 'web', 'webmail', 'secure', 'security', 'abuse', 'postmaster', 'hostmaster', 'webmaster', 'noreply', 'info', 'sales',
-    'examples', 'example', 'yearbook', 'arena', 'roster'];
+    'examples', 'example', 'yearbook', 'arena', 'roster',
+    'send', 'rsend', 'resend']; // send and rsend are the sending-mail records of Resend in the DNS (DNS only, never a site)
 
   /* Brand names that would make a page look like a bank, shop or payment page. Matched anywhere in the name (hyphens removed); short everyday words such as “apple” or “visa” are left out so ordinary names are not caught. */
   const LOOKALIKES = ['paypal', 'stripe', 'swedbank', 'revolut', 'citadele', 'luminor', 'mastercard', 'amazon', 'google', 'microsoft',

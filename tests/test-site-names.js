@@ -7,7 +7,7 @@ const bad = {
   empty: ['', '   ', null, undefined], short: ['ab', 'a'], long: ['abcdefghij'.repeat(3) + 'k'],
   characters: ['ba kery', 'bäckerei', 'a_b_c', 'a.b.c', 'shop!!', 'xn-abc', 'a/b', '../etc'],
   hyphen: ['-abc', 'abc-', 'a--b', 'xn--abc'],
-  reserved: ['www', 'API', 'admin', 'edvlabs', 'builder', 'ns1', 'login'],
+  reserved: ['www', 'API', 'admin', 'edvlabs', 'builder', 'ns1', 'login', 'send', 'rsend', 'resend'],
   lookalike: ['paypal', 'paypal-login', 'my-swedbank', 'amazon-deals', 'g00gle-search', 'str1pe-pay'],
   blocked: ['porn', 'p0rn', 'pornhub', 'free-porn', 'sex', 'sex-shop', 's3x', 'xxx', 'x-x-x-porn', 'poooorn', 'fuuuck-it', 'f-u-c-k', 'nazi-store', 'h1tler', 'scam-city', 'escorts', 'meth-lab']
 };

@@ -69,11 +69,12 @@ Cloudflare dashboard → `edvlabs.com` → **DNS** → add record: type `AAAA`, 
 
 ### 5. `www` and other fixed addresses
 
-`wrangler.sites.jsonc` routes `*.edvlabs.com/*`, which also matches `www.edvlabs.com` unless something more specific takes it first. Check what `www` does today (a redirect rule, a custom domain on the main Worker, or nothing):
+The route `*.edvlabs.com/*` in `wrangler.sites.jsonc` catches **every proxied name** under edvlabs.com that has no more specific rule, including names that have their own server. (Grey-cloud "DNS only" names such as the mail records never pass through Workers, so they are safe.)
 
-- If it is a **redirect rule** or the main Worker's **custom domain**, those win over the wildcard route. Nothing to do.
-- If `www` is not set up, the sites Worker answers it with a plain "not found" page. Add a **Redirect Rule** (Rules → Redirect Rules): when hostname equals `www.edvlabs.com`, redirect to `https://edvlabs.com` (301, keep path).
-- Any future fixed address (`app.`, `api.`) needs its own route or custom domain on the Worker that should answer it.
+**Checked 2026-10-30 against the real DNS list:** the only proxied names are the wildcard `*` and the apex `edvlabs.com` (a Worker custom domain, which wins over the wildcard). `rsend` and `send` are Resend's DNS-only mail records, kept out of the site names (reserved in `site/js/site-names.js`). `prompts` was deleted by the owner. So only `www` needs handling: it has no record of its own, the wildcard catches it and it answered `522` until a redirect exists.
+
+- **Make `www` redirect to the main site:** Rules → Redirect Rules → create (or the template "Redirect from WWW to root"): when hostname equals `www.edvlabs.com`, dynamic redirect to `concat("https://edvlabs.com", http.request.uri.path)`, status 301, preserve query string. Redirect rules run before Workers, so this keeps working once the sites Worker is deployed. Check: `curl -sI https://www.edvlabs.com | head -3` shows `301` and `location: https://edvlabs.com/`.
+- **If you ever add a website under another proxied name** (for example `app.edvlabs.com` pointing at a server), also add a route `app.edvlabs.com/*` with the Worker set to **None** (Workers & Pages → Workers Routes), and add the name to `RESERVED` in `site/js/site-names.js`. A more specific route with no Worker wins over the wildcard. A name that is a Worker custom domain needs nothing.
 
 ### 6. Deploy
 
