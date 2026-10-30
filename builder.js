@@ -7,7 +7,7 @@
   'use strict';
 
   // Shared helpers live in scripts/builder/*.js (loaded first by builder.html; required in Node).
-  const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./scripts/builder/ui-helpers.js');
+  const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./scripts/builder/ui-helpers.js');
   const { getNormalizedCategory, matchesCategory } = (typeof window !== 'undefined' && window.BuilderCategories) || require('./scripts/builder/categories.js');
   const WIDGET_CATALOG_ITEMS = (typeof window !== 'undefined' && window.WidgetCatalog) || require('./scripts/builder/widget-catalog.js');
 
@@ -231,7 +231,6 @@
       addOrReplaceLandingSection, addWithTemplateGuard, getActiveSection, setActiveSection,
       handleHistoryKeydown, pushHistorySnapshot
     });
-    const { closeToolbarPopup, clearElementSelection, selectCanvasElement, updateToolbarPosition, ensureResizeHandles } = canvas;
 
     // Sidebar 3-Tab Controller
     function switchSidebarTab(tabName) {

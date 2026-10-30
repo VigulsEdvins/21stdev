@@ -7,7 +7,6 @@
  * dependencies, workflows), which selects everything again. --shard i/n then keeps every n-th slug so the
  * work can be split across parallel jobs. Prints NONE when nothing is left to check.
  */
-const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
 

@@ -60,7 +60,7 @@
     rep.addEventListener('input', update); first.addEventListener('input', update);
     return update;
   }
-  let meters = {}, matchers = [];
+  let meters = {};
 
   // each problem is shown under the box it is about
   function clearErrors() {
@@ -226,7 +226,7 @@
     captcha = makeCaptcha(cfg.turnstileSiteKey);
     ['p-pass', 'p-pass2', 'n-pass', 'n-pass2'].forEach(addToggle);
     meters.sign = addMeter('p-pass', () => $('p-email').value); meters.fresh = addMeter('n-pass', () => knownEmail || (pending && pending.email) || '');
-    matchers = [addMatch('p-pass2', 'p-pass'), addMatch('n-pass2', 'n-pass')];
+    addMatch('p-pass2', 'p-pass'); addMatch('n-pass2', 'n-pass');
     $('p-pass').maxLength = window.EdvPassword.MAX; $('n-pass').maxLength = window.EdvPassword.MAX;
 
     $('b-google').addEventListener('click', () => oauth('google')); $('b-github').addEventListener('click', () => oauth('github'));

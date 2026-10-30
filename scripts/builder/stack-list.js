@@ -10,7 +10,7 @@
   function createStackList(ctx) {
     const {
       LANDING_PAGE_SINGLETONS, featuresMap, getSingletonType, pageStackList, previewFrame, setActiveSection,
-      stackManager, updateActiveSectionUI, updatePreview, requestPreloaderReplay, getActiveSection
+      stackManager, updateActiveSectionUI, requestPreloaderReplay, getActiveSection
     } = ctx;
     const SECTION_CLIPBOARD_FORMAT = 'web-builder-section';
     let sectionClipboard = null;

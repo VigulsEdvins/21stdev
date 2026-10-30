@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
+  const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function createPageControls(ctx) {
     const {

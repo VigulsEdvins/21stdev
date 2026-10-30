@@ -11,7 +11,7 @@
 
   function createElementsCatalog(ctx) {
     const {
-      addOrReplaceLandingSection, addWithTemplateGuard, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
+      addWithTemplateGuard, canvas, catalogLib, catalogSearch, elementsFilters, getActiveSection,
       previewFrame, registry, setActiveSection, stackManager, updateActiveSectionUI
     } = ctx;
 
@@ -31,14 +31,12 @@
     let elementsScope = 'all'; // 'all' | 'widgets' | 'sections'
     let elementsQuick = null; // null | 'favourites' | 'recents'
     let elementsSimilarTo = null; // slug of the component results should resemble
-    let elementsVisualMode = true; // true = visual with live previews
 
     // -------------------------------------------------------------
     // View Switcher (Visual Cards with live previews vs Compact list)
     // -------------------------------------------------------------
     if (elementsViewVisualBtn && elementsViewCompactBtn) {
       elementsViewVisualBtn.addEventListener('click', () => {
-        elementsVisualMode = true;
         elementsViewVisualBtn.classList.add('is-active');
         elementsViewCompactBtn.classList.remove('is-active');
         if (elementsCardsGrid) elementsCardsGrid.classList.remove('is-compact');
@@ -46,7 +44,6 @@
       });
 
       elementsViewCompactBtn.addEventListener('click', () => {
-        elementsVisualMode = false;
         elementsViewCompactBtn.classList.add('is-active');
         elementsViewVisualBtn.classList.remove('is-active');
         if (elementsCardsGrid) elementsCardsGrid.classList.add('is-compact');

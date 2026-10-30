@@ -10,7 +10,7 @@
 
   function createDrawerController(ctx) {
     const {
-      LANDING_PAGE_SINGLETONS, addOrReplaceLandingSection, addWithTemplateGuard, catalogSearch, elementsFilters, featuresMap,
+      LANDING_PAGE_SINGLETONS, addWithTemplateGuard, catalogSearch, elementsFilters, featuresMap,
       findExistingSingleton, getSingletonType, registry, setActiveSection
     } = ctx;
 

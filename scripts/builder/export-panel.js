@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
+  const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function createExportController(ctx) {
     const { stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, exportAssets = {}, weightMap = {} } = ctx;
@@ -38,7 +38,6 @@
     const copySingleBundleBtn = document.getElementById('copySingleBundleBtn');
     const copyBundleBtnText = document.getElementById('copyBundleBtnText');
 
-    let activeExportTab = 'zip';
     let activeCodeFile = 'index.html';
     let currentExportBundle = null;
     let currentExportAssets = {};
@@ -267,8 +266,6 @@
      * Switches the active export modal tab (zip, code, single-html).
      */
     async function setActiveExportTab(tabName) {
-      activeExportTab = tabName;
-
       const tabs = [
         { el: tabZip, panel: panelZip, name: 'zip' },
         { el: tabCode, panel: panelCode, name: 'code' },

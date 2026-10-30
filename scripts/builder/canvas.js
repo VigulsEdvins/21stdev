@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  const { escapeHtml, showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
+  const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   const CanvasToolbarInputs = (typeof window !== 'undefined' && window.BuilderCanvasToolbarInputs) || require('./canvas-toolbar-inputs.js');
   const CanvasContextMenu = (typeof window !== 'undefined' && window.BuilderCanvasContextMenu) || require('./canvas-context-menu.js');

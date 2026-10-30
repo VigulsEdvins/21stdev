@@ -47,7 +47,6 @@
   function questionScreen(i) {
     const q = QUESTIONS[i], a = answer(q.id), many = q.type === 'many', text = q.type === 'text';
     const name = 'a-' + q.id;
-    const unknownOn = () => answer(q.id).unknown;
     const inputs = [];
     let field, unknownInput;
 

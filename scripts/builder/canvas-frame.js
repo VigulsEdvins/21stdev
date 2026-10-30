@@ -8,7 +8,7 @@
   const { showToast } = (typeof window !== 'undefined' && window.BuilderUI) || require('./ui-helpers.js');
 
   function wire(deps) {
-    const { previewFrame, handleHistoryKeydown, handleCanvasElementKeydown, cs, selectCanvasElement, closeToolbarPopup, ensureResizeHandles, elementEditToolbar, updateToolbarPosition, clearElementSelection, canvasContextMenu, hideContextMenu, focusElementPrimaryText, pushHistorySnapshot, toolbarBtnWidth, toolbarBtnHeight, toolbarImgWidth, toolbarImgHeight, toolbarCardWidth, toolbarCardHeight, toolbarTableWidth, toolbarTableHeight, stackManager, getActiveSection, setActiveSection, addOrReplaceLandingSection, addWithTemplateGuard } = deps;
+    const { previewFrame, handleHistoryKeydown, handleCanvasElementKeydown, cs, selectCanvasElement, closeToolbarPopup, ensureResizeHandles, elementEditToolbar, updateToolbarPosition, clearElementSelection, canvasContextMenu, hideContextMenu, focusElementPrimaryText, pushHistorySnapshot, toolbarBtnWidth, toolbarBtnHeight, toolbarImgWidth, toolbarImgHeight, toolbarCardWidth, toolbarCardHeight, toolbarTableWidth, toolbarTableHeight, stackManager, getActiveSection, setActiveSection, addWithTemplateGuard } = deps;
 
   // Preview Frame load handler: wire dragging & context menu inside iframe
   if (previewFrame) {
