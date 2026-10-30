@@ -106,5 +106,6 @@
       "selector": ":scope .ns-form .ns-pill"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

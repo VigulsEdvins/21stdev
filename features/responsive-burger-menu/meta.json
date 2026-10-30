@@ -104,5 +104,6 @@
     "webgl": false,
     "canvas2d": false
   },
-  "autoMenu": true
+  "autoMenu": true,
+  "langSlot": true
 }

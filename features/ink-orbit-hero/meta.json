@@ -82,5 +82,6 @@
       "selector": ":scope .io-ghost"
     }
   ],
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "langSlot": true
 }

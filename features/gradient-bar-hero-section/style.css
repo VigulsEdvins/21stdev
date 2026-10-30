@@ -6,7 +6,7 @@ html, body { background: var(--bg, #08090c); color: var(--text, #f3f4f6); font-f
 .rb-bars span { flex: 1; height: var(--h, 30%); border-radius: 3px 3px 0 0; transform-origin: bottom; background: linear-gradient(to top, var(--accent, #7c8cff), color-mix(in srgb, var(--accent, #7c8cff) 35%, transparent) 55%, transparent); opacity: 0.85; transition: height 0.12s linear; }
 .rb-fade { position: absolute; inset: 0; background: radial-gradient(70% 60% at 50% 38%, var(--bg, #08090c) 25%, transparent 75%); pointer-events: none; }
 
-.rb-nav { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2rem; }
+.rb-nav { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2rem; }
 .rb-logo { font: 700 1.1rem/1 var(--font-display, var(--font-body, system-ui, sans-serif)); letter-spacing: -0.02em; }
 .rb-links { display: flex; gap: 1.6rem; font-size: 0.88rem; }
 .rb-links a, .rb-nav-cta { color: inherit; text-decoration: none; opacity: 0.75; transition: opacity 0.2s; }

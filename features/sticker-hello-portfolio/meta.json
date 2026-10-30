@@ -71,5 +71,6 @@
     }
   ],
   "reserveHeight": 2300,
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

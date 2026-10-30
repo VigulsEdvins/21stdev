@@ -100,5 +100,6 @@
       "selector": ":scope .fm-end .fm-h2"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

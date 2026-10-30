@@ -101,5 +101,6 @@
       "type": "text",
       "selector": ":scope .qp-flink:nth-child(3)"
     }
-  ]
+  ],
+  "langSlot": true
 }

@@ -101,7 +101,7 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
   /**
-   * Makes the language switcher header of a page list the page's translations and open them: its menu gets one option per
+   * Makes the language switchers of a page (the block, and the button headers carry) list the page's translations and open them: its menu gets one option per
    * language of the group (current one selected), each carrying the file to open. Returns { html, js } where `js` is the
    * small script that follows the links (the page's own script file gets it appended), or null when the page has no
    * switcher or no translations.
@@ -112,8 +112,10 @@
     const label = (lang) => NAMES[lang] || NAMES[String(lang).split('-')[0]] || String(lang).toUpperCase();
     const items = members.map(m => `<li role="option" tabindex="-1" data-lang="${esc(m.lang)}" data-href="${esc(fileOf(m))}" aria-selected="${m.id === currentId}">${esc(label(m.lang))}</li>`).join('\n          ');
     const current = members.find(m => m.id === currentId);
-    let out = html.replace(/(<ul class="lsw-menu"[^>]*>)[\s\S]*?(<\/ul>)/, (m, open, close) => `${open}\n          ${items}\n        ${close}`);
-    if (current) out = out.replace(/(<span class="lsw-code"[^>]*>)[^<]*(<\/span>)/, `$1${esc(String(current.lang).split('-')[0].toUpperCase())}$2`);
+    let out = html.replace(/(<ul class="lsw-menu"[^>]*>)[\s\S]*?(<\/ul>)/g, (m, open, close) => `${open}\n          ${items}\n        ${close}`);
+    if (current) out = out.replace(/(<span class="lsw-code"[^>]*>)[^<]*(<\/span>)/g, `$1${esc(String(current.lang).split('-')[0].toUpperCase())}$2`);
+    // the button a header carries starts hidden; with translations it shows
+    out = out.replace(/(<div class="lsw-lang" data-edv-lang="on") hidden>/g, '$1>');
     const js = `\n;(function () { document.querySelectorAll('.lsw-menu [data-href]').forEach(function (o) { o.addEventListener('click', function () { window.location.href = o.getAttribute('data-href'); }); }); })();\n`;
     return { html: out, js };
   }

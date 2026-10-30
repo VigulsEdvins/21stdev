@@ -82,5 +82,6 @@
       "selector": ":scope .os-sec .os-h2"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

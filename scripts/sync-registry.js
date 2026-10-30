@@ -109,6 +109,7 @@ function syncRegistry(rootDir = path.resolve(__dirname, '..')) {
       luma: meta.measured && typeof meta.measured.luma === 'number' ? meta.measured.luma : null,
       lazy: meta.lazy === true,
       stickyDefault: meta.stickyDefault === true, // a header that starts out staying at the top
+      langSlot: meta.langSlot === true, // a header that carries the language button
       autoMenu: meta.autoMenu === true, // a header that can list the page's sections by itself
       reserveHeight: Number(meta.reserveHeight) > 0 ? Number(meta.reserveHeight) : 0,
       minScale: Number(meta.minScale) >= 0.3 && Number(meta.minScale) <= 1 ? Number(meta.minScale) : 0,

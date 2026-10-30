@@ -67,3 +67,18 @@ assert.strictEqual(L.setSiteLanguage(one(), 'x').error, 'Pick a language from th
 assert.strictEqual(L.activeLanguage(c.snap), 'lv');
 console.log('  ✓ choosing the first language');
 console.log('languages ok');
+
+// a page with a header that carries the language button gets no separate switcher block
+{
+  const btn = (slug) => slug === 'hdr-btn';
+  const withHeader = { stack: [sec('hdr-btn', 'h1'), sec('hero-a', 's1')], page: { lang: 'en' }, pages: [], activePageId: null, theme: 'x' };
+  const r = L.addLanguage(withHeader, 'lv', btn);
+  assert(r.pages.every((p) => !p.stack.some((x) => x.slug === L.SWITCHER)), 'no block beside a header that has the button');
+  const old = { ...withHeader, stack: [sec(L.SWITCHER, 'w1'), sec('hdr-btn', 'h1')] };
+  assert(L.addLanguage(old, 'lv', btn).pages.every((p) => !p.stack.some((x) => x.slug === L.SWITCHER)), 'an old switcher block beside such a header is taken out');
+  const hidden = { ...withHeader, stack: [{ ...sec('hdr-btn', 'h1'), hidden: true }, sec('hero-a', 's1')] };
+  assert(L.addLanguage(hidden, 'lv', btn).pages.every((p) => p.stack[0].slug === L.SWITCHER), 'a hidden header does not count');
+  const none = { ...withHeader, stack: [sec('hero-a', 's1')] };
+  assert(L.addLanguage(none, 'lv', btn).pages.every((p) => p.stack[0].slug === L.SWITCHER), 'a page without such a header still gets the block');
+  console.log('  ✓ the switcher block is added only to pages without a header that has the button');
+}

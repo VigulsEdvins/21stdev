@@ -840,7 +840,20 @@
     var say = el('p', { class: 'cms-hint', role: 'status' });
     var rows = bl.langs.map(function (l) {
       var open = l.here ? el('span', { class: 'cms-hint', text: 'Editing this one' }) : el('button', { type: 'button', class: 'cms-btn cms-btn-ghost cms-btn-sm', text: 'Translate', on: { click: function () { leaveFor(function () { bridge.switchLanguage(l.code); }); } } });
-      return el('div', { class: 'cms-lang-row' }, [el('span', { class: 'cms-lang-name' }, [el('span', { text: l.name })]), el('span', { class: 'cms-hint', text: l.site ? 'Main language' : '' }), open]);
+      var row = el('div', { class: 'cms-lang-row' }, [el('span', { class: 'cms-lang-name' }, [el('span', { text: l.name })]), el('span', { class: 'cms-hint', text: l.site ? 'Main language' : '' }), open]);
+      if (l.site || !bridge.removeLanguage) return row;
+      // the main language stays; any other can go, after one question (its pages and words are deleted; Undo in the builder brings them back)
+      var remove = el('button', { type: 'button', class: 'cms-btn cms-btn-ghost cms-btn-sm', text: 'Remove', 'aria-label': 'Remove ' + l.name });
+      remove.addEventListener('click', function () {
+        row.textContent = '';
+        var yes = el('button', { type: 'button', class: 'cms-btn cms-btn-primary cms-btn-sm', text: 'Yes, remove it' });
+        var keep = el('button', { type: 'button', class: 'cms-btn cms-btn-ghost cms-btn-sm', text: 'Keep it' });
+        keep.addEventListener('click', function () { render(); });
+        yes.addEventListener('click', function () { var why = leaveFor(function () { return bridge.removeLanguage(l.code); }); if (why) say.textContent = why; });
+        [el('span', { class: 'cms-lang-name', text: 'Remove ' + l.name + ' and all its pages and words?' }), yes, keep].forEach(function (n) { row.appendChild(n); });
+      });
+      row.appendChild(remove);
+      return row;
     });
     var sel = el('select', { class: 'cms-input', id: 'cms-lang-add', 'aria-label': 'Language to add' }, [el('option', { value: '', text: 'Choose a language' })].concat(bl.free.map(function (f) { return el('option', { value: f.code, text: f.label }); })));
     var add = el('button', { type: 'button', class: 'cms-btn cms-btn-primary cms-btn-sm', text: 'Add language', on: { click: function () {

@@ -105,5 +105,6 @@
   "palette": "designed",
   "paletteNote": "Mixed dark panels on a light page: a token mapping flips text onto the wrong surface (tried, reverted)",
   "ownPalette": true,
-  "nativeWhen": []
+  "nativeWhen": [],
+  "langSlot": true
 }

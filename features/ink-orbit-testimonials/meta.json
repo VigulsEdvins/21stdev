@@ -75,5 +75,6 @@
       "selector": ":scope .tq-slide:nth-of-type(4) .tq-quote"
     }
   ],
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "langSlot": true
 }

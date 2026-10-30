@@ -68,5 +68,6 @@
       "selector": ":scope .rb-ghost"
     }
   ],
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "langSlot": true
 }

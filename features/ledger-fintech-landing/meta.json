@@ -105,5 +105,6 @@
       "selector": ":scope #pricing .ft-btn"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

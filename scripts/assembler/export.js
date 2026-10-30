@@ -8,6 +8,7 @@
 const { renderSectionOverlayHtml, OVERLAY_ELEMENT_CSS } = (typeof window !== 'undefined' && window.AsmOverlay) || require('./overlay.js');
 const { mapPageLinks, anchorNames, menuItems, anchorSpan, ANCHOR_CSS, navLinker, collectOverrides } = (typeof window !== 'undefined' && window.AsmPages) || require('./pages.js');
 const { assemblePreviewDocument } = (typeof window !== 'undefined' && window.AsmPreview) || require('./preview.js');
+const { fillLangSlots, hasLangSlot, LANG_CSS, LANG_JS } = (typeof window !== 'undefined' && window.AsmLangSlot) || require('./lang-slot.js');
 const { LAZY_SECTION_RUNTIME, OFFSCREEN_RUNTIME, REVIEW_RUNTIME, OVERRIDES_RUNTIME, PRELOADER_DISMISS_EXPORT } = (typeof window !== 'undefined' && window.AsmRuntimes) || require('./runtimes.js');
 const { scopeSectionStyles, isolateSectionMarkup, isolateSectionScript, extractHeadLinks } = (typeof window !== 'undefined' && window.AsmIsolation) || require('./section-isolation.js');
 const { sectionIdentity, pickSource, isPreloaderSection, nativeAttrFor, renderSectionTag } = (typeof window !== 'undefined' && window.AsmParts) || require('./section-parts.js');
@@ -54,7 +55,8 @@ function collectExportSections(safeSections, featuresData, options, isDark) {
     // Isolated HTML
     const isPreloader = isPreloaderSection(slug, section);
     const preloaderClass = isPreloader ? ' is-preloader' : '';
-    const isolatedHtml = autoNav(isolateSectionMarkup(rawHtml, id), section);
+    // the header's language button stays only on a page that has translations (options.langSwitch); otherwise its slot goes
+    const isolatedHtml = fillLangSlots(autoNav(isolateSectionMarkup(rawHtml, id), section), !!options.langSwitch);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
@@ -75,6 +77,11 @@ function collectExportSections(safeSections, featuresData, options, isDark) {
       }
     }
   });
+
+  if (options.langSwitch && sectionHtmlBlocks.some(hasLangSlot)) {
+    scopedStyleBlocks.push(`/* Language button */\n${LANG_CSS}`);
+    scriptBlocks.push(`  // Language button\n${LANG_JS.split('\n').map(l => '  ' + l).join('\n')}`);
+  }
 
   // Preloader auto-dismiss script for exported bundle
   scriptBlocks.push(PRELOADER_DISMISS_EXPORT);
@@ -378,7 +385,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette, pageLinks: options.pageLinks, anchors: { reserved: options.reservedAnchors }, keepUnlinkedNav: options.keepUnlinkedNav });
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette, pageLinks: options.pageLinks, anchors: { reserved: options.reservedAnchors }, keepUnlinkedNav: options.keepUnlinkedNav, langHost: options.langHost });
   const clean = doc.replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
   const fd = formDelivery();
   const delivered = fd ? fd.prepareHtml(clean, options.page) : clean;

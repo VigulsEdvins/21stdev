@@ -97,5 +97,6 @@
   "ownPalette": true,
   "nativeWhen": [],
   "palette": "designed",
-  "paletteNote": "Grey paper sheets on an accent wash for a photographer portfolio; the paper greys are the look (reviewed against themes)."
+  "paletteNote": "Grey paper sheets on an accent wash for a photographer portfolio; the paper greys are the look (reviewed against themes).",
+  "langSlot": true
 }

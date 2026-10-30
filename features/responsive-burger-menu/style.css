@@ -153,3 +153,5 @@ body, html {
 .menu-links a .bm-label {
   font-style: normal;
 }
+
+.topbar > [data-edv-lang] { margin-left: auto; margin-right: 16px; }

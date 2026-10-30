@@ -128,5 +128,6 @@
       "attr": "--accent"
     }
   ],
-  "order": 900
+  "order": 900,
+  "langSlot": true
 }

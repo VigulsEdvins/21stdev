@@ -93,5 +93,6 @@
       "selector": ":scope .mg-chapter:nth-of-type(3) .mg-h2"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

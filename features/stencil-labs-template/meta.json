@@ -105,5 +105,6 @@
       "selector": ":scope #hl-cohort .hl-h2"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

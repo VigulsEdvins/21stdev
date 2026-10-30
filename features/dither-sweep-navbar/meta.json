@@ -90,5 +90,6 @@
   ],
   "reserveHeight": 800,
   "autoMenu": true,
-  "stickyDefault": true
+  "stickyDefault": true,
+  "langSlot": true
 }

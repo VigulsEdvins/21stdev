@@ -99,5 +99,6 @@
       "selector": ":scope #nb-price .nb-h2"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

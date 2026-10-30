@@ -80,5 +80,6 @@
       "type": "link",
       "selector": ":scope .rl-cta .rl-btn"
     }
-  ]
+  ],
+  "langSlot": true
 }

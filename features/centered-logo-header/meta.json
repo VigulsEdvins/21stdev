@@ -102,5 +102,6 @@
     }
   ],
   "order": 900,
-  "autoMenu": true
+  "autoMenu": true,
+  "langSlot": true
 }

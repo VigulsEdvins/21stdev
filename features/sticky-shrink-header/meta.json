@@ -114,5 +114,6 @@
   ],
   "order": 900,
   "autoMenu": true,
-  "stickyDefault": true
+  "stickyDefault": true,
+  "langSlot": true
 }

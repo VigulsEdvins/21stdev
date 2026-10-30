@@ -7,6 +7,7 @@
 (function () {
 const { renderSectionOverlayHtml, OVERLAY_ELEMENT_CSS } = (typeof window !== 'undefined' && window.AsmOverlay) || require('./overlay.js');
 const { mapPageLinks, anchorNames, menuItems, anchorSpan, ANCHOR_CSS, navLinker, collectOverrides } = (typeof window !== 'undefined' && window.AsmPages) || require('./pages.js');
+const { fillLangSlots, hasLangSlot, LANG_CSS, LANG_JS } = (typeof window !== 'undefined' && window.AsmLangSlot) || require('./lang-slot.js');
 const { OFFSCREEN_RUNTIME, OVERRIDES_RUNTIME, PRELOADER_DISMISS_PREVIEW, previewPageScript } = (typeof window !== 'undefined' && window.AsmRuntimes) || require('./runtimes.js');
 const { scopeSectionStyles, isolateSectionMarkup, isolateSectionScript, previewSectionScript, extractHeadLinks } = (typeof window !== 'undefined' && window.AsmIsolation) || require('./section-isolation.js');
 const { sectionIdentity, pickSource, isPreloaderSection, nativeAttrFor, renderSectionTag } = (typeof window !== 'undefined' && window.AsmParts) || require('./section-parts.js');
@@ -202,7 +203,8 @@ function collectPreviewSections(sections, featuresData, options, isDark, nav) {
     const isPreloader = isPreloaderSection(slug, section);
     const isSuppressed = isPreloader && (options.suppressPreloader === true || section.suppressPreloader === true);
     const preloaderClass = isPreloader ? (' is-preloader' + (isSuppressed ? ' is-dismissed is-suppressed' : '')) : '';
-    const isolatedHtml = autoNav(isolateSectionMarkup(rawHtml, id), section);
+    // the builder preview and the editor's frame (options.langHost) carry the language button (hidden until the project has 2+ languages); a single-file export has one language and drops it
+    const isolatedHtml = fillLangSlots(autoNav(isolateSectionMarkup(rawHtml, id), section), !!(options.navPreview || options.langHost));
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     let styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
@@ -220,6 +222,11 @@ function collectPreviewSections(sections, featuresData, options, isDark, nav) {
       scriptBlocks.push(previewSectionScript(slug, id, isolatedJs, isPreloader && isSuppressed));
     }
   });
+
+  if (sectionHtmlBlocks.some(hasLangSlot)) {
+    scopedStyleBlocks.push(`    /* Language button */\n${LANG_CSS}`);
+    scriptBlocks.push(`        // Language button\n${LANG_JS}`);
+  }
 
   // Preloader auto-dismiss script (only needed when a preloader is active and not suppressed)
   const hasActivePreloader = sections.some(s => {

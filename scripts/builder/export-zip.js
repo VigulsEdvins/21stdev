@@ -32,7 +32,7 @@
         const missing = p.stack.map(s => s.slug).filter(slug => slug && !featureCache.has(slug));
         if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
         const settings = { ...state.page, title: home ? state.page.title : `${p.title} | ${state.page.title}`, description: p.description || state.page.description, lang: p.lang || state.page.lang, alternates: alternates[p.id] || [] };
-        const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles });
+        const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles, langSwitch: !!groups[p.id] });
         // a language switcher header lists this page's translations and opens them
         const wired = groups[p.id] ? window.BuilderSinglePages.wireLanguageSwitcher(bundle['index.html'], groups[p.id], p.id, fileOfMember) : null;
         if (wired) { bundle['index.html'] = wired.html; bundle['script.js'] += wired.js; }
@@ -85,7 +85,7 @@
         // editing in place starts from the original content, so "reset" has something to go back to
         const baseStack = inPlace ? p.stack.map(s => ({ ...s, overrides: {} })) : p.stack;
         // the editor lists every menu item, also the ones the finished page leaves out because they have no link yet
-        const doc = window.Assembler.generateSingleFileBundle(baseStack, themeConfig, featuresData, { page: p.settings, nativeMap, pageLinks, keepUnlinkedNav: true });
+        const doc = window.Assembler.generateSingleFileBundle(baseStack, themeConfig, featuresData, { page: p.settings, nativeMap, pageLinks, keepUnlinkedNav: true, langHost: !!inPlace });
         docs[p.file] = doc;
         const sections = p.stack.filter(s => !s.hidden).map((s, i) => ({
           id: s.id || `sec-${i + 1}`,

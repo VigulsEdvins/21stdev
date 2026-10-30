@@ -37,5 +37,5 @@ html, body { background: #0e1424; color: #e8ecf8; font-family: var(--font-body, 
 .lm-contact dt { color: #9aa6cc; }
 .lm-contact a { color: #e8ecf8; }
 .lm-foot { text-align: center; padding: 2rem 1rem 3rem; font-size: 0.82rem; color: #8a96bd; }
-@media (max-width: 520px) { .lm-nav nav a:nth-child(2) { display: none; } .lm-nav nav { gap: 0.8rem; } }
+@media (max-width: 520px) { .lm-nav nav a:nth-child(2), .lm-nav nav a:nth-child(4) { display: none; } .lm-nav nav { gap: 0.8rem; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .lm-cta { transition: none; } }

@@ -27,3 +27,6 @@ html, body { background: var(--bg, #0b0c10); color: var(--text, #f3f4f6); font-f
   .dn-nav.is-open { opacity: 1; visibility: visible; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) { .dn-head, .dn-bar, .dn-word small, .dn-nav, .dn-burger i { transition: none; } }
+
+.dn-bar > [data-edv-lang] { order: 9; }
+@media (max-width: 720px) { .dn-bar > [data-edv-lang] { order: 0; margin-left: auto; } }

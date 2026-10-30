@@ -497,7 +497,7 @@
           // the editor's preview page, made again from the page as it is now (a header setting changed the markup, not a text)
           frameDoc: () => {
             const cur = stackManager.getState();
-            const doc = window.Assembler.generateSingleFileBundle(cur.stack.map(s => ({ ...s, overrides: {} })), themeNow, featuresData, { page: cur.page, nativeMap, keepUnlinkedNav: true });
+            const doc = window.Assembler.generateSingleFileBundle(cur.stack.map(s => ({ ...s, overrides: {} })), themeNow, featuresData, { page: cur.page, nativeMap, keepUnlinkedNav: true, langHost: true });
             return window.BuilderCms.frameDoc(pageIn.file, doc, cms.files);
           },
           // a header can be kept at the top while the page scrolls (not the bottom tab bar)
@@ -532,6 +532,13 @@
             const why = L.whyNotAdd(p.serializeState(), code);
             if (why) return why;
             p.applyState(Object.assign(p.serializeState(), L.addLanguage(p.serializeState(), code))); // one history step: one Undo takes it back
+            openAdmin();
+            return '';
+          },
+          removeLanguage: (code) => {
+            const L = window.BuilderLanguages, p = window.builderPreview;
+            if (!L || !p || !p.applyState) return 'Languages are not available here.';
+            try { p.applyState(Object.assign(p.serializeState(), L.removeLanguage(p.serializeState(), code))); } catch (e) { return e.message; } // one history step: one Undo brings it back
             openAdmin();
             return '';
           },

@@ -106,5 +106,6 @@
       "selector": ":scope #ha-plans .ha-h2"
     }
   ],
-  "themeReviewed": "Checked by eye in a dark and a light theme: the page follows the theme tokens; the audit screenshot of this tall page paints black below the first screen."
+  "themeReviewed": "Checked by eye in a dark and a light theme: the page follows the theme tokens; the audit screenshot of this tall page paints black below the first screen.",
+  "langSlot": true
 }

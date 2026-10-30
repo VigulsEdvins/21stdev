@@ -106,5 +106,6 @@
       "selector": ":scope .ea-final .ea-h2"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }

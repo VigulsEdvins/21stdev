@@ -80,5 +80,6 @@
       "type": "link",
       "selector": ":scope .pp-btn-accent"
     }
-  ]
+  ],
+  "langSlot": true
 }

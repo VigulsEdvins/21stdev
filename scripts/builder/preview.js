@@ -136,6 +136,8 @@
         theme: themeConfig,
         suppressPreloader,
         page: latestState.page,
+        // the header's language button appears with the second language and lists the languages, so a change of them reloads
+        languages: (latestState.pages || []).map(p => p.lang || ''),
         stack: latestState.stack.map(({ elements, sizing, overrides, ...rest }) => rest),
         // per-breakpoint padding lives in a media-query block in the page CSS, so it needs a full reload
         responsivePadding: latestState.stack.map(s => [s.sizing && s.sizing.paddingYTablet, s.sizing && s.sizing.paddingYMobile])

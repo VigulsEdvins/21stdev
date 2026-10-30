@@ -65,7 +65,11 @@
     while (taken.has(slug)) slug = base + '-' + n++;
     return slug;
   }
+  /** The headers marked `langSlot` in the registry (in the browser); nothing in a plain test run. */
+  const registryHasButton = (slug) => typeof window !== 'undefined' && Array.isArray(window.FEATURE_REGISTRY) && window.FEATURE_REGISTRY.some((f) => f.slug === slug && f.langSlot);
   const hasSwitcher = (stack) => stack.some((s) => s.slug === SWITCHER);
+  /** True for a block that carries the language button itself (a header marked `langSlot` in the registry); the switcher block is not needed beside it. */
+  const hasButtonHeader = (stack, hasButton) => typeof hasButton === 'function' && stack.some((s) => !s.hidden && hasButton(s.slug));
   const switcherSection = () => ({ id: freshId('sec'), slug: SWITCHER, title: 'Language switcher', sizing: { heightMode: 'auto', customHeight: 600, paddingY: 'none' } });
 
   /** Why a language cannot be added, or '' when it can. */
@@ -77,9 +81,9 @@
 
   /**
    * Adds a language: every original page gets a linked copy (new ids, same blocks and words, ready to translate), and every page gets the language
-   * switcher block at the top if it has none. Returns the new snapshot; the open page stays open.
+   * switcher block at the top if it has none and no header with the language button (`hasButton(slug)`). Returns the new snapshot; the open page stays open.
    */
-  function addLanguage(snap, code) {
+  function addLanguage(snap, code, hasButton = registryHasButton) {
     if (whyNotAdd(snap, code)) throw new Error(whyNotAdd(snap, code));
     const single = isSingle(snap);
     let pages = pagesOf(snap);
@@ -89,7 +93,11 @@
     originals.forEach((o) => {
       pages.push({ id: freshId('page'), title: (o.title + ' (' + nameOf(code) + ')').slice(0, 60), slug: uniqueSlug(o.slug + '-' + code, pages), description: o.description || '', lang: code, translationOf: o.id, stack: withNewIds(o.stack) });
     });
-    pages = pages.map((p) => (hasSwitcher(p.stack) ? p : Object.assign(p, { stack: [switcherSection()].concat(p.stack) })));
+    // a page whose header has the button needs no switcher block (an old one is taken out: two headers would show); other pages get the block
+    pages = pages.map((p) => {
+      if (hasButtonHeader(p.stack, hasButton)) return Object.assign(p, { stack: p.stack.filter((x) => x.slug !== SWITCHER) });
+      return hasSwitcher(p.stack) ? p : Object.assign(p, { stack: [switcherSection()].concat(p.stack) });
+    });
     const active = pages.find((p) => p.id === activeId);
     return Object.assign({}, snap, { pages, activePageId: activeId, stack: clone(active.stack) });
   }
@@ -178,7 +186,7 @@
       const s = snap(), langs = languagesOf(s), site = siteLanguage(s), here = activeLanguage(s);
       siteSelect.value = LANGUAGES.some((l) => l[0] === site) ? site : 'en';
       lead.textContent = langs.length < 2
-        ? 'Your page is in ' + englishOf(site) + '. Want it in more than one language? Each language is a copy of the page with its own words. A language switcher block is added so visitors can choose.'
+        ? 'Your page is in ' + englishOf(site) + '. Want it in more than one language? Each language is a copy of the page with its own words. Visitors choose from a language button in the header.'
         : 'Your page is in ' + langs.length + ' languages. Pick the one you want to write in. Every language has its own copy of each block.';
       list.replaceChildren();
       if (langs.length > 1) {

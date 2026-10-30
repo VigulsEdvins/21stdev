@@ -25,3 +25,5 @@
 }
 @media (prefers-reduced-motion: reduce) { .sna-announce, .sna-side a::after { transition: none; } }
 html, body { background: var(--bg, #fbf8f3); color: var(--text, #292524); }
+
+.sna-side [data-edv-lang] { align-self: center; }

@@ -69,5 +69,6 @@
       "selector": ":scope .fb-mail"
     }
   ],
-  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine."
+  "themeReviewed": "Checked by eye in a dark and a light theme on 2026-10-24: the audit flags brand-coloured or decorative text that reads fine.",
+  "langSlot": true
 }

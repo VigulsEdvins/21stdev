@@ -182,5 +182,6 @@
       "type": "link",
       "selector": ":scope [data-edv-nav=\"9\"]"
     }
-  ]
+  ],
+  "langSlot": true
 }

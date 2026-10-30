@@ -87,5 +87,6 @@
       "selector": ":scope .bn-mail"
     }
   ],
-  "ownPalette": true
+  "ownPalette": true,
+  "langSlot": true
 }
