@@ -52,9 +52,29 @@ const demoMod = require('../../scripts/demo-publish.js');
   assert.notStrictEqual(await site.evaluate(() => location.origin), await page.evaluate(() => location.origin), 'the site is its own origin');
   assert.strictEqual(await site.evaluate(() => localStorage.getItem('edvlabs.session')), null, 'the published site cannot see the account session');
   console.log('  ✓ the finished page opens on its own address, in its own origin, without the account session');
+  assert(/http-equiv="Content-Security-Policy"/.test(html), 'a published page carries its own security policy');
+  const policy = (html.match(/http-equiv="Content-Security-Policy" content="([^"]*)"/) || [])[1] || '';
+  assert(/object-src 'none'/.test(policy) && /base-uri 'self'/.test(policy), 'with the standard limits: ' + policy.slice(0, 160));
   const css = await site.request.get(href + 'style.css'); assert.strictEqual(css.status(), 200); assert(/text\/css/.test(css.headers()['content-type']));
   const missing = await site.request.get(href + 'nope'); assert.strictEqual(missing.status(), 404);
   console.log('  ✓ its stylesheet is served with the right type; a missing page is a 404');
+
+  // a heavier page (header, hero, 3D cylinder, pricing, form, footer) must also run under its policy, with no violations
+  const SIX = ['responsive-burger-menu', 'oklch-ambient-glow-hero', 'cylindrical-3d-carousel', 'pricing-table-switch', 'contact-form-validated', 'beam-wordmark-footer'];
+  await page.evaluate((slugs) => { window.builderManager.clearStack(); slugs.forEach((sl) => window.builderManager.addSection(sl)); }, SIX);
+  await page.fill('#publishName', 'starter-demo'); await page.waitForFunction(() => /starter-demo\.edvlabs\.com is free/.test(document.getElementById('publishNameNote').textContent));
+  await page.click('#publishGo');
+  await page.waitForFunction(() => /Your page is online/.test(document.getElementById('publishResult').textContent) && /starter-demo/.test(document.getElementById('publishResult').textContent), null, { timeout: 60000 });
+  const big = await ctx.newPage(); const violations = [];
+  big.on('console', (m) => { if (/Content Security Policy|Refused to/i.test(m.text())) violations.push(m.text().slice(0, 200)); });
+  big.on('pageerror', (e) => violations.push('page error: ' + e.message));
+  await big.addInitScript(() => { window.__csp = []; document.addEventListener('securitypolicyviolation', (e) => window.__csp.push(e.violatedDirective + ' ' + e.blockedURI)); });
+  await big.goto('http://starter-demo.localhost:' + port + '/'); await big.waitForLoadState('networkidle'); await big.waitForTimeout(1500);
+  const seen = await big.evaluate(() => window.__csp);
+  assert((await big.locator('body *').count()) > 30, 'the six-block page rendered');
+  assert.deepStrictEqual(violations.concat(seen), [], 'no policy violations on the six-block page: ' + violations.concat(seen).join(' | '));
+  await big.close();
+  console.log('  ✓ a six-block page (header, hero, 3D, pricing, form, footer) runs under its policy with no violations');
 
   await page.click('[data-act="offline"]'); await page.waitForFunction(() => /is offline/.test(document.getElementById('publishResult').textContent));
   await site.reload(); assert(/not available/.test(await site.textContent('body')), 'offline: the address shows the plain notice');

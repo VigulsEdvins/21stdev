@@ -97,7 +97,7 @@ Check, and tell me anything that differs:
 - [ ] The page looks like the builder's preview, on a computer and on a phone.
 - [ ] `curl -sI https://testsite-anna.edvlabs.com/` shows `x-content-type-options: nosniff`, `strict-transport-security`, `referrer-policy`, `permissions-policy`, and `content-security-policy: frame-ancestors 'none'; object-src 'none'; base-uri 'self'`.
 - [ ] A page that does not exist (`/nope`) shows the 404 page, with status 404.
-- [ ] **Languages:** if the test page has an extra language (`index-lv.html`), open it and check it works. The page's own security policy tag is written only into `index.html` as far as I read the export code; if the second language misbehaves or lacks it, tell me and I will add the tag to every page.
+- [ ] **Languages:** if the test page has an extra language (`index-lv.html`), open it and check it works. Every published page carries the page security policy (publishing forces it on since 2026-10-30), so view the source of the live page and look for `Content-Security-Policy`.
 - [ ] **Videos:** a block that uses a video file does not publish the video yet (that file kind is not accepted). Tell me if a block you care about shows a broken video.
 - [ ] Take it offline from the builder; the address shows "This site is not available". Put it back.
 - [ ] Open `https://edvlabs.com/builder/` and the home page again: nothing about the main site changed. (Also the usual first-deploy header check: `npm run check-headers -- https://edvlabs.com` and `node scripts/check-builder-csp.js https://edvlabs.com`.)

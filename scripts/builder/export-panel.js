@@ -149,7 +149,7 @@
       const themeConfig = state.theme === 'custom' ? state.customColors : state.theme;
 
       if (window.Assembler && typeof window.Assembler.generateExportBundle === 'function') {
-        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: openPageSettings(state), nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked });
+        currentExportBundle = window.Assembler.generateExportBundle(currentStack, themeConfig, featuresData, { page: openPageSettings(state), nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: exportOptions.csp !== undefined ? !!exportOptions.csp : !!(document.getElementById('exportCspToggle') || {}).checked });
       }
 
       if (state.pages.length > 1 && window.BuilderSinglePages && window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {

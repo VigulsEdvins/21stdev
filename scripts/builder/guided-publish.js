@@ -120,7 +120,7 @@
       setBusy(true); say('Putting your page online…', false);
       try {
         let collected;
-        try { collected = await win.builderExport.collectFiles({ cms: false }); } catch (e) { say(e && /no sections/i.test(e.message) ? 'Add at least one block first.' : 'The page could not be prepared. Please try again.', true); return; }
+        try { collected = await win.builderExport.collectFiles({ cms: false, csp: true }); } catch (e) { say(e && /no sections/i.test(e.message) ? 'Add at least one block first.' : 'The page could not be prepared. Please try again.', true); return; }
         const r = await client.publish(name, collected);
         const e = Client.explain(r.status, r.json);
         if (e.kind === 'ok') {

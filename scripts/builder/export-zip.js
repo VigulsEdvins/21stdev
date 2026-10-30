@@ -32,7 +32,7 @@
         const missing = p.stack.map(s => s.slug).filter(slug => slug && !featureCache.has(slug));
         if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
         const settings = { ...state.page, title: home ? state.page.title : `${p.title} | ${state.page.title}`, description: p.description || state.page.description, lang: p.lang || state.page.lang, alternates: alternates[p.id] || [] };
-        const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles, langSwitch: !!groups[p.id] });
+        const bundle = window.Assembler.generateExportBundle(p.stack, themeConfig, featuresData, { page: settings, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, review: !!exportOptions.review, csp: exportOptions.csp !== undefined ? !!exportOptions.csp : !!(document.getElementById('exportCspToggle') || {}).checked, pageLinks, pageFiles, langSwitch: !!groups[p.id] });
         // a language switcher header lists this page's translations and opens them
         const wired = groups[p.id] ? window.BuilderSinglePages.wireLanguageSwitcher(bundle['index.html'], groups[p.id], p.id, fileOfMember) : null;
         if (wired) { bundle['index.html'] = wired.html; bundle['script.js'] += wired.js; }
@@ -123,7 +123,7 @@
 
     /**
      * The files of the finished site: { files: {name: text}, assets: {name: bytes}, zipFilename }. Used by the ZIP download and by Publish,
-     * so what goes online is exactly what a download contains. exportOptions: { review, cms: false to leave the content editor out }.
+     * so what goes online is exactly what a download contains. exportOptions: { review, cms: false to leave the content editor out, csp: true or false to force the page security policy on or off instead of following the checkbox }.
      */
     async function collectFiles(exportOptions = {}) {
       if (!stackManager.getStack().length) throw new Error('There are no sections to export.');
