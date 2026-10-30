@@ -5,7 +5,7 @@
    Every action returns { status, json }, the same shape as lead.js. Customers' files are untrusted: the browser is not believed, everything is checked here. */
 const Names = require('../../site/js/site-names.js');
 
-const LIMITS = { files: 500, totalBytes: 20 * 1024 * 1024, fileBytes: 5 * 1024 * 1024, pathLength: 200, publishesPerHour: 10, renamesPerHour: 10, graceDays: 14, keepVersions: 5, holdDays: 90 };
+const LIMITS = { files: 500, totalBytes: 20 * 1024 * 1024, fileBytes: 5 * 1024 * 1024, pathLength: 200, publishesPerHour: 10, renamesPerHour: 10, graceDays: 14, keepVersions: 5, holdDays: 90, retentionDays: 90, maxPurgesPerRun: 25 };
 
 const TYPES = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', json: 'application/json', svg: 'image/svg+xml', png: 'image/png',
   jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', avif: 'image/avif', gif: 'image/gif', ico: 'image/x-icon', woff2: 'font/woff2', txt: 'text/plain; charset=utf-8',
@@ -331,9 +331,12 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts }) {
       1) sites whose database row is gone (account deleted): files and address removed
       2) sites whose payment ended more than the grace period ago: taken offline, files kept
       3) name holds that ran out: released, and the redirect from the old address removed
-      4) sites the owner blocked in the database (scripts/block-site.js): the block is copied into the lookup visitors use. */
+      4) sites the owner blocked in the database (scripts/block-site.js): the block is copied into the lookup visitors use
+      5) sites changed in the last three hours: the lookup is made to say what the database says (never backwards)
+      6) sites offline because payment ended, once grace plus the 90 days of keeping files have passed: their files are deleted (the name and the row stay)
+      7) folders in R2 whose site no longer exists in the database. Both deleting steps have brakes (see the plan, "Cleaning up lapsed sites' files"). */
   async function sweep() {
-    const out = { orphans: 0, lapsed: 0, holds: 0, blocked: 0, repaired: 0 };
+    const out = { orphans: 0, lapsed: 0, holds: 0, blocked: 0, repaired: 0, purged: 0, strays: 0 };
     let cursor;
     do {
       const l = await kv.list({ prefix: 'site:', cursor });
@@ -382,6 +385,38 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts }) {
         if (!cur || cur.redirect !== h.redirect_to) { await kv.put(kvKey(h.name), JSON.stringify({ redirect: h.redirect_to })); out.repaired++; }
       }
     }
+    // 6) lapsed sites whose files have been kept long enough
+    const keepUntilOffset = (LIMITS.graceDays + LIMITS.retentionDays) * 86400000;
+    let purgedNow = 0;
+    for (let offset = 0; purgedNow < LIMITS.maxPurgesPerRun; offset += 500) {
+      const page = await db.offlineSitesWithFiles(offset);
+      for (const x of page) {
+        if (purgedNow >= LIMITS.maxPurgesPerRun) break;
+        const e = Array.isArray(x.site_entitlements) ? x.site_entitlements[0] : x.site_entitlements;
+        if (!e || entitlementState(e, now()) !== 'ended') continue; // taken offline by the owner, or still inside grace: the files stay
+        if (new Date(now()).getTime() < new Date(e.paid_until).getTime() + keepUntilOffset) continue;
+        try {
+          await deleteFiles(x.id);
+          await db.markPurged(x.id);
+          await kv.put(kvKey(x.name), JSON.stringify({ id: x.id, version: 0, status: 'unpublished' }));
+          purgedNow++; out.purged++;
+        } catch (err) { out.failed = (out.failed || 0) + 1; purgedNow++; } // one site's trouble does not stop the rest; the next run tries it again
+      }
+      if (page.length < 500) break;
+    }
+    // 7) folders in R2 that belong to no site
+    const ids = [];
+    let r2cursor;
+    do {
+      const l = await bucket.list({ prefix: 'sites/', delimiter: '/', cursor: r2cursor, limit: 1000 });
+      for (const p of l.delimitedPrefixes || []) { const id = p.split('/')[1]; if (id) ids.push(id); }
+      r2cursor = l.truncated ? l.cursor : null;
+    } while (r2cursor);
+    const strays = [];
+    for (const id of ids) { if (!(await db.siteById(id))) strays.push(id); }
+    if (strays.length && strays.length <= LIMITS.maxPurgesPerRun && !(ids.length >= 8 && strays.length > ids.length / 2)) {
+      for (const id of strays) { try { await deleteFiles(id); out.strays++; } catch (err) { out.failed = (out.failed || 0) + 1; } }
+    } else if (strays.length) out.straysSkipped = strays.length; // too many to be a clean-up: probably a wrong answer from the database; left for a person to look at
     return out;
   }
 

@@ -85,7 +85,14 @@ async function route(request, env, json, deps) {
 /** The timer: nothing happens until publishing is set up. */
 async function scheduled(env, deps) {
   if (!deps && missing(env).length) return null;
-  return (deps || makeDeps(env)).publisher.sweep();
+  try {
+    const result = await (deps || makeDeps(env)).publisher.sweep();
+    console.log('published sites clean-up: ' + JSON.stringify(result)); // seen with `npx wrangler tail`, or in the dashboard's logs when they are switched on
+    return result;
+  } catch (e) {
+    console.error('published sites clean-up failed: ' + (e && e.message)); // names the problem, never the keys
+    throw e;
+  }
 }
 
 module.exports = { route, scheduled, makeDeps, missing, NEEDED };

@@ -25,6 +25,8 @@ function create() {
     async entitlementsByUser(userId) { return ents.filter((e) => e.user_id === userId); },
     async expiredHolds(nowIso) { return holds.filter((h) => new Date(h.expires_at) < new Date(nowIso)); },
     async deleteHold(name) { const i = holds.findIndex((h) => h.name === name); if (i >= 0) holds.splice(i, 1); },
+    async offlineSitesWithFiles() { return sites.filter((s) => s.status === 'unpublished' && s.version > 0).map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status, site_entitlements: ents.find((e) => e.site_id === s.id) || null })); },
+    async markPurged(id) { sites.find((x) => x.id === id).version = 0; },
     async blockedSites() { return sites.filter((s) => s.status === 'blocked').map((s) => ({ id: s.id, name: s.name, version: s.version })); },
     async liveSites() { return sites.filter((s) => s.status === 'live').map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status, site_entitlements: ents.find((e) => e.site_id === s.id) || null })); },
     /* mirrors supabase/migrations/20261030210000_rename_site.sql, including its error codes */
@@ -54,7 +56,14 @@ function create() {
     async put(k, bytes, opts) { if (this.failOn && k.includes(this.failOn)) throw new Error('disk full'); objects.set(k, { bytes, type: opts && opts.httpMetadata && opts.httpMetadata.contentType }); log.push('put ' + k); },
     async get(k) { const o = objects.get(k); return o ? { body: o.bytes, httpMetadata: { contentType: o.type }, httpEtag: '"' + k.length + '-' + o.bytes.length + '"' } : null; },
     async delete(k) { objects.delete(k); log.push('delete ' + k); },
-    async list({ prefix }) { return { objects: [...objects.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })) }; }
+    /* like R2: with a delimiter, the folders under the prefix come back as delimitedPrefixes instead of objects */
+    async list({ prefix, delimiter }) {
+      const keys = [...objects.keys()].filter((k) => k.startsWith(prefix));
+      if (!delimiter) return { objects: keys.map((key) => ({ key })), truncated: false };
+      const folders = new Set(), direct = [];
+      for (const k of keys) { const rest = k.slice(prefix.length), i = rest.indexOf(delimiter); if (i >= 0) folders.add(prefix + rest.slice(0, i + 1)); else direct.push({ key: k }); }
+      return { objects: direct, delimitedPrefixes: [...folders], truncated: false };
+    }
   };
   const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async delete(k) { kvStore.delete(k); },
     async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };

@@ -126,7 +126,8 @@ At minute 17 the main Worker (cron in `wrangler.jsonc`) cleans up:
 - name holds that ran out (name freed, old redirect removed);
 - sites you blocked (the block is copied into the lookup).
 
-Deleting a lapsed site's files after 90 days is **not built yet**; they stay in R2 until then (small cost).
+- sites whose payment ended more than 14 + 90 days ago: their files are deleted from R2 (the name and the row stay, so the person can publish again after renewing); at most 25 per run, and a failing site is retried next time;
+- folders in R2 that belong to no site (left behind by a failure): deleted, but never more than 25 in a run and never when more than half of all folders look like strays (that would mean the database answered wrongly, so it only reports it).
 
 ## Turning it off, and undoing it
 

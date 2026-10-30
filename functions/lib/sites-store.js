@@ -74,6 +74,9 @@ function createDb(env, fetchImpl) {
     },
     holdsForSite: (siteId) => all('site_name_holds?select=name,redirect_to,expires_at&site_id=eq.' + enc(siteId)),
     recentSites: (sinceIso) => all('published_sites?select=id,name,version,status&limit=500&updated_at=gte.' + enc(sinceIso)),
+    /* sites that are offline but still have files: the candidates for the cleanup of lapsed sites (blocked ones are never listed) */
+    offlineSitesWithFiles: (offset) => all('published_sites?select=id,name,version,status,site_entitlements(status,paid_until)&status=eq.unpublished&version=gt.0&order=created_at.asc&limit=500&offset=' + Number(offset || 0)),
+    markPurged: (id) => rest('PATCH', 'published_sites?id=eq.' + enc(id), { version: 0, updated_at: new Date().toISOString() }),
     blockedSites: () => all('published_sites?select=id,name,version&status=eq.blocked&limit=500'),
     liveSites: (offset) => all('published_sites?select=id,name,version,status,site_entitlements(status,paid_until)&status=eq.live&order=created_at.asc&limit=500&offset=' + Number(offset || 0))
   };

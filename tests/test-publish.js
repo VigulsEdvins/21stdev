@@ -249,18 +249,18 @@ const test = async (name, fn) => { await fn(); count++; };
     f.holds.push({ name: 'renamed-away', user_id: 'u1', expires_at: '2026-11-15T00:00:00Z' });
     f.kvStore.set('site:stale-redirect', JSON.stringify({ redirect: 'lapsing-shop' })); // a redirect with no hold behind it
     let r = await pub.sweep();
-    assert.deepStrictEqual(r, { orphans: 1, lapsed: 0, holds: 1, blocked: 0, repaired: 0 }, JSON.stringify(r));
+    assert.deepStrictEqual(r, { orphans: 1, lapsed: 0, holds: 1, blocked: 0, repaired: 0, purged: 0, strays: 0 }, JSON.stringify(r));
     assert(!f.kvStore.has('site:gone-shop') && ![...f.objects.keys()].some((k) => k.startsWith('sites/' + goneId + '/')), 'the deleted account\'s site is gone from KV and R2');
     assert(f.kvStore.has('site:renamed-away'), 'a held redirect stays while the hold lasts');
     assert(f.sites.find((x) => x.name === 'lapsing-shop').status === 'live', 'still paid or in grace');
     setClock('2026-12-10T00:00:00.000Z'); // grace
-    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 1, blocked: 0, repaired: 0 }, 'the hold is now over (15 Nov), grace keeps the site live');
+    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 1, blocked: 0, repaired: 0, purged: 0, strays: 0 }, 'the hold is now over (15 Nov), grace keeps the site live');
     assert(!f.kvStore.has('site:renamed-away') && f.holds.length === 0, 'expired hold released with its redirect');
     setClock('2026-12-20T00:00:00.000Z'); // 19 days after payment ended: grace is over
     r = await pub.sweep();
     assert.strictEqual(r.lapsed, 1); assert.strictEqual(f.sites[0].status, 'unpublished'); assert.strictEqual(JSON.parse(f.kvStore.get('site:lapsing-shop')).status, 'unpublished');
     assert([...f.objects.keys()].some((k) => k.endsWith('/index.html')), 'the files are kept so renewing brings the site back');
-    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 0, blocked: 0, repaired: 0 }, 'running again changes nothing');
+    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 0, blocked: 0, repaired: 0, purged: 0, strays: 0 }, 'running again changes nothing');
   });
 
   await test('sweep: a site the owner blocked in the database stops being served within the hour; blocking is not undone by the sweep', async () => {
@@ -343,6 +343,63 @@ const test = async (name, fn) => { await fn(); count++; };
     // the clean-up never moves a lookup backwards
     f.kvStore.set('site:anna-bakery', JSON.stringify({ id, version: 9, status: 'live' }));
     await pub.sweep(); assert.strictEqual(JSON.parse(f.kvStore.get('site:anna-bakery')).version, 9);
+  });
+
+  await test('cleanup of lapsed sites: files go only after grace plus 90 days, only when payment ended, and the site can be published again', async () => {
+    const { f, pub, setClock } = setup();
+    f.addEntitlement('u1', '2026-12-01T00:00:00Z'); f.addEntitlement('u2', '2030-01-01T00:00:00Z'); f.addEntitlement('u3', '2026-12-01T00:00:00Z'); f.addEntitlement('u4', '2026-12-01T00:00:00Z');
+    const lapse = (await pub.publish({ userId: 'u1', name: 'lapsing-shop', files: [html('<p>one</p>'), css] })).json.siteId;
+    const keep = (await pub.publish({ userId: 'u2', name: 'paid-but-offline', files: [html()] })).json.siteId;
+    const blocked = (await pub.publish({ userId: 'u3', name: 'blocked-shop', files: [html()] })).json.siteId;
+    const bare = (await pub.publish({ userId: 'u4', name: 'owner-made', files: [html()] })).json.siteId;
+    await pub.unpublish({ userId: 'u2', siteId: keep });
+    f.sites.find((x) => x.id === blocked).status = 'blocked';
+    f.ents.splice(f.ents.findIndex((e) => e.site_id === bare), 1); // a site with no paid place at all (made by the owner)
+    const files = (id) => [...f.objects.keys()].filter((k) => k.startsWith('sites/' + id + '/')).length;
+    setClock('2026-12-20T00:00:00.000Z'); const first = await pub.sweep(); assert.strictEqual(first.lapsed, 1, 'only lapsing-shop goes offline now: the blocked site is not live, the owner-made one has no paid place, the other is paid');
+    assert.strictEqual(f.sites.find((x) => x.id === lapse).status, 'unpublished');
+    setClock('2027-03-10T00:00:00.000Z'); assert.strictEqual((await pub.sweep()).purged, 0, '99 days after payment ended: still inside the 104 days'); assert(files(lapse) > 0);
+    setClock('2027-03-16T00:00:00.000Z'); const out = await pub.sweep(); assert.strictEqual(out.purged, 1, JSON.stringify(out));
+    assert.strictEqual(files(lapse), 0, 'its files are gone'); assert.strictEqual(f.sites.find((x) => x.id === lapse).version, 0); assert.strictEqual(f.sites.find((x) => x.id === lapse).name, 'lapsing-shop', 'the name and the row stay');
+    assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:lapsing-shop')), { id: lapse, version: 0, status: 'unpublished' });
+    assert(files(keep) > 0 && files(blocked) > 0 && files(bare) > 0, 'offline by the owner with payment active, blocked, and no-entitlement sites keep their files');
+    assert.strictEqual((await pub.sweep()).purged, 0, 'a second run changes nothing');
+    f.ents.find((e) => e.site_id === lapse).paid_until = '2028-06-01T00:00:00Z'; // the person renews
+    const again = await pub.publish({ userId: 'u1', name: 'lapsing-shop', files: [html('<p>back</p>')] });
+    assert.strictEqual(again.status, 200, JSON.stringify(again.json)); assert.strictEqual(again.json.version, 2, 'folder numbers continue; nothing is reused');
+    assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:lapsing-shop')), { id: lapse, version: 2, status: 'live' }); assert(files(lapse) > 0);
+  });
+
+  await test('cleanup brakes: at most 25 sites per run; one failing site does not stop the others and is tried again', async () => {
+    const { f, pub, setClock } = setup();
+    for (let i = 0; i < 30; i++) {
+      const u = 'user-' + i; f.addEntitlement(u, '2026-12-01T00:00:00Z');
+      const r = await pub.publish({ userId: u, name: 'shop-' + String(i).padStart(2, '0') + 'x', files: [html()] }); assert.strictEqual(r.status, 200);
+    }
+    setClock('2026-12-20T00:00:00.000Z'); assert.strictEqual((await pub.sweep()).lapsed, 30);
+    setClock('2027-03-20T00:00:00.000Z');
+    const idOf = (name) => f.sites.find((x) => x.name === name).id;
+    const bad = idOf('shop-03x'); const realDelete = f.bucket.delete.bind(f.bucket);
+    f.bucket.delete = async (k) => { if (k.startsWith('sites/' + bad + '/')) throw new Error('r2 down'); return realDelete(k); };
+    const run1 = await pub.sweep(); assert.strictEqual(run1.purged + (run1.failed || 0), 25, 'twenty-five sites looked at in one run: ' + JSON.stringify(run1)); assert.strictEqual(run1.failed, 1, 'the failing one is counted');
+    assert.strictEqual(f.sites.find((x) => x.id === bad).version, 1, 'a site whose files could not be deleted is not marked as purged');
+    f.bucket.delete = realDelete;
+    const run2 = await pub.sweep(); assert.strictEqual(run2.purged, 6, 'the rest next time, with the one that failed: ' + JSON.stringify(run2));
+    assert.strictEqual((await pub.sweep()).purged, 0); assert.strictEqual([...f.objects.keys()].length, 0, 'every file of the 30 sites is gone');
+  });
+
+  await test('stray folders in R2 (no site in the database) are removed; too many strays means something is wrong, so nothing is deleted', async () => {
+    const { f, pub } = setup(); f.addEntitlement('u1', FUTURE); f.addEntitlement('u2', FUTURE);
+    const a = (await pub.publish({ userId: 'u1', name: 'real-one', files: [html()] })).json.siteId; const b = (await pub.publish({ userId: 'u2', name: 'real-two', files: [html()] })).json.siteId;
+    const put = (id) => f.bucket.put('sites/' + id + '/1/index.html', new Uint8Array([1]));
+    await put('00000000-0000-4000-8000-0000000000aa'); // a folder left behind by a failure
+    const out = await pub.sweep(); assert.strictEqual(out.strays, 1, JSON.stringify(out));
+    assert(![...f.objects.keys()].some((k) => k.includes('0000000000aa')), 'the stray is gone'); assert([...f.objects.keys()].some((k) => k.startsWith('sites/' + a + '/')) && [...f.objects.keys()].some((k) => k.startsWith('sites/' + b + '/')), 'real sites untouched');
+    for (let i = 0; i < 8; i++) await put('00000000-0000-4000-8000-00000000f' + String(i).padStart(3, '0'));
+    const out2 = await pub.sweep(); assert.strictEqual(out2.strays, 0); assert.strictEqual(out2.straysSkipped, 8, 'eight strays beside two real folders: more than half, so nothing is deleted and it is reported');
+    assert.strictEqual([...f.objects.keys()].filter((k) => k.includes('00000000f')).length, 8, 'still there');
+    for (let i = 0; i < 40; i++) await put('00000000-0000-4000-8000-0000000b' + String(i).padStart(4, '0'));
+    assert.strictEqual((await pub.sweep()).straysSkipped, 48, 'and more than 25 is never deleted in one run');
   });
 
   console.log(`✓ publish: ${count} groups (files, scan, payment, names, versions, failures, limits, unpublish)`);

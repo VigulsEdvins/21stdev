@@ -71,6 +71,16 @@ const test = async (name, fn) => { await fn(); count++; };
     await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'XX000');
   });
 
+  await test('cleanup of lapsed sites: the candidates are offline sites with files (never blocked ones); marking a site purged sets its version to 0 only', async () => {
+    const s = stub([{ status: 200, body: [{ id: 's1', name: 'a-b-c', version: 2, status: 'unpublished', site_entitlements: { status: 'active', paid_until: '2026-01-01T00:00:00Z' } }] }, { status: 204 }]);
+    const db = store.createDb(ENV, s.fetchImpl);
+    const list = await db.offlineSitesWithFiles(500);
+    assert.strictEqual(list.length, 1);
+    const url = s.calls[0].url; assert(url.includes('status=eq.unpublished') && url.includes('version=gt.0') && url.endsWith('&offset=500') && url.includes('site_entitlements(status,paid_until)'), url);
+    await db.markPurged('s1'); assert.strictEqual(s.calls[1].method, 'PATCH'); assert(s.calls[1].url.endsWith('published_sites?id=eq.s1'));
+    const body = JSON.parse(s.calls[1].body); assert.strictEqual(body.version, 0); assert.deepStrictEqual(Object.keys(body).sort(), ['updated_at', 'version'], 'nothing else is changed');
+  });
+
   await test('a database error carries its status and code but never the keys', async () => {
     const s = stub([{ status: 503, body: { message: 'upstream unavailable' } }]);
     await assert.rejects(store.createDb(ENV, s.fetchImpl).siteByName('abc'), (e) => e.status === 503 && !/SECRET|anon-key/.test(e.message));

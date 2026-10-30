@@ -159,3 +159,15 @@ The only real cost is that R2 paths use a site id instead of the name (`sites/<s
 
 - The **price** of publishing on an edvlabs address, and whether it is yearly or monthly.
 - Whether the grace period (14 days) and file retention (90 days) after non-payment suit you.
+
+## Cleaning up lapsed sites' files (plan, 2026-10-30; owner chose it as the next item)
+
+Today the hourly job takes a site offline when its payment ended more than 14 days ago and keeps its files. Nothing ever removes them. Design:
+
+1. **When:** a site is `unpublished`, still has files (`version >= 1`), its paid place is **ended** (not just in grace), and `paid_until + 14 days grace + 90 days retention` has passed. Sites the owner took offline themselves (payment still active) are never touched; blocked sites are never touched (kept for the owner to look at).
+2. **What:** delete every file of the site from R2 first, then set the database `version` to 0 and the lookup record to `{ version: 0, status: 'unpublished' }`. The name, the row and the name holds stay: the person still owns the name and can publish again after renewing (the builder uploads everything again, so no file is needed for that). If a step fails the next run does the rest (deleting files that are already gone is harmless).
+3. **Strays:** also, once an hour, list the `sites/<id>/` folders in R2 and delete those whose site no longer exists in the database (left behind by a failure anywhere). 
+4. **Brakes, because this deletes data:** at most 25 sites purged per run; the stray audit deletes nothing when more than 25 folders look like strays, or when more than half of all folders do (the signal that the database answered wrongly, not that there is a lot of garbage) and says so in the run's result instead.
+5. **Not done here:** releasing the name of an abandoned site, and an email before the files are deleted.
+
+**As built:** `sweep()` steps 6 and 7 in `functions/lib/publish.js` (`LIMITS.retentionDays`, `maxPurgesPerRun`), `offlineSitesWithFiles` and `markPurged` in `functions/lib/sites-store.js`. One site's failure is counted (`failed`) and does not stop the run. The run's result now also reports `purged`, `strays` and `straysSkipped`. Tested in `tests/test-publish.js` (timeline of 14 + 90 days, the cases that keep their files, a second run changing nothing, renewing and publishing again with continuing folder numbers, the 25-per-run brake, a failing site, stray folders and the stray brakes).
