@@ -239,7 +239,7 @@ function createPublisher({ db, bucket, kv, now, domain }) {
   /** Removes folders older than the last few versions. */
   async function prune(siteId, live) {
     const keep = live - LIMITS.keepVersions + 1; // keeps `live` and the four before it
-    const listed = await bucket.list({ prefix: 'sites/' + siteId + '/' });
+    const listed = await bucket.list({ prefix: 'sites/' + siteId + '/', limit: 1000 });
     for (const o of listed.objects || []) {
       const v = Number(o.key.split('/')[2]);
       if (Number.isInteger(v) && v < keep) await bucket.delete(o.key);
@@ -257,7 +257,64 @@ function createPublisher({ db, bucket, kv, now, domain }) {
     return { status: 200, json: { ok: true, name: site.name } };
   }
 
-  return { nameStatus, publish, unpublish };
+  /** The person's sites with their payment state, and how many paid places are still unused. */
+  async function mySites(userId) {
+    if (!userId) return fail(401, 'Please sign in.');
+    const [sites, ents] = await Promise.all([db.sitesByUser(userId), db.entitlementsByUser(userId)]);
+    const t = now();
+    return { status: 200, json: { ok: true,
+      sites: sites.map((x) => { const e = ents.find((y) => y.site_id === x.id); return { id: x.id, name: x.name, status: x.status, version: x.version, address: address(x.name), publishedAt: x.published_at || null, payment: entitlementState(e, t), paidUntil: e ? e.paid_until : null }; }),
+      freePlaces: ents.filter((e) => !e.site_id && entitlementState(e, t) === 'active').length } };
+  }
+
+  /** Deletes every file of a site from R2 (a listing returns at most a thousand at a time, so it repeats until nothing is left). */
+  async function deleteFiles(siteId) {
+    for (let round = 0; round < 1000; round++) {
+      const listed = await bucket.list({ prefix: 'sites/' + siteId + '/', limit: 1000 });
+      const objs = listed.objects || [];
+      if (!objs.length) return;
+      for (const o of objs) await bucket.delete(o.key);
+    }
+  }
+
+  /** Sweeps up after things the browser never tells us about; run on a timer (src/worker.js scheduled). Safe to run twice.
+      1) sites whose database row is gone (account deleted): files and address removed
+      2) sites whose payment ended more than the grace period ago: taken offline, files kept
+      3) name holds that ran out: released, and the redirect from the old address removed. */
+  async function sweep() {
+    const out = { orphans: 0, lapsed: 0, holds: 0 };
+    let cursor;
+    do {
+      const l = await kv.list({ prefix: 'site:', cursor });
+      for (const k of l.keys || []) {
+        let rec = null;
+        try { rec = JSON.parse(await kv.get(k.name)); } catch (e) { rec = null; }
+        if (rec && rec.id && !(await db.siteById(rec.id))) { await deleteFiles(rec.id); await kv.delete(k.name); out.orphans++; }
+        else if (rec && rec.redirect && !(await db.holdByName(k.name.slice(5)))) { await kv.delete(k.name); out.holds++; }
+      }
+      cursor = l.list_complete ? null : l.cursor;
+    } while (cursor);
+    for (let offset = 0; ; offset += 500) {
+      const page = await db.liveSites(offset);
+      for (const x of page) {
+        const e = Array.isArray(x.site_entitlements) ? x.site_entitlements[0] : x.site_entitlements;
+        if (e && entitlementState(e, now()) === 'ended') {
+          await db.setStatus(x.id, 'unpublished');
+          await kv.put(kvKey(x.name), JSON.stringify({ id: x.id, version: x.version, status: 'unpublished' }));
+          out.lapsed++;
+        }
+      }
+      if (page.length < 500) break;
+    }
+    for (const h of await db.expiredHolds(now())) {
+      await db.deleteHold(h.name);
+      try { const rec = JSON.parse(await kv.get(kvKey(h.name))); if (rec && rec.redirect) await kv.delete(kvKey(h.name)); } catch (e) { /* nothing stored under that name */ }
+      out.holds++;
+    }
+    return out;
+  }
+
+  return { nameStatus, publish, unpublish, mySites, sweep };
 }
 
 module.exports = { createPublisher, checkFiles, scanHtml, scanSvg, entitlementState, plainUrl, LIMITS, TYPES, key, kvKey };

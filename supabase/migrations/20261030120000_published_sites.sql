@@ -81,3 +81,29 @@ end;
 $$;
 
 create trigger published_sites_limit before insert on public.published_sites for each row execute function public.published_sites_limit();
+
+-- Two steps that must be one atomic database action, so they are functions the server calls (never the browser).
+-- reserve_site_version: hands out the next folder number; two publishes at the same moment get different numbers.
+create or replace function public.reserve_site_version(p_site uuid)
+returns integer
+language sql
+security invoker
+set search_path = ''
+as $$
+  update public.published_sites set last_version = last_version + 1, updated_at = now() where id = p_site returning last_version;
+$$;
+
+-- go_live_site: after the files are uploaded, makes that folder the live one (never moving backwards if a later publish finished first).
+create or replace function public.go_live_site(p_site uuid, p_version integer, p_project uuid)
+returns void
+language sql
+security invoker
+set search_path = ''
+as $$
+  update public.published_sites
+     set version = greatest(version, p_version), status = 'live', published_at = now(), updated_at = now(), project_id = coalesce(p_project, project_id)
+   where id = p_site and status <> 'blocked';
+$$;
+
+revoke all on function public.reserve_site_version(uuid) from public, anon, authenticated;
+revoke all on function public.go_live_site(uuid, integer, uuid) from public, anon, authenticated;

@@ -202,5 +202,41 @@ const test = async (name, fn) => { await fn(); count++; };
     assert.strictEqual((await pub.unpublish({ userId: 'u1', siteId: r.json.siteId })).status, 403, 'a blocked site cannot be changed by its owner');
   });
 
+  await test('mySites lists a person\'s sites with payment state and unused places', async () => {
+    const { f, pub } = setup(); f.addEntitlement('u1', FUTURE); f.addEntitlement('u1', FUTURE);
+    await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()] });
+    const r = await pub.mySites('u1');
+    assert.strictEqual(r.json.freePlaces, 1); assert.strictEqual(r.json.sites.length, 1);
+    assert.deepStrictEqual(Object.keys(r.json.sites[0]).sort(), ['address', 'id', 'name', 'paidUntil', 'payment', 'publishedAt', 'status', 'version']);
+    assert.strictEqual(r.json.sites[0].address, 'https://bakery-anna.edvlabs.com/'); assert.strictEqual(r.json.sites[0].payment, 'active');
+    assert.strictEqual((await pub.mySites('u2')).json.sites.length, 0, 'nobody sees another person\'s sites');
+    assert.strictEqual((await pub.mySites(null)).status, 401);
+  });
+
+  await test('sweep: deleted accounts\' sites vanish, lapsed payments go offline, old holds are released; a second run changes nothing', async () => {
+    const { f, pub, setClock } = setup();
+    f.addEntitlement('u1', '2026-12-01T00:00:00Z'); f.addEntitlement('u2', FUTURE);
+    await pub.publish({ userId: 'u1', name: 'lapsing-shop', files: [html()] });
+    await pub.publish({ userId: 'u2', name: 'gone-shop', files: [html()] });
+    const goneId = f.sites.find((x) => x.name === 'gone-shop').id;
+    f.sites.splice(f.sites.findIndex((x) => x.name === 'gone-shop'), 1); // the account was deleted: the database rows are gone, KV and R2 are not
+    f.kvStore.set('site:renamed-away', JSON.stringify({ redirect: 'lapsing-shop' }));
+    f.holds.push({ name: 'renamed-away', user_id: 'u1', expires_at: '2026-11-15T00:00:00Z' });
+    f.kvStore.set('site:stale-redirect', JSON.stringify({ redirect: 'lapsing-shop' })); // a redirect with no hold behind it
+    let r = await pub.sweep();
+    assert.deepStrictEqual(r, { orphans: 1, lapsed: 0, holds: 1 }, JSON.stringify(r));
+    assert(!f.kvStore.has('site:gone-shop') && ![...f.objects.keys()].some((k) => k.startsWith('sites/' + goneId + '/')), 'the deleted account\'s site is gone from KV and R2');
+    assert(f.kvStore.has('site:renamed-away'), 'a held redirect stays while the hold lasts');
+    assert(f.sites.find((x) => x.name === 'lapsing-shop').status === 'live', 'still paid or in grace');
+    setClock('2026-12-10T00:00:00.000Z'); // grace
+    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 1 }, 'the hold is now over (15 Nov), grace keeps the site live');
+    assert(!f.kvStore.has('site:renamed-away') && f.holds.length === 0, 'expired hold released with its redirect');
+    setClock('2026-12-20T00:00:00.000Z'); // 19 days after payment ended: grace is over
+    r = await pub.sweep();
+    assert.strictEqual(r.lapsed, 1); assert.strictEqual(f.sites[0].status, 'unpublished'); assert.strictEqual(JSON.parse(f.kvStore.get('site:lapsing-shop')).status, 'unpublished');
+    assert([...f.objects.keys()].some((k) => k.endsWith('/index.html')), 'the files are kept so renewing brings the site back');
+    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 0 }, 'running again changes nothing');
+  });
+
   console.log(`✓ publish: ${count} groups (files, scan, payment, names, versions, failures, limits, unpublish)`);
 })().catch((e) => { console.error(e); process.exit(1); });

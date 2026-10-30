@@ -10,6 +10,8 @@
   // deploy that does not list them here. keep_vars keeps them. Secrets (RESEND_API_KEY) are never deleted.
   "keep_vars": true,
   "kv_namespaces": [{ "binding": "LEADS" }],
+  // Hourly clean-up of published sites (taking lapsed ones offline, removing deleted accounts' sites, releasing old name holds). Does nothing until the SITES and SITES_BUCKET bindings exist.
+  "triggers": { "crons": ["17 * * * *"] },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

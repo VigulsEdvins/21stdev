@@ -4,6 +4,7 @@
    optional TURNSTILE_SECRET + TURNSTILE_SITE_KEY (together: the contact and start pages show the Cloudflare spam check and /api/lead refuses a message without a passed check),
    optional LEAD_ACK=1; TURNSTILE_SITE_KEY alone switches on the spam check on the account page (its secret goes into Supabase, not here). All the lead rules are in ./lead.js. */
 const lead = require('./lead.js');
+const publishHttp = require('./publish-http.js');
 const { handle, resendMailer } = lead;
 
 // _headers only covers static files, so the API answers carry their own security headers
@@ -32,9 +33,11 @@ async function receive(request, env) {
   return json(r.status, r.json);
 }
 
-/** Routes a request: /api/lead takes leads (POST only), /api/config hands out the public sign-in settings, any other /api path is not found, everything else is the static site. */
-async function route(request, env, serveAsset) {
+/** Routes a request: /api/lead takes leads (POST only), the four publishing endpoints (./publish-http.js), /api/config hands out the public sign-in settings, any other /api path is not found, everything else is the static site. */
+async function route(request, env, serveAsset, deps) {
   const path = new URL(request.url).pathname;
+  const published = await publishHttp.route(request, env, json, deps); // site-name, my-sites, publish, unpublish
+  if (published) return published;
   if (path === '/api/lead') return request.method === 'POST' ? receive(request, env) : json(405, { ok: false, errors: ['Use POST.'] }, { Allow: 'POST' });
   // The Supabase address and the public (anon) key, so the static pages hold neither. Both are meant to be public; the secret key never goes here.
   if (path === '/api/config') return request.method === 'GET' ? (env.SUPABASE_URL && env.SUPABASE_ANON_KEY ? json(200, Object.assign({ supabaseUrl: env.SUPABASE_URL, anonKey: env.SUPABASE_ANON_KEY }, env.TURNSTILE_SITE_KEY ? { turnstileSiteKey: env.TURNSTILE_SITE_KEY } : {}), { 'Cache-Control': 'no-store' }) : json(503, { ok: false, errors: ['Accounts are not set up yet.'], missing: ['SUPABASE_URL', 'SUPABASE_ANON_KEY'].filter((k) => !env[k]) })) : json(405, { ok: false, errors: ['Use GET.'] }, { Allow: 'GET' });

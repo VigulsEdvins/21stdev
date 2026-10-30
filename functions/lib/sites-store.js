@@ -1,0 +1,67 @@
+/* The real storage behind functions/lib/publish.js: the three Supabase tables over REST with the service key (server only), and the sign-in check.
+   R2 and KV need no adapter: Cloudflare gives them to the Worker as env.SITES_BUCKET and env.SITES, with the methods publish.js already uses.
+   Settings (never in git): SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY (secret). */
+
+const enc = encodeURIComponent;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Who is behind this token? Asks Supabase itself, so a forged or expired token is simply refused. Returns { id, email } or null. */
+async function verifyUser(env, token, fetchImpl) {
+  if (typeof token !== 'string' || token.length < 20 || token.length > 4096 || /\s/.test(token)) return null;
+  const f = fetchImpl || fetch;
+  const r = await f(env.SUPABASE_URL.replace(/\/+$/, '') + '/auth/v1/user', { headers: { apikey: env.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + token } });
+  if (!r.ok) return null;
+  const u = await r.json();
+  return u && typeof u.id === 'string' && UUID.test(u.id) ? { id: u.id, email: u.email || '' } : null;
+}
+
+function createDb(env, fetchImpl) {
+  const f = fetchImpl || fetch;
+  const base = env.SUPABASE_URL.replace(/\/+$/, '') + '/rest/v1/';
+  const headers = { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_ROLE_KEY, 'Content-Type': 'application/json' };
+
+  async function rest(method, path, body, prefer) {
+    const r = await f(base + path, { method, headers: prefer ? Object.assign({ Prefer: prefer }, headers) : headers, body: body === undefined ? undefined : JSON.stringify(body) });
+    const text = await r.text();
+    let json = null;
+    try { json = text ? JSON.parse(text) : null; } catch (e) { json = null; }
+    if (!r.ok) throw Object.assign(new Error((json && json.message) || 'database error ' + r.status), { status: r.status, code: json && json.code });
+    return json;
+  }
+  const first = async (path) => { const rows = await rest('GET', path); return Array.isArray(rows) && rows.length ? rows[0] : null; };
+  const all = async (path) => { const rows = await rest('GET', path); return Array.isArray(rows) ? rows : []; };
+
+  return {
+    siteByName: (name) => first('published_sites?select=*&limit=1&name=eq.' + enc(name)),
+    siteById: (id) => (UUID.test(String(id)) ? first('published_sites?select=*&limit=1&id=eq.' + enc(id)) : Promise.resolve(null)),
+    sitesByUser: (userId) => all('published_sites?select=*&order=created_at.desc&user_id=eq.' + enc(userId)),
+    holdByName: (name) => first('site_name_holds?select=*&limit=1&name=eq.' + enc(name)),
+    expiredHolds: (nowIso) => all('site_name_holds?select=*&limit=500&expires_at=lt.' + enc(nowIso)),
+    deleteHold: (name) => rest('DELETE', 'site_name_holds?name=eq.' + enc(name)),
+    entitlementForSite: (siteId) => first('site_entitlements?select=*&limit=1&site_id=eq.' + enc(siteId)),
+    entitlementsByUser: (userId) => all('site_entitlements?select=*&user_id=eq.' + enc(userId)),
+    freeEntitlements: (userId) => all('site_entitlements?select=*&status=eq.active&site_id=is.null&order=paid_until.desc&user_id=eq.' + enc(userId)),
+    async insertSite(row) {
+      try {
+        const rows = await rest('POST', 'published_sites', row, 'return=representation');
+        return rows[0];
+      } catch (e) {
+        if (e.code === '23505') throw Object.assign(e, { code: 'name-taken' });
+        if (e.code === 'P0001' && /too many sites/.test(e.message)) throw Object.assign(e, { code: 'too-many' });
+        throw e;
+      }
+    },
+    deleteSite: (id) => rest('DELETE', 'published_sites?id=eq.' + enc(id)),
+    async claimEntitlement(entId, siteId) { // only succeeds while the place is still free, so two publishes cannot use one place
+      const rows = await rest('PATCH', 'site_entitlements?site_id=is.null&id=eq.' + enc(entId), { site_id: siteId }, 'return=representation');
+      return Array.isArray(rows) && rows.length === 1;
+    },
+    releaseEntitlement: (siteId) => rest('PATCH', 'site_entitlements?site_id=eq.' + enc(siteId), { site_id: null }),
+    reserveVersion: (id) => rest('POST', 'rpc/reserve_site_version', { p_site: id }),
+    goLive: (id, version, extra) => rest('POST', 'rpc/go_live_site', { p_site: id, p_version: version, p_project: (extra && extra.project_id) || null }),
+    setStatus: (id, status) => rest('PATCH', 'published_sites?id=eq.' + enc(id), { status, updated_at: new Date().toISOString() }),
+    liveSites: (offset) => all('published_sites?select=id,name,version,status,site_entitlements(status,paid_until)&status=eq.live&order=created_at.asc&limit=500&offset=' + Number(offset || 0))
+  };
+}
+
+module.exports = { verifyUser, createDb, UUID };

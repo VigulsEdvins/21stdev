@@ -14,13 +14,18 @@ function create() {
     async insertSite(row) {
       if (sites.some((s) => s.name === row.name)) throw Object.assign(new Error('dup'), { code: 'name-taken' });
       if (sites.filter((s) => s.user_id === row.user_id).length >= 10) throw Object.assign(new Error('cap'), { code: 'too-many' });
-      const s = Object.assign({ id: 'site-' + (++n), version: 0, last_version: 0, status: 'unpublished', project_id: null }, row); sites.push(s); return s;
+      const s = Object.assign({ id: '00000000-0000-4000-8000-' + String(++n).padStart(12, '0'), version: 0, last_version: 0, status: 'unpublished', project_id: null }, row); sites.push(s); return s;
     },
     async deleteSite(id) { const i = sites.findIndex((s) => s.id === id); if (i >= 0) sites.splice(i, 1); },
     async claimEntitlement(entId, siteId) { const e = ents.find((x) => x.id === entId); if (!e || e.site_id) return false; e.site_id = siteId; return true; },
     async releaseEntitlement(siteId) { const e = ents.find((x) => x.site_id === siteId); if (e) e.site_id = null; },
     async reserveVersion(id) { const s = sites.find((x) => x.id === id); s.last_version += 1; return s.last_version; },
     async goLive(id, version, extra) { const s = sites.find((x) => x.id === id); if (version > s.version) s.version = version; s.status = 'live'; Object.assign(s, extra || {}); },
+    async sitesByUser(userId) { return sites.filter((s) => s.user_id === userId); },
+    async entitlementsByUser(userId) { return ents.filter((e) => e.user_id === userId); },
+    async expiredHolds(nowIso) { return holds.filter((h) => new Date(h.expires_at) < new Date(nowIso)); },
+    async deleteHold(name) { const i = holds.findIndex((h) => h.name === name); if (i >= 0) holds.splice(i, 1); },
+    async liveSites() { return sites.filter((s) => s.status === 'live').map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status, site_entitlements: ents.find((e) => e.site_id === s.id) || null })); },
     async setStatus(id, status) { sites.find((x) => x.id === id).status = status; }
   };
   const bucket = {
@@ -30,7 +35,8 @@ function create() {
     async delete(k) { objects.delete(k); log.push('delete ' + k); },
     async list({ prefix }) { return { objects: [...objects.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })) }; }
   };
-  const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); } };
+  const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async delete(k) { kvStore.delete(k); },
+    async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };
   return { db, bucket, kv, sites, holds, ents, objects, kvStore, log,
     addEntitlement(userId, paidUntil, over) { const e = Object.assign({ id: 'ent-' + (ents.length + 1), user_id: userId, site_id: null, status: 'active', paid_until: paidUntil, granted_by: 'owner' }, over || {}); ents.push(e); return e; } };
 }
