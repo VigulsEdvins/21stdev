@@ -83,7 +83,7 @@ function world() {
   await test('not set up: 503 names the missing settings and never their values; the timer does nothing', async () => {
     const env = { SUPABASE_URL: 'https://x.supabase.co', SUPABASE_ANON_KEY: 'anon-secret-value' };
     const r = await http.route(new Request('https://edvlabs.test/api/my-sites', { method: 'GET' }), env, asset);
-    const j = await r.json(); assert.strictEqual(r.status, 503); assert.deepStrictEqual(j.missing, ['SUPABASE_SERVICE_ROLE_KEY', 'SITES', 'SITES_BUCKET']);
+    const j = await r.json(); assert.strictEqual(r.status, 503); assert.deepStrictEqual(j.missing, ['SUPABASE_SERVICE_ROLE_KEY', 'SITES', 'SITES_BUCKET', 'ASSETS']);
     assert(!JSON.stringify(j).includes('anon-secret-value'));
     assert.strictEqual(await PH.scheduled(env), null);
     const w = world(); w.f.addEntitlement(U1, FUTURE);

@@ -143,5 +143,5 @@ Deleting a lapsed site's files after 90 days is **not built yet**; they stay in 
 
 ## Known limits (also in the plan)
 
-- Uploaded **JavaScript cannot be judged by a scan.** The builder only sends the library's own scripts, but a person calling the endpoint directly could upload their own. Held back today by the paid-place requirement and your block switch. Before opening publishing to everyone, the server should accept only scripts that match the library's known files, or rebuild the site from the saved project itself.
+- **Scripts are checked against the library** (2026-10-30): a published `.js` file must be exactly what the builder produces from the library's own block scripts, read from the builder's own files on the same Worker (`/builder/features/<slug>/script.js` and `/builder/export-assets.json`, both staged by `npm run build:site`). If a block's script changes in a new deploy, an old open builder tab can no longer publish and the person is told to reload. Details: `docs/superpowers/plans/2026-10-30-script-allowlist.md`.
 - Deleted accounts' sites can stay online for up to an hour. Lapsed sites' files are not removed after 90 days yet. Renaming a site is designed but not built.

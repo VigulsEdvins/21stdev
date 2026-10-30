@@ -81,6 +81,12 @@ function scanHtml(html) {
   const add = (m) => { if (!problems.includes(m)) problems.push(m); };
   eachTag(String(html), (tag, attrs) => {
     if (BANNED_TAGS.has(tag)) add('The <' + tag + '> element is not allowed.');
+    // Scripts live in the site's script files, which are checked separately. Nothing may run from inside the page itself.
+    for (const [name] of attrs) {
+      if (name.length > 2 && name.startsWith('on')) add('An element has an event handler (an “on…” attribute).');
+      if (name === 'srcdoc') add('A frame carries its own page.');
+    }
+    if (tag === 'script' && !attrs.some(([n]) => n === 'src') && !attrs.some(([n, v]) => n === 'type' && plainUrl(v) === 'application/ld+json')) add('The page has a script written into it.');
     if (!CHECKED_TAGS.has(tag)) return;
     for (const [name, raw] of attrs) {
       const value = plainUrl(raw);
@@ -166,7 +172,7 @@ function entitlementState(ent, now) {
 const key = (siteId, version, path) => 'sites/' + siteId + '/' + version + '/' + path;
 const kvKey = (name) => 'site:' + name;
 
-function createPublisher({ db, bucket, kv, now, domain, addressOf }) {
+function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts }) {
   const host = domain || 'edvlabs.com';
   const address = addressOf || ((name) => 'https://' + name + '.' + host + '/'); // addressOf: the local demo (scripts/demo-publish.js) uses http://<name>.localhost:<port>/
 
@@ -176,6 +182,17 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf }) {
     if (n >= LIMITS.publishesPerHour) return true;
     await kv.put(k, String(n + 1), { expirationTtl: 3700 });
     return false;
+  }
+
+  /** Every .js file must be exactly what the builder makes (functions/lib/script-check.js). Without a checker no script is accepted. Returns a message or ''. */
+  async function checkScripts(list) {
+    for (const f of list) {
+      if (!f.path.endsWith('.js')) continue;
+      if (!scripts) return '“' + f.path.slice(0, 60) + '”: scripts cannot be published here.';
+      const r = await scripts.check(new TextDecoder().decode(f.bytes));
+      if (!r.ok) return '“' + f.path.slice(0, 60) + '”: ' + r.problem + ' Reload the builder and put the page online again.';
+    }
+    return '';
   }
 
   /** Is this name usable by this person? Does not reserve anything. */
@@ -196,6 +213,8 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf }) {
     if (!c.ok) return fail(400, c.message, { reason: c.reason });
     const checked = checkFiles(files);
     if (!checked.ok) return fail(400, checked.errors[0], { details: checked.errors, reason: 'files' });
+    const scriptProblem = await checkScripts(checked.files);
+    if (scriptProblem) return fail(400, scriptProblem, { details: [scriptProblem], reason: 'files' });
     if (await rateLimited(userId)) return fail(429, 'Too many publishes this hour. Please try again later.', { reason: 'rate' });
 
     let site = await db.siteByName(c.name), created = false, entitlement;

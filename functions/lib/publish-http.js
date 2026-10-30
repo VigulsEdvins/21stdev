@@ -7,15 +7,27 @@
    Settings (never in git): SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY (secret); bindings SITES (KV) and SITES_BUCKET (R2); optional SITES_DOMAIN. */
 const { createPublisher } = require('./publish.js');
 const store = require('./sites-store.js');
+const { createScriptChecker } = require('./script-check.js');
 
-const NEEDED = ['SUPABASE_URL', 'SUPABASE_ANON_KEY', 'SUPABASE_SERVICE_ROLE_KEY', 'SITES', 'SITES_BUCKET'];
+const NEEDED = ['SUPABASE_URL', 'SUPABASE_ANON_KEY', 'SUPABASE_SERVICE_ROLE_KEY', 'SITES', 'SITES_BUCKET', 'ASSETS'];
 const MAX_BODY = 30 * 1024 * 1024; // 20 MB of files is about 27 MB once written as text
 
 /** The real parts, built from the Worker's settings. Tests pass their own. */
 function makeDeps(env) {
+  /* A block's script, from the builder's own published files (the Worker's static assets): what a page's script must be made of. */
+  const library = async (slug) => {
+    if (typeof slug !== 'string' || !/^[a-z0-9][a-z0-9-]{0,79}$/.test(slug)) return null;
+    const r = await env.ASSETS.fetch(new Request('https://assets.invalid/builder/features/' + slug + '/script.js'));
+    return r.ok ? r.text() : null;
+  };
+  /* The files blocks load at run time, written when the site is staged (scripts/build-site.js). */
+  const exportAssets = async () => {
+    const r = await env.ASSETS.fetch(new Request('https://assets.invalid/builder/export-assets.json'));
+    return r.ok ? r.json() : {};
+  };
   return {
     user: (token) => store.verifyUser(env, token),
-    publisher: createPublisher({ db: store.createDb(env), bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN })
+    publisher: createPublisher({ db: store.createDb(env), bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets }) })
   };
 }
 

@@ -1,6 +1,6 @@
 # Only the library's own scripts may be published (plan, 2026-10-30)
 
-Status: **decided by the owner 2026-10-30 ("Script allowlist"), being built.** Follows `2026-10-30-publish-subdomain.md`, section "Known limit of the server check".
+Status: **built and tested 2026-10-30; not yet deployed when this line was written.** Follows `2026-10-30-publish-subdomain.md`, section "Known limit of the server check".
 
 ## The problem
 
@@ -43,3 +43,13 @@ Because the check uses the generator itself, there is no separate allowlist file
 4. Wire into `publish()` through `deps`; the real library fetch from `env.ASSETS` in `publish-http.js`.
 5. Tests: all 238 real exports pass; tampering is refused (one changed character, appended or prepended code, a changed id, an unknown block, tampered overrides, duplicated blocks, extra `.js` files, inline scripts and handlers); an end-to-end publish through the demo.
 6. Deploy (push), update the testsite, record in the guide and handoff.
+
+## As built (differences and findings)
+
+- `functions/lib/script-check.js` (the check), a small refactor of `scripts/assembler/export.js` (`sectionScriptBlock`, `langScriptBlock`, `modeScriptBlock`, `scriptParts`; output unchanged, 414 snapshot checks identical), `LOCAL_ASSET_RE` exported from `scripts/assembler/zip.js`, `dist/builder/export-assets.json` written by `scripts/build-site.js`.
+- **One difference from the generator is expected:** when the builder bundles a download it rewrites root-relative file addresses inside `script.js` (`/assets/library/a.svg` becomes `assets/library/a.svg`, and the folders of run-time files listed in `meta.json` `exportAssets`). The first real test found it (the 3D cylinder block). At each such place the upload may hold either form and nothing else; tests cover rewritten, partly rewritten and tampered addresses.
+- **Measured:** all 238 blocks exported one by one from the real builder in Chromium, plus a six-block page and two 40-block pages, **241 of 241 pass**. Cost: about 0.3 to 1 ms for a typical page, about 8 ms for a 30-block page. The main Worker bundle grew from 60 KiB to 338 KiB (88 KiB compressed), because the generator now runs there.
+- The overrides data is checked as data (exact fields, known kinds, no script addresses, size limits).
+- `scanHtml` refuses inline scripts (the JSON-LD data block excepted), `on...=` handlers and `srcdoc`. The sites Worker's header now says `script-src 'self'`.
+- Without a checker `publish()` accepts no `.js` at all.
+- A person who publishes with an **old builder tab** after a block's script changes is told to reload the builder.

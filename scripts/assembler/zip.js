@@ -184,7 +184,7 @@
     return result;
   }
 
-  const api = { findLocalAssetUrls, rewriteLocalAssetUrls, createZipArchive };
+  const api = { findLocalAssetUrls, rewriteLocalAssetUrls, createZipArchive, LOCAL_ASSET_RE };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.AsmZip = api;
 })();

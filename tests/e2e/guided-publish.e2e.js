@@ -90,6 +90,9 @@ const UID = '11111111-1111-4111-8111-111111111111';
   const paths = sent.files.map((f) => f.path);
   assert(paths.includes('index.html') && paths.includes('style.css') && paths.includes('script.js'), 'the finished site is sent: ' + paths.join(', '));
   assert(!paths.some((p) => /^(admin|cms)/.test(p)), 'the content editor is not published: ' + paths.join(', '));
+  /* what the browser sends is exactly what the server's script check accepts (the library read from the repository's own files) */
+  const checker = require('../../functions/lib/script-check.js').createScriptChecker({ library: async (slug) => { try { return require('fs').readFileSync(require('path').join(__dirname, '..', '..', 'features', slug, 'script.js'), 'utf8'); } catch (e) { return null; } } });
+  for (const f of sent.files.filter((x) => x.path.endsWith('.js'))) { const r = await checker.check(f.content); assert(r.ok, f.path + ' passes the server script check: ' + r.problem); }
   const check = require('../../functions/lib/publish.js').checkFiles(sent.files);
   assert(check.ok, 'the server would accept what the builder sends: ' + (check.errors || []).join(' | '));
   const index = sent.files.find((f) => f.path === 'index.html').content;

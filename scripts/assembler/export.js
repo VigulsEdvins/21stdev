@@ -21,6 +21,21 @@ const { escapeHtml } = (typeof window !== 'undefined' && window.AsmUtil) || requ
 /** The client's own colours for the other look, from the page settings. */
 const altColorsOf = (page) => ({ bg: (page || {}).altBg, text: (page || {}).altText, accent: (page || {}).altAccent });
 
+/* The pieces of script.js that are built from small parts. They are functions of their own so that the server's check of a published script
+   (functions/lib/script-check.js) rebuilds them with exactly the code that made them. */
+const indentTwo = (js) => js.split('\n').map(l => '  ' + l).join('\n');
+const langScriptBlock = () => `  // Language button\n${indentTwo(LANG_JS)}`;
+const modeScriptBlock = () => `  // Dark/light button (runs first, so a saved choice is applied early)\n${indentTwo(MODE_JS)}`;
+/** One section's script as it stands in script.js. `isolatedJs` is the block's script after isolateSectionScript; `lazy` starts it when it is close to the screen. */
+function sectionScriptBlock({ slug, id, isolatedJs, lazy }) {
+  const body = isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n');
+  if (lazy) {
+    // heavy one-screen section: start it when it is about to scroll into view
+    return `  // Section: ${slug} (starts when it is close to the screen)\n  window.__lazySection(${JSON.stringify(id)}, ${JSON.stringify(slug)}, function () {\n    (function () {\n${body}\n    })();\n  });`;
+  }
+  return `  // Section: ${slug}\n  try {\n    window.__activeSectionRegisteringId = ${JSON.stringify(id)};\n    (function () {\n${body}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  } finally {\n    window.__activeSectionRegisteringId = null;\n  }`;
+}
+
 /** Walks the sections once and returns what the exported files are built from. */
 function collectExportSections(safeSections, featuresData, options, isDark) {
   const headLinks = new Set();
@@ -70,22 +85,16 @@ function collectExportSections(safeSections, featuresData, options, isDark) {
     // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);
     if (isolatedJs.trim()) {
-      const body = isolatedJs.trim().split('\n').map(l => '      ' + l).join('\n');
-      if ((options.lazyMap || {})[slug] && !isPreloader) {
-        // heavy one-screen section: start it when it is about to scroll into view
-        usesLazy = true;
-        scriptBlocks.push(`  // Section: ${slug} (starts when it is close to the screen)\n  window.__lazySection(${JSON.stringify(id)}, ${JSON.stringify(slug)}, function () {\n    (function () {\n${body}\n    })();\n  });`);
-      } else {
-        scriptBlocks.push(`  // Section: ${slug}\n  try {\n    window.__activeSectionRegisteringId = ${JSON.stringify(id)};\n    (function () {\n${body}\n    })();\n  } catch (err) {\n    console.error('Error executing ' + ${JSON.stringify(slug)} + ':', err);\n  } finally {\n    window.__activeSectionRegisteringId = null;\n  }`);
-      }
+      scriptBlocks.push(sectionScriptBlock({ slug, id, isolatedJs, lazy: !!(options.lazyMap || {})[slug] && !isPreloader }));
+      if ((options.lazyMap || {})[slug] && !isPreloader) usesLazy = true;
     }
   });
 
   // a header's buttons: the dark/light button unless switched off (its styles for the other look are added with the theme), the language button with translations
   if (sectionHtmlBlocks.some(hasLangSlot)) {
     scopedStyleBlocks.push(`/* Header buttons */\n${LANG_CSS}`);
-    if (options.langSwitch) scriptBlocks.push(`  // Language button\n${LANG_JS.split('\n').map(l => '  ' + l).join('\n')}`);
-    if (sectionHtmlBlocks.some(hasModeButton)) scriptBlocks.unshift(`  // Dark/light button (runs first, so a saved choice is applied early)\n${MODE_JS.split('\n').map(l => '  ' + l).join('\n')}`);
+    if (options.langSwitch) scriptBlocks.push(langScriptBlock());
+    if (sectionHtmlBlocks.some(hasModeButton)) scriptBlocks.unshift(modeScriptBlock());
   }
 
   // Preloader auto-dismiss script for exported bundle
@@ -139,6 +148,7 @@ ${renderNativePaletteCss(safeSections, options.nativeMap)}`;
 /** script.js: page-wide helpers, the section scripts and the optional form and review code. */
 function renderExportScript(c, deliveryJs) {
   const { isDark, safeSections, options, allScripts } = c;
+  const overridesJson = c.overridesJson !== undefined ? c.overridesJson : JSON.stringify(collectOverrides(safeSections), null, 2); // the server's check passes the data it already validated
   return `/**
  * Assembled Page Scripts
  * Bundled by Page Preview Builder
@@ -241,7 +251,7 @@ ${allScripts || '  // No section scripts'}
 
 // Client content edits made in the builder (headlines, images, links). Change a value here and reload.
 ${OVERRIDES_RUNTIME}
-window.__setOverrides(${JSON.stringify(collectOverrides(safeSections), null, 2)});
+window.__setOverrides(${overridesJson});
 ${deliveryJs ? '\n// Form messages: sends the form to the place chosen in the builder (see DEPLOY.md, "Contact forms")\n' + deliveryJs + '\n' : ''}${options.review ? '\n// Review copy: lets a reviewer leave comments on the page and send them back as a file\n' + REVIEW_RUNTIME + '\n' : ''}`;
 }
 
@@ -398,7 +408,7 @@ function generateSingleFileBundle(sections, themeConfig, featuresData = {}, opti
   return delivered.replace(/<\/body>/i, () => '<script>\n' + fd.runtimeJs() + '\n</script>\n</body>');
 }
 
-const api = { generateExportBundle, generateSingleFileBundle };
+const api = { generateExportBundle, generateSingleFileBundle, scriptParts: { renderExportScript, sectionScriptBlock, langScriptBlock, modeScriptBlock, LAZY_SECTION_RUNTIME, PRELOADER_DISMISS_EXPORT } };
 if (typeof module !== 'undefined' && module.exports) module.exports = api;
 if (typeof window !== 'undefined') window.AsmExport = api;
 })();

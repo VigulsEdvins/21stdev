@@ -51,10 +51,12 @@ async function world(files) {
     for (const m of ['POST', 'PUT', 'DELETE', 'PATCH']) { const r = await get('https://bakery-anna.edvlabs.com/', { method: m, body: m === 'DELETE' ? undefined : 'x' }); assert.strictEqual(r.status, 405, m); assert.strictEqual(r.headers.get('Allow'), 'GET, HEAD'); }
   });
 
-  await test('the page decides its own script policy: the header never names script-src', async () => {
+  await test('scripts may only come from the site\'s own files, whatever the page says; the page\'s own tag adds the finer limits', async () => {
     const { get } = await world();
     const csp = (await get('https://bakery-anna.edvlabs.com/')).headers.get('Content-Security-Policy');
-    assert(!/script-src|default-src/.test(csp), 'a header policy on scripts would fight the policy inside the page: ' + csp);
+    assert(/script-src 'self'/.test(csp) && !/unsafe-inline|unsafe-eval/.test(csp), csp);
+    assert(!/default-src|img-src|connect-src|style-src/.test(csp), 'the header limits scripts and framing only, so it never fights the finer limits inside the page: ' + csp);
+    for (const url of ['https://bakery-anna.edvlabs.com/missing', 'https://nothing-here.edvlabs.com/']) assert(/script-src 'self'/.test((await get(url)).headers.get('Content-Security-Policy')), url);
   });
 
   await test('addresses that are not sites: free names, other hosts, deep names, reserved and odd labels', async () => {

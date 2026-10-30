@@ -17,7 +17,7 @@ console.log('  ✓ page and stylesheet scanning, link rewrite, contact tag');
 const out = fs.mkdtempSync(path.join(os.tmpdir(), 'edv-dist-'));
 const { files } = buildSite({ out });
 const has = (p) => fs.existsSync(path.join(out, p));
-for (const p of ['index.html', 'account/index.html', '_headers', '404.html', 'builder/index.html', 'builder/preview-frame/index.html', 'builder/scripts/builder/frame-doc.js', 'builder/builder.js', 'builder/registry.js', 'builder/site/js/prices.js', 'builder/site/styles/tokens.css', 'builder/site/fonts', 'builder/features', 'builder/thumbs', 'assets/library'])
+for (const p of ['index.html', 'account/index.html', '_headers', '404.html', 'builder/index.html', 'builder/preview-frame/index.html', 'builder/scripts/builder/frame-doc.js', 'builder/builder.js', 'builder/registry.js', 'builder/site/js/prices.js', 'builder/export-assets.json', 'builder/site/styles/tokens.css', 'builder/site/fonts', 'builder/features', 'builder/thumbs', 'assets/library'])
   assert(has(p), p + ' is staged');
 for (const p of ['builder.html', 'node_modules', '.dev.vars', 'package.json', 'features', 'builder/package.json', 'builder/scripts/check-headers.js', 'builder/tests'])
   assert(!has(p), p + ' is not staged');

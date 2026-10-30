@@ -9,13 +9,31 @@ const Fake = require('../tests/lib/fake-sites.js');
 const P = require('../functions/lib/publish.js');
 const S = require('../functions/lib/sites-serve.js');
 const store = require('../functions/lib/sites-store.js');
+const { createScriptChecker } = require('../functions/lib/script-check.js');
+const fs = require('fs');
+const path = require('path');
+
+/** A block's script from the repository's own features folder (online it comes from the deployed builder's files). */
+async function libraryFromDisk(slug) {
+  if (typeof slug !== 'string' || !/^[a-z0-9][a-z0-9-]{0,79}$/.test(slug)) return null;
+  try { return fs.readFileSync(path.join(__dirname, '..', 'features', slug, 'script.js'), 'utf8'); } catch (_) { return null; }
+}
+
+/** Which blocks load files at run time, from the features folder (online: builder/export-assets.json, written by scripts/build-site.js). */
+async function exportAssetsFromDisk() {
+  const out = {};
+  for (const slug of fs.readdirSync(path.join(__dirname, '..', 'features'))) {
+    try { const m = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'features', slug, 'meta.json'), 'utf8')); if (Array.isArray(m.exportAssets) && m.exportAssets.length) out[slug] = m.exportAssets; } catch (_) { /* not a block */ }
+  }
+  return out;
+}
 
 async function start({ port }) {
   const auth = await startAuth({ confirmEmails: false });
   const f = Fake.create();
   const direct = { SUPABASE_URL: auth.url, SUPABASE_ANON_KEY: auth.anonKey }; // how this server talks to the pretend service
   const env = { SUPABASE_URL: 'http://localhost:' + port + '/__auth', SUPABASE_ANON_KEY: auth.anonKey }; // how the pages do: through this server, so the page's own security rules allow it
-  const publisher = P.createPublisher({ db: f.db, bucket: f.bucket, kv: f.kv, now: () => new Date().toISOString(), domain: 'localhost', addressOf: (name) => 'http://' + name + '.localhost:' + port + '/' });
+  const publisher = P.createPublisher({ db: f.db, bucket: f.bucket, kv: f.kv, now: () => new Date().toISOString(), domain: 'localhost', addressOf: (name) => 'http://' + name + '.localhost:' + port + '/', scripts: createScriptChecker({ library: libraryFromDisk, exportAssets: exportAssetsFromDisk }) });
   const seen = new Set();
   const inAYear = () => new Date(Date.now() + 365 * 86400000).toISOString();
   /* the real sign-in check, asked of the pretend service; a person met for the first time gets two paid places */

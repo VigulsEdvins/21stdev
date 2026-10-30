@@ -92,6 +92,12 @@ function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
       copyFile(from, to); n++;
     });
   }
+  // Which blocks load files at run time (meta.json "exportAssets"); the server's check of a published script needs it (functions/lib/script-check.js)
+  const exportAssets = {};
+  for (const slug of fs.readdirSync(path.join(ROOT, 'features'))) {
+    try { const meta = JSON.parse(fs.readFileSync(path.join(ROOT, 'features', slug, 'meta.json'), 'utf8')); if (Array.isArray(meta.exportAssets) && meta.exportAssets.length) exportAssets[slug] = meta.exportAssets; } catch (_) { /* a folder without a valid meta.json is not a block */ }
+  }
+  fs.writeFileSync(path.join(B, 'export-assets.json'), JSON.stringify(exportAssets)); n++;
   for (const dir of ROOT_DIRS) walk(path.join(ROOT, dir), (from, rel) => { copyFile(from, path.join(out, dir, rel)); n++; });
   log('dist/ written: ' + n + ' files (public site + /builder/)');
   return { out, files: n };
