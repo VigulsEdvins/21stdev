@@ -36,6 +36,33 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   // the top place is not offered for the first item
   assert(await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-down').isEnabled());
 
+  // drag the pill with the mouse in the panel's preview, from below the headline back to the top
+  const box = async (sel) => inPanel((q) => { const r = document.querySelector(q).getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, sel);
+  const fr = await af.locator('#cms-frame').boundingBox();
+  const pill = await box('.hero-pill'), title = await box('.hero-title');
+  await page.mouse.move(fr.x + pill.x, fr.y + pill.y);
+  await page.mouse.down();
+  await page.mouse.move(fr.x + pill.x, fr.y + pill.y - 30, { steps: 4 });
+  await page.mouse.move(fr.x + title.x, fr.y + title.y - 20, { steps: 8 });
+  await page.mouse.up();
+  await page.waitForTimeout(1200);
+  assert.strictEqual((await order())[0], 'hero-pill', 'dragged back to the top: ' + (await order()).join(','));
+  assert.strictEqual(await af.locator('.cms-card.is-edited').count(), 0, 'back in its own place, so nothing is edited');
+  // and a drag down: onto the lower neighbour
+  const p2 = await box('.hero-pill'), t2 = await box('.hero-title');
+  await page.mouse.move(fr.x + p2.x, fr.y + p2.y);
+  await page.mouse.down();
+  await page.mouse.move(fr.x + p2.x, fr.y + p2.y + 20, { steps: 4 });
+  await page.mouse.move(fr.x + t2.x, fr.y + t2.y + 15, { steps: 8 });
+  await page.mouse.up();
+  await page.waitForTimeout(1200);
+  assert.strictEqual((await order())[1], 'hero-pill', 'dragged one place down: ' + (await order()).join(','));
+  await page.waitForFunction(() => Object.values(window.builderPreview.stackManager.getStack()[0].overrides || {}).some((o) => o.type === 'move' && o.value === '1'), null, { timeout: 8000 });
+  await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-reset').click();
+  await page.waitForTimeout(1000);
+  // reset after the drag puts it back
+  assert.strictEqual((await order())[0], 'hero-pill');
+
   // hide: gone from the preview, the card says so, and the text is still there to show again
   await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-hide').click();
   await page.waitForTimeout(1200);
@@ -46,7 +73,6 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 
   // the builder's own page gets it too, as a saved setting of the block
   await page.waitForFunction(() => Object.values(window.builderPreview.stackManager.getStack()[0].overrides || {}).some((o) => o.type === 'hide' && o.value === '1'), null, { timeout: 8000 });
-  assert(await page.evaluate(() => Object.values(window.builderPreview.stackManager.getStack()[0].overrides).some((o) => o.type === 'move' && o.value === '1')));
 
   // Reset brings it back, in its place
   await hiddenCard.locator('.cms-reset').click();

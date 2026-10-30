@@ -160,7 +160,9 @@
     if (hovered) hovered.classList.add('edv-cms-hover');
   });
   // capture phase: a click in the preview picks a field instead of following links or running section scripts
+  var dragged = false;
   document.addEventListener('click', function (e) {
+    if (dragged) { e.preventDefault(); e.stopPropagation(); return; } // the mouse button was let go after a drag, not a click
     var hit = fieldAt(e.target);
     if (!hit) {
       var sec = e.target.closest && e.target.closest('.page-section');
@@ -170,6 +172,60 @@
     e.preventDefault();
     e.stopPropagation();
     fromAdmin.postMessage({ type: 'edv-cms:pick', page: file, section: hit.sec.id, field: hit.f.id }, TARGET);
+  }, true);
+
+  /* Drag a text to another place among its neighbours: the admin keeps the result as the field's "move" setting. */
+  var drop = document.createElement('div');
+  drop.style.cssText = 'position:fixed;z-index:2147483647;pointer-events:none;border-top:3px solid #00b181;display:none';
+  document.body.appendChild(drop);
+  function row(el) {
+    return Array.prototype.filter.call(el.parentNode.children, function (c) { return !/^(SCRIPT|STYLE)$/.test(c.tagName) && c !== drop; });
+  }
+  // The neighbour under the pointer, or the nearest one.
+  function neighbourAt(items, x, y) {
+    var best = null, bestD = Infinity;
+    items.forEach(function (n) {
+      var r = n.getBoundingClientRect();
+      var dx = x < r.left ? r.left - x : x > r.right ? x - r.right : 0, dy = y < r.top ? r.top - y : y > r.bottom ? y - r.bottom : 0;
+      var d = dx * dx + dy * dy;
+      if (d < bestD) { bestD = d; best = n; }
+    });
+    return best;
+  }
+  document.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0 || e.pointerType === 'touch') return;
+    var hit = fieldAt(e.target);
+    if (!hit || !hit.el.parentNode || row(hit.el).length < 2 || !(hit.f.sibs > 1)) return;
+    var from = { x: e.clientX, y: e.clientY }, on = false, target = null;
+    function move(ev) {
+      if (!on && Math.abs(ev.clientX - from.x) + Math.abs(ev.clientY - from.y) < 8) return;
+      on = true;
+      var items = row(hit.el);
+      target = neighbourAt(items, ev.clientX, ev.clientY);
+      var r = target.getBoundingClientRect();
+      var after = items.indexOf(target) > items.indexOf(hit.el);
+      drop.style.display = target === hit.el ? 'none' : 'block';
+      drop.style.left = r.left + 'px'; drop.style.width = r.width + 'px'; drop.style.top = (after ? r.bottom : r.top) + 'px';
+      document.documentElement.style.cursor = 'grabbing';
+      document.documentElement.style.userSelect = 'none';
+      ev.preventDefault();
+    }
+    function up() {
+      document.removeEventListener('pointermove', move, true);
+      document.removeEventListener('pointerup', up, true);
+      document.removeEventListener('pointercancel', up, true);
+      drop.style.display = 'none';
+      document.documentElement.style.cursor = '';
+      document.documentElement.style.userSelect = '';
+      if (!on) return;
+      dragged = true;
+      setTimeout(function () { dragged = false; }, 0);
+      var items = row(hit.el), steps = target ? items.indexOf(target) - items.indexOf(hit.el) : 0;
+      if (steps) fromAdmin.postMessage({ type: 'edv-cms:move', page: file, section: hit.sec.id, field: hit.f.id, steps: steps }, TARGET);
+    }
+    document.addEventListener('pointermove', move, true);
+    document.addEventListener('pointerup', up, true);
+    document.addEventListener('pointercancel', up, true);
   }, true);
 
   fromAdmin.postMessage({ type: 'edv-cms:ready', page: file }, TARGET);

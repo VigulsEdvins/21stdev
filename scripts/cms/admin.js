@@ -349,6 +349,15 @@
     if (e.source !== frame.contentWindow || !e.data || typeof e.data !== 'object') return;
     if (e.data.type === 'edv-cms:frames' && e.data.page === page().file && e.data.sizes) { frameSizes = e.data.sizes; document.querySelectorAll('.cms-fit').forEach(function (b) { if (b.repaint) b.repaint(true); }); }
     if (e.data.type === 'edv-cms:ready') { previewReady = true; pushPreview(); }
+    if (e.data.type === 'edv-cms:move' && e.data.page === page().file && Number.isInteger(e.data.steps)) {
+      var msec = findSection(e.data.section), mf = msec && msec.fields.filter(function (x) { return x.id === e.data.field; })[0];
+      if (!mf || typeof mf.pos !== 'number' || !(mf.sibs > 1)) return;
+      var file = page().file, now = getMove(file, msec, mf);
+      var next = Math.max(-mf.pos, Math.min(mf.sibs - 1 - mf.pos, now + e.data.steps));
+      if (next === now) return;
+      setMove(file, msec, mf, next); snapshot(); changed(true);
+      return;
+    }
     if (e.data.type === 'edv-cms:pick' && e.data.page === page().file) {
       if (!findSection(e.data.section)) return;
       select(e.data.section, e.data.field, true);
