@@ -10,8 +10,10 @@
   // deploy that does not list them here. keep_vars keeps them. Secrets (RESEND_API_KEY) are never deleted.
   "keep_vars": true,
   // SITES: the published sites' lookup (name -> live version), the same namespace the sites Worker (wrangler.sites.jsonc) reads. Created 2026-10-30; the id is not secret.
-  // The matching R2 binding "SITES_BUCKET" (bucket edvlabs-sites) is added here once the bucket exists, see docs/deploy/publish-sites.md. Without it the publishing endpoints answer 503 and the hourly clean-up does nothing.
+  // SITES_BUCKET: the R2 bucket edvlabs-sites that holds the published sites' files (created 2026-10-30). The name must be exactly SITES_BUCKET (the code reads env.SITES_BUCKET).
+  // Without the SITES and SITES_BUCKET bindings and the secret SUPABASE_SERVICE_ROLE_KEY the publishing endpoints answer 503 and the hourly clean-up does nothing; see docs/deploy/publish-sites.md.
   "kv_namespaces": [{ "binding": "LEADS" }, { "binding": "SITES", "id": "3ec1a308b9914c22ba2cc075f0f3b690" }],
+  "r2_buckets": [{ "binding": "SITES_BUCKET", "bucket_name": "edvlabs-sites" }],
   // Hourly clean-up of published sites (taking lapsed ones offline, removing deleted accounts' sites, releasing old name holds). Does nothing until the SITES and SITES_BUCKET bindings exist.
   "triggers": { "crons": ["17 * * * *"] },
   "assets": {
