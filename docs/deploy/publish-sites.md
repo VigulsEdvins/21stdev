@@ -98,7 +98,7 @@ Check, and tell me anything that differs:
 - [ ] `curl -sI https://testsite-anna.edvlabs.com/` shows `x-content-type-options: nosniff`, `strict-transport-security`, `referrer-policy`, `permissions-policy`, and `content-security-policy: frame-ancestors 'none'; object-src 'none'; base-uri 'self'`.
 - [ ] A page that does not exist (`/nope`) shows the 404 page, with status 404.
 - [ ] **Languages:** if the test page has an extra language (`index-lv.html`), open it and check it works. Every published page carries the page security policy (publishing forces it on since 2026-10-30), so view the source of the live page and look for `Content-Security-Policy`.
-- [ ] **Videos:** a block that uses a video file does not publish the video yet (that file kind is not accepted). Tell me if a block you care about shows a broken video.
+- [ ] **Videos and sounds:** no block of the library uses any (checked), so nothing should be missing. If the builder ever says "Left out: …" after publishing, a file kind the live site cannot hold was dropped; tell me which block caused it.
 - [ ] Take it offline from the builder; the address shows "This site is not available". Put it back.
 - [ ] Open `https://edvlabs.com/builder/` and the home page again: nothing about the main site changed. (Also the usual first-deploy header check: `npm run check-headers -- https://edvlabs.com` and `node scripts/check-builder-csp.js https://edvlabs.com`.)
 
