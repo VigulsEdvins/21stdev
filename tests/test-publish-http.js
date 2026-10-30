@@ -65,6 +65,7 @@ function world() {
     const r = await post('/api/rename', { siteId: made.siteId, name: 'anna-bakery' }, 1); const j = await r.json();
     assert.strictEqual(r.status, 200, JSON.stringify(j)); assert.strictEqual(j.address, 'https://anna-bakery.edvlabs.com/'); assert.strictEqual(j.oldName, 'bakery-anna');
     const mine = await (await call('/api/my-sites', { method: 'GET' }, as(1))).json(); assert.strictEqual(mine.sites[0].name, 'anna-bakery');
+    assert.deepStrictEqual(mine.limits, { publishesPerHour: 10, renamesPer30Days: 2, siteMb: 10, canBuyMore: { publishesPerHour: true, renamesPer30Days: true, siteMb: true } }, 'the person is told the limits that apply to them'); assert.strictEqual(mine.sites[0].renamesLeft, 1);
     assert.strictEqual((await (await call('/api/site-name?name=bakery-anna', { method: 'GET' }, as(2))).json()).reason, 'taken', 'the old name is held');
   });
 

@@ -18,7 +18,7 @@ const UID = '11111111-1111-4111-8111-111111111111';
   const api = { config: true, sites: [], freePlaces: 1, published: [], taken: new Set(['taken-name']), nameChecks: 0, signedIn: true, unpublished: [] };
   await page.route('**/api/config', (r) => (api.config ? r.fulfill({ json: { supabaseUrl: 'https://sb.test', anonKey: 'anon-key' } }) : r.fulfill({ status: 404, body: '{}' })));
   await page.route('https://sb.test/**', (r) => (api.signedIn ? r.fulfill({ json: { id: UID, email: 'a@example.com' } }) : r.fulfill({ status: 401, json: { message: 'no' } })));
-  await page.route('**/api/my-sites', (r) => r.fulfill({ json: { ok: true, sites: api.sites, freePlaces: api.freePlaces } }));
+  await page.route('**/api/my-sites', (r) => r.fulfill({ json: { ok: true, sites: api.sites, freePlaces: api.freePlaces, limits: { publishesPerHour: 10, renamesPer30Days: 2, siteMb: 10, canBuyMore: { publishesPerHour: true, renamesPer30Days: true, siteMb: true } } } }));
   await page.route('**/api/site-name**', (r) => {
     api.nameChecks++; const name = new URL(r.request().url()).searchParams.get('name').toLowerCase();
     r.fulfill({ json: api.taken.has(name) ? { ok: true, available: false, reason: 'taken', message: 'This name is taken.' } : { ok: true, available: true, name } });
@@ -27,14 +27,14 @@ const UID = '11111111-1111-4111-8111-111111111111';
     const body = JSON.parse(r.request().postData()); api.published.push(body);
     if (api.freePlaces < 1 && !api.sites.some((s) => s.name === body.name)) return r.fulfill({ status: 402, json: { ok: false, errors: ['Publishing on an edvlabs address is a paid extra. Please add it to your account first.'], reason: 'payment-needed' } });
     if (api.taken.has(body.name)) return r.fulfill({ status: 409, json: { ok: false, errors: ['This name is taken.'], reason: 'taken' } });
-    if (!api.sites.some((s) => s.name === body.name)) { api.sites.push({ id: '00000000-0000-4000-8000-000000000001', name: body.name, status: 'live', version: 1, address: `https://${body.name}.edvlabs.com/`, payment: 'active', paidUntil: '2027-11-01T00:00:00Z' }); api.freePlaces--; }
+    if (!api.sites.some((s) => s.name === body.name)) { api.sites.push({ id: '00000000-0000-4000-8000-000000000001', name: body.name, status: 'live', version: 1, address: `https://${body.name}.edvlabs.com/`, payment: 'active', paidUntil: '2027-11-01T00:00:00Z', renamesLeft: 2 }); api.freePlaces--; }
     r.fulfill({ json: { ok: true, name: body.name, address: `https://${body.name}.edvlabs.com/`, version: 1, siteId: '00000000-0000-4000-8000-000000000001', created: true } });
   });
   api.renames = [];
   await page.route('**/api/rename', (r) => {
     const body = JSON.parse(r.request().postData()); api.renames.push(body);
     if (body.name === 'twice-limit') return r.fulfill({ status: 429, json: { ok: false, errors: ['A site can be renamed twice in 30 days. Please try again later.'], reason: 'renames' } });
-    const site = api.sites.find((x) => x.id === body.siteId); const old = site.name; site.name = body.name; site.address = `https://${body.name}.edvlabs.com/`;
+    const site = api.sites.find((x) => x.id === body.siteId); const old = site.name; site.renamesLeft = Math.max(0, site.renamesLeft - 1); site.name = body.name; site.address = `https://${body.name}.edvlabs.com/`;
     r.fulfill({ json: { ok: true, name: body.name, oldName: old, address: site.address, oldAddress: `https://${old}.edvlabs.com/`, holdDays: 90 } });
   });
   await page.route('**/api/unpublish', (r) => { api.unpublished.push(JSON.parse(r.request().postData()).siteId); api.sites.forEach((s) => { s.status = 'unpublished'; }); r.fulfill({ json: { ok: true } }); });
@@ -132,6 +132,7 @@ const UID = '11111111-1111-4111-8111-111111111111';
   // renaming: checked as typed, one button, the new address, the old one explained
   await page.click('[data-act="rename"]');
   assert(await page.isVisible('.gt-rename') && await page.isDisabled('[data-act="rename-save"]'), 'the form opens with the button waiting');
+  assert(/renamed 2 times more in the next 30 days \(2 in 30 days are allowed\)/.test(await page.textContent('.gt-rename small')), 'the number of renames left is said up front: ' + await page.textContent('.gt-rename small'));
   await page.fill('.gt-rename input', 'bakery-anna'); await page.waitForFunction(() => /already the name/.test(document.querySelector('.gt-rename small').textContent));
   assert(await page.isDisabled('[data-act="rename-save"]'), 'the same name cannot be saved');
   await page.fill('.gt-rename input', 'www'); await page.waitForFunction(() => /kept for edvlabs/.test(document.querySelector('.gt-rename small').textContent));
@@ -149,6 +150,15 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await page.click('[data-act="rename-save"]'); await page.waitForFunction(() => /renamed twice in 30 days/.test(document.getElementById('publishResult').textContent));
   assert.strictEqual(await page.getAttribute('#publishResult', 'data-problem'), 'true');
   await page.click('[data-act="rename-cancel"]'); assert.strictEqual(await page.locator('.gt-rename').count(), 0);
+  // all renames used: the form says so, offers more, and cannot be saved
+  await page.click('[data-act="rename"]'); assert(/renamed once more/.test(await page.textContent('.gt-rename small')), 'one rename left after the first: ' + await page.textContent('.gt-rename small')); await page.click('[data-act="rename-cancel"]');
+  api.sites[0].renamesLeft = 0; await page.click('#guidedStep-blocks'); await page.click('#guidedStep-get'); await page.waitForFunction(() => document.querySelector('[data-act="rename"]'));
+  await page.reload(); await page.waitForSelector('#paneGet', { state: 'attached' }); await page.click('#guidedStep-get'); await page.waitForSelector('[data-act="rename"]');
+  await page.click('[data-act="rename"]');
+  assert(/used all 2 renames allowed in 30 days\. More is available: ask edvlabs\./.test(await page.textContent('.gt-rename small')), await page.textContent('.gt-rename small'));
+  await page.fill('.gt-rename input', 'another-fine-name'); await page.waitForTimeout(700);
+  assert(await page.isDisabled('[data-act="rename-save"]'), 'with no renames left the button stays disabled');
+  await page.click('[data-act="rename-cancel"]'); api.sites[0].renamesLeft = 1;
   console.log('  ✓ rename: checked as typed, saved, the old address explained, the limit in plain words, cancel closes it');
 
   await page.click('[data-act="offline"]');

@@ -9,6 +9,7 @@
 const { createPublisher } = require('./publish.js');
 const store = require('./sites-store.js');
 const { createScriptChecker } = require('./script-check.js');
+const Limits = require('./limits.js');
 
 const NEEDED = ['SUPABASE_URL', 'SUPABASE_ANON_KEY', 'SUPABASE_SERVICE_ROLE_KEY', 'SITES', 'SITES_BUCKET', 'ASSETS'];
 const MAX_BODY = 30 * 1024 * 1024; // 20 MB of files is about 27 MB once written as text
@@ -33,7 +34,7 @@ function makeDeps(env) {
   };
   return {
     user: (token) => store.verifyUser(env, token),
-    publisher: createPublisher({ db: store.createDb(env), bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets, parts }) })
+    publisher: createPublisher({ db: store.createDb(env), bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets, parts }), defaults: Limits.defaultsFrom(env) })
   };
 }
 

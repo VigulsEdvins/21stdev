@@ -54,7 +54,7 @@
     const squeeze = (t) => t.replace(/(.)\1+/g, '$1');
     const squeezedShort = new Set([...SHORT].map(squeeze));
     for (const text of new Set([name, ...variants(name)])) {
-      if (text.split('-').some((p) => squeezedShort.has(squeeze(p)))) return true;
+      if (text.split('-').some((p) => p.length >= 3 && squeezedShort.has(squeeze(p)))) return true; // (a lone “x” in a name is fine; “xxx” and its stretched forms are not)
       if (LONG.some((w) => squeeze(text.replace(/-/g, '')).includes(squeeze(w)))) return true;
     }
     return false;

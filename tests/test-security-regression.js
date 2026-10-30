@@ -91,7 +91,7 @@ test('R12', 'database: row level security is on, anonymous visitors have no righ
     assert(new RegExp('revoke all on public\\.' + t + ' from anon', 'i').test(all), t + ': anon has nothing');
     const pol = [...all.matchAll(new RegExp('create policy "[^"]+"\\s+on public\\.' + t + '\\b[^;]*;', 'gi'))].map((m) => m[0]);
     /* Tables the server writes (publishing, name holds, paid places) give the owner a read policy only, and no write right at all. */
-    const serverWritten = ['published_sites', 'site_name_holds', 'site_entitlements'].includes(t);
+    const serverWritten = ['published_sites', 'site_name_holds', 'site_entitlements', 'account_limits'].includes(t);
     if (serverWritten) assert(!new RegExp('grant[^;]*\\b(insert|update|delete|all)\\b[^;]*on public\\.' + t + '\\s+to authenticated', 'i').test(all), t + ': the browser has no write right');
     assert(pol.length >= (serverWritten ? 1 : 3), t + ': has policies'); pol.forEach((p) => assert(/auth\.uid\(\)\)? = user_id/.test(p), t + ': policy is tied to the owner: ' + p.slice(0, 60)));
     assert(!new RegExp('grant[^;]*\\bto anon\\b[^;]*public\\.' + t, 'i').test(all) && !new RegExp('grant[^;]*public\\.' + t + '[^;]*to anon', 'i').test(all), t + ': never granted to anon');

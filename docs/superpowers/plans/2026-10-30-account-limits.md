@@ -32,3 +32,12 @@ Status: **owner decisions 2026-10-30 (below); being built.** Follows `2026-10-30
 ## Order
 
 1. Migration (new table; `rename_site` takes the number, old signature dropped). 2. `limits.js`, `publish.js`, `publish-http.js`, store and fake. 3. owner command. 4. builder messages. 5. tests at every step; the migration is applied and tested on the real database (rolled-back block) only after the owner says so.
+
+## As built
+
+- `supabase/migrations/20261030230000_account_limits.sql` (new table `account_limits`; `rename_site` now takes the number of renames; the old four-argument version is dropped; the old live code keeps working with it because the new argument has a default of 2). **Apply it before the code is pushed**: the new code reads `account_limits` on every publish, rename and name check.
+- `functions/lib/limits.js` (defaults, Worker settings, one person's limits), used by `functions/lib/publish.js`: size caps follow the person's limit, publishes per hour follow it, renames pass the number to the database, name checks are limited to 60 an hour for everyone (new), `my-sites` returns the person's limits and the renames left per site.
+- `npm run owner-sites -- limits <person>` and `limit <person> --renames N --site-mb N --publishes N --note "text"` / `--reset`.
+- The builder says the number in plain words (renames left, "ask edvlabs" while more can be had).
+- A bug found on the way: the bad-name filter refused any name with a lone "x" (`x-shop`, `ben-x-cafe`) because it treated one `x` like the stretched forms of `xxx`. Fixed (a stretched match needs three letters or more).
+- Tests: `tests/test-publish.js` (defaults and Worker settings, bad settings ignored, size upgrade and its ceiling, rename and publish limits, name-check limit), `tests/test-owner-sites.js`, `tests/test-sites-store.js`, `tests/test-publish-http.js`, `tests/e2e/guided-publish.e2e.js`.

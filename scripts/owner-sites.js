@@ -6,13 +6,17 @@
  *   npm run owner-sites -- block <name>               stop serving a site (within the hour; the command for doing it at once is printed)
  *   npm run owner-sites -- unblock <name>             let its owner publish it again (it stays offline until they do)
  *   npm run owner-sites -- grant <email|user-id> [--count 1] [--years 1]    add paid places by hand, standing in for payment until Stripe exists
+ *   npm run owner-sites -- limits <email|user-id>      what one person may do: the defaults for everyone and any upgrade
+ *   npm run owner-sites -- limit <email|user-id> [--renames N] [--site-mb N] [--publishes N] [--note "text"]   set an upgrade (only the numbers given change)
+ *   npm run owner-sites -- limit <email|user-id> --reset                                                  back to the defaults
  * Settings: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY.
  */
 const fs = require('fs');
 const path = require('path');
 const store = require('../functions/lib/sites-store.js');
+const Limits = require('../functions/lib/limits.js');
 
-const USAGE = 'Usage: npm run owner-sites -- list | block <name> | unblock <name> | grant <email|user-id> [--count N] [--years N]';
+const USAGE = 'Usage: npm run owner-sites -- list | block <name> | unblock <name> | grant <email|user-id> [--count N] [--years N] | limits <email|user-id> | limit <email|user-id> [--renames N] [--site-mb N] [--publishes N] [--note text] [--reset]';
 const isName = (t) => typeof t === 'string' && t.length >= 3 && t.length <= 30 && t.split('-').every((piece) => /^[a-z0-9]+$/.test(piece));
 
 function readVars(file) {
@@ -50,7 +54,7 @@ async function userIdFor(env, who, f) {
 async function run(argv, env, say, fetchImpl) {
   const [cmd, arg] = argv;
   const missing = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'].filter((k) => !env[k]);
-  if (!['list', 'block', 'unblock', 'grant'].includes(cmd)) { say(USAGE); return 2; }
+  if (!['list', 'block', 'unblock', 'grant', 'limits', 'limit'].includes(cmd)) { say(USAGE); return 2; }
   if (missing.length) { say('Missing setting(s): ' + missing.join(', ') + '. Put them in your shell or in .dev.vars (never in git).'); return 2; }
   const f = fetchImpl || fetch, db = store.createDb(env, f);
 
@@ -76,6 +80,31 @@ async function run(argv, env, say, fetchImpl) {
       await db.setStatus(site.id, 'unpublished');
       say('Unblocked ' + arg + '. It stays offline until its owner publishes it again.');
     }
+    return 0;
+  }
+
+  if (cmd === 'limits' || cmd === 'limit') {
+    if (!arg) { say(USAGE); return 2; }
+    const id = await userIdFor(env, arg, f);
+    if (!id) { say('No account found for "' + arg + '". The person must have created an account first.'); return 1; }
+    if (cmd === 'limit') {
+      if (argv.includes('--reset')) { await db.clearAccountLimits(id); say('Back to the defaults for ' + arg + '.'); return 0; }
+      const given = { renames_per_30_days: flag(argv, 'renames'), max_site_mb: flag(argv, 'site-mb'), publishes_per_hour: flag(argv, 'publishes') };
+      const names = { renames_per_30_days: 'renamesPer30Days', max_site_mb: 'siteMb', publishes_per_hour: 'publishesPerHour' };
+      const patch = {};
+      for (const [col, v] of Object.entries(given)) {
+        if (v === undefined) continue;
+        if (Limits.whole(v, names[col]) === null) { const [lo, hi] = Limits.RANGE[names[col]]; say('--' + { renames_per_30_days: 'renames', max_site_mb: 'site-mb', publishes_per_hour: 'publishes' }[col] + ' must be a whole number from ' + lo + ' to ' + hi + '.'); return 2; }
+        patch[col] = v;
+      }
+      const noteAt = argv.indexOf('--note');
+      if (noteAt >= 0) { const note = String(argv[noteAt + 1] || '').slice(0, 300); patch.note = note; }
+      if (!Object.keys(patch).length) { say('Give at least one of --renames, --site-mb, --publishes, --note, or --reset.'); return 2; }
+      await db.setAccountLimits(id, patch);
+    }
+    const row = await db.accountLimits(id), defaults = Limits.defaultsFrom(env), now = Limits.resolve(defaults, row);
+    const line = (label, key, col, unit) => '  ' + label.padEnd(26) + String(now[key]).padStart(4) + unit + '   (everyone: ' + defaults[key] + (row && row[col] != null ? ', upgrade: ' + row[col] : ', no upgrade') + ')';
+    say(['For ' + arg + ':', line('Renames of a site', 'renamesPer30Days', 'renames_per_30_days', ' per 30 days'), line('Size of a site', 'siteMb', 'max_site_mb', ' MB'), line('Publishes', 'publishesPerHour', 'publishes_per_hour', ' per hour'), row && row.note ? '  Note: ' + row.note : ''].filter(Boolean).join('\n'));
     return 0;
   }
 

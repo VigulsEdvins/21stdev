@@ -64,11 +64,22 @@ const test = async (name, fn) => { await fn(); count++; };
     const s = stub([{ status: 200, body: { old: 'a-b-c', new: 'x-y-z', version: 2, status: 'live', held: ['a-b-c'] } }, { status: 400, body: { code: 'P0001', message: 'rename:taken' } }, { status: 400, body: { code: 'P0001', message: 'rename:too-many' } }, { status: 409, body: { code: '23505', message: 'duplicate key' } }, { status: 500, body: { code: 'XX000', message: 'boom' } }]);
     const db = store.createDb(ENV, s.fetchImpl);
     const ok = await db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z', holdDays: 90 });
-    assert.deepStrictEqual(ok.held, ['a-b-c']); assert(s.calls[0].url.endsWith('/rpc/rename_site')); assert.deepStrictEqual(JSON.parse(s.calls[0].body), { p_site: 's1', p_user: UID, p_new: 'x-y-z', p_hold_days: 90 });
+    assert.deepStrictEqual(ok.held, ['a-b-c']); assert(s.calls[0].url.endsWith('/rpc/rename_site')); assert.deepStrictEqual(JSON.parse(s.calls[0].body), { p_site: 's1', p_user: UID, p_new: 'x-y-z', p_hold_days: 90, p_max_renames: 2 }); // 2 when the caller gives none
     await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'rename-taken');
     await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'rename-too-many');
     await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'rename-taken', 'a duplicate-name error from the database is also "taken"');
     await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'XX000');
+  });
+
+  await test('account limits: read one row, upsert only the given numbers, clear; the rename call carries the person\'s number', async () => {
+    const s = stub([{ status: 200, body: [{ user_id: UID, renames_per_30_days: 6 }] }, { status: 201, body: [{ user_id: UID, renames_per_30_days: 6 }] }, { status: 204 }, { status: 200, body: { old: 'a-b-c', new: 'x-y-z', version: 1, status: 'live', held: [] } }, { status: 200, body: { old: 'a-b-c', new: 'x-y-z', version: 1, status: 'live', held: [] } }]);
+    const db = store.createDb(ENV, s.fetchImpl);
+    assert.strictEqual((await db.accountLimits(UID)).renames_per_30_days, 6); assert(s.calls[0].url.includes('/rest/v1/account_limits?') && s.calls[0].url.endsWith('&user_id=eq.' + UID));
+    await db.setAccountLimits(UID, { renames_per_30_days: 6 });
+    assert(s.calls[1].url.endsWith('account_limits?on_conflict=user_id') && /resolution=merge-duplicates/.test(s.calls[1].headers.Prefer)); const body = JSON.parse(s.calls[1].body); assert.strictEqual(body.user_id, UID); assert.deepStrictEqual(Object.keys(body).sort(), ['renames_per_30_days', 'updated_at', 'user_id']);
+    await db.clearAccountLimits(UID); assert.strictEqual(s.calls[2].method, 'DELETE'); assert(s.calls[2].url.endsWith('account_limits?user_id=eq.' + UID));
+    await db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z', holdDays: 90, maxRenames: 6 }); assert.strictEqual(JSON.parse(s.calls[3].body).p_max_renames, 6);
+    await db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z', holdDays: 90, maxRenames: 0 }); assert.strictEqual(JSON.parse(s.calls[4].body).p_max_renames, 0, 'zero is sent as zero, not as the default');
   });
 
   await test('cleanup of lapsed sites: the candidates are offline sites with files (never blocked ones); marking a site purged sets its version to 0 only', async () => {

@@ -50,6 +50,27 @@ const test = async (name, fn) => { await fn(); count++; };
     for (const bad of [['--count', '0'], ['--count', '99'], ['--count', 'x'], ['--years', '0'], ['--years', '50']]) assert.strictEqual(await O.run(['grant', UID, ...bad], ENV, out().say, stub([]).fetchImpl), 2, bad.join(' '));
   });
 
+  await test('limits: show what applies, set an upgrade (only the numbers given), reset, refuse bad numbers', async () => {
+    const row = { user_id: UID, renames_per_30_days: 6, max_site_mb: null, publishes_per_hour: null, note: 'paid 2026-11-02' };
+    const s = stub([{ status: 200, body: [row] }, // accountLimits for "limits"
+      { status: 201, body: [row] }, { status: 200, body: [row] }, // set + read back
+      { status: 204 }, // reset
+      { status: 200, body: [] }]), o = out();
+    assert.strictEqual(await O.run(['limits', UID], ENV, o.say, s.fetchImpl), 0);
+    const text = o.lines.join('\n'); assert(/Renames of a site\s+6 per 30 days\s+\(everyone: 2, upgrade: 6\)/.test(text) && /Size of a site\s+10 MB\s+\(everyone: 10, no upgrade\)/.test(text) && /Note: paid 2026-11-02/.test(text), text);
+    const o2 = out(); assert.strictEqual(await O.run(['limit', UID, '--renames', '6', '--note', 'paid 2026-11-02'], ENV, o2.say, s.fetchImpl), 0);
+    assert(s.calls[1].url.includes('/rest/v1/account_limits?on_conflict=user_id') && s.calls[1].method === 'POST' && /merge-duplicates/.test(s.calls[1].headers.Prefer), 'an upsert');
+    const sent = JSON.parse(s.calls[1].body); assert.strictEqual(sent.user_id, UID); assert.strictEqual(sent.renames_per_30_days, 6); assert.strictEqual(sent.note, 'paid 2026-11-02'); assert(!('max_site_mb' in sent) && !('publishes_per_hour' in sent), 'only the numbers given are sent: ' + Object.keys(sent));
+    const o3 = out(); assert.strictEqual(await O.run(['limit', UID, '--reset'], ENV, o3.say, s.fetchImpl), 0); assert.strictEqual(s.calls[3].method, 'DELETE'); assert(/Back to the defaults/.test(o3.lines[0]));
+    const before = s.calls.length;
+    for (const bad of [['--renames', '101'], ['--renames', 'x'], ['--site-mb', '21'], ['--site-mb', '0'], ['--publishes', '201'], ['--publishes', '1.5'], []]) { const ob = out(); assert.strictEqual(await O.run(['limit', UID, ...bad], ENV, ob.say, s.fetchImpl), 2, bad.join(' ') || '(no numbers)'); }
+    assert.strictEqual(s.calls.length, before, 'nothing is sent for a bad number');
+    assert.strictEqual(await O.run(['limit'], ENV, out().say, s.fetchImpl), 2); assert.strictEqual(await O.run(['limits', 'ghost@example.com'], ENV, out().say, stub([{ status: 200, body: { users: [] } }]).fetchImpl), 1);
+    // defaults shown follow the Worker settings when they are in the shell
+    const s2 = stub([{ status: 200, body: [] }]), o4 = out(); await O.run(['limits', UID], Object.assign({ DEFAULT_RENAMES_PER_30_DAYS: '3' }, ENV), o4.say, s2.fetchImpl);
+    assert(/\(everyone: 3, no upgrade\)/.test(o4.lines[0]), o4.lines[0]);
+  });
+
   await test('list prints the sites; a database error is reported without the key', async () => {
     const s = stub([{ status: 200, body: [{ name: 'bakery-anna', status: 'live', version: 3, user_id: UID }] }, { status: 500, body: {} }]), o = out();
     assert.strictEqual(await O.run(['list'], ENV, o.say, s.fetchImpl), 0); assert(/bakery-anna\s+live\s+v3/.test(o.lines[0]));

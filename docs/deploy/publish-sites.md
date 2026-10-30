@@ -102,6 +102,19 @@ Check, and tell me anything that differs:
 - [ ] Take it offline from the builder; the address shows "This site is not available". Put it back.
 - [ ] Open `https://edvlabs.com/builder/` and the home page again: nothing about the main site changed. (Also the usual first-deploy header check: `npm run check-headers -- https://edvlabs.com` and `node scripts/check-builder-csp.js https://edvlabs.com`.)
 
+## Limits and upgrades
+
+Everyone gets the same defaults: **2 renames per site per 30 days, 10 MB per site (largest file 5 MB), 10 publishes per hour**, 10 sites per account, 60 name checks per hour. A customer who pays for more gets a higher number for that one limit, set by you:
+
+```bash
+npm run owner-sites -- limits person@example.com                          # what applies to this person, defaults and upgrade
+npm run owner-sites -- limit person@example.com --renames 6               # more renames
+npm run owner-sites -- limit person@example.com --site-mb 20 --note "paid 2026-11-02"   # a bigger site (20 MB is the most the current upload method allows)
+npm run owner-sites -- limit person@example.com --reset                   # back to the defaults
+```
+
+Most an upgrade can set: renames 100, site size 20 MB, publishes 200 per hour. To change the defaults for **everyone**, add plain variables to the main Worker in the Cloudflare dashboard (Workers & Pages, `21stdev`, Settings, Variables): `DEFAULT_RENAMES_PER_30_DAYS`, `DEFAULT_SITE_MB`, `DEFAULT_PUBLISHES_PER_HOUR`. They apply at once, no deploy; a missing or invalid value leaves the built-in number. The builder tells people the number and says "More is available: ask edvlabs" while an upgrade is possible. Needs the migration `20261030230000_account_limits.sql` (apply it before the matching code goes live). Plan: `docs/superpowers/plans/2026-10-30-account-limits.md`.
+
 ## Everyday tools
 
 ```bash

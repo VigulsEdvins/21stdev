@@ -4,6 +4,7 @@
        claimEntitlement (true only if the place was still free), releaseEntitlement, reserveVersion (atomic +1 of last_version), goLive, setStatus. */
 function create() {
   const sites = [], holds = [], ents = [], objects = new Map(), kvStore = new Map(), log = [];
+  const limitRows = new Map();
   let n = 0;
   const db = {
     async siteByName(name) { return sites.find((s) => s.name === name) || null; },
@@ -30,13 +31,13 @@ function create() {
     async blockedSites() { return sites.filter((s) => s.status === 'blocked').map((s) => ({ id: s.id, name: s.name, version: s.version })); },
     async liveSites() { return sites.filter((s) => s.status === 'live').map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status, site_entitlements: ents.find((e) => e.site_id === s.id) || null })); },
     /* mirrors supabase/migrations/20261030210000_rename_site.sql, including its error codes */
-    async renameSite({ siteId, userId, newName, holdDays, nowIso }) {
+    async renameSite({ siteId, userId, newName, holdDays, maxRenames, nowIso }) {
       const fail = (c) => { throw Object.assign(new Error('rename:' + c), { code: 'rename-' + c }); };
       const s = sites.find((x) => x.id === siteId && x.user_id === userId); if (!s) fail('not-found');
       if (s.status === 'blocked') fail('blocked'); if (s.name === newName) fail('same');
       const now = new Date(nowIso || Date.now());
       s.renamed_at = s.renamed_at || [];
-      if (s.renamed_at.filter((t) => new Date(t) > new Date(now.getTime() - 30 * 86400000)).length >= 2) fail('too-many');
+      if (s.renamed_at.filter((t) => new Date(t) > new Date(now.getTime() - 30 * 86400000)).length >= (maxRenames === undefined ? 2 : maxRenames)) fail('too-many');
       if (holds.some((h) => h.name === newName && h.user_id !== userId && new Date(h.expires_at) > now)) fail('taken');
       if (sites.some((x) => x.name === newName)) fail('taken');
       const i = holds.findIndex((h) => h.name === newName); if (i >= 0) holds.splice(i, 1);
@@ -47,6 +48,7 @@ function create() {
       holds.filter((h) => h.site_id === siteId && h.name !== old).forEach((h) => { h.redirect_to = newName; });
       return { old, new: newName, version: s.version, status: s.status, held: holds.filter((h) => h.site_id === siteId && new Date(h.expires_at) > now).map((h) => h.name) };
     },
+    async accountLimits(userId) { return limitRows.get(userId) || null; },
     async holdsForSite(siteId) { return holds.filter((h) => h.site_id === siteId); },
     async recentSites() { return sites.map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status })); },
     async setStatus(id, status) { sites.find((x) => x.id === id).status = status; }
@@ -67,7 +69,7 @@ function create() {
   };
   const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async delete(k) { kvStore.delete(k); },
     async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };
-  return { db, bucket, kv, sites, holds, ents, objects, kvStore, log,
+  return { db, bucket, kv, sites, holds, ents, objects, kvStore, log, limitRows,
     addEntitlement(userId, paidUntil, over) { const e = Object.assign({ id: 'ent-' + (ents.length + 1), user_id: userId, site_id: null, status: 'active', paid_until: paidUntil, granted_by: 'owner' }, over || {}); ents.push(e); return e; } };
 }
 module.exports = { create };

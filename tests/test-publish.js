@@ -232,7 +232,7 @@ const test = async (name, fn) => { await fn(); count++; };
     await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()] });
     const r = await pub.mySites('u1');
     assert.strictEqual(r.json.freePlaces, 1); assert.strictEqual(r.json.sites.length, 1);
-    assert.deepStrictEqual(Object.keys(r.json.sites[0]).sort(), ['address', 'id', 'name', 'paidUntil', 'payment', 'publishedAt', 'status', 'version']);
+    assert.deepStrictEqual(Object.keys(r.json.sites[0]).sort(), ['address', 'id', 'name', 'paidUntil', 'payment', 'publishedAt', 'renamesLeft', 'status', 'version']);
     assert.strictEqual(r.json.sites[0].address, 'https://bakery-anna.edvlabs.com/'); assert.strictEqual(r.json.sites[0].payment, 'active');
     assert.strictEqual((await pub.mySites('u2')).json.sites.length, 0, 'nobody sees another person\'s sites');
     assert.strictEqual((await pub.mySites(null)).status, 401);
@@ -400,6 +400,62 @@ const test = async (name, fn) => { await fn(); count++; };
     assert.strictEqual([...f.objects.keys()].filter((k) => k.includes('00000000f')).length, 8, 'still there');
     for (let i = 0; i < 40; i++) await put('00000000-0000-4000-8000-0000000b' + String(i).padStart(4, '0'));
     assert.strictEqual((await pub.sweep()).straysSkipped, 48, 'and more than 25 is never deleted in one run');
+  });
+
+  await test('limits: the same defaults for everyone, an upgrade for one person, and the messages say the number and where to get more', async () => {
+    const L = require('../functions/lib/limits.js');
+    // defaults and the Worker settings that change them
+    assert.deepStrictEqual(L.defaultsFrom({}), { publishesPerHour: 10, renamesPer30Days: 2, siteMb: 10 });
+    assert.deepStrictEqual(L.defaultsFrom({ DEFAULT_RENAMES_PER_30_DAYS: '3', DEFAULT_SITE_MB: '15', DEFAULT_PUBLISHES_PER_HOUR: '20' }), { publishesPerHour: 20, renamesPer30Days: 3, siteMb: 15 });
+    for (const bad of ['', ' ', 'abc', '2.5', '-1', '500', '0']) assert.strictEqual(L.defaultsFrom({ DEFAULT_SITE_MB: bad }).siteMb, 10, 'a bad setting is ignored: ' + JSON.stringify(bad));
+    assert.strictEqual(L.defaultsFrom({ DEFAULT_RENAMES_PER_30_DAYS: '0' }).renamesPer30Days, 0, 'zero renames is a real choice');
+    assert.strictEqual(L.defaultsFrom({ DEFAULT_RENAMES_PER_30_DAYS: '' }).renamesPer30Days, 2, 'an empty setting is not zero');
+    const r = L.resolve(L.defaultsFrom({}), { renames_per_30_days: 6, max_site_mb: null, publishes_per_hour: 999 });
+    assert.deepStrictEqual([r.renamesPer30Days, r.siteMb, r.publishesPerHour, r.fileMb], [6, 10, 10, 5], 'only valid numbers in the row replace the defaults');
+    assert.strictEqual(L.resolve({}, { max_site_mb: 20 }).fileMb, 10); assert.strictEqual(L.resolve({}, { max_site_mb: 20 }).canBuyMore.siteMb, false);
+
+    const big = (mb) => ({ path: 'photo.png', content: Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47]), Buffer.alloc(mb * 1024 * 1024)]).toString('base64'), encoding: 'base64' });
+    const { f, pub } = setup(); f.addEntitlement('u1', FUTURE); f.addEntitlement('u2', FUTURE);
+    const tooBig = await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html(), big(4), big(4).constructor === Object ? { ...big(4), path: 'b.png' } : null, { ...big(4), path: 'c.png' }] });
+    assert.strictEqual(tooBig.status, 400); assert(/larger than 10 MB in total\. A bigger limit is available: ask edvlabs\./.test(tooBig.json.errors.join(' ')), tooBig.json.errors.join(' | '));
+    assert.strictEqual((await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html(), big(6)] })).status, 400, 'a file above half the site size is refused');
+    f.limitRows.set('u2', { max_site_mb: 20 });
+    const upgraded = await pub.publish({ userId: 'u2', name: 'ben-shop', files: [html(), big(4), { ...big(4), path: 'b.png' }, { ...big(4), path: 'c.png' }, { ...big(4), path: 'd.png' }] });
+    assert.strictEqual(upgraded.status, 200, JSON.stringify(upgraded.json)); // 16 MB: allowed for the person who has the upgrade
+    assert.strictEqual((await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html(), { ...big(4), path: 'b.png' }, { ...big(4), path: 'c.png' }] })).status, 200, 'and 8 MB is fine for everyone');
+    const over = await pub.publish({ userId: 'u2', name: 'ben-shop', files: [html(), ...[1, 2, 3, 4, 5, 6].map((i) => ({ ...big(4), path: 'p' + i + '.png' }))] });
+    assert.strictEqual(over.status, 400); assert(/larger than 20 MB/.test(over.json.errors.join(' ')) && !/bigger limit is available/.test(over.json.errors.join(' ')), 'at the ceiling there is nothing more to offer: ' + over.json.errors.join(' | '));
+  });
+
+  await test('limits: renames and publishes per account follow the person\'s limits; name checks are limited for everyone', async () => {
+    const { f, pub } = setup(); f.addEntitlement('u1', FUTURE); f.addEntitlement('u2', FUTURE);
+    const a = (await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()] })).json.siteId;
+    const b = (await pub.publish({ userId: 'u2', name: 'ben-shop', files: [html()] })).json.siteId;
+    f.limitRows.set('u2', { renames_per_30_days: 4, publishes_per_hour: 3 });
+    for (const n of ['a-one', 'a-two']) assert.strictEqual((await pub.rename({ userId: 'u1', siteId: a, newName: n })).status, 200);
+    const third = await pub.rename({ userId: 'u1', siteId: a, newName: 'a-three' });
+    assert.strictEqual(third.status, 429); assert(/renamed 2 times in 30 days\. More is available: ask edvlabs\./.test(third.json.errors[0]), third.json.errors[0]);
+    for (const n of ['b-one', 'b-two', 'b-three', 'b-four']) assert.strictEqual((await pub.rename({ userId: 'u2', siteId: b, newName: n })).status, 200, n);
+    assert.strictEqual((await pub.rename({ userId: 'u2', siteId: b, newName: 'b-five' })).status, 429, 'four, not more');
+    const mine = (await pub.mySites('u2')).json; assert.deepStrictEqual(mine.limits, { publishesPerHour: 3, renamesPer30Days: 4, siteMb: 10, canBuyMore: { publishesPerHour: true, renamesPer30Days: true, siteMb: true } }); assert.strictEqual(mine.sites[0].renamesLeft, 0);
+    assert.strictEqual((await pub.mySites('u1')).json.sites[0].renamesLeft, 0); assert.strictEqual((await pub.mySites('u1')).json.limits.renamesPer30Days, 2);
+    // publishes per hour: 3 for u2 (upgrade row says 3 here), 10 for others
+    const { f: g, pub: p2 } = setup(); g.addEntitlement('x', FUTURE); g.limitRows.set('x', { publishes_per_hour: 2 });
+    assert.strictEqual((await p2.publish({ userId: 'x', name: 'x-shop', files: [html()] })).status, 200); assert.strictEqual((await p2.publish({ userId: 'x', name: 'x-shop', files: [html()] })).status, 200);
+    const limited = await p2.publish({ userId: 'x', name: 'x-shop', files: [html()] }); assert.strictEqual(limited.status, 429); assert(/2 are allowed\)\. More is available/.test(limited.json.errors[0]), limited.json.errors[0]);
+    // name checks: 60 an hour for everyone, then a plain refusal
+    const { pub: p3 } = setup();
+    for (let i = 0; i < 60; i++) assert.strictEqual((await p3.nameStatus('z', 'some-name-' + i)).status, 200);
+    const blocked = await p3.nameStatus('z', 'some-name-x'); assert.strictEqual(blocked.status, 429); assert.strictEqual(blocked.json.reason, 'rate');
+    assert.strictEqual((await p3.nameStatus('someone-else', 'some-name-x')).status, 200, 'another person is not affected');
+  });
+
+  await test('limits: Worker settings change the defaults for everyone', async () => {
+    const L = require('../functions/lib/limits.js');
+    const { f, pub } = setup({ defaults: L.defaultsFrom({ DEFAULT_RENAMES_PER_30_DAYS: '1' }) }); f.addEntitlement('u1', FUTURE);
+    const a = (await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()] })).json.siteId;
+    assert.strictEqual((await pub.rename({ userId: 'u1', siteId: a, newName: 'anna-one' })).status, 200);
+    const second = await pub.rename({ userId: 'u1', siteId: a, newName: 'anna-two' }); assert.strictEqual(second.status, 429); assert(/renamed once in 30 days/.test(second.json.errors[0]), second.json.errors[0]);
   });
 
   console.log(`✓ publish: ${count} groups (files, scan, payment, names, versions, failures, limits, unpublish)`);

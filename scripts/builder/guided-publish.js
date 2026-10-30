@@ -56,7 +56,7 @@
     box.append(head, intro, signedOut, list, places, nameLabel, nameNote, go, out, ask);
     pane.append(box);
 
-    let state = { signedIn: false, sites: [], freePlaces: 0 }, busy = false, timer = null, lastChecked = '';
+    let state = { signedIn: false, sites: [], freePlaces: 0, limits: null }, busy = false, timer = null, lastChecked = '';
     const say = (text, problem) => { out.textContent = text; out.dataset.problem = problem ? 'true' : 'false'; };
 
     function setBusy(on) { busy = on; box.setAttribute('aria-busy', on ? 'true' : 'false'); box.querySelectorAll('button').forEach((b) => { b.disabled = on; }); if (!on) refreshGo(); }
@@ -96,7 +96,7 @@
       [list, places, nameLabel, nameNote, go].forEach((e) => { e.hidden = !state.signedIn; });
       if (!state.signedIn) return;
       const r = await client.mySites();
-      if (r.status === 200 && r.json && r.json.ok) { state.sites = r.json.sites; state.freePlaces = r.json.freePlaces; renderSites(); renderPlaces(); }
+      if (r.status === 200 && r.json && r.json.ok) { state.sites = r.json.sites; state.freePlaces = r.json.freePlaces; state.limits = r.json.limits || null; renderSites(); renderPlaces(); }
       else if (r.status === 503) { box.hidden = true; return; } // publishing is not set up on this server: say nothing
       else say(Client.explain(r.status, r.json).message, true);
       refreshGo();
@@ -151,13 +151,16 @@
       if (existing) { existing.remove(); opener.focus(); return; }
       const form = el(doc, 'div', { class: 'gt-rename' });
       const input = el(doc, 'input', { type: 'text', class: 'gt-input', maxlength: '30', autocomplete: 'off', autocapitalize: 'none', spellcheck: 'false', 'aria-label': 'New name for ' + site.name, placeholder: 'newname' });
-      const note = el(doc, 'small', { role: 'status', 'aria-live': 'polite' }, 'The old address will send visitors to the new one for 90 days. A site can be renamed twice in 30 days.');
+      const left = typeof site.renamesLeft === 'number' ? site.renamesLeft : null, per = state.limits ? state.limits.renamesPer30Days : null;
+      const more = state.limits && state.limits.canBuyMore && state.limits.canBuyMore.renamesPer30Days ? ' More is available: ask edvlabs.' : '';
+      const rule = 'The old address will send visitors to the new one for 90 days.' + (left === null || per === null ? '' : left > 0 ? ' This site can be renamed ' + (left === 1 ? 'once' : left + ' times') + ' more in the next 30 days (' + per + ' in 30 days are allowed).' : ' This site has used all ' + per + ' renames allowed in 30 days.' + more);
+      const note = el(doc, 'small', { role: 'status', 'aria-live': 'polite' }, rule);
       const save = el(doc, 'button', { type: 'button', class: 'builder-btn-primary', 'data-act': 'rename-save', disabled: '' }, 'Change the name');
       const cancel = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', 'data-act': 'rename-cancel' }, 'Cancel');
       form.append(el(doc, 'span', { class: 'gt-suffix' }, 'New name:'), input, el(doc, 'span', { class: 'gt-suffix' }, '.' + domain), note, save, cancel);
       li.append(form);
       let ready = '', timer2 = null;
-      const refresh = () => { save.disabled = busy || !ready; };
+      const refresh = () => { save.disabled = busy || !ready || left === 0; };
       const check = async () => {
         const c = Names.check(input.value); ready = '';
         if (!c.ok) { note.textContent = input.value.trim() ? c.message : ''; refresh(); return; }
