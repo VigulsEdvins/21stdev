@@ -583,7 +583,7 @@
       getBundle: () => currentExportBundle,
       getAssets: () => currentExportAssets
     });
-    const { handleDownloadZip, buildCms } = zipExport;
+    const { handleDownloadZip, collectFiles, buildCms } = zipExport;
 
     const notes = (window.BuilderExportNotes || require('./export-notes.js')).createExportNotes(ctx, { closeExportModal, getBundle: () => currentExportBundle });
     const { renderPageChecks, renderReviewComments } = notes;
@@ -596,6 +596,7 @@
       openExportModal,
       closeExportModal,
       handleDownloadZip,
+      collectFiles,
       renderReviewComments
     };
   }

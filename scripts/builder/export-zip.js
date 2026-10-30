@@ -122,6 +122,59 @@
     }
 
     /**
+     * The files of the finished site: { files: {name: text}, assets: {name: bytes}, zipFilename }. Used by the ZIP download and by Publish,
+     * so what goes online is exactly what a download contains. exportOptions: { review, cms: false to leave the content editor out }.
+     */
+    async function collectFiles(exportOptions = {}) {
+      if (!stackManager.getStack().length) throw new Error('There are no sections to export.');
+      const zipFilename = exportOptions.review ? 'my-review-copy.zip' : 'my-assembled-page.zip';
+      await prepareExportData(exportOptions);
+      if (!getBundle()) throw new Error('Could not generate export bundle');
+
+      if (exportOptions.review) {
+        getBundle()['README.md'] += '\n## Review copy\n\nThis copy has a Review button (bottom left). Open `index.html`, press **Comment mode**, click anything on the page and write what should change. Press **Review** to see the list and **Download comments** to send the file back. Comments stay in the browser until downloaded. Remove the review code before the final launch by exporting a normal copy.\n';
+      }
+
+      const cmsToggle = document.getElementById('exportCmsToggle');
+      const cmsOn = !!window.BuilderCms && exportOptions.cms !== false && (!cmsToggle || cmsToggle.checked); // publishing passes cms: false, the editor does not belong on a live site
+      const multi = stackManager.getState().pages.length > 1;
+      let cmsFiles = {};
+      const addCms = async (pagesIn, htmlByFile, readmeFiles, intoFiles, pageLinks) => {
+        try {
+          const cms = await buildCms(pagesIn, htmlByFile, pageLinks);
+          Object.assign(intoFiles, cms.pages, cms.files);
+          intoFiles['README.md'] += window.BuilderCms.readmeSection(readmeFiles);
+          cmsFiles = cms.files;
+        } catch (err) {
+          console.error('Content editor could not be added:', err);
+          showToast('The content editor could not be added; the ZIP has the page only.', 5000);
+        }
+      };
+      if (!multi && cmsOn) {
+        const st = stackManager.getState();
+        await addCms([{ file: 'index.html', title: 'Home', stack: st.stack, settings: st.page, script: 'script.js' }], { 'index.html': getBundle()['index.html'] }, ['index.html'], getBundle());
+      }
+      if (multi) {
+        const site = await buildMultiPageFiles(exportOptions);
+        if (cmsOn) {
+          const st = stackManager.getState();
+          const fileOf = (p) => (p.slug === 'index' ? 'index.html' : `${p.slug}.html`);
+          const pageLinks = Object.fromEntries(st.pages.map(p => [p.id, fileOf(p)]));
+          await addCms(
+            st.pages.map(p => ({ file: fileOf(p), title: p.title, stack: p.stack, settings: { ...st.page, lang: p.lang || st.page.lang, title: p.slug === 'index' ? st.page.title : `${p.title} | ${st.page.title}` }, script: p.slug === 'index' ? 'script.js' : `${p.slug}.js`, lang: p.lang || st.page.lang || 'en', group: p.translationOf || p.id })),
+            Object.fromEntries(st.pages.map(p => [fileOf(p), site.files[fileOf(p)]])),
+            st.pages.map(fileOf), site.files, pageLinks);
+        }
+        if (exportOptions.review) site.files['README.md'] += '\n## Review copy\n\nOpen `index.html`, press **Comment mode**, click anything and write what should change; **Download comments** sends the file back. Remove the review code before launch by exporting a normal copy.\n';
+        return { files: site.files, assets: site.assets, zipFilename };
+      }
+      const bundle = getBundle(), files = {};
+      ['index.html', 'style.css', 'script.js', 'README.md'].forEach(n => { files[n] = bundle[n]; });
+      [...window.Assembler.SITE_EXTRA_FILES, ...Object.keys(cmsFiles)].forEach(n => { if (bundle[n]) files[n] = bundle[n]; });
+      return { files, assets: getAssets(), zipFilename };
+    }
+
+    /**
      * Download Project ZIP generator.
      * Generates a clean archive with index.html, style.css, script.js, and README.md.
      * Uses window.JSZip if available, otherwise uses native pure-JS zip creator.
@@ -153,71 +206,14 @@
       }
 
       try {
-        await prepareExportData(exportOptions);
-        if (!getBundle()) {
-          throw new Error('Could not generate export bundle');
-        }
-
-        const zipFilename = exportOptions.review ? 'my-review-copy.zip' : 'my-assembled-page.zip';
-        if (exportOptions.review) {
-          getBundle()['README.md'] += '\n## Review copy\n\nThis copy has a Review button (bottom left). Open `index.html`, press **Comment mode**, click anything on the page and write what should change. Press **Review** to see the list and **Download comments** to send the file back. Comments stay in the browser until downloaded. Remove the review code before the final launch by exporting a normal copy.\n';
-        }
-
-        const cmsToggle = document.getElementById('exportCmsToggle');
-        const cmsOn = !!window.BuilderCms && (!cmsToggle || cmsToggle.checked);
-        const multi = stackManager.getState().pages.length > 1;
-        let cmsFiles = {};
-        const addCms = async (pagesIn, htmlByFile, readmeFiles, intoFiles, pageLinks) => {
-          try {
-            const cms = await buildCms(pagesIn, htmlByFile, pageLinks);
-            Object.assign(intoFiles, cms.pages, cms.files);
-            intoFiles['README.md'] += window.BuilderCms.readmeSection(readmeFiles);
-            cmsFiles = cms.files;
-          } catch (err) {
-            console.error('Content editor could not be added:', err);
-            showToast('The content editor could not be added; the ZIP has the page only.', 5000);
-          }
-        };
-        if (!multi && cmsOn) {
-          const st = stackManager.getState();
-          await addCms([{ file: 'index.html', title: 'Home', stack: st.stack, settings: st.page, script: 'script.js' }], { 'index.html': getBundle()['index.html'] }, ['index.html'], getBundle());
-        }
-        if (multi) {
-          const site = await buildMultiPageFiles(exportOptions);
-          if (cmsOn) {
-            const st = stackManager.getState();
-            const fileOf = (p) => (p.slug === 'index' ? 'index.html' : `${p.slug}.html`);
-            const pageLinks = Object.fromEntries(st.pages.map(p => [p.id, fileOf(p)]));
-            await addCms(
-              st.pages.map(p => ({ file: fileOf(p), title: p.title, stack: p.stack, settings: { ...st.page, lang: p.lang || st.page.lang, title: p.slug === 'index' ? st.page.title : `${p.title} | ${st.page.title}` }, script: p.slug === 'index' ? 'script.js' : `${p.slug}.js`, lang: p.lang || st.page.lang || 'en', group: p.translationOf || p.id })),
-              Object.fromEntries(st.pages.map(p => [fileOf(p), site.files[fileOf(p)]])),
-              st.pages.map(fileOf), site.files, pageLinks);
-          }
-          if (exportOptions.review) site.files['README.md'] += '\n## Review copy\n\nOpen `index.html`, press **Comment mode**, click anything and write what should change; **Download comments** sends the file back. Remove the review code before launch by exporting a normal copy.\n';
-          if (typeof window.JSZip !== 'undefined') {
-            const zip = new window.JSZip();
-            Object.entries(site.files).forEach(([name, text]) => zip.file(name, text));
-            Object.entries(site.assets).forEach(([name, bytes]) => zip.file(name, bytes));
-            triggerDownload(await zip.generateAsync({ type: 'blob' }), zipFilename, 'application/zip');
-          } else {
-            triggerDownload(new Blob([window.Assembler.createZipArchive(Object.assign({}, site.files, site.assets))], { type: 'application/zip' }), zipFilename, 'application/zip');
-          }
-        } else if (typeof window.JSZip !== 'undefined') {
-          // 1. Client-side JSZip
+        const { files, assets, zipFilename } = await collectFiles(exportOptions);
+        if (typeof window.JSZip !== 'undefined') {
           const zip = new window.JSZip();
-          zip.file('index.html', getBundle()['index.html']);
-          zip.file('style.css', getBundle()['style.css']);
-          zip.file('script.js', getBundle()['script.js']);
-          zip.file('README.md', getBundle()['README.md']);
-          [...window.Assembler.SITE_EXTRA_FILES, ...Object.keys(cmsFiles)].forEach(n => { if (getBundle()[n]) zip.file(n, getBundle()[n]); });
-          Object.entries(getAssets()).forEach(([name, bytes]) => zip.file(name, bytes));
-          const blob = await zip.generateAsync({ type: 'blob' });
-          triggerDownload(blob, zipFilename, 'application/zip');
+          Object.entries(files).forEach(([name, text]) => zip.file(name, text));
+          Object.entries(assets).forEach(([name, bytes]) => zip.file(name, bytes));
+          triggerDownload(await zip.generateAsync({ type: 'blob' }), zipFilename, 'application/zip');
         } else if (window.Assembler && typeof window.Assembler.createZipArchive === 'function') {
-          // 2. Native Pure-JS ZIP Generator
-          const zipBytes = window.Assembler.createZipArchive(Object.assign({}, getBundle(), getAssets()));
-          const blob = new Blob([zipBytes], { type: 'application/zip' });
-          triggerDownload(blob, zipFilename, 'application/zip');
+          triggerDownload(new Blob([window.Assembler.createZipArchive(Object.assign({}, files, assets))], { type: 'application/zip' }), zipFilename, 'application/zip');
         } else {
           throw new Error('No zip generator available');
         }
@@ -250,7 +246,7 @@
     }
     const downloadReviewBtn = document.getElementById('downloadReviewBtn');
     if (downloadReviewBtn) downloadReviewBtn.addEventListener('click', () => handleDownloadZip({ review: true }));
-    return { handleDownloadZip, buildCms, buildMultiPageFiles };
+    return { handleDownloadZip, collectFiles, buildCms, buildMultiPageFiles };
   }
 
   const api = { createZipExport };

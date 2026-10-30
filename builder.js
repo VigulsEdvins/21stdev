@@ -447,7 +447,7 @@
     const exportController = (window.BuilderExport || require('./scripts/builder/export-panel.js')).createExportController({
       stackManager, featureCache, featuresData, fetchFeatureFiles, openDrawer, nativeMap, ownPalette, reserveMap, lazyMap, licenseMap, exportAssets, weightMap
     });
-    const { prepareExportData, setActiveExportTab, setActiveCodeSubtab, openExportModal, closeExportModal, handleDownloadZip } = exportController;
+    const { prepareExportData, setActiveExportTab, setActiveCodeSubtab, openExportModal, closeExportModal, handleDownloadZip, collectFiles } = exportController;
 
     // Check localStorage for saved builder state
     let hasLoadedSavedState = false;
@@ -571,6 +571,7 @@
       setActiveCodeSubtab,
       prepareExportData,
       handleDownloadZip,
+      collectFiles,
       loadStarterTemplate,
       STARTER_SECTIONS,
       renderElementsCatalog,

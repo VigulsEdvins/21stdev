@@ -124,6 +124,13 @@ Visitor opens bakery-anna.edvlabs.com
 - Two functions, `reserve_site_version` and `go_live_site`, do the steps that must be atomic; only the server's key can call them.
 - The SQL has not been run by a database yet (no local SQL engine here). Apply it first to a Supabase **branch**, not the real project, and only with the owner's go-ahead.
 
+## Builder screen as written (step 6)
+
+- `scripts/builder/publish-client.js` (calls, plain-words answers, which files go online), `scripts/builder/guided-publish.js` (the box under the price in step 5: sign-in invitation, the person's sites with Update and Take offline, name box with live check, Put it online), styles in `builder-guided.css`.
+- The files published are exactly the download's files, from the new `collectFiles` in `scripts/builder/export-zip.js` (the ZIP download now uses it too), **without** the content editor, and without the files that only help a self-hosting download (`README.md`, `DEPLOY.md`, `DEPLOY.html`, `_headers`). A sample of 48 library blocks was exported and every one passes the server's file checks.
+- Pictures are sent as base64; videos and other kinds the server does not accept are left out silently, so a block with a video would show a broken video online. To handle (warn the person) before opening publishing to everyone.
+- A visitor who is not signed in makes no request; the invitation shows only where the page carries the access-gate tag (the published builder). No price is shown yet.
+
 ## Renaming (answer to "how hard")
 
 Not hard: about one small endpoint and its tests, roughly one build step of the nine. What it does:

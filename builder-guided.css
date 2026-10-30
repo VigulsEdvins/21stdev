@@ -264,3 +264,16 @@ body.is-guided #contentSectionSelect { min-height: 44px; font-size: 16px; }
 }
 /* 320 px: the header's buttons take a second row; keep that room from the first paint (tests/e2e/builder-layout-shift.e2e.js) */
 @media (max-width: 340px) { body.is-guided .builder-header { min-height: 125px; } }
+
+/* Put it online (scripts/builder/guided-publish.js) */
+.gt-publish { margin-top: 28px; padding-top: 18px; border-top: 2px solid var(--text-main); }
+.gt-publish h4 { margin: 0 0 6px; font-size: 18px; }
+.gt-publish [hidden] { display: none !important; }
+.gt-suffix { font-weight: 600; color: var(--text-main); }
+.gt-sites { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 10px; }
+.gt-site { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 10px 12px; border: 2px solid var(--text-main); border-radius: 10px; font-size: 15px; }
+.gt-site a { font-weight: 600; word-break: break-all; }
+.gt-site small { color: var(--text-muted); }
+.gt-site button { min-height: 44px; }
+#publishResult { margin: 12px 0 0; font-size: 15px; }
+#publishResult[data-problem="true"] { color: var(--rust); }
