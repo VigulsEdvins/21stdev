@@ -224,6 +224,7 @@ function createStackManager(initialConfig = {}) {
         slug: slugOrSection,
         sizing: { ...defaultSizing, ...(extraProps.sizing || {}) },
         ...(reg && reg.autoMenu ? { menuMode: 'auto' } : {}),
+        ...(reg && reg.stickyDefault ? { sticky: true } : {}),
         ...extraProps
       };
     } else if (slugOrSection && typeof slugOrSection === 'object') {
@@ -355,6 +356,15 @@ function createStackManager(initialConfig = {}) {
       const label = String(patch.menuLabel == null ? '' : patch.menuLabel).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 30).trim();
       if (label) section.menuLabel = label; else delete section.menuLabel;
     }
+    notify();
+    return section;
+  }
+
+  /** Keeps a header at the top of the page while it scrolls (`sticky: true`); false removes the field. */
+  function setSectionSticky(id, on) {
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    if (on === true) section.sticky = true; else delete section.sticky;
     notify();
     return section;
   }
@@ -619,6 +629,7 @@ function createStackManager(initialConfig = {}) {
     setSectionFlag,
     setSectionAnchor,
     setSectionMenu,
+    setSectionSticky,
     setSectionHideOn,
     setSectionThemeMode,
     replaceAllWithSection,

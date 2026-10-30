@@ -73,7 +73,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const homeHtml = await zip.file('index.html').async('string');
   assert(/<html lang="en"/.test(homeHtml), 'the home page keeps the site language');
   assert(/data-lang="de" data-href="about-us\.html" aria-selected="false">Deutsch/.test(homeHtml) && /data-lang="en" data-href="index\.html" aria-selected="true">English/.test(homeHtml), 'home switcher lists English (current) and Deutsch');
-  assert(/data-lang="de" data-href="about-us\.html" aria-selected="true">Deutsch/.test(aboutHtml) && /class="lsw-code">DE</.test(aboutHtml), 'about switcher shows DE as current');
+  assert(/data-lang="de" data-href="about-us\.html" aria-selected="true">Deutsch/.test(aboutHtml) && /class="lsw-code"[^>]*>DE</.test(aboutHtml), 'about switcher shows DE as current');
   assert(/data-href/.test(await zip.file('script.js').async('string')) && /data-href/.test(await zip.file('about-us.js').async('string')), 'the link-following script ships with each page');
   for (const [name, html] of [['index.html', homeHtml], ['about-us.html', aboutHtml]]) {
     assert(html.includes('hreflang="en" href="https://site.example/"') && html.includes('hreflang="de" href="https://site.example/about-us.html"') && html.includes('hreflang="x-default" href="https://site.example/"'), name + ' lists the translations');

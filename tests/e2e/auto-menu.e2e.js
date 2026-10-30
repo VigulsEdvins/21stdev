@@ -53,6 +53,15 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await mode.waitFor({ timeout: 10000 });
   assert.strictEqual(await mode.inputValue(), 'auto');
   assert(/About, Pricing, Contact, Team, FAQ/.test(await af.locator('.cms-menu-card .cms-hint').first().textContent()), 'the card lists what the menu shows');
+  // choosing in the panel changes the panel's own preview at once, without pressing Done
+  const navText = async () => (await (await af.locator('#cms-frame').elementHandle()).contentFrame()).evaluate(() => (document.querySelector('.ssh-nav') || {}).textContent || '');
+  const waitNav = async (re) => (await (await af.locator('#cms-frame').elementHandle()).contentFrame()).waitForFunction((src) => new RegExp(src).test((document.querySelector('.ssh-nav') || {}).textContent || ''), re.source, { timeout: 15000 });
+  await waitNav(/About/);
+  await mode.selectOption('manual');
+  await waitNav(/Product/);
+  await mode.selectOption('auto');
+  await waitNav(/About.*Pricing/);
+  assert(/Pricing/.test(await navText()));
   // a section: switch it off, rename another
   const stackNow = async () => page.evaluate(() => window.builderPreview.stackManager.getStack().map((s) => ({ slug: s.slug, id: s.id, inMenu: s.inMenu, menuLabel: s.menuLabel })));
   await page.evaluate((id) => window.__cmsBridge.setMenu(id, { menuLabel: 'Plans <b>and</b> prices' }), idOf('pricing-table-switch'));

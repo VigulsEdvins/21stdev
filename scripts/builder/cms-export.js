@@ -12,13 +12,19 @@
   const RUNTIME_FILES = ['admin.html', 'admin.css', 'admin.js', 'cms.js', 'form-rules.js'];
   const MAX_FIELDS_PER_SECTION = 60;
 
+  /** A language code such as "en" or "pt-BR": a 2 or 3 letter language, then up to three parts of letters and digits (checked part by part, not with one nested pattern). */
+  function isLangCode(v) {
+    const parts = String(v == null ? '' : v).split('-');
+    return parts.length <= 4 && parts.every((part, i) => (i === 0 ? /^[a-z]{2,3}$/ : /^[A-Za-z0-9]{1,8}$/).test(part));
+  }
+
   /** The cms-content.js text. `pages` is [{ file, title, sections: [{ id, slug, title, fields: [...] }] }]. */
   function buildContent({ site, siteLang = '', pages, published = {}, updatedAt = 0, forms = null }) {
     const data = {
       v: 1,
       site: site || 'Website',
       updatedAt,
-      ...(/^[a-z]{2,3}(-[A-Za-z0-9]+)*$/.test(siteLang) ? { siteLang } : {}),
+      ...(isLangCode(siteLang) ? { siteLang } : {}),
       pages: pages.map(p => ({
         file: p.file,
         title: p.title,
@@ -136,14 +142,17 @@ There is no login. Anyone who can open \`admin.html\` can edit in their own brow
    * each page's document is handed to the editor's preview frame, so no files or server are needed.
    * `docs` maps a page file to its single-file HTML.
    */
+  /** A page's document with the editor's two scripts added, ready to be the editor's preview frame. */
+  function frameDoc(file, doc, files) {
+    const cfg = `window.__EDV_CMS_FRAME=${JSON.stringify({ file })};`;
+    const extra = [cfg, files['cms-content.js'], files['cms.js']].map(inlineScript).join('\n');
+    const at = doc.lastIndexOf('</body>');
+    return at < 0 ? doc + extra : doc.slice(0, at) + extra + '\n' + doc.slice(at);
+  }
+
   function buildPreviewPage({ files, docs }) {
     const frames = {};
-    Object.keys(docs).forEach(file => {
-      const cfg = `window.__EDV_CMS_FRAME=${JSON.stringify({ file })};`;
-      const extra = [cfg, files['cms-content.js'], files['cms.js']].map(inlineScript).join('\n');
-      const at = docs[file].lastIndexOf('</body>');
-      frames[file] = at < 0 ? docs[file] + extra : docs[file].slice(0, at) + extra + '\n' + docs[file].slice(at);
-    });
+    Object.keys(docs).forEach(file => { frames[file] = frameDoc(file, docs[file], files); });
     const framesJson = JSON.stringify(frames).replace(/</g, '\\u003c');
     return files['admin.html']
       .replace('<link rel="stylesheet" href="admin.css">', () => `<style>${files['admin.css']}</style>`)
@@ -152,7 +161,7 @@ There is no login. Anyone who can open \`admin.html\` can edit in their own brow
       .replace('<script src="admin.js"></script>', () => inlineScript(files['admin.js']));
   }
 
-  const api = { buildPreviewPage, RUNTIME_FILES, buildContent, injectTags, readmeSection, runtimeFiles, discoverSections };
+  const api = { buildPreviewPage, frameDoc, RUNTIME_FILES, buildContent, injectTags, readmeSection, runtimeFiles, discoverSections };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.BuilderCms = api;
 })();

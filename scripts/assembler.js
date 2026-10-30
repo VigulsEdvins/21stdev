@@ -1558,6 +1558,13 @@ function generateUniversalThemeStyles(theme) {
       transition: background-color 0.2s ease, color 0.2s ease;
     }
 
+    /* a header the client keeps at the top: the section itself sticks, because it is the only element with the whole page as its parent */
+    .page-section.is-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
     /* Seamless document flow: React roots match container width without forcing flex overrides */
     .page-section > div[id^="root-"] {
       width: 100%;
@@ -2157,7 +2164,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
     const nativeList = sectionNativeList(section, options.nativeMap);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n${anchorSpan(anchors[id], id)}  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n${anchorSpan(anchors[id], id)}  <section class="page-section${preloaderClass}${section.sticky === true ? ' is-sticky' : ''}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -3389,7 +3396,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
     const nativeList = sectionNativeList(section, options.nativeMap);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n${anchorSpan(anchors[id], id)}  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n${anchorSpan(anchors[id], id)}  <section class="page-section${preloaderClass}${section.sticky === true ? ' is-sticky' : ''}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);

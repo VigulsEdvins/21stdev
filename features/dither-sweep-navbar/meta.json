@@ -89,5 +89,6 @@
     }
   ],
   "reserveHeight": 800,
-  "autoMenu": true
+  "autoMenu": true,
+  "stickyDefault": true
 }

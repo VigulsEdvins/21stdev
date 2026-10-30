@@ -318,6 +318,11 @@
     if (window.EDV_CMS_FRAMES) frame.srcdoc = window.EDV_CMS_FRAMES[page().file] || '';
     else frame.src = page().file + '?cms-preview=1';
   }
+  /** Builder only: a setting that changes the page's markup (menu, sticky header, link name) shows in the preview at once. */
+  function refreshPreview() {
+    if (!inBuilder || !bridge.frameDoc || !window.EDV_CMS_FRAMES) return;
+    try { var html = bridge.frameDoc(); if (html) { window.EDV_CMS_FRAMES[page().file] = html; loadPreview(); } } catch (e) { /* the preview stays as it was; Done still applies the change */ }
+  }
   function pushPreview() {
     if (!previewReady || !frame.contentWindow) return;
     frame.contentWindow.postMessage({ type: 'edv-cms:values', values: draft }, TARGET);
@@ -494,6 +499,7 @@
       bridge.setAnchor(sec.id, input.value);
       input.value = bridge.anchorOf(sec.id);
       render(); // every "go to" list shows the new name
+      refreshPreview();
     });
     return el('div', { class: 'cms-card cms-anchor-card' }, [
       el('div', { class: 'cms-card-head' }, [el('label', { class: 'cms-label', for: id, text: 'Link name of this section' }), el('span', { class: 'cms-type', text: 'menu links' })]),
@@ -512,7 +518,7 @@
         el('option', { value: 'manual', text: 'My own items' })
       ]);
       mode.value = info.mode;
-      mode.addEventListener('change', function () { bridge.setMenu(sec.id, { menuMode: mode.value }); render(); });
+      mode.addEventListener('change', function () { bridge.setMenu(sec.id, { menuMode: mode.value }); render(); refreshPreview(); });
       return el('div', { class: 'cms-card cms-menu-card' }, [
         el('div', { class: 'cms-card-head' }, [el('label', { class: 'cms-label', for: 'cms-menu-mode', text: 'Menu of this header' }), el('span', { class: 'cms-type', text: 'menu' })]),
         mode,
@@ -525,12 +531,26 @@
     box.checked = info.inMenu;
     var label = el('input', { type: 'text', class: 'cms-input', id: 'cms-menu-label', maxlength: '30', autocomplete: 'off', placeholder: info.defaultLabel, 'aria-label': 'Menu label' });
     label.value = info.label;
-    box.addEventListener('change', function () { bridge.setMenu(sec.id, { inMenu: box.checked }); });
-    label.addEventListener('change', function () { bridge.setMenu(sec.id, { menuLabel: label.value }); label.value = (bridge.menuInfo(sec.id) || {}).label || ''; });
+    box.addEventListener('change', function () { bridge.setMenu(sec.id, { inMenu: box.checked }); refreshPreview(); });
+    label.addEventListener('change', function () { bridge.setMenu(sec.id, { menuLabel: label.value }); label.value = (bridge.menuInfo(sec.id) || {}).label || ''; refreshPreview(); });
     return el('div', { class: 'cms-card cms-menu-card' }, [
       el('div', { class: 'cms-card-head' }, [el('label', { class: 'cms-label', for: 'cms-menu-in', text: 'Show in the header menu' }), el('span', { class: 'cms-type', text: 'menu' })]),
       el('div', { class: 'cms-inline' }, [box, el('label', { for: 'cms-menu-label', class: 'cms-hint', text: 'Menu text' }), label]),
       el('p', { class: 'cms-hint', text: 'The header lists this section under this text. Leave the text empty to use "' + info.defaultLabel + '".' })
+    ]);
+  }
+
+  /** A header can stay at the top of the screen while the page scrolls (builder only). */
+  function stickyCard(sec) {
+    var info = bridge.stickyInfo(sec.id);
+    if (!info) return null;
+    var box = el('input', { type: 'checkbox', id: 'cms-sticky' });
+    box.checked = info.on;
+    box.addEventListener('change', function () { bridge.setSticky(sec.id, box.checked); refreshPreview(); });
+    return el('div', { class: 'cms-card cms-sticky-card' }, [
+      el('div', { class: 'cms-card-head' }, [el('label', { class: 'cms-label', for: 'cms-sticky', text: 'Header stays at the top' }), el('span', { class: 'cms-type', text: 'header' })]),
+      el('div', { class: 'cms-inline' }, [box, el('label', { for: 'cms-sticky', class: 'cms-hint', text: 'Keep the header visible while the page scrolls' })]),
+      el('p', { class: 'cms-hint', text: 'Untick it to let the header scroll away with the page.' })
     ]);
   }
 
@@ -647,6 +667,7 @@
     ]));
     var shown = 0;
     if (inBuilder && bridge.anchorOf && bridge.setAnchor && !q && bridge.anchorOf(sec.id)) ed.appendChild(anchorCard(sec));
+    if (inBuilder && bridge.stickyInfo && bridge.setSticky && !q) { var sc = stickyCard(sec); if (sc) ed.appendChild(sc); }
     if (inBuilder && bridge.menuInfo && bridge.setMenu && !q) { var mc = menuCard(sec); if (mc) ed.appendChild(mc); }
     sec.fields.forEach(function (f, i) {
       if (q && (f.label + ' ' + getVal(page().file, sec, f)).toLowerCase().indexOf(q) < 0) return;

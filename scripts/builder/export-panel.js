@@ -467,6 +467,7 @@
         const pageIn = { file: 'index.html', title: (st.pages.find(p => p.id === st.activePageId) || {}).title || 'Home', stack: st.stack, settings: st.page, script: '' };
         const cms = await buildCms([pageIn], null, undefined, { inPlace: true });
         const html = window.BuilderCms.buildPreviewPage({ files: cms.files, docs: cms.docs });
+        const themeNow = st.theme === 'custom' ? st.customColors : st.theme;
         window.__cmsBridge = {
           setOverride: (sectionId, fieldId, value, def) => stackManager.setSectionOverride(sectionId, fieldId, value, def),
           setForm: (method, target) => stackManager.setPage({ formMethod: method, formTarget: target }),
@@ -496,6 +497,19 @@
             return base ? { kind: 'section', inMenu: sec.inMenu !== false, label: sec.menuLabel || '', defaultLabel: base.label } : null;
           },
           setMenu: (sectionId, patch) => stackManager.setSectionMenu(sectionId, patch),
+          // the editor's preview page, made again from the page as it is now (a header setting changed the markup, not a text)
+          frameDoc: () => {
+            const cur = stackManager.getState();
+            const doc = window.Assembler.generateSingleFileBundle(cur.stack.map(s => ({ ...s, overrides: {} })), themeNow, featuresData, { page: cur.page, nativeMap, keepUnlinkedNav: true });
+            return window.BuilderCms.frameDoc(pageIn.file, doc, cms.files);
+          },
+          // a header can be kept at the top while the page scrolls (not the bottom tab bar)
+          stickyInfo: (sectionId) => {
+            const sec = stackManager.getState().stack.find(s => s.id === sectionId);
+            const reg = sec && (window.FEATURE_REGISTRY || []).find(f => f.slug === sec.slug);
+            return reg && reg.category === 'Headers & Nav' && reg.slug !== 'bottom-tab-bar' ? { on: sec.sticky === true } : null;
+          },
+          setSticky: (sectionId, on) => stackManager.setSectionSticky(sectionId, on === true),
           // languages of the project: the editor lists them, opens the other language's page, and adds a language (a linked copy of every page)
           languages: () => {
             const L = window.BuilderLanguages, p = window.builderPreview;
