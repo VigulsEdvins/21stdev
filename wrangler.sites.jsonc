@@ -1,0 +1,13 @@
+{
+  // The Worker that serves published sites at <name>.edvlabs.com. Deploy: npx wrangler deploy -c wrangler.sites.jsonc (steps and owner set-up: docs/deploy/publish-sites.md, written in step 8 of the plan).
+  // Kept apart from wrangler.jsonc so a mistake here cannot touch leads, sign-in or the public pages.
+  "name": "edvlabs-sites",
+  "main": "src/sites-worker.js",
+  "compatibility_date": "2026-10-28",
+  // Only addresses with exactly one name in front of edvlabs.com. The bare domain and any address with its own route (www, and others added later) are more specific and keep going where they go now.
+  "routes": [{ "pattern": "*.edvlabs.com/*", "zone_name": "edvlabs.com" }],
+  // The KV namespace and the R2 bucket MUST be the same ones the main Worker publishes into, so both are named here by id. The owner creates them first
+  // (npx wrangler kv namespace create SITES; npx wrangler r2 bucket create edvlabs-sites) and pastes the id below and into wrangler.jsonc. Until then a deploy of this file fails, on purpose.
+  "kv_namespaces": [{ "binding": "SITES", "id": "REPLACE_WITH_THE_ID_FROM_wrangler_kv_namespace_create" }],
+  "r2_buckets": [{ "binding": "SITES_BUCKET", "bucket_name": "edvlabs-sites" }]
+}

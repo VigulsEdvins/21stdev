@@ -26,7 +26,7 @@ function create() {
   const bucket = {
     failOn: null,
     async put(k, bytes, opts) { if (this.failOn && k.includes(this.failOn)) throw new Error('disk full'); objects.set(k, { bytes, type: opts && opts.httpMetadata && opts.httpMetadata.contentType }); log.push('put ' + k); },
-    async get(k) { return objects.get(k) || null; },
+    async get(k) { const o = objects.get(k); return o ? { body: o.bytes, httpMetadata: { contentType: o.type }, httpEtag: '"' + k.length + '-' + o.bytes.length + '"' } : null; },
     async delete(k) { objects.delete(k); log.push('delete ' + k); },
     async list({ prefix }) { return { objects: [...objects.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })) }; }
   };
