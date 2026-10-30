@@ -24,6 +24,8 @@ Two Workers: the main one (`wrangler.jsonc`, already live) and a new, read-only 
 
 ### 1. Supabase: the tables
 
+**Done 2026-10-30:** trial run passed on a throwaway project; the new file was then applied to the `edvlabs` project (ref `idvirglyjvqneaudnsuu`), which already had the three earlier files. Only step 4 below (copying the service key) is left from this section. The steps are kept for reference and for any other project.
+
 1. Create a **new empty test project** in Supabase (free) and run `supabase/migrations/` there first, **all files in order**, in the SQL editor. This catches any mistake before it touches your real data. (The new file is `20261030120000_published_sites.sql`; it needs the earlier ones, `projects` in particular.)
 2. If it ran without errors, run the same file in the **real** project (SQL editor, or `supabase db push` if you use the CLI).
 3. Check in the Table editor: `published_sites`, `site_name_holds`, `site_entitlements` exist, and each shows **RLS enabled**.
