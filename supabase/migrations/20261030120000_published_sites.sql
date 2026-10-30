@@ -10,6 +10,7 @@ create table public.published_sites (
   name         text not null check (char_length(name) between 3 and 30 and name ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
   project_id   uuid references public.projects (id) on delete set null,   -- the saved page it came from, if any
   version      integer not null default 0 check (version >= 0),            -- the folder in R2 that is live now; 0 until the first publish finishes
+  last_version integer not null default 0 check (last_version >= version), -- the highest folder number handed out; two publishes at once never share a folder
   status       text not null default 'unpublished' check (status in ('live', 'unpublished', 'blocked')),
   renamed_at   timestamptz[] not null default '{}',                        -- when it was renamed; the Worker allows 2 renames per 30 days
   created_at   timestamptz not null default now(),
