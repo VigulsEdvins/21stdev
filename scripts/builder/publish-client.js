@@ -50,10 +50,17 @@
     return { kind: 'error', message: 'That did not work just now. Please try again.' };
   }
 
-  /** The address of a published site, only if it is a plain https address (it is used as a link). Otherwise ''. */
+  /** The address of a published site, only if it is a plain https address (it is used as a link). The local demo's http://<name>.localhost:<port>/ is accepted too. Otherwise ''. */
   function safeAddress(value) {
     const v = String(value || '');
-    return /^https:\/\/[a-z0-9-]{3,30}\.[a-z0-9.-]+\/$/.test(v) ? v : '';
+    let u;
+    try { u = new URL(v); } catch (_) { return ''; }
+    if (u.href !== v || u.pathname !== '/' || u.search || u.hash || u.username || u.password) return ''; // exactly the plain address, nothing the parser had to tidy
+    const label = u.hostname.split('.')[0];
+    if (!/^[a-z0-9-]{3,30}$/.test(label)) return '';
+    if (u.protocol === 'https:' && u.port === '' && u.hostname.includes('.') && /^[a-z0-9.-]+$/.test(u.hostname)) return v;
+    if (u.protocol === 'http:' && u.hostname === label + '.localhost') return v;
+    return '';
   }
 
   /** The five calls. `token()` gives the access token; `fetchImpl` is fetch (replaced in tests). Each returns { status, json }. */

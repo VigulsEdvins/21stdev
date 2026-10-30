@@ -6,6 +6,7 @@
  * Settings come from a private file, .dev.vars, in the repository folder (git ignores it; copy .dev.vars.example), or from the shell.
  * They are the same names as on Cloudflare: SUPABASE_URL, SUPABASE_ANON_KEY, LEAD_TO_EMAIL, LEAD_FROM_EMAIL, RESEND_API_KEY.
  * Careful: with the three lead settings filled in, a form you submit here really sends the email.
+ *   npm run dev:demo-publish    the same, plus a pretend sign-in service and pretend storage to try publishing at <name>.localhost (scripts/demo-publish.js)
  */
 const http = require('http');
 const fs = require('fs');
@@ -71,17 +72,35 @@ function watchSources({ dirs = [], files = [], onChange, wait = 300 } = {}) {
   return () => { clearTimeout(timer); open.forEach((w) => w.close()); };
 }
 
-function createServer(env, { applyHeaders = true, dir = SITE, live = false } = {}) {
+/** The site name in a Host header like bakery-anna.localhost:4173, or null (demo publishing only). */
+const siteHost = (host) => {
+  const parts = String(host || '').toLowerCase().split(':');
+  if (parts.length > 2 || (parts.length === 2 && !/^\d+$/.test(parts[1]))) return null;
+  const label = parts[0].endsWith('.localhost') ? parts[0].slice(0, -'.localhost'.length) : '';
+  return /^[a-z0-9-]{3,30}$/.test(label) ? label : null;
+};
+
+function createServer(env, { applyHeaders = true, dir = SITE, live = false, demo = null } = {}) {
   // live (the local server): every answer says "check with me again", and site/_headers is read again for each request, so a change shows on the next reload
   let rules = parseHeaders(fs.readFileSync(path.join(dir, '_headers'), 'utf8'));
   return http.createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     try {
+      if (demo && siteHost(req.headers.host)) { // a published site of the local demo: <name>.localhost:<port>
+        const r = await demo.sites.handle(new Request('http://' + req.headers.host + req.url, { method: req.method, headers: req.headers }));
+        res.writeHead(r.status, Object.fromEntries(r.headers)); return res.end(Buffer.from(await r.arrayBuffer()));
+      }
+      if (demo && url.pathname.startsWith('/__auth/')) { // the demo's pretend sign-in service, reached through this server so the builder's connect-src ('self' and https) allows it
+        const chunks = []; for await (const c of req) chunks.push(c);
+        const headers = {}; for (const k of ['apikey', 'authorization', 'content-type', 'prefer']) if (req.headers[k]) headers[k] = req.headers[k];
+        const r = await fetch(demo.auth.url + url.pathname.slice('/__auth'.length) + url.search, { method: req.method, headers, body: chunks.length && !['GET', 'HEAD'].includes(req.method) ? Buffer.concat(chunks) : undefined });
+        res.writeHead(r.status, { 'Content-Type': r.headers.get('content-type') || 'application/json' }); return res.end(Buffer.from(await r.arrayBuffer()));
+      }
       if (url.pathname.startsWith('/api/')) { // the same code the Worker runs
         const chunks = []; for await (const c of req) chunks.push(c);
         const body = chunks.length && !['GET', 'HEAD'].includes(req.method) ? Buffer.concat(chunks) : undefined;
         const request = new Request('http://' + (req.headers.host || 'localhost') + req.url, { method: req.method, headers: req.headers, body });
-        const r = await route(request, env, async () => new Response('Not found', { status: 404 }));
+        const r = await route(request, env, async () => new Response('Not found', { status: 404 }), demo ? demo.deps : undefined);
         res.writeHead(r.status, Object.fromEntries(r.headers)); return res.end(Buffer.from(await r.arrayBuffer()));
       }
       // Cloudflare tidies addresses: /x.html is redirected to /x and /x/index.html to /x/. Doing the same here means a page that names a .html address
@@ -100,13 +119,16 @@ function createServer(env, { applyHeaders = true, dir = SITE, live = false } = {
   });
 }
 
-if (require.main === module) {
+if (require.main === module) (async () => {
   const port = Number(process.env.PORT || 4173);
   const env = loadEnv(path.join(ROOT, '.dev.vars'), process.env);
+  // npm run dev:site -- --demo-publish : a pretend sign-in service and pretend storage, so the whole publish flow can be tried with nothing set up (scripts/demo-publish.js)
+  const demo = process.argv.includes('--demo-publish') || process.env.DEMO_PUBLISH === '1' ? await require('./demo-publish.js').start({ port }) : null;
+  if (demo) Object.assign(env, demo.env);
   const has = (k) => (env[k] ? 'set' : 'NOT SET');
   const { buildSite } = require('./build-site.js');
   const staged = buildSite(); // the same folder Cloudflare publishes: the site plus /builder/
-  const server = createServer(env, { dir: staged.out, live: true });
+  const server = createServer(env, { dir: staged.out, live: true, demo });
   server.on('error', (e) => { // the usual cause: an older copy of this server is still running
     if (e.code === 'EADDRINUSE') console.error(`Port ${port} is already in use, most likely by an older copy of this server.\nStop it, then start again:\n  pkill -f "node scripts/dev-site.js"\n  npm run dev:site\n(or use another port: PORT=4174 npm run dev:site)`);
     else console.error(e.message);
@@ -117,7 +139,8 @@ if (require.main === module) {
     console.log('  watching: a saved change rebuilds dist/ by itself; reload the page to see it (no restart, no hard reload needed)');
     console.log(`  accounts  : SUPABASE_URL ${has('SUPABASE_URL')}, SUPABASE_ANON_KEY ${has('SUPABASE_ANON_KEY')}  ->  http://localhost:${port}/account/`);
     console.log(`  lead email: LEAD_TO_EMAIL ${has('LEAD_TO_EMAIL')}, LEAD_FROM_EMAIL ${has('LEAD_FROM_EMAIL')}, RESEND_API_KEY ${has('RESEND_API_KEY')}  ->  forms really send mail only when all three are set`);
-    if (!fs.existsSync(path.join(ROOT, '.dev.vars'))) console.log('  (no .dev.vars file yet: copy .dev.vars.example to .dev.vars and fill it in)');
+    if (demo) demo.explain(port).forEach((l) => console.log(l));
+    if (!demo && !fs.existsSync(path.join(ROOT, '.dev.vars'))) console.log('  (no .dev.vars file yet: copy .dev.vars.example to .dev.vars and fill it in)');
     console.log(`  Supabase must allow this address: Authentication -> URL Configuration -> Redirect URLs: http://localhost:${port}/**`);
   });
   // rebuild into a side folder and swap it in, so a page request never meets a half-written dist/
@@ -135,5 +158,5 @@ if (require.main === module) {
     if (again) { again = false; rebuild('more files'); }
   };
   watchSources({ dirs: ['site', 'scripts', 'features', 'thumbs', 'assets/library'].map((d) => path.join(ROOT, d)), files: ['builder.html', 'builder.js', 'builder.css', 'builder-e.css', 'builder-guided.css', 'styles.css', 'registry.js'].map((f) => path.join(ROOT, f)), onChange: rebuild });
-}
-module.exports = { createServer, parseVars, loadEnv, headersFor, fileFor, watchSources };
+})();
+module.exports = { createServer, siteHost, parseVars, loadEnv, headersFor, fileFor, watchSources };

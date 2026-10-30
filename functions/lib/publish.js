@@ -166,9 +166,9 @@ function entitlementState(ent, now) {
 const key = (siteId, version, path) => 'sites/' + siteId + '/' + version + '/' + path;
 const kvKey = (name) => 'site:' + name;
 
-function createPublisher({ db, bucket, kv, now, domain }) {
+function createPublisher({ db, bucket, kv, now, domain, addressOf }) {
   const host = domain || 'edvlabs.com';
-  const address = (name) => 'https://' + name + '.' + host + '/';
+  const address = addressOf || ((name) => 'https://' + name + '.' + host + '/'); // addressOf: the local demo (scripts/demo-publish.js) uses http://<name>.localhost:<port>/
 
   async function rateLimited(userId) {
     const k = 'publishes:' + userId + ':' + String(now()).slice(0, 13); // one counter per clock hour

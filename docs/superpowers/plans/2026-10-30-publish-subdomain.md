@@ -131,6 +131,10 @@ Visitor opens bakery-anna.edvlabs.com
 - Pictures are sent as base64; videos and other kinds the server does not accept are left out silently, so a block with a video would show a broken video online. To handle (warn the person) before opening publishing to everyone.
 - A visitor who is not signed in makes no request; the invitation shows only where the page carries the access-gate tag (the published builder). No price is shown yet.
 
+## Trying it locally (step 7)
+
+`npm run dev:demo-publish` starts the local site with a pretend sign-in service and pretend storage (`scripts/demo-publish.js`) and the **real** publishing and serving code. Create an account at `/account/`, build a page at `/builder/`, press **Put it online** in step 5, and open the address it shows (`http://<name>.localhost:4173/`). Each new account gets two paid places in place of payment. Everything is forgotten when it stops. The pretend sign-in service is reached through the server (`/__auth/`) because the builder's page policy only allows its own address and https. Tested by `tests/test-demo-publish.js` and, in a real browser, `tests/e2e/demo-publish.e2e.js` (the finished site opens in its own origin and cannot see the account session).
+
 ## Renaming (answer to "how hard")
 
 Not hard: about one small endpoint and its tests, roughly one build step of the nine. What it does:

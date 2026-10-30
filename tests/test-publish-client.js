@@ -42,7 +42,8 @@ const test = async (name, fn) => { await fn(); count++; };
 
   await test('only plain https addresses become links', () => {
     assert.strictEqual(C.safeAddress('https://bakery-anna.edvlabs.com/'), 'https://bakery-anna.edvlabs.com/');
-    for (const bad of ['javascript:alert(1)', 'http://bakery.edvlabs.com/', 'https://bakery.edvlabs.com/x', 'https://ab.edvlabs.com/', 'https://a b.edvlabs.com/', '//x.edvlabs.com/', '', null, undefined, 'https://user@evil.example/', 'https://bakery.edvlabs.com/?a=1']) assert.strictEqual(C.safeAddress(bad), '', String(bad));
+    assert.strictEqual(C.safeAddress('http://bakery-anna.localhost:4173/'), 'http://bakery-anna.localhost:4173/', 'the local demo address');
+    for (const bad of ['http://bakery.evil.example/', 'http://bakery.localhost.evil.example/', 'http://bakery.localhost:99999999/', 'javascript:alert(1)', 'http://bakery.edvlabs.com/', 'https://bakery.edvlabs.com/x', 'https://ab.edvlabs.com/', 'https://a b.edvlabs.com/', '//x.edvlabs.com/', '', null, undefined, 'https://user@evil.example/', 'https://bakery.edvlabs.com/?a=1']) assert.strictEqual(C.safeAddress(bad), '', String(bad));
   });
 
   await test('calls: the right address, method, token and body; no token means no request; network failure is an answer', async () => {
