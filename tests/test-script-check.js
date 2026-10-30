@@ -80,6 +80,29 @@ const test = async (name, fn) => { await fn(); count++; };
     assert(!(await noFolders.check(dirsRewritten)).ok, 'without the folder list that rewrite is not recognised (the list matters)');
   });
 
+  await test('a page that sends forms passes when the checker is bundled the way the Worker is (function sources are rewritten by a bundler)', async () => {
+    const esbuild = require('esbuild');
+    const out = esbuild.buildSync({ entryPoints: [path.join(__dirname, '..', 'functions', 'lib', 'script-check.js')], bundle: true, platform: 'node', format: 'cjs', write: false }).outputFiles[0].text;
+    const mod = { exports: {} };
+    new Function('module', 'exports', out)(mod, mod.exports);
+    const six = ['responsive-burger-menu', 'contact-form-validated', 'beam-wordmark-footer'];
+    const withForm = make(six.map((s, i) => sec(s, i + 1)), { page: { title: 'T', lang: 'en', formMethod: 'formsubmit', formTarget: 'someone@example.com' } });
+    assert(/Form messages: sends the form/.test(withForm), 'this export sends forms');
+    const { scriptParts } = require('../scripts/build-site.js');
+    const bundled = mod.exports.createScriptChecker({ library, exportAssets, parts: async () => scriptParts() });
+    assert((await bundled.check(withForm)).ok, 'the bundled checker accepts a page that sends forms, using the text made when the site is staged');
+    const noForm = ['responsive-burger-menu', 'beam-wordmark-footer'];
+    const plain = make(noForm.map((s, i) => sec(s, i + 1)));
+    assert(!/Form messages: sends the form/.test(plain), 'a page without a message form has no form-sending code');
+    assert((await bundled.check(plain)).ok, 'and the bundled checker accepts it');
+    assert((await bundled.check(make(six.map((s, i) => sec(s, i + 1))))).ok, 'a page with a message form but no chosen method also carries the form code and passes');
+    const noText = mod.exports.createScriptChecker({ library, exportAssets, parts: async () => ({}) });
+    assert(!(await noText.check(withForm)).ok && (await noText.check(plain)).ok, 'without the staged text, pages that send forms are refused and others still pass');
+    const none = mod.exports.createScriptChecker({ library, exportAssets, parts: async () => null });
+    assert(!(await none.check(withForm)).ok && (await none.check(plain)).ok, 'a missing parts file refuses form pages rather than guessing');
+    assert.strictEqual(JSON.stringify(Object.keys(scriptParts())), '["deliveryRuntime"]');
+  });
+
   await test('a page with no section scripts at all passes (only the fixed parts)', async () => { await ok(make([]), 'empty page'); });
 
   await test('one changed character anywhere is refused', async () => {

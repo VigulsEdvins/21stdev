@@ -33,7 +33,7 @@ async function start({ port }) {
   const f = Fake.create();
   const direct = { SUPABASE_URL: auth.url, SUPABASE_ANON_KEY: auth.anonKey }; // how this server talks to the pretend service
   const env = { SUPABASE_URL: 'http://localhost:' + port + '/__auth', SUPABASE_ANON_KEY: auth.anonKey }; // how the pages do: through this server, so the page's own security rules allow it
-  const publisher = P.createPublisher({ db: f.db, bucket: f.bucket, kv: f.kv, now: () => new Date().toISOString(), domain: 'localhost', addressOf: (name) => 'http://' + name + '.localhost:' + port + '/', scripts: createScriptChecker({ library: libraryFromDisk, exportAssets: exportAssetsFromDisk }) });
+  const publisher = P.createPublisher({ db: f.db, bucket: f.bucket, kv: f.kv, now: () => new Date().toISOString(), domain: 'localhost', addressOf: (name) => 'http://' + name + '.localhost:' + port + '/', scripts: createScriptChecker({ library: libraryFromDisk, exportAssets: exportAssetsFromDisk, parts: async () => require('./build-site.js').scriptParts() }) });
   const seen = new Set();
   const inAYear = () => new Date(Date.now() + 365 * 86400000).toISOString();
   /* the real sign-in check, asked of the pretend service; a person met for the first time gets two paid places */

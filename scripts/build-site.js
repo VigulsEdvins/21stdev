@@ -59,6 +59,12 @@ function stageBuilderPage(html) {
   return out;
 }
 
+/** Text the exported script.js contains that is made from the source of functions (Function.prototype.toString). A bundler rewrites that source,
+    so the Worker cannot make it itself: it is made here, from the original files, exactly as the builder in the browser makes it. */
+function scriptParts() {
+  return { deliveryRuntime: require('./form-delivery.js').runtimeJs() };
+}
+
 function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
   fs.rmSync(out, { recursive: true, force: true });
   let n = 0;
@@ -98,6 +104,7 @@ function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
     try { const meta = JSON.parse(fs.readFileSync(path.join(ROOT, 'features', slug, 'meta.json'), 'utf8')); if (Array.isArray(meta.exportAssets) && meta.exportAssets.length) exportAssets[slug] = meta.exportAssets; } catch (_) { /* a folder without a valid meta.json is not a block */ }
   }
   fs.writeFileSync(path.join(B, 'export-assets.json'), JSON.stringify(exportAssets)); n++;
+  fs.writeFileSync(path.join(B, 'script-parts.json'), JSON.stringify(scriptParts())); n++;
   for (const dir of ROOT_DIRS) walk(path.join(ROOT, dir), (from, rel) => { copyFile(from, path.join(out, dir, rel)); n++; });
   log('dist/ written: ' + n + ' files (public site + /builder/)');
   return { out, files: n };
@@ -106,4 +113,4 @@ function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
 if (require.main === module) {
   try { buildSite({ log: console.log }); } catch (e) { console.error(e.message); process.exit(1); }
 }
-module.exports = { buildSite, localAssets, cssDeps, stageBuilderPage };
+module.exports = { buildSite, scriptParts, localAssets, cssDeps, stageBuilderPage };

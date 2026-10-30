@@ -25,9 +25,14 @@ function makeDeps(env) {
     const r = await env.ASSETS.fetch(new Request('https://assets.invalid/builder/export-assets.json'));
     return r.ok ? r.json() : {};
   };
+  /* Text made from function sources (the form-sending code); made when the site is staged, because the bundled Worker cannot make it. */
+  const parts = async () => {
+    const r = await env.ASSETS.fetch(new Request('https://assets.invalid/builder/script-parts.json'));
+    return r.ok ? r.json() : null;
+  };
   return {
     user: (token) => store.verifyUser(env, token),
-    publisher: createPublisher({ db: store.createDb(env), bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets }) })
+    publisher: createPublisher({ db: store.createDb(env), bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets, parts }) })
   };
 }
 

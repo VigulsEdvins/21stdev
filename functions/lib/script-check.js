@@ -2,8 +2,10 @@
    generator would have produced: the file is read for its parameters (which blocks, in which order, which ids, the content-override data), rebuilt from
    those parameters with the real generator functions and the blocks' own script files, and compared byte for byte. Nothing is searched for; anything that is
    not library code, however small, makes the comparison fail.
-   createScriptChecker({ library, exportAssets }) -> { check(text) } where library(slug) gives the text of that block's scripts file (features/<slug>/script.js) or null,
-   and exportAssets() gives { slug: [urls] }, the files blocks load at run time (meta.json "exportAssets").
+   createScriptChecker({ library, exportAssets, parts }) -> { check(text) } where library(slug) gives the text of that block's scripts file (features/<slug>/script.js) or null,
+   exportAssets() gives { slug: [urls] }, the files blocks load at run time (meta.json "exportAssets"), and parts() gives { deliveryRuntime }, the form-sending code made from
+   the source of functions. That text must come from the original files (scripts/build-site.js writes builder/script-parts.json): once the Worker is bundled, a function's source
+   is rewritten, so the Worker cannot make it itself. Without parts() it is made here, which is right outside a bundle (tests, the local demo).
 
    One difference from the generator's output is expected and allowed: when the builder bundles a download it rewrites root-relative file addresses ("/assets/library/a.svg",
    and the folders of run-time files) to relative ones ("assets/library/a.svg") inside script.js (scripts/builder/export-assets.js). At each such place the upload may
@@ -27,15 +29,19 @@ const LANG_WIRE = SinglePages.wireLanguageSwitcher('<ul class="lsw-menu"></ul>',
 const onlyChars = (text, chars, min, max) => text.length >= min && text.length <= max && [...text].every((c) => chars.includes(c));
 
 /** The page-to-page parts of script.js around the two holes, for one dark/light flag and one form-delivery setting. */
-function frame(isDark, delivery) {
-  const full = P.renderExportScript({ isDark, safeSections: [], options: {}, allScripts: ALL, overridesJson: OV }, delivery ? FormDelivery.runtimeJs() : '');
+function frame(isDark, deliveryText) {
+  const full = P.renderExportScript({ isDark, safeSections: [], options: {}, allScripts: ALL, overridesJson: OV }, deliveryText);
   const [pre, rest] = full.split(ALL);
   const [mid, post] = rest.split(OV);
   if (full.split(ALL).length !== 2 || rest.split(OV).length !== 2) throw new Error('script frame: the stand-ins must each appear once');
   return { pre, mid, post };
 }
-const FRAMES = [];
-for (const isDark of [true, false]) for (const delivery of [false, true]) FRAMES.push(Object.assign({ isDark, delivery }, frame(isDark, delivery)));
+/** All the shapes script.js can have: dark or light, with or without form-sending code. */
+function framesFor(deliveryText) {
+  const list = [];
+  for (const isDark of [true, false]) for (const delivery of deliveryText ? [false, true] : [false]) list.push(Object.assign({ isDark, delivery }, frame(isDark, delivery ? deliveryText : '')));
+  return list;
+}
 
 /** The path the bundler writes for a root-relative address (same rule as zipPathOf in scripts/builder/export-assets.js). */
 function bundled(address) {
@@ -124,9 +130,13 @@ async function readBlock(text, pos, library, cache, dirs) {
   return { next };
 }
 
-function createScriptChecker({ library, exportAssets }) {
+function createScriptChecker({ library, exportAssets, parts }) {
   const cache = new Map(); // the blocks' script texts, asked for once
-  let dirsPromise = null;
+  let dirsPromise = null, framesPromise = null;
+  const frames = () => (framesPromise = framesPromise || (async () => {
+    if (parts) return framesFor(((await parts()) || {}).deliveryRuntime); // parts given but without the text: pages that send forms are not accepted
+    return framesFor(FormDelivery.runtimeJs());
+  })());
   /** The folders blocks load files from at run time, as the bundler sees them (every block's, a superset of what one page needs). */
   const folders = () => (dirsPromise = dirsPromise || (async () => {
     const map = exportAssets ? await exportAssets() : {};
@@ -138,7 +148,7 @@ function createScriptChecker({ library, exportAssets }) {
     if (typeof text !== 'string' || text.length > 5 * 1024 * 1024) return { ok: false, problem: 'The script is missing or too large.' };
     const dirs = await folders();
     let firstProblem = '';
-    for (const f of FRAMES) {
+    for (const f of await frames()) {
       let pos = advance(text, 0, f.pre, dirs), blocks = 0, bad = '';
       if (pos < 0) continue;
       for (;;) {

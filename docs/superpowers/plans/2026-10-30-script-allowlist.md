@@ -53,3 +53,7 @@ Because the check uses the generator itself, there is no separate allowlist file
 - `scanHtml` refuses inline scripts (the JSON-LD data block excepted), `on...=` handlers and `srcdoc`. The sites Worker's header now says `script-src 'self'`.
 - Without a checker `publish()` accepts no `.js` at all.
 - A person who publishes with an **old builder tab** after a block's script changes is told to reload the builder.
+
+## Found on the first live publish (2026-10-30) and fixed
+
+The first live publish was refused with "The end of the page script is not the one the builder makes". Cause: the form-sending code in `script.js` is made from the **source text of functions** (`Function.prototype.toString` in `scripts/form-delivery.js`). A bundler rewrites function source, so inside the bundled Worker that text differed from what the browser writes. Every page with a message form (the library's contact form, on by default) was refused. The Node tests ran unbundled and could not see it. Fix: `scripts/build-site.js` writes `builder/script-parts.json` with that text, made from the original files; the Worker reads it (`parts` in `createScriptChecker`). New tests: the checker is bundled with esbuild exactly as the Worker is and must accept a page that sends forms, and the browser's output for a contact-form page (with and without a chosen method) must pass the check using the staged text. If `script-parts.json` is missing, form pages are refused rather than guessed.

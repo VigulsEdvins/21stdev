@@ -35,6 +35,27 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   for (const n of pages) assert(csp(multi.html[n]), n + ' carries its policy');
   console.log('  ✓ every page of a multi-page site carries its policy: ' + pages.join(', '));
 
+  /* What the builder in the browser writes (including the form-sending code made from function sources) is accepted by the server's script check,
+     which takes that text from the one made when the site is staged. */
+  const fs = require('fs'), nodePath = require('path');
+  const root = nodePath.join(__dirname, '..', '..');
+  const checker = require('../../functions/lib/script-check.js').createScriptChecker({
+    library: async (slug) => { try { return fs.readFileSync(nodePath.join(root, 'features', slug, 'script.js'), 'utf8'); } catch (e) { return null; } },
+    exportAssets: async () => ({}), parts: async () => require('../../scripts/build-site.js').scriptParts()
+  });
+  for (const [label, page_] of [['no method chosen', {}], ['a form service chosen', { formMethod: 'formsubmit', formTarget: 'someone@example.com' }]]) {
+    const text = await page.evaluate(async (settings) => {
+      const sm = window.builderManager; sm.clearStack();
+      ['responsive-burger-menu', 'contact-form-validated', 'beam-wordmark-footer'].forEach((sl) => sm.addSection(sl));
+      sm.setPage(settings);
+      return (await window.builderExport.collectFiles({ cms: false, csp: true })).files['script.js'];
+    }, page_);
+    assert(/Form messages: sends the form/.test(text), label + ': the page carries the form-sending code');
+    const r = await checker.check(text);
+    assert(r.ok, label + ': the server accepts what the browser wrote: ' + r.problem);
+  }
+  console.log('  ✓ a page with a contact form, as the browser writes it, passes the server\'s script check');
+
   assert.deepStrictEqual(errors, [], errors.join(' | '));
   await browser.close(); await srv.close();
   console.log('Publishing and policy e2e ok');
