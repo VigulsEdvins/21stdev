@@ -25,6 +25,13 @@ const test = async (name, fn) => { await fn(); count++; };
     assert.deepStrictEqual(list.map((f) => f.path).sort(), ['404.html', 'assets/font.woff2', 'assets/logo.png', 'index.html', 'robots.txt', 'script.js', 'sitemap.xml', 'style.css']);
   });
 
+  await test('files left out that are not just helper files are named, so nothing breaks silently', () => {
+    assert.deepStrictEqual(C.leftOut({ files: { 'index.html': 'a', 'README.md': 'x', 'DEPLOY.md': 'x', 'DEPLOY.html': 'x', '_headers': 'x', '.well-known/security.txt': 'x', 'robots.txt': 'r' }, assets: { 'assets/a.png': new Uint8Array([1]) } }), [], 'the usual download needs no warning');
+    assert.deepStrictEqual(C.leftOut({ files: { 'index.html': 'a' }, assets: { 'assets/clip.mp4': new Uint8Array([1]), 'assets/song.mp3': new Uint8Array([2]), 'assets/a.png': new Uint8Array([3]), 'assets/old.ttf': new Uint8Array([4]) } }), ['assets/clip.mp4', 'assets/old.ttf', 'assets/song.mp3']);
+    assert.deepStrictEqual(C.leftOut({}), []); assert.deepStrictEqual(C.leftOut(null), []);
+    const sent = C.toFiles({ files: { 'index.html': 'a' }, assets: { 'assets/clip.mp4': new Uint8Array([1]) } }).map((f) => f.path); assert.deepStrictEqual(sent, ['index.html'], 'and the left-out file is still not sent');
+  });
+
   await test('answers become plain words with a kind the screen can act on', () => {
     assert.strictEqual(C.explain(200, { ok: true }).kind, 'ok');
     assert.strictEqual(C.explain(401, {}).kind, 'signin');

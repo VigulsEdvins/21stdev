@@ -112,6 +112,18 @@ const UID = '11111111-1111-4111-8111-111111111111';
   assert.strictEqual(await page.inputValue('#publishName'), '', 'the name box is clear for the next site');
   console.log('  ✓ publishing sends the real export without the editor, shows the live link, lists the site');
 
+  // a file kind a live site cannot hold (a video): the page still publishes, and the person is told what was left out
+  api.published.length = 0;
+  await page.evaluate(() => { const real = window.builderExport.collectFiles; window.__realCollect = real; window.builderExport.collectFiles = async (o) => { const c = await real(o); c.assets['assets/clip.mp4'] = new Uint8Array([0, 0, 0, 24]); c.assets['assets/theme.mp3'] = new Uint8Array([73, 68, 51]); return c; }; });
+  await page.click('[data-act="update"]');
+  await page.waitForFunction(() => /Your page is online/.test(document.getElementById('publishResult').textContent));
+  const warn = await page.textContent('#publishResult');
+  assert(/Left out: assets\/clip\.mp4, assets\/theme\.mp3\./.test(warn) && /will not show or play/.test(warn), warn);
+  assert.strictEqual(await page.getAttribute('#publishResult', 'data-problem'), 'true');
+  assert(!api.published[0].files.some((f) => /\.(mp4|mp3)$/.test(f.path)), 'the left-out files are not sent');
+  assert(!/Left out/.test(await page.evaluate(() => { window.builderExport.collectFiles = window.__realCollect; return ''; })), 'collection restored');
+  console.log('  ✓ a video or sound is not silently dropped: the person is told what was left out');
+
   // update the same site, then take it offline and bring it back
   api.published.length = 0;
   await page.click('[data-act="update"]');

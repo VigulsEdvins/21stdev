@@ -124,12 +124,17 @@
       try {
         let collected;
         try { collected = await win.builderExport.collectFiles({ cms: false, csp: true }); } catch (e) { say(e && /no sections/i.test(e.message) ? 'Add at least one block first.' : 'The page could not be prepared. Please try again.', true); return; }
+        const skipped = Client.leftOut(collected);
         const r = await client.publish(name, collected);
         const e = Client.explain(r.status, r.json);
         if (e.kind === 'ok') {
           const addr = Client.safeAddress(r.json.address);
           out.replaceChildren('Your page is online: ', addr ? el(doc, 'a', { href: addr, target: '_blank', rel: 'noopener' }, addr) : r.json.name, '. It can take up to a minute to show everywhere.');
           out.dataset.problem = 'false';
+          if (skipped.length) { // a file kind a live site cannot hold yet (a video, a sound): say so instead of leaving a silent hole
+            out.append(el(doc, 'br', {}), el(doc, 'b', {}, 'Left out: '), skipped.slice(0, 6).join(', ') + (skipped.length > 6 ? ' and ' + (skipped.length - 6) + ' more' : '') + '. This kind of file cannot be put online yet, so anything that uses it will not show or play.');
+            out.dataset.problem = 'true';
+          }
           nameInput.value = ''; nameNote.textContent = ''; lastChecked = '';
           await load();
         } else {

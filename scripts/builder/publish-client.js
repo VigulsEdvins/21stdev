@@ -20,6 +20,16 @@
   const NOT_LIVE = ['DEPLOY.html'];
   const wanted = (path) => { const base = path.slice(path.lastIndexOf('/') + 1), dot = base.lastIndexOf('.'); return dot > 0 && ALLOWED.includes(base.slice(dot + 1).toLowerCase()) && !NOT_LIVE.includes(base) && !path.split('/').some((s) => s.startsWith('.')); };
 
+  /* Files the download carries for someone who hosts it themselves; they are left out of a live site on purpose and need no warning. */
+  const HELPERS = ['README.md', 'DEPLOY.md', 'DEPLOY.html', '_headers', '.well-known/security.txt'];
+
+  /** Names of files from the export that a live site cannot hold and that are NOT just helper files: a video, a sound, a font in another format.
+      The page would still publish, but whatever uses such a file would not work, so the person is told. (No block of the library uses one today.) */
+  function leftOut(collected) {
+    const names = [...Object.keys((collected && collected.files) || {}), ...Object.keys((collected && collected.assets) || {})];
+    return names.filter((n) => !wanted(n) && !HELPERS.includes(n)).sort();
+  }
+
   /** { files: {name: text}, assets: {name: bytes} } from the export, as the list /api/publish takes. Text stays text; pictures and fonts become base64.
       Files that only help someone who hosts the download themselves are left out. */
   function toFiles(collected) {
@@ -86,7 +96,7 @@
     };
   }
 
-  const api = { bytesToBase64, toFiles, explain, safeAddress, createClient, ALLOWED, wanted };
+  const api = { bytesToBase64, toFiles, leftOut, explain, safeAddress, createClient, ALLOWED, wanted };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (typeof window !== 'undefined') window.BuilderPublishClient = api;
 })();
