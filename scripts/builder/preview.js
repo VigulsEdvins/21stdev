@@ -151,11 +151,12 @@
         latestState.stack,
         themeConfig,
         featuresData,
-        { suppressPreloader, page: latestState.page, nativeMap, ownPalette, embedSites: true, formNote: true }
+        { suppressPreloader, page: latestState.page, nativeMap, ownPalette, embedSites: true, formNote: true, navPreview: true }
       );
 
       // A section added to a loaded page is inserted and started on its own: reloading would restart all the others
-      const insertionOnly = !rt.forceFullPreviewReload && lastPreviewRest && restOfKey(structureKey) === lastPreviewRest && PP().isInsertionOnly(lastPreviewStack, latestState.stack);
+      // (a header that lists the sections by itself has to be rebuilt too, so then the whole preview reloads)
+      const insertionOnly = !rt.forceFullPreviewReload && !latestState.stack.some(s => s.menuMode === 'auto') && lastPreviewRest && restOfKey(structureKey) === lastPreviewRest && PP().isInsertionOnly(lastPreviewStack, latestState.stack);
       lastPreviewStructureKey = structureKey;
       lastPreviewRest = restOfKey(structureKey);
       const prevStack = lastPreviewStack;

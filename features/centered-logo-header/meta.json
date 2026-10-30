@@ -47,27 +47,51 @@
     },
     {
       "id": "link-1",
-      "label": "Link 1",
+      "label": "Menu item 1: text",
       "type": "text",
-      "selector": ":scope .clh-left a:nth-child(1)"
+      "selector": ":scope [data-edv-nav=\"1\"]"
     },
     {
       "id": "link-2",
-      "label": "Link 2",
+      "label": "Menu item 2: text",
       "type": "text",
-      "selector": ":scope .clh-left a:nth-child(2)"
+      "selector": ":scope [data-edv-nav=\"2\"]"
     },
     {
       "id": "link-3",
-      "label": "Link 3",
+      "label": "Menu item 3: text",
       "type": "text",
-      "selector": ":scope .clh-right a:nth-child(1)"
+      "selector": ":scope [data-edv-nav=\"3\"]"
     },
     {
       "id": "link-4",
-      "label": "Link 4",
+      "label": "Menu item 4: text",
       "type": "text",
-      "selector": ":scope .clh-right a:nth-child(2)"
+      "selector": ":scope [data-edv-nav=\"4\"]"
+    },
+    {
+      "id": "link-1-link",
+      "label": "Menu item 1: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "link-2-link",
+      "label": "Menu item 2: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "link-3-link",
+      "label": "Menu item 3: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "link-4-link",
+      "label": "Menu item 4: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"4\"]"
     },
     {
       "id": "accent",
@@ -77,5 +101,6 @@
       "attr": "--accent"
     }
   ],
-  "order": 900
+  "order": 900,
+  "autoMenu": true
 }

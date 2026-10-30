@@ -5,7 +5,7 @@
   "category": "Headers & Nav",
   "source": "custom",
   "type": "component",
-  "description": "An editorial header: a dismissible announcement bar on top, links split left and right of a centred wordmark, and a thin rule underneath.",
+  "description": "An editorial header: a dismissible announcement bar on top, links split left and right of a centred wordmark, and a thin rule underneath. Its sample links (Search, Account, Bag) suit a shop.",
   "tags": [
     "header",
     "navigation",
@@ -52,6 +52,90 @@
       "selector": ":scope .sna-wordmark"
     },
     {
+      "id": "nav-text-1",
+      "label": "Menu item 1: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "nav-text-2",
+      "label": "Menu item 2: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "nav-text-3",
+      "label": "Menu item 3: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "nav-text-4",
+      "label": "Menu item 4: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"4\"]"
+    },
+    {
+      "id": "nav-text-5",
+      "label": "Menu item 5: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"5\"]"
+    },
+    {
+      "id": "nav-text-6",
+      "label": "Menu item 6: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"6\"]"
+    },
+    {
+      "id": "nav-text-7",
+      "label": "Menu item 7: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"7\"]"
+    },
+    {
+      "id": "nav-link-1",
+      "label": "Menu item 1: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "nav-link-2",
+      "label": "Menu item 2: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "nav-link-3",
+      "label": "Menu item 3: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "nav-link-4",
+      "label": "Menu item 4: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"4\"]"
+    },
+    {
+      "id": "nav-link-5",
+      "label": "Menu item 5: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"5\"]"
+    },
+    {
+      "id": "nav-link-6",
+      "label": "Menu item 6: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"6\"]"
+    },
+    {
+      "id": "nav-link-7",
+      "label": "Menu item 7: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"7\"]"
+    },
+    {
       "id": "accent-colour",
       "label": "Bar colour",
       "type": "color",
@@ -59,5 +143,6 @@
       "attr": "--accent"
     }
   ],
-  "order": 900
+  "order": 900,
+  "autoMenu": true
 }

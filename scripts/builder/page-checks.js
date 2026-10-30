@@ -60,6 +60,20 @@
     if (!/<html\b[^>]*\blang=/i.test(indexHtml)) add('html-lang', 'warning', 'The <html> tag has no lang attribute.');
 
     const sections = splitSections(clean);
+    // sections that did not fit the header's automatic menu (a note from the assembler)
+    splitSections(String(indexHtml || '')).forEach(sec => {
+      const m = /<!--\s*edv-menu-overflow:\s*([^>]*?)\s*-->/.exec(sec.html);
+      if (!m) return;
+      const items = m[1].split('|').map(t => t.trim()).filter(Boolean);
+      add('menu-overflow', 'warning', `The header's menu has room for fewer items than the page has sections: ${items.join(', ')} ${items.length === 1 ? 'is' : 'are'} not listed. Switch some sections off in the admin panel (Show in menu), or choose another header.`, sec);
+    });
+    // menu items the export left out because they go nowhere (the assembler leaves a note in the section: comments are stripped above, so read the original)
+    splitSections(String(indexHtml || '')).forEach(sec => {
+      const m = /<!--\s*edv-nav-hidden:\s*([^>]*?)\s*-->/.exec(sec.html);
+      if (!m) return;
+      const items = m[1].split('|').map(t => t.trim()).filter(Boolean);
+      add('nav-no-link', 'warning', `${items.length} menu ${items.length === 1 ? 'item has' : 'items have'} no link and ${items.length === 1 ? 'is' : 'are'} left out of your site (${items.join(', ')}). Open the admin panel (Content tab) and choose where ${items.length === 1 ? 'it' : 'each'} should go, or name a section like the item.`, sec);
+    });
     const scopes = sections.length ? sections : [{ id: '', slug: '', html: clean }];
     const delivery = FD ? FD.fromPage(page) : { method: '', ok: true };
     let badDeliveryShown = false;

@@ -2115,6 +2115,13 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
   const sectionHtmlBlocks = [];
   const scriptBlocks = [];
   let usesLazy = false;
+  // the live preview has no anchors; the single-file export does (options.anchors = { reserved: [names that are page keys] })
+  const navNames = options.anchors || options.navPreview ? anchorNames(sections, featuresData, options.anchors && options.anchors.reserved) : {};
+  const anchors = options.anchors ? navNames : {};
+  if (Object.keys(anchors).length) scopedStyleBlocks.push('    ' + ANCHOR_CSS);
+  // the builder preview shows menu items that go nowhere dimmed instead of leaving them out, and links the ones a section names like the export does
+  if (options.navPreview) scopedStyleBlocks.push('    .page-section a[data-edv-nav][href="#"], .page-section a[data-edv-nav][href=""] { opacity: .4 !important; text-decoration: line-through !important; }');
+  const autoNav = navLinker(navNames, options.navPreview ? Object.assign({}, options, { keepUnlinkedNav: true }) : options, menuItems(sections, navNames, featuresData));
 
   sections.forEach((section, index) => {
     const id = section.id || `sec-${index + 1}`;
@@ -2140,7 +2147,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
     const isSuppressed = isPreloader && (options.suppressPreloader === true || section.suppressPreloader === true);
     const preloaderClass = isPreloader ? (' is-preloader' + (isSuppressed ? ' is-dismissed is-suppressed' : '')) : '';
-    const isolatedHtml = isolateSectionMarkup(rawHtml, id);
+    const isolatedHtml = autoNav(isolateSectionMarkup(rawHtml, id), section);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     let styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
@@ -2150,7 +2157,7 @@ function assemblePreviewDocument(sections, themeConfig, featuresData = {}, optio
     const resizeHandleHtml = isPreloader ? '' : `\n    <div class="section-resize-handle" data-resize-section="${id}" title="Drag to adjust height"></div>`;
     const nativeList = sectionNativeList(section, options.nativeMap);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n${anchorSpan(anchors[id], id)}  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}${resizeHandleHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with section registering ID
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -2645,6 +2652,61 @@ function mapPageLinks(sections, links = {}) {
     }
     return changed ? out : sec;
   });
+}
+
+/** How a section's title and category are found when the stack item does not carry them (the builder's registry, or the loaded feature files). */
+function sectionLookups(featuresData) {
+  const registry = typeof window !== 'undefined' && Array.isArray(window.FEATURE_REGISTRY) ? window.FEATURE_REGISTRY : [];
+  const bySlug = {};
+  registry.forEach(f => { bySlug[f.slug] = f; });
+  return {
+    titleOf: s => s.title || (featuresData[s.slug] && (featuresData[s.slug].title || featuresData[s.slug].name)) || (bySlug[s.slug] && bySlug[s.slug].title) || s.slug,
+    categoryOf: s => (featuresData[s.slug] && featuresData[s.slug].category) || (bySlug[s.slug] && bySlug[s.slug].category) || ''
+  };
+}
+
+/** Anchor names for the sections (scripts/builder/anchors.js); {} when that file is not loaded. */
+function anchorNames(sections, featuresData, reserved) {
+  const A = (typeof module !== 'undefined' && module.exports) ? require('./builder/anchors.js') : (typeof window !== 'undefined' ? window.BuilderAnchors : null);
+  if (!A) return {};
+  return A.assign(sections, Object.assign({ reserved }, sectionLookups(featuresData)));
+}
+
+/** The items an automatic menu lists (scripts/builder/menu.js): [{ id, label, anchor }]; [] when that file is not loaded. */
+function menuItems(sections, names, featuresData) {
+  const M = (typeof module !== 'undefined' && module.exports) ? require('./builder/menu.js') : (typeof window !== 'undefined' ? window.BuilderMenu : null);
+  return M ? M.items(sections, names, sectionLookups(featuresData || {})) : [];
+}
+
+/** The invisible target that "#name" scrolls to: just before its section, which keeps its own id. */
+function anchorSpan(name, sectionId) {
+  return name ? `  <span class="edv-anchor" id="${name}" data-for="${sectionId}"></span>\n` : '';
+}
+
+/** Keeps a sticky header from covering the title of the section a menu link scrolls to. */
+const ANCHOR_CSS = '.edv-anchor{display:block;height:0;scroll-margin-top:80px}';
+
+/** Fills in the menu items that go nowhere with the section their text names (scripts/builder/anchors.js); a function that changes nothing without anchors. */
+function navLinker(anchors, options, menuList) {
+  const A = (typeof module !== 'undefined' && module.exports) ? require('./builder/anchors.js') : (typeof window !== 'undefined' ? window.BuilderAnchors : null);
+  const M = (typeof module !== 'undefined' && module.exports) ? require('./builder/menu.js') : (typeof window !== 'undefined' ? window.BuilderMenu : null);
+  const names = Object.values(anchors || {});
+  if (!A || !names.length) return (html) => html;
+  const o = options || {};
+  return (html, section) => {
+    let note = '';
+    // a header set to list the page's sections writes its items first; they are links already, so the steps below leave them alone
+    if (M && section && section.menuMode === 'auto' && /\sdata-edv-menu\b/.test(html)) {
+      const r = M.fill(html, menuList || []);
+      html = r.html;
+      if (r.overflow.length) note = '\n' + A.overflowNote(r.overflow);
+    }
+    const linked = A.linkNav(html, names);
+    if (o.keepUnlinkedNav) return linked + note;
+    // an export leaves out the menu items that still go nowhere (counting the addresses set in the admin panel); a note tells the page checks
+    const r = A.hideUnlinked(linked, A.linkedItems(section && section.overrides));
+    return (r.hidden.length ? r.html + '\n' + A.hiddenNote(r.hidden) : r.html) + note;
+  };
 }
 
 /** The shared guide text (scripts/deploy-guide.js): a require in Node, a script tag in the builder. */
@@ -3292,6 +3354,9 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
   const sectionInfoList = [];
   const contentOverrides = collectOverrides(safeSections);
   const pageOpts = options.page || {};
+  const anchors = anchorNames(safeSections, featuresData, options.reservedAnchors);
+  if (Object.keys(anchors).length) scopedStyleBlocks.push(ANCHOR_CSS);
+  const autoNav = navLinker(anchors, options, menuItems(safeSections, anchors, featuresData));
 
   safeSections.forEach((section, index) => {
     const id = section.id || `sec-${index + 1}`;
@@ -3318,13 +3383,13 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
     // Isolated HTML
     const isPreloader = slug.includes('preloader') || (section.category && section.category.toLowerCase().includes('preloader'));
     const preloaderClass = isPreloader ? ' is-preloader' : '';
-    const isolatedHtml = isolateSectionMarkup(rawHtml, id);
+    const isolatedHtml = autoNav(isolateSectionMarkup(rawHtml, id), section);
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
     const nativeList = sectionNativeList(section, options.nativeMap);
     const nativeAttr = (nativeList.length ? ` data-native-for="${nativeList.join(' ')}"` : '') + ((options.ownPalette || {})[slug] ? ' data-own-palette="true"' : '');
-    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
+    sectionHtmlBlocks.push(`  <!-- Section: ${slug} -->\n${anchorSpan(anchors[id], id)}  <section class="page-section${preloaderClass}${!isPreloader && sectionThemeAttr(isDark, nativeList) === 'dark' ? ' dark' : ''}" id="${id}" data-section-slug="${slug}" data-theme="${sectionThemeAttr(isDark, nativeList)}"${nativeAttr}${styleAttr}>\n    ${isolatedHtml}${overlayHtml}\n  </section>`);
 
     // Isolated JS wrapped safely with registering section ID
     const isolatedJs = isolateSectionScript(rawJs, id);
@@ -3642,7 +3707,7 @@ Then open [http://localhost:8000](http://localhost:8000) in your browser.
  * Generates an all-in-one standalone HTML file with inline CSS and JS.
  */
 function generateSingleFileBundle(sections, themeConfig, featuresData = {}, options = {}) {
-  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette, pageLinks: options.pageLinks });
+  const doc = assemblePreviewDocument(sections, themeConfig, featuresData, { page: Object.assign({ title: 'Assembled Web Page' }, options.page), nativeMap: options.nativeMap, reserveMap: options.reserveMap, lazyMap: options.lazyMap, ownPalette: options.ownPalette, pageLinks: options.pageLinks, anchors: { reserved: options.reservedAnchors }, keepUnlinkedNav: options.keepUnlinkedNav });
   const clean = doc.replace(/\s*<div class="section-resize-handle"[^>]*><\/div>/g, '');
   const fd = formDelivery();
   const delivered = fd ? fd.prepareHtml(clean, options.page) : clean;
@@ -3864,7 +3929,9 @@ if (typeof module !== 'undefined' && module.exports) {
     renderResponsiveCss,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,
-    createZipArchive
+    createZipArchive,
+    anchorNames,
+    menuItems
   };
 }
 
@@ -3896,6 +3963,8 @@ if (typeof window !== 'undefined') {
     renderResponsiveCss,
     findLocalAssetUrls,
     rewriteLocalAssetUrls,
-    createZipArchive
+    createZipArchive,
+    anchorNames,
+    menuItems
   };
 }

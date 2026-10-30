@@ -3,7 +3,7 @@
  * page named in the address (#about-us, no hash = the home page), with its own title. Links between pages become
  * "#<page>" links.
  *   BuilderSinglePages.pageKeys(pages) -> { [pageId]: key }     (the link target of each page)
- *   BuilderSinglePages.addRouter(html, pages) -> html           (pages: [{ key, title, ids: [sectionId] }])
+ *   BuilderSinglePages.addRouter(html, pages) -> html           (pages: [{ key, title, ids: [sectionId] }]; "#<anchor>" opens the page whose section it names)
  */
 (function () {
   'use strict';
@@ -28,18 +28,33 @@
 (function () {
   var pages = ${safe(pages)};
   function show() {
-    var key = decodeURIComponent((location.hash || '').slice(1));
-    var current = pages.filter(function (p) { return p.key === key; })[0] || pages[0];
+    var key = '';
+    try { key = decodeURIComponent((location.hash || '').slice(1)); } catch (e) { /* a broken address shows the home page */ }
+    var current = pages.filter(function (p) { return p.key === key; })[0];
+    var target = null;
+    if (!current && key) {
+      // "#pricing" is a section of one of the pages: show that page, then scroll to the section
+      var anchor = document.getElementById(key);
+      var owner = anchor && anchor.getAttribute('data-for');
+      current = owner ? pages.filter(function (p) { return p.ids.indexOf(owner) >= 0; })[0] : null;
+      if (current) target = anchor;
+    }
+    current = current || pages[0];
     pages.forEach(function (p) {
-      p.ids.forEach(function (id) { var el = document.getElementById(id); if (el) el.style.display = p === current ? '' : 'none'; });
+      p.ids.forEach(function (id) {
+        var shown = p === current ? '' : 'none';
+        var el = document.getElementById(id); if (el) el.style.display = shown;
+        var mark = document.querySelector('[data-for="' + id + '"]'); if (mark) mark.style.display = shown;
+      });
     });
     document.title = current.title;
     if (document.documentElement.dataset.page !== current.key) {
       document.documentElement.dataset.page = current.key;
-      window.scrollTo(0, 0);
+      if (!target) window.scrollTo(0, 0);
       // sections that sized themselves while hidden measure again
       requestAnimationFrame(function () { window.dispatchEvent(new Event('resize')); });
     }
+    if (target) requestAnimationFrame(function () { target.scrollIntoView(); });
   }
   window.addEventListener('hashchange', show);
   show();
@@ -98,7 +113,7 @@
     const items = members.map(m => `<li role="option" tabindex="-1" data-lang="${esc(m.lang)}" data-href="${esc(fileOf(m))}" aria-selected="${m.id === currentId}">${esc(label(m.lang))}</li>`).join('\n          ');
     const current = members.find(m => m.id === currentId);
     let out = html.replace(/(<ul class="lsw-menu"[^>]*>)[\s\S]*?(<\/ul>)/, (m, open, close) => `${open}\n          ${items}\n        ${close}`);
-    if (current) out = out.replace(/(<span class="lsw-code">)[^<]*(<\/span>)/, `$1${esc(String(current.lang).split('-')[0].toUpperCase())}$2`);
+    if (current) out = out.replace(/(<span class="lsw-code"[^>]*>)[^<]*(<\/span>)/, `$1${esc(String(current.lang).split('-')[0].toUpperCase())}$2`);
     const js = `\n;(function () { document.querySelectorAll('.lsw-menu [data-href]').forEach(function (o) { o.addEventListener('click', function () { window.location.href = o.getAttribute('data-href'); }); }); })();\n`;
     return { html: out, js };
   }

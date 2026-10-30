@@ -110,6 +110,11 @@
     }
     if (s.locked === true) out.locked = true;
     if (s.hidden === true) out.hidden = true;
+    // the link name and the automatic menu settings of a section (header-links plan, automatic-menu plan)
+    if (typeof s.anchor === 'string' && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(s.anchor) && s.anchor.length <= 40) out.anchor = s.anchor;
+    if (s.menuMode === 'auto') out.menuMode = 'auto';
+    if (s.inMenu === false) out.inMenu = false;
+    if (typeof s.menuLabel === 'string') { const label = text(s.menuLabel.replace(/<[^>]*>/g, ' '), 30, counter).replace(/\s+/g, ' ').trim(); if (label) out.menuLabel = label; }
     return out;
   }
 

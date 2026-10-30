@@ -51,51 +51,58 @@
       "selector": ":scope span.brand"
     },
     {
-      "id": "menu-item-2",
-      "label": "Menu item 2",
+      "id": "menu-text-1",
+      "label": "Menu item 1: text",
       "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
+      "selector": ":scope [data-edv-nav=\"1\"] .bm-label"
+    },
+    {
+      "id": "menu-text-2",
+      "label": "Menu item 2: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"2\"] .bm-label"
+    },
+    {
+      "id": "menu-text-3",
+      "label": "Menu item 3: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"3\"] .bm-label"
+    },
+    {
+      "id": "menu-text-4",
+      "label": "Menu item 4: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"4\"] .bm-label"
     },
     {
       "id": "menu-link-1",
-      "label": "Menu link 1",
+      "label": "Menu item 1: link",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-    },
-    {
-      "id": "menu-item-3",
-      "label": "Menu item 3",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)"
+      "selector": ":scope [data-edv-nav=\"1\"]"
     },
     {
       "id": "menu-link-2",
-      "label": "Menu link 2",
+      "label": "Menu item 2: link",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
-    },
-    {
-      "id": "menu-item-4",
-      "label": "Menu item 4",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)"
+      "selector": ":scope [data-edv-nav=\"2\"]"
     },
     {
       "id": "menu-link-3",
-      "label": "Menu link 3",
+      "label": "Menu item 3: link",
       "type": "link",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)"
+      "selector": ":scope [data-edv-nav=\"3\"]"
     },
     {
-      "id": "menu-item-5",
-      "label": "Menu item 5",
-      "type": "text",
-      "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)"
+      "id": "menu-link-4",
+      "label": "Menu item 4: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"4\"]"
     }
   ],
   "measured": {
     "luma": 1,
     "webgl": false,
     "canvas2d": false
-  }
+  },
+  "autoMenu": true
 }

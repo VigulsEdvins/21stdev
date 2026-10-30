@@ -61,8 +61,27 @@
       "label": "Link 3",
       "type": "text",
       "selector": ":scope .lsw-nav a:nth-child(3)"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Menu item 1: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Menu item 2: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "button-link-3",
+      "label": "Menu item 3: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"3\"]"
     }
   ],
   "nativeWhen": [],
-  "title": "Language Switcher Header"
+  "title": "Language Switcher Header",
+  "autoMenu": true
 }

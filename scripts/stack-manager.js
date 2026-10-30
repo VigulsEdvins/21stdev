@@ -217,10 +217,13 @@ function createStackManager(initialConfig = {}) {
 
     let section;
     if (typeof slugOrSection === 'string') {
+      // a header that can list the page's sections by itself starts doing it (saved headers keep what they have)
+      const reg = typeof window !== 'undefined' && Array.isArray(window.FEATURE_REGISTRY) ? window.FEATURE_REGISTRY.find(f => f.slug === slugOrSection) : null;
       section = {
         id: generateId(),
         slug: slugOrSection,
         sizing: { ...defaultSizing, ...(extraProps.sizing || {}) },
+        ...(reg && reg.autoMenu ? { menuMode: 'auto' } : {}),
         ...extraProps
       };
     } else if (slugOrSection && typeof slugOrSection === 'object') {
@@ -324,6 +327,34 @@ function createStackManager(initialConfig = {}) {
     const section = state.stack.find(s => s.id === id);
     if (!section) return null;
     if (value) section[flag] = true; else delete section[flag];
+    notify();
+    return section;
+  }
+
+  /** The client's own name for a section's link ("#pricing"); '' goes back to the automatic name. Letters, digits and dashes only. */
+  function setSectionAnchor(id, name) {
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    const A = typeof window !== 'undefined' ? window.BuilderAnchors : null;
+    const clean = A ? A.clean(name) : String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+    if (clean) section.anchor = clean; else delete section.anchor;
+    notify();
+    return section;
+  }
+
+  /**
+   * The automatic menu's settings of a section: `menuMode` ('auto' | 'manual', on a header that can list the sections),
+   * `inMenu` (false = not listed), `menuLabel` (the text of its item). Anything else in `patch` is ignored.
+   */
+  function setSectionMenu(id, patch = {}) {
+    const section = state.stack.find(s => s.id === id);
+    if (!section) return null;
+    if ('menuMode' in patch) { if (patch.menuMode === 'auto') section.menuMode = 'auto'; else delete section.menuMode; }
+    if ('inMenu' in patch) { if (patch.inMenu === false) section.inMenu = false; else delete section.inMenu; }
+    if ('menuLabel' in patch) {
+      const label = String(patch.menuLabel == null ? '' : patch.menuLabel).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 30).trim();
+      if (label) section.menuLabel = label; else delete section.menuLabel;
+    }
     notify();
     return section;
   }
@@ -586,6 +617,8 @@ function createStackManager(initialConfig = {}) {
     removeSection,
     isLocked,
     setSectionFlag,
+    setSectionAnchor,
+    setSectionMenu,
     setSectionHideOn,
     setSectionThemeMode,
     replaceAllWithSection,

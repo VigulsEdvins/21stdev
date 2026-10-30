@@ -43,34 +43,82 @@
       "selector": ":scope .sfh-logo"
     },
     {
-      "id": "cat-1",
-      "label": "Category 1",
+      "id": "account-text",
+      "label": "Menu item 1: text",
       "type": "text",
-      "selector": ":scope .sfh-cats a:nth-child(1)"
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "account-link",
+      "label": "Menu item 1: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "cart-link",
+      "label": "Menu item 2: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "cat-1",
+      "label": "Menu item 3: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"3\"]"
     },
     {
       "id": "cat-2",
-      "label": "Category 2",
+      "label": "Menu item 4: text",
       "type": "text",
-      "selector": ":scope .sfh-cats a:nth-child(2)"
+      "selector": ":scope [data-edv-nav=\"4\"]"
     },
     {
       "id": "cat-3",
-      "label": "Category 3",
+      "label": "Menu item 5: text",
       "type": "text",
-      "selector": ":scope .sfh-cats a:nth-child(3)"
+      "selector": ":scope [data-edv-nav=\"5\"]"
     },
     {
       "id": "cat-4",
-      "label": "Category 4",
+      "label": "Menu item 6: text",
       "type": "text",
-      "selector": ":scope .sfh-cats a:nth-child(4)"
+      "selector": ":scope [data-edv-nav=\"6\"]"
     },
     {
       "id": "cat-5",
-      "label": "Category 5",
+      "label": "Menu item 7: text",
       "type": "text",
-      "selector": ":scope .sfh-cats a:nth-child(5)"
+      "selector": ":scope [data-edv-nav=\"7\"]"
+    },
+    {
+      "id": "cat-1-link",
+      "label": "Menu item 3: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "cat-2-link",
+      "label": "Menu item 4: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"4\"]"
+    },
+    {
+      "id": "cat-3-link",
+      "label": "Menu item 5: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"5\"]"
+    },
+    {
+      "id": "cat-4-link",
+      "label": "Menu item 6: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"6\"]"
+    },
+    {
+      "id": "cat-5-link",
+      "label": "Menu item 7: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"7\"]"
     },
     {
       "id": "accent",

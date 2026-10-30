@@ -60,3 +60,18 @@ const big = sanitizeState({ stack: Array.from({ length: 5000 }, (_, i) => ({ id:
 assert(big.state.stack.length <= 200, 'a project with thousands of sections is cut');
 
 console.log('hostile input: ok');
+
+// the link name and automatic menu settings of a section survive saving, cleaned; nothing else gets through
+(function () {
+  const strict = require('assert');
+  const { sanitizeState } = require('../scripts/project-sanitize.js');
+  const st = sanitizeState({ stack: [
+    { id: 'a1', slug: 'about-story', anchor: 'our-story', menuMode: 'auto', inMenu: false, menuLabel: 'Plans <b>and</b>   prices' },
+    { id: 'a2', slug: 'about-story', anchor: '"><script>', menuMode: 'sneaky', inMenu: true, menuLabel: '<i></i>' }
+  ] }).state;
+  strict.strictEqual(st.stack[0].anchor, 'our-story');
+  strict.strictEqual(st.stack[0].menuMode, 'auto');
+  strict.strictEqual(st.stack[0].inMenu, false);
+  strict.strictEqual(st.stack[0].menuLabel, 'Plans and prices');
+  ['anchor', 'menuMode', 'inMenu', 'menuLabel'].forEach(k => strict(!(k in st.stack[1]), k + ' is not kept when it is not valid'));
+})();

@@ -67,6 +67,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .cms-btn[aria-pressed='false'] { color: var(--muted); }
 
 .cms-input, .cms-textarea { width: 100%; background: var(--surface-2); border: 1px solid var(--border-strong); border-radius: 8px; padding: 9px 11px; }
+select.cms-pick { margin-bottom: 6px; }
 .cms-input:focus, .cms-textarea:focus { border-color: var(--accent); outline: none; }
 .cms-search { width: 190px; }
 .cms-textarea { resize: vertical; min-height: 40px; line-height: 1.45; }
@@ -154,3 +155,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .cms-card-body[hidden] { display: none; }
 .cms-hint.cms-error { color: #ff8a8a; }
 .cms-input[aria-invalid="true"] { border-color: #ff8a8a; }
+
+.cms-orig { margin: 2px 0 8px; padding: 6px 8px; border-left: 3px solid var(--border); background: var(--surface-2); border-radius: 4px; }
+.cms-lang-list { display: grid; gap: 8px; margin: 12px 0; }
+.cms-lang-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; }
+.cms-lang-name { display: flex; align-items: center; gap: 8px; min-width: 140px; font-weight: 600; }
+.cms-lang-row .cms-hint { flex: 1; margin: 0; }

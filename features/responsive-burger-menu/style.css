@@ -149,3 +149,7 @@ body, html {
 .nav-demo-shell.is-open .overlay-menu { visibility: visible; transition-delay: 0s; }
 @media (max-width: 480px) { .topbar { padding: 16px 18px; } .overlay-menu { padding: 0 24px; } }
 @media (prefers-reduced-motion: reduce) { .overlay-menu, .menu-links a, .line { transition-duration: .01s; transition-delay: 0s; } }
+
+.menu-links a .bm-label {
+  font-style: normal;
+}

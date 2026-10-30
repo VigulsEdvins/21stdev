@@ -231,6 +231,11 @@
       if (r.error) { say(r.error); render(); return; }
       apply(r.snap, 'Your page is written in ' + englishOf(siteSelect.value) + '.');
     });
+    // the language switcher block in the preview lists these languages and opens the page of the one chosen (features/multilingual-lang-switcher/script.js)
+    win.__edvLangs = {
+      list: () => { const s = snap(), here = activeLanguage(s); return languagesOf(s).map((code) => ({ code, name: nameOf(code), here: code === here })); },
+      open: (code) => editIn(code)
+    };
     sm.subscribe(render);
     render();
     return { box, bar, render };

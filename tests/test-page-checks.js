@@ -48,3 +48,25 @@ console.log('✅ Alt credit tests passed!');
   assert.deepStrictEqual(overrideCounts([{ id: 'a', overrides: { x: { type: 'link', value: 'https://p.example' }, y: { type: 'link', value: '#' }, z: { type: 'alt', value: 'cat' }, w: { type: 'text', value: 'hi' } } }, { id: 'b' }]), { alt: { a: 1 }, link: { a: 1 } });
   console.log('✅ Plan button link tests passed!');
 }
+
+// menu items left out of an export are reported, once per section, with their names
+(function () {
+  const PC = require('../scripts/builder/page-checks.js');
+  const html = '<html lang="en"><body><section class="page-section" id="hd" data-section-slug="x"><!-- edv-nav-hidden: Shop | Journal -->\n<nav><a href="#about">About</a></nav></section><section class="page-section" id="ft" data-section-slug="y"><p>ok</p></section></body></html>';
+  const hit = PC.checkPage(html, { title: 'T', description: 'D' }).filter(i => i.id === 'nav-no-link');
+  assert.strictEqual(hit.length, 1);
+  assert.strictEqual(hit[0].sectionId, 'hd');
+  assert(/2 menu items have no link/.test(hit[0].message) && /Shop, Journal/.test(hit[0].message));
+  assert.strictEqual(PC.checkPage(html.replace(/<!--[\s\S]*?-->/, ''), { title: 'T', description: 'D' }).filter(i => i.id === 'nav-no-link').length, 0, 'no note, no warning');
+})();
+console.log('✅ Left-out menu item warning passed!');
+
+// sections that did not fit an automatic menu are reported
+(function () {
+  const PC = require('../scripts/builder/page-checks.js');
+  const html = '<html lang="en"><body><section class="page-section" id="hd" data-section-slug="x"><nav></nav><!-- edv-menu-overflow: FAQ | Team --></section></body></html>';
+  const hit = PC.checkPage(html, { title: 'T', description: 'D' }).filter(i => i.id === 'menu-overflow');
+  assert.strictEqual(hit.length, 1);
+  assert(/FAQ, Team are not listed/.test(hit[0].message));
+})();
+console.log('✅ Menu overflow warning passed!');

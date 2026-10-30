@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T10:53:18.221Z",
+  "generatedAt": "2026-10-29T12:40:02.102Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
   "totalFeatures": 238,
   "categories": [
@@ -3085,46 +3085,52 @@
           "selector": ":scope span.brand"
         },
         {
-          "id": "menu-item-2",
-          "label": "Menu item 2",
+          "id": "menu-text-1",
+          "label": "Menu item 1: text",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)"
+          "selector": ":scope [data-edv-nav=\"1\"] .bm-label"
+        },
+        {
+          "id": "menu-text-2",
+          "label": "Menu item 2: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"2\"] .bm-label"
+        },
+        {
+          "id": "menu-text-3",
+          "label": "Menu item 3: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"3\"] .bm-label"
+        },
+        {
+          "id": "menu-text-4",
+          "label": "Menu item 4: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"4\"] .bm-label"
         },
         {
           "id": "menu-link-1",
-          "label": "Menu link 1",
+          "label": "Menu item 1: link",
           "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)"
-        },
-        {
-          "id": "menu-item-3",
-          "label": "Menu item 3",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)"
+          "selector": ":scope [data-edv-nav=\"1\"]"
         },
         {
           "id": "menu-link-2",
-          "label": "Menu link 2",
+          "label": "Menu item 2: link",
           "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)"
-        },
-        {
-          "id": "menu-item-4",
-          "label": "Menu item 4",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)"
+          "selector": ":scope [data-edv-nav=\"2\"]"
         },
         {
           "id": "menu-link-3",
-          "label": "Menu link 3",
+          "label": "Menu item 3: link",
           "type": "link",
-          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)"
+          "selector": ":scope [data-edv-nav=\"3\"]"
         },
         {
-          "id": "menu-item-5",
-          "label": "Menu item 5",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > nav:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)"
+          "id": "menu-link-4",
+          "label": "Menu item 4: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"4\"]"
         }
       ],
       "nativeWhen": [],
@@ -4238,6 +4244,24 @@
           "label": "Link 3",
           "type": "text",
           "selector": ":scope .lsw-nav a:nth-child(3)"
+        },
+        {
+          "id": "button-link-1",
+          "label": "Menu item 1: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "button-link-2",
+          "label": "Menu item 2: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "button-link-3",
+          "label": "Menu item 3: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"3\"]"
         }
       ],
       "nativeWhen": [],
@@ -8680,6 +8704,30 @@
           "label": "Link 4",
           "type": "text",
           "selector": ":scope .dn-cta span"
+        },
+        {
+          "id": "button-link-1",
+          "label": "Menu item 1: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "button-link-2",
+          "label": "Menu item 2: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "button-link-3",
+          "label": "Menu item 3: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "button-link-4",
+          "label": "Menu item 4: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"4\"]"
         }
       ],
       "nativeWhen": [],
@@ -9842,16 +9890,118 @@
           "selector": ":scope .fm-col:nth-child(3) .fm-head"
         },
         {
-          "id": "button-link",
-          "label": "CTA link",
-          "type": "link",
-          "selector": ":scope .fm-cta"
-        },
-        {
           "id": "small-label",
           "label": "Footer note",
           "type": "text",
           "selector": ":scope .fm-note"
+        },
+        {
+          "id": "menu-text-1",
+          "label": "Menu item 1: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "menu-text-2",
+          "label": "Menu item 2: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "menu-text-3",
+          "label": "Menu item 3: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "menu-text-4",
+          "label": "Menu item 4: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"4\"]"
+        },
+        {
+          "id": "menu-text-5",
+          "label": "Menu item 5: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"5\"]"
+        },
+        {
+          "id": "menu-text-6",
+          "label": "Menu item 6: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"6\"]"
+        },
+        {
+          "id": "menu-text-7",
+          "label": "Menu item 7: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"7\"]"
+        },
+        {
+          "id": "menu-text-8",
+          "label": "Menu item 8: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"8\"]"
+        },
+        {
+          "id": "menu-text-9",
+          "label": "Menu item 9: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"9\"]"
+        },
+        {
+          "id": "menu-link-2",
+          "label": "Menu item 1: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "menu-link-3",
+          "label": "Menu item 2: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "menu-link-4",
+          "label": "Menu item 3: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "menu-link-5",
+          "label": "Menu item 4: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"4\"]"
+        },
+        {
+          "id": "menu-link-6",
+          "label": "Menu item 5: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"5\"]"
+        },
+        {
+          "id": "menu-link-7",
+          "label": "Menu item 6: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"6\"]"
+        },
+        {
+          "id": "menu-link-8",
+          "label": "Menu item 7: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"7\"]"
+        },
+        {
+          "id": "menu-link-9",
+          "label": "Menu item 8: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"8\"]"
+        },
+        {
+          "id": "button-link",
+          "label": "Button link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"9\"]"
         }
       ],
       "nativeWhen": [],
@@ -18230,27 +18380,51 @@
         },
         {
           "id": "link-1",
-          "label": "Link 1",
+          "label": "Menu item 1: text",
           "type": "text",
-          "selector": ":scope .clh-left a:nth-child(1)"
+          "selector": ":scope [data-edv-nav=\"1\"]"
         },
         {
           "id": "link-2",
-          "label": "Link 2",
+          "label": "Menu item 2: text",
           "type": "text",
-          "selector": ":scope .clh-left a:nth-child(2)"
+          "selector": ":scope [data-edv-nav=\"2\"]"
         },
         {
           "id": "link-3",
-          "label": "Link 3",
+          "label": "Menu item 3: text",
           "type": "text",
-          "selector": ":scope .clh-right a:nth-child(1)"
+          "selector": ":scope [data-edv-nav=\"3\"]"
         },
         {
           "id": "link-4",
-          "label": "Link 4",
+          "label": "Menu item 4: text",
           "type": "text",
-          "selector": ":scope .clh-right a:nth-child(2)"
+          "selector": ":scope [data-edv-nav=\"4\"]"
+        },
+        {
+          "id": "link-1-link",
+          "label": "Menu item 1: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "link-2-link",
+          "label": "Menu item 2: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "link-3-link",
+          "label": "Menu item 3: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "link-4-link",
+          "label": "Menu item 4: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"4\"]"
         },
         {
           "id": "accent",
@@ -18877,7 +19051,7 @@
       "title": "Mega Menu Header",
       "category": "Headers & Nav",
       "legacyCategory": null,
-      "status": "stable",
+      "status": "draft",
       "mood": [
         "minimal",
         "light"
@@ -18927,7 +19101,7 @@
       "exportAssets": [],
       "source": "custom",
       "type": "component",
-      "description": "A header with a keyboard-accessible mega menu: hover or focus a top-level link to open a panel of grouped links with short descriptions; Escape closes it.",
+      "description": "A header with a keyboard-accessible mega menu: hover or focus a top-level link to open a panel of grouped links with short descriptions; Escape closes it. Made for a site with several pages: its menus promise places a one-page landing does not have, so it is hidden unless Drafts is ticked.",
       "tags": [
         "header",
         "mega-menu",
@@ -19448,34 +19622,82 @@
           "selector": ":scope .sfh-logo"
         },
         {
-          "id": "cat-1",
-          "label": "Category 1",
+          "id": "account-text",
+          "label": "Menu item 1: text",
           "type": "text",
-          "selector": ":scope .sfh-cats a:nth-child(1)"
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "account-link",
+          "label": "Menu item 1: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "cart-link",
+          "label": "Menu item 2: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "cat-1",
+          "label": "Menu item 3: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"3\"]"
         },
         {
           "id": "cat-2",
-          "label": "Category 2",
+          "label": "Menu item 4: text",
           "type": "text",
-          "selector": ":scope .sfh-cats a:nth-child(2)"
+          "selector": ":scope [data-edv-nav=\"4\"]"
         },
         {
           "id": "cat-3",
-          "label": "Category 3",
+          "label": "Menu item 5: text",
           "type": "text",
-          "selector": ":scope .sfh-cats a:nth-child(3)"
+          "selector": ":scope [data-edv-nav=\"5\"]"
         },
         {
           "id": "cat-4",
-          "label": "Category 4",
+          "label": "Menu item 6: text",
           "type": "text",
-          "selector": ":scope .sfh-cats a:nth-child(4)"
+          "selector": ":scope [data-edv-nav=\"6\"]"
         },
         {
           "id": "cat-5",
-          "label": "Category 5",
+          "label": "Menu item 7: text",
           "type": "text",
-          "selector": ":scope .sfh-cats a:nth-child(5)"
+          "selector": ":scope [data-edv-nav=\"7\"]"
+        },
+        {
+          "id": "cat-1-link",
+          "label": "Menu item 3: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "cat-2-link",
+          "label": "Menu item 4: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"4\"]"
+        },
+        {
+          "id": "cat-3-link",
+          "label": "Menu item 5: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"5\"]"
+        },
+        {
+          "id": "cat-4-link",
+          "label": "Menu item 6: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"6\"]"
+        },
+        {
+          "id": "cat-5-link",
+          "label": "Menu item 7: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"7\"]"
         },
         {
           "id": "accent",
@@ -19725,6 +19947,90 @@
           "selector": ":scope .sna-wordmark"
         },
         {
+          "id": "nav-text-1",
+          "label": "Menu item 1: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "nav-text-2",
+          "label": "Menu item 2: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "nav-text-3",
+          "label": "Menu item 3: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "nav-text-4",
+          "label": "Menu item 4: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"4\"]"
+        },
+        {
+          "id": "nav-text-5",
+          "label": "Menu item 5: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"5\"]"
+        },
+        {
+          "id": "nav-text-6",
+          "label": "Menu item 6: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"6\"]"
+        },
+        {
+          "id": "nav-text-7",
+          "label": "Menu item 7: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"7\"]"
+        },
+        {
+          "id": "nav-link-1",
+          "label": "Menu item 1: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "nav-link-2",
+          "label": "Menu item 2: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "nav-link-3",
+          "label": "Menu item 3: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "nav-link-4",
+          "label": "Menu item 4: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"4\"]"
+        },
+        {
+          "id": "nav-link-5",
+          "label": "Menu item 5: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"5\"]"
+        },
+        {
+          "id": "nav-link-6",
+          "label": "Menu item 6: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"6\"]"
+        },
+        {
+          "id": "nav-link-7",
+          "label": "Menu item 7: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"7\"]"
+        },
+        {
           "id": "accent-colour",
           "label": "Bar colour",
           "type": "color",
@@ -19737,7 +20043,7 @@
       "exportAssets": [],
       "source": "custom",
       "type": "component",
-      "description": "An editorial header: a dismissible announcement bar on top, links split left and right of a centred wordmark, and a thin rule underneath.",
+      "description": "An editorial header: a dismissible announcement bar on top, links split left and right of a centred wordmark, and a thin rule underneath. Its sample links (Search, Account, Bag) suit a shop.",
       "tags": [
         "header",
         "navigation",
@@ -19884,16 +20190,64 @@
           "selector": ":scope .ssh-logo"
         },
         {
+          "id": "nav-text-1",
+          "label": "Menu item 1: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "nav-text-2",
+          "label": "Menu item 2: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "nav-text-3",
+          "label": "Menu item 3: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "nav-text-4",
+          "label": "Menu item 4: text",
+          "type": "text",
+          "selector": ":scope [data-edv-nav=\"4\"]"
+        },
+        {
+          "id": "nav-link-1",
+          "label": "Menu item 1: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"1\"]"
+        },
+        {
+          "id": "nav-link-2",
+          "label": "Menu item 2: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"2\"]"
+        },
+        {
+          "id": "nav-link-3",
+          "label": "Menu item 3: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"3\"]"
+        },
+        {
+          "id": "nav-link-4",
+          "label": "Menu item 4: link",
+          "type": "link",
+          "selector": ":scope [data-edv-nav=\"4\"]"
+        },
+        {
           "id": "cta-text",
           "label": "Button text",
           "type": "text",
-          "selector": ":scope .ssh-cta"
+          "selector": ":scope [data-edv-nav=\"5\"]"
         },
         {
           "id": "cta-link",
           "label": "Button link",
           "type": "link",
-          "selector": ":scope .ssh-cta"
+          "selector": ":scope [data-edv-nav=\"5\"]"
         },
         {
           "id": "accent-colour",

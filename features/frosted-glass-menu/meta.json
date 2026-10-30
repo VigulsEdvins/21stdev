@@ -69,16 +69,118 @@
       "selector": ":scope .fm-col:nth-child(3) .fm-head"
     },
     {
-      "id": "button-link",
-      "label": "CTA link",
-      "type": "link",
-      "selector": ":scope .fm-cta"
-    },
-    {
       "id": "small-label",
       "label": "Footer note",
       "type": "text",
       "selector": ":scope .fm-note"
+    },
+    {
+      "id": "menu-text-1",
+      "label": "Menu item 1: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "menu-text-2",
+      "label": "Menu item 2: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "menu-text-3",
+      "label": "Menu item 3: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "menu-text-4",
+      "label": "Menu item 4: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"4\"]"
+    },
+    {
+      "id": "menu-text-5",
+      "label": "Menu item 5: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"5\"]"
+    },
+    {
+      "id": "menu-text-6",
+      "label": "Menu item 6: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"6\"]"
+    },
+    {
+      "id": "menu-text-7",
+      "label": "Menu item 7: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"7\"]"
+    },
+    {
+      "id": "menu-text-8",
+      "label": "Menu item 8: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"8\"]"
+    },
+    {
+      "id": "menu-text-9",
+      "label": "Menu item 9: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"9\"]"
+    },
+    {
+      "id": "menu-link-2",
+      "label": "Menu item 1: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "menu-link-3",
+      "label": "Menu item 2: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "menu-link-4",
+      "label": "Menu item 3: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "menu-link-5",
+      "label": "Menu item 4: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"4\"]"
+    },
+    {
+      "id": "menu-link-6",
+      "label": "Menu item 5: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"5\"]"
+    },
+    {
+      "id": "menu-link-7",
+      "label": "Menu item 6: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"6\"]"
+    },
+    {
+      "id": "menu-link-8",
+      "label": "Menu item 7: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"7\"]"
+    },
+    {
+      "id": "menu-link-9",
+      "label": "Menu item 8: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"8\"]"
+    },
+    {
+      "id": "button-link",
+      "label": "Button link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"9\"]"
     }
   ]
 }

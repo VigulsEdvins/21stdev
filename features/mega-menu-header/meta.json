@@ -5,7 +5,7 @@
   "category": "Headers & Nav",
   "source": "custom",
   "type": "component",
-  "description": "A header with a keyboard-accessible mega menu: hover or focus a top-level link to open a panel of grouped links with short descriptions; Escape closes it.",
+  "description": "A header with a keyboard-accessible mega menu: hover or focus a top-level link to open a panel of grouped links with short descriptions; Escape closes it. Made for a site with several pages: its menus promise places a one-page landing does not have, so it is hidden unless Drafts is ticked.",
   "tags": [
     "header",
     "mega-menu",
@@ -20,7 +20,7 @@
   "dependencies": [
     "Vanilla HTML/CSS/JS"
   ],
-  "status": "stable",
+  "status": "draft",
   "weight": "light",
   "mood": [
     "minimal",

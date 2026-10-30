@@ -45,16 +45,64 @@
       "selector": ":scope .ssh-logo"
     },
     {
+      "id": "nav-text-1",
+      "label": "Menu item 1: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "nav-text-2",
+      "label": "Menu item 2: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "nav-text-3",
+      "label": "Menu item 3: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "nav-text-4",
+      "label": "Menu item 4: text",
+      "type": "text",
+      "selector": ":scope [data-edv-nav=\"4\"]"
+    },
+    {
+      "id": "nav-link-1",
+      "label": "Menu item 1: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "nav-link-2",
+      "label": "Menu item 2: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "nav-link-3",
+      "label": "Menu item 3: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "nav-link-4",
+      "label": "Menu item 4: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"4\"]"
+    },
+    {
       "id": "cta-text",
       "label": "Button text",
       "type": "text",
-      "selector": ":scope .ssh-cta"
+      "selector": ":scope [data-edv-nav=\"5\"]"
     },
     {
       "id": "cta-link",
       "label": "Button link",
       "type": "link",
-      "selector": ":scope .ssh-cta"
+      "selector": ":scope [data-edv-nav=\"5\"]"
     },
     {
       "id": "accent-colour",
@@ -64,5 +112,6 @@
       "attr": "--accent"
     }
   ],
-  "order": 900
+  "order": 900,
+  "autoMenu": true
 }

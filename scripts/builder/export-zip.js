@@ -84,7 +84,8 @@
         if (missing.length) await Promise.all(missing.map(slug => fetchFeatureFiles(slug)));
         // editing in place starts from the original content, so "reset" has something to go back to
         const baseStack = inPlace ? p.stack.map(s => ({ ...s, overrides: {} })) : p.stack;
-        const doc = window.Assembler.generateSingleFileBundle(baseStack, themeConfig, featuresData, { page: p.settings, nativeMap, pageLinks });
+        // the editor lists every menu item, also the ones the finished page leaves out because they have no link yet
+        const doc = window.Assembler.generateSingleFileBundle(baseStack, themeConfig, featuresData, { page: p.settings, nativeMap, pageLinks, keepUnlinkedNav: true });
         docs[p.file] = doc;
         const sections = p.stack.filter(s => !s.hidden).map((s, i) => ({
           id: s.id || `sec-${i + 1}`,
@@ -92,11 +93,11 @@
           title: s.title || (featuresData[s.slug] && (featuresData[s.slug].title || featuresData[s.slug].name)) || s.slug,
           overrides: inPlace ? {} : s.overrides
         }));
-        pages.push({
-          file: p.file,
-          title: p.title,
-          sections: await cms.discoverSections({ html: doc, sections, discoverFields: window.BuilderExtras.discoverFields, explicitFor: cmsExplicitFor })
-        });
+        const found = await cms.discoverSections({ html: doc, sections, discoverFields: window.BuilderExtras.discoverFields, explicitFor: cmsExplicitFor });
+        // the names menu links use to scroll to each section (the editor's "go to" list)
+        const anchorOf = window.Assembler.anchorNames(p.stack, featuresData);
+        found.forEach(sec => { if (anchorOf[sec.id]) sec.anchor = anchorOf[sec.id]; });
+        pages.push({ file: p.file, title: p.title, sections: found, ...(p.lang ? { lang: p.lang, group: p.group || p.file } : {}) });
       }
       const files = await cms.runtimeFiles((url) => fetch(url));
       const published = {};
@@ -112,7 +113,7 @@
       // where form messages go, as exported (the editor's Form messages tab can change it later); the tab shows only when a page has a message form
       const pg = stackManager.getState().page;
       const forms = { method: pg.formMethod || '', target: pg.formTarget || '', has: Object.values(docs).some(d => /data-edv-form="message"/.test(d)) };
-      files['cms-content.js'] = cms.buildContent({ site: pg.title || 'Website', pages, published, forms });
+      files['cms-content.js'] = cms.buildContent({ site: pg.title || 'Website', siteLang: pg.lang || 'en', pages, published, forms });
       const patched = {};
       if (html) pagesIn.forEach(p => { patched[p.file] = cms.injectTags(html[p.file], p.script); });
       return { files, docs, pages: patched, fields: pages.reduce((n, p) => n + p.sections.reduce((m, s) => m + s.fields.length, 0), 0) };
@@ -186,7 +187,7 @@
             const fileOf = (p) => (p.slug === 'index' ? 'index.html' : `${p.slug}.html`);
             const pageLinks = Object.fromEntries(st.pages.map(p => [p.id, fileOf(p)]));
             await addCms(
-              st.pages.map(p => ({ file: fileOf(p), title: p.title, stack: p.stack, settings: { ...st.page, lang: p.lang || st.page.lang, title: p.slug === 'index' ? st.page.title : `${p.title} | ${st.page.title}` }, script: p.slug === 'index' ? 'script.js' : `${p.slug}.js` })),
+              st.pages.map(p => ({ file: fileOf(p), title: p.title, stack: p.stack, settings: { ...st.page, lang: p.lang || st.page.lang, title: p.slug === 'index' ? st.page.title : `${p.title} | ${st.page.title}` }, script: p.slug === 'index' ? 'script.js' : `${p.slug}.js`, lang: p.lang || st.page.lang || 'en', group: p.translationOf || p.id })),
               Object.fromEntries(st.pages.map(p => [fileOf(p), site.files[fileOf(p)]])),
               st.pages.map(fileOf), site.files, pageLinks);
           }

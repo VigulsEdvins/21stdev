@@ -161,7 +161,7 @@
         const links = Object.fromEntries(Object.entries(keys).map(([id, key]) => [id, '#' + key]));
         const home = state.pages[0];
         const combined = state.pages.flatMap(p => p.stack);
-        const html = window.Assembler.generateSingleFileBundle(combined, themeConfig, featuresData, { page: { ...state.page, lang: home.lang || state.page.lang }, nativeMap, pageLinks: links });
+        const html = window.Assembler.generateSingleFileBundle(combined, themeConfig, featuresData, { page: { ...state.page, lang: home.lang || state.page.lang }, nativeMap, pageLinks: links, reservedAnchors: Object.values(keys) });
         currentSingleHtml = window.BuilderSinglePages.addRouter(html, state.pages.map((p, i) => ({ key: keys[p.id], title: i === 0 ? state.page.title : `${p.title} | ${state.page.title}`, ids: p.stack.filter(s => !s.hidden).map(s => s.id) })));
       } else if (window.Assembler && typeof window.Assembler.generateSingleFileBundle === 'function') {
         currentSingleHtml = window.Assembler.generateSingleFileBundle(currentStack, themeConfig, featuresData, { page: openPageSettings(state), nativeMap });
@@ -470,6 +470,60 @@
         window.__cmsBridge = {
           setOverride: (sectionId, fieldId, value, def) => stackManager.setSectionOverride(sectionId, fieldId, value, def),
           setForm: (method, target) => stackManager.setPage({ formMethod: method, formTarget: target }),
+          // where a menu or button link can go: this page's sections by anchor name, and the other pages ("page:<id>", turned into a file or "#key" on export)
+          targets: () => {
+            const cur = stackManager.getState();
+            const names = window.Assembler.anchorNames(cur.stack, featuresData);
+            const titleOf = (sec) => sec.title || (featuresData[sec.slug] && (featuresData[sec.slug].title || featuresData[sec.slug].name)) || sec.slug;
+            return {
+              sections: cur.stack.filter(sec => names[sec.id]).map(sec => ({ value: '#' + names[sec.id], label: titleOf(sec) + '  (#' + names[sec.id] + ')' })),
+              pages: (cur.pages || []).filter(p => p.id !== cur.activePageId).map(p => ({ value: 'page:' + p.id, label: p.title || 'Page' }))
+            };
+          },
+          anchorOf: (sectionId) => window.Assembler.anchorNames(stackManager.getState().stack, featuresData)[sectionId] || '',
+          setAnchor: (sectionId, name) => stackManager.setSectionAnchor(sectionId, name),
+          // the automatic menu: a header that can list the sections reports its mode and items; the other sections their place in it
+          menuInfo: (sectionId) => {
+            const cur = stackManager.getState();
+            const sec = cur.stack.find(s => s.id === sectionId);
+            if (!sec) return null;
+            const names = window.Assembler.anchorNames(cur.stack, featuresData);
+            const reg = (window.FEATURE_REGISTRY || []).find(f => f.slug === sec.slug);
+            if (reg && reg.autoMenu) return { kind: 'header', mode: sec.menuMode === 'auto' ? 'auto' : 'manual', items: window.Assembler.menuItems(cur.stack, names, featuresData).map(i => i.label) };
+            if (!cur.stack.some(s => s.menuMode === 'auto')) return null;
+            const plain = cur.stack.map(s => ({ ...s, inMenu: undefined, menuLabel: undefined }));
+            const base = window.Assembler.menuItems(plain, names, featuresData).find(i => i.id === sectionId);
+            return base ? { kind: 'section', inMenu: sec.inMenu !== false, label: sec.menuLabel || '', defaultLabel: base.label } : null;
+          },
+          setMenu: (sectionId, patch) => stackManager.setSectionMenu(sectionId, patch),
+          // languages of the project: the editor lists them, opens the other language's page, and adds a language (a linked copy of every page)
+          languages: () => {
+            const L = window.BuilderLanguages, p = window.builderPreview;
+            if (!L || !p || !p.serializeState) return null;
+            const s = p.serializeState(), here = L.activeLanguage(s), site = L.siteLanguage(s), have = L.languagesOf(s);
+            return {
+              langs: have.map(code => ({ code, name: L.nameOf(code), english: L.englishOf(code), here: code === here, site: code === site })),
+              free: L.LANGUAGES.filter(l => !have.includes(l[0])).map(l => ({ code: l[0], label: L.label(l[0]) })),
+              pages: (s.pages && s.pages.length) || 1
+            };
+          },
+          switchLanguage: (code) => {
+            const L = window.BuilderLanguages, p = window.builderPreview;
+            const target = L && p && L.pageFor(p.serializeState(), code);
+            if (!target) return false;
+            stackManager.switchPage(target.id);
+            openAdmin(); // the panel starts again on that language's page
+            return true;
+          },
+          addLanguage: (code) => {
+            const L = window.BuilderLanguages, p = window.builderPreview;
+            if (!L || !p || !p.applyState) return 'Languages are not available here.';
+            const why = L.whyNotAdd(p.serializeState(), code);
+            if (why) return why;
+            p.applyState(Object.assign(p.serializeState(), L.addLanguage(p.serializeState(), code))); // one history step: one Undo takes it back
+            openAdmin();
+            return '';
+          },
           close: closeAdmin
         };
         // the editor page needs inline scripts and styles: it goes into the frame page that has its own policy (frame-doc.js), not a blob: URL, which would take the builder page's strict one

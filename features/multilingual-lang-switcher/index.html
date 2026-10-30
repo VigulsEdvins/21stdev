@@ -10,19 +10,19 @@
 <div class="lsw-demo">
   <header class="lsw-header">
     <div class="lsw-bar">
-      <a class="lsw-brand" href="#"><span class="lsw-dot" aria-hidden="true"></span><span class="lsw-brand-text">edvlabs</span></a>
-      <nav class="lsw-nav" aria-label="Main">
-        <a href="#" data-i18n="work">Work</a>
-        <a href="#" data-i18n="about">About</a>
-        <a href="#" data-i18n="contact">Contact</a>
+      <a class="lsw-brand" href="#top"><span class="lsw-dot" aria-hidden="true"></span><span class="lsw-brand-text">edvlabs</span></a>
+      <nav class="lsw-nav" aria-label="Main" data-edv-menu data-edv-menu-max="5">
+        <a href="#" data-edv-nav="1" data-i18n="work">Work</a>
+        <a href="#" data-edv-nav="2" data-i18n="about">About</a>
+        <a href="#" data-edv-nav="3" data-i18n="contact">Contact</a>
       </nav>
       <div class="lsw-lang">
         <button type="button" class="lsw-current" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
-          <span class="lsw-code">EN</span>
+          <span class="lsw-code" data-cms-skip>EN</span>
           <svg class="lsw-caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
-        <ul class="lsw-menu" role="listbox" aria-label="Choose language" hidden>
+        <ul class="lsw-menu" data-cms-skip role="listbox" aria-label="Choose language" hidden>
           <li role="option" tabindex="-1" data-lang="en" aria-selected="true">English</li>
           <li role="option" tabindex="-1" data-lang="de" aria-selected="false">Deutsch</li>
           <li role="option" tabindex="-1" data-lang="es" aria-selected="false">Español</li>

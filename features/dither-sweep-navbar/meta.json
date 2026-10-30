@@ -62,7 +62,32 @@
       "label": "Link 4",
       "type": "text",
       "selector": ":scope .dn-cta span"
+    },
+    {
+      "id": "button-link-1",
+      "label": "Menu item 1: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"1\"]"
+    },
+    {
+      "id": "button-link-2",
+      "label": "Menu item 2: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"2\"]"
+    },
+    {
+      "id": "button-link-3",
+      "label": "Menu item 3: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"3\"]"
+    },
+    {
+      "id": "button-link-4",
+      "label": "Menu item 4: link",
+      "type": "link",
+      "selector": ":scope [data-edv-nav=\"4\"]"
     }
   ],
-  "reserveHeight": 800
+  "reserveHeight": 800,
+  "autoMenu": true
 }

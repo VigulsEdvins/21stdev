@@ -75,6 +75,20 @@
   // Where form messages go, if the owner changed it in the editor: the form script re-checks it before using it
   var chosen = published().__form;
   if (!preview && chosen && typeof chosen === 'object') window.__edvForm = { method: String(chosen.method || ''), target: String(chosen.target || '') };
+  // Languages the owner turned off in the editor leave the language switcher; with one left the switcher goes
+  var offered = published().__langs;
+  if (!preview && Array.isArray(offered) && offered.length) {
+    var trim = function () {
+      Array.prototype.forEach.call(document.querySelectorAll('.lsw-menu'), function (menu) {
+        var opts = Array.prototype.slice.call(menu.querySelectorAll('[data-lang]'));
+        opts.forEach(function (o) { if (offered.indexOf(o.getAttribute('data-lang')) < 0 && o.getAttribute('aria-selected') !== 'true') o.remove(); });
+        var left = menu.querySelectorAll('[data-lang]');
+        var box = menu.closest('.lsw-lang');
+        if (box && left.length < 2) box.style.display = 'none';
+      });
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', trim); else trim();
+  }
   if (!preview) return;
 
   /* ---------------- admin preview only ---------------- */

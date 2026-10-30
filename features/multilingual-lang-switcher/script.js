@@ -10,6 +10,21 @@
     var btn = root.querySelector('.lsw-current');
     var menu = root.querySelector('.lsw-menu');
     var code = root.querySelector('.lsw-code');
+    // inside the builder the menu lists the project's own languages and opens the page written in the chosen one
+    var host = null;
+    try { host = window.parent !== window && window.parent.__edvLangs || null; } catch (e) { host = null; }
+    var mine = [];
+    try { mine = host ? host.list() : []; } catch (e) { mine = []; }
+    if (mine.length > 1) {
+      menu.textContent = '';
+      mine.forEach(function (l) {
+        var li = document.createElement('li');
+        li.setAttribute('role', 'option'); li.setAttribute('tabindex', '-1'); li.setAttribute('data-lang', l.code);
+        li.setAttribute('aria-selected', String(!!l.here)); li.textContent = l.name;
+        menu.appendChild(li);
+        if (l.here) code.textContent = l.code.split('-')[0].toUpperCase();
+      });
+    } else host = null;
     var opts = Array.prototype.slice.call(menu.querySelectorAll('[role=option]'));
     function setOpen(open, focusFirst) {
       btn.setAttribute('aria-expanded', String(open));
@@ -20,6 +35,7 @@
       }
     }
     function choose(lang) {
+      if (host) { host.open(lang); return; }
       var d = DICT[lang] || DICT.en;
       opts.forEach(function (o) { o.setAttribute('aria-selected', String(o.getAttribute('data-lang') === lang)); });
       code.textContent = lang.toUpperCase();

@@ -174,6 +174,15 @@
           return;
         }
 
+        // Opened first, while the click still counts for pop-up blockers. A blob: page would inherit the builder's strict
+        // policy and lose every inline style, so the page goes into the preview frame page, which has its own policy.
+        const frameUrl = (window.FrameDoc && window.FrameDoc.FRAME_URL) || 'preview-frame/';
+        const newTab = window.open(frameUrl, '_blank');
+        if (!newTab) {
+          showToast('Pop-up was blocked. Please allow pop-ups for this page.');
+          return;
+        }
+
         const state = stackManager.getState();
         const missingSlugs = state.stack
           .map(s => s.slug)
@@ -187,17 +196,26 @@
         const fullDoc = window.Assembler.assemblePreviewDocument(state.stack, themeConfig, featuresData, { embedSites: true });
 
         try {
-          const blob = new Blob([fullDoc], { type: 'text/html;charset=utf-8' });
-          const blobUrl = URL.createObjectURL(blob);
-          const newTab = window.open(blobUrl, '_blank');
-          if (newTab) {
-            showToast('Opened live assembled preview in new tab');
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
-          } else {
-            showToast('Pop-up was blocked. Please allow pop-ups for this page.');
-          }
+          await new Promise((resolve, reject) => {
+            const started = Date.now();
+            (function put() {
+              try {
+                const d = newTab.document;
+                if (newTab.location.href.indexOf('/preview-frame/') !== -1 && d.readyState === 'complete') {
+                  d.open(); d.write(fullDoc); d.close();
+                  resolve();
+                } else if (Date.now() - started > 10000) {
+                  reject(new Error('preview tab did not load'));
+                } else {
+                  setTimeout(put, 30);
+                }
+              } catch (e) { reject(e); }
+            })();
+          });
+          showToast('Opened live assembled preview in new tab');
         } catch (err) {
           console.error('Error opening preview in new tab:', err);
+          try { newTab.close(); } catch (_) { /* already gone */ }
           showToast('Failed to open preview tab');
         }
       });

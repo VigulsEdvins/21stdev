@@ -17,12 +17,19 @@
         </a>
         <span class="cms-badge">CMS</span>
       </div>
+      <label class="cms-page-pick" id="cms-lang-pick" hidden>
+        <span>Language</span>
+        <select id="cms-lang-select"></select>
+      </label>
       <label class="cms-page-pick" id="cms-page-pick" hidden>
         <span>Page</span>
         <select id="cms-page-select"></select>
       </label>
       <nav class="cms-nav" id="cms-nav" aria-label="Page sections"></nav>
       <div class="cms-nav-foot">
+        <button type="button" class="cms-nav-item" id="cms-nav-langs" data-tab="__langs" hidden>
+          <span class="cms-nav-title">Languages</span>
+        </button>
         <button type="button" class="cms-nav-item" id="cms-nav-forms" data-tab="__forms" hidden>
           <span class="cms-nav-title">Form messages</span>
         </button>

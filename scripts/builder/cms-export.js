@@ -13,18 +13,21 @@
   const MAX_FIELDS_PER_SECTION = 60;
 
   /** The cms-content.js text. `pages` is [{ file, title, sections: [{ id, slug, title, fields: [...] }] }]. */
-  function buildContent({ site, pages, published = {}, updatedAt = 0, forms = null }) {
+  function buildContent({ site, siteLang = '', pages, published = {}, updatedAt = 0, forms = null }) {
     const data = {
       v: 1,
       site: site || 'Website',
       updatedAt,
+      ...(/^[a-z]{2,3}(-[A-Za-z0-9]+)*$/.test(siteLang) ? { siteLang } : {}),
       pages: pages.map(p => ({
         file: p.file,
         title: p.title,
+        ...(p.lang ? { lang: String(p.lang), group: String(p.group || p.file) } : {}),
         sections: p.sections.map(s => ({
           id: s.id,
           slug: s.slug,
           title: s.title,
+          ...(s.anchor ? { anchor: String(s.anchor) } : {}),
           ...(s.hasForm ? { form: true } : {}),
           fields: s.fields.map(f => {
             const out = { id: f.id, label: f.label, type: f.type, selector: f.selector, value: f.value };

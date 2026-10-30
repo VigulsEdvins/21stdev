@@ -34,11 +34,12 @@
   var MAX_HISTORY = 60;
   var BACKUP_TAB = '__backup';
   var FORM_TAB = '__forms';
+  var LANG_TAB = '__langs';
   var R = window.EdvFormRules; // the choices and checks for where form messages go (form-rules.js)
   var siteKey = 'edv-cms:' + location.pathname.replace(/[^/]*$/, '');
 
   var pageIndex = 0;
-  var tab = null; // section id, BACKUP_TAB or FORM_TAB
+  var tab = null; // section id, BACKUP_TAB, FORM_TAB or LANG_TAB
   var draft = {};
   var history = [];
   var cursor = -1;
@@ -114,6 +115,73 @@
   }
   /** The error to show for the current choice, or '' when it is fine. */
   function formProblem() { var f = getForm(); var r = R ? R.check(f.method, f.target) : { ok: true }; return r.ok ? '' : r.error; }
+  /* Languages: pages carry `lang` and `group` (the original page they translate). The choice of which languages the site offers is kept as `__langs` only when some are off */
+  var LANG_NAMES = { en: 'English', de: 'Deutsch', es: 'Español', fr: 'Français', it: 'Italiano', pt: 'Português', nl: 'Nederlands', pl: 'Polski', lv: 'Latviešu', lt: 'Lietuvių', et: 'Eesti', ru: 'Русский', uk: 'Українська', sv: 'Svenska', no: 'Norsk', nb: 'Norsk', da: 'Dansk', fi: 'Suomi', cs: 'Čeština', sk: 'Slovenčina', hu: 'Magyar', ro: 'Română', bg: 'Български', el: 'Ελληνικά', tr: 'Türkçe', ja: '日本語', zh: '中文', ko: '한국어', ar: 'العربية', he: 'עברית', hi: 'हिन्दी' };
+  function langName(code) { return LANG_NAMES[code] || LANG_NAMES[String(code).split('-')[0]] || String(code).toUpperCase(); }
+  function langOf(p) { return p.lang || C.siteLang || ''; }
+  /** Every language of the site, the main one first. */
+  function allLangs() {
+    var out = [];
+    C.pages.forEach(function (p) { var l = langOf(p); if (l && out.indexOf(l) < 0) out.push(l); });
+    var main = C.siteLang && out.indexOf(C.siteLang) >= 0 ? C.siteLang : out[0];
+    return out.length ? [main].concat(out.filter(function (l) { return l !== main; })) : out;
+  }
+  /** Inside the builder: the project's languages and the ones that can still be added; null when the builder has no languages. */
+  function builderLangs() {
+    if (!inBuilder || !bridge.languages) return null;
+    try { return bridge.languages(); } catch (e) { return null; }
+  }
+  /** Runs a builder action that reopens the panel on another page: what was typed is sent first. */
+  function leaveFor(action) { if (syncTimer) syncBuilder(); return action(); }
+  function hasLangs() { return allLangs().length > 1; }
+  /** The languages the site offers: all of them unless the owner turned some off; the main language is always on. */
+  function getLangs() {
+    var all = allLangs(), d = draft.__langs;
+    if (!Array.isArray(d)) return all;
+    return all.filter(function (l, i) { return i === 0 || d.indexOf(l) >= 0; });
+  }
+  function setLangs(list) {
+    var all = allLangs();
+    var keep = all.filter(function (l, i) { return i === 0 || list.indexOf(l) >= 0; });
+    if (keep.length === all.length) delete draft.__langs; else draft.__langs = keep;
+  }
+  /** The page this one translates: same group, written in the main language; null for the main-language pages themselves. */
+  function sourcePage(p) {
+    if (!p.group || !hasLangs() || langOf(p) === allLangs()[0]) return null;
+    var found = null;
+    C.pages.forEach(function (q) { if (q !== p && q.group === p.group && langOf(q) === allLangs()[0]) found = q; });
+    return found;
+  }
+  /** The original wording of a field in the main language, or '' when this page is not a translation or the field has no wording. */
+  function originalOf(sec, f) {
+    var src = sourcePage(page());
+    if (!src || f.type === 'image' || f.type === 'color' || f.type === 'number' || f.type === 'currency') return '';
+    var ss = src.sections[sections().indexOf(sec)];
+    if (!ss || ss.slug !== sec.slug) return '';
+    var sf = ss.fields.filter(function (x) { return x.id === f.id; })[0];
+    return sf ? getVal(src.file, ss, sf) : '';
+  }
+  /** [still the same as the original, total] over the wording of every page in language `code`. */
+  function untranslated(code) {
+    var same = 0, total = 0;
+    C.pages.forEach(function (p) {
+      if (langOf(p) !== code || !sourcePage(p)) return;
+      var src = sourcePage(p);
+      p.sections.forEach(function (sec, i) {
+        var ss = src.sections[i];
+        if (!ss || ss.slug !== sec.slug) return;
+        sec.fields.forEach(function (f) {
+          if (f.type === 'image' || f.type === 'color' || f.type === 'number' || f.type === 'currency' || f.type === 'link') return;
+          var sf = ss.fields.filter(function (x) { return x.id === f.id; })[0];
+          if (!sf) return;
+          total++;
+          if (getVal(p.file, sec, f) === getVal(src.file, ss, sf)) same++;
+        });
+      });
+    });
+    return [same, total];
+  }
+
   function hasForms() { return !!(C.forms && C.forms.has) && !!R; }
 
   /** Only addresses a page may load: web, mail, phone, in-page and relative paths (and small embedded pictures). */
@@ -291,6 +359,7 @@
     });
     $('cms-nav-backup').classList.toggle('is-active', tab === BACKUP_TAB);
     $('cms-nav-forms').classList.toggle('is-active', tab === FORM_TAB);
+    $('cms-nav-langs').classList.toggle('is-active', tab === LANG_TAB);
   }
   function refreshNavMeta() {
     var items = $('cms-nav').children;
@@ -405,6 +474,66 @@
     return box;
   }
 
+  /** Where a link can go: the sections of this page ("#name") and the other pages. [{ value, label }] each. */
+  function linkTargets() {
+    if (inBuilder && bridge.targets) { try { return bridge.targets(); } catch (e) { /* no picker, the text box still works */ } }
+    var out = { sections: [], pages: [] };
+    (C.pages || []).forEach(function (p) {
+      if (p.file === page().file) (p.sections || []).forEach(function (sec) { if (sec.anchor) out.sections.push({ value: '#' + sec.anchor, label: sec.title || sec.slug }); });
+      else out.pages.push({ value: p.file, label: p.title || p.file });
+    });
+    return out;
+  }
+
+  /** The name a menu link uses to scroll to this section ("#pricing"). Editable in the builder only: the finished page has its anchors written into it. */
+  function anchorCard(sec) {
+    var id = 'cms-anchor-' + sec.id;
+    var input = el('input', { type: 'text', class: 'cms-input', id: id, maxlength: '40', autocomplete: 'off', spellcheck: 'false' });
+    input.value = bridge.anchorOf(sec.id);
+    input.addEventListener('change', function () {
+      bridge.setAnchor(sec.id, input.value);
+      input.value = bridge.anchorOf(sec.id);
+      render(); // every "go to" list shows the new name
+    });
+    return el('div', { class: 'cms-card cms-anchor-card' }, [
+      el('div', { class: 'cms-card-head' }, [el('label', { class: 'cms-label', for: id, text: 'Link name of this section' }), el('span', { class: 'cms-type', text: 'menu links' })]),
+      input,
+      el('p', { class: 'cms-hint', text: 'A menu link written as #' + (input.value || 'name') + ' scrolls here. Letters, numbers and dashes; leave it empty for the automatic name.' })
+    ]);
+  }
+
+  /** The automatic menu (builder only): a header chooses between listing the sections by itself and its own items; each section chooses whether it is listed and under what text. */
+  function menuCard(sec) {
+    var info = bridge.menuInfo(sec.id);
+    if (!info) return null;
+    if (info.kind === 'header') {
+      var mode = el('select', { class: 'cms-input', id: 'cms-menu-mode', 'aria-label': 'Menu of this header' }, [
+        el('option', { value: 'auto', text: 'Automatic: one item for each section' }),
+        el('option', { value: 'manual', text: 'My own items' })
+      ]);
+      mode.value = info.mode;
+      mode.addEventListener('change', function () { bridge.setMenu(sec.id, { menuMode: mode.value }); render(); });
+      return el('div', { class: 'cms-card cms-menu-card' }, [
+        el('div', { class: 'cms-card-head' }, [el('label', { class: 'cms-label', for: 'cms-menu-mode', text: 'Menu of this header' }), el('span', { class: 'cms-type', text: 'menu' })]),
+        mode,
+        el('p', { class: 'cms-hint', text: info.mode === 'auto'
+          ? (info.items.length ? 'Shows: ' + info.items.join(', ') + '. Add, remove, move or hide a section and the menu follows. The button keeps its own link below; the menu item fields below are not used.' : 'No section to list yet: add sections after the header.')
+          : 'You type each item and say where it goes (the fields below). Items with no link are left out of the finished site.' })
+      ]);
+    }
+    var box = el('input', { type: 'checkbox', id: 'cms-menu-in' });
+    box.checked = info.inMenu;
+    var label = el('input', { type: 'text', class: 'cms-input', id: 'cms-menu-label', maxlength: '30', autocomplete: 'off', placeholder: info.defaultLabel, 'aria-label': 'Menu label' });
+    label.value = info.label;
+    box.addEventListener('change', function () { bridge.setMenu(sec.id, { inMenu: box.checked }); });
+    label.addEventListener('change', function () { bridge.setMenu(sec.id, { menuLabel: label.value }); label.value = (bridge.menuInfo(sec.id) || {}).label || ''; });
+    return el('div', { class: 'cms-card cms-menu-card' }, [
+      el('div', { class: 'cms-card-head' }, [el('label', { class: 'cms-label', for: 'cms-menu-in', text: 'Show in the header menu' }), el('span', { class: 'cms-type', text: 'menu' })]),
+      el('div', { class: 'cms-inline' }, [box, el('label', { for: 'cms-menu-label', class: 'cms-hint', text: 'Menu text' }), label]),
+      el('p', { class: 'cms-hint', text: 'The header lists this section under this text. Leave the text empty to use "' + info.defaultLabel + '".' })
+    ]);
+  }
+
   function fieldCard(sec, f, index) {
     var file = page().file;
     var value = getVal(file, sec, f);
@@ -417,6 +546,8 @@
       el('label', { class: 'cms-label', text: f.label }),
       el('div', { class: 'cms-card-actions' }, [reset, el('span', { class: 'cms-type', text: f.type })])
     ]));
+    var orig = originalOf(sec, f);
+    if (orig) card.appendChild(el('p', { class: 'cms-hint cms-orig', text: 'In ' + langName(allLangs()[0]) + ': ' + (orig.length > 200 ? orig.slice(0, 200) + '\u2026' : orig) }));
     function commit(v) { setVal(file, sec, f, v); syncReset(); edited(); }
 
     if (f.type === 'image') {
@@ -466,11 +597,33 @@
       });
       card.appendChild(el('div', { class: 'cms-inline' }, [num, el('span', { class: 'cms-hint', text: 'Numbers only' })]));
     } else if (f.type === 'link') {
-      var link = el('input', { type: 'text', class: 'cms-input', autocomplete: 'off', placeholder: 'https://… or page.html or #section', 'aria-label': f.label });
+      var link = el('input', { type: 'text', class: 'cms-input', autocomplete: 'off', placeholder: 'https://… or choose above', 'aria-label': f.label });
       link.value = value;
+      var tg = linkTargets();
+      var pick = null;
+      if (tg.sections.length || tg.pages.length) {
+        pick = el('select', { class: 'cms-input cms-pick', 'aria-label': f.label + ': go to a section or page' });
+        pick.appendChild(el('option', { value: '', text: 'Go to a section or page…' }));
+        [['A section on this page', tg.sections], ['Another page of this site', tg.pages]].forEach(function (g) {
+          if (!g[1].length) return;
+          var og = el('optgroup', { label: g[0] });
+          g[1].forEach(function (t) { og.appendChild(el('option', { value: t.value, text: t.label })); });
+          pick.appendChild(og);
+        });
+        pick.addEventListener('change', function () {
+          if (!pick.value) return;
+          link.value = pick.value;
+          link.setAttribute('aria-invalid', 'false');
+          commit(pick.value);
+        });
+        card.appendChild(pick);
+      }
+      function syncPick() { if (!pick) return; pick.value = ''; pick.value = link.value; if (pick.selectedIndex < 0) pick.value = ''; }
+      syncPick();
       link.addEventListener('input', function () {
         var clean = safeUrl(link.value, 'link');
         link.setAttribute('aria-invalid', clean || !link.value.trim() ? 'false' : 'true');
+        syncPick();
         if (!clean && link.value.trim()) return;
         commit(clean);
       });
@@ -493,6 +646,8 @@
       el('button', { type: 'button', class: 'cms-btn cms-btn-ghost cms-btn-sm', text: 'Show in preview', on: { click: function () { $('cms-workspace').classList.add('show-preview'); focusPreview(sec.id); } } })
     ]));
     var shown = 0;
+    if (inBuilder && bridge.anchorOf && bridge.setAnchor && !q && bridge.anchorOf(sec.id)) ed.appendChild(anchorCard(sec));
+    if (inBuilder && bridge.menuInfo && bridge.setMenu && !q) { var mc = menuCard(sec); if (mc) ed.appendChild(mc); }
     sec.fields.forEach(function (f, i) {
       if (q && (f.label + ' ' + getVal(page().file, sec, f)).toLowerCase().indexOf(q) < 0) return;
       ed.appendChild(fieldCard(sec, f, i));
@@ -559,6 +714,11 @@
       var rr = R.check(rf.method, rf.target), dd = formDefault();
       if (rr.ok && (rr.method !== dd.method || rr.value !== dd.target)) { out.__form = { method: rr.method, target: rr.value }; kept++; }
     }
+    var rl = raw.__langs;
+    if (hasLangs() && Array.isArray(rl)) {
+      var all = allLangs(), kl = all.filter(function (l, i) { return i === 0 || rl.indexOf(l) >= 0; });
+      if (kl.length !== all.length) { out.__langs = kl; kept++; }
+    }
     return { values: out, kept: kept };
   }
 
@@ -605,6 +765,59 @@
     paint();
     return panel;
   }
+  /** The Languages tab: one tick per language the site offers, and how much of each is still the original wording. */
+  function renderBuilderLangs(bl) {
+    var ed = $('cms-editor');
+    var say = el('p', { class: 'cms-hint', role: 'status' });
+    var rows = bl.langs.map(function (l) {
+      var open = l.here ? el('span', { class: 'cms-hint', text: 'Editing this one' }) : el('button', { type: 'button', class: 'cms-btn cms-btn-ghost cms-btn-sm', text: 'Translate', on: { click: function () { leaveFor(function () { bridge.switchLanguage(l.code); }); } } });
+      return el('div', { class: 'cms-lang-row' }, [el('span', { class: 'cms-lang-name' }, [el('span', { text: l.name })]), el('span', { class: 'cms-hint', text: l.site ? 'Main language' : '' }), open]);
+    });
+    var sel = el('select', { class: 'cms-input', id: 'cms-lang-add', 'aria-label': 'Language to add' }, [el('option', { value: '', text: 'Choose a language' })].concat(bl.free.map(function (f) { return el('option', { value: f.code, text: f.label }); })));
+    var add = el('button', { type: 'button', class: 'cms-btn cms-btn-primary cms-btn-sm', text: 'Add language', on: { click: function () {
+      if (!sel.value) { say.textContent = 'Choose a language first.'; return; }
+      var why = leaveFor(function () { return bridge.addLanguage(sel.value); });
+      if (why) say.textContent = why;
+    } } });
+    ed.appendChild(el('div', { class: 'cms-panel', id: 'cms-lang-panel' }, [
+      el('h2', { text: 'Languages of the website' }),
+      el('p', { class: 'cms-hint', text: bl.langs.length > 1 ? 'Pick a language and press Translate to write its words. Every language has its own copy of every page.' : 'The website is in one language. Add a language to get a copy of every page to translate; a language switcher is added at the top of each page.' }),
+      el('div', { class: 'cms-lang-list' }, rows),
+      el('label', { class: 'cms-label', for: 'cms-lang-add', text: 'Add a language (a copy of all ' + bl.pages + (bl.pages === 1 ? ' page' : ' pages') + ')' }),
+      el('div', { class: 'cms-inline' }, [sel, add]), say
+    ]));
+  }
+  function renderLangs() {
+    var bl = builderLangs();
+    if (bl) { renderBuilderLangs(bl); return; }
+    var ed = $('cms-editor'), all = allLangs(), on = getLangs();
+    var count = el('p', { class: 'cms-hint', role: 'status' });
+    function paintCount() { var n = getLangs().length; count.textContent = n + ' of ' + all.length + (all.length === 1 ? ' language is' : ' languages are') + ' on. ' + (n === 1 ? 'With one language the language switcher is hidden.' : ''); }
+    var rows = all.map(function (code, i) {
+      var id = 'cms-lang-' + code;
+      var box = el('input', { type: 'checkbox', id: id });
+      box.checked = on.indexOf(code) >= 0;
+      box.disabled = i === 0;
+      box.addEventListener('change', function () {
+        setLangs(all.filter(function (l, j) { return j === 0 || (l === code ? box.checked : getLangs().indexOf(l) >= 0); }));
+        paintCount(); snapshot(); changed(false);
+      });
+      var u = i === 0 ? null : untranslated(code);
+      var status = i === 0 ? 'Main language' : (u[1] ? (u[0] ? u[0] + ' of ' + u[1] + ' texts are still the original wording' : 'All ' + u[1] + ' texts are translated') : '');
+      var open = i === 0 ? null : el('button', { type: 'button', class: 'cms-btn cms-btn-ghost cms-btn-sm', text: 'Translate', on: { click: function () { switchLanguage(code); } } });
+      return el('div', { class: 'cms-lang-row' }, [
+        el('label', { class: 'cms-lang-name', for: id }, [box, el('span', { text: langName(code) })]),
+        el('span', { class: 'cms-hint', text: status }), open
+      ]);
+    });
+    paintCount();
+    ed.appendChild(el('div', { class: 'cms-panel', id: 'cms-lang-panel' }, [
+      el('h2', { text: 'Languages of the website' }),
+      el('p', { class: 'cms-hint', text: 'Tick the languages visitors can choose in the language switcher. Use Translate (or the Language list on the left) to write the words of a language. A language that is not listed here is added in the builder; export again afterwards.' }),
+      el('div', { class: 'cms-lang-list' }, rows), count,
+      el('p', { class: 'cms-hint', text: inBuilder ? '' : 'Press Publish, then download cms-content.js and upload it to change the live site. A language that is off stays on the server but is not offered in the switcher.' })
+    ]));
+  }
   function renderForms() { $('cms-editor').appendChild(formPanel(false)); }
 
   function renderBackup() {
@@ -612,6 +825,7 @@
     var total = 0;
     C.pages.forEach(function (p) { p.sections.forEach(function (s) { total += editedCount(p.file, s); }); });
     if (draft.__form) total++;
+    if (draft.__langs) total++;
     var importInput = el('input', { type: 'file', accept: 'application/json,.json', hidden: true });
     importInput.addEventListener('change', function () {
       var file = importInput.files && importInput.files[0];
@@ -751,9 +965,10 @@
     ed.textContent = '';
     renderNav();
     var title = $('cms-title');
-    $('cms-search').hidden = tab === BACKUP_TAB || tab === FORM_TAB;
+    $('cms-search').hidden = tab === BACKUP_TAB || tab === FORM_TAB || tab === LANG_TAB;
     if (tab === BACKUP_TAB) { title.textContent = 'Publishing & backup'; renderBackup(); }
     else if (tab === FORM_TAB) { title.textContent = 'Form messages'; renderForms(); }
+    else if (tab === LANG_TAB) { title.textContent = 'Languages'; renderLangs(); }
     else {
       var sec = findSection(tab);
       title.textContent = sec ? sec.title : page().title;
@@ -771,15 +986,51 @@
   snapshot();
 
   var pageSelect = $('cms-page-select');
-  if (C.pages.length > 1) {
-    $('cms-page-pick').hidden = false;
-    C.pages.forEach(function (p, i) { pageSelect.appendChild(el('option', { value: String(i), text: p.title })); });
-    pageSelect.addEventListener('change', function () {
-      pageIndex = +pageSelect.value;
-      tab = sections()[0] ? sections()[0].id : BACKUP_TAB;
-      render(); loadPreview();
-    });
+  var langSelect = $('cms-lang-select');
+  /** Fills the Page list with the pages of the current language (all pages when the site has one language). */
+  function fillPages() {
+    pageSelect.textContent = '';
+    C.pages.forEach(function (p, i) { if (!hasLangs() || langOf(p) === langOf(page())) pageSelect.appendChild(el('option', { value: String(i), text: p.title })); });
+    pageSelect.value = String(pageIndex);
+    $('cms-page-pick').hidden = pageSelect.options.length < 2;
   }
+  /** Opens the page of language `code` that goes with the open page (or that language's first page). */
+  function switchLanguage(code) {
+    var cur = page(), target = -1;
+    C.pages.forEach(function (p, i) { if (target < 0 && langOf(p) === code && cur.group && p.group === cur.group) target = i; });
+    C.pages.forEach(function (p, i) { if (target < 0 && langOf(p) === code) target = i; });
+    if (target < 0) return;
+    pageIndex = target;
+    langSelect.value = code;
+    fillPages();
+    tab = sections()[0] ? sections()[0].id : BACKUP_TAB;
+    render(); loadPreview();
+  }
+  if (hasLangs()) {
+    $('cms-lang-pick').hidden = false;
+    allLangs().forEach(function (l) { langSelect.appendChild(el('option', { value: l, text: langName(l) })); });
+    langSelect.value = langOf(page());
+    langSelect.addEventListener('change', function () { switchLanguage(langSelect.value); });
+  }
+  var bl0 = builderLangs();
+  $('cms-nav-langs').hidden = !hasLangs() && !bl0;
+  // the language switcher block in this panel's preview lists the project's languages and opens the page of the one chosen
+  if (bl0) window.__edvLangs = {
+    list: function () { var b = builderLangs(); return b ? b.langs.map(function (l) { return { code: l.code, name: l.name, here: l.here }; }) : []; },
+    open: function (code) { leaveFor(function () { bridge.switchLanguage(code); }); }
+  };
+  if (bl0 && bl0.langs.length > 1) {
+    $('cms-lang-pick').hidden = false;
+    bl0.langs.forEach(function (l) { langSelect.appendChild(el('option', { value: l.code, text: l.name })); });
+    langSelect.value = bl0.langs.filter(function (l) { return l.here; }).map(function (l) { return l.code; })[0] || '';
+    langSelect.addEventListener('change', function () { leaveFor(function () { bridge.switchLanguage(langSelect.value); }); });
+  }
+  fillPages();
+  pageSelect.addEventListener('change', function () {
+    pageIndex = +pageSelect.value;
+    tab = sections()[0] ? sections()[0].id : BACKUP_TAB;
+    render(); loadPreview();
+  });
   $('cms-view-site').setAttribute('href', page().file);
   $('cms-nav-forms').hidden = !hasForms();
   if (inBuilder) {
@@ -795,6 +1046,7 @@
 
   $('cms-nav-backup').addEventListener('click', function () { tab = BACKUP_TAB; render(); });
   $('cms-nav-forms').addEventListener('click', function () { tab = FORM_TAB; render(); });
+  $('cms-nav-langs').addEventListener('click', function () { tab = LANG_TAB; render(); });
   $('cms-publish').addEventListener('click', publish);
   $('cms-undo').addEventListener('click', function () { goHistory(-1); });
   $('cms-redo').addEventListener('click', function () { goHistory(1); });
