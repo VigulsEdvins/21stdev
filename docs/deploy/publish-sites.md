@@ -33,6 +33,8 @@ Two Workers: the main one (`wrangler.jsonc`, already live) and a new, read-only 
 
 ### 2. Cloudflare: storage
 
+**Progress 2026-10-30:** the KV namespace `SITES` is created (id `3ec1a308b9914c22ba2cc075f0f3b690`) and written into both wrangler files. Left: switch R2 on in the dashboard (the command failed with "Please enable R2 through the Cloudflare Dashboard", code 10042), create the bucket, and add the `r2_buckets` line to `wrangler.jsonc`.
+
 ```bash
 npx wrangler kv namespace create SITES
 npx wrangler r2 bucket create edvlabs-sites

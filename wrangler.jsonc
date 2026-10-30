@@ -9,7 +9,9 @@
   // Plain-text variables added in the Cloudflare dashboard (SUPABASE_URL, SUPABASE_ANON_KEY, LEAD_TO_EMAIL, LEAD_FROM_EMAIL) would be deleted by every
   // deploy that does not list them here. keep_vars keeps them. Secrets (RESEND_API_KEY) are never deleted.
   "keep_vars": true,
-  "kv_namespaces": [{ "binding": "LEADS" }],
+  // SITES: the published sites' lookup (name -> live version), the same namespace the sites Worker (wrangler.sites.jsonc) reads. Created 2026-10-30; the id is not secret.
+  // The matching R2 binding "SITES_BUCKET" (bucket edvlabs-sites) is added here once the bucket exists, see docs/deploy/publish-sites.md. Without it the publishing endpoints answer 503 and the hourly clean-up does nothing.
+  "kv_namespaces": [{ "binding": "LEADS" }, { "binding": "SITES", "id": "3ec1a308b9914c22ba2cc075f0f3b690" }],
   // Hourly clean-up of published sites (taking lapsed ones offline, removing deleted accounts' sites, releasing old name holds). Does nothing until the SITES and SITES_BUCKET bindings exist.
   "triggers": { "crons": ["17 * * * *"] },
   "assets": {
