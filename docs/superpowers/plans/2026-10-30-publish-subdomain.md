@@ -76,6 +76,7 @@ Visitor opens bakery-anna.edvlabs.com
 2. Supabase migration `…_published_sites.sql` + RLS tests against the pretend Supabase. **Not applied to the real project until you say so.**
 3. `functions/lib/publish.js`: validate, store, return address; with fake R2/KV classes for tests (`tests/test-publish.js`): bad token, taken name, reserved name, too many files, forbidden type, hostile HTML, rate limit, update keeps old version, rollback.
 4. `src/sites-worker.js` + `wrangler.sites.jsonc`: routing by host, index/404 rules, headers (`tests/test-sites-worker.js` runs the real Worker code with fake bindings).
+5b. Account deletion also removes the person's R2 files and KV keys.
 5. Wire the three `/api/*` endpoints into `src/worker.js` / `lead-http.js` router.
 6. Builder: `guided-publish.js`, name box and live check, states (not signed in, free, taken, publishing, live, updating, offline). Browser tests with the pretend Supabase and a pretend publish API (`tests/e2e/publish.e2e.js`).
 7. `npm run dev:site` serves a local fake of the sites Worker so the whole flow can be tried on `http://bakery-anna.localhost:PORT`.
@@ -110,6 +111,15 @@ Visitor opens bakery-anna.edvlabs.com
 4. **Indexed right away**, no noindex.
 5. **No "Made with edvlabs" link**: the address already carries the name.
 6. **Name filter** for bad words; no names held back for the owner.
+
+## Database as written (step 2, migration `20261030120000_published_sites.sql`)
+
+- `published_sites`: id, owner, name (unique index; format check in SQL too), saved page it came from, live version, status (`live`/`unpublished`/`blocked`), rename dates, timestamps. Safety cap of 10 per account in a trigger.
+- `site_name_holds`: a name given up by a rename or unpublish, held 90 days for its owner, with an optional redirect target.
+- `site_entitlements`: one row is one paid place for one site (`site_id` empty until used; `paid_until`; `granted_by` is `owner` now, `payment` later). Publishing consumes a free place or uses the site's own.
+- All three: owner may read their own rows; **no** insert/update/delete right for the browser; anonymous has nothing. The regression test R12 checks this.
+- Deleting an account cascades these rows, but not R2 files or KV keys: the Worker's account-deletion path must also remove them (added to the build order as step 5b).
+- The SQL has not been run by a database yet (no local SQL engine here). Apply it first to a Supabase **branch**, not the real project, and only with the owner's go-ahead.
 
 ## Renaming (answer to "how hard")
 

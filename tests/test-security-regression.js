@@ -85,12 +85,15 @@ test('R11', 'the public key endpoint hands out only the public values', async ()
 test('R12', 'database: row level security is on, anonymous visitors have no rights, every policy ties a row to its owner (IDOR, reading without signing in)', async () => {
   const dir = path.join(__dirname, '..', 'supabase', 'migrations'); const all = fs.readdirSync(dir).filter((f) => f.endsWith('.sql')).map((f) => fs.readFileSync(path.join(dir, f), 'utf8')).join('\n');
   const tables = [...all.matchAll(/create table (?:if not exists )?public\.(\w+)/gi)].map((m) => m[1]);
-  assert(tables.includes('briefs') && tables.includes('projects'));
+  assert(tables.includes('briefs') && tables.includes('projects') && tables.includes('published_sites'));
   for (const t of tables) {
     assert(new RegExp('alter table public\\.' + t + ' enable row level security', 'i').test(all), t + ': row level security on');
     assert(new RegExp('revoke all on public\\.' + t + ' from anon', 'i').test(all), t + ': anon has nothing');
     const pol = [...all.matchAll(new RegExp('create policy "[^"]+"\\s+on public\\.' + t + '\\b[^;]*;', 'gi'))].map((m) => m[0]);
-    assert(pol.length >= 3, t + ': has policies'); pol.forEach((p) => assert(/auth\.uid\(\)\)? = user_id/.test(p), t + ': policy is tied to the owner: ' + p.slice(0, 60)));
+    /* Tables the server writes (publishing, name holds, paid places) give the owner a read policy only, and no write right at all. */
+    const serverWritten = ['published_sites', 'site_name_holds', 'site_entitlements'].includes(t);
+    if (serverWritten) assert(!new RegExp('grant[^;]*\\b(insert|update|delete|all)\\b[^;]*on public\\.' + t + '\\s+to authenticated', 'i').test(all), t + ': the browser has no write right');
+    assert(pol.length >= (serverWritten ? 1 : 3), t + ': has policies'); pol.forEach((p) => assert(/auth\.uid\(\)\)? = user_id/.test(p), t + ': policy is tied to the owner: ' + p.slice(0, 60)));
     assert(!new RegExp('grant[^;]*\\bto anon\\b[^;]*public\\.' + t, 'i').test(all) && !new RegExp('grant[^;]*public\\.' + t + '[^;]*to anon', 'i').test(all), t + ': never granted to anon');
   }
   assert(!/grant\s+delete\s+on\s+public\.projects/i.test(all), 'a project is never deleted straight from the browser');
