@@ -581,6 +581,15 @@ select option {
 }
 
 /* Scrollable Container for Elements Cards */
+/* Scrolling the card list down leaves only the target-section banner */
+.elements-catalog-header { transition: gap .25s ease, padding .25s ease; }
+.elements-collapsible { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .25s ease, opacity .2s ease; }
+.elements-collapsible-inner { min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
+.elements-catalog-header.is-compact { gap: 0; padding-block: 8px; }
+.elements-catalog-header.is-compact .elements-collapsible { grid-template-rows: 0fr; opacity: 0; pointer-events: none; }
+.elements-catalog-scroll { overflow-anchor: none; }
+@media (prefers-reduced-motion: reduce) { .elements-catalog-header, .elements-collapsible { transition: none; } }
+
 .elements-catalog-scroll {
   flex: 1;
   overflow-y: auto;

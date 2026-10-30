@@ -500,6 +500,31 @@
       if (scroller) scroller.scrollTop = top;
     });
 
+    const catalogScroller = document.getElementById('elementsCatalogScroll');
+    const catalogHeader = document.querySelector('.elements-catalog-header');
+    if (catalogScroller && catalogHeader) {
+      let lastTop = 0;
+      let ticking = false;
+      catalogScroller.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          const top = catalogScroller.scrollTop;
+          const delta = top - lastTop;
+          if (top <= 0 || delta < -24) {
+            catalogHeader.classList.remove('is-compact');
+            lastTop = top;
+          } else if (delta > 24 && top > 80) {
+            catalogHeader.classList.add('is-compact');
+            lastTop = top;
+          } else if (Math.abs(delta) > 24) {
+            lastTop = top;
+          }
+        });
+      }, { passive: true });
+    }
+
     return { renderElementsCatalog };
   }
 
