@@ -103,6 +103,14 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.waitForTimeout(1200);
   assert(await shown());
   assert.strictEqual((await order())[0], 'hero-pill');
+  // the label at the very end of its box: the chip fields (positional selectors) still edit their own chips
+  const sl = () => af.locator('.cms-card', { hasText: 'Small label' }).first();
+  for (let i = 0; i < 3; i++) { await sl().locator('.cms-down').click(); await page.waitForTimeout(500); }
+  await page.waitForTimeout(1000);
+  assert.strictEqual((await order()).slice(-1)[0], 'hero-pill', 'the label is last: ' + (await order()).join(','));
+  await af.locator('.cms-card', { hasText: 'Button text 2' }).first().locator('textarea').fill('Second');
+  await page.waitForTimeout(1200);
+  assert.strictEqual(await inPanel(() => Array.from(document.querySelectorAll('.chip')).map((c) => c.textContent.trim()).join(',')), 'Ultraviolet,Second,Solar Flare,Deep Cryo');
   console.log('  ✓ move, hide, show again, reset');
 
   assert.deepStrictEqual(errors, []);

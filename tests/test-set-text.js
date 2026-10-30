@@ -102,6 +102,23 @@ const stack = [{ id: 'sec', slug: 'x-hero', title: 'Hero', html: HEAD, css: '', 
   await run([]);
   assert.strictEqual(await tr(), '', 'removed');
 
+  // a field whose selector counts positions ("the 2nd div") still finds its own element after another one was moved:
+  // the aurora hero's chip fields count the divs of the box, and its small label is the first of them
+  const fs = require('fs'), dir = require('path').join(__dirname, '..', 'features', 'oklch-ambient-glow-hero') + '/';
+  const meta = JSON.parse(fs.readFileSync(dir + 'meta.json', 'utf8'));
+  const sel = (id) => meta.customizable.find((c) => c.id === id).selector;
+  const page3 = await browser.newPage();
+  await page3.setContent(Asm.assemblePreviewDocument([{ id: 'sec', slug: 'oklch-ambient-glow-hero', title: 'Hero', html: fs.readFileSync(dir + 'index.html', 'utf8'), css: fs.readFileSync(dir + 'style.css', 'utf8'), js: '' }], {}, {}, {}));
+  const chips = await page3.evaluate((list) => { window.__setOverrides(list); return Array.from(document.querySelectorAll('.chip')).map((c) => c.textContent.trim()).join(','); }, [
+    { section: 'sec', field: 'small-label__move', selector: sel('small-label'), type: 'move', value: '3' },
+    { section: 'sec', field: 'button-text-2', selector: sel('button-text-2'), type: 'text', value: 'Second' },
+    { section: 'sec', field: 'button-text-4', selector: sel('button-text-4'), type: 'text', value: 'Fourth' }
+  ]);
+  assert.strictEqual(chips, 'Ultraviolet,Second,Solar Flare,Fourth', 'the chip fields follow their chips');
+  assert.strictEqual(await page3.evaluate(() => Array.from(document.querySelector('.hero-content').children).map((c) => c.className.split(' ')[0]).join(',')), 'hero-title,hero-sub,preset-chips,hero-pill', 'and the label did move to the end');
+  // the page script of a real site asks for the original order too
+  assert.strictEqual(await page3.evaluate(() => window.__withOriginalOrder(() => document.querySelector('.hero-content').firstElementChild.className.split(' ')[0]) + '/' + document.querySelector('.hero-content').firstElementChild.className.split(' ')[0]), 'hero-pill/hero-title');
+
   await browser.close();
   console.log('✅ Text fields edit every line passed!');
 })().catch(e => { console.error(e); process.exit(1); });

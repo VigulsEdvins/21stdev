@@ -3163,10 +3163,15 @@ const OVERRIDES_RUNTIME = `(function () {
     return Array.prototype.filter.call(parent.children, function (c) { return !/^(SCRIPT|STYLE)$/.test(c.tagName); });
   }
   // Moves el by n places among its neighbours (negative = up), counting from where it was originally.
+  var moves = [];
   function moveBy(el, n, active) {
     var rec = original(el);
     rec.saved.move = { parent: el.parentNode, next: el.nextSibling };
     active.push([el, 'move']);
+    moves.push({ el: el, n: n });
+    place(el, n);
+  }
+  function place(el, n) {
     var row = places(el.parentNode), at = row.indexOf(el);
     var to = Math.max(0, Math.min(row.length - 1, at + n));
     if (to === at) return;
@@ -3390,15 +3395,21 @@ const OVERRIDES_RUNTIME = `(function () {
     var active = [];
     painted = [];
     shifted = [];
+    moves = [];
     // every move counts from the page's own order: put the moved elements back (last moved first), then move them again
     for (var m = originals.length - 1; m >= 0; m--) {
       if (originals[m].saved.move) { restore(originals[m].el, 'move', originals[m].saved.move); delete originals[m].saved.move; }
     }
-    list.forEach(function (o) {
+    // find every element first, in the page's own order: a selector such as "the 2nd div" must not see the
+    // page after another field was moved
+    var found = list.map(function (o) {
+      var r = document.getElementById(o.section);
+      try { return r ? r.querySelector(o.selector) : null; } catch (e) { return null; }
+    });
+    list.forEach(function (o, at) {
       var root = document.getElementById(o.section);
       if (!root) return;
-      var el;
-      try { el = root.querySelector(o.selector); } catch (e) { return; }
+      var el = found[at];
       if (!el) return;
       var key;
       if (o.type === 'image') {
@@ -3488,6 +3499,14 @@ const OVERRIDES_RUNTIME = `(function () {
       return Object.keys(rec.saved).length > 0;
     });
   }
+  // Runs fn with the page in its own order (moved elements back where they came from), then moves them again.
+  window.__withOriginalOrder = function (fn) {
+    for (var m = originals.length - 1; m >= 0; m--) {
+      var sv = originals[m].saved.move;
+      if (sv) restore(originals[m].el, 'move', sv);
+    }
+    try { return fn(); } finally { moves.forEach(function (mv) { place(mv.el, mv.n); }); }
+  };
   window.__setOverrides = function (next) { list = next || []; apply(); };
   window.__getOverrides = function () { return list.slice(); };
   window.__applyOverrides = apply;

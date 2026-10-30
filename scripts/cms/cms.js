@@ -68,6 +68,7 @@
 
   function apply(values) {
     lastValues = values || {};
+    found = null;
     window.__setOverrides(base.concat(listFor(values)));
   }
 
@@ -113,10 +114,26 @@
     '.edv-cms-flash{outline:3px solid #e6c82a!important;outline-offset:3px;transition:outline-color .4s}';
   document.head.appendChild(style);
 
+  // Selectors such as "the 2nd div" are written for the page's own order. Once a text has been moved they would point
+  // at something else, so every field is found with the moved elements back in place, once per change.
+  var found = null, foundAt = 0;
+  function findAll() {
+    var map = {};
+    page.sections.forEach(function (sec) {
+      var root = document.getElementById(sec.id);
+      sec.fields.forEach(function (f) {
+        try { map[sec.id + '/' + f.id] = root ? root.querySelector(f.selector) : null; } catch (e) { map[sec.id + '/' + f.id] = null; }
+      });
+    });
+    return map;
+  }
   function resolve(sec, f) {
-    var root = document.getElementById(sec.id);
-    if (!root) return null;
-    try { return root.querySelector(f.selector); } catch (e) { return null; }
+    // a block that draws itself later may not have its fields yet: look again, but not on every mouse move
+    if (!found || (Date.now() - foundAt > 1500 && Object.keys(found).some(function (k) { return !found[k] || !found[k].isConnected; }))) {
+      found = typeof window.__withOriginalOrder === 'function' ? window.__withOriginalOrder(findAll) : findAll();
+      foundAt = Date.now();
+    }
+    return found[sec.id + '/' + f.id] || null;
   }
 
   function flash(el) {
