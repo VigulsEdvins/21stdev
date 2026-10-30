@@ -118,7 +118,7 @@ I have proposed an answer for each so work can continue; change any of them.
 - Images: **real screenshots** of the real templates and the real builder, not stock photos or 3D blobs.
 - Details that show a person made it: a short note from you, honest limits ("what we do not do"), small hand-drawn marks or stamps, a real process timeline.
 
-Two mock-ups of the same three screens (home, question 4, builder step 2) are in `docs/design/mockups/` (open `index.html`): **A paper and ink** and **B newsprint grid**. The owner chooses one (task E1.2). The "looks AI-made" list that the plan turns into a checklist: gradient headlines, glowing grids and orbs, glassmorphism, purple-to-blue gradients, emoji as icons, identical rounded cards in a row of three, "supercharge / seamless / unlock" copy, badge-pill eyebrow labels on everything, centred hero with two buttons and a screenshot under it.
+Two mock-ups of the same three screens (home, question 4, builder step 2) were made (only the chosen direction, E, is kept in `docs/design/mockups/e/`; the rest are in git history): **A paper and ink** and **B newsprint grid**. The owner chooses one (task E1.2). The "looks AI-made" list that the plan turns into a checklist: gradient headlines, glowing grids and orbs, glassmorphism, purple-to-blue gradients, emoji as icons, identical rounded cards in a row of three, "supercharge / seamless / unlock" copy, badge-pill eyebrow labels on everything, centred hero with two buttons and a screenshot under it.
 
 ## 9. How it is done (parts decided by you, parts by me)
 

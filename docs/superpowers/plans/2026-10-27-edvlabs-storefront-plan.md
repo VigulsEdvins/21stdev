@@ -58,7 +58,7 @@ Goal: a look that a person designed, applied through tokens so it can be used on
 - **E1.1 Research and moodboard (M).**
   - Subtasks: collect 15–20 references of editorial and independent-studio sites (print magazines, small agencies, zines), noting what makes each feel hand-made; collect 5 negative references (the AI look) and write what to avoid; write a one-page brand note: voice (plain, warm, a little dry), three words that describe it, three words it must never be.
   - Done when: the moodboard and brand note are in `docs/brand/` and you have approved them.
-- **E1.2 Two design directions as mock-ups, you choose one (L) [decision]. DONE 2026-10-27: six directions were shown (A to F); the owner chose E, mid-century poster (`docs/design/mockups/e/`).**
+- **E1.2 Two design directions as mock-ups, you choose one (L) [decision]. DONE 2026-10-27: six directions were shown (A to F); the owner chose E, mid-century poster (`docs/design/mockups/e/`; the others were removed, see git history).**
   - Subtasks: build two static HTML mock-ups of the same three screens (home, the first wizard question, one builder screen) in two different editorial takes (for example "paper and ink with a clay accent" and "newsprint with a bold type grid"); put them side by side; review with you; record the choice and the reasons.
   - Done when: one direction is chosen in writing. Nothing else in this epic starts before this.
 - **E1.3 Tokens and type (M). Status 2026-10-27: tokens, self-hosted fonts, usage page and an AA contrast check (`npm run check-brand`) are done (`site/styles/tokens.css`, `docs/brand/tokens.md`); still to do: spacing and type samples on the style page (E1.5).**

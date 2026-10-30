@@ -20,7 +20,7 @@ edvlabs sells landing pages and small websites at **edvlabs.com** (domain owned,
 ## Decided
 
 - **Order of work:** done-for-you path first (needs only email), then self-serve with accounts and payments.
-- **Look:** direction **E, mid-century poster** (teal, mustard, rust on cream; circles and arches; Gloock and Work Sans). Mock-ups of six directions are in `docs/design/mockups/` (open `index.html`); the chosen one is `e/`.
+- **Look:** direction **E, mid-century poster** (teal, mustard, rust on cream; circles and arches; Gloock and Work Sans). Six directions were mocked up; only the chosen one, `docs/design/mockups/e/`, is kept (the others are in git history).
 - **Hosting:** Cloudflare Pages for the static site and builder, Supabase (Pro plan once data is stored) for accounts, database and functions, Stripe for payment, an email service (Resend or Postmark). **No dedicated VM.**
 - **Prices (draft, accepted as a starting point):** €39 base including 3 blocks, €9 per extra block, €39 editor add-on; done-for-you adds €150 set-up plus €35 per block. To be tested against three real local quotes (E5.1a).
 - **Lead notifications:** email first, WhatsApp later. The owner gave the email address and the WhatsApp number in chat on 2026-10-27; **they are deliberately not stored in the repository.** They belong in environment settings. Ask the owner for them when configuring.
