@@ -213,6 +213,9 @@
     });
     return best;
   }
+  var guideX = document.createElement('div'), guideY = document.createElement('div');
+  guideX.style.display = guideY.style.display = 'none';
+  document.body.appendChild(guideX); document.body.appendChild(guideY);
   // Drag a text anywhere inside its block (Shift: drop it before or after a neighbour instead).
   // The place is sent as "x|y", a percent of the block's width, counted from where the page puts it.
   function dragFree(e, hit) {
@@ -225,11 +228,38 @@
     var start = { x: e.clientX, y: e.clientY }, r0 = el.getBoundingClientRect(), rr = root.getBoundingClientRect();
     var lo = { x: Math.min(0, rr.left - r0.left), y: Math.min(0, rr.top - r0.top) }, hi = { x: Math.max(0, rr.right - r0.right), y: Math.max(0, rr.bottom - r0.bottom) };
     var saved = el.style.getPropertyValue('translate'), savedOutline = root.style.outline, on = false, d = { x: 0, y: 0 };
+    // what it can line up with: the block's centre and edges, and the sides and middles of the block's other texts
+    var xs = [{ v: rr.left, c: 'root' }, { v: (rr.left + rr.right) / 2, c: 'root' }, { v: rr.right, c: 'root' }];
+    var ys = [{ v: rr.top, c: 'root' }, { v: (rr.top + rr.bottom) / 2, c: 'root' }, { v: rr.bottom, c: 'root' }];
+    hit.sec.fields.forEach(function (f) {
+      var o = f.id === hit.f.id ? null : resolve(hit.sec, f);
+      if (!o || o.contains(el) || el.contains(o)) return;
+      var q = o.getBoundingClientRect();
+      if (q.width < 1 || q.height < 1 || getComputedStyle(o).display === 'none') return;
+      [q.left, (q.left + q.right) / 2, q.right].forEach(function (v) { xs.push({ v: v, c: 'text' }); });
+      [q.top, (q.top + q.bottom) / 2, q.bottom].forEach(function (v) { ys.push({ v: v, c: 'text' }); });
+    });
+    // the closest line within reach for the three sides (or middle) of the moving text; returns { by, at, c }
+    function snap(mine, targets) {
+      var best = null;
+      mine.forEach(function (m) { targets.forEach(function (t) { var diff = t.v - m; var cost = Math.abs(diff) - (t.c === 'root' ? 3 : 0); // the block's own centre and edges win when they are about as close
+        if (Math.abs(diff) <= 6 && (!best || cost < best.cost)) best = { by: diff, at: t.v, c: t.c, cost: cost }; }); });
+      return best;
+    }
+    function line(box, vertical, at, kind) {
+      box.style.cssText = 'position:fixed;z-index:2147483647;pointer-events:none;background:' + (kind === 'root' ? '#00b181' : '#ff2d95') + ';' + (vertical ? 'width:1px;top:' + rr.top + 'px;height:' + (rr.bottom - rr.top) + 'px;left:' + at + 'px' : 'height:1px;left:' + rr.left + 'px;width:' + (rr.right - rr.left) + 'px;top:' + at + 'px');
+    }
     function move(ev) {
       if (!on && Math.abs(ev.clientX - start.x) + Math.abs(ev.clientY - start.y) < 8) return;
       if (!on) { on = true; root.style.outline = '2px dashed #00b181'; root.style.outlineOffset = '-2px'; document.documentElement.style.userSelect = 'none'; }
       d.x = Math.max(lo.x, Math.min(hi.x, ev.clientX - start.x));
       d.y = Math.max(lo.y, Math.min(hi.y, ev.clientY - start.y));
+      guideX.style.display = guideY.style.display = 'none';
+      if (!ev.altKey) {
+        var sx = snap([r0.left + d.x, r0.left + r0.width / 2 + d.x, r0.right + d.x], xs), sy = snap([r0.top + d.y, r0.top + r0.height / 2 + d.y, r0.bottom + d.y], ys);
+        if (sx) { d.x = Math.max(lo.x, Math.min(hi.x, d.x + sx.by)); line(guideX, true, sx.at, sx.c); guideX.style.display = 'block'; }
+        if (sy) { d.y = Math.max(lo.y, Math.min(hi.y, d.y + sy.by)); line(guideY, false, sy.at, sy.c); guideY.style.display = 'block'; }
+      }
       el.style.setProperty('translate', (base.x + d.x) + 'px ' + (base.y + d.y) + 'px');
       document.documentElement.style.cursor = 'grabbing';
       ev.preventDefault();
@@ -241,6 +271,7 @@
       document.documentElement.style.cursor = '';
       document.documentElement.style.userSelect = '';
       root.style.outline = savedOutline; root.style.outlineOffset = '';
+      guideX.style.display = guideY.style.display = 'none';
       if (!on) return;
       // give the element back to the page's own settings; the admin sends the new place back as a value
       if (saved) el.style.setProperty('translate', saved); else el.style.removeProperty('translate');

@@ -42,3 +42,12 @@ Owner: "I can change only positions, but I want to move around all section." Up/
 - **Applied** with the CSS `translate` property (not `transform`, so an element's own animation or rotation is not replaced), recomputed when the window is resized. The old inline value is restored on Reset.
 - **Panel:** a card shows "Moved" with a **Put back** button; Reset also clears it. Saved, imported, exported and ignored by the word counters exactly like `__hide` and `__move`.
 - **Limit:** a text moved by hand stays where it was put on every screen width, even if the layout there is different; the client checks the phone view.
+
+## Step 4 (2026-10-30, owner request): snap to the centre and to other texts
+
+Owner: "when I move them, it can help to center it or set in line with other buttons/texts."
+
+- While a text is dragged freely, it **snaps** (within 6 screen pixels) to: the **centre of the block** (across and down), the **edges of the block**, and the **left, centre, right / top, middle, bottom of every other text or button of the same block**. A line shows what it is lined up with (green for the block's centre and edges, pink for another text). Nothing is saved except the final place (`__shift`), so the data stays as it is.
+- **Hold Alt** to move without snapping.
+- Lines and snapping are only in the panel's preview (`scripts/cms/cms.js`); the page code is not touched.
+- Other fields are measured once when the drag starts; containers of the dragged text (and its own parts) are not targets.

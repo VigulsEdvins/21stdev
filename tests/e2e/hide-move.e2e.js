@@ -87,6 +87,43 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const w2 = await where();
   assert(Math.abs(w2.x - w0.x) < 1 && Math.abs(w2.y - w0.y) < 1 && !w2.tr, 'Put back: ' + JSON.stringify(w2));
 
+  // dragging near the block's centre snaps to it (a green line shows), and Alt turns snapping off
+  const geo = () => inPanel(() => { const e = document.querySelector('.hero-pill').getBoundingClientRect(), r = document.querySelector('.hero-pill').closest('.page-section').getBoundingClientRect(); return { cx: (e.left + e.right) / 2, rc: (r.left + r.right) / 2, cy: (e.top + e.bottom) / 2, x: e.left + e.width / 2, y: e.top + e.height / 2 }; });
+  const guides = () => inPanel(() => Array.from(document.body.children).filter((d) => d.style.position === 'fixed' && d.style.display === 'block' && /rgb\(0, 177, 129\)/.test(d.style.background)).length);
+  const g0 = await geo();
+  const nudge = async (alt) => {
+    const g = await geo();
+    if (alt) await page.keyboard.down('Alt');
+    await page.mouse.move(fr.x + g.x, fr.y + g.y); await page.mouse.down();
+    await page.mouse.move(fr.x + g.x + 20, fr.y + g.y + 20, { steps: 3 });
+    await page.mouse.move(fr.x + g.x + (g.rc - g.cx) + 2, fr.y + g.y + 30, { steps: 6 }); // 2 px right of the centre
+    await page.waitForTimeout(200);
+    const during = await guides();
+    await page.mouse.up(); if (alt) await page.keyboard.up('Alt'); await page.waitForTimeout(1200);
+    return { during, after: await geo() };
+  };
+  const snapped = await nudge(false);
+  assert(snapped.during >= 1, 'a green guide shows while it is near the centre');
+  assert(Math.abs(snapped.after.cx - snapped.after.rc) < 0.8, 'centred: ' + JSON.stringify(snapped.after));
+  await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-putback').click();
+  await page.waitForTimeout(1000);
+  const free = await nudge(true);
+  assert(Math.abs(free.after.cx - free.after.rc - 2) < 1.5, 'with Alt it stays where the mouse put it: ' + JSON.stringify(free.after));
+  await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-putback').click();
+  await page.waitForTimeout(1000);
+
+  // it also lines up with another text: the left side of the pill with the left side of the first chip
+  const edges = () => inPanel(() => ({ pill: document.querySelector('.hero-pill').getBoundingClientRect().left, pw: document.querySelector('.hero-pill').getBoundingClientRect().width, chip: document.querySelector('.chip').getBoundingClientRect().left, x: document.querySelector('.hero-pill').getBoundingClientRect().left + document.querySelector('.hero-pill').getBoundingClientRect().width / 2, y: document.querySelector('.hero-pill').getBoundingClientRect().top + 10 }));
+  const e0 = await edges();
+  await page.mouse.move(fr.x + e0.x, fr.y + e0.y); await page.mouse.down();
+  await page.mouse.move(fr.x + e0.x - 20, fr.y + e0.y + 20, { steps: 3 });
+  await page.mouse.move(fr.x + e0.x + (e0.chip - e0.pill) + 3, fr.y + e0.y + 60, { steps: 6 }); // 3 px right of the chip's left side
+  await page.mouse.up(); await page.waitForTimeout(1200);
+  const e1 = await edges();
+  assert(Math.abs(e1.pill - e1.chip) < 0.8, 'lined up with the chip: ' + JSON.stringify(e1));
+  await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-putback').click();
+  await page.waitForTimeout(1000);
+
   // hide: gone from the preview, the card says so, and the text is still there to show again
   await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-hide').click();
   await page.waitForTimeout(1200);
