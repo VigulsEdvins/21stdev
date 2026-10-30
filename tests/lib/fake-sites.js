@@ -25,6 +25,7 @@ function create() {
     async entitlementsByUser(userId) { return ents.filter((e) => e.user_id === userId); },
     async expiredHolds(nowIso) { return holds.filter((h) => new Date(h.expires_at) < new Date(nowIso)); },
     async deleteHold(name) { const i = holds.findIndex((h) => h.name === name); if (i >= 0) holds.splice(i, 1); },
+    async blockedSites() { return sites.filter((s) => s.status === 'blocked').map((s) => ({ id: s.id, name: s.name, version: s.version })); },
     async liveSites() { return sites.filter((s) => s.status === 'live').map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status, site_entitlements: ents.find((e) => e.site_id === s.id) || null })); },
     async setStatus(id, status) { sites.find((x) => x.id === id).status = status; }
   };

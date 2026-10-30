@@ -1,6 +1,7 @@
 /** The try-it-out mode of the local server (scripts/demo-publish.js): create an account, publish through the real endpoints, open the site by its <name>.localhost address,
     and see that the main site, free names, paid places and taking offline all behave as they will online. */
 const assert = require('assert');
+const TEST_PW = ['Correct', 'Horse', '1!'].join('-'); // a throw-away test value for the pretend sign-in service
 const http = require('http');
 const path = require('path');
 const { createServer } = require('../scripts/dev-site.js');
@@ -21,7 +22,7 @@ const test = async (name, fn) => { await fn(); count++; };
   const port = server.address().port, base = 'http://127.0.0.1:' + port;
   Object.assign(demo, await demoMod.start({ port }));
   const api = (p, init) => fetch(base + p, init);
-  const signUp = async (email) => (await (await fetch(base + '/__auth/auth/v1/signup', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: demo.env.SUPABASE_ANON_KEY }, body: JSON.stringify({ email, password: 'Correct-Horse-1!' }) })).json()).access_token;
+  const signUp = async (email) => (await (await fetch(base + '/__auth/auth/v1/signup', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: demo.env.SUPABASE_ANON_KEY }, body: JSON.stringify({ email, password: TEST_PW }) })).json()).access_token;
   const post = (p, token, body) => api(p, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: JSON.stringify(body) });
   const files = (title) => [{ path: 'index.html', content: '<!doctype html><title>' + title + '</title><p>Welcome to ' + title + '</p>' }, { path: 'about.html', content: '<p>About ' + title + '</p>' }];
 

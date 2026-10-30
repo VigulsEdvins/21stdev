@@ -280,9 +280,10 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf }) {
   /** Sweeps up after things the browser never tells us about; run on a timer (src/worker.js scheduled). Safe to run twice.
       1) sites whose database row is gone (account deleted): files and address removed
       2) sites whose payment ended more than the grace period ago: taken offline, files kept
-      3) name holds that ran out: released, and the redirect from the old address removed. */
+      3) name holds that ran out: released, and the redirect from the old address removed
+      4) sites the owner blocked in the database (scripts/block-site.js): the block is copied into the lookup visitors use. */
   async function sweep() {
-    const out = { orphans: 0, lapsed: 0, holds: 0 };
+    const out = { orphans: 0, lapsed: 0, holds: 0, blocked: 0 };
     let cursor;
     do {
       const l = await kv.list({ prefix: 'site:', cursor });
@@ -310,6 +311,11 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf }) {
       await db.deleteHold(h.name);
       try { const rec = JSON.parse(await kv.get(kvKey(h.name))); if (rec && rec.redirect) await kv.delete(kvKey(h.name)); } catch (e) { /* nothing stored under that name */ }
       out.holds++;
+    }
+    for (const x of await db.blockedSites()) {
+      let rec = null;
+      try { rec = JSON.parse(await kv.get(kvKey(x.name))); } catch (e) { rec = null; }
+      if (!rec || rec.status !== 'blocked') { await kv.put(kvKey(x.name), JSON.stringify({ id: x.id, version: x.version, status: 'blocked' })); out.blocked++; }
     }
     return out;
   }

@@ -224,18 +224,30 @@ const test = async (name, fn) => { await fn(); count++; };
     f.holds.push({ name: 'renamed-away', user_id: 'u1', expires_at: '2026-11-15T00:00:00Z' });
     f.kvStore.set('site:stale-redirect', JSON.stringify({ redirect: 'lapsing-shop' })); // a redirect with no hold behind it
     let r = await pub.sweep();
-    assert.deepStrictEqual(r, { orphans: 1, lapsed: 0, holds: 1 }, JSON.stringify(r));
+    assert.deepStrictEqual(r, { orphans: 1, lapsed: 0, holds: 1, blocked: 0 }, JSON.stringify(r));
     assert(!f.kvStore.has('site:gone-shop') && ![...f.objects.keys()].some((k) => k.startsWith('sites/' + goneId + '/')), 'the deleted account\'s site is gone from KV and R2');
     assert(f.kvStore.has('site:renamed-away'), 'a held redirect stays while the hold lasts');
     assert(f.sites.find((x) => x.name === 'lapsing-shop').status === 'live', 'still paid or in grace');
     setClock('2026-12-10T00:00:00.000Z'); // grace
-    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 1 }, 'the hold is now over (15 Nov), grace keeps the site live');
+    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 1, blocked: 0 }, 'the hold is now over (15 Nov), grace keeps the site live');
     assert(!f.kvStore.has('site:renamed-away') && f.holds.length === 0, 'expired hold released with its redirect');
     setClock('2026-12-20T00:00:00.000Z'); // 19 days after payment ended: grace is over
     r = await pub.sweep();
     assert.strictEqual(r.lapsed, 1); assert.strictEqual(f.sites[0].status, 'unpublished'); assert.strictEqual(JSON.parse(f.kvStore.get('site:lapsing-shop')).status, 'unpublished');
     assert([...f.objects.keys()].some((k) => k.endsWith('/index.html')), 'the files are kept so renewing brings the site back');
-    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 0 }, 'running again changes nothing');
+    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 0, blocked: 0 }, 'running again changes nothing');
+  });
+
+  await test('sweep: a site the owner blocked in the database stops being served within the hour; blocking is not undone by the sweep', async () => {
+    const { f, pub } = setup(); f.addEntitlement('u1', FUTURE);
+    await pub.publish({ userId: 'u1', name: 'bad-shop', files: [html()] });
+    f.sites[0].status = 'blocked'; // what scripts/block-site.js does to the database
+    assert.strictEqual(JSON.parse(f.kvStore.get('site:bad-shop')).status, 'live', 'until the sweep runs it is still served');
+    assert.strictEqual((await pub.sweep()).blocked, 1);
+    assert.strictEqual(JSON.parse(f.kvStore.get('site:bad-shop')).status, 'blocked');
+    assert.strictEqual((await pub.sweep()).blocked, 0, 'nothing more to do the second time');
+    assert.strictEqual((await pub.publish({ userId: 'u1', name: 'bad-shop', files: [html()] })).status, 403, 'the owner cannot publish it back');
+    assert.strictEqual(f.sites[0].status, 'blocked');
   });
 
   console.log(`✓ publish: ${count} groups (files, scan, payment, names, versions, failures, limits, unpublish)`);

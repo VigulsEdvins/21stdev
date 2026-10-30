@@ -87,7 +87,7 @@ function world() {
     assert(!JSON.stringify(j).includes('anon-secret-value'));
     assert.strictEqual(await PH.scheduled(env), null);
     const w = world(); w.f.addEntitlement(U1, FUTURE);
-    assert.deepStrictEqual(await PH.scheduled({}, w.deps), { orphans: 0, lapsed: 0, holds: 0 });
+    assert.deepStrictEqual(await PH.scheduled({}, w.deps), { orphans: 0, lapsed: 0, holds: 0, blocked: 0 });
   });
 
   console.log(`✓ publish http: ${count} groups (sign-in, methods, flow, refusals, headers, not set up)`);

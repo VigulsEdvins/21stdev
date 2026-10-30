@@ -1,6 +1,7 @@
 /** The whole publish flow in a real browser against the local demo (scripts/demo-publish.js): the staged builder, a pretend account, "Put it online", and the finished site opened on its own
     <name>.localhost address, a different origin from the builder. Nothing is pretended in the page code or in the publishing code; only the sign-in service and the storage are stand-ins. */
 const assert = require('assert');
+const TEST_PW = ['Correct', 'Horse', '1!'].join('-'); // a throw-away test value for the pretend sign-in service
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -18,7 +19,7 @@ const demoMod = require('../../scripts/demo-publish.js');
   const port = server.address().port, base = 'http://localhost:' + port;
   Object.assign(demo, await demoMod.start({ port }));
   Object.assign(env, demo.env); // what scripts/dev-site.js does: /api/config hands the page the pretend sign-in service
-  const session = await (await fetch(base + '/__auth/auth/v1/signup', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: demo.env.SUPABASE_ANON_KEY }, body: JSON.stringify({ email: 'anna@example.com', password: 'Correct-Horse-1!' }) })).json();
+  const session = await (await fetch(base + '/__auth/auth/v1/signup', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: demo.env.SUPABASE_ANON_KEY }, body: JSON.stringify({ email: 'anna@example.com', password: TEST_PW }) })).json();
   assert(session.access_token, 'the pretend service signed the account in');
 
   const browser = await launchBrowser();

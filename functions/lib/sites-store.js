@@ -40,6 +40,7 @@ function createDb(env, fetchImpl) {
     deleteHold: (name) => rest('DELETE', 'site_name_holds?name=eq.' + enc(name)),
     entitlementForSite: (siteId) => first('site_entitlements?select=*&limit=1&site_id=eq.' + enc(siteId)),
     entitlementsByUser: (userId) => all('site_entitlements?select=*&user_id=eq.' + enc(userId)),
+    insertEntitlement: async (row) => (await rest('POST', 'site_entitlements', row, 'return=representation'))[0],
     freeEntitlements: (userId) => all('site_entitlements?select=*&status=eq.active&site_id=is.null&order=paid_until.desc&user_id=eq.' + enc(userId)),
     async insertSite(row) {
       try {
@@ -60,6 +61,7 @@ function createDb(env, fetchImpl) {
     reserveVersion: (id) => rest('POST', 'rpc/reserve_site_version', { p_site: id }),
     goLive: (id, version, extra) => rest('POST', 'rpc/go_live_site', { p_site: id, p_version: version, p_project: (extra && extra.project_id) || null }),
     setStatus: (id, status) => rest('PATCH', 'published_sites?id=eq.' + enc(id), { status, updated_at: new Date().toISOString() }),
+    blockedSites: () => all('published_sites?select=id,name,version&status=eq.blocked&limit=500'),
     liveSites: (offset) => all('published_sites?select=id,name,version,status,site_entitlements(status,paid_until)&status=eq.live&order=created_at.asc&limit=500&offset=' + Number(offset || 0))
   };
 }
