@@ -20,19 +20,19 @@
       "reason": "Dynamic parts are fixed strings, class names, booleans or numbers chosen by the code itself; every text taken from a project, a field or the registry goes through escapeHtml."
     },
     {
-      "file": "scripts/assembler.js",
+      "file": "scripts/assembler/runtimes.js",
       "key": ".innerHTML = (on ? 'Reviewing' : 'Review') + ' <b>' + comments.length + '</b>'",
       "verdict": "fixed",
       "reason": "Review panel in the exported page: only numbers and constant text go through innerHTML; the section name, the reviewer name and the comment are set with textContent (changed 2026-10-28)."
     },
     {
-      "file": "scripts/assembler.js",
+      "file": "scripts/assembler/runtimes.js",
       "key": ".innerHTML = html",
       "verdict": "fixed",
       "reason": "Review panel in the exported page: only numbers and constant text go through innerHTML; the section name, the reviewer name and the comment are set with textContent (changed 2026-10-28)."
     },
     {
-      "file": "scripts/assembler.js",
+      "file": "scripts/assembler/runtimes.js",
       "key": ".innerHTML = value",
       "verdict": "safe",
       "reason": "Restores the HTML the element held before an override touched it (read from the same element), never an outside value."

@@ -4,12 +4,17 @@
       "count": 9
     }
   },
-  "scripts/assembler.js": {
+  "scripts/assembler/section-isolation.js": {
     "security/detect-non-literal-regexp": {
       "count": 3
     },
     "security/detect-unsafe-regex": {
-      "count": 6
+      "count": 2
+    }
+  },
+  "scripts/assembler/site-files.js": {
+    "security/detect-unsafe-regex": {
+      "count": 4
     }
   },
   "scripts/build-site.js": {

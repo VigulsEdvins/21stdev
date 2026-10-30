@@ -88,7 +88,7 @@ function ownFiles() {
 
 // Findings in the project's own code that were looked at and accepted, each with the reason. Anything else fails.
 const OWN_WAIVERS = [
-  { file: 'scripts/assembler.js', rule: 'eval', reason: 'the text "eval(" is a pattern the Content-Security-Policy generator searches section scripts for; the file never calls eval' },
+  { file: 'scripts/assembler/site-files.js', rule: 'eval', reason: 'the text "eval(" is a pattern the Content-Security-Policy generator searches section scripts for; the file never calls eval' },
   { file: 'scripts/builder/react-export.js', rule: 'new-function', reason: 'the React export wraps a section\'s own script in a component and starts it with new Function; the script is the vault\'s code that the plain page ships too, never visitor input' }
 ];
 
