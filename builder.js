@@ -347,11 +347,6 @@
       if (themePresetCards) themePresetCards.querySelectorAll('.theme-card-btn').forEach(b => b.classList.toggle('is-active', b.dataset.theme === theme));
       const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
       const colors = theme === 'custom' ? (st.customColors || {}) : (presets[theme] || {});
-      // a project saved with custom colours shows the colour pickers when it is opened
-      if (theme === 'custom') {
-        if (customColorsControls && customColorsControls.style.display === 'none') customColorsControls.style.display = 'inline-flex';
-        if (customThemeToggle) customThemeToggle.classList.add('is-active');
-      }
       // the preview width buttons follow the project's viewport (loaded project, API, undo)
       const stage = document.getElementById('viewportStage');
       const vp = st.viewport;

@@ -76,6 +76,25 @@ function resolveTheme(themeConfig) {
 }
 
 /**
+ * The opposite look of a theme, for the visitor's dark/light button: the preset the client chose (Other look), else the default
+ * preset of the opposite polarity. Colours are never derived from the page's own.
+ */
+function altTheme(themeConfig, altId, colors) {
+  const t = resolveTheme(themeConfig);
+  const dark = isDarkTheme(t);
+  const hex = (v) => typeof v === 'string' && /^#[0-9a-fA-F]{6}$/.test(v);
+  // the client's own colours (Other look: custom); only valid hex colours count, and the look must be the opposite of the page's
+  if (altId === 'custom' && colors && hex(colors.bg) && hex(colors.text) && hex(colors.accent)) {
+    const own = { id: 'custom-alt', name: 'Custom other look', bg: colors.bg, text: colors.text, accent: colors.accent };
+    if (isDarkTheme(own) !== dark) return own;
+  }
+  // the client's pick (a preset of the opposite polarity); without a valid pick, the default preset of the opposite polarity
+  const chosen = typeof altId === 'string' ? THEME_PRESETS[altId] : null;
+  if (chosen && isDarkTheme(chosen) !== dark) return chosen;
+  return THEME_PRESETS[NATIVE_PRESET_FOR_PAGE[dark ? 'dark' : 'light']];
+}
+
+/**
  * Checks whether a hex color string represents a dark color (luminance < 70).
  */
 function isDarkHex(hex) {
@@ -131,7 +150,7 @@ function sectionThemeAttr(pageIsDark, nativeList) {
   return pagePol;
 }
 
-const api = { THEME_PRESETS, resolveTheme, isDarkHex, isDarkTheme, NATIVE_PRESET_FOR_PAGE, sectionNativeList, sectionThemeAttr };
+const api = { THEME_PRESETS, resolveTheme, altTheme, isDarkHex, isDarkTheme, NATIVE_PRESET_FOR_PAGE, sectionNativeList, sectionThemeAttr };
 if (typeof module !== 'undefined' && module.exports) module.exports = api;
 if (typeof window !== 'undefined') window.AsmTheme = api;
 })();

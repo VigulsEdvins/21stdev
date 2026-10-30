@@ -7,13 +7,13 @@
 (function () {
 const { renderSectionOverlayHtml, OVERLAY_ELEMENT_CSS } = (typeof window !== 'undefined' && window.AsmOverlay) || require('./overlay.js');
 const { mapPageLinks, anchorNames, menuItems, anchorSpan, ANCHOR_CSS, navLinker, collectOverrides } = (typeof window !== 'undefined' && window.AsmPages) || require('./pages.js');
-const { fillLangSlots, hasLangSlot, LANG_CSS, LANG_JS } = (typeof window !== 'undefined' && window.AsmLangSlot) || require('./lang-slot.js');
+const { fillLangSlots, hasLangSlot, hasModeButton, LANG_CSS, LANG_JS, MODE_JS } = (typeof window !== 'undefined' && window.AsmLangSlot) || require('./lang-slot.js');
 const { OFFSCREEN_RUNTIME, OVERRIDES_RUNTIME, PRELOADER_DISMISS_PREVIEW, previewPageScript } = (typeof window !== 'undefined' && window.AsmRuntimes) || require('./runtimes.js');
 const { scopeSectionStyles, isolateSectionMarkup, isolateSectionScript, previewSectionScript, extractHeadLinks } = (typeof window !== 'undefined' && window.AsmIsolation) || require('./section-isolation.js');
 const { sectionIdentity, pickSource, isPreloaderSection, nativeAttrFor, renderSectionTag } = (typeof window !== 'undefined' && window.AsmParts) || require('./section-parts.js');
 const { formDelivery, renderPageHead } = (typeof window !== 'undefined' && window.AsmSiteFiles) || require('./site-files.js');
 const { fitScaleCss, sectionSizingStyle, renderResponsiveCss } = (typeof window !== 'undefined' && window.AsmSizing) || require('./sizing.js');
-const { generateUniversalThemeStyles, renderNativePaletteCss } = (typeof window !== 'undefined' && window.AsmThemeCss) || require('./theme-css.js');
+const { generateUniversalThemeStyles, generateModeThemeStyles, renderNativePaletteCss } = (typeof window !== 'undefined' && window.AsmThemeCss) || require('./theme-css.js');
 const { resolveTheme, isDarkTheme, sectionNativeList } = (typeof window !== 'undefined' && window.AsmTheme) || require('./theme.js');
 
 /**
@@ -204,7 +204,7 @@ function collectPreviewSections(sections, featuresData, options, isDark, nav) {
     const isSuppressed = isPreloader && (options.suppressPreloader === true || section.suppressPreloader === true);
     const preloaderClass = isPreloader ? (' is-preloader' + (isSuppressed ? ' is-dismissed is-suppressed' : '')) : '';
     // the builder preview and the editor's frame (options.langHost) carry the language button (hidden until the project has 2+ languages); a single-file export has one language and drops it
-    const isolatedHtml = fillLangSlots(autoNav(isolateSectionMarkup(rawHtml, id), section), !!(options.navPreview || options.langHost));
+    const isolatedHtml = fillLangSlots(autoNav(isolateSectionMarkup(rawHtml, id), section), !!(options.navPreview || options.langHost), (options.page || {}).modeButton !== 'off');
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     let styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
@@ -224,7 +224,8 @@ function collectPreviewSections(sections, featuresData, options, isDark, nav) {
   });
 
   if (sectionHtmlBlocks.some(hasLangSlot)) {
-    scopedStyleBlocks.push(`    /* Language button */\n${LANG_CSS}`);
+    scopedStyleBlocks.push(`    /* Header buttons */\n${LANG_CSS}`);
+    if (sectionHtmlBlocks.some(hasModeButton)) scriptBlocks.unshift(`        // Dark/light button\n${MODE_JS}`);
     scriptBlocks.push(`        // Language button\n${LANG_JS}`);
   }
 
@@ -260,7 +261,7 @@ function renderPreviewDocument(sections, options, theme, isDark, pageHead, parts
   <script>${OFFSCREEN_RUNTIME}</script>
   ${pageHead.headTags}
   ${externalLinksHtml ? externalLinksHtml + '\n  ' : ''}<style id="universal-theme-styles">
-${generateUniversalThemeStyles(theme)}
+${parts.sectionHtmlBlocks.some(hasModeButton) ? generateModeThemeStyles(theme, (options.page || {}).altTheme, { bg: (options.page || {}).altBg, text: (options.page || {}).altText, accent: (options.page || {}).altAccent }) : generateUniversalThemeStyles(theme)}
   </style>
   <style>
 ${allScopedStyles}

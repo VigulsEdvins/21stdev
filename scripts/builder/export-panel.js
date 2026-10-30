@@ -535,6 +535,13 @@
             openAdmin();
             return '';
           },
+          // the visitor's light/dark button: on unless the page setting says off; null when no header on the page has it
+          modeInfo: () => {
+            const cur = stackManager.getState();
+            const has = cur.stack.some(sec => !sec.hidden && (window.FEATURE_REGISTRY || []).some(f => f.slug === sec.slug && f.langSlot));
+            return has ? { has: true, on: cur.page.modeButton !== 'off' } : null;
+          },
+          setModeButton: (on) => stackManager.setPage({ modeButton: on ? '' : 'off' }),
           removeLanguage: (code) => {
             const L = window.BuilderLanguages, p = window.builderPreview;
             if (!L || !p || !p.applyState) return 'Languages are not available here.';

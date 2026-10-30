@@ -113,7 +113,9 @@
       // where form messages go, as exported (the editor's Form messages tab can change it later); the tab shows only when a page has a message form
       const pg = stackManager.getState().page;
       const forms = { method: pg.formMethod || '', target: pg.formTarget || '', has: Object.values(docs).some(d => /data-edv-form="message"/.test(d)) };
-      files['cms-content.js'] = cms.buildContent({ site: pg.title || 'Website', siteLang: pg.lang || 'en', pages, published, forms });
+      // the Light/dark mode tab shows only when the pages have the button
+      const mode = { has: Object.values(docs).some(d => /class="edv-mode"/.test(d)) };
+      files['cms-content.js'] = cms.buildContent({ site: pg.title || 'Website', siteLang: pg.lang || 'en', pages, published, forms, mode });
       const patched = {};
       if (html) pagesIn.forEach(p => { patched[p.file] = cms.injectTags(html[p.file], p.script); });
       return { files, docs, pages: patched, fields: pages.reduce((n, p) => n + p.sections.reduce((m, s) => m + s.fields.length, 0), 0) };

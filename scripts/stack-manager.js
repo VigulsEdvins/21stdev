@@ -25,7 +25,12 @@ const DEFAULT_PAGE = {
   bizEmail: '', // public contact address: goes into security.txt and the business data
   bizAddress: '',
   formMethod: '', // where form messages go: '' (nowhere yet) | netlify | email | formspree | web3forms | whatsapp | mailto | custom (see scripts/form-delivery.js)
-  formTarget: '' // the address, number or key that goes with formMethod
+  formTarget: '', // the address, number or key that goes with formMethod
+  altTheme: '', // the look the visitor's dark/light button switches to: '' = the default preset of the opposite polarity, a theme preset id, or 'custom' (altBg, altText, altAccent)
+  altBg: '',
+  altText: '',
+  altAccent: '',
+  modeButton: '' // '' = the header shows the dark/light button, 'off' = it does not
 };
 
 function createStackManager(initialConfig = {}) {

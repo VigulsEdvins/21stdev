@@ -59,6 +59,7 @@
 
 /* Theme Controls Group */
 .theme-controls-group {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -3305,3 +3306,27 @@ html:has(#adminOverlay:target:not(.is-closed)) { overflow: hidden; }
 .quick-edit[open] > summary { margin-bottom: 10px; }
 .page-lang { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; opacity: .85; }
 .page-lang input { width: 84px; font-size: 11.5px; padding: 3px 6px; }
+
+/* The colours popover: your colours and the other look (the light/dark button) in one small panel under the Palette button */
+.colors-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 60;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  min-width: 270px;
+  padding: 14px;
+  border: 1px solid var(--border-subtle, color-mix(in srgb, var(--ui-ink) 14%, transparent));
+  border-radius: 12px;
+  background: var(--ui-surface, var(--bg-1));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+.colors-popover .cp-group { display: flex; flex-direction: column; gap: 8px; }
+.colors-popover .cp-title { display: flex; flex-direction: column; gap: 2px; font-size: 12px; font-weight: 700; color: var(--text-main); }
+.colors-popover .cp-sub { font-size: 11px; font-weight: 400; color: var(--text-muted); }
+.colors-popover .cp-row { display: flex; align-items: center; gap: 14px; }
+.colors-popover .builder-select { width: 100%; }
+.colors-popover .cp-hint { margin: 0; font-size: 11px; color: var(--text-muted); }
+.colors-popover[hidden], .colors-popover .cp-group[hidden] { display: none !important; }

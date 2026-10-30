@@ -226,15 +226,11 @@
         stackManager.setCustomColors(customColors);
 
         if (theme === 'custom') {
-          if (customColorsControls) customColorsControls.style.display = 'inline-flex';
-          if (customThemeToggle) customThemeToggle.classList.add('is-active');
           if (bgColorInput && customColors.bg) bgColorInput.value = customColors.bg;
           if (textColorInput && customColors.text) textColorInput.value = customColors.text;
           if (accentColorInput && customColors.accent) accentColorInput.value = customColors.accent;
           applyDynamicTheme(customColors);
         } else {
-          if (customColorsControls) customColorsControls.style.display = 'none';
-          if (customThemeToggle) customThemeToggle.classList.remove('is-active');
           const presets = (window.Assembler && window.Assembler.THEME_PRESETS) || {};
           const preset = presets[theme];
           if (preset) {

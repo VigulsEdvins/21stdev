@@ -7,7 +7,7 @@
 // Parts of the assembler live in scripts/assembler/*.js (loaded first by builder.html; required in Node).
 const { computeSectionSizingStyles, renderResponsiveCss } = (typeof window !== 'undefined' && window.AsmSizing) || require('./assembler/sizing.js');
 const { findLocalAssetUrls, rewriteLocalAssetUrls, createZipArchive } = (typeof window !== 'undefined' && window.AsmZip) || require('./assembler/zip.js');
-const { THEME_PRESETS, resolveTheme, isDarkTheme } = (typeof window !== 'undefined' && window.AsmTheme) || require('./assembler/theme.js');
+const { THEME_PRESETS, resolveTheme, altTheme, isDarkTheme } = (typeof window !== 'undefined' && window.AsmTheme) || require('./assembler/theme.js');
 const { resolvePageLink, mapPageLinks, anchorNames, menuItems, collectOverrides } = (typeof window !== 'undefined' && window.AsmPages) || require('./assembler/pages.js');
 const { renderJsonLd, renderCsp, render404, renderSecurityTxt, SITE_EXTRA_FILES, renderDeployFiles, renderSiteFiles, renderPageHead } = (typeof window !== 'undefined' && window.AsmSiteFiles) || require('./assembler/site-files.js');
 const { generateUniversalThemeStyles, applyThemeToDocument, renderNativePaletteCss } = (typeof window !== 'undefined' && window.AsmThemeCss) || require('./assembler/theme-css.js');
@@ -22,6 +22,7 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     THEME_PRESETS,
     resolveTheme,
+    altTheme,
     isDarkTheme,
     generateUniversalThemeStyles,
     applyThemeToDocument,
@@ -62,6 +63,7 @@ if (typeof window !== 'undefined') {
   window.Assembler = {
     THEME_PRESETS,
     resolveTheme,
+    altTheme,
     isDarkTheme,
     generateUniversalThemeStyles,
     applyThemeToDocument,

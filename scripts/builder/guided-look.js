@@ -25,12 +25,19 @@
     const colourBox = el(doc, 'div', { class: 'lk-grid', role: 'group', 'aria-label': 'Colours' });
     const fontBox = el(doc, 'div', { class: 'lk-grid lk-grid--wide', role: 'group', 'aria-label': 'Fonts' });
     const roundBox = el(doc, 'div', { class: 'lk-grid', role: 'group', 'aria-label': 'Corners' });
+    const altBox = el(doc, 'div', { class: 'lk-grid', role: 'group', 'aria-label': 'Other look' });
+    const altInputs = {};
+    const altWarn = el(doc, 'p', { class: 'lk-guard is-bad', hidden: '' });
+    const altOwn = el(doc, 'div', { class: 'lk-grid', role: 'group', 'aria-label': 'Your own colours for the other look', hidden: '' });
     const guard = el(doc, 'p', { class: 'lk-guard', id: 'lookGuard', role: 'status', 'aria-live': 'polite' });
     const fixBtn = el(doc, 'button', { type: 'button', class: 'builder-btn-primary lk-fix', id: 'lookFix', text: 'Fix it for me' });
+    const altSection = el(doc, 'div', { class: 'lk-alt' },
+      el(doc, 'h3', { class: 'lk-h', text: 'Other look' }), el(doc, 'p', { class: 'lk-guard', text: 'Visitors can switch your page to this look with the sun/moon button in the header.' }), altBox, altOwn);
     const root = el(doc, 'section', { class: 'look-picker', id: 'lookPicker', 'aria-label': 'Look of your page' },
       el(doc, 'h3', { class: 'lk-h', text: 'Colours' }), colourBox, guard, fixBtn,
       el(doc, 'h3', { class: 'lk-h', text: 'Fonts' }), fontBox,
-      el(doc, 'h3', { class: 'lk-h', text: 'Corners' }), roundBox);
+      el(doc, 'h3', { class: 'lk-h', text: 'Corners' }), roundBox,
+      altSection);
     host.insertBefore(root, host.firstChild);
 
     // the page settings that only make sense in Advanced get a marker the stylesheet hides in guided mode
@@ -53,7 +60,7 @@
 
     function render() {
       const st = sm.getState(), c = colours(), page = st.page;
-      colourBox.replaceChildren(); fontBox.replaceChildren(); roundBox.replaceChildren();
+      colourBox.replaceChildren(); fontBox.replaceChildren(); roundBox.replaceChildren(); altBox.replaceChildren();
       Sets.COLOUR_SETS.forEach((s) => {
         const on = st.theme === 'custom' && same(c.bg, s.bg) && same(c.text, s.text) && same(c.accent, s.accent);
         const sw = el(doc, 'span', { class: 'lk-swatch', 'aria-hidden': 'true' });
@@ -72,6 +79,45 @@
         sw.style.borderTopLeftRadius = r.value || '10px';
         choice(roundBox, r.label, same(page.radius, r.value), () => sm.setPage({ radius: r.value }), sw);
       });
+
+      // the look the visitor's dark/light button switches to: a theme of the opposite polarity (the default is marked until one is picked)
+      const A = win.Assembler;
+      // only while a header on the page has the light/dark button and it is not switched off (Light/dark mode tab of the admin panel)
+      const reg = win.FEATURE_REGISTRY || [];
+      const wantAlt = page.modeButton !== 'off' && st.stack.some((sec) => !sec.hidden && reg.some((f) => f.slug === sec.slug && f.langSlot));
+      altSection.hidden = !wantAlt;
+      if (A && A.THEME_PRESETS && wantAlt) {
+        const now = st.theme === 'custom' ? st.customColors : st.theme;
+        const curDark = A.isDarkTheme(A.resolveTheme(now));
+        const swatchOf = (bg, text, accent) => { const sw = el(doc, 'span', { class: 'lk-swatch', 'aria-hidden': 'true' }); sw.style.background = bg; sw.style.borderColor = accent; sw.style.color = text; sw.append(el(doc, 'i', { text: 'Aa' })); return sw; };
+        const shown = A.altTheme(now, page.altTheme || '').id;
+        Object.keys(A.THEME_PRESETS).filter((k) => A.isDarkTheme(A.THEME_PRESETS[k]) !== curDark).forEach((k) => {
+          const t = A.THEME_PRESETS[k];
+          choice(altBox, t.name, shown === k && page.altTheme !== 'custom', () => sm.setPage({ altTheme: k }), swatchOf(t.bg, t.text, t.accent));
+        });
+        // the client's own colours: three colour boxes, and the look has to be the opposite of the page's
+        const HEX = /^#[0-9a-fA-F]{6}$/, dflt = A.altTheme(now, '');
+        const own = { bg: HEX.test(page.altBg) ? page.altBg : dflt.bg, text: HEX.test(page.altText) ? page.altText : dflt.text, accent: HEX.test(page.altAccent) ? page.altAccent : dflt.accent };
+        const isCustom = page.altTheme === 'custom';
+        choice(altBox, 'Your own colours', isCustom, () => sm.setPage({ altTheme: 'custom', altBg: own.bg, altText: own.text, altAccent: own.accent }), swatchOf(own.bg, own.text, own.accent));
+        altOwn.hidden = !isCustom;
+        if (isCustom) {
+          // the colour boxes are made once, so a colour picker that is open is not rebuilt under the client's hand
+          if (!altOwn.firstChild) {
+            let timer = null;
+            [['bg', 'Background'], ['text', 'Text'], ['accent', 'Buttons and links']].forEach(([k, label]) => {
+              const inp = el(doc, 'input', { type: 'color', 'aria-label': label });
+              altInputs[k] = inp;
+              inp.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(() => sm.setPage({ altTheme: 'custom', altBg: altInputs.bg.value, altText: altInputs.text.value, altAccent: altInputs.accent.value }), 150); });
+              altOwn.append(el(doc, 'label', { class: 'lk-btn' }, el(doc, 'span', { text: label }), inp));
+            });
+            altOwn.append(altWarn);
+          }
+          ['bg', 'text', 'accent'].forEach((k) => { if (doc.activeElement !== altInputs[k]) altInputs[k].value = own[k]; });
+          altWarn.hidden = A.isDarkTheme({ bg: own.bg }) !== curDark;
+          altWarn.textContent = 'The background needs to be ' + (curDark ? 'light' : 'dark') + ' to be the other look.';
+        }
+      }
 
       const problems = Sets.check(c);
       const fix = Object.assign({}, ...problems.map((p) => p.fix));

@@ -35,6 +35,7 @@
   var BACKUP_TAB = '__backup';
   var FORM_TAB = '__forms';
   var LANG_TAB = '__langs';
+  var MODE_TAB = '__mode';
   var R = window.EdvFormRules; // the choices and checks for where form messages go (form-rules.js)
   var siteKey = 'edv-cms:' + location.pathname.replace(/[^/]*$/, '');
 
@@ -398,6 +399,7 @@
     $('cms-nav-backup').classList.toggle('is-active', tab === BACKUP_TAB);
     $('cms-nav-forms').classList.toggle('is-active', tab === FORM_TAB);
     $('cms-nav-langs').classList.toggle('is-active', tab === LANG_TAB);
+    $('cms-nav-mode').classList.toggle('is-active', tab === MODE_TAB);
   }
   function refreshNavMeta() {
     var items = $('cms-nav').children;
@@ -900,6 +902,27 @@
       el('p', { class: 'cms-hint', text: inBuilder ? '' : 'Press Publish, then download cms-content.js and upload it to change the live site. A language that is off stays on the server but is not offered in the switcher.' })
     ]));
   }
+  /* The visitor's light/dark button in the header: on unless switched off. Inside the builder the choice is a page setting; in the downloaded editor it is kept as `__mode: 'off'` */
+  function modeInfo() {
+    if (inBuilder) return bridge.modeInfo ? bridge.modeInfo() : null;
+    return C.mode && C.mode.has ? { has: true, on: draft.__mode !== 'off' } : null;
+  }
+  function renderMode() {
+    var info = modeInfo();
+    var box = el('input', { type: 'checkbox', id: 'cms-mode-on' });
+    box.checked = !info || info.on;
+    box.addEventListener('change', function () {
+      if (inBuilder) { bridge.setModeButton(box.checked); refreshPreview(); return; }
+      if (box.checked) delete draft.__mode; else draft.__mode = 'off';
+      snapshot(); changed(false);
+    });
+    $('cms-editor').appendChild(el('div', { class: 'cms-panel', id: 'cms-mode-panel' }, [
+      el('h2', { text: 'Light/dark mode' }),
+      el('p', { class: 'cms-hint', text: 'Visitors can switch the website between a light and a dark look with a sun/moon button in the header. Untick to take the button away; the website then always shows its main look.' }),
+      el('label', { class: 'cms-lang-name', for: 'cms-mode-on' }, [box, el('span', { text: 'Show the light/dark button in the header' })]),
+      el('p', { class: 'cms-hint', text: inBuilder ? '' : 'Press Publish, then download cms-content.js and upload it to change the live site.' })
+    ]));
+  }
   function renderForms() { $('cms-editor').appendChild(formPanel(false)); }
 
   function renderBackup() {
@@ -1047,10 +1070,11 @@
     ed.textContent = '';
     renderNav();
     var title = $('cms-title');
-    $('cms-search').hidden = tab === BACKUP_TAB || tab === FORM_TAB || tab === LANG_TAB;
+    $('cms-search').hidden = tab === BACKUP_TAB || tab === FORM_TAB || tab === LANG_TAB || tab === MODE_TAB;
     if (tab === BACKUP_TAB) { title.textContent = 'Publishing & backup'; renderBackup(); }
     else if (tab === FORM_TAB) { title.textContent = 'Form messages'; renderForms(); }
     else if (tab === LANG_TAB) { title.textContent = 'Languages'; renderLangs(); }
+    else if (tab === MODE_TAB) { title.textContent = 'Light/dark mode'; renderMode(); }
     else {
       var sec = findSection(tab);
       title.textContent = sec ? sec.title : page().title;
@@ -1129,6 +1153,8 @@
   $('cms-nav-backup').addEventListener('click', function () { tab = BACKUP_TAB; render(); });
   $('cms-nav-forms').addEventListener('click', function () { tab = FORM_TAB; render(); });
   $('cms-nav-langs').addEventListener('click', function () { tab = LANG_TAB; render(); });
+  $('cms-nav-mode').hidden = !modeInfo();
+  $('cms-nav-mode').addEventListener('click', function () { tab = MODE_TAB; render(); });
   $('cms-publish').addEventListener('click', publish);
   $('cms-undo').addEventListener('click', function () { goHistory(-1); });
   $('cms-redo').addEventListener('click', function () { goHistory(1); });

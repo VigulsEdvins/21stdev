@@ -1,14 +1,15 @@
 /**
- * The language button every header can carry. A header's markup holds an empty slot, `<div data-edv-lang></div>`; this file turns it into
- * the button (a globe, the language code and a menu) or removes it, and holds the CSS and JS the button needs, written once for all headers.
- * The button uses the class names of the "Language Switcher Header" block (lsw-lang, lsw-menu, lsw-code), so wireLanguageSwitcher
+ * The buttons every header can carry. A header's markup holds an empty slot, `<div data-edv-lang></div>`; this file turns it into a small
+ * container with the visitor's dark/light button and, when the project has 2+ languages, the language button (a globe, the language code
+ * and a menu), and holds the CSS and JS they need, written once for all headers.
+ * The language button uses the class names of the "Language Switcher Header" block (lsw-lang, lsw-menu, lsw-code), so wireLanguageSwitcher
  * (single-pages.js), the editor's language trimming (cms.js) and the builder's `__edvLangs` host treat both the same way.
  */
 (function () {
 'use strict';
 
 const SLOT = /<div data-edv-lang><\/div>/g;
-const BUTTON = '<div class="lsw-lang" data-edv-lang="on" hidden>'
+const LANG_BUTTON = '<div class="lsw-lang" data-edv-lang="on" hidden>'
   + '<button type="button" class="lsw-current" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">'
   + '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>'
   + '<span class="lsw-code" data-cms-skip>EN</span>'
@@ -16,14 +17,20 @@ const BUTTON = '<div class="lsw-lang" data-edv-lang="on" hidden>'
   + '</button>'
   + '<ul class="lsw-menu" data-cms-skip role="listbox" aria-label="Choose language" hidden></ul>'
   + '</div>';
+const MODE_BUTTON = '<button type="button" class="edv-mode" data-cms-skip aria-label="Switch to dark mode" aria-pressed="false">'
+  + '<svg class="edv-mode-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>'
+  + '<svg class="edv-mode-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'
+  + '</button>';
 
-/** True when the markup has a slot or a button. */
-const hasLangSlot = (html) => /data-edv-lang="on"/.test(String(html));
+/** True when the markup has the buttons' container / the dark/light button. */
+const hasLangSlot = (html) => /data-edv-lang="tools"/.test(String(html));
+const hasModeButton = (html) => /class="edv-mode"/.test(String(html));
 
-/** Turns every slot into the (hidden) button, or removes it when the page has one language. */
-const fillLangSlots = (html, keep) => String(html).replace(SLOT, keep ? BUTTON : '');
+/** Turns every slot into the container: the dark/light button (unless switched off) and, when the page has translations, the (hidden) language button; with neither the slot just goes. */
+const fillLangSlots = (html, withLang, withMode = true) => String(html).replace(SLOT, () => (withLang || withMode ? `<div class="edv-tools" data-edv-lang="tools">${withMode ? MODE_BUTTON : ''}${withLang ? LANG_BUTTON : ''}</div>` : ''));
 
-const LANG_CSS = `[data-edv-lang] { position: relative; z-index: 60; flex: none; font-family: var(--font-body, inherit); font-size: 1rem; letter-spacing: normal; text-transform: none; line-height: 1.2; }
+const LANG_CSS = `.edv-tools { display: inline-flex; align-items: center; gap: 8px; }
+[data-edv-lang] { position: relative; z-index: 60; flex: none; font-family: var(--font-body, inherit); font-size: 1rem; letter-spacing: normal; text-transform: none; line-height: 1.2; }
 [data-edv-lang][hidden] { display: none !important; }
 [data-edv-lang] .lsw-current { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: .85rem; font-weight: 600; letter-spacing: .06em; color: inherit; padding: 8px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 22%, transparent); background: transparent; cursor: pointer; }
 [data-edv-lang] .lsw-current svg { width: 16px; height: 16px; }
@@ -35,6 +42,11 @@ const LANG_CSS = `[data-edv-lang] { position: relative; z-index: 60; flex: none;
 [data-edv-lang] .lsw-menu li:hover, [data-edv-lang] .lsw-menu li:focus { background: color-mix(in srgb, var(--text, #f3f4f6) 12%, transparent); outline: none; }
 [data-edv-lang] .lsw-menu li[aria-selected="true"] { color: var(--accent, #7c8cff); font-weight: 600; }
 [data-edv-lang] .lsw-current:focus-visible, [data-edv-lang] .lsw-menu li:focus-visible { outline: 2px solid var(--accent, #7c8cff); outline-offset: 2px; }
+[data-edv-lang] .edv-mode { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; padding: 0; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--text, #f3f4f6) 22%, transparent); background: transparent; color: inherit; cursor: pointer; }
+[data-edv-lang] .edv-mode svg { width: 18px; height: 18px; }
+[data-edv-lang] .edv-mode:focus-visible { outline: 2px solid var(--accent, #7c8cff); outline-offset: 2px; }
+html[data-theme="dark"] .edv-mode .edv-mode-moon, html:not([data-theme="dark"]) .edv-mode .edv-mode-sun { display: none; }
+@media (max-width: 480px) { .edv-tools { gap: 6px; } [data-edv-lang] .edv-mode { width: 34px; height: 34px; } [data-edv-lang] .lsw-current { gap: 5px; padding: 8px 10px; } [data-edv-lang] .lsw-current > svg:first-child { display: none; } }
 @media (prefers-reduced-motion: reduce) { [data-edv-lang] .lsw-current .lsw-caret { transition: none; } }`;
 
 // Opens and closes the menu. In the builder's preview the menu lists the project's languages and opens the page of the one chosen;
@@ -82,7 +94,48 @@ const LANG_JS = `(function () {
   });
 })();`;
 
-const api = { fillLangSlots, hasLangSlot, LANG_CSS, LANG_JS };
+// The visitor's dark/light button: flips <html data-mode="alt"> (the styles of the other look), the data-theme of the page, its sections and
+// nested components, and the .dark class of sections, the same way applyThemeToDocument does. The choice is kept in localStorage (not inside the builder).
+const MODE_JS = `(function () {
+  var html = document.documentElement, base = html.getAttribute('data-theme') === 'light' ? 'light' : 'dark', cur = base;
+  var KEY = 'edv-mode', inBuilder = false;
+  try { inBuilder = window.parent !== window && !!window.parent.__edvLangs; } catch (e) { inBuilder = false; }
+  function apply(pol) {
+    cur = pol;
+    if (pol === base) html.removeAttribute('data-mode'); else html.setAttribute('data-mode', 'alt');
+    html.setAttribute('data-theme', pol);
+    if (document.body) document.body.setAttribute('data-theme', pol);
+    function nativeEl(el) { var h = el && el.closest ? el.closest('.page-section[data-native-for]') : null; return !!h && (h.getAttribute('data-native-for') || '').split(' ').indexOf(pol) >= 0; }
+    var flip = pol === 'dark' ? 'light' : 'dark';
+    Array.prototype.forEach.call(document.querySelectorAll('.page-section:not(.is-preloader)'), function (s) {
+      var v = nativeEl(s) ? flip : pol;
+      s.setAttribute('data-theme', v); s.classList.toggle('dark', v === 'dark');
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-theme]:not(html):not(body):not(.page-section)'), function (el) { el.setAttribute('data-theme', nativeEl(el) ? flip : pol); });
+    Array.prototype.forEach.call(document.querySelectorAll('.edv-mode'), function (b) {
+      b.setAttribute('aria-pressed', String(pol === 'dark'));
+      b.setAttribute('aria-label', pol === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+    try { window.dispatchEvent(new CustomEvent('themechange', { detail: { isDark: pol === 'dark' } })); } catch (e) { /* older browser */ }
+  }
+  function start() {
+    var saved = null;
+    if (!inBuilder) { try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; } }
+    if ((saved === 'light' || saved === 'dark') && saved !== base) apply(saved); // the default look needs no change to the page
+    Array.prototype.forEach.call(document.querySelectorAll('.edv-mode'), function (b) {
+      b.setAttribute('aria-pressed', String(cur === 'dark')); b.setAttribute('aria-label', cur === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      b.addEventListener('click', function () {
+        var next = cur === 'dark' ? 'light' : 'dark';
+        apply(next);
+        if (!inBuilder) { try { localStorage.setItem(KEY, next); } catch (e) { /* storage blocked: the choice lasts for this visit */ } }
+      });
+    });
+  }
+  window.__edvMode = { reset: function () { if (cur !== base) apply(base); try { localStorage.removeItem(KEY); } catch (e) { /* storage blocked */ } } };
+  start();
+})();`;
+
+const api = { fillLangSlots, hasLangSlot, hasModeButton, LANG_CSS, LANG_JS, MODE_JS };
 if (typeof module !== 'undefined' && module.exports) module.exports = api;
 if (typeof window !== 'undefined') window.AsmLangSlot = api;
 })();

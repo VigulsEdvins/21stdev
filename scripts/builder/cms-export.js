@@ -19,7 +19,7 @@
   }
 
   /** The cms-content.js text. `pages` is [{ file, title, sections: [{ id, slug, title, fields: [...] }] }]. */
-  function buildContent({ site, siteLang = '', pages, published = {}, updatedAt = 0, forms = null }) {
+  function buildContent({ site, siteLang = '', pages, published = {}, updatedAt = 0, forms = null, mode = null }) {
     const data = {
       v: 1,
       site: site || 'Website',
@@ -45,6 +45,7 @@
         }))
       })),
       forms: forms && typeof forms === 'object' ? { method: String(forms.method || ''), target: String(forms.target || ''), has: !!forms.has } : { method: '', target: '', has: false },
+      ...(mode && mode.has ? { mode: { has: true } } : {}),
       published
     };
     // '<' is escaped so no editable text can close a script tag

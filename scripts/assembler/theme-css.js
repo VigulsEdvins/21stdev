@@ -5,7 +5,7 @@
  * The code between the braces is not indented, so the template strings in it stay byte for byte as they were.
  */
 (function () {
-const { THEME_PRESETS, resolveTheme, isDarkTheme, NATIVE_PRESET_FOR_PAGE, sectionNativeList } = (typeof window !== 'undefined' && window.AsmTheme) || require('./theme.js');
+const { THEME_PRESETS, resolveTheme, altTheme, isDarkTheme, NATIVE_PRESET_FOR_PAGE, sectionNativeList } = (typeof window !== 'undefined' && window.AsmTheme) || require('./theme.js');
 
 /**
  * The CSS variables written into :root for a theme, in groups (the comment is printed above its group).
@@ -550,6 +550,68 @@ ${!isDark ? `
     }`}`;
 }
 
+/** Splits a selector list at the commas that are not inside brackets. */
+function splitSelectors(list) {
+  const out = [];
+  let depth = 0, cur = '';
+  for (const ch of list) {
+    if (ch === '(' || ch === '[') depth++;
+    else if (ch === ')' || ch === ']') depth--;
+    if (ch === ',' && depth === 0) { out.push(cur); cur = ''; } else cur += ch;
+  }
+  out.push(cur);
+  return out.map(x => x.trim()).filter(Boolean);
+}
+
+/** Puts every rule of `css` under `prefix` (:root, html and body become the prefix itself); rules for `*` and at-rules other than @media are dropped. */
+function scopeCss(css, prefix, keepStar = false) {
+  const text = String(css).replace(/\/\*[\s\S]*?\*\//g, '');
+  const out = [];
+  let i = 0;
+  const readBlock = (from) => { // index of the brace that closes the block opened at `from`
+    let depth = 0;
+    for (let k = from; k < text.length; k++) { if (text[k] === '{') depth++; else if (text[k] === '}' && --depth === 0) return k; }
+    return text.length - 1;
+  };
+  while (i < text.length) {
+    const open = text.indexOf('{', i);
+    if (open < 0) break;
+    const head = text.slice(i, open).trim();
+    const close = readBlock(open);
+    const body = text.slice(open + 1, close);
+    if (head.startsWith('@media')) out.push(`${head} {\n${scopeCss(body, prefix, keepStar)}\n}`);
+    else if (!head.startsWith('@')) {
+      if (keepStar && /^\*/.test(head)) { out.push(`${head} {${body}}`); i = close + 1; continue; }
+      const sels = splitSelectors(head).filter(s => !/^\*/.test(s)).map(s => {
+        if (s === ':root' || s === 'html') return prefix;
+        if (/^(html|:root)\s/.test(s)) return prefix + s.replace(/^(html|:root)/, '');
+        return `${prefix} ${s}`;
+      });
+      if (sels.length) out.push(`${sels.join(',\n')} {${body}}`);
+    }
+    i = close + 1;
+  }
+  return out.join('\n');
+}
+
+/**
+ * The page styles for a page with the dark/light button: the colour variables (:root) stay as they are, every other rule of the page's own
+ * look applies only while <html data-mode="alt"> is NOT set, and the styles of the other look apply only while it is set. So a rule written
+ * for one polarity (light-theme fixes for dark-designed components, and the other way round) never lingers in the other look.
+ */
+function generateModeThemeStyles(themeConfig, altId, altColors) {
+  const base = generateUniversalThemeStyles(resolveTheme(themeConfig));
+  const end = base.indexOf('\n    }\n');
+  const root = end < 0 ? base : base.slice(0, end + 7);
+  const rest = end < 0 ? '' : base.slice(end + 7);
+  return `${root}\n${scopeCss(rest, 'html:not([data-mode="alt"])', true)}\n${generateAltThemeStyles(themeConfig, altId, altColors)}`;
+}
+
+/** The styles of the opposite look, active while <html data-mode="alt"> is set (the visitor's dark/light button). */
+function generateAltThemeStyles(themeConfig, altId, altColors) {
+  return `/* Other look (dark/light button) */\n${scopeCss(generateUniversalThemeStyles(altTheme(themeConfig, altId, altColors)), 'html[data-mode="alt"]')}\n`;
+}
+
 /**
  * Synchronously applies all dynamic theme variables, color-scheme, data-theme,
  * universal styles, and section backgrounds directly to a target document (e.g. iframe).
@@ -725,7 +787,7 @@ function renderNativePaletteCss(sections, nativeMap) {
   return blocks.length ? `/* Native-palette sections */\n${blocks.join('\n')}\n` : '';
 }
 
-const api = { generateUniversalThemeStyles, applyThemeToDocument, renderNativePaletteCss };
+const api = { generateUniversalThemeStyles, generateAltThemeStyles, generateModeThemeStyles, scopeCss, applyThemeToDocument, renderNativePaletteCss };
 if (typeof module !== 'undefined' && module.exports) module.exports = api;
 if (typeof window !== 'undefined') window.AsmThemeCss = api;
 })();

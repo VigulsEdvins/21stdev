@@ -60,23 +60,47 @@
           </select>
         </div>
 
-        <button type="button" class="custom-theme-toggle-btn" id="customThemeToggle" title="Toggle custom color controls">
+        <button type="button" class="custom-theme-toggle-btn" id="customThemeToggle" title="Colours of your page and of the other look" aria-haspopup="dialog" aria-expanded="false">
           <span>Palette</span>
         </button>
 
-        <div class="custom-colors-container" id="customColorsControls" style="display: none;">
-          <label class="color-control-item" title="Page Background Color">
-            <span class="color-label">BG</span>
-            <input type="color" id="bgColor" value="#0b0f19" class="color-input" />
-          </label>
-          <label class="color-control-item" title="Page Text Color">
-            <span class="color-label">Text</span>
-            <input type="color" id="textColor" value="#f3f4f6" class="color-input" />
-          </label>
-          <label class="color-control-item" title="Brand Accent Color">
-            <span class="color-label">Accent</span>
-            <input type="color" id="accentColor" value="#6366f1" class="color-input" />
-          </label>
+        <div class="custom-colors-container colors-popover" id="customColorsControls" style="display: none;" role="dialog" aria-label="Colours">
+          <div class="cp-group">
+            <div class="cp-title">Your colours</div>
+            <div class="cp-row">
+              <label class="color-control-item" title="Page Background Color">
+                <span class="color-label">BG</span>
+                <input type="color" id="bgColor" value="#0b0f19" class="color-input" />
+              </label>
+              <label class="color-control-item" title="Page Text Color">
+                <span class="color-label">Text</span>
+                <input type="color" id="textColor" value="#f3f4f6" class="color-input" />
+              </label>
+              <label class="color-control-item" title="Brand Accent Color">
+                <span class="color-label">Accent</span>
+                <input type="color" id="accentColor" value="#6366f1" class="color-input" />
+              </label>
+            </div>
+          </div>
+          <div class="cp-group" id="altThemeWrap">
+            <div class="cp-title"><label for="altThemeSelect">Other look</label><span class="cp-sub">the light/dark button in the header switches to it</span></div>
+            <select id="altThemeSelect" class="builder-select" aria-label="Look the light/dark button switches to"></select>
+            <div class="cp-row" id="altCustomControls" style="display: none;">
+              <label class="color-control-item" title="Other look: background color">
+                <span class="color-label">BG</span>
+                <input type="color" id="altBgColor" value="#ffffff" class="color-input" />
+              </label>
+              <label class="color-control-item" title="Other look: text color">
+                <span class="color-label">Text</span>
+                <input type="color" id="altTextColor" value="#111111" class="color-input" />
+              </label>
+              <label class="color-control-item" title="Other look: accent color">
+                <span class="color-label">Accent</span>
+                <input type="color" id="altAccentColor" value="#6366f1" class="color-input" />
+              </label>
+            </div>
+            <p class="cp-hint" id="altCustomHint" role="status" hidden></p>
+          </div>
         </div>
       </div>
 

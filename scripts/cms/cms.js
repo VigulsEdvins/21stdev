@@ -79,7 +79,15 @@
     return fromFile.values;
   }
 
+  /* The light/dark button: switched off in the editor (`__mode: 'off'`), it goes and the page returns to its main look */
+  function applyMode(values) {
+    var off = !!values && values.__mode === 'off';
+    Array.prototype.forEach.call(document.querySelectorAll('.edv-mode'), function (b) { b.style.display = off ? 'none' : ''; });
+    if (off && window.__edvMode) window.__edvMode.reset();
+  }
   apply(preview ? (read('draft') && read('draft').values) || published() : published());
+  var startValues = preview ? (read('draft') && read('draft').values) || published() : published();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { applyMode(startValues); }); else applyMode(startValues);
   // Where form messages go, if the owner changed it in the editor: the form script re-checks it before using it
   var chosen = published().__form;
   if (!preview && chosen && typeof chosen === 'object') window.__edvForm = { method: String(chosen.method || ''), target: String(chosen.target || '') };
@@ -105,7 +113,7 @@
 
   window.addEventListener('message', function (e) {
     if (e.source !== fromAdmin || !e.data || typeof e.data !== 'object') return;
-    if (e.data.type === 'edv-cms:values') apply(e.data.values || {});
+    if (e.data.type === 'edv-cms:values') { apply(e.data.values || {}); applyMode(e.data.values || {}); }
     if (e.data.type === 'edv-cms:focus') focusTarget(e.data.section, e.data.field);
   });
 

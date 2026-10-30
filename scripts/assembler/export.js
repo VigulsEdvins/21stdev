@@ -8,15 +8,18 @@
 const { renderSectionOverlayHtml, OVERLAY_ELEMENT_CSS } = (typeof window !== 'undefined' && window.AsmOverlay) || require('./overlay.js');
 const { mapPageLinks, anchorNames, menuItems, anchorSpan, ANCHOR_CSS, navLinker, collectOverrides } = (typeof window !== 'undefined' && window.AsmPages) || require('./pages.js');
 const { assemblePreviewDocument } = (typeof window !== 'undefined' && window.AsmPreview) || require('./preview.js');
-const { fillLangSlots, hasLangSlot, LANG_CSS, LANG_JS } = (typeof window !== 'undefined' && window.AsmLangSlot) || require('./lang-slot.js');
+const { fillLangSlots, hasLangSlot, hasModeButton, LANG_CSS, LANG_JS, MODE_JS } = (typeof window !== 'undefined' && window.AsmLangSlot) || require('./lang-slot.js');
 const { LAZY_SECTION_RUNTIME, OFFSCREEN_RUNTIME, REVIEW_RUNTIME, OVERRIDES_RUNTIME, PRELOADER_DISMISS_EXPORT } = (typeof window !== 'undefined' && window.AsmRuntimes) || require('./runtimes.js');
 const { scopeSectionStyles, isolateSectionMarkup, isolateSectionScript, extractHeadLinks } = (typeof window !== 'undefined' && window.AsmIsolation) || require('./section-isolation.js');
 const { sectionIdentity, pickSource, isPreloaderSection, nativeAttrFor, renderSectionTag } = (typeof window !== 'undefined' && window.AsmParts) || require('./section-parts.js');
 const { renderCsp, formDelivery, renderDeployFiles, renderSiteFiles, renderPageHead } = (typeof window !== 'undefined' && window.AsmSiteFiles) || require('./site-files.js');
 const { fitScaleCss, sectionSizingStyle, renderResponsiveCss } = (typeof window !== 'undefined' && window.AsmSizing) || require('./sizing.js');
-const { generateUniversalThemeStyles, renderNativePaletteCss } = (typeof window !== 'undefined' && window.AsmThemeCss) || require('./theme-css.js');
+const { generateUniversalThemeStyles, generateModeThemeStyles, renderNativePaletteCss } = (typeof window !== 'undefined' && window.AsmThemeCss) || require('./theme-css.js');
 const { resolveTheme, isDarkTheme, sectionNativeList } = (typeof window !== 'undefined' && window.AsmTheme) || require('./theme.js');
 const { escapeHtml } = (typeof window !== 'undefined' && window.AsmUtil) || require('./util.js');
+
+/** The client's own colours for the other look, from the page settings. */
+const altColorsOf = (page) => ({ bg: (page || {}).altBg, text: (page || {}).altText, accent: (page || {}).altAccent });
 
 /** Walks the sections once and returns what the exported files are built from. */
 function collectExportSections(safeSections, featuresData, options, isDark) {
@@ -56,7 +59,7 @@ function collectExportSections(safeSections, featuresData, options, isDark) {
     const isPreloader = isPreloaderSection(slug, section);
     const preloaderClass = isPreloader ? ' is-preloader' : '';
     // the header's language button stays only on a page that has translations (options.langSwitch); otherwise its slot goes
-    const isolatedHtml = fillLangSlots(autoNav(isolateSectionMarkup(rawHtml, id), section), !!options.langSwitch);
+    const isolatedHtml = fillLangSlots(autoNav(isolateSectionMarkup(rawHtml, id), section), !!options.langSwitch, (options.page || {}).modeButton !== 'off');
     const overlayHtml = renderSectionOverlayHtml(section.elements);
     const sizingStyle = isPreloader ? '' : sectionSizingStyle(section, (options.reserveMap || {})[slug]);
     const styleAttr = sizingStyle ? ` style="${sizingStyle}"` : '';
@@ -78,9 +81,11 @@ function collectExportSections(safeSections, featuresData, options, isDark) {
     }
   });
 
-  if (options.langSwitch && sectionHtmlBlocks.some(hasLangSlot)) {
-    scopedStyleBlocks.push(`/* Language button */\n${LANG_CSS}`);
-    scriptBlocks.push(`  // Language button\n${LANG_JS.split('\n').map(l => '  ' + l).join('\n')}`);
+  // a header's buttons: the dark/light button unless switched off (its styles for the other look are added with the theme), the language button with translations
+  if (sectionHtmlBlocks.some(hasLangSlot)) {
+    scopedStyleBlocks.push(`/* Header buttons */\n${LANG_CSS}`);
+    if (options.langSwitch) scriptBlocks.push(`  // Language button\n${LANG_JS.split('\n').map(l => '  ' + l).join('\n')}`);
+    if (sectionHtmlBlocks.some(hasModeButton)) scriptBlocks.unshift(`  // Dark/light button (runs first, so a saved choice is applied early)\n${MODE_JS.split('\n').map(l => '  ' + l).join('\n')}`);
   }
 
   // Preloader auto-dismiss script for exported bundle
@@ -118,7 +123,7 @@ function renderExportStyles(c) {
  * --preview-accent in the :root block below. Every other colour token derives from them.
  */
 
-${generateUniversalThemeStyles(theme)}
+${c.usesMode ? generateModeThemeStyles(theme, (c.pageOpts || {}).altTheme, altColorsOf(c.pageOpts)) : generateUniversalThemeStyles(theme)}
 
 /* ==========================================================================
    Section Styles
@@ -352,7 +357,7 @@ function generateExportBundle(sections, themeConfig, featuresData = {}, options 
   if (usesLazy) scriptBlocks.unshift(LAZY_SECTION_RUNTIME);
   const allScripts = scriptBlocks.join('\n\n');
 
-  const c = { pageHead, theme, isDark, safeSections, options, pageOpts, externalLinksHtml, allScopedStyles, allHtml, allScripts, sectionInfoList, contentOverrides, featuresData };
+  const c = { usesMode: sectionHtmlBlocks.some(hasModeButton), pageHead, theme, isDark, safeSections, options, pageOpts, externalLinksHtml, allScopedStyles, allHtml, allScripts, sectionInfoList, contentOverrides, featuresData };
   const indexHtml = renderExportIndex(c);
   const styleCss = renderExportStyles(c);
 
