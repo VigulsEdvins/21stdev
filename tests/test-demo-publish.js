@@ -46,6 +46,22 @@ const test = async (name, fn) => { await fn(); count++; };
     assert.strictEqual(inline.status, 400);
   });
 
+  await test('renaming: the new address serves the page, the old one redirects (path kept) and is held; a refused rename changes nothing', async () => {
+    const eva = await signUp('eva@example.com');
+    const made = await (await post('/api/publish', eva, { name: 'eva-shop', files: files('Eva') })).json();
+    const r = await post('/api/rename', eva, { siteId: made.siteId, name: 'eva-bakery' }); const j = await r.json();
+    assert.strictEqual(r.status, 200, JSON.stringify(j)); assert.strictEqual(j.address, 'http://eva-bakery.localhost:' + port + '/');
+    assert(/Welcome to Eva/.test((await get(port, 'eva-bakery.localhost:' + port, '/')).body), 'the new address serves the page');
+    const old = await get(port, 'eva-shop.localhost:' + port, '/about?x=1');
+    assert.strictEqual(old.status, 301); assert.strictEqual(old.headers.location, 'http://eva-bakery.localhost:' + port + '/about?x=1', 'the old address redirects, keeping the path and query');
+    const frank = await signUp('frank@example.com');
+    assert.strictEqual((await post('/api/publish', frank, { name: 'eva-shop', files: files('Frank') })).status, 409, 'the old name is held for its owner');
+    assert.strictEqual((await post('/api/rename', frank, { siteId: made.siteId, name: 'frank-name' })).status, 404, 'only the owner can rename');
+    const again = await post('/api/rename', eva, { siteId: made.siteId, name: 'eva-cakes' }); assert.strictEqual(again.status, 200);
+    assert.strictEqual((await get(port, 'eva-shop.localhost:' + port, '/')).headers.location, 'http://eva-cakes.localhost:' + port + '/', 'older names follow to the newest');
+    assert.strictEqual((await post('/api/rename', eva, { siteId: made.siteId, name: 'eva-third' })).status, 429, 'a third rename within 30 days is refused');
+  });
+
   await test('the main site, free names and other people behave as they will online', async () => {
     const main = await get(port, 'localhost:' + port, '/'); assert.strictEqual(main.status, 200); assert(!/Welcome to Anna/.test(main.body), 'the main site is not a published site');
     const free = await get(port, 'nothing-here.localhost:' + port, '/'); assert.strictEqual(free.status, 404); assert(/Nothing here yet/.test(free.body));

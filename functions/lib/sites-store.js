@@ -61,6 +61,19 @@ function createDb(env, fetchImpl) {
     reserveVersion: (id) => rest('POST', 'rpc/reserve_site_version', { p_site: id }),
     goLive: (id, version, extra) => rest('POST', 'rpc/go_live_site', { p_site: id, p_version: version, p_project: (extra && extra.project_id) || null }),
     setStatus: (id, status) => rest('PATCH', 'published_sites?id=eq.' + enc(id), { status, updated_at: new Date().toISOString() }),
+    /* The whole rename in one database action (supabase/migrations/20261030210000_rename_site.sql); the error codes are named for publish.js. */
+    async renameSite({ siteId, userId, newName, holdDays }) {
+      try {
+        return await rest('POST', 'rpc/rename_site', { p_site: siteId, p_user: userId, p_new: newName, p_hold_days: holdDays || 90 });
+      } catch (e) {
+        const m = /rename:([a-z-]+)/.exec(e.message || '');
+        if (m) throw Object.assign(e, { code: 'rename-' + m[1] });
+        if (e.code === '23505') throw Object.assign(e, { code: 'rename-taken' });
+        throw e;
+      }
+    },
+    holdsForSite: (siteId) => all('site_name_holds?select=name,redirect_to,expires_at&site_id=eq.' + enc(siteId)),
+    recentSites: (sinceIso) => all('published_sites?select=id,name,version,status&limit=500&updated_at=gte.' + enc(sinceIso)),
     blockedSites: () => all('published_sites?select=id,name,version&status=eq.blocked&limit=500'),
     liveSites: (offset) => all('published_sites?select=id,name,version,status,site_entitlements(status,paid_until)&status=eq.live&order=created_at.asc&limit=500&offset=' + Number(offset || 0))
   };

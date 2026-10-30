@@ -5,7 +5,7 @@
    Every action returns { status, json }, the same shape as lead.js. Customers' files are untrusted: the browser is not believed, everything is checked here. */
 const Names = require('../../site/js/site-names.js');
 
-const LIMITS = { files: 500, totalBytes: 20 * 1024 * 1024, fileBytes: 5 * 1024 * 1024, pathLength: 200, publishesPerHour: 10, graceDays: 14, keepVersions: 5 };
+const LIMITS = { files: 500, totalBytes: 20 * 1024 * 1024, fileBytes: 5 * 1024 * 1024, pathLength: 200, publishesPerHour: 10, renamesPerHour: 10, graceDays: 14, keepVersions: 5, holdDays: 90 };
 
 const TYPES = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', json: 'application/json', svg: 'image/svg+xml', png: 'image/png',
   jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', avif: 'image/avif', gif: 'image/gif', ico: 'image/x-icon', woff2: 'font/woff2', txt: 'text/plain; charset=utf-8',
@@ -176,10 +176,10 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts }) {
   const host = domain || 'edvlabs.com';
   const address = addressOf || ((name) => 'https://' + name + '.' + host + '/'); // addressOf: the local demo (scripts/demo-publish.js) uses http://<name>.localhost:<port>/
 
-  async function rateLimited(userId) {
-    const k = 'publishes:' + userId + ':' + String(now()).slice(0, 13); // one counter per clock hour
+  async function rateLimited(userId, what, limit) {
+    const k = (what || 'publishes') + ':' + userId + ':' + String(now()).slice(0, 13); // one counter per clock hour
     const n = Number(await kv.get(k)) || 0;
-    if (n >= LIMITS.publishesPerHour) return true;
+    if (n >= (limit || LIMITS.publishesPerHour)) return true;
     await kv.put(k, String(n + 1), { expirationTtl: 3700 });
     return false;
   }
@@ -276,6 +276,37 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts }) {
     return { status: 200, json: { ok: true, name: site.name } };
   }
 
+  /** Gives a site a new name. The old address redirects to the new one for 90 days and stays reserved for the owner; the files do not move
+      (they are stored under the site's id). The database does the swap in one action (db.renameSite); then the lookup visitors use is updated. */
+  async function rename({ userId, siteId, newName }) {
+    if (!userId) return fail(401, 'Please sign in.');
+    const c = Names.check(newName);
+    if (!c.ok) return fail(400, c.message, { reason: c.reason });
+    const site = await db.siteById(siteId);
+    if (!site || site.user_id !== userId) return fail(404, 'That site was not found.');
+    if (site.status === 'blocked') return fail(403, 'This site has been blocked. Please contact edvlabs.', { reason: 'blocked' });
+    if (site.name === c.name) return fail(400, 'That is already the name of this site.', { reason: 'same' });
+    if (entitlementState(await db.entitlementForSite(site.id), now()) === 'ended') return fail(402, 'Publishing for this site has ended. Please renew it.', { reason: 'payment-needed' });
+    if (await db.siteByName(c.name)) return fail(409, 'This name is taken.', { reason: 'taken' });
+    const hold = await db.holdByName(c.name);
+    if (hold && hold.user_id !== userId && new Date(hold.expires_at).getTime() > new Date(now()).getTime()) return fail(409, 'This name is taken.', { reason: 'taken' });
+    if (await rateLimited(userId, 'renames', LIMITS.renamesPerHour)) return fail(429, 'Too many changes this hour. Please try again later.', { reason: 'rate' });
+    let r;
+    try { r = await db.renameSite({ siteId: site.id, userId, newName: c.name, holdDays: LIMITS.holdDays, nowIso: now() }); } catch (e) {
+      const why = { 'rename-taken': [409, 'This name is taken.', 'taken'], 'rename-too-many': [429, 'A site can be renamed twice in 30 days. Please try again later.', 'renames'], 'rename-blocked': [403, 'This site has been blocked.', 'blocked'], 'rename-not-found': [404, 'That site was not found.', 'not-found'], 'rename-same': [400, 'That is already the name of this site.', 'same'] }[e && e.code];
+      if (why) return fail(why[0], why[1], { reason: why[2] });
+      throw e;
+    }
+    // the lookup visitors use: the new name serves the site, the old names (this one and any older held ones) redirect to it
+    try {
+      await kv.put(kvKey(c.name), JSON.stringify({ id: site.id, version: r.version, status: r.status }));
+      for (const held of r.held || []) await kv.put(kvKey(held), JSON.stringify({ redirect: c.name }));
+    } catch (e) {
+      return { status: 202, json: { ok: true, name: c.name, oldName: r.old, address: address(c.name), pending: true, errors: [] } }; // the next hourly clean-up finishes the lookup
+    }
+    return { status: 200, json: { ok: true, name: c.name, oldName: r.old, address: address(c.name), oldAddress: address(r.old), holdDays: LIMITS.holdDays } };
+  }
+
   /** The person's sites with their payment state, and how many paid places are still unused. */
   async function mySites(userId) {
     if (!userId) return fail(401, 'Please sign in.');
@@ -302,7 +333,7 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts }) {
       3) name holds that ran out: released, and the redirect from the old address removed
       4) sites the owner blocked in the database (scripts/block-site.js): the block is copied into the lookup visitors use. */
   async function sweep() {
-    const out = { orphans: 0, lapsed: 0, holds: 0, blocked: 0 };
+    const out = { orphans: 0, lapsed: 0, holds: 0, blocked: 0, repaired: 0 };
     let cursor;
     do {
       const l = await kv.list({ prefix: 'site:', cursor });
@@ -336,10 +367,25 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts }) {
       try { rec = JSON.parse(await kv.get(kvKey(x.name))); } catch (e) { rec = null; }
       if (!rec || rec.status !== 'blocked') { await kv.put(kvKey(x.name), JSON.stringify({ id: x.id, version: x.version, status: 'blocked' })); out.blocked++; }
     }
+    // 5) sites changed in the last three hours: the lookup must say what the database says (a rename whose lookup update failed is finished here)
+    const since = new Date(new Date(now()).getTime() - 3 * 3600 * 1000).toISOString();
+    for (const x of await db.recentSites(since)) {
+      const want = JSON.stringify({ id: x.id, version: x.version, status: x.status });
+      if (x.status !== 'live' && x.status !== 'blocked' && x.status !== 'unpublished') continue;
+      if (x.version < 1) continue; // never published: nothing to serve
+      let have = null;
+      try { have = JSON.parse(await kv.get(kvKey(x.name))); } catch (e) { have = null; }
+      if (!have || have.id !== x.id || have.version < x.version) { await kv.put(kvKey(x.name), want); out.repaired++; } // never moves a lookup backwards: a publish or unpublish running at this moment wins
+      for (const h of await db.holdsForSite(x.id)) {
+        if (new Date(h.expires_at).getTime() <= new Date(now()).getTime() || !h.redirect_to) continue;
+        let cur = null; try { cur = JSON.parse(await kv.get(kvKey(h.name))); } catch (e) { cur = null; }
+        if (!cur || cur.redirect !== h.redirect_to) { await kv.put(kvKey(h.name), JSON.stringify({ redirect: h.redirect_to })); out.repaired++; }
+      }
+    }
     return out;
   }
 
-  return { nameStatus, publish, unpublish, mySites, sweep };
+  return { nameStatus, publish, unpublish, rename, mySites, sweep };
 }
 
 module.exports = { createPublisher, checkFiles, scanHtml, scanSvg, entitlementState, plainUrl, LIMITS, TYPES, key, kvKey };

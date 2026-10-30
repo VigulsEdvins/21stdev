@@ -39,8 +39,9 @@ function candidates(pathname) {
 
 const extOf = (p) => (p.includes('.') ? p.slice(p.lastIndexOf('.') + 1).toLowerCase() : '');
 
-function createSiteServer({ bucket, kv, domain }) {
+function createSiteServer({ bucket, kv, domain, originOf }) {
   const host = domain || 'edvlabs.com';
+  const origin = originOf || ((name) => 'https://' + name + '.' + host); // originOf: the local demo serves http://<name>.localhost:<port>
 
   /** The site name in a request's host name, or null when it is not a one-piece name under our domain. */
   function nameOf(hostname) {
@@ -63,7 +64,7 @@ function createSiteServer({ bucket, kv, domain }) {
     const raw = await kv.get(kvKey(name));
     if (raw) { try { record = JSON.parse(raw); } catch (e) { record = null; } }
     if (!record) return respond(404, FREE_ADDRESS);
-    if (record.redirect && isLabel(record.redirect)) return new Response(null, { status: 301, headers: Object.assign({ Location: 'https://' + record.redirect + '.' + host + url.pathname + url.search, 'Cache-Control': 'public, max-age=3600' }, SECURITY) });
+    if (record.redirect && isLabel(record.redirect)) return new Response(null, { status: 301, headers: Object.assign({ Location: origin(record.redirect) + url.pathname + url.search, 'Cache-Control': 'public, max-age=3600' }, SECURITY) });
     if (record.status !== 'live' || !record.id || !Number.isInteger(record.version)) return respond(404, NOT_AVAILABLE);
 
     const wanted = candidates(url.pathname);

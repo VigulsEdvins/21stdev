@@ -30,6 +30,13 @@ const UID = '11111111-1111-4111-8111-111111111111';
     if (!api.sites.some((s) => s.name === body.name)) { api.sites.push({ id: '00000000-0000-4000-8000-000000000001', name: body.name, status: 'live', version: 1, address: `https://${body.name}.edvlabs.com/`, payment: 'active', paidUntil: '2027-11-01T00:00:00Z' }); api.freePlaces--; }
     r.fulfill({ json: { ok: true, name: body.name, address: `https://${body.name}.edvlabs.com/`, version: 1, siteId: '00000000-0000-4000-8000-000000000001', created: true } });
   });
+  api.renames = [];
+  await page.route('**/api/rename', (r) => {
+    const body = JSON.parse(r.request().postData()); api.renames.push(body);
+    if (body.name === 'twice-limit') return r.fulfill({ status: 429, json: { ok: false, errors: ['A site can be renamed twice in 30 days. Please try again later.'], reason: 'renames' } });
+    const site = api.sites.find((x) => x.id === body.siteId); const old = site.name; site.name = body.name; site.address = `https://${body.name}.edvlabs.com/`;
+    r.fulfill({ json: { ok: true, name: body.name, oldName: old, address: site.address, oldAddress: `https://${old}.edvlabs.com/`, holdDays: 90 } });
+  });
   await page.route('**/api/unpublish', (r) => { api.unpublished.push(JSON.parse(r.request().postData()).siteId); api.sites.forEach((s) => { s.status = 'unpublished'; }); r.fulfill({ json: { ok: true } }); });
 
   let gate = false, configRequests = 0;
@@ -110,6 +117,28 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await page.click('[data-act="update"]');
   await page.waitForFunction(() => /Your page is online/.test(document.getElementById('publishResult').textContent));
   assert.strictEqual(api.published[0].name, 'bakery-anna'); console.log('  ✓ "Update with this page" publishes to the same name');
+  // renaming: checked as typed, one button, the new address, the old one explained
+  await page.click('[data-act="rename"]');
+  assert(await page.isVisible('.gt-rename') && await page.isDisabled('[data-act="rename-save"]'), 'the form opens with the button waiting');
+  await page.fill('.gt-rename input', 'bakery-anna'); await page.waitForFunction(() => /already the name/.test(document.querySelector('.gt-rename small').textContent));
+  assert(await page.isDisabled('[data-act="rename-save"]'), 'the same name cannot be saved');
+  await page.fill('.gt-rename input', 'www'); await page.waitForFunction(() => /kept for edvlabs/.test(document.querySelector('.gt-rename small').textContent));
+  await page.fill('.gt-rename input', 'taken-name'); await page.waitForFunction(() => /taken/.test(document.querySelector('.gt-rename small').textContent));
+  assert(await page.isDisabled('[data-act="rename-save"]'), 'a taken name cannot be saved');
+  await page.fill('.gt-rename input', 'anna-bakery'); await page.waitForFunction(() => /is free/.test(document.querySelector('.gt-rename small').textContent));
+  await page.click('[data-act="rename-save"]');
+  await page.waitForFunction(() => /The name is changed/.test(document.getElementById('publishResult').textContent));
+  assert.deepStrictEqual(api.renames[0], { siteId: '00000000-0000-4000-8000-000000000001', name: 'anna-bakery' });
+  const done = await page.textContent('#publishResult'); assert(/anna-bakery\.edvlabs\.com/.test(done) && /bakery-anna\.edvlabs\.com, sends visitors to the new one for 90 days/.test(done), done);
+  assert.strictEqual(await page.locator('#publishResult a').getAttribute('href'), 'https://anna-bakery.edvlabs.com/');
+  await page.waitForFunction(() => /anna-bakery\.edvlabs\.com/.test(document.getElementById('publishSites').textContent));
+  assert.strictEqual(await page.locator('.gt-rename').count(), 0, 'the form is gone after a rename');
+  await page.click('[data-act="rename"]'); await page.fill('.gt-rename input', 'twice-limit'); await page.waitForFunction(() => /is free/.test(document.querySelector('.gt-rename small').textContent));
+  await page.click('[data-act="rename-save"]'); await page.waitForFunction(() => /renamed twice in 30 days/.test(document.getElementById('publishResult').textContent));
+  assert.strictEqual(await page.getAttribute('#publishResult', 'data-problem'), 'true');
+  await page.click('[data-act="rename-cancel"]'); assert.strictEqual(await page.locator('.gt-rename').count(), 0);
+  console.log('  ✓ rename: checked as typed, saved, the old address explained, the limit in plain words, cancel closes it');
+
   await page.click('[data-act="offline"]');
   await page.waitForFunction(() => /is offline/.test(document.getElementById('publishResult').textContent));
   assert.deepStrictEqual(api.unpublished, ['00000000-0000-4000-8000-000000000001']); await page.waitForFunction(() => /Offline/.test(document.getElementById('publishSites').textContent));

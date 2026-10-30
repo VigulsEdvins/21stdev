@@ -3,6 +3,7 @@
      GET  /api/my-sites            my sites with payment state, and how many paid places are unused
      POST /api/publish             { name, files: [{ path, content, encoding? }], projectId? }
      POST /api/unpublish           { siteId }
+     POST /api/rename              { siteId, name }   the old address redirects to the new one for 90 days
    and the timer (scheduled) that cleans up. All the rules are in ./publish.js; the storage is in ./sites-store.js.
    Settings (never in git): SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY (secret); bindings SITES (KV) and SITES_BUCKET (R2); optional SITES_DOMAIN. */
 const { createPublisher } = require('./publish.js');
@@ -41,7 +42,7 @@ const missing = (env) => NEEDED.filter((k) => !env[k]);
 /** Returns a Response for the four endpoints, or null for any other path. `json(status, body, extraHeaders)` is the Worker's answer helper. */
 async function route(request, env, json, deps) {
   const url = new URL(request.url), path = url.pathname;
-  const wantsGet = path === '/api/site-name' || path === '/api/my-sites', wantsPost = path === '/api/publish' || path === '/api/unpublish';
+  const wantsGet = path === '/api/site-name' || path === '/api/my-sites', wantsPost = path === '/api/publish' || path === '/api/unpublish' || path === '/api/rename';
   if (!wantsGet && !wantsPost) return null;
   if (request.method !== (wantsGet ? 'GET' : 'POST')) return json(405, { ok: false, errors: ['Use ' + (wantsGet ? 'GET' : 'POST') + '.'] }, { Allow: wantsGet ? 'GET' : 'POST' });
   const absent = missing(env);
@@ -67,6 +68,10 @@ async function route(request, env, json, deps) {
   let body; try { body = JSON.parse(text); } catch (e) { return json(400, { ok: false, errors: ['That was not valid JSON.'] }); }
   if (!body || typeof body !== 'object' || Array.isArray(body)) return json(400, { ok: false, errors: ['That was not valid JSON.'] });
 
+  if (path === '/api/rename') {
+    if (typeof body.siteId !== 'string' || !store.UUID.test(body.siteId) || typeof body.name !== 'string') return json(400, { ok: false, errors: ['Send the site and the new name.'] });
+    try { return reply(await pub.rename({ userId: user.id, siteId: body.siteId, newName: body.name })); } catch (e) { return json(500, { ok: false, errors: ['Renaming did not work just now. Please try again.'] }); }
+  }
   if (path === '/api/unpublish') return typeof body.siteId === 'string' && store.UUID.test(body.siteId) ? reply(await pub.unpublish({ userId: user.id, siteId: body.siteId })) : json(400, { ok: false, errors: ['Which site?'] });
   const projectId = typeof body.projectId === 'string' && store.UUID.test(body.projectId) ? body.projectId : null;
   if (typeof body.name !== 'string' || !Array.isArray(body.files)) return json(400, { ok: false, errors: ['Send a name and the files.'] });

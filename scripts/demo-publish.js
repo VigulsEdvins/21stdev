@@ -44,7 +44,7 @@ async function start({ port }) {
   };
   return {
     env, deps: { user, publisher }, auth, store: f,
-    sites: S.createSiteServer({ bucket: f.bucket, kv: f.kv, domain: 'localhost' }),
+    sites: S.createSiteServer({ bucket: f.bucket, kv: f.kv, domain: 'localhost', originOf: (name) => 'http://' + name + '.localhost:' + port }),
     explain: (p) => [
       '  DEMO PUBLISHING is on: a pretend sign-in service and pretend storage, forgotten when this stops.',
       `    1. create an account at http://localhost:${p}/account/  (any email and a password with 10+ characters; no email is sent)`,

@@ -113,6 +113,10 @@ npm run owner-sites -- grant person@example.com --count 2 --years 1   # paid pla
 
 A blocked site cannot be changed by its owner. People who report a site can write from the contact page; add a line about reporting to the "not available" page text in `functions/lib/sites-serve.js` once you have an address for it.
 
+## Renaming (added 2026-10-30)
+
+Needs the database function in `supabase/migrations/20261030210000_rename_site.sql` **before** the matching main-site code goes live (apply the file first, then push). A site can be renamed twice in 30 days; the old address redirects to the new one for 90 days and stays reserved for its owner. Nothing to set up in Cloudflare.
+
 ## What runs by itself every hour
 
 At minute 17 the main Worker (cron in `wrangler.jsonc`) cleans up:
@@ -144,4 +148,4 @@ Deleting a lapsed site's files after 90 days is **not built yet**; they stay in 
 ## Known limits (also in the plan)
 
 - **Scripts are checked against the library** (2026-10-30): a published `.js` file must be exactly what the builder produces from the library's own block scripts, read from the builder's own files on the same Worker (`/builder/features/<slug>/script.js` and `/builder/export-assets.json`, both staged by `npm run build:site`). If a block's script changes in a new deploy, an old open builder tab can no longer publish and the person is told to reload. Details: `docs/superpowers/plans/2026-10-30-script-allowlist.md`.
-- Deleted accounts' sites can stay online for up to an hour. Lapsed sites' files are not removed after 90 days yet. Renaming a site is designed but not built.
+- Deleted accounts' sites can stay online for up to an hour. Lapsed sites' files are not removed after 90 days yet. 

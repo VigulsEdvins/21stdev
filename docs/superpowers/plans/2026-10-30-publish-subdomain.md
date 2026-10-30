@@ -147,6 +147,14 @@ Not hard: about one small endpoint and its tests, roughly one build step of the 
 
 The only real cost is that R2 paths use a site id instead of the name (`sites/<site-id>/<version>/<path>`); I have changed the plan's storage layout to that now, so it is no extra work later. Build order gets one added step after the publish screen: "rename endpoint and the Rename button".
 
+## Renaming as built (2026-10-30)
+
+- `supabase/migrations/20261030210000_rename_site.sql`: the function `public.rename_site(site, user, new name, hold days)` does the whole swap in one database action (owner check, not blocked, a different name, free or the person's own hold, at most two renames in 30 days, the old name held 90 days with a redirect target, older held names re-pointed so redirects never chain). Only the server's key can run it.
+- `functions/lib/publish.js` `rename()`: plain-words checks first, then the database call, then the lookup visitors use (`site:<new>` serves, `site:<old>` and older held names redirect). If the lookup update fails after the database change the answer is 202 and the hourly clean-up repairs it (it also never moves a lookup backwards).
+- `POST /api/rename { siteId, name }` in `functions/lib/publish-http.js`; the sites Worker already answered `{redirect}` with a 301 that keeps path and query.
+- The builder: "Change the name" under each site, checked as typed, with the 90-day and twice-in-30-days rules said up front.
+- Tested: unit (rules, holds, no chains, limits, refusals change nothing, failed lookup repaired), the endpoint, the database call and its error codes, a real browser against the local demo (old address redirects to the new one), and the builder screen. The SQL itself has only run in the tests' stand-in until it is applied.
+
 ## Still open
 
 - The **price** of publishing on an edvlabs address, and whether it is yearly or monthly.

@@ -51,6 +51,23 @@ function world() {
     assert.strictEqual((await post('/api/unpublish', { siteId: 'not-a-uuid' }, 1)).status, 400);
   });
 
+  await test('renaming through the endpoint: sign-in, owner only, plain refusals, the new address works and the old one is held', async () => {
+    const { f, post, call, as } = world(); f.addEntitlement(U1, FUTURE); f.addEntitlement(U2, FUTURE);
+    assert.strictEqual((await call('/api/rename', { method: 'POST', body: '{}' })).status, 401, 'no token');
+    assert.strictEqual((await call('/api/rename', { method: 'GET' }, as(1))).status, 405);
+    const made = await (await post('/api/publish', { name: 'bakery-anna', files }, 1)).json();
+    await post('/api/publish', { name: 'ben-shop', files }, 2);
+    assert.strictEqual((await post('/api/rename', { siteId: 'x', name: 'fresh-name' }, 1)).status, 400);
+    assert.strictEqual((await post('/api/rename', { siteId: made.siteId }, 1)).status, 400);
+    assert.strictEqual((await post('/api/rename', { siteId: made.siteId, name: 'fresh-name' }, 2)).status, 404, 'not the owner');
+    assert.strictEqual((await post('/api/rename', { siteId: made.siteId, name: 'ben-shop' }, 1)).status, 409);
+    assert.strictEqual((await post('/api/rename', { siteId: made.siteId, name: 'admin' }, 1)).status, 400);
+    const r = await post('/api/rename', { siteId: made.siteId, name: 'anna-bakery' }, 1); const j = await r.json();
+    assert.strictEqual(r.status, 200, JSON.stringify(j)); assert.strictEqual(j.address, 'https://anna-bakery.edvlabs.com/'); assert.strictEqual(j.oldName, 'bakery-anna');
+    const mine = await (await call('/api/my-sites', { method: 'GET' }, as(1))).json(); assert.strictEqual(mine.sites[0].name, 'anna-bakery');
+    assert.strictEqual((await (await call('/api/site-name?name=bakery-anna', { method: 'GET' }, as(2))).json()).reason, 'taken', 'the old name is held');
+  });
+
   await test('refusals come back as plain JSON with the right status', async () => {
     const { f, post } = world();
     assert.strictEqual((await post('/api/publish', { name: 'bakery-anna', files })).status, 402, 'no paid place');
@@ -87,7 +104,7 @@ function world() {
     assert(!JSON.stringify(j).includes('anon-secret-value'));
     assert.strictEqual(await PH.scheduled(env), null);
     const w = world(); w.f.addEntitlement(U1, FUTURE);
-    assert.deepStrictEqual(await PH.scheduled({}, w.deps), { orphans: 0, lapsed: 0, holds: 0, blocked: 0 });
+    assert.deepStrictEqual(await PH.scheduled({}, w.deps), { orphans: 0, lapsed: 0, holds: 0, blocked: 0, repaired: 0 });
   });
 
   console.log(`✓ publish http: ${count} groups (sign-in, methods, flow, refusals, headers, not set up)`);

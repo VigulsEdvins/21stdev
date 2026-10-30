@@ -76,6 +76,9 @@
           upd.addEventListener('click', () => publish(s.name));
           li.append(upd);
           if (s.status === 'live') { const off = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', 'data-act': 'offline' }, 'Take offline'); off.addEventListener('click', () => takeOffline(s)); li.append(off); }
+          const ren = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', 'data-act': 'rename' }, 'Change the name');
+          ren.addEventListener('click', () => openRename(li, s, ren));
+          li.append(ren);
         }
         list.append(li);
       });
@@ -136,6 +139,50 @@
       } finally { setBusy(false); }
     }
     go.addEventListener('click', () => { const c = Names.check(nameInput.value); if (c.ok) publish(c.name); });
+
+    /** The small form under a site: a new name, checked as it is typed, and one button. The old address redirects for 90 days. */
+    function openRename(li, site, opener) {
+      const existing = li.querySelector('.gt-rename');
+      if (existing) { existing.remove(); opener.focus(); return; }
+      const form = el(doc, 'div', { class: 'gt-rename' });
+      const input = el(doc, 'input', { type: 'text', class: 'gt-input', maxlength: '30', autocomplete: 'off', autocapitalize: 'none', spellcheck: 'false', 'aria-label': 'New name for ' + site.name, placeholder: 'newname' });
+      const note = el(doc, 'small', { role: 'status', 'aria-live': 'polite' }, 'The old address will send visitors to the new one for 90 days. A site can be renamed twice in 30 days.');
+      const save = el(doc, 'button', { type: 'button', class: 'builder-btn-primary', 'data-act': 'rename-save', disabled: '' }, 'Change the name');
+      const cancel = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', 'data-act': 'rename-cancel' }, 'Cancel');
+      form.append(el(doc, 'span', { class: 'gt-suffix' }, 'New name:'), input, el(doc, 'span', { class: 'gt-suffix' }, '.' + domain), note, save, cancel);
+      li.append(form);
+      let ready = '', timer2 = null;
+      const refresh = () => { save.disabled = busy || !ready; };
+      const check = async () => {
+        const c = Names.check(input.value); ready = '';
+        if (!c.ok) { note.textContent = input.value.trim() ? c.message : ''; refresh(); return; }
+        if (c.name === site.name) { note.textContent = 'That is already the name of this site.'; refresh(); return; }
+        note.textContent = 'Checking…';
+        const r = await client.checkName(c.name);
+        if (Names.check(input.value).name !== c.name) return;
+        const line = nameLine(r, c.name + '.' + domain);
+        note.textContent = line.text; ready = line.good ? c.name : ''; refresh();
+      };
+      input.addEventListener('input', () => { ready = ''; refresh(); clearTimeout(timer2); timer2 = setTimeout(check, CHECK_DELAY); });
+      cancel.addEventListener('click', () => { form.remove(); opener.focus(); });
+      save.addEventListener('click', async () => {
+        if (busy || !ready) return;
+        setBusy(true); say('Changing the name…', false);
+        try {
+          const r = await client.rename(site.id, ready);
+          const e = Client.explain(r.status, r.json);
+          if (e.kind === 'ok') {
+            const addr = Client.safeAddress(r.json.address);
+            out.replaceChildren('The name is changed. Your page is now at ', addr ? el(doc, 'a', { href: addr, target: '_blank', rel: 'noopener' }, addr) : r.json.name, '. ' + (r.json.pending ? 'It can take a few minutes to start working. ' : '') + 'The old address, ' + r.json.oldName + '.' + domain + ', sends visitors to the new one for 90 days.');
+            out.dataset.problem = 'false';
+            await load();
+          } else {
+            note.textContent = e.message; say(e.message, true);
+          }
+        } finally { setBusy(false); }
+      });
+      input.focus();
+    }
 
     async function takeOffline(site) {
       if (busy) return;

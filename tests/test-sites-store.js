@@ -60,6 +60,17 @@ const test = async (name, fn) => { await fn(); count++; };
     await db.deleteSite('s1'); assert.strictEqual(s.calls[9].method, 'DELETE');
   });
 
+  await test('rename: the one database call, and its error codes turned into names', async () => {
+    const s = stub([{ status: 200, body: { old: 'a-b-c', new: 'x-y-z', version: 2, status: 'live', held: ['a-b-c'] } }, { status: 400, body: { code: 'P0001', message: 'rename:taken' } }, { status: 400, body: { code: 'P0001', message: 'rename:too-many' } }, { status: 409, body: { code: '23505', message: 'duplicate key' } }, { status: 500, body: { code: 'XX000', message: 'boom' } }]);
+    const db = store.createDb(ENV, s.fetchImpl);
+    const ok = await db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z', holdDays: 90 });
+    assert.deepStrictEqual(ok.held, ['a-b-c']); assert(s.calls[0].url.endsWith('/rpc/rename_site')); assert.deepStrictEqual(JSON.parse(s.calls[0].body), { p_site: 's1', p_user: UID, p_new: 'x-y-z', p_hold_days: 90 });
+    await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'rename-taken');
+    await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'rename-too-many');
+    await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'rename-taken', 'a duplicate-name error from the database is also "taken"');
+    await assert.rejects(db.renameSite({ siteId: 's1', userId: UID, newName: 'x-y-z' }), (e) => e.code === 'XX000');
+  });
+
   await test('a database error carries its status and code but never the keys', async () => {
     const s = stub([{ status: 503, body: { message: 'upstream unavailable' } }]);
     await assert.rejects(store.createDb(ENV, s.fetchImpl).siteByName('abc'), (e) => e.status === 503 && !/SECRET|anon-key/.test(e.message));

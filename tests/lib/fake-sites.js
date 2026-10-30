@@ -27,6 +27,26 @@ function create() {
     async deleteHold(name) { const i = holds.findIndex((h) => h.name === name); if (i >= 0) holds.splice(i, 1); },
     async blockedSites() { return sites.filter((s) => s.status === 'blocked').map((s) => ({ id: s.id, name: s.name, version: s.version })); },
     async liveSites() { return sites.filter((s) => s.status === 'live').map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status, site_entitlements: ents.find((e) => e.site_id === s.id) || null })); },
+    /* mirrors supabase/migrations/20261030210000_rename_site.sql, including its error codes */
+    async renameSite({ siteId, userId, newName, holdDays, nowIso }) {
+      const fail = (c) => { throw Object.assign(new Error('rename:' + c), { code: 'rename-' + c }); };
+      const s = sites.find((x) => x.id === siteId && x.user_id === userId); if (!s) fail('not-found');
+      if (s.status === 'blocked') fail('blocked'); if (s.name === newName) fail('same');
+      const now = new Date(nowIso || Date.now());
+      s.renamed_at = s.renamed_at || [];
+      if (s.renamed_at.filter((t) => new Date(t) > new Date(now.getTime() - 30 * 86400000)).length >= 2) fail('too-many');
+      if (holds.some((h) => h.name === newName && h.user_id !== userId && new Date(h.expires_at) > now)) fail('taken');
+      if (sites.some((x) => x.name === newName)) fail('taken');
+      const i = holds.findIndex((h) => h.name === newName); if (i >= 0) holds.splice(i, 1);
+      const old = s.name; s.name = newName; s.renamed_at = s.renamed_at.concat(now.toISOString()).slice(-4);
+      const exp = new Date(now.getTime() + (holdDays || 90) * 86400000).toISOString();
+      const j = holds.findIndex((h) => h.name === old); const row = { name: old, user_id: userId, site_id: siteId, redirect_to: newName, expires_at: exp };
+      if (j >= 0) holds[j] = row; else holds.push(row);
+      holds.filter((h) => h.site_id === siteId && h.name !== old).forEach((h) => { h.redirect_to = newName; });
+      return { old, new: newName, version: s.version, status: s.status, held: holds.filter((h) => h.site_id === siteId && new Date(h.expires_at) > now).map((h) => h.name) };
+    },
+    async holdsForSite(siteId) { return holds.filter((h) => h.site_id === siteId); },
+    async recentSites() { return sites.map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status })); },
     async setStatus(id, status) { sites.find((x) => x.id === id).status = status; }
   };
   const bucket = {

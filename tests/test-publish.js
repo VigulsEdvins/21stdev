@@ -249,18 +249,18 @@ const test = async (name, fn) => { await fn(); count++; };
     f.holds.push({ name: 'renamed-away', user_id: 'u1', expires_at: '2026-11-15T00:00:00Z' });
     f.kvStore.set('site:stale-redirect', JSON.stringify({ redirect: 'lapsing-shop' })); // a redirect with no hold behind it
     let r = await pub.sweep();
-    assert.deepStrictEqual(r, { orphans: 1, lapsed: 0, holds: 1, blocked: 0 }, JSON.stringify(r));
+    assert.deepStrictEqual(r, { orphans: 1, lapsed: 0, holds: 1, blocked: 0, repaired: 0 }, JSON.stringify(r));
     assert(!f.kvStore.has('site:gone-shop') && ![...f.objects.keys()].some((k) => k.startsWith('sites/' + goneId + '/')), 'the deleted account\'s site is gone from KV and R2');
     assert(f.kvStore.has('site:renamed-away'), 'a held redirect stays while the hold lasts');
     assert(f.sites.find((x) => x.name === 'lapsing-shop').status === 'live', 'still paid or in grace');
     setClock('2026-12-10T00:00:00.000Z'); // grace
-    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 1, blocked: 0 }, 'the hold is now over (15 Nov), grace keeps the site live');
+    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 1, blocked: 0, repaired: 0 }, 'the hold is now over (15 Nov), grace keeps the site live');
     assert(!f.kvStore.has('site:renamed-away') && f.holds.length === 0, 'expired hold released with its redirect');
     setClock('2026-12-20T00:00:00.000Z'); // 19 days after payment ended: grace is over
     r = await pub.sweep();
     assert.strictEqual(r.lapsed, 1); assert.strictEqual(f.sites[0].status, 'unpublished'); assert.strictEqual(JSON.parse(f.kvStore.get('site:lapsing-shop')).status, 'unpublished');
     assert([...f.objects.keys()].some((k) => k.endsWith('/index.html')), 'the files are kept so renewing brings the site back');
-    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 0, blocked: 0 }, 'running again changes nothing');
+    assert.deepStrictEqual(await pub.sweep(), { orphans: 0, lapsed: 0, holds: 0, blocked: 0, repaired: 0 }, 'running again changes nothing');
   });
 
   await test('sweep: a site the owner blocked in the database stops being served within the hour; blocking is not undone by the sweep', async () => {
@@ -273,6 +273,76 @@ const test = async (name, fn) => { await fn(); count++; };
     assert.strictEqual((await pub.sweep()).blocked, 0, 'nothing more to do the second time');
     assert.strictEqual((await pub.publish({ userId: 'u1', name: 'bad-shop', files: [html()] })).status, 403, 'the owner cannot publish it back');
     assert.strictEqual(f.sites[0].status, 'blocked');
+  });
+
+  await test('rename: new name serves the site, old name redirects and is held for the owner, files do not move, rules are enforced', async () => {
+    const { f, pub, setClock } = setup(); f.addEntitlement('u1', FUTURE); f.addEntitlement('u2', FUTURE);
+    const made = await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html('<p>Anna</p>'), css] });
+    const id = made.json.siteId, filesBefore = [...f.objects.keys()].sort();
+    const r = await pub.rename({ userId: 'u1', siteId: id, newName: ' Anna-Bakery ' });
+    assert.strictEqual(r.status, 200, JSON.stringify(r.json)); assert.strictEqual(r.json.name, 'anna-bakery'); assert.strictEqual(r.json.oldName, 'bakery-anna');
+    assert.strictEqual(r.json.address, 'https://anna-bakery.edvlabs.com/'); assert.strictEqual(r.json.oldAddress, 'https://bakery-anna.edvlabs.com/'); assert.strictEqual(r.json.holdDays, 90);
+    assert.strictEqual(f.sites[0].name, 'anna-bakery');
+    assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:anna-bakery')), { id, version: 1, status: 'live' });
+    assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:bakery-anna')), { redirect: 'anna-bakery' });
+    assert.deepStrictEqual([...f.objects.keys()].sort(), filesBefore, 'renaming copies and moves no files');
+    const hold = f.holds.find((h) => h.name === 'bakery-anna'); assert(hold && hold.user_id === 'u1' && hold.redirect_to === 'anna-bakery' && new Date(hold.expires_at) > new Date('2027-01-20'), 'the old name is held for 90 days');
+    // the old name is not free for others, but is for its owner
+    assert.strictEqual((await pub.nameStatus('u2', 'bakery-anna')).json.reason, 'taken');
+    assert.strictEqual((await pub.publish({ userId: 'u2', name: 'bakery-anna', files: [html()] })).status, 409);
+    assert.strictEqual((await pub.nameStatus('u1', 'bakery-anna')).json.available, true);
+    // a second rename: the older held name is pointed at the newest name (no chains)
+    const r2 = await pub.rename({ userId: 'u1', siteId: id, newName: 'anna-cakes' }); assert.strictEqual(r2.status, 200);
+    assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:bakery-anna')), { redirect: 'anna-cakes' }); assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:anna-bakery')), { redirect: 'anna-cakes' });
+    assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:anna-cakes')), { id, version: 1, status: 'live' });
+    // twice in 30 days is the limit
+    const r3 = await pub.rename({ userId: 'u1', siteId: id, newName: 'third-name' }); assert.strictEqual(r3.status, 429); assert.strictEqual(r3.json.reason, 'renames'); assert.strictEqual(f.sites[0].name, 'anna-cakes');
+    setClock('2026-12-05T10:00:00.000Z');
+    assert.strictEqual((await pub.rename({ userId: 'u1', siteId: id, newName: 'third-name' })).status, 200, 'after 30 days it is allowed again');
+    // renaming back to a name of one's own hold works
+    f.addEntitlement('u1', '2028-01-01T00:00:00Z');
+    assert.strictEqual(f.sites[0].name, 'third-name');
+    // publishing again after a rename keeps serving from the new name
+    assert.strictEqual((await pub.publish({ userId: 'u1', name: 'third-name', files: [html('<p>v2</p>')] })).json.version, 2);
+    assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:third-name')), { id, version: 2, status: 'live' });
+  });
+
+  await test('rename: refusals leave everything as it was', async () => {
+    const { f, pub, setClock } = setup(); f.addEntitlement('u1', '2026-12-01T00:00:00Z'); f.addEntitlement('u2', FUTURE); f.addEntitlement('u1', FUTURE);
+    const a = (await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()] })).json.siteId;
+    const b = (await pub.publish({ userId: 'u2', name: 'ben-shop', files: [html()] })).json.siteId;
+    const snapshot = () => JSON.stringify([f.sites, f.holds, [...f.kvStore.entries()]]);
+    const before = snapshot();
+    const cases = [[{ userId: null, siteId: a, newName: 'fresh-name' }, 401], [{ userId: 'u1', siteId: a, newName: 'www' }, 400], [{ userId: 'u1', siteId: a, newName: 'p0rn' }, 400], [{ userId: 'u1', siteId: a, newName: 'bakery-anna' }, 400],
+      [{ userId: 'u1', siteId: a, newName: 'ben-shop' }, 409], [{ userId: 'u2', siteId: a, newName: 'fresh-name' }, 404], [{ userId: 'u1', siteId: 'no-such-site', newName: 'fresh-name' }, 404], [{ userId: 'u1', siteId: b, newName: 'fresh-name' }, 404]];
+    for (const [args, status] of cases) assert.strictEqual((await pub.rename(args)).status, status, JSON.stringify(args));
+    f.holds.push({ name: 'held-by-ben', user_id: 'u2', site_id: null, redirect_to: null, expires_at: '2027-02-01T00:00:00Z' });
+    assert.strictEqual((await pub.rename({ userId: 'u1', siteId: a, newName: 'held-by-ben' })).status, 409, 'someone else\'s held name');
+    f.holds.pop(); const afterRefusals = snapshot(); assert.strictEqual(afterRefusals, before, 'nothing changed by any refusal');
+    f.sites.find((s) => s.id === a).status = 'blocked'; assert.strictEqual((await pub.rename({ userId: 'u1', siteId: a, newName: 'fresh-name' })).status, 403); f.sites.find((s) => s.id === a).status = 'live';
+    f.holds.push({ name: 'expired-hold', user_id: 'u2', site_id: null, redirect_to: null, expires_at: '2026-01-01T00:00:00Z' });
+    assert.strictEqual((await pub.rename({ userId: 'u1', siteId: a, newName: 'expired-hold' })).status, 200, 'a hold that ran out is free');
+    setClock('2026-12-20T00:00:00.000Z'); // payment of a's place ended more than 14 days ago
+    const c = f.addEntitlement('u1', '2026-12-01T00:00:00Z', { status: 'active' }); assert(c);
+    f.ents.find((e) => e.site_id === a).paid_until = '2026-12-01T00:00:00Z';
+    assert.strictEqual((await pub.rename({ userId: 'u1', siteId: a, newName: 'another-new' })).json.reason, 'payment-needed');
+  });
+
+  await test('rename: a lookup update that fails after the database change is repaired by the next clean-up', async () => {
+    const { f, pub, setClock } = setup(); f.addEntitlement('u1', FUTURE);
+    const id = (await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()] })).json.siteId;
+    const realPut = f.kv.put; f.kv.put = async (k, v, o) => { if (k.startsWith('site:')) throw new Error('kv down'); return realPut(k, v, o); }; // the lookup is down, the rate counter is not
+    const r = await pub.rename({ userId: 'u1', siteId: id, newName: 'anna-bakery' });
+    f.kv.put = realPut;
+    assert.strictEqual(r.status, 202); assert(r.json.pending); assert.strictEqual(f.sites[0].name, 'anna-bakery', 'the database already has the new name');
+    assert.strictEqual(JSON.parse(f.kvStore.get('site:bakery-anna')).status, 'live', 'until the clean-up the lookup is as it was');
+    setClock('2026-11-01T11:00:00.000Z');
+    const out = await pub.sweep(); assert(out.repaired >= 2, JSON.stringify(out));
+    assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:anna-bakery')), { id, version: 1, status: 'live' }); assert.deepStrictEqual(JSON.parse(f.kvStore.get('site:bakery-anna')), { redirect: 'anna-bakery' });
+    assert.strictEqual((await pub.sweep()).repaired, 0, 'and a second run changes nothing');
+    // the clean-up never moves a lookup backwards
+    f.kvStore.set('site:anna-bakery', JSON.stringify({ id, version: 9, status: 'live' }));
+    await pub.sweep(); assert.strictEqual(JSON.parse(f.kvStore.get('site:anna-bakery')).version, 9);
   });
 
   console.log(`✓ publish: ${count} groups (files, scan, payment, names, versions, failures, limits, unpublish)`);

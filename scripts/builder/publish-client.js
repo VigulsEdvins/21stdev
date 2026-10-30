@@ -36,7 +36,7 @@
   /** What to tell the person about an answer: { kind, message }. kind is one of ok, signin, payment, taken, name, files, busy, error. */
   function explain(status, json) {
     const first = json && Array.isArray(json.errors) && json.errors[0] ? String(json.errors[0]) : '';
-    if (status === 200 && json && json.ok) return { kind: 'ok', message: '' };
+    if ((status === 200 || status === 202) && json && json.ok) return { kind: 'ok', message: '' };
     if (status === 401) return { kind: 'signin', message: 'Please sign in again to put your page online.' };
     if (status === 402) return { kind: 'payment', message: first || 'Publishing on an edvlabs address is a paid extra.' };
     if (status === 409 && json && json.reason === 'taken') return { kind: 'taken', message: 'This name is taken. Please choose another.' };
@@ -45,6 +45,7 @@
     if (status === 400) return { kind: 'name', message: first || 'Please check the name.' };
     if (status === 403) return { kind: 'error', message: first || 'This is not allowed.' };
     if (status === 413) return { kind: 'files', message: 'Your page is too large to put online. Try smaller pictures.' };
+    if (status === 429 && json && json.reason === 'renames') return { kind: 'busy', message: first || 'A site can be renamed twice in 30 days. Please try again later.' };
     if (status === 429) return { kind: 'busy', message: 'You have published a lot in the last hour. Please try again a little later.' };
     if (status === 503) return { kind: 'error', message: 'Putting pages online is not switched on yet.' };
     return { kind: 'error', message: 'That did not work just now. Please try again.' };
@@ -63,7 +64,7 @@
     return '';
   }
 
-  /** The five calls. `token()` gives the access token; `fetchImpl` is fetch (replaced in tests). Each returns { status, json }. */
+  /** The six calls. `token()` gives the access token; `fetchImpl` is fetch (replaced in tests). Each returns { status, json }. */
   function createClient({ fetchImpl, token, base }) {
     const f = fetchImpl || ((...a) => fetch(...a)), root = base || '/api';
     async function call(method, path, body) {
@@ -80,7 +81,8 @@
       checkName: (name) => call('GET', '/site-name?name=' + encodeURIComponent(name)),
       mySites: () => call('GET', '/my-sites'),
       publish: (name, collected, projectId) => call('POST', '/publish', Object.assign({ name, files: toFiles(collected) }, projectId ? { projectId } : {})),
-      unpublish: (siteId) => call('POST', '/unpublish', { siteId })
+      unpublish: (siteId) => call('POST', '/unpublish', { siteId }),
+      rename: (siteId, name) => call('POST', '/rename', { siteId, name })
     };
   }
 

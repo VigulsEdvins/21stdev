@@ -76,7 +76,22 @@ const demoMod = require('../../scripts/demo-publish.js');
   await big.close();
   console.log('  ✓ a six-block page (header, hero, 3D, pricing, form, footer) runs under its policy with no violations');
 
-  await page.click('[data-act="offline"]'); await page.waitForFunction(() => /is offline/.test(document.getElementById('publishResult').textContent));
+  // renaming in the real flow: the old address redirects to the new one in a real browser
+  await page.locator('#publishSites li', { hasText: 'bakery-anna.localhost' }).locator('[data-act="rename"]').click();
+  await page.fill('.gt-rename input', 'anna-cakes'); await page.waitForFunction(() => /is free/.test(document.querySelector('.gt-rename small').textContent));
+  await page.click('[data-act="rename-save"]');
+  await page.waitForFunction(() => /The name is changed/.test(document.getElementById('publishResult').textContent));
+  const moved = await ctx.newPage();
+  /* a path this browser has not seen before (pages it already holds are kept for 5 minutes, which is normal) */
+  const landed = await moved.goto('http://bakery-anna.localhost:' + port + '/never-opened?x=1');
+  assert.strictEqual(new URL(moved.url()).hostname, 'anna-cakes.localhost', 'the old address ends up on the new one: ' + moved.url());
+  assert.strictEqual(new URL(moved.url()).pathname + new URL(moved.url()).search, '/never-opened?x=1', 'with the path and query kept');
+  assert.strictEqual(landed.status(), 404, 'and the new site answers (this page does not exist there)');
+  const newHome = await moved.goto('http://anna-cakes.localhost:' + port + '/'); assert.strictEqual(newHome.status(), 200);
+  await moved.close();
+  console.log('  ✓ rename: the new address serves the page and the old one redirects to it, in a real browser');
+
+  await page.locator('#publishSites li').first().locator('[data-act="offline"]').click(); await page.waitForFunction(() => /is offline/.test(document.getElementById('publishResult').textContent));
   await site.reload(); assert(/not available/.test(await site.textContent('body')), 'offline: the address shows the plain notice');
   console.log('  ✓ take offline: the address shows the plain notice');
 
