@@ -73,6 +73,20 @@ const stack = [{ id: 'sec', slug: 'x-hero', title: 'Hero', html: HEAD, css: '', 
   assert.strictEqual(r.text, 'Ship interfaces with perceptual depth.');
   assert(/<br>/.test(r.html));
 
+  // hide and move: counted from the original place, and Reset puts everything back
+  const SIB = `<section><div id="row"><i id="m1">1</i><i id="m2">2</i><i id="m3">3</i></div></section>`;
+  const page2 = await browser.newPage();
+  await page2.setContent(Asm.assemblePreviewDocument([{ id: 'sec', slug: 'x-row', title: 'Row', html: SIB, css: '', js: '' }], {}, {}, {}));
+  const run = (list) => page2.evaluate((l) => { window.__setOverrides(l); return Array.from(document.querySelectorAll('#row > i')).map(e => e.id + (getComputedStyle(e).display === 'none' ? '(hidden)' : '')).join(','); }, list);
+  const ov = (id, type, value) => ({ section: 'sec', field: id + '__' + type, selector: '#' + id, type, value });
+  assert.strictEqual(await run([ov('m1', 'move', '1')]), 'm2,m1,m3');
+  assert.strictEqual(await run([ov('m1', 'move', '2')]), 'm2,m3,m1', 'counts from the original place, not from the last edit');
+  assert.strictEqual(await run([ov('m1', 'move', '9')]), 'm2,m3,m1', 'stops at the end');
+  assert.strictEqual(await run([ov('m3', 'move', '-1')]), 'm1,m3,m2');
+  assert.strictEqual(await run([ov('m2', 'hide', '1')]), 'm1,m2(hidden),m3');
+  assert.strictEqual(await run([ov('m2', 'hide', '1'), ov('m2', 'move', '1')]), 'm1,m3,m2(hidden)');
+  assert.strictEqual(await run([]), 'm1,m2,m3', 'removing the settings puts it back, shown');
+
   await browser.close();
   console.log('✅ Text fields edit every line passed!');
 })().catch(e => { console.error(e); process.exit(1); });

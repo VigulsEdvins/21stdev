@@ -89,6 +89,11 @@ select.cms-pick { margin-bottom: 6px; }
 .cms-card-actions { display: flex; align-items: center; gap: 8px; }
 .cms-reset { background: none; border: none; color: var(--muted); font-size: 12px; cursor: pointer; text-decoration: underline; }
 .cms-reset:hover { color: var(--text); }
+.cms-tool { background: none; border: 1px solid var(--border, rgba(127,127,127,.35)); color: var(--muted); font-size: 11px; line-height: 1; padding: 4px 7px; border-radius: 5px; cursor: pointer; }
+.cms-tool:hover:not(:disabled) { color: var(--text); }
+.cms-tool:disabled { opacity: .35; cursor: default; }
+.cms-card.is-hidden .cms-textarea, .cms-card.is-hidden .cms-input { opacity: .5; }
+.cms-card.is-hidden .cms-label::after { content: ' \2014  hidden on the page'; color: var(--muted); font-weight: 400; }
 .cms-image-row { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: start; }
 .cms-thumb { width: 96px; height: 72px; object-fit: cover; border-radius: 8px; background: var(--surface-3) center / cover; border: 1px solid var(--border); }
 .cms-fit { display: grid; gap: 8px; margin-top: 10px; }

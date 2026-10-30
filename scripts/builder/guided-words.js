@@ -8,7 +8,7 @@
 (function () {
   'use strict';
 
-  const own = (section) => Object.entries(section.overrides || {}).filter(([k, v]) => v && v.type !== 'alt' && !/__alt$/.test(k) && v.value !== '' && v.value != null).length;
+  const own = (section) => Object.entries(section.overrides || {}).filter(([k, v]) => v && v.type !== 'alt' && v.type !== 'hide' && v.type !== 'move' && !/__alt$/.test(k) && v.value !== '' && v.value != null).length;
 
   function el(doc, tag, attrs, ...kids) {
     const e = doc.createElement(tag);

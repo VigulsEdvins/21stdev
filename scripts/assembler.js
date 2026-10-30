@@ -3156,6 +3156,22 @@ const OVERRIDES_RUNTIME = `(function () {
     else if (key === 'href') { if (value === null) el.removeAttribute('href'); else el.setAttribute('href', value); }
     else if (key === 'svgpic') { if (value && value.parentNode) value.parentNode.removeChild(value); el.__cmsPic = null; }
     else if (key.indexOf('style:') === 0) { if (value) el.style.setProperty(key.slice(6), value); else el.style.removeProperty(key.slice(6)); }
+    else if (key === 'move') { if (value.parent && value.parent.isConnected) value.parent.insertBefore(el, value.next && value.next.parentNode === value.parent ? value.next : null); }
+  }
+  // The element children that count as places in a row: scripts and styles are not on the page.
+  function places(parent) {
+    return Array.prototype.filter.call(parent.children, function (c) { return !/^(SCRIPT|STYLE)$/.test(c.tagName); });
+  }
+  // Moves el by n places among its neighbours (negative = up), counting from where it was originally.
+  function moveBy(el, n, active) {
+    var rec = original(el);
+    rec.saved.move = { parent: el.parentNode, next: el.nextSibling };
+    active.push([el, 'move']);
+    var row = places(el.parentNode), at = row.indexOf(el);
+    var to = Math.max(0, Math.min(row.length - 1, at + n));
+    if (to === at) return;
+    if (to > at) el.parentNode.insertBefore(el, row[to].nextSibling);
+    else el.parentNode.insertBefore(el, row[to]);
   }
   var STYLED = /^(SPAN|B|I|EM|STRONG|SMALL|MARK|U|SUB|SUP)$/;
   // A child whose words belong to the field: a plain styled run (the gradient half of a headline), nothing inside it
@@ -3367,6 +3383,10 @@ const OVERRIDES_RUNTIME = `(function () {
   function apply() {
     var active = [];
     painted = [];
+    // every move counts from the page's own order: put the moved elements back (last moved first), then move them again
+    for (var m = originals.length - 1; m >= 0; m--) {
+      if (originals[m].saved.move) { restore(originals[m].el, 'move', originals[m].saved.move); delete originals[m].saved.move; }
+    }
     list.forEach(function (o) {
       var root = document.getElementById(o.section);
       if (!root) return;
@@ -3424,6 +3444,15 @@ const OVERRIDES_RUNTIME = `(function () {
         key = remember(el, 'href', function () { return el.getAttribute('href'); });
         active.push([el, key]);
         el.setAttribute('href', o.value);
+      } else if (o.type === 'hide') {
+        if (String(o.value) === '1') {
+          key = remember(el, 'style:display', function () { return el.style.getPropertyValue('display'); });
+          active.push([el, key]);
+          el.style.setProperty('display', 'none', 'important');
+        }
+      } else if (o.type === 'move') {
+        var steps = parseInt(o.value, 10);
+        if (steps && isFinite(steps) && el.parentNode) moveBy(el, Math.max(-50, Math.min(50, steps)), active);
       } else if (o.type === 'color') {
         key = remember(el, 'style:' + (o.attr || 'color'), function () { return el.style.getPropertyValue(o.attr || 'color'); });
         active.push([el, key]);

@@ -50,6 +50,9 @@
         if (f.type === 'image' && f.fit && typeof fv === 'string' && fv !== f.fit && /^(cover|contain)[|0-9]{0,16}$/.test(fv)) {
           out.push({ section: sec.id, field: f.id + '__fit', selector: f.selector, type: 'fit', attr: '', value: fv });
         }
+        if (vals[f.id + '__hide'] === '1') out.push({ section: sec.id, field: f.id + '__hide', selector: f.selector, type: 'hide', attr: '', value: '1' });
+        var mv = vals[f.id + '__move'];
+        if (typeof mv === 'string' && /^-?[1-9][0-9]?$/.test(mv)) out.push({ section: sec.id, field: f.id + '__move', selector: f.selector, type: 'move', attr: '', value: mv });
         if (!Object.prototype.hasOwnProperty.call(vals, f.id)) return;
         var v = vals[f.id];
         if (typeof v !== 'string' || v === f.value) return;

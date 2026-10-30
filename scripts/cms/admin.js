@@ -102,7 +102,12 @@
     return typeof v === 'string' ? v : f.fit;
   }
   function setFit(file, sec, f, value) { setKey(file, sec, f.id + '__fit', value, f.fit); }
-  function isEdited(file, sec, f) { return getVal(file, sec, f) !== f.value || (!!f.fit && getFit(file, sec, f) !== f.fit); }
+  /** A field can also be hidden ("<id>__hide" = "1") or moved ("<id>__move" = places down, negative = up). */
+  function getHide(file, sec, f) { var v = draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id + '__hide']; return v === '1'; }
+  function setHide(file, sec, f, on) { setKey(file, sec, f.id + '__hide', on ? '1' : '', ''); }
+  function getMove(file, sec, f) { var n = parseInt(draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id + '__move'], 10); return isFinite(n) ? n : 0; }
+  function setMove(file, sec, f, n) { setKey(file, sec, f.id + '__move', n ? String(n) : '', ''); }
+  function isEdited(file, sec, f) { return getVal(file, sec, f) !== f.value || (!!f.fit && getFit(file, sec, f) !== f.fit) || getHide(file, sec, f) || getMove(file, sec, f) !== 0; }
   function editedCount(file, sec) { return sec.fields.filter(function (f) { return isEdited(file, sec, f); }).length; }
 
   /* Where form messages go: one choice for the whole site, kept in the draft as `__form` only when it differs from the exported one */
@@ -274,6 +279,15 @@
         if ((synced[key] || '') === want) return;
         synced[key] = want;
         bridge.setOverride(sec.id, f.id, want, { selector: f.selector, type: f.type, attr: f.attr });
+      });
+      sec.fields.forEach(function (f) {
+        [['__hide', 'hide'], ['__move', 'move']].forEach(function (k) {
+          var want = (draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id + k[0]]) || '';
+          var key = sec.id + '/' + f.id + k[0];
+          if ((synced[key] || '') === want) return;
+          synced[key] = want;
+          bridge.setOverride(sec.id, f.id + k[0], want, { selector: f.selector, type: k[1] });
+        });
       });
       sec.fields.forEach(function (f) {
         if (f.type !== 'image' || !f.fit) return;
@@ -557,14 +571,23 @@
   function fieldCard(sec, f, index) {
     var file = page().file;
     var value = getVal(file, sec, f);
-    var card = el('div', { class: 'cms-card' + (isEdited(file, sec, f) ? ' is-edited' : ''), 'data-field': f.id, 'data-index': String(index) });
+    var hidden = getHide(file, sec, f), moved = getMove(file, sec, f);
+    var card = el('div', { class: 'cms-card' + (isEdited(file, sec, f) ? ' is-edited' : '') + (hidden ? ' is-hidden' : ''), 'data-field': f.id, 'data-index': String(index) });
     var reset = el('button', { type: 'button', class: 'cms-reset', text: 'Reset', title: 'Back to the original', on: { click: function () {
-      setVal(file, sec, f, f.value); if (f.fit) setFit(file, sec, f, f.fit); snapshot(); changed(true);
+      setVal(file, sec, f, f.value); if (f.fit) setFit(file, sec, f, f.fit); setHide(file, sec, f, false); setMove(file, sec, f, 0); snapshot(); changed(true);
     } } });
+    function place(step) { setMove(file, sec, f, moved + step); snapshot(); changed(true); }
+    var canMove = typeof f.pos === 'number' && typeof f.sibs === 'number' && f.sibs > 1;
+    var tools = [];
+    if (canMove) {
+      tools.push(el('button', { type: 'button', class: 'cms-tool cms-up', text: '\u25b2', title: 'Move up', 'aria-label': f.label + ': move up', disabled: f.pos + moved <= 0, on: { click: function () { place(-1); } } }));
+      tools.push(el('button', { type: 'button', class: 'cms-tool cms-down', text: '\u25bc', title: 'Move down', 'aria-label': f.label + ': move down', disabled: f.pos + moved >= f.sibs - 1, on: { click: function () { place(1); } } }));
+    }
+    tools.push(el('button', { type: 'button', class: 'cms-tool cms-hide', text: hidden ? 'Show again' : 'Hide', title: hidden ? 'Show it on the page again' : 'Take it off the page (you can show it again)', 'aria-pressed': hidden ? 'true' : 'false', on: { click: function () { setHide(file, sec, f, !hidden); snapshot(); changed(true); } } }));
     function syncReset() { reset.hidden = !isEdited(file, sec, f); }
     card.appendChild(el('div', { class: 'cms-card-head' }, [
       el('label', { class: 'cms-label', text: f.label }),
-      el('div', { class: 'cms-card-actions' }, [reset, el('span', { class: 'cms-type', text: f.type })])
+      el('div', { class: 'cms-card-actions' }, tools.concat([reset, el('span', { class: 'cms-type', text: f.type })]))
     ]));
     var orig = originalOf(sec, f);
     if (orig) card.appendChild(el('p', { class: 'cms-hint cms-orig', text: 'In ' + langName(allLangs()[0]) + ': ' + (orig.length > 200 ? orig.slice(0, 200) + '\u2026' : orig) }));
@@ -719,6 +742,9 @@
             out[p.file] = out[p.file] || {}; out[p.file][sec.id] = out[p.file][sec.id] || {};
             out[p.file][sec.id][f.id + '__fit'] = fv; kept++;
           }
+          if (rs[f.id + '__hide'] === '1') { out[p.file] = out[p.file] || {}; out[p.file][sec.id] = out[p.file][sec.id] || {}; out[p.file][sec.id][f.id + '__hide'] = '1'; kept++; }
+          var mv = rs[f.id + '__move'];
+          if (typeof mv === 'string' && /^-?[1-9][0-9]?$/.test(mv)) { out[p.file] = out[p.file] || {}; out[p.file][sec.id] = out[p.file][sec.id] || {}; out[p.file][sec.id][f.id + '__move'] = mv; kept++; }
           var v = rs[f.id];
           if (typeof v !== 'string' || v === f.value) return;
           if (f.type === 'image' || f.type === 'link') { v = safeUrl(v, f.type); if (!v) return; }

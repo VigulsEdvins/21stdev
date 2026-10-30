@@ -39,6 +39,7 @@
             const out = { id: f.id, label: f.label, type: f.type, selector: f.selector, value: f.value };
             if (f.attr) out.attr = f.attr;
             if (f.fit) out.fit = f.fit;
+            if (Number.isInteger(f.pos) && Number.isInteger(f.sibs) && f.sibs > 1) { out.pos = f.pos; out.sibs = f.sibs; }
             return out;
           })
         }))
@@ -120,6 +121,14 @@ There is no login. Anyone who can open \`admin.html\` can edit in their own brow
             fields: found.map(f => {
               const out = { id: f.id, label: f.label, type: f.type, selector: f.selector, attr: f.attr, value: String(f.current == null ? '' : f.current) };
               if (f.type === 'image') out.fit = String(((s.overrides || {})[f.id + '__fit'] || {}).value || 'cover|50|50|100');
+              // where it stands among its neighbours (the editor's up and down buttons stop at the ends)
+              let el = null;
+              try { el = root.querySelector(f.selector); } catch (_) { /* bad selector */ }
+              if (el && el.parentElement) {
+                const row = Array.from(el.parentElement.children).filter(c => !/^(SCRIPT|STYLE)$/.test(c.tagName));
+                out.pos = row.indexOf(el);
+                out.sibs = row.length;
+              }
               return out;
             })
           });

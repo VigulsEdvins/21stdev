@@ -33,7 +33,7 @@
     'contact-phone': 'The phone number in your settings is not on the page.',
     'contact-email': 'The email address in your settings is not on the page.'
   };
-  const own = (s) => Object.values(s.overrides || {}).filter((v) => v && v.type !== 'alt' && v.value !== '' && v.value != null).length;
+  const own = (s) => Object.values(s.overrides || {}).filter((v) => v && v.type !== 'alt' && v.type !== 'hide' && v.type !== 'move' && v.value !== '' && v.value != null).length;
 
   /** Pure part: turns the raw findings into the list shown. items: { id, text, kind, sectionId?, fix? } */
   function buildItems({ stack, issues, colours, page }) {
