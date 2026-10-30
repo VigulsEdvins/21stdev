@@ -107,7 +107,11 @@
   function setHide(file, sec, f, on) { setKey(file, sec, f.id + '__hide', on ? '1' : '', ''); }
   function getMove(file, sec, f) { var n = parseInt(draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id + '__move'], 10); return isFinite(n) ? n : 0; }
   function setMove(file, sec, f, n) { setKey(file, sec, f.id + '__move', n ? String(n) : '', ''); }
-  function isEdited(file, sec, f) { return getVal(file, sec, f) !== f.value || (!!f.fit && getFit(file, sec, f) !== f.fit) || getHide(file, sec, f) || getMove(file, sec, f) !== 0; }
+  /** Placed by hand: "<id>__shift" = "x|y", a percent of the block's width. */
+  var SHIFT_RE = /^-?\d{1,3}(\.\d)?\|-?\d{1,3}(\.\d)?$/;
+  function getShift(file, sec, f) { var v = draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id + '__shift']; return typeof v === 'string' && SHIFT_RE.test(v) ? v : ''; }
+  function setShift(file, sec, f, v) { setKey(file, sec, f.id + '__shift', v, ''); }
+  function isEdited(file, sec, f) { return getVal(file, sec, f) !== f.value || (!!f.fit && getFit(file, sec, f) !== f.fit) || getHide(file, sec, f) || getMove(file, sec, f) !== 0 || !!getShift(file, sec, f); }
   function editedCount(file, sec) { return sec.fields.filter(function (f) { return isEdited(file, sec, f); }).length; }
 
   /* Where form messages go: one choice for the whole site, kept in the draft as `__form` only when it differs from the exported one */
@@ -281,7 +285,7 @@
         bridge.setOverride(sec.id, f.id, want, { selector: f.selector, type: f.type, attr: f.attr });
       });
       sec.fields.forEach(function (f) {
-        [['__hide', 'hide'], ['__move', 'move']].forEach(function (k) {
+        [['__hide', 'hide'], ['__move', 'move'], ['__shift', 'shift']].forEach(function (k) {
           var want = (draft[file] && draft[file][sec.id] && draft[file][sec.id][f.id + k[0]]) || '';
           var key = sec.id + '/' + f.id + k[0];
           if ((synced[key] || '') === want) return;
@@ -349,6 +353,12 @@
     if (e.source !== frame.contentWindow || !e.data || typeof e.data !== 'object') return;
     if (e.data.type === 'edv-cms:frames' && e.data.page === page().file && e.data.sizes) { frameSizes = e.data.sizes; document.querySelectorAll('.cms-fit').forEach(function (b) { if (b.repaint) b.repaint(true); }); }
     if (e.data.type === 'edv-cms:ready') { previewReady = true; pushPreview(); }
+    if (e.data.type === 'edv-cms:shift' && e.data.page === page().file && typeof e.data.value === 'string' && SHIFT_RE.test(e.data.value)) {
+      var ssec = findSection(e.data.section), sf = ssec && ssec.fields.filter(function (x) { return x.id === e.data.field; })[0];
+      if (!sf) return;
+      setShift(page().file, ssec, sf, e.data.value === '0|0' ? '' : e.data.value); snapshot(); changed(true);
+      return;
+    }
     if (e.data.type === 'edv-cms:move' && e.data.page === page().file && Number.isInteger(e.data.steps)) {
       var msec = findSection(e.data.section), mf = msec && msec.fields.filter(function (x) { return x.id === e.data.field; })[0];
       if (!mf || typeof mf.pos !== 'number' || !(mf.sibs > 1)) return;
@@ -583,7 +593,7 @@
     var hidden = getHide(file, sec, f), moved = getMove(file, sec, f);
     var card = el('div', { class: 'cms-card' + (isEdited(file, sec, f) ? ' is-edited' : '') + (hidden ? ' is-hidden' : ''), 'data-field': f.id, 'data-index': String(index) });
     var reset = el('button', { type: 'button', class: 'cms-reset', text: 'Reset', title: 'Back to the original', on: { click: function () {
-      setVal(file, sec, f, f.value); if (f.fit) setFit(file, sec, f, f.fit); setHide(file, sec, f, false); setMove(file, sec, f, 0); snapshot(); changed(true);
+      setVal(file, sec, f, f.value); if (f.fit) setFit(file, sec, f, f.fit); setHide(file, sec, f, false); setMove(file, sec, f, 0); setShift(file, sec, f, ''); snapshot(); changed(true);
     } } });
     function place(step) { setMove(file, sec, f, moved + step); snapshot(); changed(true); }
     var canMove = typeof f.pos === 'number' && typeof f.sibs === 'number' && f.sibs > 1;
@@ -592,6 +602,7 @@
       tools.push(el('button', { type: 'button', class: 'cms-tool cms-up', text: '\u25b2', title: 'Move up', 'aria-label': f.label + ': move up', disabled: f.pos + moved <= 0, on: { click: function () { place(-1); } } }));
       tools.push(el('button', { type: 'button', class: 'cms-tool cms-down', text: '\u25bc', title: 'Move down', 'aria-label': f.label + ': move down', disabled: f.pos + moved >= f.sibs - 1, on: { click: function () { place(1); } } }));
     }
+    if (getShift(file, sec, f)) tools.unshift(el('button', { type: 'button', class: 'cms-tool cms-putback', text: 'Put back', title: 'Back to the place the page gives it', on: { click: function () { setShift(file, sec, f, ''); snapshot(); changed(true); } } }));
     tools.push(el('button', { type: 'button', class: 'cms-tool cms-hide', text: hidden ? 'Show again' : 'Hide', title: hidden ? 'Show it on the page again' : 'Take it off the page (you can show it again)', 'aria-pressed': hidden ? 'true' : 'false', on: { click: function () { setHide(file, sec, f, !hidden); snapshot(); changed(true); } } }));
     function syncReset() { reset.hidden = !isEdited(file, sec, f); }
     card.appendChild(el('div', { class: 'cms-card-head' }, [
@@ -752,6 +763,8 @@
             out[p.file][sec.id][f.id + '__fit'] = fv; kept++;
           }
           if (rs[f.id + '__hide'] === '1') { out[p.file] = out[p.file] || {}; out[p.file][sec.id] = out[p.file][sec.id] || {}; out[p.file][sec.id][f.id + '__hide'] = '1'; kept++; }
+          var shv = rs[f.id + '__shift'];
+          if (typeof shv === 'string' && SHIFT_RE.test(shv)) { out[p.file] = out[p.file] || {}; out[p.file][sec.id] = out[p.file][sec.id] || {}; out[p.file][sec.id][f.id + '__shift'] = shv; kept++; }
           var mv = rs[f.id + '__move'];
           if (typeof mv === 'string' && /^-?[1-9][0-9]?$/.test(mv)) { out[p.file] = out[p.file] || {}; out[p.file][sec.id] = out[p.file][sec.id] || {}; out[p.file][sec.id][f.id + '__move'] = mv; kept++; }
           var v = rs[f.id];

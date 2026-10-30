@@ -70,10 +70,10 @@
     Object.keys(map).slice(0, 500).forEach(fieldId => {
       const o = map[fieldId];
       if (!/^[\w.:-]{1,80}$/.test(fieldId) || !o || typeof o !== 'object' || typeof o.selector !== 'string' || o.selector.length > 300) { counter.n++; return; }
-      const type = ['text', 'image', 'link', 'color', 'alt', 'fit', 'hide', 'move'].includes(o.type) ? o.type : 'text';
+      const type = ['text', 'image', 'link', 'color', 'alt', 'fit', 'hide', 'move', 'shift'].includes(o.type) ? o.type : 'text';
       let value = text(String(o.value === undefined ? '' : o.value), MAX_TEXT, counter);
       // hiding is "1"; moving is a small whole number of places (anything else is not a setting)
-      if ((type === 'hide' && value !== '1') || (type === 'move' && !/^-?[1-9][0-9]?$/.test(value))) { counter.n++; return; }
+      if ((type === 'hide' && value !== '1') || (type === 'move' && !/^-?[1-9][0-9]?$/.test(value)) || (type === 'shift' && !/^-?\d{1,3}(\.\d)?\|-?\d{1,3}(\.\d)?$/.test(value))) { counter.n++; return; }
       if (type === 'link' || type === 'image') value = safeUrl(value, counter);
       const entry = { selector: o.selector, type, value };
       if (typeof o.attr === 'string' && /^[a-z-]{1,60}$|^--[\w-]{1,60}$/i.test(o.attr)) entry.attr = o.attr;

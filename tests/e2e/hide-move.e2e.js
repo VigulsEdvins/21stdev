@@ -40,21 +40,25 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const box = async (sel) => inPanel((q) => { const r = document.querySelector(q).getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, sel);
   const fr = await af.locator('#cms-frame').boundingBox();
   const pill = await box('.hero-pill'), title = await box('.hero-title');
+  await page.keyboard.down('Shift');
   await page.mouse.move(fr.x + pill.x, fr.y + pill.y);
   await page.mouse.down();
   await page.mouse.move(fr.x + pill.x, fr.y + pill.y - 30, { steps: 4 });
   await page.mouse.move(fr.x + title.x, fr.y + title.y - 20, { steps: 8 });
   await page.mouse.up();
+  await page.keyboard.up('Shift');
   await page.waitForTimeout(1200);
   assert.strictEqual((await order())[0], 'hero-pill', 'dragged back to the top: ' + (await order()).join(','));
   assert.strictEqual(await af.locator('.cms-card.is-edited').count(), 0, 'back in its own place, so nothing is edited');
   // and a drag down: onto the lower neighbour
   const p2 = await box('.hero-pill'), t2 = await box('.hero-title');
+  await page.keyboard.down('Shift');
   await page.mouse.move(fr.x + p2.x, fr.y + p2.y);
   await page.mouse.down();
   await page.mouse.move(fr.x + p2.x, fr.y + p2.y + 20, { steps: 4 });
   await page.mouse.move(fr.x + t2.x, fr.y + t2.y + 15, { steps: 8 });
   await page.mouse.up();
+  await page.keyboard.up('Shift');
   await page.waitForTimeout(1200);
   assert.strictEqual((await order())[1], 'hero-pill', 'dragged one place down: ' + (await order()).join(','));
   await page.waitForFunction(() => Object.values(window.builderPreview.stackManager.getStack()[0].overrides || {}).some((o) => o.type === 'move' && o.value === '1'), null, { timeout: 8000 });
@@ -62,6 +66,26 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.waitForTimeout(1000);
   // reset after the drag puts it back
   assert.strictEqual((await order())[0], 'hero-pill');
+
+  // a plain drag places it anywhere inside the block, and stays inside it
+  const where = () => inPanel(() => { const r = document.querySelector('.hero-pill').getBoundingClientRect(), s = document.querySelector('.hero-pill').closest('.page-section').getBoundingClientRect(); return { x: r.left, y: r.top, right: r.right, bottom: r.bottom, sl: s.left, st: s.top, sr: s.right, sb: s.bottom, tr: document.querySelector('.hero-pill').style.translate }; });
+  const w0 = await where(), p3 = await box('.hero-pill');
+  await page.mouse.move(fr.x + p3.x, fr.y + p3.y);
+  await page.mouse.down();
+  await page.mouse.move(fr.x + p3.x + 40, fr.y + p3.y + 40, { steps: 4 });
+  await page.mouse.move(fr.x + p3.x + 9000, fr.y + p3.y + 150, { steps: 8 }); // far past the right edge of the block
+  await page.mouse.up();
+  await page.waitForTimeout(1200);
+  const w1 = await where();
+  assert(w1.x > w0.x + 100 && w1.y > w0.y + 100, 'moved to the lower right: ' + JSON.stringify([w0, w1]));
+  assert(w1.right <= w1.sr + 1 && w1.bottom <= w1.sb + 1, 'and stays inside the block');
+  assert.strictEqual((await order())[0], 'hero-pill', 'its place in the row is the same');
+  assert.strictEqual(await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-putback').count(), 1);
+  await page.waitForFunction(() => Object.values(window.builderPreview.stackManager.getStack()[0].overrides || {}).some((o) => o.type === 'shift'), null, { timeout: 8000 });
+  await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-putback').click();
+  await page.waitForTimeout(1200);
+  const w2 = await where();
+  assert(Math.abs(w2.x - w0.x) < 1 && Math.abs(w2.y - w0.y) < 1 && !w2.tr, 'Put back: ' + JSON.stringify(w2));
 
   // hide: gone from the preview, the card says so, and the text is still there to show again
   await af.locator('.cms-card', { hasText: 'Small label' }).first().locator('.cms-hide').click();

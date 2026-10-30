@@ -39,6 +39,7 @@
     return '';
   }
 
+  var lastValues = {};
   function listFor(values) {
     var out = [];
     var mine = (values && values[file]) || {};
@@ -51,6 +52,8 @@
           out.push({ section: sec.id, field: f.id + '__fit', selector: f.selector, type: 'fit', attr: '', value: fv });
         }
         if (vals[f.id + '__hide'] === '1') out.push({ section: sec.id, field: f.id + '__hide', selector: f.selector, type: 'hide', attr: '', value: '1' });
+        var sh = vals[f.id + '__shift'];
+        if (typeof sh === 'string' && /^-?\d{1,3}(\.\d)?\|-?\d{1,3}(\.\d)?$/.test(sh)) out.push({ section: sec.id, field: f.id + '__shift', selector: f.selector, type: 'shift', attr: '', value: sh });
         var mv = vals[f.id + '__move'];
         if (typeof mv === 'string' && /^-?[1-9][0-9]?$/.test(mv)) out.push({ section: sec.id, field: f.id + '__move', selector: f.selector, type: 'move', attr: '', value: mv });
         if (!Object.prototype.hasOwnProperty.call(vals, f.id)) return;
@@ -64,6 +67,7 @@
   }
 
   function apply(values) {
+    lastValues = values || {};
     window.__setOverrides(base.concat(listFor(values)));
   }
 
@@ -192,10 +196,53 @@
     });
     return best;
   }
+  // Drag a text anywhere inside its block (Shift: drop it before or after a neighbour instead).
+  // The place is sent as "x|y", a percent of the block's width, counted from where the page puts it.
+  function dragFree(e, hit) {
+    var root = document.getElementById(hit.sec.id), el = hit.el;
+    if (!root) return;
+    var rw = root.getBoundingClientRect().width || 1;
+    var mine = ((lastValues[file] || {})[hit.sec.id] || {})[hit.f.id + '__shift'];
+    var m = /^(-?[0-9.]+)\|(-?[0-9.]+)$/.exec(typeof mine === 'string' ? mine : '0|0') || [0, 0, 0];
+    var base = { x: Number(m[1]) * rw / 100, y: Number(m[2]) * rw / 100 };
+    var start = { x: e.clientX, y: e.clientY }, r0 = el.getBoundingClientRect(), rr = root.getBoundingClientRect();
+    var lo = { x: Math.min(0, rr.left - r0.left), y: Math.min(0, rr.top - r0.top) }, hi = { x: Math.max(0, rr.right - r0.right), y: Math.max(0, rr.bottom - r0.bottom) };
+    var saved = el.style.getPropertyValue('translate'), savedOutline = root.style.outline, on = false, d = { x: 0, y: 0 };
+    function move(ev) {
+      if (!on && Math.abs(ev.clientX - start.x) + Math.abs(ev.clientY - start.y) < 8) return;
+      if (!on) { on = true; root.style.outline = '2px dashed #00b181'; root.style.outlineOffset = '-2px'; document.documentElement.style.userSelect = 'none'; }
+      d.x = Math.max(lo.x, Math.min(hi.x, ev.clientX - start.x));
+      d.y = Math.max(lo.y, Math.min(hi.y, ev.clientY - start.y));
+      el.style.setProperty('translate', (base.x + d.x) + 'px ' + (base.y + d.y) + 'px');
+      document.documentElement.style.cursor = 'grabbing';
+      ev.preventDefault();
+    }
+    function up() {
+      document.removeEventListener('pointermove', move, true);
+      document.removeEventListener('pointerup', up, true);
+      document.removeEventListener('pointercancel', up, true);
+      document.documentElement.style.cursor = '';
+      document.documentElement.style.userSelect = '';
+      root.style.outline = savedOutline; root.style.outlineOffset = '';
+      if (!on) return;
+      // give the element back to the page's own settings; the admin sends the new place back as a value
+      if (saved) el.style.setProperty('translate', saved); else el.style.removeProperty('translate');
+      dragged = true;
+      setTimeout(function () { dragged = false; }, 0);
+      var pc = function (px) { return Math.round(px / rw * 1000) / 10; };
+      var x = pc(base.x + d.x), y = pc(base.y + d.y);
+      fromAdmin.postMessage({ type: 'edv-cms:shift', page: file, section: hit.sec.id, field: hit.f.id, value: x + '|' + y }, TARGET);
+    }
+    document.addEventListener('pointermove', move, true);
+    document.addEventListener('pointerup', up, true);
+    document.addEventListener('pointercancel', up, true);
+  }
   document.addEventListener('pointerdown', function (e) {
     if (e.button !== 0 || e.pointerType === 'touch') return;
     var hit = fieldAt(e.target);
-    if (!hit || !hit.el.parentNode || row(hit.el).length < 2 || !(hit.f.sibs > 1)) return;
+    if (!hit || !hit.el.parentNode) return;
+    if (!e.shiftKey) { dragFree(e, hit); return; }
+    if (row(hit.el).length < 2 || !(hit.f.sibs > 1)) return;
     var from = { x: e.clientX, y: e.clientY }, on = false, target = null;
     function move(ev) {
       if (!on && Math.abs(ev.clientX - from.x) + Math.abs(ev.clientY - from.y) < 8) return;

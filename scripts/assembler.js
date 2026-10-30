@@ -3380,9 +3380,16 @@ const OVERRIDES_RUNTIME = `(function () {
     list.forEach(function (a) { if (a.section === o.section && a.field === field + '__fit') found = a; });
     return fitFor(found || { value: '' });
   }
+  var shifted = [];
+  function placeShift(s) {
+    var w = s.root.getBoundingClientRect().width;
+    s.el.style.setProperty('translate', (s.x * w / 100).toFixed(1) + 'px ' + (s.y * w / 100).toFixed(1) + 'px');
+  }
+  window.addEventListener('resize', function () { shifted.forEach(placeShift); });
   function apply() {
     var active = [];
     painted = [];
+    shifted = [];
     // every move counts from the page's own order: put the moved elements back (last moved first), then move them again
     for (var m = originals.length - 1; m >= 0; m--) {
       if (originals[m].saved.move) { restore(originals[m].el, 'move', originals[m].saved.move); delete originals[m].saved.move; }
@@ -3449,6 +3456,15 @@ const OVERRIDES_RUNTIME = `(function () {
           key = remember(el, 'style:display', function () { return el.style.getPropertyValue('display'); });
           active.push([el, key]);
           el.style.setProperty('display', 'none', 'important');
+        }
+      } else if (o.type === 'shift') {
+        // placed by hand: x|y as a percent of the block's width, counted from where the page puts it
+        var xy = /^(-?\\d{1,3}(?:\\.\\d)?)\\|(-?\\d{1,3}(?:\\.\\d)?)$/.exec(String(o.value));
+        if (xy) {
+          key = remember(el, 'style:translate', function () { return el.style.getPropertyValue('translate'); });
+          active.push([el, key]);
+          shifted.push({ el: el, root: root, x: Number(xy[1]), y: Number(xy[2]) });
+          placeShift(shifted[shifted.length - 1]);
         }
       } else if (o.type === 'move') {
         var steps = parseInt(o.value, 10);

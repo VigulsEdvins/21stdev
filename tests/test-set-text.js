@@ -86,6 +86,21 @@ const stack = [{ id: 'sec', slug: 'x-hero', title: 'Hero', html: HEAD, css: '', 
   assert.strictEqual(await run([ov('m2', 'hide', '1')]), 'm1,m2(hidden),m3');
   assert.strictEqual(await run([ov('m2', 'hide', '1'), ov('m2', 'move', '1')]), 'm1,m3,m2(hidden)');
   assert.strictEqual(await run([]), 'm1,m2,m3', 'removing the settings puts it back, shown');
+  // placed by hand: a percent of the block's width, restored when the setting goes
+  await page2.setViewportSize({ width: 800, height: 600 });
+  await run([ov('m2', 'shift', '10|5')]);
+  const tr = () => page2.evaluate(() => document.getElementById('m2').style.translate);
+  const w = await page2.evaluate(() => document.getElementById('sec').getBoundingClientRect().width);
+  assert.strictEqual(await tr(), +(10 * w / 100).toFixed(1) + 'px ' + +(5 * w / 100).toFixed(1) + 'px');
+  await page2.setViewportSize({ width: 400, height: 600 });
+  await page2.waitForTimeout(100);
+  const w3 = await page2.evaluate(() => document.getElementById('sec').getBoundingClientRect().width);
+  assert.strictEqual(await tr(), +(10 * w3 / 100).toFixed(1) + 'px ' + +(5 * w3 / 100).toFixed(1) + 'px', 'follows the width');
+  await run([ov('m2', 'shift', 'javascript:1')]);
+  assert.strictEqual(await tr(), '', 'a wrong value is ignored');
+  await run([ov('m2', 'shift', '10|5')]);
+  await run([]);
+  assert.strictEqual(await tr(), '', 'removed');
 
   await browser.close();
   console.log('✅ Text fields edit every line passed!');

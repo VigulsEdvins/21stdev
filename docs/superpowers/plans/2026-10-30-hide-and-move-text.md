@@ -32,3 +32,13 @@ On every field card in the admin panel, next to "Reset":
 ## Check
 
 - A browser test of the runtime (hide, show again, move up and down, clamp, reset) and of the saved values; `npm run check-fields`, the admin-panel e2e tests, and the real panel.
+
+## Step 3 (2026-10-30, owner request): move a text anywhere in its block
+
+Owner: "I can change only positions, but I want to move around all section." Up/down and dragging onto a neighbour only reorder. Now a text can be dragged **anywhere inside its block** (free position).
+
+- **Drag in the panel's preview moves it freely**; a green outline shows the block's limit and the text cannot leave the block. **Shift + drag** keeps the old way (drop it before or after a neighbour). ▲ ▼ stay as they are.
+- **Stored** as `<id>__shift` = `x|y`, both a percent of the block's width (one decimal, at most 150 either way), type `shift`. A percent, not pixels, so it follows the width of the screen. *Why not pixels:* the same site is shown on a phone and a desktop.
+- **Applied** with the CSS `translate` property (not `transform`, so an element's own animation or rotation is not replaced), recomputed when the window is resized. The old inline value is restored on Reset.
+- **Panel:** a card shows "Moved" with a **Put back** button; Reset also clears it. Saved, imported, exported and ignored by the word counters exactly like `__hide` and `__move`.
+- **Limit:** a text moved by hand stays where it was put on every screen width, even if the layout there is different; the client checks the phone view.
