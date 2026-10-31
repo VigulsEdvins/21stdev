@@ -17,6 +17,8 @@
   // Hourly clean-up of published sites (taking lapsed ones offline, removing deleted accounts' sites, releasing old name holds). Does nothing until the SITES and SITES_BUCKET bindings exist.
   // The bare domain is pinned to this Worker with an explicit route. Needed for customers' own domains: the sites Worker (wrangler.sites.jsonc) holds a "*/*" route for them, and without this route that catch-all took the bare domain from this Worker (seen 2026-10-31, rolled back within minutes). A more specific route always wins over "*/*".
   "routes": [{ "pattern": "edvlabs.com/*", "zone_name": "edvlabs.com" }],
+  // CF_ZONE_ID: the Cloudflare zone of edvlabs.com, for customers' own domains (docs/deploy/publish-sites.md, "Own domains"). The zone id is not a secret. The matching secret CLOUDFLARE_API_TOKEN is set separately and never goes in this file.
+  "vars": { "CF_ZONE_ID": "029e6530d36a0ddf4b17862f477c37a8" },
   "triggers": { "crons": ["17 * * * *"] },
   "assets": {
     "directory": "./dist",
