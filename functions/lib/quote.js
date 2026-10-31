@@ -40,13 +40,13 @@ function quote(order) {
   return { ok: true, lines, payToday, hosting, priceVersion: o.paid ? o.paid.version : Prices.version, newAllowance };
 }
 
-/** The blocks a saved page holds, as the client pays for them: all pages of a multi-page site (the open page's live stack replaces its stored copy), visible blocks only. */
+/** The blocks the client pays for: the page that is open (the same count step 5 shows), visible blocks only, the language switcher is free. The saved `stack` is the open page's live copy;
+    only if it is missing is the open page's own stored stack used. Other pages of a multi-page site are not charged (owner decision 2026-10-31). */
 function countProjectBlocks(state) {
   if (!state || typeof state !== 'object') return 0;
-  if (Array.isArray(state.pages) && state.pages.length > 1) {
-    return state.pages.reduce((sum, p) => sum + Entitlement.countBlocks(p && p.id === state.activePageId && Array.isArray(state.stack) ? state.stack : p && p.stack), 0);
-  }
-  return Entitlement.countBlocks(state.stack);
+  if (Array.isArray(state.stack)) return Entitlement.countBlocks(state.stack);
+  const open = Array.isArray(state.pages) ? state.pages.find((p) => p && p.id === state.activePageId) : null;
+  return open ? Entitlement.countBlocks(open.stack) : 0;
 }
 
 module.exports = { quote, countProjectBlocks, DESTINATIONS, TRIAL_DAYS };

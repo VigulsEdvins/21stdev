@@ -50,10 +50,12 @@ test('a project already bought pays only the difference, at the table it was bou
   assert.deepStrictEqual(quote({ blocks: 5, editor: false, destination: 'download', hosting: null, deployHelp: false, paid }), { ok: false, reason: 'nothing-to-pay' });
 });
 
-test('blocks of a saved page: visible ones, the language switcher is free, every page of a multi-page site counts, the open page uses its live stack', () => {
+test('blocks of a saved page: only the open page is charged (as step 5 shows), visible ones only, the language switcher is free', () => {
   const b = (n, extra) => Array.from({ length: n }, (_, i) => ({ slug: 'b' + i })).concat(extra || []);
   assert.strictEqual(countProjectBlocks({ stack: b(3, [{ slug: 'multilingual-lang-switcher' }, { slug: 'x', hidden: true }]) }), 3);
-  assert.strictEqual(countProjectBlocks({ stack: b(2), pages: [{ id: 'a', stack: b(9) }, { id: 'b', stack: b(4) }], activePageId: 'a' }), 6, 'page a is the open one: its live stack (2) replaces the stored 9');
+  assert.strictEqual(countProjectBlocks({ stack: b(6), pages: [{ id: 'a', stack: b(6) }, { id: 'b', stack: b(6) }], activePageId: 'b' }), 6, 'two pages of 6: the open one is 6, not 12');
+  assert.strictEqual(countProjectBlocks({ stack: b(2), pages: [{ id: 'a', stack: b(9) }, { id: 'b', stack: b(4) }], activePageId: 'a' }), 2, 'the live stack of the open page counts, not its older stored copy');
+  assert.strictEqual(countProjectBlocks({ pages: [{ id: 'a', stack: b(9) }, { id: 'b', stack: b(4) }], activePageId: 'b' }), 4, 'no live stack saved: the open page\'s own stack');
   assert.strictEqual(countProjectBlocks({ stack: b(5), pages: [{ id: 'a', stack: b(5) }] }), 5, 'a single page is just the stack');
   for (const junk of [null, undefined, 'x', 7, {}, { stack: 'no' }]) assert.strictEqual(countProjectBlocks(junk), 0);
 });
