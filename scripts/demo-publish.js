@@ -34,6 +34,7 @@ async function exportAssetsFromDisk() {
 async function start({ port }) {
   const auth = await startAuth({ confirmEmails: false });
   const f = Fake.create();
+  f.db.projectForUser = async (id, userId) => ({ id, user_id: userId, state: {} }); // the demo has no account pages of its own: every page id the browser names is taken as the person's own
   const direct = { SUPABASE_URL: auth.url, SUPABASE_ANON_KEY: auth.anonKey }; // how this server talks to the pretend service
   const env = { SUPABASE_URL: 'http://localhost:' + port + '/__auth', SUPABASE_ANON_KEY: auth.anonKey }; // how the pages do: through this server, so the page's own security rules allow it
   /* the admin panel: the editor's files from the repository's own scripts/cms folder (online they come from the deployed builder) */

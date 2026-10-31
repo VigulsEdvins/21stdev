@@ -65,8 +65,10 @@ const PW = ['Tulip', 'Garden', '7', 'Moon!'].join('-'), NEW_PW = ['Quiet', 'Rive
 
   // 3. nothing to edit yet: put the page online again from the builder so the editor has fields
   await page.reload(); await page.waitForSelector('#paneGet', { state: 'attached' });
-  await page.click('#guidedStep-get'); await page.waitForSelector('#publishSites li');
-  await page.locator('#publishSites li', { hasText: 'bakery-anna' }).locator('[data-act="update"]').click();
+  await page.click('#guidedStep-get'); await page.waitForSelector('#publishSites li, #publishOthers summary');
+  // this site was put online before the page was saved to the account, so it has no page of its own yet and waits under "other websites"; updating it from here links it to this page
+  if (await page.locator('#publishOthers summary').isVisible()) await page.click('#publishOthers summary');
+  await page.locator('#publishSites li, #publishOthers li', { hasText: 'bakery-anna' }).locator('[data-act="update"]').click();
   await page.waitForFunction(() => /Your page is online/.test(document.getElementById('publishResult').textContent), null, { timeout: 60000 });
   assert(!/Add an admin panel to this site/.test(await page.textContent('#publishResult')), 'no hint once the panel is on');
   const live = await ctx.newPage(); const cspHits = []; live.on('pageerror', (e) => errors.push('live: ' + e.message));
