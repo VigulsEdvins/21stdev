@@ -47,16 +47,16 @@ const LV_PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/',
   // pricing: static text and filled text equal the table; calculator
   const T = P.table;
   const html = fs.readFileSync(path.join(SITE, 'pricing/index.html'), 'utf8');
-  const expect = (el, blocks, ed) => ({ self: P.eur(P.self(blocks, ed)), done: P.eur(P.done(blocks, ed)), extra: P.eur(T.extra), editor: P.eur(T.editor), setup: P.eur(T.doneSetup), perblock: P.eur(T.donePerBlock), included: String(T.included) }[el]);
+  const expect = (el, blocks, ed) => ({ self: P.eur(P.self(blocks, ed)), extra: P.eur(T.extra), editor: P.eur(T.editor), included: String(T.included) }[el]);
   await page.goto(srv.url + '/site/pricing/index.html');
   const rows = await page.$$eval('[data-price]', els => els.map(e => ({ k: e.dataset.price, b: Number(e.dataset.blocks), ed: e.dataset.editor === '1', t: e.textContent })));
-  assert(rows.length >= 11); for (const r of rows) assert.strictEqual(r.t, expect(r.k, r.b, r.ed), 'pricing ' + r.k + ' ' + r.b);
+  assert(rows.length >= 6); for (const r of rows) assert.strictEqual(r.t, expect(r.k, r.b, r.ed), 'pricing ' + r.k + ' ' + r.b);
   const stat = [...html.matchAll(/data-price="(\w+)"(?: data-blocks="(\d+)")?(?: data-editor="(\d)")?[^>]*>([^<]*)</g)].filter(m => m[1] !== 'self' && m[1] !== 'done');
   for (const m of stat) assert.strictEqual(m[4], expect(m[1]), 'static ' + m[1]);
   assert.strictEqual(await page.textContent('#calc-self'), P.eur(P.self(5, false)));
   await page.fill('#calc-blocks', '9'); await page.check('#calc-editor');
   assert.strictEqual(await page.textContent('#calc-self'), P.eur(P.self(9, true)));
-  assert.strictEqual(await page.textContent('#calc-done'), P.eur(P.done(9, true)));
+  assert.strictEqual(await page.textContent('#calc-done'), 'Agreed after we talk', 'the done-for-you price stays words however the calculator moves');
   assert.strictEqual(await page.textContent('#calc-extra'), P.eur(6 * T.extra));
   await page.fill('#calc-blocks', '500'); assert.strictEqual(await page.textContent('#calc-self'), P.eur(P.self(30, true)), 'clamped at 30');
   await page.fill('#calc-blocks', ''); assert.strictEqual(await page.textContent('#calc-self'), P.eur(P.self(1, true)), 'empty counts as 1');

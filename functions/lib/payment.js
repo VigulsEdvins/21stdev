@@ -81,7 +81,7 @@ async function quoteOrder({ db, user, body, env }) {
   const project = await db.projectForUser(order.projectId, user.id);
   if (!project) return bad(404, 'We could not find that page in your account.');
   const latest = await db.purchaseForProject(order.projectId);
-  const q = Quote.quote({ blocks: Quote.countProjectBlocks(project.state), editor: order.editor, destination: order.destination, hosting: order.hosting, deployHelp: order.deployHelp, trialDays: trialDays(env || {}),
+  const q = Quote.quote({ blocks: Quote.countProjectBlocks(project.state), editor: order.editor, destination: order.destination, hosting: order.hosting, deployHelp: order.deployHelp, trialDays: trialDays(env || {}), agreedCents: project.agreed_price_cents,
     paid: latest ? { allowance: latest.allowance, editor: latest.editor, version: latest.price_version } : undefined });
   if (!q.ok && q.reason === 'nothing-to-pay') return { status: 409, json: { ok: false, alreadyBought: true, errors: ['You have already bought this page. Nothing more to pay.'] } };
   if (!q.ok) return bad(400, REFUSED[q.reason] || 'That order could not be priced.');
@@ -116,7 +116,7 @@ async function createOrderCheckout({ env, db, user, origin, body, fetchImpl, kv 
   }
   form.set('mode', q.hosting ? 'subscription' : 'payment');
   if (q.hosting && q.hosting.trialDays > 0) form.set('subscription_data[trial_period_days]', String(q.hosting.trialDays));
-  const meta = { user_id: user.id, project_id: order.projectId, destination: order.destination, editor: order.editor || (latest && latest.editor) ? '1' : '0', blocks: String(q.newAllowance), price_version: q.priceVersion, deploy_help: order.deployHelp ? '1' : '0', site_name: order.siteName };
+  const meta = { user_id: user.id, project_id: order.projectId, destination: order.destination, editor: order.editor || q.agreed || (latest && latest.editor) ? '1' : '0', blocks: String(q.newAllowance), price_version: q.priceVersion, deploy_help: order.deployHelp ? '1' : '0', site_name: order.siteName };
   for (const [k, v] of Object.entries(meta)) { form.set('metadata[' + k + ']', v); if (q.hosting) form.set('subscription_data[metadata][' + k + ']', v); }
   form.set('client_reference_id', user.id);
   if (user.email) form.set('customer_email', user.email);

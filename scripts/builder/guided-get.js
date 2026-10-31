@@ -78,7 +78,7 @@
       lines.replaceChildren();
       if (n) m.lines.forEach(([k, v]) => { lines.append(el(doc, 'dt', { text: k }), el(doc, 'dd', { text: v })); });
       total.textContent = n ? 'Build it yourself: ' + P.eur(m.self) : 'Add blocks in step 1 to see the price.';
-      doc.getElementById('getDone').textContent = n ? 'Or let edvlabs build it for you: ' + P.eur(m.done) + '. That adds a set-up fee and a fee per block.' : '';
+      doc.getElementById('getDone').textContent = n ? 'Or let edvlabs build it for you. We agree the price after we talk.' : '';
       go.disabled = !n;
     }
     edBox.addEventListener('change', () => { try { win.localStorage.setItem(EDITOR_KEY, edBox.checked ? '1' : '0'); } catch (_) { /* kept for this visit only */ } render(); });

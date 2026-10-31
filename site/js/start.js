@@ -41,7 +41,7 @@
     const guess = chosen.unknown || !(chosen.value && chosen.value.length);
     priceBox.append(h('div', { class: 'meter' },
       h('b', { text: tr('about {price}', { price: P.eur(P.self(b, ed)) }) }),
-      h('span', { text: tr('for yourself, from {price} if we do it.', { price: P.eur(P.done(b, ed)) }) + ' ' + (guess ? nt(b, 'Worked out for {n} block, the usual size.', 'Worked out for {n} blocks, the usual size.') : ed ? nt(b, '{n} block, with the editor.', '{n} blocks, with the editor.') : nt(b, '{n} block.', '{n} blocks.')) })));
+      h('span', { text: tr('if you build it yourself. If we build it, we agree the price after we talk.') + ' ' + (guess ? nt(b, 'Worked out for {n} block, the usual size.', 'Worked out for {n} blocks, the usual size.') : ed ? nt(b, '{n} block, with the editor.', '{n} blocks, with the editor.') : nt(b, '{n} block.', '{n} blocks.')) })));
   }
 
   /* ---------- question screen ---------- */
@@ -132,7 +132,7 @@
       h('p', { class: 'lead', text: tr('Both give you the same finished files.') + ' ' + (ed ? nt(b, 'Prices are worked out for {n} block and the editor.', 'Prices are worked out for {n} blocks and the editor.') : nt(b, 'Prices are worked out for {n} block.', 'Prices are worked out for {n} blocks.')) }),
       h('div', { class: 'fork' },
         way('', 'You build it', 'We guide you.', P.eur(P.self(b, ed)), 'about', ['You choose blocks, write your words and pick the look', 'Free to try before you pay', 'You download the files when you pay'], 'I will build it', 'self'),
-        way('way--teal', 'We build it', 'You talk. We make.', P.eur(P.done(b, ed)), 'from, agreed first', ['We read your answers and get in touch', 'You send the words and photos you have', 'The same files, ready to put online'], 'Ask edvlabs to do it', 'done')),
+        way('way--teal', 'We build it', 'You talk. We make.', tr('Agreed after we talk'), 'no price list, no obligation', ['We read your answers and get in touch', 'You send the words and photos you have', 'The same files, ready to put online'], 'Ask edvlabs to do it', 'done')),
       h('p', { class: 'mt-5' }, h('a', { class: 'link', href: '#contact', onclick: () => { brief.path = 'talk'; save(); } }, tr('I want to talk first'))),
       h('div', { class: 'q-nav' }, btn(tr('Back'), 'btn--secondary', () => go('check'))));
   }

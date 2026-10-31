@@ -27,8 +27,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.check('#getEditor');
   assert(/€96/.test(await text('#getTotal')), 'with the editor 96');
   const done = await text('#getDone');
-  assert(/€\d+/.test(done) && done.includes(await page.evaluate(() => EdvPrices.eur(EdvPrices.done(5, true)))), done);
-  console.log('  ✓ meter follows the page: 5 blocks €57, with editor €96, edvlabs price shown');
+  assert(!/€\d+/.test(done) && /agree the price after we talk/.test(done), done);
+  console.log('  ✓ meter follows the page: 5 blocks €57, with editor €96, edvlabs: price agreed after a talk');
 
   // the public calculator says the same
   const pub = await ctx.newPage();

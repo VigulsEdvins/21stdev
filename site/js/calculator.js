@@ -13,7 +13,6 @@
     $('calc-extra').textContent = P.eur(extra * T.extra);
     $('calc-ed').textContent = ed ? P.eur(T.editor) : window.EdvI18n.t('not chosen');
     $('calc-self').textContent = P.eur(P.self(n, ed));
-    $('calc-done').textContent = P.eur(P.done(n, ed));
   }
   blocksEl.form.addEventListener('submit', (e) => e.preventDefault());
   blocksEl.addEventListener('input', update); editorEl.addEventListener('change', update);

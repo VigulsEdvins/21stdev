@@ -7,6 +7,9 @@
  *   npm run owner-sites -- unblock <name>             let its owner publish it again (it stays offline until they do)
  *   npm run owner-sites -- grant <email|user-id> [--count 1] [--years 1]    add paid places by hand, standing in for payment until Stripe exists
  *   npm run owner-sites -- deploy-requests [--done <id>]    the open "we put it online for you" requests (who, domain, note); --done marks one finished
+ *   npm run owner-sites -- projects <email|user-id>    one person's saved pages: id, name, state, agreed price
+ *   npm run owner-sites -- agree-price <email|user-id> <project-id> <euros>   the price you agreed after a talk; the builder's checkout then charges exactly this for the build (1 to 100000)
+ *   npm run owner-sites -- agree-price <email|user-id> <project-id> --clear   back to the normal price list
  *   npm run owner-sites -- limits <email|user-id>      what one person may do: the defaults for everyone and any upgrade
  *   npm run owner-sites -- limit <email|user-id> [--renames N] [--site-mb N] [--publishes N] [--note "text"]   set an upgrade (only the numbers given change)
  *   npm run owner-sites -- limit <email|user-id> --reset                                                  back to the defaults
@@ -16,8 +19,10 @@ const fs = require('fs');
 const path = require('path');
 const store = require('../functions/lib/sites-store.js');
 const Limits = require('../functions/lib/limits.js');
+const Quote = require('../functions/lib/quote.js');
+const Prices = require('../site/js/prices.js');
 
-const USAGE = 'Usage: npm run owner-sites -- list | block <name> | unblock <name> | grant <email|user-id> [--count N] [--years N] | deploy-requests [--done <id>] | limits <email|user-id> | limit <email|user-id> [--renames N] [--site-mb N] [--publishes N] [--note text] [--reset]';
+const USAGE = 'Usage: npm run owner-sites -- list | block <name> | unblock <name> | grant <email|user-id> [--count N] [--years N] | deploy-requests [--done <id>] | projects <email|user-id> | agree-price <email|user-id> <project-id> <euros|--clear> | limits <email|user-id> | limit <email|user-id> [--renames N] [--site-mb N] [--publishes N] [--note text] [--reset]';
 const isName = (t) => typeof t === 'string' && t.length >= 3 && t.length <= 30 && t.split('-').every((piece) => /^[a-z0-9]+$/.test(piece));
 
 function readVars(file) {
@@ -55,7 +60,7 @@ async function userIdFor(env, who, f) {
 async function run(argv, env, say, fetchImpl) {
   const [cmd, arg] = argv;
   const missing = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'].filter((k) => !env[k]);
-  if (!['list', 'block', 'unblock', 'grant', 'limits', 'limit', 'deploy-requests'].includes(cmd)) { say(USAGE); return 2; }
+  if (!['list', 'block', 'unblock', 'grant', 'limits', 'limit', 'deploy-requests', 'projects', 'agree-price'].includes(cmd)) { say(USAGE); return 2; }
   if (missing.length) { say('Missing setting(s): ' + missing.join(', ') + '. Put them in your shell or in .dev.vars (never in git).'); return 2; }
   const f = fetchImpl || fetch, db = store.createDb(env, f);
 
@@ -77,6 +82,28 @@ async function run(argv, env, say, fetchImpl) {
       emails.set(r.user_id, x.ok ? ((await x.json()).email || '(no email)') : '(email not found)');
     }
     say(rows.map((r) => { const p = Array.isArray(r.project_purchases) ? r.project_purchases[0] : r.project_purchases; return [r.id, emails.get(r.user_id), String((p && p.created_at) || '').slice(0, 10), (p && p.destination) || '', r.domain || '(details not sent yet)', r.notes || ''].filter((x, i) => i < 5 || x).join('  '); }).join('\n'));
+    return 0;
+  }
+
+  if (cmd === 'projects' || cmd === 'agree-price') {
+    if (!arg) { say(USAGE); return 2; }
+    const id = await userIdFor(env, arg, f);
+    if (!id) { say('No account found for "' + arg + '". The person must have created an account first.'); return 1; }
+    if (cmd === 'projects') {
+      const rows = await db.projectsOfUser(id);
+      say(rows.length ? rows.map((p) => [p.id, String(p.name || '').slice(0, 30).padEnd(30), String(p.status).padEnd(8), p.agreed_price_cents == null ? 'normal prices' : 'agreed ' + Prices.eur(p.agreed_price_cents / 100)].join('  ')).join('\n') : 'No saved pages for ' + arg + '.');
+      return 0;
+    }
+    const pid = argv[2], clear = argv.includes('--clear');
+    if (!store.UUID.test(String(pid))) { say('Give the page id after the person (npm run owner-sites -- projects <email> shows it).'); return 2; }
+    let cents = null;
+    if (!clear) {
+      const euros = Number(argv[3]);
+      cents = Math.round(euros * 100);
+      if (argv[3] === undefined || !Number.isFinite(euros) || cents < Quote.MIN_AGREED_CENTS || cents > Quote.MAX_AGREED_CENTS) { say('Give the agreed price in euros, 1 to 100000 (for example 250 or 249.50), or --clear.'); return 2; }
+    }
+    if (!(await db.setAgreedPrice(pid, id, cents))) { say('That person has no saved page with that id.'); return 1; }
+    say(clear ? 'Page ' + pid + ' is back to the normal price list.' : 'Agreed price for page ' + pid + ': ' + Prices.eur(cents / 100) + '. When ' + arg + ' presses Proceed in the builder, the build is charged exactly this (hosting and "we put it online" are added as they choose).');
     return 0;
   }
 

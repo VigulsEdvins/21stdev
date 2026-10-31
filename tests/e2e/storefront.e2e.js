@@ -22,7 +22,8 @@ const Q = require('../../site/js/questions.js');
   await page.goto(srv.url + '/site/index.html');
   const prices = await page.$$eval('[data-price]', els => els.map(e => [e.dataset.price, e.dataset.blocks, e.textContent]));
   const T = P.table;
-  const expect = { self: P.eur(P.self(3, false)), done: P.eur(P.done(3, false)), extra: P.eur(T.extra), editor: P.eur(T.editor), setup: P.eur(T.doneSetup), perblock: P.eur(T.donePerBlock) };
+  const expect = { self: P.eur(P.self(3, false)), extra: P.eur(T.extra), editor: P.eur(T.editor) }; // no price for "we build it": it is agreed after a talk
+  assert(!/€\d+<\/span> <small>(from|no,)/.test(fs.readFileSync(path.join(__dirname, '../../site/index.html'), 'utf8')), 'the done-for-you card shows no price');
   for (const [k, , text] of prices) assert.strictEqual(text, expect[k], `home price ${k}`);
   // the static text (what search engines and no-JS visitors see) must match the table too
   const html = fs.readFileSync(path.join(__dirname, '../../site/index.html'), 'utf8');
@@ -82,7 +83,8 @@ const Q = require('../../site/js/questions.js');
 
   // fork and contact rules
   await page.goto(srv.url + '/site/start/index.html#choose');
-  assert((await page.innerText('.fork')).includes(P.eur(P.done(4, true))), 'fork shows the done-for-you price');
+  const forkText = await page.innerText('.fork');
+  assert(!forkText.includes(P.eur(P.done(4, true))) && /agreed after we talk/i.test(forkText), 'fork shows no done-for-you price, only that it is agreed after a talk');
   await page.getByRole('button', { name: 'Ask edvlabs to do it' }).click();
   await page.getByRole('button', { name: 'Send my answers' }).click();
   assert((await page.innerText('#c-err-email')).includes('email address or a phone number'));

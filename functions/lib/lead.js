@@ -59,7 +59,7 @@ function renderEmail(lead, repeat) {
     'CONTACT', lead.name ? `Name: ${lead.name}` : null, lead.email ? `Email: ${lead.email}` : null, lead.phone ? `Phone: ${lead.phone}` : null,
     lead.how ? `Prefers: ${lead.how}` : null, '',
     ...(hasAnswers ? ['PRICE', `${q.blocks} blocks${q.guessedBlocks ? ' (assumed: they did not choose)' : ''}${q.editor ? ', with the editor' : ''}`,
-    `Build it themselves: ${Prices.eur(q.self)}`, `If we do it: ${Prices.eur(q.done)}`, '',
+    `Build it themselves: ${Prices.eur(q.self)}`, `If we do it: ${Prices.eur(q.done)} (a guide for your talk only; visitors are told the price is agreed after we talk)`, '',
     'ANSWERED', ...part('answered').map(line), '',
     'TO DISCUSS (they said “I don’t know yet”)', ...part('unknown').map((r) => `- ${r.question}`), '',
     'SKIPPED', ...part('skipped').map((r) => `- ${r.question}`), ''] : []),

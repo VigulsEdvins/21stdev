@@ -53,7 +53,7 @@ function createDb(env, fetchImpl) {
     endBySubscription: (subId) => rest('PATCH', 'site_entitlements?stripe_subscription_id=eq.' + enc(subId), { status: 'ended' }),
     async customerForUser(userId) { const r = await first('site_entitlements?select=stripe_customer_id&limit=1&stripe_customer_id=not.is.null&order=created_at.desc&user_id=eq.' + enc(userId)); return r ? r.stripe_customer_id : null; },
     /* The buying flow (supabase/migrations/20261031160000_project_purchases.sql). A project is only ever read together with its owner, so one person can never quote or buy another's page. */
-    projectForUser: (projectId, userId) => (UUID.test(String(projectId)) && UUID.test(String(userId)) ? first('projects?select=id,name,state,status&limit=1&deleted_at=is.null&id=eq.' + enc(projectId) + '&user_id=eq.' + enc(userId)) : Promise.resolve(null)),
+    projectForUser: (projectId, userId) => (UUID.test(String(projectId)) && UUID.test(String(userId)) ? first('projects?select=id,name,state,status,agreed_price_cents&limit=1&deleted_at=is.null&id=eq.' + enc(projectId) + '&user_id=eq.' + enc(userId)) : Promise.resolve(null)),
     purchaseForProject: (projectId) => (UUID.test(String(projectId)) ? first('project_purchases?select=*&limit=1&order=created_at.desc&project_id=eq.' + enc(projectId)) : Promise.resolve(null)),
     purchaseBySession: (sessionId) => first('project_purchases?select=*&limit=1&stripe_session_id=eq.' + enc(sessionId)),
     purchaseById: (id) => (UUID.test(String(id)) ? first('project_purchases?select=*&limit=1&id=eq.' + enc(id)) : Promise.resolve(null)),
@@ -76,6 +76,9 @@ function createDb(env, fetchImpl) {
     },
     deployRequestsByUser: (userId) => all('deploy_requests?select=purchase_id,user_id,domain,status&limit=200&user_id=eq.' + enc(userId)),
     deployRequestsOpen: () => all('deploy_requests?select=*,project_purchases(created_at,destination)&order=created_at.asc&limit=200&status=eq.open'),
+    /* The owner's price after discussion (migration 20261031170000_agreed_price.sql). Both are for the owner's command-line tool, which holds the service key; the person's id is part of the filter so a page id alone changes nothing. */
+    projectsOfUser: (userId) => (UUID.test(String(userId)) ? all('projects?select=id,name,status,agreed_price_cents,updated_at&deleted_at=is.null&order=updated_at.desc&user_id=eq.' + enc(userId)) : Promise.resolve([])),
+    async setAgreedPrice(projectId, userId, cents) { const rows = await rest('PATCH', 'projects?deleted_at=is.null&id=eq.' + enc(projectId) + '&user_id=eq.' + enc(userId), { agreed_price_cents: cents }, 'return=representation'); return Array.isArray(rows) && rows.length === 1; },
     markProjectPaid: (projectId) => rest('PATCH', 'projects?id=eq.' + enc(projectId), { status: 'paid' }),
     refundByIntent: (intent) => rest('PATCH', 'site_entitlements?stripe_payment_intent=eq.' + enc(intent), { status: 'refunded' }),
     freeEntitlements: (userId) => all('site_entitlements?select=*&status=eq.active&site_id=is.null&order=paid_until.desc&user_id=eq.' + enc(userId)),

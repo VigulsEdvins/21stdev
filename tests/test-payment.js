@@ -155,6 +155,17 @@ function world(env) {
     assert.strictEqual((await call('/api/checkout', { body: order({ hosting: null }) }, tok)).status, 409, 'nothing left to pay on a hosted page');
   });
 
+  await test('agreed price: the checkout charges the owner\'s amount for the build, one Stripe line, hosting subscription kept; a client cannot send a price, and the quote shows the same line', async () => {
+    const w = world(); w.db.projects[0].agreed_price_cents = 25050;
+    const qj = await (await w.call('/api/quote', { body: w.order({ amount: 1, agreedCents: 100 }) }, w.tok)).json();
+    assert.deepStrictEqual(qj.lines.map((l) => l.key), ['agreed']); assert.strictEqual(qj.payToday, 250.5);
+    const res = await w.call('/api/checkout', { body: w.order({ price: 1, agreed_price_cents: 100 }) }, w.tok); assert.strictEqual(res.status, 200);
+    const f = new URLSearchParams(String(w.calls[0].init.body));
+    assert.strictEqual(f.get('line_items[0][price]'), 'price_month'); assert.strictEqual(f.get('line_items[1][price_data][unit_amount]'), '25050');
+    assert.strictEqual(f.get('line_items[1][price_data][product_data][name]'), 'Website built by edvlabs, as agreed'); assert.strictEqual(f.get('line_items[2][price_data][unit_amount]'), null);
+    assert.strictEqual(f.get('metadata[editor]'), '1');
+  });
+
   await test('Stripe Tax is off unless STRIPE_TAX=1; on, the session collects the address and VAT id, prices include VAT, every item has the digital-services tax code, and a one-time payment still makes an invoice', async () => {
     const asForm = async (env, body) => { const w = world(env); await w.call('/api/checkout', { body: w.order(body) }, w.tok); return new URLSearchParams(String(w.calls[0].init.body)); };
     const off = await asForm(ENV, {});

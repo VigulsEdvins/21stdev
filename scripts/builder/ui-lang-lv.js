@@ -225,8 +225,7 @@ window.BuilderUiLangLv = {
     'Go to the download': 'Pāriet uz lejupielādi',
     'Payment is not switched on yet, so downloading is free for now.': 'Maksājumi vēl nav ieslēgti, tāpēc lejupielāde pagaidām ir bezmaksas.',
     'Add blocks in step 1 to see the price.': 'Pievienojiet blokus 1. solī, lai redzētu cenu.',
-    'Or let edvlabs build it for you: {price}. That adds a set-up fee and a fee per block.': 'Vai uzticiet edvlabs to izveidot jūsu vietā: {price}. Tas pieskaita sagatavošanas maksu un maksu par katru bloku.',
-    'Or let edvlabs build it for you:': 'Vai uzticiet edvlabs to izveidot jūsu vietā:',
+    'Or let edvlabs build it for you. We agree the price after we talk.': 'Vai uzticiet edvlabs to izveidot jūsu vietā. Cenu saskaņojam pēc sarunas.',
     'Build it yourself:': 'Veidojiet paši:',
 
     // put it online

@@ -69,4 +69,22 @@ test('after buying, hosting is optional: more blocks on an edvlabs address are c
   assert.strictEqual(quote({ ...base, blocks: 5, hosting: 'yearly', paid }).hosting.plan, 'yearly', 'starting hosting later is still possible');
 });
 
+test('agreed price: one line at the owner\'s price replaces base, extra blocks and editor; hosting and deploy help are added as before; the admin panel counts as included', () => {
+  const q = quote({ ...base, blocks: 9, editor: false, agreedCents: 25050, hosting: 'yearly' });
+  assert.strictEqual(q.ok, true); assert.deepStrictEqual(keys(q), ['agreed']); assert.strictEqual(q.lines[0].amount, 250.5); assert.strictEqual(q.payToday, 250.5);
+  assert.strictEqual(q.agreed, true); assert.strictEqual(q.hosting.amount, 29); assert.strictEqual(q.newAllowance, 9);
+  const d = quote({ blocks: 2, editor: false, destination: 'download', hosting: null, deployHelp: true, agreedCents: 10000 });
+  assert.deepStrictEqual(keys(d), ['agreed', 'deployHelp']); assert.strictEqual(d.payToday, 130); assert.strictEqual(d.newAllowance, 3);
+  assert.strictEqual(quote(base).agreed, false);
+});
+
+test('agreed price already paid: no second charge for the build, even with more blocks; refused when the number is not sane', () => {
+  const paid = { allowance: 5, editor: true, version: 'v1' };
+  assert.deepStrictEqual(quote({ ...base, blocks: 8, hosting: null, paid, agreedCents: 25000 }), { ok: false, reason: 'nothing-to-pay' });
+  const h = quote({ ...base, blocks: 8, hosting: 'monthly', paid, agreedCents: 25000 });
+  assert.strictEqual(h.payToday, 0); assert.strictEqual(h.hosting.amount, 3); assert.strictEqual(h.newAllowance, 8);
+  for (const bad of [0, 99, 10000001, 12.5, '250', NaN]) assert.deepStrictEqual(quote({ ...base, agreedCents: bad }), { ok: false, reason: 'bad-combination' }, String(bad));
+  assert.strictEqual(quote({ ...base, agreedCents: null }).lines[0].key, 'base', 'null means the normal price list');
+});
+
 console.log('quote: ' + count + ' tests passed');

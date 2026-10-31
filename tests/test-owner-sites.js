@@ -94,5 +94,24 @@ const test = async (name, fn) => { await fn(); count++; };
     assert.strictEqual(await O.run(['deploy-requests', '--done', 'not-an-id'], ENV, o2.say, d.fetchImpl), 2); assert.strictEqual(d.calls.length, 1);
   });
 
+  await test('projects and agree-price: lists a person\'s pages, sets cents for exactly that person\'s page, clears, and refuses nonsense before sending anything', async () => {
+    const P1 = '44444444-4444-4444-8444-444444444444';
+    const l = stub([{ status: 200, body: [{ id: P1, name: 'Anna shop', status: 'draft', agreed_price_cents: null }, { id: UID, name: 'Second', status: 'paid', agreed_price_cents: 25000 }] }]), lo = out();
+    assert.strictEqual(await O.run(['projects', UID], ENV, lo.say, l.fetchImpl), 0);
+    assert(l.calls[0].url.includes('projects?') && l.calls[0].url.includes('user_id=eq.' + UID) && l.calls[0].url.includes('deleted_at=is.null'));
+    assert(lo.lines.join('\n').includes(P1) && /normal prices/.test(lo.lines.join('\n')) && /agreed €250/.test(lo.lines.join('\n')), lo.lines.join('\n'));
+    const s = stub([{ status: 200, body: [{ id: P1 }] }]), o = out();
+    assert.strictEqual(await O.run(['agree-price', UID, P1, '249.50'], ENV, o.say, s.fetchImpl), 0);
+    assert.strictEqual(s.calls[0].method, 'PATCH'); assert(s.calls[0].url.includes('id=eq.' + P1) && s.calls[0].url.includes('user_id=eq.' + UID), 'the person is part of the filter');
+    assert.deepStrictEqual(JSON.parse(s.calls[0].body), { agreed_price_cents: 24950 }); assert(/€249\.5/.test(o.lines[0]) && !o.lines.join('').includes('SECRET'));
+    const c = stub([{ status: 200, body: [{ id: P1 }] }]);
+    assert.strictEqual(await O.run(['agree-price', UID, P1, '--clear'], ENV, out().say, c.fetchImpl), 0); assert.deepStrictEqual(JSON.parse(c.calls[0].body), { agreed_price_cents: null });
+    const n = stub([{ status: 200, body: [] }]), no = out();
+    assert.strictEqual(await O.run(['agree-price', UID, P1, '100'], ENV, no.say, n.fetchImpl), 1); assert(/no saved page/.test(no.lines[0]));
+    const z = stub([]);
+    for (const args of [[UID, P1], [UID, P1, '0'], [UID, P1, '100001'], [UID, P1, 'abc'], [UID, 'not-an-id', '100']]) assert.strictEqual(await O.run(['agree-price', ...args], ENV, out().say, z.fetchImpl), 2, args.join(' '));
+    assert.strictEqual(z.calls.length, 0, 'nothing is sent for a refused value');
+  });
+
   console.log(`✓ owner sites: ${count} groups (usage, block, unblock, grant, list)`);
 })().catch((e) => { console.error(e); process.exit(1); });
