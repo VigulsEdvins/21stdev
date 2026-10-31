@@ -15,6 +15,8 @@
   "kv_namespaces": [{ "binding": "LEADS" }, { "binding": "SITES", "id": "3ec1a308b9914c22ba2cc075f0f3b690" }],
   "r2_buckets": [{ "binding": "SITES_BUCKET", "bucket_name": "edvlabs-sites" }],
   // Hourly clean-up of published sites (taking lapsed ones offline, removing deleted accounts' sites, releasing old name holds). Does nothing until the SITES and SITES_BUCKET bindings exist.
+  // The bare domain is pinned to this Worker with an explicit route. Needed for customers' own domains: the sites Worker (wrangler.sites.jsonc) holds a "*/*" route for them, and without this route that catch-all took the bare domain from this Worker (seen 2026-10-31, rolled back within minutes). A more specific route always wins over "*/*".
+  "routes": [{ "pattern": "edvlabs.com/*", "zone_name": "edvlabs.com" }],
   "triggers": { "crons": ["17 * * * *"] },
   "assets": {
     "directory": "./dist",

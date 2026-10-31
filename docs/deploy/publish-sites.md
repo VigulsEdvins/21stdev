@@ -196,14 +196,14 @@ A customer can show their website at their own domain (for example `www.bakery-a
 
 Owner steps, in this order (all in the Cloudflare dashboard for `edvlabs.com`; nothing here goes into git):
 
-1. **Fallback origin record.** DNS → Add record: type `AAAA`, name `sites`, content `100::`, **Proxied**. (The wildcard `*` already covers `sites.edvlabs.com`, so it may exist; the point is that `sites` is proxied and has no real server behind it.)
-2. **Turn on Cloudflare for SaaS and set the fallback origin.** SSL/TLS → **Custom Hostnames** → enable, then *Fallback Origin*: `sites.edvlabs.com` → Add. Wait until it shows **Active**.
+1. **Fallback origin record (done 2026-10-31).** DNS → Add record: type `AAAA`, name `sites`, content `100::`, **Proxied**. (The wildcard `*` already covers `sites.edvlabs.com`, so it may exist; the point is that `sites` is proxied and has no real server behind it.)
+2. **Turn on Cloudflare for SaaS and set the fallback origin (done 2026-10-31, Active).** SSL/TLS → **Custom Hostnames** → enable, then *Fallback Origin*: `sites.edvlabs.com` → Add. Wait until it shows **Active**.
 3. **Zone id.** Dashboard → `edvlabs.com` → Overview → right column → *Zone ID*. It is not a secret.
 4. **API token for the main Worker.** My Profile → API Tokens → Create Token → Custom: permission **Zone → SSL and Certificates → Edit**, zone resources **Include → Specific zone → edvlabs.com**, nothing else. Copy it once.
 5. **Give the main Worker both settings** (Workers & Pages → `21stdev` → Settings → Variables and Secrets):
    - variable `CF_ZONE_ID` = the zone id from step 3 (plain text),
    - secret `CLOUDFLARE_API_TOKEN` = the token from step 4. Or from the terminal: `npx wrangler secret put CLOUDFLARE_API_TOKEN` and paste it when asked.
-6. **Add the second route and deploy the sites Worker.** In `wrangler.sites.jsonc` change `"routes"` to `[{ "pattern": "*.edvlabs.com/*", "zone_name": "edvlabs.com" }, { "pattern": "*/*", "zone_name": "edvlabs.com" }]` (Cloudflare refuses it with error 10022 until step 2 is done; that is why it is not listed yet), then `npx wrangler deploy -c wrangler.sites.jsonc`. Both Workers already run the new code (deployed 2026-10-31); this only adds the route. Check at once that `https://edvlabs.com/`, `/builder/` and `/account/` still answer 200.
+6. **Routes: done 2026-10-31.** The sites Worker now also holds the route `*/*` (Cloudflare accepted it once Custom Hostnames was enabled), and the main Worker holds an explicit route `edvlabs.com/*` (in `wrangler.jsonc`). **Keep both:** without the second one the catch-all took the bare domain from the main Worker (everything on `edvlabs.com` answered 404 for about a minute during the first attempt, rolled back at once). Any new proxied name with its own server needs its own route too, as in step 5 above.
 7. **Try it with a domain of your own** (any domain or sub-domain you control): sign in, My websites → *Use my own domain*, add the record shown, wait for "Your domain is working". Then check:
    - `curl -sI https://<your host name>/` shows `200` and the site's security headers;
    - `curl -sI https://<name>.edvlabs.com/` shows `301` and `location: https://<your host name>/`;
