@@ -182,6 +182,18 @@ const UID = '11111111-1111-4111-8111-111111111111';
   buy.domainState = 'active'; await page.click('#buyDomainCheck'); await page.waitForFunction(() => /working/i.test(document.getElementById('buyDomainState').textContent));
   console.log('  ✓ after paying: online, the domain attached, the DNS record shown with what to do, and a way to check');
 
+  // the payment was confirmed BEFORE the page came back from Stripe: the new purchase is already in the list, and it must still count as new
+  buy.pending = null; buy.polls = 0; api.published = []; api.sites = []; api.freePlaces = 1; buy.domainCalls = [];
+  buy.purchases = [{ id: 'pur-5', projectId: PID, allowance: 6, editor: true, destination: 'domain', createdAt: '2026-11-06T10:00:00Z', deployHelp: false, deployDetailsSent: false }];
+  await ctx.addInitScript(() => { try { sessionStorage.setItem('edvlabs.buy_known', '[]'); } catch (e) { /* no storage */ } });
+  await page.goto(srv.url + '/builder.html?paid=1'); await page.waitForSelector('#paneGet', { state: 'attached' }); await page.click('#guidedStep-get');
+  await page.waitForSelector('#buyDomainHelp', { state: 'visible', timeout: 30000 });
+  assert.strictEqual(api.published.length, 1, 'published once, right away'); assert.deepStrictEqual(buy.domainCalls.map((c) => c.hostname), ['www.bakery-anna.com']);
+  // a bought page does not show the price or the add-on choice again
+  assert(!(await page.isVisible('#getTotal')), 'no "Build it yourself" price on a bought page');
+  const bought = await page.textContent('#buyBought'); assert(/bought/i.test(bought) && /6 blocks/.test(bought) && /admin panel/i.test(bought), 'it says what was bought: ' + bought);
+  console.log('  ✓ a purchase confirmed before the page returns still goes online; a bought page shows what was bought, not a price');
+
   assert.deepStrictEqual(errors, [], errors.join(' | '));
   await browser.close(); await srv.close();
   console.log('Guided buy e2e ok');

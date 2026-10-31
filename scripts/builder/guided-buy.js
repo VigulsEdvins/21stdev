@@ -8,7 +8,7 @@
   const SESSION_KEY = 'edvlabs.session';
   const EDITOR_KEY = 'web_builder_editor';
   const CHECK_DELAY = 400;
-  const NAME_KEY = 'edvlabs.buy_name', DOMAIN_KEY = 'edvlabs.buy_domain';
+  const NAME_KEY = 'edvlabs.buy_name', DOMAIN_KEY = 'edvlabs.buy_domain', KNOWN_KEY = 'edvlabs.buy_known'; // KNOWN: the purchases of this page before paying, so a payment confirmed early still counts as new
   const STRIPE = /^https:\/\/checkout\.stripe\.com\//;
 
   const el = (doc, tag, attrs, text) => {
@@ -241,6 +241,7 @@
       const id = await savedProjectId();
       proceed.disabled = false;
       if (!id) { note.textContent = 'Your page could not be saved to your account just now, so it cannot be bought yet. Please try again in a moment.'; return; }
+      try { win.sessionStorage.setItem(KNOWN_KEY, JSON.stringify(boughtFor(id).map((p) => p.id))); } catch (_) { /* then the list at return is used */ }
       note.textContent = ''; s.projectId = id; s.bought = boughtFor(id).length > 0; if (s.bought && s.hosting !== 'yearly') s.hosting = 'none'; else if (!s.bought && s.hosting === 'none') s.hosting = 'monthly'; s.step = 1; s.quote = null; s.message = ''; s.waiver = false;
       overlay = el(doc, 'div', { id: 'buyOverlay', class: 'buy-overlay', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'buyTitle' });
       const panel = el(doc, 'div', { class: 'buy-panel' });
@@ -261,8 +262,15 @@
       return l ? l.id : '';
     }
     const boughtFor = (pid) => purchases.filter((p) => pid && p.projectId === pid);
+    const boughtLine = el(doc, 'p', { class: 'buy-bought', id: 'buyBought', hidden: '' });
+    if (sum) sum.before(boughtLine);
     async function applyLock() {
       const pid = await currentProjectId(), mine = boughtFor(pid);
+      // a bought page says what was bought instead of showing a price and the add-on choice again
+      const blocks = Math.max(0, ...mine.map((p) => p.allowance)), withEditor = mine.some((p) => p.editor);
+      boughtLine.hidden = !mine.length;
+      boughtLine.textContent = mine.length ? 'Bought: up to ' + blocks + ' block' + (blocks === 1 ? '' : 's') + (withEditor ? ', admin panel included' : '') + '.' : '';
+      if (paneGet) { paneGet.classList.toggle('buy-bought', mine.length > 0); paneGet.classList.toggle('buy-has-editor', withEditor); }
       if (paneGet) paneGet.classList.toggle('buy-locked', !mine.length);
       proceed.textContent = mine.length ? 'Add blocks or extras to your order' : 'Proceed: buy it and put it online';
       if (!mine.length) note.textContent = note.textContent || 'Buy your website to download it or put it online.';
@@ -339,9 +347,14 @@
     /* Back from Stripe: the payment is confirmed by Stripe telling our server, which can take a moment, so look a few times. */
     async function afterPayment() {
       note.textContent = 'Thank you. Confirming your payment…';
-      const pid = await currentProjectId(), known = new Set(purchases.map((p) => p.id));
+      try { win.history.replaceState(null, '', win.location.pathname + win.location.hash); } catch (_) { /* a reload would only look again */ }
+      const pid = await currentProjectId();
+      let known = null; try { const raw = win.sessionStorage.getItem(KNOWN_KEY); known = raw ? new Set(JSON.parse(raw)) : null; win.sessionStorage.removeItem(KNOWN_KEY); } catch (_) { known = null; }
+      if (!known) known = new Set(purchases.map((p) => p.id)); // no record of the time before paying: only a purchase that appears from now on is new
+      let list = purchases;
       for (let i = 0; i < 8; i++) {
-        const r = await client.myPurchases();
+        if (i > 0) { await new Promise((res) => setTimeout(res, 1500)); const r0 = await client.myPurchases(); if (!(r0.status === 200 && r0.json && r0.json.ok)) continue; list = r0.json.purchases; }
+        const r = { status: 200, json: { ok: true, purchases: list } };
         if (r.status === 200 && r.json && r.json.ok) {
           const fresh = r.json.purchases.find((p) => p.projectId === pid && !known.has(p.id));
           if (fresh) {
@@ -358,7 +371,6 @@
             return;
           }
         }
-        await new Promise((res) => setTimeout(res, 1500));
       }
       note.textContent = 'Your payment is being confirmed. If your page is not unlocked within a few minutes, contact edvlabs. You will not be charged twice.';
     }

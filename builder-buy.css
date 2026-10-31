@@ -36,3 +36,9 @@
 .buy-domain { display: grid; gap: 8px; padding: 12px; border: 2px solid var(--rust, #b5482a); border-radius: 8px; margin-top: 10px; }
 .buy-domain[hidden] { display: none; }
 .buy-record { font-family: ui-monospace, monospace; font-size: .85rem; word-break: break-all; background: rgba(128, 128, 128, .15); padding: 6px 8px; border-radius: 6px; margin: 4px 0; }
+
+/* a bought page: what was bought, not the price again; the admin panel choice goes when it is already included */
+.buy-bought { font-weight: 600; margin: 4px 0; }
+.buy-bought[hidden] { display: none; }
+.buy-on.buy-bought #getTotal { display: none; }
+.buy-on.buy-has-editor .gt-editor { display: none; }
