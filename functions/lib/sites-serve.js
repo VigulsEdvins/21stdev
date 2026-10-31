@@ -1,6 +1,6 @@
 /* Serving published sites at <name>.edvlabs.com (plan 2026-10-30-publish-subdomain.md, step 4). Used by the sites Worker (src/sites-worker.js).
    createSiteServer({ bucket, kv, domain }).handle(request) -> Response. Reads only: KV tells which version of which site is live, R2 holds the files.
-   Nothing here reads the database, so a visitor never waits for it. What KV holds for a name (written by functions/lib/publish.js):
+   Nothing here reads the database, so a visitor never waits for it. A customer's own domain is found through KV too (`host:<hostname>` -> { name }, `sitehost:<site id>` -> hostname; functions/lib/site-domain.js). What KV holds for a name (written by functions/lib/publish.js):
      { id, version, status: 'live' | 'unpublished' | 'blocked' }   or   { redirect: '<new name>' } after a rename. */
 const { TYPES, key, kvKey } = require('./publish.js');
 
@@ -37,6 +37,13 @@ function candidates(pathname) {
   return last.includes('.') ? [p.slice(1)] : [p.slice(1) + '.html', p.slice(1) + '/index.html'];
 }
 
+/** A KV entry holding JSON, or null when it is missing or not readable. */
+async function json(kv, k) {
+  const raw = await kv.get(k);
+  if (!raw) return null;
+  try { const v = JSON.parse(raw); return v && typeof v === 'object' ? v : null; } catch (e) { return null; }
+}
+
 const extOf = (p) => (p.includes('.') ? p.slice(p.lastIndexOf('.') + 1).toLowerCase() : '');
 
 function createSiteServer({ bucket, kv, domain, originOf, admin }) {
@@ -58,16 +65,31 @@ function createSiteServer({ bucket, kv, domain, originOf, admin }) {
   }
 
   async function handle(request) {
-    const url = new URL(request.url), name = nameOf(url.hostname);
+    const url = new URL(request.url);
+    let name = nameOf(url.hostname);
     const adminPost = !!admin && request.method === 'POST' && /^\/admin\d{10}(\/|$)/.test(url.pathname); // the only POSTs a site answers
     if (request.method !== 'GET' && request.method !== 'HEAD' && !adminPost) return respond(405, 'Method not allowed', 'text/plain; charset=utf-8', { Allow: 'GET, HEAD' });
-    if (!name) return respond(404, NOT_FOUND);
-    let record = null;
-    const raw = await kv.get(kvKey(name));
-    if (raw) { try { record = JSON.parse(raw); } catch (e) { record = null; } }
-    if (!record) return respond(404, FREE_ADDRESS);
-    if (record.redirect && isLabel(record.redirect)) return new Response(null, { status: 301, headers: Object.assign({ Location: origin(record.redirect) + url.pathname + url.search, 'Cache-Control': 'public, max-age=3600' }, SECURITY) });
+    /* A host name that is not <name>.edvlabs.com may be a customer's own domain (plan 2026-10-31-custom-domain.md): KV `host:<hostname>` says which site it shows. */
+    let ownHost = null;
+    if (!name) {
+      ownHost = url.hostname.toLowerCase().replace(/\.$/, '');
+      const h = await json(kv, 'host:' + ownHost);
+      name = h && isLabel(h.name) ? h.name : null;
+      if (!name) return respond(404, NOT_FOUND);
+    }
+    let record = await json(kv, kvKey(name));
+    if (ownHost && record && record.redirect && isLabel(record.redirect)) record = await json(kv, kvKey(record.redirect)); // renamed a moment ago: the host entry is moved on the next write
+    if (!record) return respond(404, ownHost ? NOT_FOUND : FREE_ADDRESS);
+    if (!ownHost && record.redirect && isLabel(record.redirect)) return new Response(null, { status: 301, headers: Object.assign({ Location: origin(record.redirect) + url.pathname + url.search, 'Cache-Control': 'public, max-age=3600' }, SECURITY) });
     if (record.status !== 'live' || !record.id || !Number.isInteger(record.version)) return respond(404, NOT_AVAILABLE);
+
+    /* The site lives on its own domain (`sitehost:<site id>`): its edvlabs address only redirects there, and the domain only serves while that entry names it. */
+    const lives = await kv.get('sitehost:' + record.id);
+    if (ownHost && lives !== ownHost) return respond(404, NOT_FOUND);
+    if (!ownHost && lives) {
+      if (request.method === 'POST') return respond(404, NOT_FOUND);
+      return new Response(null, { status: 301, headers: Object.assign({ Location: 'https://' + lives + url.pathname + url.search, 'Cache-Control': 'public, max-age=300' }, SECURITY) });
+    }
 
     if (admin) {
       const answered = await admin.handle(request, url, record) || await admin.publicFile(url.pathname, record);

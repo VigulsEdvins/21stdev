@@ -9,6 +9,7 @@ const Fake = require('../tests/lib/fake-sites.js');
 const P = require('../functions/lib/publish.js');
 const S = require('../functions/lib/sites-serve.js');
 const SA = require('../functions/lib/site-admin.js');
+const SD = require('../functions/lib/site-domain.js');
 const AS = require('../functions/lib/site-admin-serve.js');
 const store = require('../functions/lib/sites-store.js');
 const { createScriptChecker } = require('../functions/lib/script-check.js');
@@ -43,6 +44,14 @@ async function start({ port }) {
     return out;
   };
   const siteAdmin = SA.createSiteAdmin({ db: f.db, kv: f.kv, bucket: f.bucket, now: () => new Date().toISOString(), editorFiles, address: (name) => 'http://' + name + '.localhost:' + port + '/' });
+  /* own domains: a pretend Cloudflare that confirms a host name 4 seconds after it is added, as if the customer's DNS record were in place */
+  const hostnames = new Map();
+  const cf = {
+    async create(hostname) { const h = { id: 'demo-' + hostnames.size + '-hostname', hostname, at: Date.now() }; hostnames.set(h.id, h); return { id: h.id, hostname, status: 'pending', ssl: { status: 'pending_validation' }, errors: ['custom hostname does not CNAME to this zone.'], ownership: { name: '_cf-custom-hostname.' + hostname, value: 'demo-token' } }; },
+    async get(id) { const h = hostnames.get(id); if (!h) return null; const up = Date.now() - h.at > 4000; return { id, hostname: h.hostname, status: up ? 'active' : 'pending', ssl: { status: up ? 'active' : 'pending_validation' }, errors: up ? [] : ['custom hostname does not CNAME to this zone.'], ownership: null }; },
+    async remove(id) { hostnames.delete(id); }
+  };
+  const siteDomains = SD.createSiteDomains({ db: f.db, kv: f.kv, cf, now: () => new Date().toISOString(), domain: 'localhost' });
   const publisher = P.createPublisher({ db: f.db, bucket: f.bucket, kv: f.kv, now: () => new Date().toISOString(), domain: 'localhost', addressOf: (name) => 'http://' + name + '.localhost:' + port + '/', scripts: createScriptChecker({ library: libraryFromDisk, exportAssets: exportAssetsFromDisk, parts: async () => require('./build-site.js').scriptParts() }), adminHook: siteAdmin });
   const seen = new Set();
   const inAYear = () => new Date(Date.now() + 365 * 86400000).toISOString();
@@ -53,7 +62,8 @@ async function start({ port }) {
     return u;
   };
   return {
-    env, deps: { user, publisher, siteAdmin }, auth, store: f,
+    env, deps: { user, publisher, siteAdmin, siteDomains }, auth, store: f,
+    ownDomain: async (host) => !!(await f.kv.get('host:' + String(host || '').toLowerCase().split(':')[0])), // a pretend own domain the browser or curl reaches with a Host header
     sites: S.createSiteServer({ bucket: f.bucket, kv: f.kv, domain: 'localhost', originOf: (name) => 'http://' + name + '.localhost:' + port,
       admin: AS.createAdminServer({ kv: f.kv, bucket: f.bucket, secret: 'demo-only-session-secret-not-for-real-use', insecure: true }) }), // insecure: the demo is plain http, where a Secure cookie would not be kept
     explain: (p) => [

@@ -12,8 +12,8 @@
     try { u = new URL(String(value)); } catch (e) { return ''; }
     if (u.href !== value || u.search || u.hash || u.username || u.password) return '';
     if (admin ? !/^\/admin[0-9]{10}$/.test(u.pathname) : u.pathname !== '/') return '';
-    const label = u.hostname.split('.')[0];
-    if (!/^[a-z0-9-]{3,30}$/.test(label)) return '';
+    const label = u.hostname.split('.')[0], ours = u.hostname.endsWith('.edvlabs.com') || u.hostname.endsWith('.localhost'); // a customer's own domain (plan 2026-10-31-custom-domain.md) has any plain host name
+    if (ours && !/^[a-z0-9-]{3,30}$/.test(label)) return '';
     if (u.protocol === 'https:' && u.port === '' && u.hostname.includes('.') && /^[a-z0-9.-]+$/.test(u.hostname)) return value;
     if (u.protocol === 'http:' && u.hostname === label + '.localhost') return value;
     return '';
@@ -57,7 +57,7 @@
       fields.forEach((fd) => {
         const wrap = el('div', 'field'), id = 'ws-' + site.id.slice(0, 8) + '-' + fd.id;
         const label = el('label', '', fd.label); label.htmlFor = id;
-        const input = el('input', 'input'); input.id = id; input.type = fd.type || 'text'; input.autocomplete = fd.autocomplete || 'off'; input.maxLength = fd.type === 'password' ? 100 : 40;
+        const input = el('input', 'input'); input.id = id; input.type = fd.type || 'text'; input.autocomplete = fd.autocomplete || 'off'; input.maxLength = fd.max || (fd.type === 'password' ? 100 : 40);
         if (fd.type !== 'password') { input.setAttribute('autocapitalize', 'none'); input.spellcheck = false; }
         wrap.append(label, input); box.append(wrap); inputs[fd.id] = input;
       });
@@ -145,6 +145,86 @@
       return box;
     }
 
+    /* The site's own domain: add it, see the one record to put at the domain provider and how it is going, remove it. The state is asked from the server (which asks Cloudflare). */
+    function domainBlock(site) {
+      if (site.domain === undefined) return null; // own domains are not set up on this server: say nothing
+      const box = el('div', 'ws-domain');
+      box.append(el('h4', '', 'Your own domain'));
+      const body = el('div', 'ws-domain-body'); box.append(body);
+      let timer = null;
+      const stop = () => { if (timer) { clearTimeout(timer); timer = null; } };
+
+      function recordRow(label, r) {
+        const p = el('p', 'ws-line');
+        p.append(el('strong', '', label + ' '), 'type ', el('code', '', r.type), ', name ', el('code', '', r.name), ', value ', el('code', '', r.value));
+        return p;
+      }
+
+      function showInfo(info) {
+        stop(); body.replaceChildren();
+        const row = el('div', 'btn-row');
+        const remove = el('button', 'btn btn--secondary btn--small', 'Remove domain'); remove.type = 'button';
+        remove.addEventListener('click', () => {
+          const ask = el('div', 'ws-form'); ask.append(el('p', '', 'The website goes back to its edvlabs address. ' + (info.status === 'active' ? 'Visitors who use your own domain will see nothing until you add it again.' : '')));
+          const yes = el('button', 'btn', 'Yes, remove it'); yes.type = 'button'; const no = el('button', 'btn btn--secondary', 'Keep it'); no.type = 'button';
+          no.addEventListener('click', () => ask.remove());
+          yes.addEventListener('click', async () => { yes.disabled = true; const r = await call('POST', '/site-domain', { action: 'remove', siteId: site.id }); if (r.status === 200 && r.json && r.json.ok) { await show(); note('The domain is removed.', 'ok'); } else { yes.disabled = false; note(words(r), 'error'); } });
+          ask.append(yes, ' ', no); body.append(ask);
+        });
+        if (info.status === 'active') {
+          const addr = safeUrl('https://' + info.hostname + '/', false);
+          body.append(el('p', 'hint', 'Your domain is working. Visitors who use the edvlabs address are sent to it.'));
+          if (addr) body.append(linkRow('Your domain:', addr, site.status !== 'live'));
+          row.append(remove); body.append(row);
+          return;
+        }
+        if (info.status === 'failed') {
+          body.append(el('p', 'error-text', info.hostname + ': ' + (info.error || 'This did not work.')));
+          row.append(remove); body.append(row);
+          return;
+        }
+        body.append(el('p', 'hint', 'Almost there for ' + info.hostname + '. At the company where you bought the domain (your domain provider), add this record:'));
+        (info.records || []).forEach((r) => body.append(recordRow('Add:', r)));
+        body.append(el('p', 'hint', 'Some providers want only the first part as the name (for example www). It can take a few minutes, and sometimes a few hours, before it works. This page checks by itself.'));
+        if (info.error) body.append(el('p', 'hint', 'Not yet: ' + info.error));
+        if ((info.optionalRecords || []).length) {
+          const more = el('details', 'ws-more'); more.append(el('summary', '', 'Still waiting after an hour? Add this record too'));
+          info.optionalRecords.forEach((r) => more.append(recordRow('Also:', r)));
+          body.append(more);
+        }
+        const check = el('button', 'btn btn--secondary btn--small', 'Check now'); check.type = 'button';
+        check.addEventListener('click', async () => { check.disabled = true; await refresh(); });
+        row.append(check, ' ', remove); body.append(row);
+        timer = setTimeout(function again() { if (!box.isConnected) return; refresh().then(() => { if (box.isConnected && body.querySelector('.btn-row button') && !/working/.test(body.textContent)) timer = setTimeout(again, 20000); }); }, 20000);
+      }
+
+      async function refresh() {
+        const r = await call('GET', '/site-domain?siteId=' + encodeURIComponent(site.id));
+        if (r.status === 200 && r.json && r.json.ok && r.json.hostname) {
+          if (r.json.status === 'active' && site.domain && site.domain.status !== 'active') { await show(); note('Your domain is working.', 'ok'); return; }
+          showInfo(r.json);
+        } else if (r.status === 200) { await show(); } else { stop(); body.replaceChildren(el('p', 'error-text', words(r))); }
+      }
+
+      if (site.domain) { body.append(el('p', 'hint', 'Checking ' + site.domain.hostname + '…')); refresh(); return box; }
+      if (site.status !== 'live') { body.append(el('p', 'hint', 'Put the website online first, then you can use your own domain.')); return box; }
+      body.append(el('p', 'hint', 'Show this website at your own domain, for example www.yourdomain.com, instead of the edvlabs address. You keep the domain at your domain provider; you only add one record there.'));
+      const open = el('button', 'btn btn--secondary', 'Use my own domain'); open.type = 'button';
+      open.addEventListener('click', () => {
+        if (body.querySelector('.ws-form')) return;
+        const fm = form(site, 'Your domain', [{ id: 'hostname', label: 'Domain address (like www.yourdomain.com)', autocomplete: 'off', max: 253 }], 'Continue', async (v) => {
+          const h = String(v.hostname || '').trim();
+          if (!h) return 'Type the address of your domain, for example www.yourdomain.com.';
+          const r = await call('POST', '/site-domain', { action: 'add', siteId: site.id, hostname: h });
+          if (r.status === 200 && r.json && r.json.ok) { site.domain = { hostname: r.json.hostname, status: r.json.status }; showInfo(r.json); return ''; }
+          return words(r);
+        }, 'Use a name with something in front, like www or shop. If you want the bare domain too, ask your domain provider to send it to the www name.');
+        body.append(fm); fm.querySelector('input').focus();
+      });
+      body.append(open);
+      return box;
+    }
+
     function siteItem(site) {
       const li = el('li', 'ws-item'); li.dataset.id = site.id;
       li.append(el('h3', 'ws-name', site.name));
@@ -152,6 +232,7 @@
       if (addr) li.append(linkRow('Website:', addr, site.status !== 'live'));
       if (site.status !== 'live') li.append(el('p', 'hint', site.status === 'blocked' ? 'This website has been blocked. Please contact edvlabs.' : 'This website is offline. Put it online again from the builder.'));
       li.append(adminBlock(site, li));
+      const domain = domainBlock(site); if (domain) li.append(domain);
       return li;
     }
 

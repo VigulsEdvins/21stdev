@@ -4,10 +4,14 @@
      POST /api/publish             { name, files: [{ path, content, encoding? }], projectId? }
      POST /api/unpublish           { siteId }
      POST /api/rename              { siteId, name }   the old address redirects to the new one for 90 days
+     GET  /api/site-domain?siteId=…   the state of the site's own domain (asks Cloudflare while it is not confirmed yet)
+     POST /api/site-domain         { action: 'add' | 'remove', siteId, hostname? }   a customer's own domain for the site (functions/lib/site-domain.js)
    and the timer (scheduled) that cleans up. All the rules are in ./publish.js; the storage is in ./sites-store.js.
-   Settings (never in git): SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY (secret); bindings SITES (KV) and SITES_BUCKET (R2); optional SITES_DOMAIN. */
+   Settings (never in git): SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY (secret); bindings SITES (KV) and SITES_BUCKET (R2); optional SITES_DOMAIN.
+   Own domains also need CLOUDFLARE_API_TOKEN (secret, limited to SSL and certificates on the zone) and CF_ZONE_ID; without them the domain endpoints answer 503 and nothing else changes. */
 const { createPublisher } = require('./publish.js');
 const { createSiteAdmin } = require('./site-admin.js');
+const { createSiteDomains, createCloudflare } = require('./site-domain.js');
 const store = require('./sites-store.js');
 const { createScriptChecker } = require('./script-check.js');
 const Limits = require('./limits.js');
@@ -46,9 +50,13 @@ function makeDeps(env) {
   };
   const db = store.createDb(env);
   const siteAdmin = createSiteAdmin({ db, kv: env.SITES, bucket: env.SITES_BUCKET, now: () => new Date().toISOString(), editorFiles, address: (name) => 'https://' + name + '.' + (env.SITES_DOMAIN || 'edvlabs.com') + '/' });
+  const siteDomains = env.CLOUDFLARE_API_TOKEN && env.CF_ZONE_ID
+    ? createSiteDomains({ db, kv: env.SITES, cf: createCloudflare({ token: env.CLOUDFLARE_API_TOKEN, zoneId: env.CF_ZONE_ID }), now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, target: env.CF_FALLBACK_ORIGIN })
+    : undefined;
   return {
     user: (token) => store.verifyUser(env, token),
     siteAdmin,
+    siteDomains,
     publisher: createPublisher({ db, bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets, parts }), defaults: Limits.defaultsFrom(env), adminHook: siteAdmin })
   };
 }
@@ -58,7 +66,7 @@ const missing = (env) => NEEDED.filter((k) => !env[k]);
 /** Returns a Response for the four endpoints, or null for any other path. `json(status, body, extraHeaders)` is the Worker's answer helper. */
 async function route(request, env, json, deps) {
   const url = new URL(request.url), path = url.pathname;
-  const wantsGet = path === '/api/site-name' || path === '/api/my-sites', wantsPost = path === '/api/publish' || path === '/api/unpublish' || path === '/api/rename' || path === '/api/site-admin';
+  const wantsGet = path === '/api/site-name' || path === '/api/my-sites' || (path === '/api/site-domain' && request.method === 'GET'), wantsPost = path === '/api/publish' || path === '/api/unpublish' || path === '/api/rename' || path === '/api/site-admin' || (path === '/api/site-domain' && request.method === 'POST');
   if (!wantsGet && !wantsPost) return null;
   if (request.method !== (wantsGet ? 'GET' : 'POST')) return json(405, { ok: false, errors: ['Use ' + (wantsGet ? 'GET' : 'POST') + '.'] }, { Allow: wantsGet ? 'GET' : 'POST' });
   const absent = missing(env);
@@ -79,12 +87,31 @@ async function route(request, env, json, deps) {
     if (r.status === 200 && d.siteAdmin && r.json.sites.length) { // the admin panel of each site: its address and username (never the password or its hash)
       try { const st = await d.siteAdmin.status(user.id, r.json.sites); r.json.sites.forEach((x) => { x.admin = st[x.id] || { on: false }; }); } catch (e) { r.json.sites.forEach((x) => { x.admin = null; }); } // null: could not be read just now
     }
+    if (r.status === 200 && d.siteDomains && r.json.sites.length) { // the site's own domain: shown instead of the edvlabs address once Cloudflare has confirmed it
+      try {
+        const dm = await d.siteDomains.decorate(r.json.sites.map((x) => x.id));
+        r.json.sites.forEach((x) => {
+          x.domain = dm[x.id] || null;
+          if (x.domain && x.domain.status === 'active') {
+            x.edvlabsAddress = x.address; x.address = 'https://' + x.domain.hostname + '/';
+            if (x.admin && x.admin.on) x.admin.address = 'https://' + x.domain.hostname + '/admin' + x.admin.digits;
+          }
+        });
+      } catch (e) { r.json.sites.forEach((x) => { x.domain = undefined; }); } // undefined: could not be read just now; the page shows nothing about domains
+    }
     return reply(r);
+  }
+
+  if (path === '/api/site-domain' && request.method === 'GET') {
+    if (!d.siteDomains) return json(503, { ok: false, errors: ['Own domains are not set up yet.'] });
+    const siteId = url.searchParams.get('siteId');
+    if (typeof siteId !== 'string' || !store.UUID.test(siteId)) return json(400, { ok: false, errors: ['Which site?'] });
+    try { return reply(await d.siteDomains.status({ userId: user.id, siteId })); } catch (e) { return json(500, { ok: false, errors: ['The domain could not be checked just now. Please try again.'] }); }
   }
 
   if (!(request.headers.get('Content-Type') || '').includes('application/json')) return json(415, { ok: false, errors: ['Send JSON.'] });
   const declared = Number(request.headers.get('Content-Length') || 0);
-  const maxBody = path === '/api/site-admin' ? 10 * 1024 : MAX_BODY; // a username and a password are small
+  const maxBody = path === '/api/site-admin' || path === '/api/site-domain' ? 10 * 1024 : MAX_BODY; // a username and a password are small
   if (declared > maxBody) return json(413, { ok: false, errors: ['That is too large.'] });
   const text = await request.text();
   if (text.length > maxBody) return json(413, { ok: false, errors: ['That is too large.'] });
@@ -104,6 +131,15 @@ async function route(request, env, json, deps) {
     } catch (e) { return json(500, { ok: false, errors: ['The admin panel did not change just now. Please try again.'] }); }
     return json(400, { ok: false, errors: ['What should happen: enable, change or remove?'] });
   }
+  if (path === '/api/site-domain') { // { action: 'add' | 'remove', siteId, hostname? }
+    if (!d.siteDomains) return json(503, { ok: false, errors: ['Own domains are not set up yet.'] });
+    if (typeof body.siteId !== 'string' || !store.UUID.test(body.siteId)) return json(400, { ok: false, errors: ['Which site?'] });
+    try {
+      if (body.action === 'add') return reply(await d.siteDomains.add({ userId: user.id, siteId: body.siteId, hostname: body.hostname }));
+      if (body.action === 'remove') return reply(await d.siteDomains.remove({ userId: user.id, siteId: body.siteId }));
+    } catch (e) { return json(500, { ok: false, errors: ['The domain did not change just now. Please try again.'] }); } // the reason stays in the Worker's own log
+    return json(400, { ok: false, errors: ['What should happen: add or remove?'] });
+  }
   if (path === '/api/rename') {
     if (typeof body.siteId !== 'string' || !store.UUID.test(body.siteId) || typeof body.name !== 'string') return json(400, { ok: false, errors: ['Send the site and the new name.'] });
     try { return reply(await pub.rename({ userId: user.id, siteId: body.siteId, newName: body.name })); } catch (e) { return json(500, { ok: false, errors: ['Renaming did not work just now. Please try again.'] }); }
@@ -122,7 +158,9 @@ async function route(request, env, json, deps) {
 async function scheduled(env, deps) {
   if (!deps && missing(env).length) return null;
   try {
-    const result = await (deps || makeDeps(env)).publisher.sweep();
+    const d = deps || makeDeps(env);
+    const result = await d.publisher.sweep();
+    if (d.siteDomains) { try { result.domains = await d.siteDomains.sweep(); } catch (e) { console.error('own domains clean-up failed: ' + (e && e.message)); } } // a failing domain clean-up never stops the rest
     console.log('published sites clean-up: ' + JSON.stringify(result)); // seen with `npx wrangler tail`, or in the dashboard's logs when they are switched on
     return result;
   } catch (e) {

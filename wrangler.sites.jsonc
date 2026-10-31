@@ -1,11 +1,12 @@
 {
-  // The Worker that serves published sites at <name>.edvlabs.com. Deploy: npx wrangler deploy -c wrangler.sites.jsonc (steps and owner set-up: docs/deploy/publish-sites.md, written in step 8 of the plan).
+  // The Worker that serves published sites at <name>.edvlabs.com and at customers' own domains. Deploy: npx wrangler deploy -c wrangler.sites.jsonc (steps and owner set-up: docs/deploy/publish-sites.md, written in step 8 of the plan).
   // Kept apart from wrangler.jsonc so a mistake here cannot touch leads, sign-in or the public pages.
   "name": "edvlabs-sites",
   "main": "src/sites-worker.js",
   "compatibility_date": "2026-10-28",
   // Only addresses with exactly one name in front of edvlabs.com. The bare domain and any address with its own route (www, and others added later) are more specific and keep going where they go now.
-  "routes": [{ "pattern": "*.edvlabs.com/*", "zone_name": "edvlabs.com" }],
+  // "*/*" is for customers' own domains (docs/deploy/publish-sites.md, "Own domains"): Cloudflare for SaaS sends a customer's host name through this zone, and only a "*/*" route sees it. The route above is more specific and keeps winning for <name>.edvlabs.com; the bare domain (a Worker custom domain) and any route with no Worker keep going where they go now.
+  "routes": [{ "pattern": "*.edvlabs.com/*", "zone_name": "edvlabs.com" }, { "pattern": "*/*", "zone_name": "edvlabs.com" }],
   // The KV namespace and the R2 bucket MUST be the same ones the main Worker publishes into, so both are named here by id. The KV namespace was created 2026-10-30 (id below, not secret); the same id goes into wrangler.jsonc.
   // The R2 bucket is created with: npx wrangler r2 bucket create edvlabs-sites
   "kv_namespaces": [{ "binding": "SITES", "id": "3ec1a308b9914c22ba2cc075f0f3b690" }],

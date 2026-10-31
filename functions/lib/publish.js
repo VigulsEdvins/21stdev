@@ -315,6 +315,8 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
     try {
       await kv.put(kvKey(c.name), JSON.stringify({ id: site.id, version: r.version, status: r.status }));
       for (const held of r.held || []) await kv.put(kvKey(held), JSON.stringify({ redirect: c.name }));
+      const ownHost = await kv.get('sitehost:' + site.id); // the customer's own domain (plan 2026-10-31-custom-domain.md) keeps serving the site under its new name
+      if (ownHost) await kv.put('host:' + ownHost, JSON.stringify({ name: c.name }));
     } catch (e) {
       return { status: 202, json: { ok: true, name: c.name, oldName: r.old, address: address(c.name), pending: true, errors: [] } }; // the next hourly clean-up finishes the lookup
     }

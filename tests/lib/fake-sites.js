@@ -4,7 +4,8 @@
        claimEntitlement (true only if the place was still free), releaseEntitlement, reserveVersion (atomic +1 of last_version), goLive, setStatus. */
 function create() {
   const sites = [], holds = [], ents = [], objects = new Map(), kvStore = new Map(), log = [];
-  const limitRows = new Map(), admins = [];
+  const limitRows = new Map(), admins = [], domains = [];
+  let hostCounter = 1;
   let n = 0;
   const db = {
     async siteByName(name) { return sites.find((s) => s.name === name) || null; },
@@ -57,6 +58,18 @@ function create() {
     },
     async deleteAdmin(siteId) { const i = admins.findIndex((a) => a.site_id === siteId); if (i >= 0) admins.splice(i, 1); },
     async touchAdminLogin(siteId, iso) { const a = admins.find((x) => x.site_id === siteId); if (a) a.last_login_at = iso; },
+    /* mirrors supabase/migrations/20261031120000_site_domains.sql: one row per site, one per host name, rows outlive their site with site_id empty */
+    async domainBySite(siteId) { return domains.find((d) => d.site_id === siteId) || null; },
+    async domainByHostname(h) { return domains.find((d) => d.hostname === h) || null; },
+    async domainsBySites(ids) { return domains.filter((d) => ids.includes(d.site_id)); },
+    async insertDomain(row) {
+      if (domains.some((d) => d.hostname === row.hostname)) throw Object.assign(new Error('dup'), { code: 'host-taken' });
+      if (domains.some((d) => d.site_id && d.site_id === row.site_id)) throw Object.assign(new Error('dup'), { code: 'site-has-domain' });
+      const d = Object.assign({ id: 'dom-' + (domains.length + 1) + '-' + hostCounter++, cf_hostname_id: null, dns_help: {}, last_error: null, created_at: '2026-11-01T10:00:00.000Z', updated_at: '2026-11-01T10:00:00.000Z' }, row); domains.push(d); return d;
+    },
+    async updateDomain(id, patch) { Object.assign(domains.find((d) => d.id === id), patch); },
+    async deleteDomain(id) { const i = domains.findIndex((d) => d.id === id); if (i >= 0) domains.splice(i, 1); },
+    async orphanDomains() { return domains.filter((d) => !d.site_id); },
     async accountLimits(userId) { return limitRows.get(userId) || null; },
     async holdsForSite(siteId) { return holds.filter((h) => h.site_id === siteId); },
     async recentSites() { return sites.map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status })); },
@@ -78,7 +91,7 @@ function create() {
   };
   const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async delete(k) { kvStore.delete(k); },
     async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };
-  return { db, bucket, kv, admins, sites, holds, ents, objects, kvStore, log, limitRows,
+  return { db, bucket, kv, admins, domains, sites, holds, ents, objects, kvStore, log, limitRows,
     addEntitlement(userId, paidUntil, over) { const e = Object.assign({ id: 'ent-' + (ents.length + 1), user_id: userId, site_id: null, status: 'active', paid_until: paidUntil, granted_by: 'owner' }, over || {}); ents.push(e); return e; } };
 }
 module.exports = { create };

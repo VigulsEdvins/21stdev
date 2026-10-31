@@ -187,3 +187,29 @@ At minute 17 the main Worker (cron in `wrangler.jsonc`) cleans up:
 
 - **Scripts are checked against the library** (2026-10-30): a published `.js` file must be exactly what the builder produces from the library's own block scripts, read from the builder's own files on the same Worker (`/builder/features/<slug>/script.js` and `/builder/export-assets.json`, both staged by `npm run build:site`). If a block's script changes in a new deploy, an old open builder tab can no longer publish and the person is told to reload. Details: `docs/superpowers/plans/2026-10-30-script-allowlist.md`.
 - Deleted accounts' sites can stay online for up to an hour. Lapsed sites' files are not removed after 90 days yet. 
+
+## Own domains (added 2026-10-31)
+
+A customer can show their website at their own domain (for example `www.bakery-anna.com`) instead of `<name>.edvlabs.com`. They add one DNS record at their domain provider; Cloudflare for SaaS issues the certificate; the old edvlabs address then redirects (301) to their domain. Plan and design: `docs/superpowers/plans/2026-10-31-custom-domain.md`. Code is deployed and **stays off (the endpoints answer 503, the account page shows nothing about domains) until the steps below are done.** Only sub-names work (`www.`, `shop.`); a bare domain needs the customer to send it to `www` at their provider.
+
+**Cost** (checked in Cloudflare's docs 2026-10-31): Cloudflare for SaaS includes 100 custom hostnames on any plan, then $0.10 per extra hostname per month. Check your billing page, I cannot see it.
+
+Owner steps, in this order (all in the Cloudflare dashboard for `edvlabs.com`; nothing here goes into git):
+
+1. **Fallback origin record.** DNS → Add record: type `AAAA`, name `sites`, content `100::`, **Proxied**. (The wildcard `*` already covers `sites.edvlabs.com`, so it may exist; the point is that `sites` is proxied and has no real server behind it.)
+2. **Turn on Cloudflare for SaaS and set the fallback origin.** SSL/TLS → **Custom Hostnames** → enable, then *Fallback Origin*: `sites.edvlabs.com` → Add. Wait until it shows **Active**.
+3. **Zone id.** Dashboard → `edvlabs.com` → Overview → right column → *Zone ID*. It is not a secret.
+4. **API token for the main Worker.** My Profile → API Tokens → Create Token → Custom: permission **Zone → SSL and Certificates → Edit**, zone resources **Include → Specific zone → edvlabs.com**, nothing else. Copy it once.
+5. **Give the main Worker both settings** (Workers & Pages → `21stdev` → Settings → Variables and Secrets):
+   - variable `CF_ZONE_ID` = the zone id from step 3 (plain text),
+   - secret `CLOUDFLARE_API_TOKEN` = the token from step 4. Or from the terminal: `npx wrangler secret put CLOUDFLARE_API_TOKEN` and paste it when asked.
+6. **Deploy the sites Worker** if it was not deployed since 2026-10-31: `npx wrangler deploy -c wrangler.sites.jsonc` (it now has the extra `*/*` route that customers' domains need), and the main Worker (`npm run deploy:site`).
+7. **Try it with a domain of your own** (any domain or sub-domain you control): sign in, My websites → *Use my own domain*, add the record shown, wait for "Your domain is working". Then check:
+   - `curl -sI https://<your host name>/` shows `200` and the site's security headers;
+   - `curl -sI https://<name>.edvlabs.com/` shows `301` and `location: https://<your host name>/`;
+   - `https://edvlabs.com/`, `https://edvlabs.com/builder/` and the account page still work (`npm run check-headers -- https://edvlabs.com`).
+8. Remove the test domain from the account page; the edvlabs address serves the site again.
+
+Everyday: a domain that is still waiting after a day shows an extra TXT record under "Still waiting after an hour?"; most customers never need it. The hourly clean-up removes the Cloudflare entry of any domain whose site or account was deleted. Look at what Cloudflare holds: dashboard → SSL/TLS → Custom Hostnames. To switch the feature off, delete the secret `CLOUDFLARE_API_TOKEN` from the main Worker: the endpoints answer 503 and the account page shows nothing about domains, while domains that are already active keep working (they only need the sites Worker and KV).
+
+Known limits: a site's `sitemap.xml`, canonical link and share tags still name the address the customer typed in the builder; if they used the edvlabs address, search engines follow the 301 to the domain. A site that goes offline or is unpublished keeps its domain attached and shows "not available" there; the customer can remove the domain from the account page. Bare domains are not supported yet.

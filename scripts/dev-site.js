@@ -86,7 +86,7 @@ function createServer(env, { applyHeaders = true, dir = SITE, live = false, demo
   return http.createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     try {
-      if (demo && siteHost(req.headers.host)) { // a published site of the local demo: <name>.localhost:<port>
+      if (demo && (siteHost(req.headers.host) || await demo.ownDomain(req.headers.host))) { // a published site of the local demo: <name>.localhost:<port>, or a pretend own domain (send a Host header like www.bakery-anna.example)
         const posted = []; for await (const c of req) posted.push(c); // a site's admin panel takes POSTs (sign-in, save)
         const r = await demo.sites.handle(new Request('http://' + req.headers.host + req.url, { method: req.method, headers: req.headers, body: posted.length && !['GET', 'HEAD'].includes(req.method) ? Buffer.concat(posted) : undefined }));
         res.writeHead(r.status, Object.fromEntries(r.headers)); return res.end(Buffer.from(await r.arrayBuffer()));

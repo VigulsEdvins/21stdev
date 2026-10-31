@@ -82,6 +82,18 @@ function createDb(env, fetchImpl) {
     },
     deleteAdmin: (siteId) => rest('DELETE', 'site_admins?site_id=eq.' + enc(siteId)),
     touchAdminLogin: (siteId, iso) => rest('PATCH', 'site_admins?site_id=eq.' + enc(siteId), { last_login_at: iso }),
+    domainBySite: (siteId) => first('site_domains?select=*&limit=1&site_id=eq.' + enc(siteId)),
+    domainByHostname: (hostname) => first('site_domains?select=*&limit=1&hostname=eq.' + enc(hostname)),
+    domainsBySites: (ids) => (ids.length ? all('site_domains?select=site_id,hostname,status&site_id=in.(' + ids.filter((i) => UUID.test(String(i))).map(enc).join(',') + ')') : Promise.resolve([])),
+    async insertDomain(row) {
+      try { return (await rest('POST', 'site_domains', row, 'return=representation'))[0]; } catch (e) {
+        if (e.code === '23505') throw Object.assign(e, { code: /hostname/.test(e.message) ? 'host-taken' : 'site-has-domain' }); // the host name, or the site, already has a row
+        throw e;
+      }
+    },
+    updateDomain: (id, patch) => rest('PATCH', 'site_domains?id=eq.' + enc(id), patch),
+    deleteDomain: (id) => rest('DELETE', 'site_domains?id=eq.' + enc(id)),
+    orphanDomains: () => all('site_domains?select=*&site_id=is.null&limit=100'),
     accountLimits: (userId) => first('account_limits?select=*&limit=1&user_id=eq.' + enc(userId)),
     /* An upgrade for one person: only the numbers given are changed, the rest stay as they were (an empty column means the default for everyone). */
     async setAccountLimits(userId, patch) { return (await rest('POST', 'account_limits?on_conflict=user_id', Object.assign({ user_id: userId, updated_at: new Date().toISOString() }, patch), 'resolution=merge-duplicates,return=representation'))[0]; },

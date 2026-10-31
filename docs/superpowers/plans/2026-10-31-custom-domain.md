@@ -1,6 +1,6 @@
 # Customer's own domain for a published site (plan, 2026-10-31)
 
-Status: **approved by the owner 2026-10-31: A is a 301 redirect from the old address, and B to D are accepted with the recommendations below.** No code written, nothing deployed, nothing bought or switched on in Cloudflare.** Follows `2026-10-30-publish-subdomain.md` and `2026-10-31-site-admin-panel.md`.
+Status: **built and tested; the table is applied on the real database (2026-10-31); the Cloudflare set-up in `docs/deploy/publish-sites.md` ("Own domains") is the owner's part. See "As built" at the end for what changed from the design below.** Approved by the owner 2026-10-31: A is a 301 redirect from the old address, and B to D are accepted with the recommendations below.** No code written, nothing deployed, nothing bought or switched on in Cloudflare.** Follows `2026-10-30-publish-subdomain.md` and `2026-10-31-site-admin-panel.md`.
 
 ## Goal (owner request, 2026-10-31)
 
@@ -91,3 +91,16 @@ Hostname rules, checked on the server (the browser is not trusted): 4 to 253 cha
 - **B. Is a custom domain part of the paid place, or an extra?** Recommendation: part of the paid place, as one more per-account limit in `limits.js` with the same default for everyone and upgrades per account, like the other limits.
 - **C. Apex domains (`bakery.com` without `www`)?** A plain CNAME is not allowed there at most registrars. Recommendation for launch: **sub-names only (`www.`, `shop.`)**, with the screen telling the customer to redirect the bare domain to `www` at their registrar. Apex support (customer moves their name servers to Cloudflare) later if customers ask.
 - **D. One domain per site?** Recommendation: **yes**, one primary domain per site, as in the table above. A second one (for example both `www` and the bare domain) can redirect to it later.
+
+## As built (2026-10-31)
+
+Differences from the design above, and why:
+
+- **Two lookups in KV instead of `customHost` inside the site record.** Publishing, unpublishing and the clean-up all rewrite `site:<name>`, and would have wiped a `customHost` field. So: `host:<hostname>` -> `{ name }` (which site a host shows) and `sitehost:<site id>` -> hostname (the site lives there). A host serves only while `sitehost:` names that same host, so a stale or forged `host:` entry shows nothing. `sitehost:` is written last and removed first: the edvlabs address never redirects to a host that does not answer yet.
+- **Rename** moves `host:<hostname>` to the new name (`publish.js`, one added line); until it does, the old name's redirect record is followed one step.
+- **Unpublish / payment ended:** the domain stays attached and shows "not available" there; the customer removes it from the account page. (The design said it would be removed automatically; keeping it avoids deleting a hostname the customer set up when a site only goes offline for a while.) A deleted site or account leaves the table row behind with empty `site_id`/`user_id`, and the hourly clean-up removes the Cloudflare entry and the row.
+- **Validation:** the certificate uses Cloudflare's `http` method, so the customer adds only the CNAME. The TXT ownership record is shown only as an extra ("still waiting after an hour?").
+- **Pending set-ups** hold a host name for 2 hours; after that the real owner of the domain may take it (Cloudflare still needs their DNS to prove ownership). A confirmed domain is never taken.
+- **Step 0 result:** published sites' forms post to the services the customer chose (`scripts/form-delivery.js`), not to `/api/lead`, so nothing there compares against `*.edvlabs.com`. Nothing needed changing. The site's canonical link and sitemap still use the address typed in the builder; the 301 covers search engines.
+- **Step 1 result:** Cloudflare's documentation says a Worker receives custom-hostname traffic through a `*/*` route on the SaaS zone (a more specific route such as `*.edvlabs.com/*` keeps winning for its own names). Free, Pro and Business plans include 100 custom hostnames, then $0.10 each per month.
+- Tests: `tests/test-site-domain.js` (15 groups), `tests/e2e/site-domain.e2e.js` (browser, with a pretend Cloudflare in the local demo), and the security guard R12 now covers `site_domains` (the browser cannot read Cloudflare's id or the ownership token).
