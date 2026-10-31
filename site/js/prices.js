@@ -6,7 +6,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   // Every table ever sold keeps its id: a customer is quoted at the table they paid at for 12 months (design doc D7a).
   // To change a price, add a new id here, make it CURRENT, and leave the old one alone.
-  const VERSIONS = { v1: { base: 39, included: 3, extra: 9, editor: 39, doneSetup: 150, donePerBlock: 35, hostingMonth: 3, hostingYear: 29 } }; // hosting: what a place at name.edvlabs.com costs after the free first month; the real charge is the Stripe price, so change both together
+  const VERSIONS = { v1: { base: 39, included: 3, extra: 9, editor: 39, doneSetup: 150, donePerBlock: 35, hostingMonth: 3, hostingYear: 29, deployHelp: 30 } }; // hosting: what a place at name.edvlabs.com costs after the free first month; the real charge is the Stripe price, so change both together
   const CURRENT = 'v1';
   const T = VERSIONS[CURRENT];
   const tableFor = (version) => {
