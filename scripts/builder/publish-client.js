@@ -94,7 +94,10 @@
       siteAdmin: (action, siteId, extra) => call('POST', '/site-admin', Object.assign({ action, siteId }, extra || {})),
       unpublish: (siteId) => call('POST', '/unpublish', { siteId }),
       rename: (siteId, name) => call('POST', '/rename', { siteId, name }),
-      checkout: (plan) => call('POST', '/checkout', { plan }),
+      quote: (order) => call('POST', '/quote', order),
+      checkout: (order) => call('POST', '/checkout', order),
+      myPurchases: () => call('GET', '/my-purchases'),
+      deployRequest: (purchaseId, domain, notes) => call('POST', '/deploy-request', { purchaseId, domain, notes }),
       billingPortal: () => call('POST', '/billing-portal', {})
     };
   }

@@ -1,0 +1,20 @@
+/* The buying overlay (scripts/builder/guided-buy.js): a full-screen dialog over the builder. Colours come from the builder's own variables, with plain fallbacks. */
+.buy-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(20, 20, 20, .72); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.buy-panel { background: var(--bg-0, #fff); color: var(--text-main, #1d2a33); width: min(720px, 100%); max-height: calc(100vh - 32px); overflow: auto; border-radius: 12px; padding: 20px; display: grid; gap: 14px; }
+.buy-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.buy-top h2 { margin: 0; font-size: 1.25rem; }
+.buy-steps { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.buy-steps li { padding: 4px 12px; border-radius: 999px; background: rgba(128, 128, 128, .18); font-size: .85rem; }
+.buy-steps li.is-now { background: var(--rust, #b5482a); color: #fff; }
+.buy-body { display: grid; gap: 10px; }
+.buy-body h3 { margin: 4px 0; }
+.buy-cards { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.buy-card { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid rgba(128, 128, 128, .5); border-radius: 8px; cursor: pointer; }
+.buy-card.is-on { border: 2px solid var(--rust, #b5482a); }
+.buy-card input { margin-right: 6px; }
+.buy-waiver { font-size: .9rem; }
+.buy-error { color: #b3261e; margin: 0; }
+.buy-test { margin: 0; padding: 6px 10px; border-radius: 6px; background: rgba(226, 166, 39, .25); font-size: .9rem; }
+.buy-actions { display: flex; justify-content: flex-end; gap: 8px; }
+#buyTotal { margin: 0; font-weight: 600; min-height: 1.2em; }
+@media (max-width: 520px) { .buy-panel { padding: 14px; } .buy-actions button { flex: 1; } }

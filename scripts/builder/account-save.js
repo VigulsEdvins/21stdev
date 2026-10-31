@@ -149,6 +149,7 @@
     });
   }
 
-  window.BuilderAccountSave = { run };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => run(window)); else run(window);
+  window.BuilderAccountSave = { run, saver: null }; // saver: { tick(force) } once the first run has started, so the buying overlay can save the page before it is bought
+  const start = () => run(window).then((r) => { window.BuilderAccountSave.saver = r || null; }, () => {});
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
