@@ -94,7 +94,8 @@
       siteAdmin: (action, siteId, extra) => call('POST', '/site-admin', Object.assign({ action, siteId }, extra || {})),
       unpublish: (siteId) => call('POST', '/unpublish', { siteId }),
       rename: (siteId, name) => call('POST', '/rename', { siteId, name }),
-      checkout: () => call('POST', '/checkout', {})
+      checkout: (plan) => call('POST', '/checkout', { plan }),
+      billingPortal: () => call('POST', '/billing-portal', {})
     };
   }
 

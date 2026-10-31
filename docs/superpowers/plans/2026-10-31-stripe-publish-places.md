@@ -33,3 +33,15 @@ Status: **owner decisions 2026-10-31 (below); being built in Stripe TEST mode on
 ## Go-live checklist (later, owner)
 
 Create the live product/price; set live `STRIPE_SECRET_KEY` and `STRIPE_PRICE_ID`; add a live webhook endpoint in Stripe for `https://edvlabs.com/api/stripe-webhook` and put its `whsec_…` in `STRIPE_WEBHOOK_SECRET`; one real small payment, then refund it and check the place is gone; accountant's VAT/invoice decision (E8.1, E8.4) done before the first customer.
+
+## Revision 2026-10-31 (owner): hosting is a subscription
+
+The owner's pricing: building is paid once (39 EUR for 3 blocks, 9 EUR per extra block, 39 EUR with the admin panel, existing `prices.js`, **later slice**); **hosting** on edvlabs is **monthly or yearly with a free first month**; the owner's own domain costs nothing extra. Suggested and entered in Stripe (test): 3 EUR a month, 29 EUR a year.
+
+This replaces decision 2 above (one payment per year) and the "How" section where they differ:
+- `POST /api/checkout { plan: 'monthly' | 'yearly' }` makes a Checkout Session `mode=subscription` with `trial_period_days` 30. Prices are `STRIPE_PRICE_MONTHLY` / `STRIPE_PRICE_YEARLY`.
+- `checkout.session.completed` creates the place (to trial end + 1 day), keeping the subscription and customer ids (migration `20261031150000_stripe_subscriptions.sql`).
+- `invoice.paid` sets `paid_until` to the end of the paid period (the free first invoice and every renewal). A failed renewal sends no such event, so the place falls into the existing 14 days of grace and then goes offline.
+- `customer.subscription.deleted` ends the place. `charge.refunded` stays for later one-off payments.
+- `POST /api/billing-portal` opens Stripe's portal (cancel, switch plan, new card); the builder's "Manage billing" button uses it.
+- VAT: prices shown to consumers with VAT included is the safe default; the accountant decides (OSS for EU customers, Stripe Tax later).

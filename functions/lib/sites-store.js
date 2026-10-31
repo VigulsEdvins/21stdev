@@ -49,6 +49,9 @@ function createDb(env, fetchImpl) {
         throw e;
       }
     },
+    extendBySubscription: (subId, paidUntilIso) => rest('PATCH', 'site_entitlements?status=eq.active&stripe_subscription_id=eq.' + enc(subId), { paid_until: paidUntilIso }),
+    endBySubscription: (subId) => rest('PATCH', 'site_entitlements?stripe_subscription_id=eq.' + enc(subId), { status: 'ended' }),
+    async customerForUser(userId) { const r = await first('site_entitlements?select=stripe_customer_id&limit=1&stripe_customer_id=not.is.null&order=created_at.desc&user_id=eq.' + enc(userId)); return r ? r.stripe_customer_id : null; },
     refundByIntent: (intent) => rest('PATCH', 'site_entitlements?stripe_payment_intent=eq.' + enc(intent), { status: 'refunded' }),
     freeEntitlements: (userId) => all('site_entitlements?select=*&status=eq.active&site_id=is.null&order=paid_until.desc&user_id=eq.' + enc(userId)),
     async insertSite(row) {

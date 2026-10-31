@@ -39,7 +39,7 @@
 
     const box = el(doc, 'section', { class: 'gt-publish', id: 'publishBox', 'aria-labelledby': 'publishHead' });
     const head = el(doc, 'h4', { id: 'publishHead' }, 'Put it online');
-    const intro = el(doc, 'p', { class: 'gt-note' }, 'Your page can live at yourname.' + domain + '. It is a paid extra. You can always download the files and put them on any other host instead.');
+    const intro = el(doc, 'p', { class: 'gt-note' }, 'Your page can live at yourname.' + domain + '. It is a paid extra, and the first month is free. You can always download the files and put them on any other host instead.');
     const signedOut = el(doc, 'p', { id: 'publishSignedOut' });
     const signIn = el(doc, 'a', { class: 'builder-btn-subtle', id: 'publishSignIn', href: SIGN_IN_URL }, 'Sign in free');
     signedOut.append('Sign in to put your page online. ', signIn);
@@ -53,9 +53,14 @@
     const go = el(doc, 'button', { type: 'button', class: 'builder-btn-primary gt-go', id: 'publishGo' }, 'Put it online');
     const out = el(doc, 'p', { id: 'publishResult', role: 'status', 'aria-live': 'polite' });
     const ask = el(doc, 'a', { class: 'builder-btn-subtle gt-ask', id: 'publishAsk', href: help, target: '_blank', rel: 'noopener', hidden: '' }, 'Ask edvlabs to switch it on for me');
-    const buy = el(doc, 'button', { type: 'button', class: 'builder-btn-primary gt-buy', id: 'publishBuy', hidden: '' }, 'Buy a place');
+    const T = win.EdvPrices && win.EdvPrices.table, euro = (n) => (Number.isFinite(n) ? ' (€' + n + ')' : '');
+    const buy = el(doc, 'span', { class: 'gt-buy', id: 'publishBuy', hidden: '' });
+    const buyMonth = el(doc, 'button', { type: 'button', class: 'builder-btn-primary', id: 'publishBuyMonthly' }, 'First month free, then monthly' + euro(T && T.hostingMonth));
+    const buyYear = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', id: 'publishBuyYearly' }, 'First month free, then yearly' + euro(T && T.hostingYear));
+    buy.append(buyMonth, ' ', buyYear);
     const buyNote = el(doc, 'small', { id: 'publishBuyNote', role: 'status', 'aria-live': 'polite' });
-    box.append(head, intro, signedOut, list, places, nameLabel, nameNote, go, out, buy, buyNote, ask);
+    const manage = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', id: 'publishManage', hidden: '' }, 'Manage billing');
+    box.append(head, intro, signedOut, list, places, nameLabel, nameNote, go, out, buy, buyNote, manage, ask);
     pane.append(box);
 
     let state = { signedIn: false, sites: [], freePlaces: 0, limits: null }, busy = false, timer = null, lastChecked = '';
@@ -90,20 +95,31 @@
       places.textContent = state.freePlaces > 0 ? 'You have ' + state.freePlaces + ' paid place' + (state.freePlaces === 1 ? '' : 's') + ' left for a new site.' : 'You have no paid place for a new site yet. Buy one, or ask edvlabs to add it for you.';
       ask.hidden = state.freePlaces > 0;
       buy.hidden = state.freePlaces > 0 || state.payment === 'off';
+      manage.hidden = state.payment === 'off' || (!state.sites.length && state.freePlaces === 0); // anyone who has had a place can open the billing page
     }
 
     /* Payment: the server makes the Stripe page and the browser goes there. A place appears when Stripe tells the server (the webhook), a second or two after the person comes back. */
-    async function startCheckout() {
+    async function startCheckout(plan) {
       if (busy) return;
       setBusy(true); buyNote.textContent = 'Opening the payment page…';
       try {
-        const r = await client.checkout();
+        const r = await client.checkout(plan);
         if (r.status === 200 && r.json && r.json.ok && typeof r.json.url === 'string' && /^https:\/\/checkout\.stripe\.com\//.test(r.json.url)) { win.location.assign(r.json.url); return; }
         if (r.status === 503) { state.payment = 'off'; buyNote.textContent = ''; renderPlaces(); say('Payment is not switched on yet, so edvlabs adds a place for you.', false); return; }
         buyNote.textContent = (r.json && r.json.errors && r.json.errors[0]) || Client.explain(r.status, r.json).message;
       } finally { setBusy(false); }
     }
-    buy.addEventListener('click', startCheckout);
+    buyMonth.addEventListener('click', () => startCheckout('monthly'));
+    buyYear.addEventListener('click', () => startCheckout('yearly'));
+    manage.addEventListener('click', async () => { // the Stripe page to cancel, switch plan or change the card
+      if (busy) return;
+      setBusy(true);
+      try {
+        const r = await client.billingPortal();
+        if (r.status === 200 && r.json && r.json.ok && typeof r.json.url === 'string' && /^https:\/\/billing\.stripe\.com\//.test(r.json.url)) { win.location.assign(r.json.url); return; }
+        say(r.status === 404 ? 'There is no subscription on this account yet.' : (r.json && r.json.errors && r.json.errors[0]) || 'The billing page could not be opened just now.', true);
+      } finally { setBusy(false); }
+    });
 
     /* Back from Stripe (?paid=1): look a few times for the new place, because the webhook can arrive after the redirect. */
     async function afterPayment() {
@@ -114,7 +130,7 @@
       const before = state.freePlaces;
       for (let i = 0; i < 8; i++) {
         await load();
-        if (state.freePlaces > before) { say('Payment received. You have a paid place for a new site.', false); return; }
+        if (state.freePlaces > before) { say('Your free month has started. You have a paid place for a new site.', false); return; }
         await new Promise((res) => setTimeout(res, 1500));
       }
       say('Your payment is being confirmed. If the place does not appear within a few minutes, contact edvlabs; you will not be charged twice.', false);

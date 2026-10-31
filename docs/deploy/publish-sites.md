@@ -215,18 +215,20 @@ Everyday: a domain that is still waiting after a day shows an extra TXT record u
 
 Known limits: a site's `sitemap.xml`, canonical link and share tags still name the address the customer typed in the builder; if they used the edvlabs address, search engines follow the 301 to the domain. A site that goes offline or is unpublished keeps its domain attached and shows "not available" there; the customer can remove the domain from the account page. Bare domains are not supported yet.
 
-## Paying for a place with Stripe (test mode first)
+## Paying for hosting with Stripe (test mode first)
 
-Plan: `docs/superpowers/plans/2026-10-31-stripe-publish-places.md`. Code is built and tested (`npm run test:payment`); nothing is deployed or applied yet. Do these in order, with **test mode** switched on in the Stripe dashboard (the "Test mode" / sandbox toggle).
+Plan: `docs/superpowers/plans/2026-10-31-stripe-publish-places.md`. A place is a Stripe **subscription**, monthly or yearly, **first month free**. Code is built and tested (`npm run test:payment`). Do these in order, in Stripe's test mode or a sandbox.
 
-1. **Supabase:** run `supabase/migrations/20261031140000_stripe_payments.sql` in the SQL Editor (adds two Stripe columns to `site_entitlements`; the browser cannot read them).
-2. **Stripe (test mode):** Product catalog → add a product "Publishing place (1 year)", one-time price (you choose the amount). Copy the **Price ID** (`price_…`). Developers → API keys → copy the test **secret key** (`sk_test_…`).
-3. **Webhook (test mode):** Developers → Webhooks → add endpoint `https://edvlabs.com/api/stripe-webhook`, events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `charge.refunded`. Copy its **signing secret** (`whsec_…`).
-4. **Worker settings** (main Worker `21stdev`; secrets never go in git):
+1. **Supabase:** run both `supabase/migrations/20261031140000_stripe_payments.sql` and `20261031150000_stripe_subscriptions.sql` (the first was run 2026-10-31).
+2. **Stripe:** one product, two recurring prices (3 EUR monthly, 29 EUR yearly, test mode). No trial on the prices; the code adds the free month (`STRIPE_TRIAL_DAYS`, default 30). Turn on the customer portal (Settings, Billing, Customer portal): cancel, switch plan, update card.
+3. **Restricted key** (Developers, API keys, "Powering an integration you built"): Checkout Sessions write, Customer portal write, Subscriptions read, Customers read.
+4. **Worker settings** (main Worker `21stdev`, never the sites Worker):
    ```bash
-   npx wrangler secret put STRIPE_SECRET_KEY      # sk_test_…
+   npx wrangler secret put STRIPE_SECRET_KEY      # rk_test_… or sk_test_…
    npx wrangler secret put STRIPE_WEBHOOK_SECRET  # whsec_…
    ```
-   and add the plain variable `STRIPE_PRICE_ID` (`price_…`) in the dashboard (Settings → Variables). `keep_vars` keeps it across deploys.
-5. **Try it:** builder → Put it online → "Buy a place" → card `4242 4242 4242 4242`, any future date, any CVC. Back in the builder the place appears within a few seconds. Declined card: `4000 0000 0000 0002`. Refund the payment in the Stripe dashboard: the place becomes `refunded`.
-6. **Going live later:** repeat steps 2–4 in live mode (live product/price, live key, a live webhook endpoint with its own `whsec_…`), then one small real payment and refund. Settle VAT and invoices with the accountant first (plan E8.1, E8.4).
+   plus plain variables `STRIPE_PRICE_MONTHLY` and `STRIPE_PRICE_YEARLY` (the `price_…` ids). `keep_vars` keeps them across deploys.
+5. **Webhook** (after the code is deployed): endpoint `https://edvlabs.com/api/stripe-webhook`, events `checkout.session.completed`, `invoice.paid`, `invoice.payment_failed`, `customer.subscription.deleted`, `charge.refunded`. Its `whsec_…` goes into step 4.
+6. **Try it:** builder, Put it online, choose monthly or yearly, card `4242 4242 4242 4242`. The place appears within seconds. Declined card `4000 0000 0000 0002`; 3-D Secure `4000 0025 0000 3155`. "Manage billing" opens the Stripe portal; cancelling ends the place when the subscription ends. To see a renewal, advance a Stripe test clock past the free month: `invoice.paid` moves the place's end date to the end of the paid period. A failed renewal sends no such event, so the place runs into the existing 14 days of grace.
+7. **Refunds:** refund in Stripe and cancel the subscription (a refund alone does not stop the next invoice).
+8. **Going live:** repeat 2 to 5 in live mode, one small real payment and refund. Decide VAT and invoices with the accountant first (plan E8.1, E8.4). The price on the site (`site/js/prices.js`, `hostingMonth`/`hostingYear`) and the Stripe prices must match.
