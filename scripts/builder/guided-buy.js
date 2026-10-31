@@ -42,7 +42,13 @@
 
     const proceed = el(doc, 'button', { type: 'button', class: 'builder-btn-primary gt-go', id: 'buyProceed', hidden: '' }, 'Proceed: buy it and put it online');
     const note = el(doc, 'p', { class: 'gt-note', id: 'buyNote', role: 'status', 'aria-live': 'polite' });
-    pane.append(proceed, note);
+    // while buying is on, step 5 stays short: the count, one total and Proceed; address, editor and "done for you" wait in a closed "More options"
+    const more = el(doc, 'details', { class: 'buy-more', id: 'buyMore' });
+    more.append(el(doc, 'summary', {}, 'More options: web address, editor, done for you'));
+    ['.gt-editor', '.gt-address', '.gt-help'].forEach((sel) => { const n = pane.querySelector(sel); if (n) more.append(n); });
+    const sum = pane.querySelector('#getTotal');
+    if (sum) sum.after(proceed, note, more); else pane.append(proceed, note, more);
+    if (pane.closest('#paneGet')) pane.closest('#paneGet').classList.add('buy-on');
     let editorDefault = false; try { editorDefault = win.localStorage.getItem(EDITOR_KEY) === '1'; } catch (_) { editorDefault = false; }
 
     let purchases = Array.isArray(initial) ? initial : [];

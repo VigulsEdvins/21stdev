@@ -100,6 +100,14 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await page.waitForFunction(() => /nothing was charged/i.test((document.getElementById('buyNote') || {}).textContent || ''));
   console.log('  ✓ Escape returns to the builder untouched; a cancelled payment says nothing was charged');
 
+  // step 5 stays short while buying is on: the count, one total and Proceed; the rest waits in "More options"
+  buy.purchases = []; await open(); await page.waitForSelector('#buyProceed'); await page.waitForTimeout(500);
+  assert(!(await page.isVisible('#getLines')), 'the long price lines are not shown (the overlay shows them)'); assert(!(await page.isVisible('#getNote')), 'no "payment is not switched on" line');
+  assert(!(await page.isVisible('#getAddress')) && !(await page.isVisible('#getEditor')), 'address and editor wait in More options');
+  assert.strictEqual(await page.evaluate(() => document.getElementById('buyMore').open), false, 'More options starts closed');
+  await page.click('#buyMore summary'); assert(await page.isVisible('#getAddress') && await page.isVisible('#getEditor'), 'opened, they are there');
+  console.log('  ✓ step 5 is short: count, total, Proceed, and a closed "More options"');
+
   // nothing is unlocked before the purchase; the purchase unlocks the download and the publish box
   buy.purchases = []; await open(); await page.waitForSelector('#buyProceed'); await page.waitForTimeout(600);
   assert(!(await page.isVisible('#getDownload')), 'the download waits for the purchase'); assert(!(await page.isVisible('#publishBox')), 'so does "Put it online"');

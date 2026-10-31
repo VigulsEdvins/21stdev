@@ -23,3 +23,8 @@
 .buy-locked #getDownload, .buy-locked #getNote, .buy-locked #publishBox { display: none; }
 .buy-deploy { display: grid; gap: 6px; padding: 10px 12px; border: 1px solid rgba(128, 128, 128, .5); border-radius: 8px; }
 .buy-deploy[hidden] { display: none; }
+
+/* step 5 while buying is on: short. The price lines and the free-download note belong to the old flow; the overlay shows the real prices. */
+.buy-on #getLines, .buy-on #getNote { display: none; }
+.buy-more { margin-top: 10px; }
+.buy-more > summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
