@@ -194,6 +194,18 @@ const UID = '11111111-1111-4111-8111-111111111111';
   const bought = await page.textContent('#buyBought'); assert(/bought/i.test(bought) && /6 blocks/.test(bought) && /admin panel/i.test(bought), 'it says what was bought: ' + bought);
   console.log('  ✓ a purchase confirmed before the page returns still goes online; a bought page shows what was bought, not a price');
 
+  // the "Put it online" list shows the site of the open page; the account's other websites wait in a closed section
+  const site = (n, name, address, projectId) => ({ id: '00000000-0000-4000-8000-00000000000' + n, name, status: 'live', version: 1, address, payment: 'active', paidUntil: '2027-12-01T00:00:00Z', renamesLeft: 2, projectId });
+  api.sites = [site(1, 'test-ed', 'https://test-ed.edvlabs.com/', PID), site(2, 'first-site', 'https://www.first-site.example/', null)];
+  buy.purchases = [{ id: 'pur-9', projectId: PID, allowance: 6, editor: true, destination: 'edvlabs', createdAt: 'x', deployHelp: false, deployDetailsSent: false }]; buy.pending = null;
+  await page.goto(srv.url + '/builder.html'); await page.waitForSelector('#paneGet', { state: 'attached' }); await link(); await page.click('#guidedStep-get'); await page.waitForSelector('#publishSites li');
+  const mine = await page.locator('#publishSites > li').allTextContents(); assert.strictEqual(mine.length, 1, 'only this page\'s site is listed: ' + mine.join(' | ')); assert(/test-ed\.edvlabs\.com/.test(mine[0]));
+  assert(!(await page.isVisible('#publishOthers li')), 'the other website is hidden while the section is closed');
+  assert(/Your other websites \(1\)/.test(await page.textContent('#publishOthers summary')), 'the section says how many');
+  await page.click('#publishOthers summary'); const other = page.locator('#publishOthers li').first();
+  assert(/first-site\.example/.test(await other.textContent())); assert(/Replace with this page/.test(await other.locator('[data-act="update"]').textContent()), 'updating another site says it replaces it');
+  console.log('  ✓ the list shows the open page\'s site; the other websites are in a closed section');
+
   assert.deepStrictEqual(errors, [], errors.join(' | '));
   await browser.close(); await srv.close();
   console.log('Guided buy e2e ok');

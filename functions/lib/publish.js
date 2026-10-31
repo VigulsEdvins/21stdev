@@ -344,7 +344,7 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
     const t = now(), since = new Date(t).getTime() - 30 * 86400000;
     return { status: 200, json: { ok: true,
       limits: { publishesPerHour: limits.publishesPerHour, renamesPer30Days: limits.renamesPer30Days, siteMb: limits.siteMb, canBuyMore: limits.canBuyMore },
-      sites: sites.map((x) => { const e = ents.find((y) => y.site_id === x.id); const used = (x.renamed_at || []).filter((d) => new Date(d).getTime() > since).length; return { id: x.id, name: x.name, status: x.status, version: x.version, address: address(x.name), publishedAt: x.published_at || null, payment: entitlementState(e, t), paidUntil: e ? e.paid_until : null, renamesLeft: Math.max(0, limits.renamesPer30Days - used) }; }),
+      sites: sites.map((x) => { const e = ents.find((y) => y.site_id === x.id); const used = (x.renamed_at || []).filter((d) => new Date(d).getTime() > since).length; return { id: x.id, name: x.name, projectId: x.project_id || null, status: x.status, version: x.version, address: address(x.name), publishedAt: x.published_at || null, payment: entitlementState(e, t), paidUntil: e ? e.paid_until : null, renamesLeft: Math.max(0, limits.renamesPer30Days - used) }; }),
       freePlaces: ents.filter((e) => !e.site_id && entitlementState(e, t) === 'active').length } };
   }
 

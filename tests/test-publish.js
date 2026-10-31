@@ -228,11 +228,15 @@ const test = async (name, fn) => { await fn(); count++; };
   });
 
   await test('mySites lists a person\'s sites with payment state and unused places', async () => {
-    const { f, pub } = setup(); f.addEntitlement('u1', FUTURE); f.addEntitlement('u1', FUTURE);
+    const { f, pub } = setup(); f.addEntitlement('u1', FUTURE); f.addEntitlement('u1', FUTURE); f.addEntitlement('u1', FUTURE);
     await pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()] });
     const r = await pub.mySites('u1');
-    assert.strictEqual(r.json.freePlaces, 1); assert.strictEqual(r.json.sites.length, 1);
-    assert.deepStrictEqual(Object.keys(r.json.sites[0]).sort(), ['address', 'id', 'name', 'paidUntil', 'payment', 'publishedAt', 'renamesLeft', 'status', 'version']);
+    assert.strictEqual(r.json.freePlaces, 2); assert.strictEqual(r.json.sites.length, 1);
+    assert.deepStrictEqual(Object.keys(r.json.sites[0]).sort(), ['address', 'id', 'name', 'paidUntil', 'payment', 'projectId', 'publishedAt', 'renamesLeft', 'status', 'version']);
+    assert.strictEqual(r.json.sites[0].projectId, null, 'a site made without a saved page has no page');
+    const PID = '33333333-3333-4333-8333-333333333333'; f.addProject('u1', PID, 3);
+    await pub.publish({ userId: 'u1', name: 'with-page', files: [html()], projectId: PID });
+    assert.strictEqual((await pub.mySites('u1')).json.sites.find((x) => x.name === 'with-page').projectId, PID, 'the page a site was published from is told, so the builder can show that page\'s site first');
     assert.strictEqual(r.json.sites[0].address, 'https://bakery-anna.edvlabs.com/'); assert.strictEqual(r.json.sites[0].payment, 'active');
     assert.strictEqual((await pub.mySites('u2')).json.sites.length, 0, 'nobody sees another person\'s sites');
     assert.strictEqual((await pub.mySites(null)).status, 401);

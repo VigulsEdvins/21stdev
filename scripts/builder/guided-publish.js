@@ -44,6 +44,8 @@
     const signIn = el(doc, 'a', { class: 'builder-btn-subtle', id: 'publishSignIn', href: SIGN_IN_URL }, 'Sign in free');
     signedOut.append('Sign in to put your page online. ', signIn);
     const list = el(doc, 'ul', { class: 'gt-sites', id: 'publishSites' });
+    const othersBox = el(doc, 'details', { class: 'gt-others', id: 'publishOthers', hidden: '' }), othersSummary = el(doc, 'summary', {}, 'Your other websites'), others = el(doc, 'ul', { class: 'gt-sites' });
+    othersBox.append(othersSummary, others);
     const places = el(doc, 'p', { class: 'gt-note', id: 'publishPlaces', role: 'status', 'aria-live': 'polite' });
     const nameInput = el(doc, 'input', { type: 'text', id: 'publishName', class: 'gt-input', maxlength: '30', autocomplete: 'off', autocapitalize: 'none', spellcheck: 'false', 'aria-describedby': 'publishNameNote', placeholder: 'yourname' });
     const nameLabel = el(doc, 'label', { class: 'gt-address', for: 'publishName' }, null);
@@ -54,18 +56,27 @@
     const out = el(doc, 'p', { id: 'publishResult', role: 'status', 'aria-live': 'polite' });
     const ask = el(doc, 'a', { class: 'builder-btn-subtle gt-ask', id: 'publishAsk', href: help, target: '_blank', rel: 'noopener', hidden: '' }, 'Ask edvlabs to switch it on for me');
     const manage = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', id: 'publishManage', hidden: '' }, 'Manage billing');
-    box.append(head, intro, signedOut, list, places, nameLabel, nameNote, go, out, manage, ask);
+    box.append(head, intro, signedOut, list, othersBox, places, nameLabel, nameNote, go, out, manage, ask);
     pane.append(box);
 
-    let state = { signedIn: false, sites: [], freePlaces: 0, limits: null }, busy = false, timer = null, lastChecked = '';
+    let state = { signedIn: false, sites: [], freePlaces: 0, limits: null, projectId: '' }, busy = false, timer = null, lastChecked = '';
     const say = (text, problem) => { out.textContent = text; out.dataset.problem = problem ? 'true' : 'false'; };
 
     function setBusy(on) { busy = on; box.setAttribute('aria-busy', on ? 'true' : 'false'); box.querySelectorAll('button').forEach((b) => { b.disabled = on; }); if (!on) refreshGo(); }
     function refreshGo() { const c = Names.check(nameInput.value); go.disabled = busy || !c.ok || !state.signedIn || (lastChecked !== (c.ok ? c.name : '')); }
 
+    /* The list shows the site of the page that is open; the account's other websites wait in a closed section, so one page never looks like the other and "Update" cannot hit the wrong site by accident.
+       A page that is not saved to the account yet has no site of its own, so then everything is listed as before. */
     function renderSites() {
-      list.replaceChildren();
-      state.sites.forEach((s) => {
+      list.replaceChildren(); others.replaceChildren(); othersBox.hidden = true;
+      const mineHere = state.projectId ? state.sites.filter((s) => s.projectId === state.projectId) : state.sites;
+      const elsewhere = state.projectId ? state.sites.filter((s) => s.projectId !== state.projectId) : [];
+      draw(mineHere, list, false);
+      if (elsewhere.length) { othersBox.hidden = false; othersSummary.textContent = 'Your other websites (' + elsewhere.length + ')'; draw(elsewhere, others, true); }
+    }
+
+    function draw(sites, into, replacing) {
+      sites.forEach((s) => {
         const li = el(doc, 'li', { class: 'gt-site' });
         const addr = Client.safeAddress(s.address);
         li.append(addr ? el(doc, 'a', { href: addr, target: '_blank', rel: 'noopener' }, addr.replace(/^https:\/\//, '').replace(/\/$/, '')) : el(doc, 'b', {}, s.name));
@@ -73,7 +84,7 @@
         const pay = s.payment === 'grace' ? ' · payment is due, please renew' : s.payment === 'ended' ? ' · payment has ended' : '';
         li.append(el(doc, 'small', {}, ' ' + status + pay));
         if (s.status !== 'blocked') {
-          const upd = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', 'data-act': 'update' }, s.status === 'live' ? 'Update with this page' : 'Put back online with this page');
+          const upd = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', 'data-act': 'update' }, replacing ? 'Replace with this page' : s.status === 'live' ? 'Update with this page' : 'Put back online with this page');
           upd.addEventListener('click', () => publish(s.name));
           li.append(upd);
           if (s.status === 'live') { const off = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', 'data-act': 'offline' }, 'Take offline'); off.addEventListener('click', () => takeOffline(s)); li.append(off); }
@@ -81,7 +92,7 @@
           ren.addEventListener('click', () => openRename(li, s, ren));
           li.append(ren);
         }
-        list.append(li);
+        into.append(li);
       });
     }
 
@@ -122,7 +133,7 @@
       [list, places, nameLabel, nameNote, go].forEach((e) => { e.hidden = !state.signedIn; });
       if (!state.signedIn) return;
       const r = await client.mySites();
-      if (r.status === 200 && r.json && r.json.ok) { state.sites = r.json.sites; state.freePlaces = r.json.freePlaces; state.limits = r.json.limits || null; renderSites(); renderPlaces(); }
+      if (r.status === 200 && r.json && r.json.ok) { state.projectId = await linkedProjectId(); state.sites = r.json.sites; state.freePlaces = r.json.freePlaces; state.limits = r.json.limits || null; renderSites(); renderPlaces(); }
       else if (r.status === 503) { box.hidden = true; return; } // publishing is not set up on this server: say nothing
       else say(Client.explain(r.status, r.json).message, true);
       refreshGo();
