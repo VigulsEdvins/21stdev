@@ -32,3 +32,7 @@
 /* a button with a class keeps its own display and would ignore the hidden attribute: Pay shows only on step 3, Next only before it */
 .buy-actions [hidden], .buy-overlay [hidden] { display: none !important; }
 #buyWaiver[aria-invalid="true"] { outline: 2px solid #b3261e; outline-offset: 2px; }
+
+.buy-domain { display: grid; gap: 8px; padding: 12px; border: 2px solid var(--rust, #b5482a); border-radius: 8px; margin-top: 10px; }
+.buy-domain[hidden] { display: none; }
+.buy-record { font-family: ui-monospace, monospace; font-size: .85rem; word-break: break-all; background: rgba(128, 128, 128, .15); padding: 6px 8px; border-radius: 6px; margin: 4px 0; }

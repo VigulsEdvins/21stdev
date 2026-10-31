@@ -97,6 +97,8 @@
       quote: (order) => call('POST', '/quote', order),
       checkout: (order) => call('POST', '/checkout', order),
       myPurchases: () => call('GET', '/my-purchases'),
+      siteDomain: (action, siteId, hostname) => call('POST', '/site-domain', Object.assign({ action, siteId }, hostname ? { hostname } : {})),
+      siteDomainStatus: (siteId) => call('GET', '/site-domain?siteId=' + encodeURIComponent(siteId)),
       deployRequest: (purchaseId, domain, notes) => call('POST', '/deploy-request', { purchaseId, domain, notes }),
       billingPortal: () => call('POST', '/billing-portal', {})
     };

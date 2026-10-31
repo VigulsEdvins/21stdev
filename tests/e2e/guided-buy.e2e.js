@@ -49,6 +49,8 @@ const UID = '11111111-1111-4111-8111-111111111111';
   const buy = { paymentOn: true, purchases: [], quotes: [], checkouts: [], testMode: true, payToday: 96 };
   buy.polls = 0; buy.pending = null; buy.deploy = [];
   await page.route('**/api/my-purchases', (r) => { if (buy.pending && ++buy.polls >= 3) buy.purchases = buy.pending; r.fulfill({ json: { ok: true, paymentOn: buy.paymentOn, purchases: buy.purchases } }); });
+  buy.domainCalls = []; buy.domainState = 'pending';
+  await page.route('**/api/site-domain**', (r) => { const q = r.request(), view = (h, st) => ({ ok: true, hostname: h, status: st, records: [{ type: 'CNAME', name: h, value: 'fallback.edvlabs.test' }], optionalRecords: [], error: '' }); if (q.method() === 'POST') { const b = JSON.parse(q.postData()); buy.domainCalls.push(b); return r.fulfill({ json: view(b.hostname, 'pending') }); } r.fulfill({ json: view('www.bakery-anna.com', buy.domainState) }); });
   await page.route('**/api/deploy-request', (r) => { buy.deploy.push(JSON.parse(r.request().postData())); r.fulfill({ json: { ok: true } }); });
   await page.route('**/api/quote', (r) => { const b = JSON.parse(r.request().postData()); buy.quotes.push(b); r.fulfill({ json: { ok: true, lines: [{ key: 'base', label: 'Website, 3 blocks included', amount: 39 }, { key: 'editor', label: 'Admin panel', amount: 39 }], payToday: buy.payToday, hosting: b.hosting ? { plan: b.hosting, amount: b.hosting === 'monthly' ? 3 : 29, trialDays: 30 } : null, blocks: 5, testMode: buy.testMode } }); });
   await page.route('**/api/checkout', (r) => { buy.checkouts.push(JSON.parse(r.request().postData())); r.fulfill({ json: { ok: true, url: 'https://checkout.stripe.com/c/pay/cs_test_1', testMode: true } }); });
@@ -129,7 +131,7 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await page.waitForTimeout(800); await page.click('#publishGo'); await page.waitForFunction(() => /bakery-anna/.test(document.getElementById('publishResult').textContent), null, { timeout: 8000 }).catch(async () => { throw new Error('publish result: ' + await page.textContent('#publishResult')); });
   assert.strictEqual(api.published[0].projectId, PID, 'the publish request names the page');
   // a page that is already bought: hosting is "No change" by default, so more blocks never start a second subscription
-  buy.quotes = []; await page.click('#buyProceed'); await page.waitForSelector('#buyOverlay'); await page.check('#buyOverlay input[value="domain"]'); await page.click('#buyNext');
+  buy.quotes = []; await page.click('#buyProceed'); await page.waitForSelector('#buyOverlay'); await page.check('#buyOverlay input[value="domain"]'); await page.fill('#buyDomain', 'www.bakery-anna.com'); await page.waitForFunction(() => !document.getElementById('buyNext').disabled); await page.click('#buyNext');
   assert(await page.isChecked('#buyHosting input[value="none"]'), 'No change is the default for a bought page');
   await page.waitForFunction(() => true); await page.click('#buyNext'); await page.waitForFunction(() => /96/.test(document.getElementById('buyTotal').textContent), null, { timeout: 8000 }).catch(async () => { throw new Error('total: ' + await page.textContent('#buyTotal') + ' / ' + await page.textContent('#buyOverlay')); });
   assert.strictEqual(buy.quotes[buy.quotes.length - 1].hosting, null, 'the order asks for no hosting'); await page.keyboard.press('Escape');
@@ -151,9 +153,34 @@ const UID = '11111111-1111-4111-8111-111111111111';
   buy.pending = [{ id: 'pur-3', projectId: PID, allowance: 5, editor: false, destination: 'edvlabs', createdAt: '2026-11-04T10:00:00Z', deployHelp: false, deployDetailsSent: false }];
   await page.evaluate(() => sessionStorage.setItem('edvlabs.buy_name', 'bakery-anna'));
   await page.goto(srv.url + '/builder.html?paid=1'); await page.waitForSelector('#paneGet', { state: 'attached' }); await page.click('#guidedStep-get');
-  await page.waitForFunction(() => /bakery-anna\.edvlabs\.com/.test((document.getElementById('publishResult') || {}).textContent || ''), null, { timeout: 25000 }).catch(async () => { throw new Error('note: ' + await page.textContent('#buyNote') + ' | result: ' + await page.textContent('#publishResult') + ' | name: ' + await page.inputValue('#publishName') + ' | go disabled: ' + await page.isDisabled('#publishGo')); });
+  await page.waitForFunction(() => /bakery-anna\.edvlabs\.com/.test((document.getElementById('publishResult') || {}).textContent || ''), null, { timeout: 25000 }).catch(async () => { throw new Error('errors: ' + errors.join(' / ') + ' | proceed: ' + await page.locator('#buyProceed').count() + ' | url: ' + page.url() + ' | note: ' + (await page.locator('#buyNote').count() ? await page.textContent('#buyNote') : '(none)') + ' | result: ' + await page.textContent('#publishResult') + ' | name: ' + await page.inputValue('#publishName') + ' | go disabled: ' + await page.isDisabled('#publishGo')); });
   assert.strictEqual(api.published.length, 1, 'published once, with no click'); assert.strictEqual(api.published[0].name, 'bakery-anna'); assert.strictEqual(api.published[0].projectId, PID);
   console.log('  ✓ after paying for an edvlabs address the page goes online by itself');
+
+  // own domain: the client types it (a bare domain is explained), the site is first put online under a name made from it, and the order carries that name
+  buy.purchases = []; buy.pending = null; buy.checkouts = []; api.taken.clear(); await open(); await page.waitForSelector('#buyProceed'); await page.click('#buyProceed'); await page.waitForSelector('#buyOverlay');
+  await page.check('#buyOverlay input[value="domain"]'); assert(await page.isVisible('#buyDomain'), 'the domain is asked for'); assert(!(await page.isVisible('#buyName')), 'no edvlabs name box for a domain');
+  assert(await page.isDisabled('#buyNext'), 'Next waits for a domain');
+  await page.fill('#buyDomain', 'bakery-anna.com'); await page.waitForFunction(() => /www\.yourdomain\.com/.test(document.getElementById('buyDomainNote').textContent)); assert(await page.isDisabled('#buyNext'), 'a bare domain is explained and refused');
+  await page.fill('#buyDomain', 'www.bakery-anna.com'); await page.waitForFunction(() => !document.getElementById('buyNext').disabled);
+  assert(/bakery-anna\.edvlabs\.com/.test(await page.textContent('#buyDomainNote')), 'it says the site is first put online at the edvlabs name made from the domain');
+  await page.click('#buyNext'); await page.click('#buyNext'); await page.waitForFunction(() => /96/.test(document.getElementById('buyTotal').textContent)); await page.check('#buyWaiver'); await page.click('#buyPay'); await page.waitForURL(/checkout\.stripe\.com/);
+  assert.deepStrictEqual(buy.checkouts[0], { projectId: PID, destination: 'domain', editor: false, hosting: 'monthly', deployHelp: false, siteName: 'bakery-anna' }, JSON.stringify(buy.checkouts[0]));
+  console.log('  ✓ own domain: asked for, bare domains explained, the order carries the name made from it');
+
+  // after paying: online at the edvlabs name, the domain attached, and the client is told what to do at his domain provider
+  buy.purchases = []; buy.polls = 0; api.published = []; api.sites = []; api.freePlaces = 1; buy.domainCalls = [];
+  buy.pending = [{ id: 'pur-4', projectId: PID, allowance: 5, editor: false, destination: 'domain', createdAt: '2026-11-05T10:00:00Z', deployHelp: false, deployDetailsSent: false }];
+  await ctx.addInitScript(() => { try { sessionStorage.setItem('edvlabs.buy_name', 'bakery-anna'); sessionStorage.setItem('edvlabs.buy_domain', 'www.bakery-anna.com'); } catch (e) { /* no storage */ } });
+    await page.goto(srv.url + '/builder.html?paid=1'); await page.waitForSelector('#paneGet', { state: 'attached' }); await page.click('#guidedStep-get');
+  await page.waitForSelector('#buyDomainHelp', { state: 'visible', timeout: 30000 }).catch(async () => { throw new Error('note: ' + await page.textContent('#buyNote') + ' | published: ' + JSON.stringify(api.published.map((x) => x.name)) + ' | domain calls: ' + JSON.stringify(buy.domainCalls)); });
+  assert.strictEqual(api.published[0].name, 'bakery-anna'); assert.deepStrictEqual(buy.domainCalls, [{ action: 'add', siteId: '00000000-0000-4000-8000-000000000001', hostname: 'www.bakery-anna.com' }]);
+  const help = await page.textContent('#buyDomainHelp');
+  assert(/CNAME/.test(help) && /www\.bakery-anna\.com/.test(help) && /fallback\.edvlabs\.test/.test(help), 'the record to add is shown exactly: ' + help.slice(0, 200)); assert(/domain provider|where you bought/i.test(help), 'it says where to add it'); assert(/hour/i.test(help), 'and how long it can take');
+  assert(/bakery-anna\.edvlabs\.com/.test(help), 'meanwhile the edvlabs address works');
+  await page.click('#buyDomainCheck'); await page.waitForFunction(() => /waiting|not yet|pending/i.test(document.getElementById('buyDomainState').textContent));
+  buy.domainState = 'active'; await page.click('#buyDomainCheck'); await page.waitForFunction(() => /working/i.test(document.getElementById('buyDomainState').textContent));
+  console.log('  ✓ after paying: online, the domain attached, the DNS record shown with what to do, and a way to check');
 
   assert.deepStrictEqual(errors, [], errors.join(' | '));
   await browser.close(); await srv.close();
