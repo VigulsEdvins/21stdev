@@ -82,3 +82,5 @@ Goal: regressions get caught without manual runs.
 2. 2.1, 3.1, 5.1: close known quality gaps.
 3. 6.1: lock the gains in.
 4. 4.x and 2.2 in parallel; 3.2, 5.3, 7.x as demand shows.
+
+- **Owner admin panel for all sites (idea from the owner, 2026-11-01):** one place to see clients, what each did, how many sites, which domains they use, and some statistics. Build it on what exists: `scripts/owner-sites.js` (list, projects, grant, limits, deploy-requests, agree-price) and the store methods in `functions/lib/sites-store.js`. Done-for-you clients are handled by hand (Stripe link sent by the owner), so `agree-price` stays idle but kept. Needs its own plan in `docs/superpowers/plans/` first.
