@@ -92,10 +92,27 @@ const test = async (name, fn) => { await fn(); count++; };
     const body = JSON.parse(s.calls[1].body); assert.strictEqual(body.version, 0); assert.deepStrictEqual(Object.keys(body).sort(), ['updated_at', 'version'], 'nothing else is changed');
   });
 
+  await test('project purchases: a project is read only for its own owner; purchases are inserted once per payment; deploy requests and the paid mark', async () => {
+    const PID = '22222222-2222-4222-8222-222222222222';
+    const s = stub([{ status: 200, body: [{ id: PID, name: 'Shop', state: { stack: [] }, status: 'draft' }] }, { status: 200, body: [] }, { status: 200, body: [{ id: 'p1' }] },
+      { status: 201, body: [{ id: 'p1' }] }, { status: 409, body: { code: '23505', message: 'duplicate key' } }, { status: 201, body: [{ id: 'd1' }] }, { status: 200, body: [{ id: 'd1' }] }, { status: 200, body: [] }, { status: 200, body: [] }]);
+    const db = store.createDb(ENV, s.fetchImpl);
+    assert.strictEqual((await db.projectForUser(PID, UID)).id, PID);
+    assert(s.calls[0].url.includes('/rest/v1/projects?') && s.calls[0].url.includes('id=eq.' + PID) && s.calls[0].url.includes('user_id=eq.' + UID) && s.calls[0].url.includes('deleted_at=is.null'), 'owner and not-deleted in the same request: ' + s.calls[0].url);
+    assert.strictEqual(await db.projectForUser('not-a-uuid', UID), null); assert.strictEqual(s.calls.length, 1, 'a bad id is never sent');
+    assert.strictEqual(await db.purchaseForProject(PID), null); assert(s.calls[1].url.includes('project_purchases?') && s.calls[1].url.includes('project_id=eq.' + PID));
+    assert.strictEqual((await db.purchasesByUser(UID)).length, 1);
+    assert.strictEqual((await db.insertPurchase({ project_id: PID, user_id: UID, stripe_session_id: 'cs_1' })).id, 'p1');
+    await assert.rejects(db.insertPurchase({ project_id: PID, user_id: UID, stripe_session_id: 'cs_1' }), (e) => e.code === 'duplicate');
+    assert.strictEqual((await db.insertDeployRequest({ purchase_id: 'p1', user_id: UID, status: 'open' })).id, 'd1');
+    assert.strictEqual((await db.deployRequestsOpen()).length, 1); assert(s.calls[s.calls.length - 1].url.includes('status=eq.open'));
+    await db.markProjectPaid(PID); const paid = s.calls[s.calls.length - 1]; assert.strictEqual(paid.method, 'PATCH'); assert(paid.url.includes('projects?id=eq.' + PID)); assert.deepStrictEqual(JSON.parse(paid.body), { status: 'paid' });
+  });
+
   await test('a database error carries its status and code but never the keys', async () => {
     const s = stub([{ status: 503, body: { message: 'upstream unavailable' } }]);
     await assert.rejects(store.createDb(ENV, s.fetchImpl).siteByName('abc'), (e) => e.status === 503 && !/SECRET|anon-key/.test(e.message));
   });
 
-  console.log(`✓ sites store: ${count} groups (sign-in check, reads, writes, errors)`);
+  console.log(`✓ sites store: ${count} groups (sign-in check, reads, writes, purchases, errors)`);
 })().catch((e) => { console.error(e); process.exit(1); });
