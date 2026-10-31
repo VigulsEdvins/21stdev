@@ -190,7 +190,7 @@ At minute 17 the main Worker (cron in `wrangler.jsonc`) cleans up:
 
 ## Own domains (added 2026-10-31)
 
-A customer can show their website at their own domain (for example `www.bakery-anna.com`) instead of `<name>.edvlabs.com`. They add one DNS record at their domain provider; Cloudflare for SaaS issues the certificate; the old edvlabs address then redirects (301) to their domain. Plan and design: `docs/superpowers/plans/2026-10-31-custom-domain.md`. Code is deployed and **stays off (the endpoints answer 503, the account page shows nothing about domains) until the steps below are done.** Only sub-names work (`www.`, `shop.`); a bare domain needs the customer to send it to `www` at their provider.
+A customer can show their website at their own domain (for example `www.bakery-anna.com`) instead of `<name>.edvlabs.com`. They add one DNS record at their domain provider; Cloudflare for SaaS issues the certificate; the old edvlabs address then redirects (301) to their domain. Plan and design: `docs/superpowers/plans/2026-10-31-custom-domain.md`. Code is deployed (both Workers, 2026-10-31) and **stays off (the endpoints answer 503, the account page shows nothing about domains) until the steps below are done.** Only sub-names work (`www.`, `shop.`); a bare domain needs the customer to send it to `www` at their provider.
 
 **Cost** (checked in Cloudflare's docs 2026-10-31): Cloudflare for SaaS includes 100 custom hostnames on any plan, then $0.10 per extra hostname per month. Check your billing page, I cannot see it.
 
@@ -203,7 +203,7 @@ Owner steps, in this order (all in the Cloudflare dashboard for `edvlabs.com`; n
 5. **Give the main Worker both settings** (Workers & Pages → `21stdev` → Settings → Variables and Secrets):
    - variable `CF_ZONE_ID` = the zone id from step 3 (plain text),
    - secret `CLOUDFLARE_API_TOKEN` = the token from step 4. Or from the terminal: `npx wrangler secret put CLOUDFLARE_API_TOKEN` and paste it when asked.
-6. **Deploy the sites Worker** if it was not deployed since 2026-10-31: `npx wrangler deploy -c wrangler.sites.jsonc` (it now has the extra `*/*` route that customers' domains need), and the main Worker (`npm run deploy:site`).
+6. **Add the second route and deploy the sites Worker.** In `wrangler.sites.jsonc` change `"routes"` to `[{ "pattern": "*.edvlabs.com/*", "zone_name": "edvlabs.com" }, { "pattern": "*/*", "zone_name": "edvlabs.com" }]` (Cloudflare refuses it with error 10022 until step 2 is done; that is why it is not listed yet), then `npx wrangler deploy -c wrangler.sites.jsonc`. Both Workers already run the new code (deployed 2026-10-31); this only adds the route. Check at once that `https://edvlabs.com/`, `/builder/` and `/account/` still answer 200.
 7. **Try it with a domain of your own** (any domain or sub-domain you control): sign in, My websites → *Use my own domain*, add the record shown, wait for "Your domain is working". Then check:
    - `curl -sI https://<your host name>/` shows `200` and the site's security headers;
    - `curl -sI https://<name>.edvlabs.com/` shows `301` and `location: https://<your host name>/`;

@@ -5,8 +5,8 @@
   "main": "src/sites-worker.js",
   "compatibility_date": "2026-10-28",
   // Only addresses with exactly one name in front of edvlabs.com. The bare domain and any address with its own route (www, and others added later) are more specific and keep going where they go now.
-  // "*/*" is for customers' own domains (docs/deploy/publish-sites.md, "Own domains"): Cloudflare for SaaS sends a customer's host name through this zone, and only a "*/*" route sees it. The route above is more specific and keeps winning for <name>.edvlabs.com; the bare domain (a Worker custom domain) and any route with no Worker keep going where they go now.
-  "routes": [{ "pattern": "*.edvlabs.com/*", "zone_name": "edvlabs.com" }, { "pattern": "*/*", "zone_name": "edvlabs.com" }],
+  // Customers' own domains (docs/deploy/publish-sites.md, "Own domains") also need a second route, { "pattern": "*/*", "zone_name": "edvlabs.com" }: Cloudflare for SaaS sends a customer's host name through this zone, and only a "*/*" route sees it. Cloudflare refuses that route (error 10022) until Cloudflare for SaaS is enabled on the zone, so it is NOT listed yet. Add it to "routes" below as owner step 6, then deploy. The route above is more specific and keeps winning for <name>.edvlabs.com.
+  "routes": [{ "pattern": "*.edvlabs.com/*", "zone_name": "edvlabs.com" }],
   // The KV namespace and the R2 bucket MUST be the same ones the main Worker publishes into, so both are named here by id. The KV namespace was created 2026-10-30 (id below, not secret); the same id goes into wrangler.jsonc.
   // The R2 bucket is created with: npx wrangler r2 bucket create edvlabs-sites
   "kv_namespaces": [{ "binding": "SITES", "id": "3ec1a308b9914c22ba2cc075f0f3b690" }],
