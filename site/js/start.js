@@ -100,12 +100,13 @@
       h('div', { class: 'q-nav' },
         i > 0 ? btn(tr('Back'), 'btn--secondary', () => go('q' + i)) : null,
         h('span', { class: 'spacer' }),
-        btn(tr('Skip'), 'btn--secondary', () => go(i + 1 < QUESTIONS.length ? 'q' + (i + 2) : 'check')),
-        btn(i + 1 < QUESTIONS.length ? tr('Next') : tr('See my answers'), '', () => go(i + 1 < QUESTIONS.length ? 'q' + (i + 2) : 'check'))));
+        btn(tr('Skip'), 'btn--secondary', () => go(i + 1 < QUESTIONS.length ? 'q' + (i + 2) : afterLast())),
+        btn(i + 1 < QUESTIONS.length ? tr('Next') : brief.path === 'done' ? tr('Next: how to reach you') : tr('See my answers'), '', () => go(i + 1 < QUESTIONS.length ? 'q' + (i + 2) : afterLast()))));
     return card;
   }
 
   /* ---------- summary, choice, contact ---------- */
+  const afterLast = () => (brief.path === 'done' ? 'contact' : 'check'); // "Ask us to do it": the contact form comes straight after the last question
   function describe(q) {
     const a = answer(q.id);
     if (a.unknown) return UNKNOWN;
@@ -185,7 +186,7 @@
       h('div', { class: 'field' }, h('label', { for: 'c-how', text: tr('How would you like us to reach you?') }), how),
       h('label', { class: 'choice' }, consent, CONSENT), f4,
       h('div', { 'aria-hidden': 'true', class: 'trap' }, h('label', null, tr('Leave this empty'), trap)), checkBox,
-      h('div', { class: 'q-nav' }, btn(tr('Back'), 'btn--secondary', () => go(path === 'talk' ? 'choose' : 'choose')), h('span', { class: 'spacer' }), h('button', { class: 'btn', type: 'submit', text: copy[2] })));
+      h('div', { class: 'q-nav' }, btn(tr('Back'), 'btn--secondary', () => go(path === 'done' ? 'q' + QUESTIONS.length : 'choose')), h('span', { class: 'spacer' }), h('button', { class: 'btn', type: 'submit', text: copy[2] })));
     return h('div', null, h('h1', { id: 'q-title', tabindex: '-1', text: copy[0] }), h('p', { class: 'lead', text: copy[1] }), form);
   }
   /* The lead address is set at deploy time (a <meta name="lead-endpoint"> tag). Until it exists nothing leaves the browser. */
