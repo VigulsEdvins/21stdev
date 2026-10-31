@@ -119,6 +119,8 @@ const Q = require('../../site/js/questions.js');
   assert((await page.getAttribute('a:has-text("Ask us to do it")', 'href')).endsWith('start/?way=done'), 'the home card links to the done-for-you start');
   await page.goto(srv.url + '/site/start/index.html?way=done');
   assert(!page.url().includes('way=done'), 'the marker is removed from the address');
+  await page.goto(srv.url + '/site/start/index.html#q3'); await page.goto(srv.url + '/site/start/index.html?way=done'); // saved answers from before
+  assert.strictEqual(await page.textContent('#q-count'), 'Question 1 of 10', 'no "Welcome back" screen: it starts at question 1');
   assert.strictEqual(await page.textContent('#q-count'), 'Question 1 of 10', 'it starts with the questions');
   await page.goto(srv.url + '/site/start/index.html#q10');
   await page.getByRole('button', { name: 'Next: how to reach you' }).click();

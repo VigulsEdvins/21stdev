@@ -14,7 +14,8 @@
 
   let brief = load();
   /* "Ask us to do it" on the home page links here with ?way=done: the visitor answers every question, then goes straight to the contact form (no "who makes it" fork). */
-  try { if (new URLSearchParams(location.search).get('way') === 'done') { brief.path = 'done'; save(); history.replaceState(null, '', location.pathname + location.hash); } } catch (e) { /* the fork still lets them choose */ }
+  // always from question 1, even when answers from an earlier visit are saved (they stay filled in)
+  try { if (new URLSearchParams(location.search).get('way') === 'done') { brief.path = 'done'; save(); history.replaceState(null, '', location.pathname + '#q1'); } } catch (e) { /* the fork still lets them choose */ }
   let check = null; // the Cloudflare spam check, when the site has one (js/spam-check.js)
   function load() {
     try { const b = JSON.parse(localStorage.getItem(KEY)); if (b && b.v === 1 && b.answers) return b; } catch (e) { /* storage may be blocked */ }
