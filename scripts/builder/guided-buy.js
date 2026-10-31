@@ -153,15 +153,17 @@
         body.append(dl);
         if (s.quote && s.quote.hosting) body.append(el(doc, 'p', { id: 'buyHostingLine' }, 'Hosting: free for ' + s.quote.hosting.trialDays + ' days, then ' + eur(s.quote.hosting.amount) + ' a ' + (s.quote.hosting.plan === 'monthly' ? 'month' : 'year') + '. Cancel any time.'));
         const w = el(doc, 'input', { type: 'checkbox', id: 'buyWaiver' }); w.checked = s.waiver;
-        w.addEventListener('change', () => { s.waiver = w.checked; pay.disabled = !(s.waiver && s.quote); });
+        const werr = el(doc, 'p', { class: 'buy-error', id: 'buyWaiverError', role: 'alert' }, 'Please tick the box above to continue.'); werr.hidden = true;
+        w.addEventListener('change', () => { s.waiver = w.checked; if (s.waiver) { werr.hidden = true; w.removeAttribute('aria-invalid'); } });
         body.append(el(doc, 'label', { class: 'buy-waiver' }, null)); body.lastChild.append(w, ' I want the website made available to me at once, and I know I then lose my right to withdraw from this digital purchase.');
+        body.append(werr);
       }
       if (s.message) body.append(el(doc, 'p', { class: 'buy-error', role: 'alert' }, s.message));
       if (s.testMode) body.append(el(doc, 'p', { class: 'buy-test' }, 'Test mode: no real money is taken. Use the card 4242 4242 4242 4242.'));
       total.textContent = s.quote ? 'Pay today: ' + eur(s.quote.payToday) + (s.quote.hosting ? ' (hosting free for ' + s.quote.hosting.trialDays + ' days)' : '') : (s.step === 1 ? '' : 'Working out the price…');
       back.hidden = s.step === 1; next.hidden = s.step === 3; pay.hidden = s.step !== 3;
       next.disabled = s.step === 1 && o.name ? !s.nameFree : false;
-      pay.disabled = !(s.waiver && s.quote);
+      pay.disabled = !s.quote;
       const first = body.querySelector('input:checked, input, button'); if (first && first.focus && !doc.activeElement.closest('.buy-body')) first.focus();
     }
 
@@ -172,6 +174,12 @@
     back.addEventListener('click', () => { s.step = Math.max(1, s.step - 1); render(); });
     next.addEventListener('click', () => { s.step = Math.min(3, s.step + 1); s.message = ''; render(); if (s.step >= 2) refreshQuote(); });
     pay.addEventListener('click', async () => {
+      if (!s.waiver) { // say what is missing instead of a button that silently does nothing
+        const box = overlay && overlay.querySelector('#buyWaiver'), err = overlay && overlay.querySelector('#buyWaiverError');
+        if (err) err.hidden = false;
+        if (box) { box.setAttribute('aria-invalid', 'true'); box.focus(); }
+        return;
+      }
       pay.disabled = true; s.message = 'Opening the payment page…'; render();
       try { win.sessionStorage.setItem(NAME_KEY, optionsFor(s.destination).name ? s.siteName : ''); } catch (_) { /* the name is then typed again */ }
       const r = await client.checkout(orderFrom(s));

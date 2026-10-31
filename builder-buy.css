@@ -28,3 +28,7 @@
 .buy-on #getLines, .buy-on #getNote { display: none; }
 .buy-more { margin-top: 10px; }
 .buy-more > summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+
+/* a button with a class keeps its own display and would ignore the hidden attribute: Pay shows only on step 3, Next only before it */
+.buy-actions [hidden], .buy-overlay [hidden] { display: none !important; }
+#buyWaiver[aria-invalid="true"] { outline: 2px solid #b3261e; outline-offset: 2px; }

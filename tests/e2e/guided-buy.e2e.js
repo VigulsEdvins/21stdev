@@ -72,11 +72,13 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await page.fill('#buyName', 'bakery-anna'); await page.waitForFunction(() => !document.getElementById('buyNext').disabled);
   console.log('  ✓ Proceed opens the overlay; the edvlabs address needs a free name');
 
+  assert(!(await page.isVisible('#buyPay')), 'Pay is not shown on step 1');
   // download: no name, no hosting; deploy help offered; edvlabs: no deploy help
   await page.check('#buyOverlay input[value="download"]');
   assert(!(await page.isVisible('#buyName')), 'a download needs no name'); await page.click('#buyNext');
   assert(!(await page.isVisible('#buyHosting')), 'a download has no hosting'); assert(await page.isVisible('#buyDeployHelp'), 'deploy help is offered with a download');
   await page.click('#buyBack'); await page.check('#buyOverlay input[value="edvlabs"]'); await page.click('#buyNext');
+  assert(!(await page.isVisible('#buyPay')), 'Pay is not shown on step 2'); assert(await page.isVisible('#buyNext'), 'Next is');
   assert(await page.isVisible('#buyHosting'), 'hosting with an edvlabs address'); assert(!(await page.isVisible('#buyDeployHelp')), 'no deploy help on an edvlabs address: it publishes itself');
   assert(/first month free/i.test(await page.textContent('#buyHosting')), 'the free month is said plainly');
   console.log('  ✓ the options follow the destination');
@@ -85,7 +87,10 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await page.check('#buyEditor'); await page.check('#buyHosting input[value="yearly"]'); await page.click('#buyNext');
   await page.waitForFunction(() => /96/.test(document.getElementById('buyTotal').textContent));
   assert(/test mode/i.test(await page.textContent('#buyOverlay')), 'test mode is visible');
-  assert(await page.isDisabled('#buyPay'), 'Pay waits for the waiver'); await page.check('#buyWaiver'); assert(!(await page.isDisabled('#buyPay')));
+  assert(!(await page.isVisible('#buyNext')), 'step 3 has no Next button'); assert(await page.isVisible('#buyPay'), 'Pay is on step 3');
+  await page.click('#buyPay'); await page.waitForSelector('#buyWaiverError', { state: 'visible' });
+  assert(/tick the box/i.test(await page.textContent('#buyWaiverError')), 'Pay without the tick says what to do'); assert.strictEqual(buy.checkouts.length, 0, 'nothing was sent to Stripe');
+  await page.check('#buyWaiver'); await page.waitForFunction(() => { const e = document.getElementById('buyWaiverError'); return !e || e.hidden; });
   await page.click('#buyPay'); await page.waitForURL(/checkout\.stripe\.com/);
   assert.deepStrictEqual(buy.checkouts[0], { projectId: PID, destination: 'edvlabs', editor: true, hosting: 'yearly', deployHelp: false, siteName: 'bakery-anna' }, JSON.stringify(buy.checkouts[0]));
   console.log('  ✓ one total from the server, a waiver before paying, and an order without any price');
