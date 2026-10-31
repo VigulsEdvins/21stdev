@@ -62,6 +62,17 @@
     // the switch lives in the header so it is always there; the step bar itself disappears in Advanced mode
     const actions = header.querySelector('.builder-actions') || header;
     actions.insertBefore(swLabel, actions.firstChild);
+    // In Advanced mode there is no step bar, so the header carries the way to step 5 (price, payment, download). It takes the place of the old Export button.
+    const checkout = el(doc, 'button', { type: 'button', class: 'builder-btn-primary', id: 'guidedCheckoutBtn', title: 'See the price and take your finished page', text: 'Get your page' });
+    checkout.addEventListener('click', () => {
+      setMode('guided'); go(STEPS.length - 1);
+      // then do what step 5's main button does, so the popup opens as it does there: the buying window when buying is on, otherwise the download window
+      const buy = doc.getElementById('buyProceed'), dl = doc.getElementById('getDownload');
+      const main = buy && !buy.hidden ? buy : dl;
+      if (main && !main.disabled) main.click();
+    });
+    const oldExport = doc.getElementById('openExportModalBtn');
+    if (oldExport && oldExport.parentNode) oldExport.parentNode.insertBefore(checkout, oldExport); else actions.append(checkout);
 
     const bar = el(doc, 'nav', { class: 'guided-bar', id: 'guidedBar', 'aria-label': 'Steps to your page' },
       el(doc, 'div', { class: 'guided-inner' }, list, el(doc, 'div', { class: 'guided-actions' }, prev, next)),
@@ -118,6 +129,7 @@
       body.classList.toggle('is-advanced', m === 'advanced');
       sw.checked = m === 'advanced';
       bar.hidden = m === 'advanced';
+      checkout.hidden = m !== 'advanced';
     }
 
     setMode(mode); render();

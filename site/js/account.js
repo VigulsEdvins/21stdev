@@ -135,7 +135,7 @@
   }
   /* "I will build it" on the questions page sends people here with ?from=start. The wish is remembered in this browser, so it also survives the
      round trip through Google or GitHub (which comes back without the query); once signed in they go on to the builder, once. */
-  const BUILDER_URL = '/builder/', INTENT_KEY = 'edvlabs.after_login';
+  const BUILDER_URL = tr('/builder/'), INTENT_KEY = 'edvlabs.after_login';
   const store = () => { try { return window.localStorage; } catch (_) { return null; } };
   const from = new URLSearchParams(window.location.search).get('from');
   const fromStart = from === 'start' || from === 'builder'; // sent here by "I will build it" on the questions page, or by a locked block in the builder; either way on to the builder after signing in

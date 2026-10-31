@@ -17,7 +17,7 @@ const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'application/ja
   console.log('Strict CSP export');
   await page.goto(srv.url + '/builder.html');
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.querySelector('.page-section'));
-  await page.click('#openExportModalBtn');
+  await page.evaluate(() => document.getElementById('openExportModalBtn').click());
   await page.waitForSelector('#exportChecks .export-checks-head');
   await page.check('#exportCspToggle');
   await page.waitForTimeout(500);

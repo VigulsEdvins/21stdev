@@ -11,7 +11,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   console.log('Export page checks');
   await page.goto(srv.url + '/builder.html');
   await page.waitForFunction(() => document.querySelector('iframe').contentDocument.querySelector('.page-section'));
-  await page.click('#openExportModalBtn');
+  await page.evaluate(() => document.getElementById('openExportModalBtn').click());
   await page.waitForSelector('#exportChecks .export-checks-head');
   const head = await page.textContent('#exportChecks .export-checks-head');
   assert(/Page check/.test(head), head);

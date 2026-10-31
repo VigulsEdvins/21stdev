@@ -89,6 +89,12 @@
   ! Content-Security-Policy
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: data: blob:; frame-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
+# The Latvian copy of the builder page (same page and files, see scripts/build-site.js): the same rules.
+/lv/builder/*
+  X-Robots-Tag: noindex
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: data: blob:; frame-src 'self' data: blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
 # The preview frame is its own page (preview-frame/, see scripts/builder/frame-doc.js). The page written into it keeps THIS policy, which is
 # what lets the blocks run their own inline scripts and styles without weakening the builder page above. It is the old builder policy, nothing wider.
 /builder/preview-frame/

@@ -43,7 +43,7 @@ const H = require('../../scripts/check-headers.js');
   await page.waitForTimeout(800);
   const info = await page.evaluate(() => { const d = document.getElementById('previewFrame').contentDocument; return { sections: d.querySelectorAll('.page-section').length, inlineScripts: Array.from(d.scripts).filter((s) => !s.src && s.textContent.trim()).length }; });
   assert(info.sections >= slugs.length && info.inlineScripts > 0, 'the preview ran with its inline scripts (' + JSON.stringify(info) + ')');
-  await page.click('#openExportModalBtn'); await page.waitForSelector('#exportModal.is-open');
+  await page.evaluate(() => document.getElementById('openExportModalBtn').click()); await page.waitForSelector('#exportModal.is-open');
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#downloadZipBtn')]);
   assert(await dl.path());
   console.log('  ✓ ' + slugs.length + ' heavy blocks previewed and exported under the real policies');

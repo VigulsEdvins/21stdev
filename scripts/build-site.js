@@ -59,6 +59,19 @@ function stageBuilderPage(html) {
   return out;
 }
 
+/** The Latvian copy of the builder page, served at /lv/builder/ (plan 2026-10-31-latvian-builder.md). It is the same page and the same files: a <base> tag makes every
+    script, style, folder and the preview frame resolve to /builder/, so nothing is copied twice. Two scripts are added only here (the translator and its dictionary),
+    and the links back to the site and the contact page point at the Latvian pages. The words themselves are replaced in the browser by scripts/builder/ui-lang.js. */
+function stageLatvianBuilderPage(staged) {
+  return staged
+    .replace('<html lang="en">', '<html lang="lv">')
+    .replace('<meta charset="UTF-8" />', '<meta charset="UTF-8" />\n  <base href="/builder/" />')
+    .replace('content="../contact/"', 'content="/lv/contact/"')
+    .replace('href="./"', 'href="/lv/builder/"')
+    .replace(/href="\.\.\/"/g, 'href="/lv/"')
+    .replace('<script src="builder.js" defer></script>', '<script src="scripts/builder/ui-lang-lv.js" defer></script>\n  <script src="scripts/builder/ui-lang.js" defer></script>\n  <script src="builder.js" defer></script>');
+}
+
 /** Text the exported script.js contains that is made from the source of functions (Function.prototype.toString). A bundler rewrites that source,
     so the Worker cannot make it itself: it is made here, from the original files, exactly as the builder in the browser makes it. */
 function scriptParts() {
@@ -74,6 +87,10 @@ function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
   const page = fs.readFileSync(path.join(ROOT, 'builder.html'), 'utf8');
   fs.mkdirSync(B, { recursive: true });
   fs.writeFileSync(path.join(B, 'index.html'), stageBuilderPage(page)); n++;
+  const LV_BUILDER_FILES = ['scripts/builder/ui-lang.js', 'scripts/builder/ui-lang-lv.js']; // only the Latvian page loads these
+  fs.mkdirSync(path.join(out, 'lv', 'builder'), { recursive: true });
+  fs.writeFileSync(path.join(out, 'lv', 'builder', 'index.html'), stageLatvianBuilderPage(stageBuilderPage(page))); n++;
+  for (const rel of LV_BUILDER_FILES) { copyFile(path.join(ROOT, rel), path.join(B, rel)); n++; }
   copyFile(path.join(ROOT, 'preview-frame', 'index.html'), path.join(B, 'preview-frame', 'index.html')); n++; // the preview frame's own page (scripts/builder/frame-doc.js)
   for (const rel of localAssets(page)) {
     const from = path.join(ROOT, rel);
@@ -113,4 +130,4 @@ function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
 if (require.main === module) {
   try { buildSite({ log: console.log }); } catch (e) { console.error(e.message); process.exit(1); }
 }
-module.exports = { buildSite, scriptParts, localAssets, cssDeps, stageBuilderPage };
+module.exports = { buildSite, scriptParts, localAssets, cssDeps, stageBuilderPage, stageLatvianBuilderPage };

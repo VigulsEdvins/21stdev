@@ -31,7 +31,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   console.log(`  ✓ ${reached.length} tab stops, all named, focus visible`);
 
   // 2. dialogs: Escape closes and focus goes back to the button that opened them
-  for (const [openId, modalSel, openClass] of [['#openExportModalBtn', '#exportModal', 'is-open'], ['#projectsBtn', '#projectsModal', 'is-open']]) {
+  for (const [openId, modalSel, openClass] of [['#projectsBtn', '#projectsModal', 'is-open']]) { // the export window opens from step 5 now, not from a header button
     await page.focus(openId);
     await page.keyboard.press('Enter');
     await page.waitForSelector(`${modalSel}.${openClass}`);
@@ -40,7 +40,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
     const back = await page.evaluate(() => document.activeElement && document.activeElement.id);
     assert.strictEqual('#' + back, openId, `focus returns to ${openId} after Escape, got ${back}`);
   }
-  console.log('  ✓ export and projects dialogs: Escape closes, focus returns');
+  console.log('  ✓ projects dialog: Escape closes, focus returns');
 
   await browser.close();
   await srv.close();

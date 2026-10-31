@@ -70,7 +70,7 @@ async function main() {
   step('snapshot saved');
 
   // 5. export the ZIP and unpack it
-  await page.click('#openExportModalBtn');
+  await page.evaluate(() => document.getElementById('openExportModalBtn').click());
   await page.waitForSelector('#exportModal.is-open');
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#downloadZipBtn')]);
   const JSZip = require('jszip');

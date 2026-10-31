@@ -20,7 +20,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.click('.tour-next');
   assert(await page.$('#tabContentBtn.tour-highlight'));
   await page.click('.tour-next');
-  assert(await page.$('#openExportModalBtn.tour-highlight'));
+  assert(await page.$('#guidedCheckoutBtn.tour-highlight'));
   assert.strictEqual((await page.textContent('.tour-next')).trim(), 'Got it');
   await page.click('.tour-next');
   assert.strictEqual(await page.$('.tour-card'), null, 'closed');

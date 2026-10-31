@@ -91,9 +91,9 @@ async function main() {
       if ((c['style-src'] || []).some((x) => x !== "'self'")) errs.push(r + ': style-src must stay as strict as everywhere');
       if (!(rules[r]['!detach'] || []).includes('content-security-policy')) errs.push(r + ': must detach the strict policy first, or the browser applies both');
     }
-    if (rules['/builder/*']) { // the page's own policy tag applies; the header must still forbid framing and detach the strict policy first
-      const b = rules['/builder/*'];
-      if (!(b['!detach'] || []).includes('content-security-policy')) errs.push('/builder/*: must detach the strict policy first, or the browser applies both');
+    for (const B of ['/builder/*', '/lv/builder/*']) if (rules[B] || B === '/builder/*') { // the page's own policy tag applies; the header must still forbid framing and detach the strict policy first
+      const b = rules[B];
+      if (!(b['!detach'] || []).includes('content-security-policy')) errs.push(B + ': must detach the strict policy first, or the browser applies both');
       if (!/frame-ancestors 'none'/.test(b['content-security-policy'] || '')) errs.push("/builder/*: must keep frame-ancestors 'none'");
     }
     if (rules['/builder/features/*']) { // the catalogue previews: framed by the same site only

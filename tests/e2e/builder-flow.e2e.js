@@ -100,7 +100,7 @@ async function main() {
   await page.click('#closeProjectsModalBtn');
 
   // --- export ----------------------------------------------------------------
-  await page.click('#openExportModalBtn');
+  await page.evaluate(() => document.getElementById('openExportModalBtn').click());
   await page.waitForSelector('#exportModal.is-open');
   const [zipDownload] = await Promise.all([page.waitForEvent('download'), page.click('#downloadZipBtn')]);
   const JSZip = require('jszip');

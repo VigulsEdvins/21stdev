@@ -60,7 +60,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   await page.fill('#pageCanonicalInput', 'https://site.example/');
   await page.waitForTimeout(900);
 
-  await page.click('#openExportModalBtn');
+  await page.evaluate(() => document.getElementById('openExportModalBtn').click());
   await page.waitForSelector('#exportChecks .export-checks-head');
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#downloadZipBtn')]);
   const zip = await JSZip.loadAsync(fs.readFileSync(await dl.path()));

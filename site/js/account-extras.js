@@ -25,7 +25,7 @@
       const name = el('span', 'pg-name', page.name);
       const tag = el('span', 'pg-tag', page.status === 'paid' ? tr('Paid') : tr('Draft')); tag.dataset.status = page.status;
       const meta = el('span', 'pg-meta', page.updatedAt ? tr('Edited {date}', { date: when(page.updatedAt) }) : '');
-      const open = el('a', 'btn btn--small', tr('Open')); open.href = '/builder/?project=' + encodeURIComponent(page.id); open.setAttribute('aria-label', tr('Open {name} in the builder', { name: page.name }));
+      const open = el('a', 'btn btn--small', tr('Open')); open.href = tr('/builder/') + '?project=' + encodeURIComponent(page.id); open.setAttribute('aria-label', tr('Open {name} in the builder', { name: page.name }));
       const rename = el('button', 'btn btn--secondary btn--small', tr('Rename')); rename.type = 'button';
       const del = el('button', 'btn btn--secondary btn--small', tr('Delete')); del.type = 'button';
       rename.setAttribute('aria-label', tr('Rename {name}', { name: page.name })); del.setAttribute('aria-label', tr('Delete {name}', { name: page.name }));

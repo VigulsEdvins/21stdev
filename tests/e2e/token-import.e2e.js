@@ -30,7 +30,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   assert.strictEqual(await page.inputValue('#sidebarAccentColor'), '#ff5a1f', 'the colour pickers follow the import');
   console.log('  ✓ colours, fonts and radius imported and shown in the controls');
 
-  await page.click('#openExportModalBtn');
+  await page.evaluate(() => document.getElementById('openExportModalBtn').click());
   await page.waitForSelector('#exportChecks .export-checks-head');
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#downloadZipBtn')]);
   const zip = await JSZip.loadAsync(fs.readFileSync(await dl.path()));

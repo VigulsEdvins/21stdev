@@ -23,7 +23,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   const slugs = await page.evaluate(() => window.FEATURE_REGISTRY.filter(i => !i.isWidget && i.type !== 'template' && (i.weight === 'heavy' || /gsap|three|react/i.test((i.tech || []).join()))).slice(0, 4).map(i => i.slug));
   await page.evaluate(s => { const sm = window.builderPreview.stackManager; sm.setStack([]); s.forEach(x => sm.addSection({ slug: x, title: x })); }, slugs);
   await page.waitForTimeout(3500);
-  await page.click('#openExportModalBtn');
+  await page.evaluate(() => document.getElementById('openExportModalBtn').click());
   await page.waitForSelector('#exportModal.is-open');
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#downloadZipBtn')]);
   assert(await dl.path());

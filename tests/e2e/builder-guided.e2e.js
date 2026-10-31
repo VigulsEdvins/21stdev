@@ -44,7 +44,14 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
 
   // advanced switch: classic tools return, the choice survives a reload
   await page.click('.guided-switch');
-  assert(await vis('.mode-switcher') && await vis('#tabStylingBtn'), 'classic tools return in advanced mode');
+  assert(await vis('.viewport-mode-switcher') && await vis('#tabStylingBtn'), 'classic tools return in advanced mode');
+  assert(await vis('#guidedCheckoutBtn') && !(await vis('#openExportModalBtn')), 'advanced mode has Get your page in the header, and no Export button');
+  await page.click('#guidedCheckoutBtn');
+  assert(await page.locator('#paneGet').isVisible() && !(await page.isChecked('#guidedAdvancedSwitch')), 'it goes back to the guided bar, on step 5');
+  await page.waitForSelector('#exportModal.is-open, #buyOverlay', { timeout: 5000 }); // the window of step 5 opens (the download window, or the buying window when buying is on)
+  await page.keyboard.press('Escape');
+  assert(!(await vis('#guidedCheckoutBtn')), 'and the button is only for advanced mode');
+  await page.click('.guided-switch');
   assert.strictEqual(await page.evaluate(() => localStorage.getItem('web_builder_mode')), 'advanced');
   await page.reload(); await page.waitForSelector('#guidedBar', { state: 'attached' });
   assert(await page.isChecked('#guidedAdvancedSwitch'), 'advanced is remembered');

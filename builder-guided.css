@@ -34,6 +34,10 @@ body.is-guided .sidebar-tab-btn[data-tab="styling"], body.is-guided .sidebar-tab
 body.is-guided:not([data-step="1"]) .sidebar-tab-switcher { display: none; }
 body.is-guided[data-step="1"] #tabElementsBtn span:not(.tab-badge) { font-size: 0; }
 body.is-guided[data-step="1"] #tabElementsBtn span:not(.tab-badge)::after { content: "Add blocks"; font-size: 14px; }
+/* The header Export button is not shown: a page is taken through step 5 (Get it / checkout). The button stays in the page because "Go to the download" and the paid download open the export window through it. */
+#openExportModalBtn[hidden] { display: none !important; }
+#guidedCheckoutBtn[hidden] { display: none !important; }
+html[lang="lv"] body.is-guided[data-step="1"] #tabElementsBtn span:not(.tab-badge)::after { content: "Pievienot blokus"; } /* words made by CSS are not on the page for scripts/builder/ui-lang.js to find */
 @media (max-width: 800px) { .guided-label { display: none; } .guided-step { padding-right: 8px; } }
 
 /* guided step 1: the plain block picker replaces the full catalogue (Advanced brings the catalogue back) */

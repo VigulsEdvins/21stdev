@@ -21,7 +21,7 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   // every header control is on screen: nothing is pushed off the right edge (the Download button used to be)
   const off = await page.evaluate(() => Array.from(document.querySelectorAll('.builder-header button, .builder-header a, .builder-header select')).filter((e) => { const r = e.getBoundingClientRect(); return r.width && (r.right > innerWidth + 1 || r.left < -1); }).map((e) => e.id || e.className));
   assert.deepStrictEqual(off, [], 'header controls off screen: ' + off.join(', '));
-  assert(await page.isVisible('#openExportModalBtn'), 'the Download button is reachable');
+  assert(await page.isVisible('#guidedCheckoutBtn') && !(await page.isVisible('#openExportModalBtn')), 'the Get your page button is reachable, and the old Export button is gone');
   assert(!(await page.isVisible('.viewport-mode-switcher')), 'no desktop / tablet / mobile switch on a phone');
   console.log('  ✓ one column, panel first, no sideways page, floating button on screen');
 

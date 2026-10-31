@@ -4,6 +4,7 @@
   if (typeof EdvI18n === 'undefined') return;
   EdvI18n.add('lv', {
     // dates
+    '/builder/': '/lv/builder/', // the Latvian builder (plan 2026-10-31-latvian-builder.md)
     'en-GB': 'lv-LV',
 
     // the question flow (start.js) and its data (questions.js)
