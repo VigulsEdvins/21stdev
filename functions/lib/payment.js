@@ -49,10 +49,10 @@ const iso = (sec) => new Date(sec * 1000).toISOString();
 const trialDays = (env) => { const n = Number(env.STRIPE_TRIAL_DAYS); return Number.isInteger(n) && n >= 0 && n <= 90 ? n : TRIAL_DAYS; };
 
 /** One call to Stripe. Returns { ok, json }; the reason of a failure stays in the Worker's log (the code only: Stripe's message can echo what was sent). */
-async function stripePost(env, fetchImpl, path, form) {
+async function stripePost(env, fetchImpl, path, form, idempotencyKey) {
   const f = fetchImpl || fetch;
   let r;
-  try { r = await f('https://api.stripe.com/v1/' + path, { method: 'POST', headers: { Authorization: 'Bearer ' + env.STRIPE_SECRET_KEY, 'Content-Type': 'application/x-www-form-urlencoded' }, body: form }); } catch (e) { return { ok: false, json: null }; }
+  try { r = await f('https://api.stripe.com/v1/' + path, { method: 'POST', headers: Object.assign({ Authorization: 'Bearer ' + env.STRIPE_SECRET_KEY, 'Content-Type': 'application/x-www-form-urlencoded' }, idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {}), body: form }); } catch (e) { return { ok: false, json: null }; }
   let j = null; try { j = await r.json(); } catch (e) { j = null; }
   if (!r.ok) console.error('stripe ' + path + ' failed: ' + r.status + ' ' + (j && j.error && (j.error.code || j.error.type)));
   return { ok: r.ok, json: j };
@@ -118,7 +118,8 @@ async function createOrderCheckout({ env, db, user, origin, body, fetchImpl }) {
   if (user.email) form.set('customer_email', user.email);
   form.set('success_url', origin + '/builder/?paid=1');
   form.set('cancel_url', origin + '/builder/?paid=0');
-  const s = await stripePost(env, fetchImpl, 'checkout/sessions', form);
+  // the same order asked for twice (two tabs, a double click) is one Stripe session, so it cannot be paid twice; another order is another key
+  const s = await stripePost(env, fetchImpl, 'checkout/sessions', form, await hmacHex('idem:' + user.id, form.toString()));
   if (!s.ok || !s.json || typeof s.json.url !== 'string' || !/^https:\/\/checkout\.stripe\.com\//.test(s.json.url)) return sorry('Payment could not be started');
   return { status: 200, json: { ok: true, url: s.json.url, testMode: isTestKey(env.STRIPE_SECRET_KEY) } };
 }
@@ -182,7 +183,7 @@ function createPayments({ db, now, env }) {
     if (!session || (session.mode !== 'subscription' && session.mode !== 'payment')) return ok({ ignored: 'not-ours' });
     const m = session.metadata || {}, userId = m.user_id || session.client_reference_id, sub = id(session.subscription);
     if (typeof session.id !== 'string' || typeof userId !== 'string' || !UUID.test(userId) || (session.mode === 'subscription' && !sub)) { console.error('stripe: session ' + session.id + ' has no valid user or subscription'); return { status: 400, json: { ok: false, errors: ['No account on this payment.'] } }; }
-    if (session.mode === 'payment' && session.payment_status !== 'paid') return ok({ ignored: 'not-paid' }); // a delayed method sends this event unpaid first
+    if (session.payment_status === 'unpaid') return ok({ ignored: 'not-paid' }); // a delayed method (bank debit) sends this event unpaid first; "async payment succeeded" follows when the money arrives
     const order = await readOrderMeta(m, userId);
     if (order && order.bad) { console.error('stripe: session ' + session.id + ' has a bad order'); return { status: 400, json: { ok: false, errors: ['That order could not be read.'] } }; }
     if (session.mode === 'payment' && !order) return ok({ ignored: 'not-ours' });
@@ -237,7 +238,7 @@ function createPayments({ db, now, env }) {
     async handleEvent(event) {
       if (!event || typeof event.type !== 'string' || !event.data || typeof event.data.object !== 'object' || !event.data.object) return { status: 400, json: { ok: false, errors: ['Not an event.'] } };
       const o = event.data.object;
-      if (event.type === 'checkout.session.completed') return completed(o);
+      if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') return completed(o);
       if (event.type === 'invoice.paid') return invoicePaid(o);
       if (event.type === 'customer.subscription.deleted') return cancelled(o);
       if (event.type === 'charge.refunded') return refunded(o);

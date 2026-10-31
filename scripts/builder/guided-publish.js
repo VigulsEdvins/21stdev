@@ -105,6 +105,16 @@
     // the buying overlay says so after a payment (scripts/builder/guided-buy.js): look again at the places and sites
     doc.addEventListener('edvlabs:purchased', () => { load(); });
 
+    /* The saved copy of this page in the account: the server only puts a bought page online, so the publish request names it. */
+    async function linkedProjectId() {
+      try {
+        const who = auth ? await auth.current() : null;
+        if (!who || !win.EdvCloudSave || !cfg) return '';
+        const l = win.EdvCloudSave.create({ url: cfg.supabaseUrl, anonKey: cfg.anonKey, token: () => auth.accessToken(), storage: win.localStorage }).link(who.id);
+        return l ? l.id : '';
+      } catch (_) { return ''; }
+    }
+
     async function load() {
       const who = auth ? await auth.current() : null;
       state.signedIn = !!who;
@@ -142,7 +152,7 @@
         const siteNow = state.sites.find((x) => x.name === name), withAdmin = !!(siteNow && siteNow.admin && siteNow.admin.on); // a site with an admin panel gets its editable fields too
         try { collected = await win.builderExport.collectFiles({ cms: withAdmin ? 'live' : false, csp: true }); } catch (e) { say(e && /no sections/i.test(e.message) ? 'Add at least one block first.' : 'The page could not be prepared. Please try again.', true); return; }
         const skipped = Client.leftOut(collected);
-        const r = await client.publish(name, collected);
+        const r = await client.publish(name, collected, await linkedProjectId());
         const e = Client.explain(r.status, r.json);
         if (e.kind === 'ok') {
           const addr = Client.safeAddress(r.json.address);

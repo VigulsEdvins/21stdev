@@ -53,7 +53,8 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await page.route('**/api/quote', (r) => { const b = JSON.parse(r.request().postData()); buy.quotes.push(b); r.fulfill({ json: { ok: true, lines: [{ key: 'base', label: 'Website, 3 blocks included', amount: 39 }, { key: 'editor', label: 'Admin panel', amount: 39 }], payToday: buy.payToday, hosting: b.hosting ? { plan: b.hosting, amount: b.hosting === 'monthly' ? 3 : 29, trialDays: 30 } : null, blocks: 5, testMode: buy.testMode } }); });
   await page.route('**/api/checkout', (r) => { buy.checkouts.push(JSON.parse(r.request().postData())); r.fulfill({ json: { ok: true, url: 'https://checkout.stripe.com/c/pay/cs_test_1', testMode: true } }); });
   await page.route('https://checkout.stripe.com/**', (r) => r.fulfill({ contentType: 'text/html', body: '<title>Stripe</title>' }));
-  await page.route('https://sb.test/rest/v1/projects**', (r) => (r.request().method() === 'GET' ? r.fulfill({ json: [{ id: PID, name: 'Shop', state: {}, revision: 1, deleted_at: null, updated_at: '2026-01-01T00:00:00Z' }] }) : r.fulfill({ json: [{ id: PID, revision: 2 }] }))); // the account copy of the page
+  let rev = 1; // the account copy of the page: every save moves the revision on, and a read answers the current one (so the builder keeps its own page)
+  await page.route('https://sb.test/rest/v1/projects**', (r) => { if (r.request().method() === 'GET') return r.fulfill({ json: [{ id: PID, name: 'Shop', state: {}, revision: rev, deleted_at: null, updated_at: '2026-01-01T00:00:00Z' }] }); rev += 1; r.fulfill({ json: [{ id: PID, revision: rev }] }); });
   const link = () => page.evaluate(([id, uid]) => localStorage.setItem('edvlabs.cloud_project', JSON.stringify({ id, userId: uid, revision: 1, hash: 'x' })), [PID, UID]);
   console.log('Guided buying overlay');
 
@@ -108,6 +109,18 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await open(); await page.waitForSelector('#buyProceed'); await page.waitForTimeout(600);
   assert(!(await page.isVisible('#getDownload')), 'a purchase for another page does not unlock this one');
   console.log('  ✓ download and "Put it online" wait for the purchase of this page');
+
+  // publishing carries the id of the page, because the server only publishes a page that was bought
+  buy.purchases = [{ id: 'pur-1', projectId: PID, allowance: 5, editor: true, destination: 'edvlabs', createdAt: 'x', deployHelp: false, deployDetailsSent: false }]; api.published = [];
+  await open(); await page.waitForSelector('#publishName', { state: 'visible' }); await page.fill('#publishName', 'bakery-anna'); await page.waitForFunction(() => !document.getElementById('publishGo').disabled);
+  await page.waitForTimeout(800); await page.click('#publishGo'); await page.waitForFunction(() => /bakery-anna/.test(document.getElementById('publishResult').textContent), null, { timeout: 8000 }).catch(async () => { throw new Error('publish result: ' + await page.textContent('#publishResult')); });
+  assert.strictEqual(api.published[0].projectId, PID, 'the publish request names the page');
+  // a page that is already bought: hosting is "No change" by default, so more blocks never start a second subscription
+  buy.quotes = []; await page.click('#buyProceed'); await page.waitForSelector('#buyOverlay'); await page.check('#buyOverlay input[value="domain"]'); await page.click('#buyNext');
+  assert(await page.isChecked('#buyHosting input[value="none"]'), 'No change is the default for a bought page');
+  await page.waitForFunction(() => true); await page.click('#buyNext'); await page.waitForFunction(() => /96/.test(document.getElementById('buyTotal').textContent), null, { timeout: 8000 }).catch(async () => { throw new Error('total: ' + await page.textContent('#buyTotal') + ' / ' + await page.textContent('#buyOverlay')); });
+  assert.strictEqual(buy.quotes[buy.quotes.length - 1].hosting, null, 'the order asks for no hosting'); await page.keyboard.press('Escape');
+  console.log('  ✓ publishing names the page; a bought page does not buy hosting again by default');
 
   // back from Stripe: the webhook can be a moment late, so the page looks again, then unlocks and asks for the deploy details once
   buy.purchases = []; buy.polls = 0; buy.pending = [{ id: 'pur-2', projectId: PID, allowance: 5, editor: false, destination: 'domain', createdAt: '2026-11-03T10:00:00Z', deployHelp: true, deployDetailsSent: false }];

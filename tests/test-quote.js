@@ -58,4 +58,13 @@ test('blocks of a saved page: visible ones, the language switcher is free, every
   for (const junk of [null, undefined, 'x', 7, {}, { stack: 'no' }]) assert.strictEqual(countProjectBlocks(junk), 0);
 });
 
+test('after buying, hosting is optional: more blocks on an edvlabs address are charged once with no second subscription, and nothing left to pay is recognised for hosted pages too', () => {
+  const paid = { allowance: 5, editor: true, version: 'v1' };
+  const q = quote({ ...base, blocks: 6, hosting: null, paid });
+  assert.strictEqual(q.ok, true); assert.strictEqual(q.hosting, null); assert.strictEqual(q.payToday, 9); assert.deepStrictEqual(keys(q), ['extra']);
+  assert.deepStrictEqual(quote({ ...base, blocks: 5, hosting: null, paid }), { ok: false, reason: 'nothing-to-pay' });
+  assert.deepStrictEqual(quote({ ...base, hosting: null }), { ok: false, reason: 'bad-combination' }, 'a first purchase on a hosted destination still needs hosting');
+  assert.strictEqual(quote({ ...base, blocks: 5, hosting: 'yearly', paid }).hosting.plan, 'yearly', 'starting hosting later is still possible');
+});
+
 console.log('quote: ' + count + ' tests passed');

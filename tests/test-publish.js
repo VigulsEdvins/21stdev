@@ -466,11 +466,26 @@ const test = async (name, fn) => { await fn(); count++; };
     on.f.addPurchase('u2', PID); await refused(PID); // somebody else bought that page
     on.f.addPurchase('u1', OTHER); await refused(PID);
     assert.strictEqual(on.f.sites.length, 0, 'nothing is created by a refused publish');
-    on.f.addPurchase('u1', PID);
+    on.f.addProject('u1', PID, 3); on.f.addPurchase('u1', PID);
     assert.strictEqual((await on.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()], projectId: PID })).status, 200);
     assert.strictEqual((await on.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()], projectId: PID })).status, 200, 'updating a bought page again is free');
     const off = setup(); off.f.addEntitlement('u1', FUTURE);
     assert.strictEqual((await off.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()] })).status, 200, 'payment off: no purchase needed');
+  });
+
+  await test('publish gate: a purchase must cover the blocks of the page, and sites granted by the owner keep working', async () => {
+    const PID = '33333333-3333-4333-8333-333333333333';
+    const on = setup({ paymentOn: true }); on.f.addEntitlement('u1', FUTURE); on.f.addProject('u1', PID, 6); on.f.addPurchase('u1', PID, 5);
+    const over = await on.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()], projectId: PID });
+    assert.strictEqual(over.status, 402); assert.strictEqual(over.json.reason, 'upgrade-needed'); assert.strictEqual(on.f.sites.length, 0);
+    on.f.projects[0].state.stack.pop();
+    assert.strictEqual((await on.pub.publish({ userId: 'u1', name: 'bakery-anna', files: [html()], projectId: PID })).status, 200, 'within what was bought');
+    // a site made before the flag existed, with a place the owner granted by hand
+    const old = setup(); old.f.addEntitlement('u2', FUTURE, { granted_by: 'owner' }); await old.pub.publish({ userId: 'u2', name: 'old-shop', files: [html()] });
+    const flagged = P.createPublisher({ db: old.f.db, bucket: old.f.bucket, kv: old.f.kv, now: () => '2026-11-01T10:00:00.000Z', paymentOn: true });
+    assert.strictEqual((await flagged.publish({ userId: 'u2', name: 'old-shop', files: [html('<p>New</p>')] })).status, 200, 'an owner-granted site can still be updated without a purchase');
+    old.f.addEntitlement('u2', FUTURE, { granted_by: 'owner' });
+    assert.strictEqual((await flagged.publish({ userId: 'u2', name: 'second-shop', files: [html()] })).status, 402, 'but a new site needs a purchase');
   });
 
   console.log(`✓ publish: ${count} groups (files, scan, payment, names, versions, failures, limits, unpublish)`);

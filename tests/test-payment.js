@@ -140,6 +140,32 @@ function world(env) {
     assert.strictEqual((await send({ purchaseId: 'pur-3', domain: 'shop.example.com' })).status, 404, 'no deploy help was bought with that purchase');
   });
 
+  await test('adding blocks to a bought page on an edvlabs address is one plain payment, no second subscription; asking twice with the same order reuses one Stripe session (same idempotency key), a different order does not', async () => {
+    const w = world(), { calls, call, order, tok } = w;
+    w.db.purchases.push({ id: 'pur-1', project_id: PID, user_id: U1, allowance: 3, editor: true, price_version: 'v1', created_at: 'x' });
+    const more = order({ hosting: null });
+    assert.strictEqual((await call('/api/checkout', { body: more }, tok)).status, 200);
+    const f = new URLSearchParams(String(calls[0].init.body));
+    assert.strictEqual(f.get('mode'), 'payment'); assert.strictEqual(f.get('subscription_data[trial_period_days]'), null); assert(![...f.keys()].some((k) => /\[price\]$/.test(k)), 'no recurring price');
+    await call('/api/checkout', { body: more }, tok); await call('/api/checkout', { body: order({ hosting: null, destination: 'domain' }) }, tok);
+    const key = (i) => calls[i].init.headers['Idempotency-Key'];
+    assert(key(0) && key(0).length >= 32); assert.strictEqual(key(0), key(1), 'the same order twice is one session'); assert.notStrictEqual(key(0), key(2), 'another order is another session');
+    w.db.purchases[0].allowance = 5;
+    assert.strictEqual((await call('/api/checkout', { body: order({ hosting: null }) }, tok)).status, 409, 'nothing left to pay on a hosted page');
+  });
+
+  await test('a delayed payment method: an unpaid session waits, and the later "async payment succeeded" event makes the purchase; a failed one makes nothing', async () => {
+    const { db, hook } = world();
+    const unpaid = bought({ payment_status: 'unpaid' });
+    assert.strictEqual((await hook(event('checkout.session.completed', unpaid))).status, 200); assert.strictEqual(db.purchases.length, 0); assert.strictEqual(db.rows.length, 0);
+    assert.strictEqual((await hook(event('checkout.session.async_payment_failed', unpaid))).status, 200); assert.strictEqual(db.purchases.length, 0);
+    assert.strictEqual((await hook(event('checkout.session.async_payment_succeeded', bought({ payment_status: 'paid' })))).status, 200);
+    assert.strictEqual(db.purchases.length, 1); assert.strictEqual(db.rows.length, 1);
+    const dl = bought({ id: 'cs_dl', mode: 'payment', subscription: null, payment_status: 'unpaid', metadata: { ...bought().metadata, destination: 'download' } });
+    await hook(event('checkout.session.completed', dl)); assert.strictEqual(db.purchases.length, 1);
+    await hook(event('checkout.session.async_payment_succeeded', { ...dl, payment_status: 'paid' })); assert.strictEqual(db.purchases.length, 2);
+  });
+
   await test('other events and sessions without a valid person or subscription make no place', async () => {
     const { db, hook } = world();
     assert.strictEqual((await hook(event('checkout.session.completed', session({ mode: 'payment' })))).status, 200);

@@ -27,7 +27,8 @@
   /** Pure: the order the server is asked about. Choices only; the server never reads a price from it. */
   function orderFrom(s) {
     const o = optionsFor(s.destination);
-    const order = { projectId: s.projectId, destination: s.destination, editor: !!s.editor, hosting: o.hosting ? s.hosting : null, deployHelp: o.deployHelp && !!s.deployHelp };
+    // hosting 'none' (a bought page keeping its hosting) sends no hosting
+    const order = { projectId: s.projectId, destination: s.destination, editor: !!s.editor, hosting: o.hosting && (s.hosting === 'monthly' || s.hosting === 'yearly') ? s.hosting : null, deployHelp: o.deployHelp && !!s.deployHelp };
     if (o.name && s.siteName) order.siteName = s.siteName;
     return order;
   }
@@ -126,7 +127,9 @@
         const last = body.lastChild; last.append(ed, el(doc, 'b', {}, 'Admin panel (' + eur(win.EdvPrices.table.editor) + ')'), el(doc, 'small', {}, 'Change words and pictures later without the builder.'));
         if (o.hosting) {
           const g = el(doc, 'fieldset', { id: 'buyHosting', class: 'buy-card' }); g.append(el(doc, 'legend', {}, 'Hosting: first month free'));
-          [['monthly', 'Monthly ' + eur(win.EdvPrices.table.hostingMonth)], ['yearly', 'Yearly ' + eur(win.EdvPrices.table.hostingYear)]].forEach(([v, t]) => {
+          const choices = [['monthly', 'Monthly ' + eur(win.EdvPrices.table.hostingMonth)], ['yearly', 'Yearly ' + eur(win.EdvPrices.table.hostingYear)]];
+          if (s.bought) choices.unshift(['none', 'No change: keep my hosting as it is']); // adding blocks must never start a second subscription
+          choices.forEach(([v, t]) => {
             const r = el(doc, 'input', { type: 'radio', name: 'buyBilling', value: v }); r.checked = s.hosting === v; r.addEventListener('change', () => { s.hosting = v; refreshQuote(); });
             g.append(el(doc, 'label', {}, null)); g.lastChild.append(r, ' ' + t);
           });
@@ -175,7 +178,7 @@
       const id = await savedProjectId();
       proceed.disabled = false;
       if (!id) { note.textContent = 'Your page could not be saved to your account just now, so it cannot be bought yet. Please try again in a moment.'; return; }
-      note.textContent = ''; s.projectId = id; s.step = 1; s.quote = null; s.message = ''; s.waiver = false;
+      note.textContent = ''; s.projectId = id; s.bought = boughtFor(id).length > 0; if (s.bought && s.hosting !== 'yearly') s.hosting = 'none'; else if (!s.bought && s.hosting === 'none') s.hosting = 'monthly'; s.step = 1; s.quote = null; s.message = ''; s.waiver = false;
       overlay = el(doc, 'div', { id: 'buyOverlay', class: 'buy-overlay', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'buyTitle' });
       const panel = el(doc, 'div', { class: 'buy-panel' });
       const top = el(doc, 'div', { class: 'buy-top' }, null); const x = el(doc, 'button', { type: 'button', class: 'builder-btn-subtle', id: 'buyClose' }, 'Back to builder'); x.addEventListener('click', close);

@@ -15,7 +15,8 @@ function quote(order) {
   if (!Number.isFinite(blocks) || blocks < 1) return { ok: false, reason: 'no-blocks' };
   const hosted = o.destination === 'edvlabs' || o.destination === 'domain';
   if (!DESTINATIONS.includes(o.destination) || (o.editor !== undefined && typeof o.editor !== 'boolean') || typeof o.deployHelp !== 'boolean') return { ok: false, reason: 'bad-combination' };
-  if (hosted ? (o.hosting !== 'monthly' && o.hosting !== 'yearly') : o.hosting !== null) return { ok: false, reason: 'bad-combination' };
+  const noHosting = o.hosting === null && (!hosted || !!o.paid); // after buying, hosting is optional: more blocks must not start a second subscription
+  if (!noHosting && (hosted ? (o.hosting !== 'monthly' && o.hosting !== 'yearly') : true)) return { ok: false, reason: 'bad-combination' };
   if (o.deployHelp && o.destination === 'edvlabs') return { ok: false, reason: 'bad-combination' }; // publishing there is automatic
   const editor = !!o.editor, T = Prices.table, lines = [];
   let newAllowance;
@@ -33,7 +34,7 @@ function quote(order) {
   }
   if (o.deployHelp) lines.push({ key: 'deployHelp', label: 'We put it online for you', amount: T.deployHelp });
   const trialDays = Number.isInteger(o.trialDays) && o.trialDays >= 0 && o.trialDays <= 90 ? o.trialDays : TRIAL_DAYS;
-  const hosting = hosted ? { plan: o.hosting, amount: o.hosting === 'monthly' ? T.hostingMonth : T.hostingYear, trialDays } : null;
+  const hosting = hosted && o.hosting ? { plan: o.hosting, amount: o.hosting === 'monthly' ? T.hostingMonth : T.hostingYear, trialDays } : null;
   const payToday = lines.reduce((sum, l) => sum + l.amount, 0);
   if (payToday === 0 && !hosting) return { ok: false, reason: 'nothing-to-pay' };
   return { ok: true, lines, payToday, hosting, priceVersion: o.paid ? o.paid.version : Prices.version, newAllowance };

@@ -10,5 +10,6 @@ assert.deepStrictEqual(G.optionsFor('moon'), { name: false, hosting: false, depl
 const s = { projectId: 'pid', destination: 'download', editor: 1, hosting: 'yearly', deployHelp: true, siteName: 'left-over-name', price: 1, payToday: 1 };
 assert.deepStrictEqual(G.orderFrom(s), { projectId: 'pid', destination: 'download', editor: true, hosting: null, deployHelp: true }, 'a download carries no hosting and no name');
 assert.deepStrictEqual(G.orderFrom({ ...s, destination: 'edvlabs' }), { projectId: 'pid', destination: 'edvlabs', editor: true, hosting: 'yearly', deployHelp: false, siteName: 'left-over-name' }, 'deploy help is dropped on an edvlabs address');
+assert.strictEqual(G.orderFrom({ ...s, destination: 'edvlabs', hosting: 'none' }).hosting, null, '"No change" sends no hosting');
 for (const o of [G.orderFrom(s), G.orderFrom({ ...s, destination: 'domain' })]) assert(!('price' in o) && !('payToday' in o), 'no price in an order');
 console.log('✓ guided buy: options and order');

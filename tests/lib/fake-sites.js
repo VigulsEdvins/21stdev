@@ -4,7 +4,7 @@
        claimEntitlement (true only if the place was still free), releaseEntitlement, reserveVersion (atomic +1 of last_version), goLive, setStatus. */
 function create() {
   const sites = [], holds = [], ents = [], objects = new Map(), kvStore = new Map(), log = [];
-  const limitRows = new Map(), admins = [], domains = [], purchases = [];
+  const limitRows = new Map(), admins = [], domains = [], purchases = [], projects = [];
   let hostCounter = 1;
   let n = 0;
   const db = {
@@ -24,6 +24,7 @@ function create() {
     async reserveVersion(id) { const s = sites.find((x) => x.id === id); s.last_version += 1; return s.last_version; },
     async goLive(id, version, extra) { const s = sites.find((x) => x.id === id); if (version > s.version) s.version = version; s.status = 'live'; Object.assign(s, extra || {}); },
     async sitesByUser(userId) { return sites.filter((s) => s.user_id === userId); },
+    async projectForUser(projectId, userId) { return projects.find((x) => x.id === projectId && x.user_id === userId) || null; },
     async purchaseForProject(projectId) { return purchases.filter((x) => x.project_id === projectId).slice(-1)[0] || null; },
     async entitlementsByUser(userId) { return ents.filter((e) => e.user_id === userId); },
     async expiredHolds(nowIso) { return holds.filter((h) => new Date(h.expires_at) < new Date(nowIso)); },
@@ -92,8 +93,9 @@ function create() {
   };
   const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async delete(k) { kvStore.delete(k); },
     async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };
-  return { db, bucket, kv, purchases, admins, domains, sites, holds, ents, objects, kvStore, log, limitRows,
-    addPurchase(userId, projectId) { const r = { id: 'pur-' + (purchases.length + 1), project_id: projectId, user_id: userId, allowance: 5, editor: false, price_version: 'v1', destination: 'edvlabs' }; purchases.push(r); return r; },
+  return { db, bucket, kv, purchases, projects, admins, domains, sites, holds, ents, objects, kvStore, log, limitRows,
+    addProject(userId, projectId, blocks) { projects.push({ id: projectId, user_id: userId, state: { stack: Array.from({ length: blocks }, (_, i) => ({ slug: 'b' + i })) } }); },
+    addPurchase(userId, projectId, allowance) { const r = { id: 'pur-' + (purchases.length + 1), project_id: projectId, user_id: userId, allowance: allowance || 5, editor: false, price_version: 'v1', destination: 'edvlabs' }; purchases.push(r); return r; },
     addEntitlement(userId, paidUntil, over) { const e = Object.assign({ id: 'ent-' + (ents.length + 1), user_id: userId, site_id: null, status: 'active', paid_until: paidUntil, granted_by: 'owner' }, over || {}); ents.push(e); return e; } };
 }
 module.exports = { create };
