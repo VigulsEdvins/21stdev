@@ -52,6 +52,31 @@ function createDb(env, fetchImpl) {
     extendBySubscription: (subId, paidUntilIso) => rest('PATCH', 'site_entitlements?status=eq.active&stripe_subscription_id=eq.' + enc(subId), { paid_until: paidUntilIso }),
     endBySubscription: (subId) => rest('PATCH', 'site_entitlements?stripe_subscription_id=eq.' + enc(subId), { status: 'ended' }),
     async customerForUser(userId) { const r = await first('site_entitlements?select=stripe_customer_id&limit=1&stripe_customer_id=not.is.null&order=created_at.desc&user_id=eq.' + enc(userId)); return r ? r.stripe_customer_id : null; },
+    /* The buying flow (supabase/migrations/20261031160000_project_purchases.sql). A project is only ever read together with its owner, so one person can never quote or buy another's page. */
+    projectForUser: (projectId, userId) => (UUID.test(String(projectId)) && UUID.test(String(userId)) ? first('projects?select=id,name,state,status&limit=1&deleted_at=is.null&id=eq.' + enc(projectId) + '&user_id=eq.' + enc(userId)) : Promise.resolve(null)),
+    purchaseForProject: (projectId) => (UUID.test(String(projectId)) ? first('project_purchases?select=*&limit=1&order=created_at.desc&project_id=eq.' + enc(projectId)) : Promise.resolve(null)),
+    purchaseBySession: (sessionId) => first('project_purchases?select=*&limit=1&stripe_session_id=eq.' + enc(sessionId)),
+    purchaseById: (id) => (UUID.test(String(id)) ? first('project_purchases?select=*&limit=1&id=eq.' + enc(id)) : Promise.resolve(null)),
+    deployRequestForPurchase: (purchaseId) => (UUID.test(String(purchaseId)) ? first('deploy_requests?select=*&limit=1&purchase_id=eq.' + enc(purchaseId)) : Promise.resolve(null)),
+    /* only while the details are still empty, so they can be sent once; false when they were already sent */
+    async fillDeployRequest(purchaseId, details) { const rows = await rest('PATCH', 'deploy_requests?domain=is.null&notes=is.null&purchase_id=eq.' + enc(purchaseId), details, 'return=representation'); return Array.isArray(rows) && rows.length === 1; },
+    markDeployRequestDone: (id) => rest('PATCH', 'deploy_requests?id=eq.' + enc(id), { status: 'done' }),
+    purchasesByUser: (userId) => all('project_purchases?select=*&order=created_at.desc&user_id=eq.' + enc(userId)),
+    async insertPurchase(row) {
+      try { return (await rest('POST', 'project_purchases', row, 'return=representation'))[0]; } catch (e) {
+        if (e.code === '23505') throw Object.assign(e, { code: 'duplicate' }); // the same Stripe payment arriving twice
+        throw e;
+      }
+    },
+    async insertDeployRequest(row) {
+      try { return (await rest('POST', 'deploy_requests', row, 'return=representation'))[0]; } catch (e) {
+        if (e.code === '23505') throw Object.assign(e, { code: 'duplicate' }); // one request per purchase
+        throw e;
+      }
+    },
+    deployRequestsByUser: (userId) => all('deploy_requests?select=purchase_id,user_id,domain,status&limit=200&user_id=eq.' + enc(userId)),
+    deployRequestsOpen: () => all('deploy_requests?select=*,project_purchases(created_at,destination)&order=created_at.asc&limit=200&status=eq.open'),
+    markProjectPaid: (projectId) => rest('PATCH', 'projects?id=eq.' + enc(projectId), { status: 'paid' }),
     refundByIntent: (intent) => rest('PATCH', 'site_entitlements?stripe_payment_intent=eq.' + enc(intent), { status: 'refunded' }),
     freeEntitlements: (userId) => all('site_entitlements?select=*&status=eq.active&site_id=is.null&order=paid_until.desc&user_id=eq.' + enc(userId)),
     async insertSite(row) {

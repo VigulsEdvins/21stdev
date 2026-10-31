@@ -5,6 +5,7 @@
    Every action returns { status, json }, the same shape as lead.js. Customers' files are untrusted: the browser is not believed, everything is checked here. */
 const Names = require('../../site/js/site-names.js');
 const Limits = require('./limits.js');
+const { countProjectBlocks } = require('./quote.js');
 
 const LIMITS = { files: 500, totalBytes: 10 * 1024 * 1024, fileBytes: 5 * 1024 * 1024, nameChecksPerHour: 60, pathLength: 200, publishesPerHour: 10, renamesPerHour: 10, graceDays: 14, keepVersions: 5, holdDays: 90, retentionDays: 90, maxPurgesPerRun: 25 };
 
@@ -178,7 +179,8 @@ function entitlementState(ent, now) {
 const key = (siteId, version, path) => 'sites/' + siteId + '/' + version + '/' + path;
 const kvKey = (name) => 'site:' + name;
 
-function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defaults, adminHook }) {
+function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defaults, adminHook, paymentOn }) {
+  // paymentOn: Stripe is switched on, so a page must have been bought (by the person who publishes it) before it can go online
   // adminHook: { afterPublish(siteId, structure) }, the admin panel of a site (site-admin.js); called after the new version is live
   const host = domain || 'edvlabs.com';
   /** What this person may do: the defaults for everyone, with any upgrade in their account_limits row applied. */
@@ -221,6 +223,16 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
     if (!userId) return fail(401, 'Please sign in.');
     const c = Names.check(name);
     if (!c.ok) return fail(400, c.message, { reason: c.reason });
+    if (paymentOn) {
+      // a site that already exists with a place the owner granted by hand keeps working: it was never bought through the checkout
+      const mine = await db.siteByName(c.name), granted = mine && mine.user_id === userId ? await db.entitlementForSite(mine.id) : null;
+      if (!(granted && granted.granted_by === 'owner')) {
+        const bought = typeof projectId === 'string' && db.purchaseForProject ? await db.purchaseForProject(projectId) : null;
+        const project = bought && bought.user_id === userId && db.projectForUser ? await db.projectForUser(projectId, userId) : null;
+        if (!bought || bought.user_id !== userId || !project) return fail(402, 'Please buy this page first. You can do that from the “Proceed” button.', { reason: 'purchase-needed' });
+        if (countProjectBlocks(project.state) > bought.allowance) return fail(402, 'Your page has more blocks than you have bought. Press “Proceed” to add them to your order.', { reason: 'upgrade-needed' });
+      }
+    }
     const limits = await limitsFor(userId);
     const checked = checkFiles(files, { totalBytes: limits.siteMb * 1024 * 1024, fileBytes: limits.fileMb * 1024 * 1024, more: limits.canBuyMore.siteMb });
     if (!checked.ok) return fail(400, checked.errors[0], { details: checked.errors, reason: 'files' });

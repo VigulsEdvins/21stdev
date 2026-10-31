@@ -232,3 +232,16 @@ Plan: `docs/superpowers/plans/2026-10-31-stripe-publish-places.md`. A place is a
 6. **Try it:** builder, Put it online, choose monthly or yearly, card `4242 4242 4242 4242`. The place appears within seconds. Declined card `4000 0000 0000 0002`; 3-D Secure `4000 0025 0000 3155`. "Manage billing" opens the Stripe portal; cancelling ends the place when the subscription ends. To see a renewal, advance a Stripe test clock past the free month: `invoice.paid` moves the place's end date to the end of the paid period. A failed renewal sends no such event, so the place runs into the existing 14 days of grace.
 7. **Refunds:** refund in Stripe and cancel the subscription (a refund alone does not stop the next invoice).
 8. **Going live:** repeat 2 to 5 in live mode, one small real payment and refund. Decide VAT and invoices with the accountant first (plan E8.1, E8.4). The price on the site (`site/js/prices.js`, `hostingMonth`/`hostingYear`) and the Stripe prices must match.
+
+### The buying overlay ("Proceed" in builder step 5)
+
+Plan `docs/superpowers/plans/2026-10-31-buying-flow.md`, design `docs/superpowers/specs/2026-10-31-buying-flow-design.md`. A signed-in client presses **Proceed**, picks where the site goes (edvlabs address, own domain, download), the extras (admin panel 39 EUR, hosting monthly or yearly with the free month, "we put it online for you" 30 EUR for own domain or download) and pays once. The server works the price out from the saved page and `site/js/prices.js`; the browser only shows it. After paying, the download and "Put it online" unlock.
+
+Switching it on, in order:
+1. Supabase SQL Editor: run `supabase/migrations/20261031150000_stripe_subscriptions.sql` (if not yet) and `20261031160000_project_purchases.sql`.
+2. Deploy (push). Nothing changes for visitors yet: the overlay and the "pay before publish" rule stay off.
+3. Add the plain variable **`BUYING_FLOW`** = `1` on the main Worker `21stdev` (Cloudflare dashboard, Settings, Variables). Together with `STRIPE_SECRET_KEY` it shows Proceed and makes publishing on an edvlabs address require a purchase of that page. **Careful:** people whose place was granted by hand (`owner-sites grant`) have no purchase and cannot update their site while it is on. Turn it on only when you are ready for that.
+4. Test with card `4242 4242 4242 4242` for each destination. Webhook events needed (add `invoice.paid`, `customer.subscription.deleted` if missing): `checkout.session.completed`, `invoice.paid`, `invoice.payment_failed`, `customer.subscription.deleted`, `charge.refunded`.
+5. Deploy-help orders: `npm run owner-sites -- deploy-requests` lists who paid, their domain and note; `-- deploy-requests --done <id>` marks one finished.
+
+Known limits: the download ZIP is built in the browser, so the "pay before download" lock can be bypassed by a technical person (publishing is enforced on the server); the waiver text in the overlay is a placeholder until the lawyer sets the real wording; VAT and invoices are still to be decided with the accountant.

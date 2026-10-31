@@ -1,5 +1,8 @@
 /* The HTTP side of paying for a publishing place, in the main Worker (plan 2026-10-31-stripe-publish-places.md). Two endpoints:
-     POST /api/checkout        signed in; { plan: 'monthly' | 'yearly' }; answers { ok, url, testMode }: the Stripe page to start hosting on (first month free)
+     POST /api/quote           signed in; { projectId, destination, editor, hosting, deployHelp }; answers the price lines for the overlay, worked out from the saved page
+     POST /api/checkout        signed in; the same body (+ siteName); answers { ok, url, testMode }: the one Stripe page for the whole order
+     GET  /api/my-purchases    signed in; what this person has bought, for the builder
+     POST /api/deploy-request  signed in; { purchaseId, domain, notes }: the details for "we put it online for you", sent once
      POST /api/billing-portal  signed in; answers { ok, url }: the Stripe page to cancel, switch plan or change the card
      POST /api/stripe-webhook  only Stripe: the raw body is checked against the Stripe-Signature header, then a payment makes a place
    All the rules are in ./payment.js; the storage is in ./sites-store.js. Settings (never in git): STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET (secrets),
@@ -13,13 +16,13 @@ const MAX_EVENT = 512 * 1024; // Stripe events are a few KB; this only stops abu
 /** deps (tests): { user(token), db, fetchImpl, nowSec() }. The real ones are built from the Worker's settings. */
 async function route(request, env, json, deps) {
   const url = new URL(request.url), path = url.pathname;
-  if (path !== '/api/checkout' && path !== '/api/billing-portal' && path !== '/api/stripe-webhook') return null;
-  if (request.method !== 'POST') return json(405, { ok: false, errors: ['Use POST.'] }, { Allow: 'POST' });
+  if (!['/api/checkout', '/api/quote', '/api/billing-portal', '/api/stripe-webhook', '/api/deploy-request', '/api/my-purchases'].includes(path)) return null;
+  if (request.method !== (path === '/api/my-purchases' ? 'GET' : 'POST')) return json(405, { ok: false, errors: ['Use POST.'] }, { Allow: path === '/api/my-purchases' ? 'GET' : 'POST' });
   const d = deps || {};
   const db = d.db || (SUPABASE.every((k) => env[k]) ? store.createDb(env) : null);
 
-  if (path === '/api/checkout' || path === '/api/billing-portal') {
-    const need = path === '/api/checkout' ? Payment.NEEDED : ['STRIPE_SECRET_KEY'];
+  if (path !== '/api/stripe-webhook') {
+    const need = path === '/api/checkout' || path === '/api/billing-portal' ? ['STRIPE_SECRET_KEY'] : [];
     const absent = [...SUPABASE, ...need].filter((k) => !env[k]);
     if (absent.length && !d.user) return json(503, { ok: false, errors: ['Payment is not switched on yet.'], missing: absent });
     const origin = request.headers.get('Origin');
@@ -28,10 +31,12 @@ async function route(request, env, json, deps) {
     const user = m ? await (d.user ? d.user(m[1]) : store.verifyUser(env, m[1])) : null;
     if (!user) return json(401, { ok: false, errors: ['Please sign in.'] });
     let r;
-    if (path === '/api/billing-portal') r = await Payment.createPortal({ env, db, user, origin: url.origin, fetchImpl: d.fetchImpl });
+    if (path === '/api/my-purchases') r = await Payment.listPurchases({ db, user, env });
+    else if (path === '/api/billing-portal') r = await Payment.createPortal({ env, db, user, origin: url.origin, fetchImpl: d.fetchImpl });
     else {
-      let plan = ''; try { const body = JSON.parse(await request.text()); plan = body && typeof body.plan === 'string' ? body.plan : ''; } catch (e) { plan = ''; }
-      r = await Payment.createCheckout({ env, user, origin: url.origin, plan, fetchImpl: d.fetchImpl });
+      let body = null; try { body = JSON.parse(await request.text()); } catch (e) { body = null; }
+      if (!body || typeof body !== 'object') return json(400, { ok: false, errors: ['That was not valid JSON.'] });
+      r = path === '/api/quote' ? await Payment.createQuote({ db, user, body, env }) : path === '/api/deploy-request' ? await Payment.submitDeployRequest({ db, user, body }) : await Payment.createOrderCheckout({ env, db, user, origin: url.origin, body, fetchImpl: d.fetchImpl });
     }
     return json(r.status, r.json);
   }

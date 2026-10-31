@@ -78,5 +78,21 @@ const test = async (name, fn) => { await fn(); count++; };
     for (const c of s.calls) { assert(c.url.startsWith('https://proj.supabase.co/'), 'only the Supabase address is ever called'); }
   });
 
+  await test('deploy-requests: lists open requests with the buyer\'s email, domain and note; --done marks one finished; nothing prints the key', async () => {
+    const R1 = '55555555-5555-4555-8555-555555555555';
+    const s = stub([{ status: 200, body: [{ id: R1, user_id: UID, domain: 'shop.example.com', notes: 'Namecheap', status: 'open', project_purchases: { created_at: '2026-11-02T10:00:00Z', destination: 'domain' } }, { id: 'r2', user_id: UID, domain: null, notes: null, status: 'open', project_purchases: { created_at: '2026-11-03T10:00:00Z', destination: 'download' } }] },
+      { status: 200, body: { id: UID, email: 'anna@example.com' } }, { status: 200, body: [] }]), o = out();
+    assert.strictEqual(await O.run(['deploy-requests'], ENV, o.say, s.fetchImpl), 0);
+    const text = o.lines.join('\n');
+    assert(text.includes(R1) && text.includes('anna@example.com') && text.includes('shop.example.com') && text.includes('Namecheap') && text.includes('2026-11-02'), text);
+    assert(/details not sent yet/.test(text), 'a request without details says so'); assert(!text.includes('SECRET'));
+    assert(s.calls[0].url.includes('deploy_requests?') && s.calls[0].url.includes('status=eq.open')); assert(s.calls[1].url.endsWith('/auth/v1/admin/users/' + UID), 'the email is looked up once per person');
+    assert.strictEqual(s.calls.length, 2, 'one person, one lookup');
+    const d = stub([{ status: 200, body: [] }]), o2 = out();
+    assert.strictEqual(await O.run(['deploy-requests', '--done', R1], ENV, o2.say, d.fetchImpl), 0);
+    assert.strictEqual(d.calls[0].method, 'PATCH'); assert(d.calls[0].url.endsWith('deploy_requests?id=eq.' + R1)); assert.deepStrictEqual(JSON.parse(d.calls[0].body), { status: 'done' });
+    assert.strictEqual(await O.run(['deploy-requests', '--done', 'not-an-id'], ENV, o2.say, d.fetchImpl), 2); assert.strictEqual(d.calls.length, 1);
+  });
+
   console.log(`✓ owner sites: ${count} groups (usage, block, unblock, grant, list)`);
 })().catch((e) => { console.error(e); process.exit(1); });

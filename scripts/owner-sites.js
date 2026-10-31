@@ -6,6 +6,7 @@
  *   npm run owner-sites -- block <name>               stop serving a site (within the hour; the command for doing it at once is printed)
  *   npm run owner-sites -- unblock <name>             let its owner publish it again (it stays offline until they do)
  *   npm run owner-sites -- grant <email|user-id> [--count 1] [--years 1]    add paid places by hand, standing in for payment until Stripe exists
+ *   npm run owner-sites -- deploy-requests [--done <id>]    the open "we put it online for you" requests (who, domain, note); --done marks one finished
  *   npm run owner-sites -- limits <email|user-id>      what one person may do: the defaults for everyone and any upgrade
  *   npm run owner-sites -- limit <email|user-id> [--renames N] [--site-mb N] [--publishes N] [--note "text"]   set an upgrade (only the numbers given change)
  *   npm run owner-sites -- limit <email|user-id> --reset                                                  back to the defaults
@@ -16,7 +17,7 @@ const path = require('path');
 const store = require('../functions/lib/sites-store.js');
 const Limits = require('../functions/lib/limits.js');
 
-const USAGE = 'Usage: npm run owner-sites -- list | block <name> | unblock <name> | grant <email|user-id> [--count N] [--years N] | limits <email|user-id> | limit <email|user-id> [--renames N] [--site-mb N] [--publishes N] [--note text] [--reset]';
+const USAGE = 'Usage: npm run owner-sites -- list | block <name> | unblock <name> | grant <email|user-id> [--count N] [--years N] | deploy-requests [--done <id>] | limits <email|user-id> | limit <email|user-id> [--renames N] [--site-mb N] [--publishes N] [--note text] [--reset]';
 const isName = (t) => typeof t === 'string' && t.length >= 3 && t.length <= 30 && t.split('-').every((piece) => /^[a-z0-9]+$/.test(piece));
 
 function readVars(file) {
@@ -54,9 +55,30 @@ async function userIdFor(env, who, f) {
 async function run(argv, env, say, fetchImpl) {
   const [cmd, arg] = argv;
   const missing = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'].filter((k) => !env[k]);
-  if (!['list', 'block', 'unblock', 'grant', 'limits', 'limit'].includes(cmd)) { say(USAGE); return 2; }
+  if (!['list', 'block', 'unblock', 'grant', 'limits', 'limit', 'deploy-requests'].includes(cmd)) { say(USAGE); return 2; }
   if (missing.length) { say('Missing setting(s): ' + missing.join(', ') + '. Put them in your shell or in .dev.vars (never in git).'); return 2; }
   const f = fetchImpl || fetch, db = store.createDb(env, f);
+
+  if (cmd === 'deploy-requests') {
+    const doneAt = argv.indexOf('--done');
+    if (doneAt >= 0) {
+      const rid = argv[doneAt + 1];
+      if (!store.UUID.test(String(rid))) { say('Give the request id after --done (the long id the list shows).'); return 2; }
+      await db.markDeployRequestDone(rid);
+      say('Marked as done: ' + rid);
+      return 0;
+    }
+    const rows = await db.deployRequestsOpen();
+    if (!rows.length) { say('No open requests.'); return 0; }
+    const emails = new Map();
+    for (const r of rows) { // one lookup per person
+      if (emails.has(r.user_id)) continue;
+      const x = await f(env.SUPABASE_URL.replace(/\/+$/, '') + '/auth/v1/admin/users/' + r.user_id, { headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_ROLE_KEY } });
+      emails.set(r.user_id, x.ok ? ((await x.json()).email || '(no email)') : '(email not found)');
+    }
+    say(rows.map((r) => { const p = Array.isArray(r.project_purchases) ? r.project_purchases[0] : r.project_purchases; return [r.id, emails.get(r.user_id), String((p && p.created_at) || '').slice(0, 10), (p && p.destination) || '', r.domain || '(details not sent yet)', r.notes || ''].filter((x, i) => i < 5 || x).join('  '); }).join('\n'));
+    return 0;
+  }
 
   if (cmd === 'list') {
     const r = await f(env.SUPABASE_URL.replace(/\/+$/, '') + '/rest/v1/published_sites?select=name,status,version,user_id,published_at&order=created_at.desc&limit=500', { headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: 'Bearer ' + env.SUPABASE_SERVICE_ROLE_KEY } });

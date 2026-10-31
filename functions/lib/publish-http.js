@@ -57,7 +57,7 @@ function makeDeps(env) {
     user: (token) => store.verifyUser(env, token),
     siteAdmin,
     siteDomains,
-    publisher: createPublisher({ db, bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets, parts }), defaults: Limits.defaultsFrom(env), adminHook: siteAdmin })
+    publisher: createPublisher({ db, bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets, parts }), defaults: Limits.defaultsFrom(env), adminHook: siteAdmin, paymentOn: require('./payment.js').buyingOn(env) })
   };
 }
 
