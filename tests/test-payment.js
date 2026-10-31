@@ -154,6 +154,23 @@ function world(env) {
     assert.strictEqual((await call('/api/checkout', { body: order({ hosting: null }) }, tok)).status, 409, 'nothing left to pay on a hosted page');
   });
 
+  await test('Stripe Tax is off unless STRIPE_TAX=1; on, the session collects the address and VAT id, prices include VAT, every item has the digital-services tax code, and a one-time payment still makes an invoice', async () => {
+    const asForm = async (env, body) => { const w = world(env); await w.call('/api/checkout', { body: w.order(body) }, w.tok); return new URLSearchParams(String(w.calls[0].init.body)); };
+    const off = await asForm(ENV, {});
+    assert(![...off.keys()].some((k) => /automatic_tax|tax_id_collection|billing_address_collection|tax_behavior|tax_code|invoice_creation/.test(k)), 'nothing tax-related while the switch is off');
+    const on = await asForm({ ...ENV, STRIPE_TAX: '1' }, {});
+    assert.strictEqual(on.get('automatic_tax[enabled]'), 'true'); assert.strictEqual(on.get('billing_address_collection'), 'required'); assert.strictEqual(on.get('tax_id_collection[enabled]'), 'true');
+    const oneTime = [...on.keys()].filter((k) => /\[price_data\]\[unit_amount\]$/.test(k));
+    assert(oneTime.length >= 2, 'the one-time lines are there');
+    for (const k of oneTime) { const base = k.replace('[unit_amount]', ''); assert.strictEqual(on.get(base + '[tax_behavior]'), 'inclusive', k + ' includes VAT'); assert.strictEqual(on.get(base + '[product_data][tax_code]'), 'txcd_10000000', k + ' is an electronically supplied service'); }
+    const dl = await asForm({ ...ENV, STRIPE_TAX: '1' }, { destination: 'download', hosting: null });
+    assert.strictEqual(dl.get('mode'), 'payment'); assert.strictEqual(dl.get('invoice_creation[enabled]'), 'true', 'a one-time payment gets an invoice too'); assert.strictEqual(dl.get('customer_creation'), 'always');
+    assert.strictEqual(on.get('invoice_creation[enabled]'), null, 'a subscription makes its own invoices');
+    const w1 = world({ ...ENV, STRIPE_TAX: '1' }), w0 = world(ENV);
+    assert.strictEqual((await (await w1.call('/api/quote', { body: w1.order() }, w1.tok)).json()).vatIncluded, true, 'the overlay is told prices include VAT');
+    assert.strictEqual((await (await w0.call('/api/quote', { body: w0.order() }, w0.tok)).json()).vatIncluded, false);
+  });
+
   await test('a delayed payment method: an unpaid session waits, and the later "async payment succeeded" event makes the purchase; a failed one makes nothing', async () => {
     const { db, hook } = world();
     const unpaid = bought({ payment_status: 'unpaid' });

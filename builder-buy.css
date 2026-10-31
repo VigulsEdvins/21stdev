@@ -42,3 +42,5 @@
 .buy-bought[hidden] { display: none; }
 .buy-on.buy-bought #getTotal { display: none; }
 .buy-on.buy-has-editor .gt-editor { display: none; }
+
+.buy-vat { margin: 0; font-size: .9rem; }

@@ -15,6 +15,9 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const PLANS = { monthly: 'STRIPE_PRICE_MONTHLY', yearly: 'STRIPE_PRICE_YEARLY' };
 const NEEDED = ['STRIPE_SECRET_KEY', 'STRIPE_PRICE_MONTHLY', 'STRIPE_PRICE_YEARLY'];
 const missing = (env, keys) => (keys || NEEDED).filter((k) => !env[k]);
+/** Stripe Tax is switched on by the owner (Worker setting STRIPE_TAX=1) once Stripe Tax is set up in the dashboard: until then checkout is exactly as before. */
+const taxOn = (env) => !!env && env.STRIPE_TAX === '1';
+const DIGITAL_SERVICE = 'txcd_10000000'; // Stripe's tax code for electronically supplied services
 const isTestKey = (key) => /^(sk|rk)_test_/.test(String(key || ''));
 
 const hex = (buf) => Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, '0')).join('');
@@ -89,7 +92,7 @@ async function quoteOrder({ db, user, body, env }) {
 async function createQuote({ db, user, body, env }) {
   const r = await quoteOrder({ db, user, body, env });
   if (r.status !== 200) return r;
-  return { status: 200, json: { ok: true, lines: r.q.lines, payToday: r.q.payToday, hosting: r.q.hosting, blocks: r.q.newAllowance, testMode: isTestKey(env && env.STRIPE_SECRET_KEY) } };
+  return { status: 200, json: { ok: true, lines: r.q.lines, payToday: r.q.payToday, hosting: r.q.hosting, blocks: r.q.newAllowance, vatIncluded: taxOn(env), testMode: isTestKey(env && env.STRIPE_SECRET_KEY) } };
 }
 
 /** One Stripe Checkout Session for the whole order. With hosting: a subscription (free first month) that also carries the one-time items; without: a plain payment. Returns { status, json: { ok, url, testMode } }. */
@@ -107,6 +110,7 @@ async function createOrderCheckout({ env, db, user, origin, body, fetchImpl }) {
     form.set('line_items[' + i + '][price_data][currency]', 'eur');
     form.set('line_items[' + i + '][price_data][product_data][name]', line.label);
     form.set('line_items[' + i + '][price_data][unit_amount]', String(Math.round(line.amount / qty * 100)));
+    if (taxOn(env)) { form.set('line_items[' + i + '][price_data][tax_behavior]', 'inclusive'); form.set('line_items[' + i + '][price_data][product_data][tax_code]', DIGITAL_SERVICE); } // the price the client sees is the price he pays, VAT inside
     form.set('line_items[' + i + '][quantity]', String(qty));
     i++;
   }
@@ -116,6 +120,10 @@ async function createOrderCheckout({ env, db, user, origin, body, fetchImpl }) {
   for (const [k, v] of Object.entries(meta)) { form.set('metadata[' + k + ']', v); if (q.hosting) form.set('subscription_data[metadata][' + k + ']', v); }
   form.set('client_reference_id', user.id);
   if (user.email) form.set('customer_email', user.email);
+  if (taxOn(env)) { // VAT worked out by Stripe from the buyer's address; a business can enter a VAT number; every payment gets an invoice
+    form.set('automatic_tax[enabled]', 'true'); form.set('billing_address_collection', 'required'); form.set('tax_id_collection[enabled]', 'true');
+    if (!q.hosting) { form.set('invoice_creation[enabled]', 'true'); form.set('customer_creation', 'always'); } // a subscription makes its own invoices
+  }
   form.set('success_url', origin + '/builder/?paid=1');
   form.set('cancel_url', origin + '/builder/?paid=0');
   // the same order asked for twice (two tabs, a double click) is one Stripe session, so it cannot be paid twice; another order is another key

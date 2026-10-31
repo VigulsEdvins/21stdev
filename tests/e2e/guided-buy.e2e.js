@@ -52,7 +52,7 @@ const UID = '11111111-1111-4111-8111-111111111111';
   buy.domainCalls = []; buy.domainState = 'pending';
   await page.route('**/api/site-domain**', (r) => { const q = r.request(), view = (h, st) => ({ ok: true, hostname: h, status: st, records: [{ type: 'CNAME', name: h, value: 'fallback.edvlabs.test' }], optionalRecords: [], error: '' }); if (q.method() === 'POST') { const b = JSON.parse(q.postData()); buy.domainCalls.push(b); return r.fulfill({ json: view(b.hostname, 'pending') }); } r.fulfill({ json: view('www.bakery-anna.com', buy.domainState) }); });
   await page.route('**/api/deploy-request', (r) => { buy.deploy.push(JSON.parse(r.request().postData())); r.fulfill({ json: { ok: true } }); });
-  await page.route('**/api/quote', (r) => { const b = JSON.parse(r.request().postData()); buy.quotes.push(b); r.fulfill({ json: { ok: true, lines: [{ key: 'base', label: 'Website, 3 blocks included', amount: 39 }, { key: 'editor', label: 'Admin panel', amount: 39 }], payToday: buy.payToday, hosting: b.hosting ? { plan: b.hosting, amount: b.hosting === 'monthly' ? 3 : 29, trialDays: 30 } : null, blocks: 5, testMode: buy.testMode } }); });
+  await page.route('**/api/quote', (r) => { const b = JSON.parse(r.request().postData()); buy.quotes.push(b); r.fulfill({ json: { ok: true, lines: [{ key: 'base', label: 'Website, 3 blocks included', amount: 39 }, { key: 'editor', label: 'Admin panel', amount: 39 }], payToday: buy.payToday, hosting: b.hosting ? { plan: b.hosting, amount: b.hosting === 'monthly' ? 3 : 29, trialDays: 30 } : null, blocks: 5, vatIncluded: true, testMode: buy.testMode } }); });
   await page.route('**/api/checkout', (r) => { buy.checkouts.push(JSON.parse(r.request().postData())); r.fulfill({ json: { ok: true, url: 'https://checkout.stripe.com/c/pay/cs_test_1', testMode: true } }); });
   await page.route('https://checkout.stripe.com/**', (r) => r.fulfill({ contentType: 'text/html', body: '<title>Stripe</title>' }));
   let rev = 1; // the account copy of the page: every save moves the revision on, and a read answers the current one (so the builder keeps its own page)
@@ -88,7 +88,7 @@ const UID = '11111111-1111-4111-8111-111111111111';
   // step 3: the total is the server's, the waiver gates Pay, the order carries no price
   await page.check('#buyEditor'); await page.check('#buyHosting input[value="yearly"]'); await page.click('#buyNext');
   await page.waitForFunction(() => /96/.test(document.getElementById('buyTotal').textContent));
-  assert(/test mode/i.test(await page.textContent('#buyOverlay')), 'test mode is visible');
+  assert(/test mode/i.test(await page.textContent('#buyOverlay')), 'test mode is visible'); assert(/include VAT/i.test(await page.textContent('#buyVat')), 'the price says it includes VAT');
   assert(!(await page.isVisible('#buyNext')), 'step 3 has no Next button'); assert(await page.isVisible('#buyPay'), 'Pay is on step 3');
   await page.click('#buyPay'); await page.waitForSelector('#buyWaiverError', { state: 'visible' });
   assert(/tick the box/i.test(await page.textContent('#buyWaiverError')), 'Pay without the tick says what to do'); assert.strictEqual(buy.checkouts.length, 0, 'nothing was sent to Stripe');

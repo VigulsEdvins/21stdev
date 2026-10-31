@@ -201,6 +201,7 @@
         if (s.quote) s.quote.lines.forEach((l) => dl.append(el(doc, 'dt', {}, l.label), el(doc, 'dd', {}, eur(l.amount))));
         body.append(dl);
         if (s.quote && s.quote.hosting) body.append(el(doc, 'p', { id: 'buyHostingLine' }, 'Hosting: free for ' + s.quote.hosting.trialDays + ' days, then ' + eur(s.quote.hosting.amount) + ' a ' + (s.quote.hosting.plan === 'monthly' ? 'month' : 'year') + '. Cancel any time.'));
+        if (s.quote && s.quote.vatIncluded) body.append(el(doc, 'p', { id: 'buyVat', class: 'buy-vat' }, 'Prices include VAT where it applies. You can add your VAT number on the payment page, and you get an invoice by email.'));
         const w = el(doc, 'input', { type: 'checkbox', id: 'buyWaiver' }); w.checked = s.waiver;
         const werr = el(doc, 'p', { class: 'buy-error', id: 'buyWaiverError', role: 'alert' }, 'Please tick the box above to continue.'); werr.hidden = true;
         w.addEventListener('change', () => { s.waiver = w.checked; if (s.waiver) { werr.hidden = true; w.removeAttribute('aria-invalid'); } });

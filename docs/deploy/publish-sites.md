@@ -245,3 +245,15 @@ Switching it on, in order:
 5. Deploy-help orders: `npm run owner-sites -- deploy-requests` lists who paid, their domain and note; `-- deploy-requests --done <id>` marks one finished.
 
 Known limits: the download ZIP is built in the browser, so the "pay before download" lock can be bypassed by a technical person (publishing is enforced on the server); the waiver text in the overlay is a placeholder until the lawyer sets the real wording; VAT and invoices are still to be decided with the accountant.
+
+### VAT and invoices with Stripe Tax (decided 2026-10-31: option B, no accountant)
+
+Code: setting **`STRIPE_TAX=1`** on the main Worker turns it on. Until it is set, checkout is exactly as before. With it on, the checkout collects the buyer's address and an optional VAT number, shows prices **with VAT included**, tags every line as "electronically supplied services" (`txcd_10000000`), and every payment gets a Stripe invoice (a subscription makes its own). Stripe Tax calculates and keeps the records; **it does not register you or file your returns**.
+
+Owner steps, in test mode first:
+1. Stripe, **Settings, Business, Business details**: your legal name, address and VAT number (as registered in Latvia).
+2. **Settings, Tax**: head office address (Latvia); default product tax code **Electronically supplied services**; default tax behavior **Inclusive**. Under **Registrations** add Latvia, and for sales to consumers in other EU countries the EU one-stop-shop (OSS) once you are registered for it.
+3. **Settings, Billing, Invoices**: turn on invoice emails; check the invoice shows your name, address and VAT number. Compare it with the invoice rules of the Latvian tax office (VID); ask them if anything is missing (for example numbering).
+4. Your two recurring prices were made with no tax setting; with the default above they are treated as VAT-inclusive. (Or make new prices marked "Inclusive".)
+5. Add the Worker variable `STRIPE_TAX` = `1`, then test: pay with a German test address; the invoice must show German VAT inside the price. Pay with a business VAT number; VAT should drop out (reverse charge).
+6. **Registering for OSS and filing VAT returns is yours to do** at the Latvian tax office (VID, e-services). One short session with an accountant or a call to VID for the first return is worth it; Stripe's Tax reports (Tax, Reports) give the figures for the return.
