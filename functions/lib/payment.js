@@ -139,18 +139,48 @@ function createPayments({ db, now, env }) {
   const ok = (extra) => ({ status: 200, json: Object.assign({ ok: true }, extra || {}) });
   const id = (v) => (typeof v === 'string' ? v : v && typeof v.id === 'string' ? v.id : null); // Stripe sends an id, or the whole object when expanded
 
-  /* The person has paid for hosting (a card is on file and the trial has begun). Make the place; until the first invoice says otherwise it lasts the trial plus a day. */
-  async function subscribed(session) {
-    if (!session || session.mode !== 'subscription') return ok({ ignored: 'not-subscription' });
-    const userId = (session.metadata && session.metadata.user_id) || session.client_reference_id, sub = id(session.subscription);
-    if (typeof session.id !== 'string' || !sub || typeof userId !== 'string' || !UUID.test(userId)) { console.error('stripe: session ' + session.id + ' has no valid user or subscription'); return { status: 400, json: { ok: false, errors: ['No account on this payment.'] } }; }
+  const DESTINATIONS = ['edvlabs', 'domain', 'download'];
+  /* What the order metadata says, checked before anything is written. null means it is not an order from the buying flow (an older hosting-only session). */
+  async function readOrderMeta(m, userId) {
+    if (m.project_id === undefined) return null;
+    const blocks = /^\d{1,3}$/.test(String(m.blocks)) ? Number(m.blocks) : 0;
+    const good = typeof m.project_id === 'string' && UUID.test(m.project_id) && DESTINATIONS.includes(m.destination) && blocks >= 1 && blocks <= 500
+      && typeof m.price_version === 'string' && m.price_version.length >= 1 && m.price_version.length <= 20 && (m.editor === '1' || m.editor === '0') && (m.deploy_help === '1' || m.deploy_help === '0');
+    if (!good || !(await db.projectForUser(m.project_id, userId))) return { bad: true };
+    return { projectId: m.project_id, destination: m.destination, allowance: blocks, editor: m.editor === '1', version: m.price_version, deployHelp: m.deploy_help === '1' };
+  }
+
+  /* The client has paid for an order (a subscription with a free first month, or a one-time payment). Each part is written on its own and is safe to repeat, so a delivery that failed halfway
+     is finished by Stripe's retry: the purchase (what was bought), the page marked paid, the deploy-help request, and for hosting the place. */
+  async function completed(session) {
+    if (!session || (session.mode !== 'subscription' && session.mode !== 'payment')) return ok({ ignored: 'not-ours' });
+    const m = session.metadata || {}, userId = m.user_id || session.client_reference_id, sub = id(session.subscription);
+    if (typeof session.id !== 'string' || typeof userId !== 'string' || !UUID.test(userId) || (session.mode === 'subscription' && !sub)) { console.error('stripe: session ' + session.id + ' has no valid user or subscription'); return { status: 400, json: { ok: false, errors: ['No account on this payment.'] } }; }
+    if (session.mode === 'payment' && session.payment_status !== 'paid') return ok({ ignored: 'not-paid' }); // a delayed method sends this event unpaid first
+    const order = await readOrderMeta(m, userId);
+    if (order && order.bad) { console.error('stripe: session ' + session.id + ' has a bad order'); return { status: 400, json: { ok: false, errors: ['That order could not be read.'] } }; }
+    if (session.mode === 'payment' && !order) return ok({ ignored: 'not-ours' });
+    if (order) {
+      let purchase = await db.purchaseBySession(session.id);
+      if (!purchase) {
+        try { purchase = await db.insertPurchase({ project_id: order.projectId, user_id: userId, allowance: order.allowance, editor: order.editor, price_version: order.version, destination: order.destination, stripe_session_id: session.id }); } catch (e) {
+          if (!e || e.code !== 'duplicate') throw e; // a 500 makes Stripe try again later
+          purchase = await db.purchaseBySession(session.id); // two deliveries at the same moment: the unique index let one through
+        }
+      }
+      await db.markProjectPaid(order.projectId);
+      if (order.deployHelp && purchase) {
+        try { await db.insertDeployRequest({ purchase_id: purchase.id, user_id: userId, status: 'open' }); } catch (e) { if (!e || e.code !== 'duplicate') throw e; }
+      }
+    }
+    if (session.mode !== 'subscription') return ok({ created: true });
     if (await db.placeBySession(session.id)) return ok({ duplicate: true });
-    const until = new Date(new Date(now()).getTime() + (trialDays(env || {}) + 1) * 86400000).toISOString();
+    const until = new Date(new Date(now()).getTime() + (trialDays(env || {}) + 1) * 86400000).toISOString(); // until the first invoice says otherwise: the free month and a day
     try {
       await db.insertPlace({ user_id: userId, status: 'active', paid_until: until, granted_by: 'payment', stripe_session_id: session.id, stripe_subscription_id: sub, stripe_customer_id: id(session.customer) });
     } catch (e) {
-      if (e && e.code === 'duplicate') return ok({ duplicate: true }); // two deliveries at the same moment: the unique index let one through
-      throw e; // a 500 makes Stripe try again later
+      if (e && e.code === 'duplicate') return ok({ duplicate: true });
+      throw e;
     }
     return ok({ created: true });
   }
@@ -181,7 +211,7 @@ function createPayments({ db, now, env }) {
     async handleEvent(event) {
       if (!event || typeof event.type !== 'string' || !event.data || typeof event.data.object !== 'object' || !event.data.object) return { status: 400, json: { ok: false, errors: ['Not an event.'] } };
       const o = event.data.object;
-      if (event.type === 'checkout.session.completed') return subscribed(o);
+      if (event.type === 'checkout.session.completed') return completed(o);
       if (event.type === 'invoice.paid') return invoicePaid(o);
       if (event.type === 'customer.subscription.deleted') return cancelled(o);
       if (event.type === 'charge.refunded') return refunded(o);

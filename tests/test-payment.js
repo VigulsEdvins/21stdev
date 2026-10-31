@@ -19,6 +19,11 @@ function fakeDb() {
     projects: [], purchases: [],
     async projectForUser(id, userId) { return this.projects.find((x) => x.id === id && x.user_id === userId) || null; },
     async purchaseForProject(id) { return this.purchases.filter((x) => x.project_id === id).slice(-1)[0] || null; },
+    deployRequests: [], paidMarks: [],
+    async purchaseBySession(id) { return this.purchases.find((x) => x.stripe_session_id === id) || null; },
+    async insertPurchase(row) { if (this.purchases.some((x) => x.stripe_session_id === row.stripe_session_id)) throw Object.assign(new Error('dup'), { code: 'duplicate' }); const r = Object.assign({ id: 'pur-' + (this.purchases.length + 1) }, row); this.purchases.push(r); return r; },
+    async insertDeployRequest(row) { if (this.deployRequests.some((x) => x.purchase_id === row.purchase_id)) throw Object.assign(new Error('dup'), { code: 'duplicate' }); this.deployRequests.push(row); return row; },
+    async markProjectPaid(id) { this.paidMarks.push(id); },
     async placeBySession(id) { return rows.find((r) => r.stripe_session_id === id) || null; },
     async insertPlace(row) { if (rows.some((r) => r.stripe_session_id === row.stripe_session_id || (row.stripe_subscription_id && r.stripe_subscription_id === row.stripe_subscription_id))) throw Object.assign(new Error('dup'), { code: 'duplicate' }); rows.push(Object.assign({ id: 'ent-' + (rows.length + 1) }, row)); return row; },
     async extendBySubscription(sub, until) { rows.filter((r) => r.stripe_subscription_id === sub && r.status === 'active').forEach((r) => { r.paid_until = until; }); },
@@ -68,6 +73,36 @@ function world(env) {
     const slow = world(); slow.db.placeBySession = async () => null;
     await Promise.all([slow.hook(event('checkout.session.completed', session())), slow.hook(event('checkout.session.completed', session()))]);
     assert.strictEqual(slow.db.rows.length, 1);
+  });
+
+  const bought = (over) => session({ metadata: { user_id: U1, project_id: PID, destination: 'edvlabs', editor: '1', blocks: '5', price_version: 'v1', deploy_help: '0', site_name: 'bakery-anna' }, ...over });
+
+  await test('an order paid on Stripe makes one purchase (allowance, admin panel, price table, destination), marks the page paid and makes the hosting place; ten replays and a race change nothing', async () => {
+    const w = world(); const { db, hook } = w;
+    for (let i = 0; i < 10; i++) assert.strictEqual((await hook(event('checkout.session.completed', bought()))).status, 200);
+    assert.strictEqual(db.purchases.length, 1); assert.strictEqual(db.rows.length, 1); assert.deepStrictEqual(db.paidMarks.slice(0, 1), [PID]);
+    const p = db.purchases[0];
+    assert.strictEqual(p.project_id, PID); assert.strictEqual(p.user_id, U1); assert.strictEqual(p.allowance, 5); assert.strictEqual(p.editor, true); assert.strictEqual(p.price_version, 'v1'); assert.strictEqual(p.destination, 'edvlabs'); assert.strictEqual(p.stripe_session_id, 'cs_test_1');
+    const racy = world(); racy.db.purchaseBySession = async () => null; racy.db.placeBySession = async () => null;
+    await Promise.all([racy.hook(event('checkout.session.completed', bought())), racy.hook(event('checkout.session.completed', bought()))]);
+    assert.strictEqual(racy.db.purchases.length, 1); assert.strictEqual(racy.db.rows.length, 1);
+  });
+
+  await test('a download-only payment makes a purchase and no hosting place; deploy help makes exactly one open request for that purchase', async () => {
+    const { db, hook } = world();
+    const dl = bought({ mode: 'payment', subscription: null, payment_status: 'paid', metadata: { ...bought().metadata, destination: 'download', deploy_help: '1', editor: '0' } });
+    for (let i = 0; i < 3; i++) assert.strictEqual((await hook(event('checkout.session.completed', dl))).status, 200);
+    assert.strictEqual(db.purchases.length, 1); assert.strictEqual(db.rows.length, 0, 'no hosting place'); assert.strictEqual(db.purchases[0].editor, false);
+    assert.strictEqual(db.deployRequests.length, 1); assert.strictEqual(db.deployRequests[0].purchase_id, db.purchases[0].id); assert.strictEqual(db.deployRequests[0].user_id, U1);
+  });
+
+  await test('metadata that is wrong writes nothing: a project id that is not a uuid, a page that is not the buyer\'s, a made-up destination, a silly allowance', async () => {
+    const { db, hook } = world();
+    const m = (o) => bought({ metadata: { ...bought().metadata, ...o } });
+    for (const o of [{ project_id: 'nope' }, { project_id: '44444444-4444-4444-8444-444444444444' }, { destination: 'moon' }, { blocks: '0' }, { blocks: '9999' }, { blocks: 'five' }, { user_id: 'x' }]) {
+      assert.strictEqual((await hook(event('checkout.session.completed', m(o)))).status, 400, JSON.stringify(o));
+    }
+    assert.strictEqual(db.purchases.length + db.rows.length + db.deployRequests.length + db.paidMarks.length, 0);
   });
 
   await test('other events and sessions without a valid person or subscription make no place', async () => {

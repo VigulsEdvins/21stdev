@@ -55,6 +55,7 @@ function createDb(env, fetchImpl) {
     /* The buying flow (supabase/migrations/20261031160000_project_purchases.sql). A project is only ever read together with its owner, so one person can never quote or buy another's page. */
     projectForUser: (projectId, userId) => (UUID.test(String(projectId)) && UUID.test(String(userId)) ? first('projects?select=id,name,state,status&limit=1&deleted_at=is.null&id=eq.' + enc(projectId) + '&user_id=eq.' + enc(userId)) : Promise.resolve(null)),
     purchaseForProject: (projectId) => (UUID.test(String(projectId)) ? first('project_purchases?select=*&limit=1&order=created_at.desc&project_id=eq.' + enc(projectId)) : Promise.resolve(null)),
+    purchaseBySession: (sessionId) => first('project_purchases?select=*&limit=1&stripe_session_id=eq.' + enc(sessionId)),
     purchasesByUser: (userId) => all('project_purchases?select=*&order=created_at.desc&user_id=eq.' + enc(userId)),
     async insertPurchase(row) {
       try { return (await rest('POST', 'project_purchases', row, 'return=representation'))[0]; } catch (e) {
@@ -62,7 +63,12 @@ function createDb(env, fetchImpl) {
         throw e;
       }
     },
-    async insertDeployRequest(row) { return (await rest('POST', 'deploy_requests', row, 'return=representation'))[0]; },
+    async insertDeployRequest(row) {
+      try { return (await rest('POST', 'deploy_requests', row, 'return=representation'))[0]; } catch (e) {
+        if (e.code === '23505') throw Object.assign(e, { code: 'duplicate' }); // one request per purchase
+        throw e;
+      }
+    },
     deployRequestsOpen: () => all('deploy_requests?select=*&order=created_at.asc&limit=200&status=eq.open'),
     markProjectPaid: (projectId) => rest('PATCH', 'projects?id=eq.' + enc(projectId), { status: 'paid' }),
     refundByIntent: (intent) => rest('PATCH', 'site_entitlements?stripe_payment_intent=eq.' + enc(intent), { status: 'refunded' }),

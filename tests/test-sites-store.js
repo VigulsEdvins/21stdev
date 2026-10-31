@@ -109,6 +109,13 @@ const test = async (name, fn) => { await fn(); count++; };
     await db.markProjectPaid(PID); const paid = s.calls[s.calls.length - 1]; assert.strictEqual(paid.method, 'PATCH'); assert(paid.url.includes('projects?id=eq.' + PID)); assert.deepStrictEqual(JSON.parse(paid.body), { status: 'paid' });
   });
 
+  await test('purchase by Stripe session, and a second deploy request for one purchase is a duplicate', async () => {
+    const s = stub([{ status: 200, body: [{ id: 'p1' }] }, { status: 409, body: { code: '23505', message: 'duplicate key' } }]);
+    const db = store.createDb(ENV, s.fetchImpl);
+    assert.strictEqual((await db.purchaseBySession('cs_1&x')).id, 'p1'); assert(s.calls[0].url.endsWith('stripe_session_id=eq.cs_1%26x'));
+    await assert.rejects(db.insertDeployRequest({ purchase_id: 'p1' }), (e) => e.code === 'duplicate');
+  });
+
   await test('a database error carries its status and code but never the keys', async () => {
     const s = stub([{ status: 503, body: { message: 'upstream unavailable' } }]);
     await assert.rejects(store.createDb(ENV, s.fetchImpl).siteByName('abc'), (e) => e.status === 503 && !/SECRET|anon-key/.test(e.message));
