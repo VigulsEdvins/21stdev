@@ -13,6 +13,8 @@
   const CONSENT = tr('It is fine to contact me about this page.'); // the sentence the visitor sees is the one sent as proof of consent
 
   let brief = load();
+  /* "Ask us to do it" on the home page links here with ?way=done: the visitor answers every question, then goes straight to the contact form (no "who makes it" fork). */
+  try { if (new URLSearchParams(location.search).get('way') === 'done') { brief.path = 'done'; save(); history.replaceState(null, '', location.pathname + location.hash); } } catch (e) { /* the fork still lets them choose */ }
   let check = null; // the Cloudflare spam check, when the site has one (js/spam-check.js)
   function load() {
     try { const b = JSON.parse(localStorage.getItem(KEY)); if (b && b.v === 1 && b.answers) return b; } catch (e) { /* storage may be blocked */ }
@@ -117,7 +119,8 @@
     QUESTIONS.forEach((q, i) => dl.append(h('dt', { text: tr(q.title) }), h('dd', null, h('span', { text: describe(q) }), h('a', { class: 'link', href: '#q' + (i + 1), 'aria-label': tr('Change: {question}', { question: tr(q.title) }) }, tr('Change')))));
     return h('div', null, h('h1', { id: 'q-title', tabindex: '-1', text: tr('Here is what you told us.') }),
       h('p', { class: 'lead', text: tr('Check it over. Anything marked “not answered” or “I don’t know yet” is fine; we help with it.') }), dl,
-      h('div', { class: 'q-nav' }, btn(tr('Back'), 'btn--secondary', () => go('q' + QUESTIONS.length)), h('span', { class: 'spacer' }), btn(tr('Choose who makes it'), '', () => go('choose'))));
+      h('div', { class: 'q-nav' }, btn(tr('Back'), 'btn--secondary', () => go('q' + QUESTIONS.length)), h('span', { class: 'spacer' }), brief.path === 'done' ? btn(tr('Next: how to reach you'), '', () => go('contact')) : btn(tr('Choose who makes it'), '', () => go('choose'))),
+      brief.path === 'done' ? h('p', { class: 'hint mt-5' }, h('a', { class: 'link', href: '#choose', id: 'q-other-way' }, tr('I would rather build it myself'))) : null);
   }
   /* "You build it" needs an account. If accounts are not switched on yet (no /api/config answer), fall back to the "tell me when it opens" form. */
   function openAccount() {
@@ -211,13 +214,14 @@
     const n = answeredCount(), total = QUESTIONS.length, done = n === total;
     const firstOpen = QUESTIONS.findIndex((q) => !isAnswered(q));
     const toBuilder = () => { brief.path = 'self'; save(); openAccount(); };
+    const wantsUs = brief.path === 'done'; // came from "Ask us to do it": no builder buttons
     const lead = done ? tr('You have answered all {total} questions.', { total }) : tr('You answered {n} of {total} questions earlier.', { n, total });
     return h('div', null, h('h1', { id: 'q-title', tabindex: '-1', text: tr('Welcome back.') }),
       h('p', { class: 'lead', text: lead + ' ' + tr('Your answers are still here, so there is no need to start over.') }),
       brief.sent ? h('p', { class: 'hint', text: tr('We already have a copy of your answers.') }) : null,
       h('div', { class: 'btn-row' },
-        done ? btn(tr('Open the builder'), '', toBuilder, { id: 'w-build' }) : btn(tr('Carry on with the questions'), '', () => go('q' + (firstOpen + 1)), { id: 'w-carry' }),
-        done ? null : btn(tr('Open the builder'), 'btn--secondary', toBuilder, { id: 'w-build' }),
+        done && wantsUs ? btn(tr('Next: how to reach you'), '', () => go('contact'), { id: 'w-contact' }) : done ? btn(tr('Open the builder'), '', toBuilder, { id: 'w-build' }) : btn(tr('Carry on with the questions'), '', () => go('q' + (firstOpen + 1)), { id: 'w-carry' }),
+        done || wantsUs ? null : btn(tr('Open the builder'), 'btn--secondary', toBuilder, { id: 'w-build' }),
         btn(tr('Look at my answers'), 'btn--secondary', () => go('check'), { id: 'w-look' }),
         btn(tr('Go through the questions again'), 'btn--secondary', () => go('q1'), { id: 'w-again' })),
       h('p', { class: 'hint mt-5', text: tr('Going through them again shows your answers, ready to change. Nothing is erased.') }));

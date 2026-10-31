@@ -40,6 +40,8 @@
     'I will build it': 'Veidošu pats',
     'We build it': 'Mēs veidojam',
     'You talk. We make.': 'Jūs stāstāt. Mēs darām.',
+    'Next: how to reach you': 'Tālāk: kā ar jums sazināties',
+    'I would rather build it myself': 'Labāk veidošu pats',
     'Agreed after we talk': 'Cena pēc sarunas',
     'no price list, no obligation': 'bez cenrāža, bez saistībām',
     'We read your answers and get in touch': 'Izlasām jūsu atbildes un sazināmies',

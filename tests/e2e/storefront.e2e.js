@@ -113,6 +113,22 @@ const Q = require('../../site/js/questions.js');
   assert((await page.innerText('main')).includes('Nothing has left your browser'), 'honest when sending is off');
   console.log('  ✓ phone number alone is enough; errors name the problem; honest when sending is not switched on');
 
+  // "Ask us to do it" on the home page: all questions, then straight to the contact form (no fork)
+  await page.evaluate(() => localStorage.clear());
+  await page.goto(srv.url + '/site/index.html');
+  assert((await page.getAttribute('a:has-text("Ask us to do it")', 'href')).endsWith('start/?way=done'), 'the home card links to the done-for-you start');
+  await page.goto(srv.url + '/site/start/index.html?way=done');
+  assert(!page.url().includes('way=done'), 'the marker is removed from the address');
+  assert.strictEqual(await page.textContent('#q-count'), 'Question 1 of 10', 'it starts with the questions');
+  await page.goto(srv.url + '/site/start/index.html#check');
+  assert.strictEqual(await page.locator('text=Choose who makes it').count(), 0, 'no fork for this visitor');
+  await page.getByRole('button', { name: 'Next: how to reach you' }).click();
+  await page.waitForSelector('#c-email');
+  assert(page.url().endsWith('#contact') && (await page.innerText('main')).includes('Send my answers'), 'the contact form follows the answers');
+  await page.goto(srv.url + '/site/start/index.html#check'); await page.click('#q-other-way'); await page.waitForSelector('.fork');
+  assert(page.url().endsWith('#choose'), 'they can still choose to build it themselves');
+  console.log('  ✓ "Ask us to do it": questions, then the contact form, no fork');
+
   // no horizontal scroll on a phone
   await page.setViewportSize({ width: 375, height: 800 });
   for (const u of ['/site/index.html', '/site/start/index.html#q4']) {
