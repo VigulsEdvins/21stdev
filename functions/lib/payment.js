@@ -96,7 +96,7 @@ async function createQuote({ db, user, body, env }) {
 }
 
 /** One Stripe Checkout Session for the whole order. With hosting: a subscription (free first month) that also carries the one-time items; without: a plain payment. Returns { status, json: { ok, url, testMode } }. */
-async function createOrderCheckout({ env, db, user, origin, body, fetchImpl }) {
+async function createOrderCheckout({ env, db, user, origin, body, fetchImpl, kv }) {
   const r = await quoteOrder({ db, user, body, env });
   if (r.status !== 200) return r;
   const { q, order, latest } = r;
@@ -129,6 +129,15 @@ async function createOrderCheckout({ env, db, user, origin, body, fetchImpl }) {
   // the same order asked for twice (two tabs, a double click) is one Stripe session, so it cannot be paid twice; another order is another key
   const s = await stripePost(env, fetchImpl, 'checkout/sessions', form, await hmacHex('idem:' + user.id, form.toString()));
   if (!s.ok || !s.json || typeof s.json.url !== 'string' || !/^https:\/\/checkout\.stripe\.com\//.test(s.json.url)) return sorry('Payment could not be started');
+  // only one payment page is open for this person and page: a different order expires the earlier one, so two browser tabs can never both be paid
+  if (kv && typeof s.json.id === 'string' && /^cs_[A-Za-z0-9_]+$/.test(s.json.id)) {
+    const key = 'pending:' + user.id + ':' + order.projectId;
+    try {
+      const before = await kv.get(key);
+      if (typeof before === 'string' && before !== s.json.id && /^cs_[A-Za-z0-9_]+$/.test(before)) await stripePost(env, fetchImpl, 'checkout/sessions/' + before + '/expire', new URLSearchParams()); // refused when it is already paid or expired: fine
+      await kv.put(key, s.json.id, { expirationTtl: 3600 });
+    } catch (e) { console.error('pending checkout bookkeeping failed: ' + (e && e.message)); } // never stops the payment
+  }
   return { status: 200, json: { ok: true, url: s.json.url, testMode: isTestKey(env.STRIPE_SECRET_KEY) } };
 }
 

@@ -257,3 +257,5 @@ Owner steps, in test mode first:
 4. Your two recurring prices were made with no tax setting; with the default above they are treated as VAT-inclusive. (Or make new prices marked "Inclusive".)
 5. Add the Worker variable `STRIPE_TAX` = `1`, then test: pay with a German test address; the invoice must show German VAT inside the price. Pay with a business VAT number; VAT should drop out (reverse charge).
 6. **Registering for OSS and filing VAT returns is yours to do** at the Latvian tax office (VID, e-services). One short session with an accountant or a call to VID for the first return is worth it; Stripe's Tax reports (Tax, Reports) give the figures for the return.
+
+Two browser tabs: opening a different order for the same page expires the payment page of the earlier one (the open session id is kept for an hour in the `SITES` KV under `pending:<user>:<page>`), so the same page cannot be paid twice from two tabs. Asking for the very same order twice reuses one Stripe session.

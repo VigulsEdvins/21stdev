@@ -42,13 +42,14 @@ async function signed(body, t, secret) { return 't=' + t + ',v1=' + (await Pay.h
 
 function world(env) {
   const db = fakeDb(), calls = [];
-  const fetchImpl = async (url, init) => { calls.push({ url, init }); return new Response(JSON.stringify({ id: 'cs_test_9', url: 'https://checkout.stripe.com/c/pay/cs_test_9' }), { status: 200 }); };
-  const deps = { payment: { db, user: async (t) => (t === 'token-for-user-one-aaaaaaaa' ? { id: U1, email: 'a@example.com' } : null), fetchImpl, nowSec: () => NOW_S } };
+  const kvStore = new Map(), kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); } };
+  const fetchImpl = async (url, init) => { calls.push({ url, init }); const key = init && init.headers && init.headers['Idempotency-Key']; const id = key ? 'cs_' + key.slice(0, 10) : 'cs_test_9'; if (/\/expire$/.test(url)) return new Response(JSON.stringify(world.expireFails ? { error: { code: 'resource_missing' } } : { id: url.split('/').slice(-2)[0], status: 'expired' }), { status: world.expireFails ? 400 : 200 }); return new Response(JSON.stringify({ id, url: 'https://checkout.stripe.com/c/pay/' + id }), { status: 200 }); };
+  const deps = { payment: { db, user: async (t) => (t === 'token-for-user-one-aaaaaaaa' ? { id: U1, email: 'a@example.com' } : null), fetchImpl, kv, nowSec: () => NOW_S } };
   const call = (path, init, headers) => http.route(new Request('https://edvlabs.test' + path, Object.assign({ method: 'POST' }, init, { headers: headers || {} })), env || ENV, asset, deps);
   const hook = async (obj, over) => { const body = JSON.stringify(obj); return call('/api/stripe-webhook', { body }, { 'Stripe-Signature': await signed(body, NOW_S, over && over.secret), 'Content-Type': 'application/json' }); };
   db.projects.push({ id: PID, user_id: U1, name: 'Shop', status: 'draft', state: { stack: blocks(5) } });
   const order = (over) => JSON.stringify(Object.assign({ projectId: PID, destination: 'edvlabs', editor: true, hosting: 'monthly', deployHelp: false }, over || {}));
-  return { db, calls, call, hook, order, tok: { Authorization: 'Bearer token-for-user-one-aaaaaaaa' } };
+  return { db, kvStore, calls, call, hook, order, tok: { Authorization: 'Bearer token-for-user-one-aaaaaaaa' } };
 }
 
 (async () => {
@@ -171,6 +172,21 @@ function world(env) {
     assert.strictEqual((await (await w0.call('/api/quote', { body: w0.order() }, w0.tok)).json()).vatIncluded, false);
   });
 
+  await test('only one payment page is open per page and person: a different order expires the earlier one, the same order twice keeps one session, a failed expire never blocks checkout', async () => {
+    const w = world(), { calls, call, order, tok } = w;
+    const expires = () => calls.filter((c) => /\/expire$/.test(c.url));
+    const a = await (await call('/api/checkout', { body: order() }, tok)).json(); assert(a.ok);
+    await call('/api/checkout', { body: order() }, tok);
+    assert.strictEqual(expires().length, 0, 'the same order again is the same session: nothing is expired');
+    const idA = a.url.split('/').pop();
+    const b = await (await call('/api/checkout', { body: order({ hosting: 'yearly' }) }, tok)).json(); assert(b.ok && b.url !== a.url);
+    assert.strictEqual(expires().length, 1, 'the earlier payment page is expired'); assert.strictEqual(expires()[0].url, 'https://api.stripe.com/v1/checkout/sessions/' + idA + '/expire'); assert.strictEqual(expires()[0].init.method, 'POST');
+    const kvKey = [...w.kvStore.keys()][0]; assert(/^pending:/.test(kvKey) && w.kvStore.get(kvKey) === b.url.split('/').pop(), 'the open session is remembered');
+    world.expireFails = true; // an earlier page that is already paid or expired: Stripe refuses, checkout carries on
+    const c = await call('/api/checkout', { body: order({ hosting: 'monthly', editor: false }) }, tok); assert.strictEqual(c.status, 200); world.expireFails = false;
+    const other = world(); await other.call('/api/checkout', { body: other.order() }, other.tok); assert.strictEqual(other.calls.filter((x) => /expire/.test(x.url)).length, 0, 'a first checkout expires nothing');
+  });
+
   await test('a delayed payment method: an unpaid session waits, and the later "async payment succeeded" event makes the purchase; a failed one makes nothing', async () => {
     const { db, hook } = world();
     const unpaid = bought({ payment_status: 'unpaid' });
@@ -265,7 +281,7 @@ function world(env) {
     assert.strictEqual((await call('/api/checkout', { body: order() }, {})).status, 401);
     assert.strictEqual(calls.length, 0);
     const r = await call('/api/checkout', { body: order({ hosting: 'yearly' }) }, Object.assign({ Origin: 'https://edvlabs.test' }, tok)), j = await r.json();
-    assert.strictEqual(r.status, 200); assert(j.ok && j.url === 'https://checkout.stripe.com/c/pay/cs_test_9' && j.testMode === true);
+    assert.strictEqual(r.status, 200); assert(j.ok && /^https:\/\/checkout\.stripe\.com\/c\/pay\/cs_/.test(j.url) && j.testMode === true);
     assert.strictEqual(calls[0].url, 'https://api.stripe.com/v1/checkout/sessions'); assert.strictEqual(calls[0].init.headers.Authorization, 'Bearer ' + ENV.STRIPE_SECRET_KEY);
     const f = new URLSearchParams(String(calls[0].init.body)), items = {};
     for (const [k, v] of f) { const m = /^line_items\[(\d+)\]\[(.+)\]$/.exec(k); if (m) (items[m[1]] = items[m[1]] || {})[m[2]] = v; }

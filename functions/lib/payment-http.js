@@ -36,7 +36,7 @@ async function route(request, env, json, deps) {
     else {
       let body = null; try { body = JSON.parse(await request.text()); } catch (e) { body = null; }
       if (!body || typeof body !== 'object') return json(400, { ok: false, errors: ['That was not valid JSON.'] });
-      r = path === '/api/quote' ? await Payment.createQuote({ db, user, body, env }) : path === '/api/deploy-request' ? await Payment.submitDeployRequest({ db, user, body }) : await Payment.createOrderCheckout({ env, db, user, origin: url.origin, body, fetchImpl: d.fetchImpl });
+      r = path === '/api/quote' ? await Payment.createQuote({ db, user, body, env }) : path === '/api/deploy-request' ? await Payment.submitDeployRequest({ db, user, body }) : await Payment.createOrderCheckout({ env, db, user, origin: url.origin, body, fetchImpl: d.fetchImpl, kv: d.kv || env.SITES });
     }
     return json(r.status, r.json);
   }
