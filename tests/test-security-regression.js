@@ -91,13 +91,14 @@ test('R12', 'database: row level security is on, anonymous visitors have no righ
     assert(new RegExp('revoke all on public\\.' + t + ' from anon', 'i').test(all), t + ': anon has nothing');
     const pol = [...all.matchAll(new RegExp('create policy "[^"]+"\\s+on public\\.' + t + '\\b[^;]*;', 'gi'))].map((m) => m[0]);
     /* Tables the server writes (publishing, name holds, paid places) give the owner a read policy only, and no write right at all. */
-    const serverWritten = ['published_sites', 'site_name_holds', 'site_entitlements', 'account_limits'].includes(t);
+    const serverWritten = ['published_sites', 'site_name_holds', 'site_entitlements', 'account_limits', 'site_admins'].includes(t);
     if (serverWritten) assert(!new RegExp('grant[^;]*\\b(insert|update|delete|all)\\b[^;]*on public\\.' + t + '\\s+to authenticated', 'i').test(all), t + ': the browser has no write right');
     assert(pol.length >= (serverWritten ? 1 : 3), t + ': has policies'); pol.forEach((p) => assert(/auth\.uid\(\)\)? = user_id/.test(p), t + ': policy is tied to the owner: ' + p.slice(0, 60)));
     assert(!new RegExp('grant[^;]*\\bto anon\\b[^;]*public\\.' + t, 'i').test(all) && !new RegExp('grant[^;]*public\\.' + t + '[^;]*to anon', 'i').test(all), t + ': never granted to anon');
   }
   assert(!/grant\s+delete\s+on\s+public\.projects/i.test(all), 'a project is never deleted straight from the browser');
   assert(/revoke all on function public\.delete_my_account\(\) from public, anon/i.test(all), 'account deletion is closed to anon');
+  assert(!/grant\s+select\s+on\s+public\.site_admins/i.test(all) && /grant select \(([^)]*)\) on public\.site_admins/i.test(all) && !/grant select \([^)]*(password_hash|salt|rounds|credential_version)[^)]*\) on public\.site_admins/i.test(all), 'site_admins: the browser can read only the non-secret columns');
   assert(!/service_role/i.test(all), 'no migration hands rows to the service role by name');
 });
 test('R13', 'download without a paid entitlement, after expiry, and above the allowance is refused', async () => {

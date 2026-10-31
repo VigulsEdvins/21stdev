@@ -72,6 +72,16 @@ function createDb(env, fetchImpl) {
         throw e;
       }
     },
+    adminBySite: (siteId) => first('site_admins?select=*&limit=1&site_id=eq.' + enc(siteId)),
+    adminsBySites: (ids) => (ids.length ? all('site_admins?select=site_id,path_digits,username,last_login_at&site_id=in.(' + ids.filter((i) => UUID.test(String(i))).map(enc).join(',') + ')') : Promise.resolve([])),
+    async upsertAdmin(row) {
+      try { return (await rest('POST', 'site_admins?on_conflict=site_id', row, 'resolution=merge-duplicates,return=representation'))[0]; } catch (e) {
+        if (e.code === '23505') throw Object.assign(e, { code: 'digits-taken' }); // the secret address was already in use by another site
+        throw e;
+      }
+    },
+    deleteAdmin: (siteId) => rest('DELETE', 'site_admins?site_id=eq.' + enc(siteId)),
+    touchAdminLogin: (siteId, iso) => rest('PATCH', 'site_admins?site_id=eq.' + enc(siteId), { last_login_at: iso }),
     accountLimits: (userId) => first('account_limits?select=*&limit=1&user_id=eq.' + enc(userId)),
     /* An upgrade for one person: only the numbers given are changed, the rest stay as they were (an empty column means the default for everyone). */
     async setAccountLimits(userId, patch) { return (await rest('POST', 'account_limits?on_conflict=user_id', Object.assign({ user_id: userId, updated_at: new Date().toISOString() }, patch), 'resolution=merge-duplicates,return=representation'))[0]; },

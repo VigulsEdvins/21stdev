@@ -39,7 +39,8 @@ function candidates(pathname) {
 
 const extOf = (p) => (p.includes('.') ? p.slice(p.lastIndexOf('.') + 1).toLowerCase() : '');
 
-function createSiteServer({ bucket, kv, domain, originOf }) {
+function createSiteServer({ bucket, kv, domain, originOf, admin }) {
+  // admin: the site's admin panel (site-admin-serve.js), answering under /admin<10 digits> and the two files live pages load when the panel is on
   const host = domain || 'edvlabs.com';
   const origin = originOf || ((name) => 'https://' + name + '.' + host); // originOf: the local demo serves http://<name>.localhost:<port>
 
@@ -57,8 +58,9 @@ function createSiteServer({ bucket, kv, domain, originOf }) {
   }
 
   async function handle(request) {
-    if (request.method !== 'GET' && request.method !== 'HEAD') return respond(405, 'Method not allowed', 'text/plain; charset=utf-8', { Allow: 'GET, HEAD' });
     const url = new URL(request.url), name = nameOf(url.hostname);
+    const adminPost = !!admin && request.method === 'POST' && /^\/admin\d{10}(\/|$)/.test(url.pathname); // the only POSTs a site answers
+    if (request.method !== 'GET' && request.method !== 'HEAD' && !adminPost) return respond(405, 'Method not allowed', 'text/plain; charset=utf-8', { Allow: 'GET, HEAD' });
     if (!name) return respond(404, NOT_FOUND);
     let record = null;
     const raw = await kv.get(kvKey(name));
@@ -66,6 +68,12 @@ function createSiteServer({ bucket, kv, domain, originOf }) {
     if (!record) return respond(404, FREE_ADDRESS);
     if (record.redirect && isLabel(record.redirect)) return new Response(null, { status: 301, headers: Object.assign({ Location: origin(record.redirect) + url.pathname + url.search, 'Cache-Control': 'public, max-age=3600' }, SECURITY) });
     if (record.status !== 'live' || !record.id || !Number.isInteger(record.version)) return respond(404, NOT_AVAILABLE);
+
+    if (admin) {
+      const answered = await admin.handle(request, url, record) || await admin.publicFile(url.pathname, record);
+      if (answered) return answered;
+    }
+    if (request.method === 'POST') return respond(404, NOT_FOUND); // not this site's admin address: the same answer as any missing page
 
     const wanted = candidates(url.pathname);
     if (!wanted) return respond(404, NOT_FOUND);

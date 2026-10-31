@@ -55,13 +55,15 @@
   var bridge = null;
   try { bridge = window.parent !== window && window.parent.__cmsBridge || null; } catch (e) { bridge = null; }
   var inBuilder = !!bridge;
+  /* On a published site the editor lives at /admin<10 digits>/ and saves to the server (which checks the sign-in); it keeps nothing in this browser's storage. */
+  var live = !inBuilder && /^\/admin[0-9]{10}\//.test(location.pathname);
   var memory = {}; // inside the builder nothing is kept in the browser's storage
   function read(kind) {
-    if (inBuilder) return memory[kind] || null;
+    if (inBuilder || live) return memory[kind] || null;
     try { return JSON.parse(localStorage.getItem(siteKey + ':' + kind) || 'null'); } catch (e) { return null; }
   }
   function write(kind, value) {
-    if (inBuilder) { memory[kind] = clone(value); return true; }
+    if (inBuilder || live) { memory[kind] = clone(value); return true; }
     try { localStorage.setItem(siteKey + ':' + kind, JSON.stringify(value)); return true; } catch (e) { return false; }
   }
   function clone(v) { return JSON.parse(JSON.stringify(v)); }
@@ -239,10 +241,10 @@
     }
     var dirty = isDirty();
     var pill = $('cms-pill');
-    pill.textContent = dirty ? 'Unpublished changes' : 'Published';
+    pill.textContent = dirty ? (live ? 'Not saved yet' : 'Unpublished changes') : (live ? 'Saved' : 'Published');
     pill.classList.toggle('is-dirty', dirty);
     var btn = $('cms-publish');
-    btn.textContent = dirty ? 'Publish changes' : 'Published';
+    btn.textContent = dirty ? (live ? 'Save changes' : 'Publish changes') : (live ? 'Saved' : 'Published');
     btn.disabled = !dirty;
     $('cms-undo').disabled = cursor <= 0;
     $('cms-redo').disabled = cursor >= history.length - 1;
@@ -707,7 +709,7 @@
     var ed = $('cms-editor');
     var q = $('cms-search').value.trim().toLowerCase();
     ed.appendChild(el('div', { class: 'cms-section-head' }, [
-      el('p', { text: sec.fields.length + ' editable ' + (sec.fields.length === 1 ? 'item' : 'items') + (inBuilder ? ' in this section. Changes show in the preview and are saved to your page as you type.' : ' in this section. Changes show in the preview straight away; press Publish to keep them.') }),
+      el('p', { text: sec.fields.length + ' editable ' + (sec.fields.length === 1 ? 'item' : 'items') + (inBuilder ? ' in this section. Changes show in the preview and are saved to your page as you type.' : ' in this section. Changes show in the preview straight away; press ' + (live ? 'Save changes' : 'Publish') + ' to keep them.') }),
       el('button', { type: 'button', class: 'cms-btn cms-btn-ghost cms-btn-sm', text: 'Show in preview', on: { click: function () { $('cms-workspace').classList.add('show-preview'); focusPreview(sec.id); } } })
     ]));
     var shown = 0;
@@ -726,6 +728,7 @@
   }
 
   /* ---------------- publishing & backup ---------------- */
+  function howToPublish() { return live ? 'Press Save changes to put them on your website.' : 'Press Publish, then download cms-content.js and upload it to change the live site.'; }
   function contentFileText() {
     var out = clone(C);
     out.published = clone(draft);
@@ -742,10 +745,29 @@
     if (historyTimer) snapshot();
     if (inBuilder) { syncBuilder(); if (hasForms()) syncForm(); bridge.close(); return true; }
     if (hasForms() && formProblem()) { toast('Fix the form messages setting first: ' + formProblem()); return false; }
+    if (live) { saveToServer(); return true; }
     if (!write('published', { savedAt: Date.now(), values: clone(draft) })) { toast('This browser would not save the changes. Download cms-content.js instead.'); return false; }
     refreshStatus();
     toast('Published in this browser. Download cms-content.js to put it on the live site.');
     return true;
+  }
+
+  /** The live site: sends the changes to the server, which checks the sign-in and every value again. Nothing is "saved" here until the server says so. */
+  var saving = false;
+  function saveToServer() {
+    if (saving) return;
+    saving = true;
+    var sent = clone(draft);
+    $('cms-publish').disabled = true;
+    fetch('save', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ values: sent }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, json: j }; }); })
+      .then(function (res) {
+        saving = false;
+        if (res.status === 200 && res.json.ok) { write('published', { savedAt: res.json.savedAt || Date.now(), values: sent }); refreshStatus(); toast('Saved. Your website shows the changes within about a minute.'); return; }
+        refreshStatus();
+        toast(res.status === 401 ? 'You were signed out. Open the sign-in page again; your changes here are kept until you close this page.' : (res.json.errors && res.json.errors[0]) || 'The changes could not be saved. Please try again.');
+      })
+      .catch(function () { saving = false; refreshStatus(); toast('The changes could not be saved. Check your connection and try again.'); });
   }
 
   /** Accepts only values for fields this site really has, with web-safe addresses. */
@@ -828,7 +850,7 @@
     valueInput.addEventListener('input', function () { setForm(getForm().method, valueInput.value); paint(); edited(); });
     var panel = el('div', { class: 'cms-panel', id: 'cms-form-panel' }, [
       el('h2', { text: inSection ? 'Where should this form\u2019s messages go?' : 'Where should form messages go?' }),
-      el('p', { class: 'cms-hint', text: 'Every contact, newsletter, waiting-list and quote form on the site uses this one choice. ' + (inBuilder ? 'It is saved to your page as you type.' : 'Press Publish, then download cms-content.js and upload it to change the live site.') }),
+      el('p', { class: 'cms-hint', text: 'Every contact, newsletter, waiting-list and quote form on the site uses this one choice. ' + (inBuilder ? 'It is saved to your page as you type.' : howToPublish()) }),
       el('label', { class: 'cms-label', for: 'cms-form-method', text: 'Send messages' }), select,
       valueWrap, hint, via,
       el('p', { class: 'cms-hint', text: 'Netlify Forms only works when the site is hosted on Netlify. The preview never sends anything; messages are sent from the live site.' })
@@ -899,7 +921,7 @@
       el('h2', { text: 'Languages of the website' }),
       el('p', { class: 'cms-hint', text: 'Tick the languages visitors can choose in the language switcher. Use Translate (or the Language list on the left) to write the words of a language. A language that is not listed here is added in the builder; export again afterwards.' }),
       el('div', { class: 'cms-lang-list' }, rows), count,
-      el('p', { class: 'cms-hint', text: inBuilder ? '' : 'Press Publish, then download cms-content.js and upload it to change the live site. A language that is off stays on the server but is not offered in the switcher.' })
+      el('p', { class: 'cms-hint', text: inBuilder ? '' : howToPublish() + ' A language that is off stays on the server but is not offered in the switcher.' })
     ]));
   }
   /* The visitor's light/dark button in the header: on unless switched off. Inside the builder the choice is a page setting; in the downloaded editor it is kept as `__mode: 'off'` */
@@ -920,7 +942,7 @@
       el('h2', { text: 'Light/dark mode' }),
       el('p', { class: 'cms-hint', text: 'Visitors can switch the website between a light and a dark look with a sun/moon button in the header. Untick to take the button away; the website then always shows its main look.' }),
       el('label', { class: 'cms-lang-name', for: 'cms-mode-on' }, [box, el('span', { text: 'Show the light/dark button in the header' })]),
-      el('p', { class: 'cms-hint', text: inBuilder ? '' : 'Press Publish, then download cms-content.js and upload it to change the live site.' })
+      el('p', { class: 'cms-hint', text: inBuilder ? '' : howToPublish() })
     ]));
   }
   function renderForms() { $('cms-editor').appendChild(formPanel(false)); }
@@ -948,21 +970,37 @@
       importInput.value = '';
     });
 
-    ed.appendChild(el('div', { class: 'cms-panel' }, [
-      el('h2', { text: 'Put the changes on the live website' }),
-      el('ol', {}, [
-        el('li', { text: 'Press Publish. The website you open in this browser now shows the changes.' }),
-        el('li', { text: 'Download cms-content.js and upload it to your web host, replacing the old file next to index.html.' }),
-        el('li', { text: 'From then on every visitor sees the new content.' })
-      ]),
-      el('div', { class: 'cms-inline' }, [
-        el('button', { type: 'button', class: 'cms-btn cms-btn-primary', text: 'Download cms-content.js', on: { click: function () {
-          if (isDirty() && !publish()) return;
-          download('cms-content.js', contentFileText(), 'text/javascript');
-        } } })
-      ]),
-      el('p', { class: 'cms-hint', text: 'This editor has no login. Anyone who opens admin.html can change content in their own browser, but only the file you upload changes the live site. Keep admin.html off the public host if you do not want others to see it.' })
-    ]));
+    if (live) {
+      ed.appendChild(el('div', { class: 'cms-panel' }, [
+        el('h2', { text: 'Saving your changes' }),
+        el('p', { class: 'cms-hint', text: 'Press Save changes (top right). Your website shows them within about a minute. You are signed in on this browser for 8 hours.' }),
+        el('div', { class: 'cms-inline' }, [
+          el('button', { type: 'button', class: 'cms-btn', text: 'Go back to the previous saved version', on: { click: function () {
+            if (!confirm('Replace what is saved now with the version saved before it? You can switch back the same way.')) return;
+            fetch('restore', { method: 'POST', credentials: 'same-origin' }).then(function (r) { return r.json().catch(function () { return {}; }); }).then(function (j) {
+              if (j && j.ok) location.reload(); else toast((j && j.errors && j.errors[0]) || 'There is no earlier saved version.');
+            }).catch(function () { toast('That did not work. Please try again.'); });
+          } } }),
+          el('form', { method: 'post', action: 'logout', class: 'cms-inline-form' }, [el('button', { type: 'submit', class: 'cms-btn cms-btn-ghost', text: 'Sign out' })])
+        ])
+      ]));
+    } else {
+      ed.appendChild(el('div', { class: 'cms-panel' }, [
+        el('h2', { text: 'Put the changes on the live website' }),
+        el('ol', {}, [
+          el('li', { text: 'Press Publish. The website you open in this browser now shows the changes.' }),
+          el('li', { text: 'Download cms-content.js and upload it to your web host, replacing the old file next to index.html.' }),
+          el('li', { text: 'From then on every visitor sees the new content.' })
+        ]),
+        el('div', { class: 'cms-inline' }, [
+          el('button', { type: 'button', class: 'cms-btn cms-btn-primary', text: 'Download cms-content.js', on: { click: function () {
+            if (isDirty() && !publish()) return;
+            download('cms-content.js', contentFileText(), 'text/javascript');
+          } } })
+        ]),
+        el('p', { class: 'cms-hint', text: 'This editor has no login. Anyone who opens admin.html can change content in their own browser, but only the file you upload changes the live site. Keep admin.html off the public host if you do not want others to see it.' })
+      ]));
+    }
 
     ed.appendChild(el('div', { class: 'cms-panel' }, [
       el('h2', { text: 'Backup' }),

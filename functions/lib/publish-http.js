@@ -7,6 +7,7 @@
    and the timer (scheduled) that cleans up. All the rules are in ./publish.js; the storage is in ./sites-store.js.
    Settings (never in git): SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY (secret); bindings SITES (KV) and SITES_BUCKET (R2); optional SITES_DOMAIN. */
 const { createPublisher } = require('./publish.js');
+const { createSiteAdmin } = require('./site-admin.js');
 const store = require('./sites-store.js');
 const { createScriptChecker } = require('./script-check.js');
 const Limits = require('./limits.js');
@@ -32,9 +33,23 @@ function makeDeps(env) {
     const r = await env.ASSETS.fetch(new Request('https://assets.invalid/builder/script-parts.json'));
     return r.ok ? r.json() : null;
   };
+  /* The editor's own files, from the builder's published copy (never from a customer). Its links back to the page are pointed at the site's home. */
+  const editorFiles = async () => {
+    const out = {};
+    for (const name of ['admin.html', 'admin.css', 'admin.js', 'cms.js', 'form-rules.js']) {
+      const r = await env.ASSETS.fetch(new Request('https://assets.invalid/builder/scripts/cms/' + name));
+      if (!r.ok) throw new Error('editor file missing: ' + name);
+      out[name] = await r.text();
+    }
+    out['admin.html'] = out['admin.html'].replace(/href="index\.html"/g, 'href="/"');
+    return out;
+  };
+  const db = store.createDb(env);
+  const siteAdmin = createSiteAdmin({ db, kv: env.SITES, bucket: env.SITES_BUCKET, now: () => new Date().toISOString(), editorFiles, address: (name) => 'https://' + name + '.' + (env.SITES_DOMAIN || 'edvlabs.com') + '/' });
   return {
     user: (token) => store.verifyUser(env, token),
-    publisher: createPublisher({ db: store.createDb(env), bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets, parts }), defaults: Limits.defaultsFrom(env) })
+    siteAdmin,
+    publisher: createPublisher({ db, bucket: env.SITES_BUCKET, kv: env.SITES, now: () => new Date().toISOString(), domain: env.SITES_DOMAIN, scripts: createScriptChecker({ library, exportAssets, parts }), defaults: Limits.defaultsFrom(env), adminHook: siteAdmin })
   };
 }
 
@@ -43,7 +58,7 @@ const missing = (env) => NEEDED.filter((k) => !env[k]);
 /** Returns a Response for the four endpoints, or null for any other path. `json(status, body, extraHeaders)` is the Worker's answer helper. */
 async function route(request, env, json, deps) {
   const url = new URL(request.url), path = url.pathname;
-  const wantsGet = path === '/api/site-name' || path === '/api/my-sites', wantsPost = path === '/api/publish' || path === '/api/unpublish' || path === '/api/rename';
+  const wantsGet = path === '/api/site-name' || path === '/api/my-sites', wantsPost = path === '/api/publish' || path === '/api/unpublish' || path === '/api/rename' || path === '/api/site-admin';
   if (!wantsGet && !wantsPost) return null;
   if (request.method !== (wantsGet ? 'GET' : 'POST')) return json(405, { ok: false, errors: ['Use ' + (wantsGet ? 'GET' : 'POST') + '.'] }, { Allow: wantsGet ? 'GET' : 'POST' });
   const absent = missing(env);
@@ -59,16 +74,36 @@ async function route(request, env, json, deps) {
   const pub = d.publisher, reply = (r) => json(r.status, r.json);
 
   if (path === '/api/site-name') return reply(await pub.nameStatus(user.id, url.searchParams.get('name')));
-  if (path === '/api/my-sites') return reply(await pub.mySites(user.id));
+  if (path === '/api/my-sites') {
+    const r = await pub.mySites(user.id);
+    if (r.status === 200 && d.siteAdmin && r.json.sites.length) { // the admin panel of each site: its address and username (never the password or its hash)
+      try { const st = await d.siteAdmin.status(user.id, r.json.sites); r.json.sites.forEach((x) => { x.admin = st[x.id] || { on: false }; }); } catch (e) { r.json.sites.forEach((x) => { x.admin = null; }); } // null: could not be read just now
+    }
+    return reply(r);
+  }
 
   if (!(request.headers.get('Content-Type') || '').includes('application/json')) return json(415, { ok: false, errors: ['Send JSON.'] });
   const declared = Number(request.headers.get('Content-Length') || 0);
-  if (declared > MAX_BODY) return json(413, { ok: false, errors: ['That is too large.'] });
+  const maxBody = path === '/api/site-admin' ? 10 * 1024 : MAX_BODY; // a username and a password are small
+  if (declared > maxBody) return json(413, { ok: false, errors: ['That is too large.'] });
   const text = await request.text();
-  if (text.length > MAX_BODY) return json(413, { ok: false, errors: ['That is too large.'] });
+  if (text.length > maxBody) return json(413, { ok: false, errors: ['That is too large.'] });
   let body; try { body = JSON.parse(text); } catch (e) { return json(400, { ok: false, errors: ['That was not valid JSON.'] }); }
   if (!body || typeof body !== 'object' || Array.isArray(body)) return json(400, { ok: false, errors: ['That was not valid JSON.'] });
 
+  if (path === '/api/site-admin') { // { action: 'enable' | 'change' | 'remove', siteId, username?, password?, newAddress? }
+    if (!d.siteAdmin) return json(503, { ok: false, errors: ['The admin panel is not set up yet.'] });
+    if (typeof body.siteId !== 'string' || !store.UUID.test(body.siteId)) return json(400, { ok: false, errors: ['Which site?'] });
+    const str = (v) => (v === undefined ? undefined : typeof v === 'string' ? v : null);
+    const a = { userId: user.id, siteId: body.siteId, username: str(body.username), password: str(body.password), newAddress: body.newAddress === true };
+    if (a.username === null || a.password === null) return json(400, { ok: false, errors: ['Send the username and password as text.'] });
+    try {
+      if (body.action === 'enable') return reply(await d.siteAdmin.enable(a));
+      if (body.action === 'change') return reply(await d.siteAdmin.change(a));
+      if (body.action === 'remove') return reply(await d.siteAdmin.remove(a));
+    } catch (e) { return json(500, { ok: false, errors: ['The admin panel did not change just now. Please try again.'] }); }
+    return json(400, { ok: false, errors: ['What should happen: enable, change or remove?'] });
+  }
   if (path === '/api/rename') {
     if (typeof body.siteId !== 'string' || !store.UUID.test(body.siteId) || typeof body.name !== 'string') return json(400, { ok: false, errors: ['Send the site and the new name.'] });
     try { return reply(await pub.rename({ userId: user.id, siteId: body.siteId, newName: body.name })); } catch (e) { return json(500, { ok: false, errors: ['Renaming did not work just now. Please try again.'] }); }
@@ -77,7 +112,7 @@ async function route(request, env, json, deps) {
   const projectId = typeof body.projectId === 'string' && store.UUID.test(body.projectId) ? body.projectId : null;
   if (typeof body.name !== 'string' || !Array.isArray(body.files)) return json(400, { ok: false, errors: ['Send a name and the files.'] });
   try {
-    return reply(await pub.publish({ userId: user.id, name: body.name, files: body.files, projectId }));
+    return reply(await pub.publish({ userId: user.id, name: body.name, files: body.files, projectId, adminStructure: body.adminStructure }));
   } catch (e) {
     return json(500, { ok: false, errors: ['Publishing did not work just now. Please try again.'] }); // the reason stays in the Worker's own log, not in the answer
   }

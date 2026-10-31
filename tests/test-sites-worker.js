@@ -123,7 +123,7 @@ async function world(files) {
 
   await test('the Worker file and its config are wired as planned', () => {
     const w = fs.readFileSync(path.join(__dirname, '..', 'src', 'sites-worker.js'), 'utf8');
-    assert(/SITES_BUCKET/.test(w) && /env\.SITES\b/.test(w) && !/SERVICE|SECRET|KEY/.test(w), 'reads only: no secrets in the serving Worker');
+    assert(/SITES_BUCKET/.test(w) && /env\.SITES\b/.test(w) && !/SERVICE|SECRET|KEY|SUPABASE/.test(w.replace(/ADMIN_SESSION_SECRET/g, '')), 'no database key in the serving Worker; the one secret it has signs admin sessions');
     const cfg = fs.readFileSync(path.join(__dirname, '..', 'wrangler.sites.jsonc'), 'utf8').replace(/^\s*\/\/.*$/gm, '');
     const j = JSON.parse(cfg);
     assert.strictEqual(j.routes[0].pattern, '*.edvlabs.com/*'); assert.strictEqual(j.main, 'src/sites-worker.js');

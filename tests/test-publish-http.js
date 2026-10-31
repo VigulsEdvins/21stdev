@@ -108,5 +108,29 @@ function world() {
     assert.deepStrictEqual(await PH.scheduled({}, w.deps), { orphans: 0, lapsed: 0, holds: 0, blocked: 0, repaired: 0, purged: 0, strays: 0 });
   });
 
+  await test('admin panel endpoint: sign-in, own site only, password never echoed, listed in my-sites without the hash', async () => {
+    const { f, deps, post, call, as } = world(); f.addEntitlement(U1, FUTURE);
+    const SA = require('../functions/lib/site-admin.js');
+    deps.siteAdmin = SA.createSiteAdmin({ db: f.db, kv: f.kv, now: () => '2026-11-01T10:00:00.000Z', rounds: 1000 });
+    const j = await (await post('/api/publish', { name: 'bakery-anna', files })).json();
+    const PW = 'Tulip-Garden-7-Moon!';
+    assert.strictEqual((await call('/api/site-admin', { method: 'POST', body: '{}' })).status, 401);
+    assert.strictEqual((await call('/api/site-admin', { method: 'GET' }, as(1))).status, 405);
+    assert.strictEqual((await post('/api/site-admin', { action: 'enable', siteId: j.siteId, username: 'anna.baker', password: PW }, 2)).status, 404, 'not their site');
+    assert.strictEqual((await post('/api/site-admin', { action: 'enable', siteId: 'nope', username: 'anna.baker', password: PW })).status, 400);
+    assert.strictEqual((await post('/api/site-admin', { action: 'enable', siteId: j.siteId, username: 'anna.baker', password: 12345 })).status, 400);
+    assert.strictEqual((await post('/api/site-admin', { action: 'fly', siteId: j.siteId })).status, 400);
+    assert.strictEqual((await post('/api/site-admin', { action: 'enable', siteId: j.siteId, username: 'anna.baker', password: 'x'.repeat(20000) })).status, 413, 'a huge body is refused');
+    const r = await post('/api/site-admin', { action: 'enable', siteId: j.siteId, username: 'anna.baker', password: PW });
+    const text = await r.text(); assert.strictEqual(r.status, 200, text); assert(!text.includes(PW), 'the password is never sent back');
+    const mine = await (await call('/api/my-sites', { method: 'GET' }, as(1))).json();
+    assert(mine.sites[0].admin.on && /\/admin\d{10}$/.test(mine.sites[0].admin.address) && mine.sites[0].admin.username === 'anna.baker');
+    assert(!JSON.stringify(mine).includes(f.admins[0].password_hash));
+    assert.strictEqual((await (await call('/api/my-sites', { method: 'GET' }, as(2))).json()).sites.length, 0);
+    assert.strictEqual((await post('/api/site-admin', { action: 'change', siteId: j.siteId, password: 'Quiet-River-9-Stone?' })).status, 200);
+    assert.strictEqual((await post('/api/site-admin', { action: 'remove', siteId: j.siteId })).status, 200);
+    assert.strictEqual((await (await call('/api/my-sites', { method: 'GET' }, as(1))).json()).sites[0].admin.on, false);
+  });
+
   console.log(`✓ publish http: ${count} groups (sign-in, methods, flow, refusals, headers, not set up)`);
 })().catch((e) => { console.error(e); process.exit(1); });

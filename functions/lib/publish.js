@@ -178,7 +178,8 @@ function entitlementState(ent, now) {
 const key = (siteId, version, path) => 'sites/' + siteId + '/' + version + '/' + path;
 const kvKey = (name) => 'site:' + name;
 
-function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defaults }) {
+function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defaults, adminHook }) {
+  // adminHook: { afterPublish(siteId, structure) }, the admin panel of a site (site-admin.js); called after the new version is live
   const host = domain || 'edvlabs.com';
   /** What this person may do: the defaults for everyone, with any upgrade in their account_limits row applied. */
   const limitsFor = async (userId) => Limits.resolve(defaults, db.accountLimits ? await db.accountLimits(userId) : null);
@@ -216,7 +217,7 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
   }
 
   /** Publishes (a new site) or updates (a site the person already has, by its name). */
-  async function publish({ userId, name, files, projectId }) {
+  async function publish({ userId, name, files, projectId, adminStructure }) {
     if (!userId) return fail(401, 'Please sign in.');
     const c = Names.check(name);
     if (!c.ok) return fail(400, c.message, { reason: c.reason });
@@ -262,7 +263,9 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
       return fail(500, 'Publishing did not finish. Your earlier version is still live. Please try again.', { reason: 'storage' });
     }
     await prune(site.id, version);
-    return { status: 200, json: { ok: true, name: c.name, address: address(c.name), version, siteId: site.id, created } };
+    let admin; // what happened to the admin panel's editor content, only for a site that has one
+    if (adminHook) { try { admin = await adminHook.afterPublish(site.id, adminStructure); } catch (e) { admin = { ok: false, admin: true, note: 'failed' }; } } // the page is live either way; the panel is refreshed by the next publish
+    return { status: 200, json: Object.assign({ ok: true, name: c.name, address: address(c.name), version, siteId: site.id, created }, admin && admin.admin ? { admin } : {}) };
   }
 
   /** Removes folders older than the last few versions. */

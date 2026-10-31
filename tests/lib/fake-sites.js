@@ -4,7 +4,7 @@
        claimEntitlement (true only if the place was still free), releaseEntitlement, reserveVersion (atomic +1 of last_version), goLive, setStatus. */
 function create() {
   const sites = [], holds = [], ents = [], objects = new Map(), kvStore = new Map(), log = [];
-  const limitRows = new Map();
+  const limitRows = new Map(), admins = [];
   let n = 0;
   const db = {
     async siteByName(name) { return sites.find((s) => s.name === name) || null; },
@@ -48,6 +48,15 @@ function create() {
       holds.filter((h) => h.site_id === siteId && h.name !== old).forEach((h) => { h.redirect_to = newName; });
       return { old, new: newName, version: s.version, status: s.status, held: holds.filter((h) => h.site_id === siteId && new Date(h.expires_at) > now).map((h) => h.name) };
     },
+    async adminBySite(siteId) { return admins.find((a) => a.site_id === siteId) || null; },
+    async adminsBySites(ids) { return admins.filter((a) => ids.includes(a.site_id)); },
+    async upsertAdmin(row) {
+      if (admins.some((a) => a.path_digits === row.path_digits && a.site_id !== row.site_id)) throw Object.assign(new Error('dup'), { code: 'digits-taken' });
+      const i = admins.findIndex((a) => a.site_id === row.site_id); const merged = Object.assign({ last_login_at: null }, i >= 0 ? admins[i] : {}, row);
+      if (i >= 0) admins[i] = merged; else admins.push(merged); return merged;
+    },
+    async deleteAdmin(siteId) { const i = admins.findIndex((a) => a.site_id === siteId); if (i >= 0) admins.splice(i, 1); },
+    async touchAdminLogin(siteId, iso) { const a = admins.find((x) => x.site_id === siteId); if (a) a.last_login_at = iso; },
     async accountLimits(userId) { return limitRows.get(userId) || null; },
     async holdsForSite(siteId) { return holds.filter((h) => h.site_id === siteId); },
     async recentSites() { return sites.map((s) => ({ id: s.id, name: s.name, version: s.version, status: s.status })); },
@@ -69,7 +78,7 @@ function create() {
   };
   const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async delete(k) { kvStore.delete(k); },
     async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };
-  return { db, bucket, kv, sites, holds, ents, objects, kvStore, log, limitRows,
+  return { db, bucket, kv, admins, sites, holds, ents, objects, kvStore, log, limitRows,
     addEntitlement(userId, paidUntil, over) { const e = Object.assign({ id: 'ent-' + (ents.length + 1), user_id: userId, site_id: null, status: 'active', paid_until: paidUntil, granted_by: 'owner' }, over || {}); ents.push(e); return e; } };
 }
 module.exports = { create };

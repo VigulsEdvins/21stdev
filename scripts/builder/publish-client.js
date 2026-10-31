@@ -90,7 +90,8 @@
     return {
       checkName: (name) => call('GET', '/site-name?name=' + encodeURIComponent(name)),
       mySites: () => call('GET', '/my-sites'),
-      publish: (name, collected, projectId) => call('POST', '/publish', Object.assign({ name, files: toFiles(collected) }, projectId ? { projectId } : {})),
+      publish: (name, collected, projectId) => call('POST', '/publish', Object.assign({ name, files: toFiles(collected) }, projectId ? { projectId } : {}, collected && collected.adminStructure ? { adminStructure: collected.adminStructure } : {})),
+      siteAdmin: (action, siteId, extra) => call('POST', '/site-admin', Object.assign({ action, siteId }, extra || {})),
       unpublish: (siteId) => call('POST', '/unpublish', { siteId }),
       rename: (siteId, name) => call('POST', '/rename', { siteId, name })
     };

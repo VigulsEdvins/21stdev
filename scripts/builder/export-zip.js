@@ -125,7 +125,7 @@
      * The files of the finished site: { files: {name: text}, assets: {name: bytes}, zipFilename }. Used by the ZIP download and by Publish,
      * so what goes online is exactly what a download contains. exportOptions: { review, cms: false to leave the content editor out, csp: true or false to force the page security policy on or off instead of following the checkbox }.
      */
-    async function collectFiles(exportOptions = {}) {
+    async function collectFilesRaw(exportOptions = {}) {
       if (!stackManager.getStack().length) throw new Error('There are no sections to export.');
       const zipFilename = exportOptions.review ? 'my-review-copy.zip' : 'my-assembled-page.zip';
       await prepareExportData(exportOptions);
@@ -136,7 +136,7 @@
       }
 
       const cmsToggle = document.getElementById('exportCmsToggle');
-      const cmsOn = !!window.BuilderCms && exportOptions.cms !== false && (!cmsToggle || cmsToggle.checked); // publishing passes cms: false, the editor does not belong on a live site
+      const cmsOn = !!window.BuilderCms && (exportOptions.cms === 'live' || (exportOptions.cms !== false && (!cmsToggle || cmsToggle.checked))); // publishing passes cms: false, the editor does not belong on a live site
       const multi = stackManager.getState().pages.length > 1;
       let cmsFiles = {};
       const addCms = async (pagesIn, htmlByFile, readmeFiles, intoFiles, pageLinks) => {
@@ -172,6 +172,22 @@
       ['index.html', 'style.css', 'script.js', 'README.md'].forEach(n => { files[n] = bundle[n]; });
       [...window.Assembler.SITE_EXTRA_FILES, ...Object.keys(cmsFiles)].forEach(n => { if (bundle[n]) files[n] = bundle[n]; });
       return { files, assets: getAssets(), zipFilename };
+    }
+
+    /**
+     * collectFilesRaw, plus `cms: 'live'` for a published site that has an admin panel: the pages carry the two content scripts (the live site serves them itself),
+     * and the editor's own files are NOT part of the upload. The list of editable fields comes back as `adminStructure` instead of as a cms-content.js file,
+     * because on the server that file is made from this list plus the customer's saved edits (functions/lib/site-admin-serve.js).
+     */
+    async function collectFiles(exportOptions = {}) {
+      const out = await collectFilesRaw(exportOptions);
+      if (exportOptions.cms !== 'live') return out;
+      const text = out.files['cms-content.js'];
+      ['admin.html', 'admin.css', 'admin.js', 'cms.js', 'form-rules.js', 'cms-content.js'].forEach(n => { delete out.files[n]; });
+      const m = typeof text === 'string' ? /^[\s\S]*?window\.EDV_CMS = ([\s\S]*);\s*$/.exec(text) : null;
+      if (!m) throw new Error('The content editor could not be added.');
+      out.adminStructure = JSON.parse(m[1]);
+      return out;
     }
 
     /**

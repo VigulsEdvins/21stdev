@@ -87,7 +87,8 @@ function createServer(env, { applyHeaders = true, dir = SITE, live = false, demo
     const url = new URL(req.url, 'http://localhost');
     try {
       if (demo && siteHost(req.headers.host)) { // a published site of the local demo: <name>.localhost:<port>
-        const r = await demo.sites.handle(new Request('http://' + req.headers.host + req.url, { method: req.method, headers: req.headers }));
+        const posted = []; for await (const c of req) posted.push(c); // a site's admin panel takes POSTs (sign-in, save)
+        const r = await demo.sites.handle(new Request('http://' + req.headers.host + req.url, { method: req.method, headers: req.headers, body: posted.length && !['GET', 'HEAD'].includes(req.method) ? Buffer.concat(posted) : undefined }));
         res.writeHead(r.status, Object.fromEntries(r.headers)); return res.end(Buffer.from(await r.arrayBuffer()));
       }
       if (demo && url.pathname.startsWith('/__auth/')) { // the demo's pretend sign-in service, reached through this server so the builder's connect-src ('self' and https) allows it

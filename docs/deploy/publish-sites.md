@@ -102,6 +102,30 @@ Check, and tell me anything that differs:
 - [ ] Take it offline from the builder; the address shows "This site is not available". Put it back.
 - [ ] Open `https://edvlabs.com/builder/` and the home page again: nothing about the main site changed. (Also the usual first-deploy header check: `npm run check-headers -- https://edvlabs.com` and `node scripts/check-builder-csp.js https://edvlabs.com`.)
 
+## Admin panel for a site (added 2026-10-31)
+
+A customer can add an admin panel to a published site from the account page ("My websites"): a username and a strong password, at the secret address `https://<name>.edvlabs.com/admin<10 digits>`. Plan and design: `docs/superpowers/plans/2026-10-31-site-admin-panel.md`. Included with a paid site; nothing to price yet.
+
+Owner steps, in this order, before the first customer uses it:
+
+1. **Apply the migration** `supabase/migrations/20261031100000_site_admins.sql` (first to a Supabase branch, then the real project, as for the other tables). The customer-facing code only touches the new table when someone adds a panel, so it can be applied just before the deploy.
+2. **Make the session secret and set it on the sites Worker** (never in git or in chat):
+   ```bash
+   openssl rand -base64 48
+   ```
+   then paste the output when this asks for it:
+   ```bash
+   npx wrangler secret put ADMIN_SESSION_SECRET -c wrangler.sites.jsonc
+   ```
+   Without it the admin address answers like any missing page. Changing the secret signs everybody out of every admin panel.
+3. **Workers Paid plan.** The password check is deliberately slow (PBKDF2, 100,000 rounds, the most a Worker allows); on the free plan's 10 ms CPU limit a login may be cut off. The publishing plan already assumed the paid plan.
+4. **Deploy both Workers** (the main one by git push, the sites one with `npx wrangler deploy -c wrangler.sites.jsonc`).
+5. **Check the headers once on a real site with a panel**: `curl -sI https://<name>.edvlabs.com/admin<digits>` should show `Cache-Control: no-store`, `X-Robots-Tag: noindex, nofollow`, a `Content-Security-Policy` with `frame-ancestors 'none'`; after signing in the cookie must be `__Host-edv_admin` with `Secure; HttpOnly; SameSite=Strict` and **no `Domain`**.
+
+Everyday: a customer who forgets the admin password sets a new one from their signed-in account page. To switch the feature off, delete the `ADMIN_SESSION_SECRET` secret (`npx wrangler secret delete ADMIN_SESSION_SECRET -c wrangler.sites.jsonc`); the panels stop answering and the public sites are unaffected, but values saved earlier keep showing on the live pages.
+
+Known limits: wrong-password counting is per visitor address (5 per 15 minutes) and per site (30), kept in KV, so it is approximate across the world for up to about a minute; one admin user per site; the clean-up that runs every hour does not yet remove the KV records of a deleted account's panel (they cannot be reached once the site is gone).
+
 ## Limits and upgrades
 
 Everyone gets the same defaults: **2 renames per site per 30 days, 10 MB per site (largest file 5 MB), 10 publishes per hour**, 10 sites per account, 60 name checks per hour. A customer who pays for more gets a higher number for that one limit, set by you:

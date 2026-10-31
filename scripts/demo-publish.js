@@ -8,6 +8,8 @@ const { start: startAuth } = require('../tests/lib/fake-supabase.js');
 const Fake = require('../tests/lib/fake-sites.js');
 const P = require('../functions/lib/publish.js');
 const S = require('../functions/lib/sites-serve.js');
+const SA = require('../functions/lib/site-admin.js');
+const AS = require('../functions/lib/site-admin-serve.js');
 const store = require('../functions/lib/sites-store.js');
 const { createScriptChecker } = require('../functions/lib/script-check.js');
 const fs = require('fs');
@@ -33,7 +35,15 @@ async function start({ port }) {
   const f = Fake.create();
   const direct = { SUPABASE_URL: auth.url, SUPABASE_ANON_KEY: auth.anonKey }; // how this server talks to the pretend service
   const env = { SUPABASE_URL: 'http://localhost:' + port + '/__auth', SUPABASE_ANON_KEY: auth.anonKey }; // how the pages do: through this server, so the page's own security rules allow it
-  const publisher = P.createPublisher({ db: f.db, bucket: f.bucket, kv: f.kv, now: () => new Date().toISOString(), domain: 'localhost', addressOf: (name) => 'http://' + name + '.localhost:' + port + '/', scripts: createScriptChecker({ library: libraryFromDisk, exportAssets: exportAssetsFromDisk, parts: async () => require('./build-site.js').scriptParts() }) });
+  /* the admin panel: the editor's files from the repository's own scripts/cms folder (online they come from the deployed builder) */
+  const editorFiles = async () => {
+    const out = {};
+    for (const n of ['admin.html', 'admin.css', 'admin.js', 'cms.js', 'form-rules.js']) out[n] = fs.readFileSync(path.join(__dirname, 'cms', n), 'utf8');
+    out['admin.html'] = out['admin.html'].replace(/href="index\.html"/g, 'href="/"');
+    return out;
+  };
+  const siteAdmin = SA.createSiteAdmin({ db: f.db, kv: f.kv, bucket: f.bucket, now: () => new Date().toISOString(), editorFiles, address: (name) => 'http://' + name + '.localhost:' + port + '/' });
+  const publisher = P.createPublisher({ db: f.db, bucket: f.bucket, kv: f.kv, now: () => new Date().toISOString(), domain: 'localhost', addressOf: (name) => 'http://' + name + '.localhost:' + port + '/', scripts: createScriptChecker({ library: libraryFromDisk, exportAssets: exportAssetsFromDisk, parts: async () => require('./build-site.js').scriptParts() }), adminHook: siteAdmin });
   const seen = new Set();
   const inAYear = () => new Date(Date.now() + 365 * 86400000).toISOString();
   /* the real sign-in check, asked of the pretend service; a person met for the first time gets two paid places */
@@ -43,13 +53,15 @@ async function start({ port }) {
     return u;
   };
   return {
-    env, deps: { user, publisher }, auth, store: f,
-    sites: S.createSiteServer({ bucket: f.bucket, kv: f.kv, domain: 'localhost', originOf: (name) => 'http://' + name + '.localhost:' + port }),
+    env, deps: { user, publisher, siteAdmin }, auth, store: f,
+    sites: S.createSiteServer({ bucket: f.bucket, kv: f.kv, domain: 'localhost', originOf: (name) => 'http://' + name + '.localhost:' + port,
+      admin: AS.createAdminServer({ kv: f.kv, bucket: f.bucket, secret: 'demo-only-session-secret-not-for-real-use', insecure: true }) }), // insecure: the demo is plain http, where a Secure cookie would not be kept
     explain: (p) => [
       '  DEMO PUBLISHING is on: a pretend sign-in service and pretend storage, forgotten when this stops.',
       `    1. create an account at http://localhost:${p}/account/  (any email and a password with 10+ characters; no email is sent)`,
       `    2. build a page at http://localhost:${p}/builder/, step 5 "Get it", box "Put it online" (each new account has 2 paid places)`,
-      `    3. open the address it shows, like http://bakery-anna.localhost:${p}/`
+      `    3. open the address it shows, like http://bakery-anna.localhost:${p}/`,
+      `    4. in the account page, "My websites" has the button "Add admin panel"; then put the page online again from the builder and open the admin address it shows`
     ],
     close: () => auth.close()
   };

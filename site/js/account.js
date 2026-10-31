@@ -5,7 +5,7 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const A = window.EdvAuth;
-  let auth = null, answersSync = null, extras = null, mode = 'in', mailKind = null, pending = null, captcha = null, lastSent = 0, knownEmail = '';
+  let auth = null, answersSync = null, extras = null, websites = null, mode = 'in', mailKind = null, pending = null, captcha = null, lastSent = 0, knownEmail = '';
 
   const VIEWS = ['a-loading', 'a-closed', 'a-out', 'f-code', 'a-in', 'f-new'];
   const view = (name) => { VIEWS.forEach((id) => { $(id).hidden = id !== name; }); hideAllPasswords(); };
@@ -110,6 +110,7 @@
     knownEmail = who.email; $('i-who').textContent = who.email; $('i-how').textContent = how; $('b-newpass').hidden = who.provider !== 'email'; // a Google or GitHub account has no password of its own here
     title('You are signed in.', 'This is your edvlabs account.'); view('a-in'); focusTitle();
     if (extras) extras.show(who);
+    if (websites) websites.show();
     const toBuilder = takeBuilderIntent();
     if (toBuilder) title('You are signed in.', 'Opening the builder…');
     // the answers from the questions: this browser's go to the account, or the account's come back here (site/js/brief-sync.js)
@@ -222,6 +223,7 @@
     auth = A.createAuth({ url: cfg.supabaseUrl, anonKey: cfg.anonKey, storage: safe('localStorage') || mem(), tempStorage: safe('sessionStorage') || mem(), origin: window.location.origin, returnTo: window.location.origin + window.location.pathname.replace(/index\.html$/, '') });
     answersSync = window.EdvBriefSync ? window.EdvBriefSync.create({ url: cfg.supabaseUrl, anonKey: cfg.anonKey, token: () => auth.accessToken(), storage: safe('localStorage') || mem() }) : null;
     const pagesApi = window.EdvMyPages ? window.EdvMyPages.create({ url: cfg.supabaseUrl, anonKey: cfg.anonKey, token: () => auth.accessToken() }) : null;
+    websites = window.EdvSiteAdmin ? window.EdvSiteAdmin.create({ token: () => auth.accessToken() }) : null;
     extras = pagesApi && window.EdvAccountExtras ? window.EdvAccountExtras.create({ auth, pages: pagesApi, storage: safe('localStorage') || mem(), notice, signedOut: (text) => { showSignedOut(); notice(text, 'ok'); } }) : null;
     captcha = makeCaptcha(cfg.turnstileSiteKey);
     ['p-pass', 'p-pass2', 'n-pass', 'n-pass2'].forEach(addToggle);

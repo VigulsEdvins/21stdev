@@ -123,7 +123,8 @@
       setBusy(true); say('Putting your page online…', false);
       try {
         let collected;
-        try { collected = await win.builderExport.collectFiles({ cms: false, csp: true }); } catch (e) { say(e && /no sections/i.test(e.message) ? 'Add at least one block first.' : 'The page could not be prepared. Please try again.', true); return; }
+        const siteNow = state.sites.find((x) => x.name === name), withAdmin = !!(siteNow && siteNow.admin && siteNow.admin.on); // a site with an admin panel gets its editable fields too
+        try { collected = await win.builderExport.collectFiles({ cms: withAdmin ? 'live' : false, csp: true }); } catch (e) { say(e && /no sections/i.test(e.message) ? 'Add at least one block first.' : 'The page could not be prepared. Please try again.', true); return; }
         const skipped = Client.leftOut(collected);
         const r = await client.publish(name, collected);
         const e = Client.explain(r.status, r.json);
@@ -135,6 +136,8 @@
             out.append(el(doc, 'br', {}), el(doc, 'b', {}, 'Left out: '), skipped.slice(0, 6).join(', ') + (skipped.length > 6 ? ' and ' + (skipped.length - 6) + ' more' : '') + '. This kind of file cannot be put online yet, so anything that uses it will not show or play.');
             out.dataset.problem = 'true';
           }
+          if (!withAdmin) out.append(el(doc, 'br', {}), 'Want to change texts and pictures later without the builder? Add an admin panel to this site in ', el(doc, 'a', { href: '/account/', target: '_blank', rel: 'noopener' }, 'your account'), '.');
+          else if (r.json.admin && r.json.admin.ok === false) { out.append(el(doc, 'br', {}), el(doc, 'b', {}, 'Admin panel: '), 'the page is online, but the admin panel could not be refreshed. Please put the page online once more.'); out.dataset.problem = 'true'; }
           nameInput.value = ''; nameNote.textContent = ''; lastChecked = '';
           await load();
         } else {

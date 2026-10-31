@@ -76,6 +76,13 @@
       <p><a class="btn btn--secondary" href="../start/">Start your page</a></p>
     </div>
 
+    <div class="acct-sec" id="ws-sec" aria-labelledby="ws-h" hidden>
+      <h2 id="ws-h">My websites</h2>
+      <p id="ws-empty" hidden>You have no website online yet. When you put a page online from the builder, its address and its admin panel are shown here.</p>
+      <ul class="ws-list" id="ws-list"></ul>
+      <div id="ws-msg" role="status" aria-live="polite"></div>
+    </div>
+
     <div class="acct-sec" aria-labelledby="gd-h">
       <h2 id="gd-h">Putting your page online</h2>
       <p>A step-by-step guide for Netlify, Cloudflare Pages, GitHub Pages or an ordinary web host, with your own domain.</p>
@@ -123,6 +130,7 @@
 <script src="../js/nav-auth.js"></script>
 <script src="../js/my-pages.js"></script>
 <script src="../js/account-extras.js"></script>
+<script src="../js/site-admin-account.js"></script>
 <script src="../js/account.js"></script>
 </body>
 </html>

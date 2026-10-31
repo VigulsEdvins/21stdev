@@ -187,6 +187,14 @@
 /* Signed-in account page: saved pages, answers, email, delete */
 .acct-sec { margin-top: var(--s-7); padding-top: var(--s-5); border-top: 2px solid var(--ink); }
 .acct-sec h2 { margin-bottom: var(--s-3); }
+.ws-list { list-style: none; margin: 0 0 var(--s-4); padding: 0; display: grid; gap: var(--s-4); }
+.ws-item { padding: var(--s-4); border: var(--border); border-radius: var(--radius-m); background: var(--paper-raised); }
+.ws-item .ws-name { margin: 0 0 var(--s-2); overflow-wrap: anywhere; }
+.ws-line { margin: 0 0 var(--s-2); overflow-wrap: anywhere; }
+.ws-off { color: var(--text-muted); }
+.ws-admin { margin-top: var(--s-4); padding-top: var(--s-3); border-top: var(--border); }
+.ws-admin h4, .ws-form h4 { margin: 0 0 var(--s-2); }
+.ws-form { margin-top: var(--s-3); padding: var(--s-3); border: var(--border); border-radius: var(--radius-m); background: var(--paper); }
 .pg-list { list-style: none; margin: 0 0 var(--s-4); padding: 0; display: grid; gap: var(--s-3); }
 .pg-item { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-4); padding: var(--s-3) var(--s-4); border: var(--border); border-radius: var(--radius-m); background: var(--paper-raised); }
 .pg-item .pg-name { flex: 1 1 12em; font-weight: 600; overflow-wrap: anywhere; }
