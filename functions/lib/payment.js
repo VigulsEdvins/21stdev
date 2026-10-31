@@ -9,6 +9,7 @@
 
 const TRIAL_DAYS = 30; // the first month is free (Stripe collects the card now and charges when the trial ends)
 const TOLERANCE_S = 300; // a signed event older than this is refused, so a captured request cannot be replayed later
+const Quote = require('./quote.js');
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const PLANS = { monthly: 'STRIPE_PRICE_MONTHLY', yearly: 'STRIPE_PRICE_YEARLY' };
@@ -58,26 +59,68 @@ async function stripePost(env, fetchImpl, path, form) {
 }
 const sorry = (what) => ({ status: 502, json: { ok: false, errors: [what + ' just now. Please try again.'] } });
 
-/** A Checkout Session for hosting: plan is 'monthly' or 'yearly'; the first month is free. Returns { status, json: { ok, url, testMode } }. */
-async function createCheckout({ env, user, origin, plan, fetchImpl }) {
-  const absent = missing(env);
+const siteNameOk = (n) => typeof n === 'string' && n.length >= 3 && n.length <= 30 && /^[a-z0-9-]+$/.test(n) && !n.startsWith('-') && !n.endsWith('-') && !n.includes('--'); // the shape only; the name itself is checked again when the site is published
+const bad = (status, message) => ({ status, json: { ok: false, errors: [message] } });
+const REFUSED = { 'no-blocks': 'Add at least one block to your page first.', 'bad-combination': 'Those options are not available together. Please check your choices.' };
+
+/** What the person asked for, with every value strictly checked: only a real `true` counts as true, so a forged or odd value can only ever make the order cheaper to refuse, never cheaper to pay. */
+function readOrder(body) {
+  const b = body && typeof body === 'object' ? body : {};
+  if (typeof b.projectId !== 'string' || !UUID.test(b.projectId)) return null;
+  return { projectId: b.projectId, destination: typeof b.destination === 'string' ? b.destination : '', editor: b.editor === true, hosting: typeof b.hosting === 'string' ? b.hosting : null, deployHelp: b.deployHelp === true,
+    siteName: siteNameOk(b.siteName) ? b.siteName : '' };
+}
+
+/** The price of one order, from the person's own saved page and prices.js, never from the browser. Returns { status, json } for a refusal, or { status: 200, q, project, order }. */
+async function quoteOrder({ db, user, body, env }) {
+  const order = readOrder(body);
+  if (!order) return bad(400, 'Which page do you want to buy?');
+  const project = await db.projectForUser(order.projectId, user.id);
+  if (!project) return bad(404, 'We could not find that page in your account.');
+  const latest = await db.purchaseForProject(order.projectId);
+  const q = Quote.quote({ blocks: Quote.countProjectBlocks(project.state), editor: order.editor, destination: order.destination, hosting: order.hosting, deployHelp: order.deployHelp, trialDays: trialDays(env || {}),
+    paid: latest ? { allowance: latest.allowance, editor: latest.editor, version: latest.price_version } : undefined });
+  if (!q.ok && q.reason === 'nothing-to-pay') return { status: 409, json: { ok: false, alreadyBought: true, errors: ['You have already bought this page. Nothing more to pay.'] } };
+  if (!q.ok) return bad(400, REFUSED[q.reason] || 'That order could not be priced.');
+  return { status: 200, q, project, order, latest };
+}
+
+/** The price lines for the overlay: { status, json }. */
+async function createQuote({ db, user, body, env }) {
+  const r = await quoteOrder({ db, user, body, env });
+  if (r.status !== 200) return r;
+  return { status: 200, json: { ok: true, lines: r.q.lines, payToday: r.q.payToday, hosting: r.q.hosting, blocks: r.q.newAllowance, testMode: isTestKey(env && env.STRIPE_SECRET_KEY) } };
+}
+
+/** One Stripe Checkout Session for the whole order. With hosting: a subscription (free first month) that also carries the one-time items; without: a plain payment. Returns { status, json: { ok, url, testMode } }. */
+async function createOrderCheckout({ env, db, user, origin, body, fetchImpl }) {
+  const r = await quoteOrder({ db, user, body, env });
+  if (r.status !== 200) return r;
+  const { q, order, latest } = r;
+  const absent = missing(env, q.hosting ? ['STRIPE_SECRET_KEY', PLANS[q.hosting.plan]] : ['STRIPE_SECRET_KEY']);
   if (absent.length) return { status: 503, json: { ok: false, errors: ['Payment is not switched on yet.'], missing: absent } }; // names only, never values
-  if (!Object.prototype.hasOwnProperty.call(PLANS, plan)) return { status: 400, json: { ok: false, errors: ['Choose monthly or yearly.'] } };
   const form = new URLSearchParams();
-  form.set('mode', 'subscription');
-  form.set('line_items[0][price]', env[PLANS[plan]]);
-  form.set('line_items[0][quantity]', '1');
-  const days = trialDays(env);
-  if (days > 0) form.set('subscription_data[trial_period_days]', String(days));
-  form.set('subscription_data[metadata][user_id]', user.id);
+  let i = 0;
+  if (q.hosting) { form.set('line_items[0][price]', env[PLANS[q.hosting.plan]]); form.set('line_items[0][quantity]', '1'); i = 1; }
+  for (const line of q.lines) {
+    const qty = line.qty || 1;
+    form.set('line_items[' + i + '][price_data][currency]', 'eur');
+    form.set('line_items[' + i + '][price_data][product_data][name]', line.label);
+    form.set('line_items[' + i + '][price_data][unit_amount]', String(Math.round(line.amount / qty * 100)));
+    form.set('line_items[' + i + '][quantity]', String(qty));
+    i++;
+  }
+  form.set('mode', q.hosting ? 'subscription' : 'payment');
+  if (q.hosting && q.hosting.trialDays > 0) form.set('subscription_data[trial_period_days]', String(q.hosting.trialDays));
+  const meta = { user_id: user.id, project_id: order.projectId, destination: order.destination, editor: order.editor || (latest && latest.editor) ? '1' : '0', blocks: String(q.newAllowance), price_version: q.priceVersion, deploy_help: order.deployHelp ? '1' : '0', site_name: order.siteName };
+  for (const [k, v] of Object.entries(meta)) { form.set('metadata[' + k + ']', v); if (q.hosting) form.set('subscription_data[metadata][' + k + ']', v); }
   form.set('client_reference_id', user.id);
-  form.set('metadata[user_id]', user.id);
   if (user.email) form.set('customer_email', user.email);
   form.set('success_url', origin + '/builder/?paid=1');
   form.set('cancel_url', origin + '/builder/?paid=0');
-  const r = await stripePost(env, fetchImpl, 'checkout/sessions', form);
-  if (!r.ok || !r.json || typeof r.json.url !== 'string' || !/^https:\/\/checkout\.stripe\.com\//.test(r.json.url)) return sorry('Payment could not be started');
-  return { status: 200, json: { ok: true, url: r.json.url, testMode: isTestKey(env.STRIPE_SECRET_KEY) } };
+  const s = await stripePost(env, fetchImpl, 'checkout/sessions', form);
+  if (!s.ok || !s.json || typeof s.json.url !== 'string' || !/^https:\/\/checkout\.stripe\.com\//.test(s.json.url)) return sorry('Payment could not be started');
+  return { status: 200, json: { ok: true, url: s.json.url, testMode: isTestKey(env.STRIPE_SECRET_KEY) } };
 }
 
 /** The Stripe page where a customer cancels, switches plan or changes the card. `db.customerForUser(userId)` finds the customer. */
@@ -147,4 +190,4 @@ function createPayments({ db, now, env }) {
   };
 }
 
-module.exports = { createCheckout, createPortal, createPayments, verifySignature, hmacHex, isTestKey, missing, NEEDED, PLANS, TRIAL_DAYS };
+module.exports = { createOrderCheckout, createQuote, createPortal, createPayments, verifySignature, hmacHex, isTestKey, missing, NEEDED, PLANS, TRIAL_DAYS };

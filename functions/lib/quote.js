@@ -4,6 +4,7 @@
    destination: 'edvlabs' | 'domain' | 'download'. hosting: 'monthly' | 'yearly' for the first two, null for a download. deployHelp (30 EUR, once) only with 'domain' or 'download'.
    paid ({ allowance, editor, version }) is what the project already bought: only the difference is charged, at the table it was bought at (entitlement.upgrade). */
 const Prices = require('../../site/js/prices.js');
+const Entitlement = require('./entitlement.js');
 
 const DESTINATIONS = ['edvlabs', 'domain', 'download'];
 const TRIAL_DAYS = 30;
@@ -31,10 +32,20 @@ function quote(order) {
     newAllowance = Math.max(T.included, blocks);
   }
   if (o.deployHelp) lines.push({ key: 'deployHelp', label: 'We put it online for you', amount: T.deployHelp });
-  const hosting = hosted ? { plan: o.hosting, amount: o.hosting === 'monthly' ? T.hostingMonth : T.hostingYear, trialDays: TRIAL_DAYS } : null;
+  const trialDays = Number.isInteger(o.trialDays) && o.trialDays >= 0 && o.trialDays <= 90 ? o.trialDays : TRIAL_DAYS;
+  const hosting = hosted ? { plan: o.hosting, amount: o.hosting === 'monthly' ? T.hostingMonth : T.hostingYear, trialDays } : null;
   const payToday = lines.reduce((sum, l) => sum + l.amount, 0);
   if (payToday === 0 && !hosting) return { ok: false, reason: 'nothing-to-pay' };
   return { ok: true, lines, payToday, hosting, priceVersion: o.paid ? o.paid.version : Prices.version, newAllowance };
 }
 
-module.exports = { quote, DESTINATIONS, TRIAL_DAYS };
+/** The blocks a saved page holds, as the client pays for them: all pages of a multi-page site (the open page's live stack replaces its stored copy), visible blocks only. */
+function countProjectBlocks(state) {
+  if (!state || typeof state !== 'object') return 0;
+  if (Array.isArray(state.pages) && state.pages.length > 1) {
+    return state.pages.reduce((sum, p) => sum + Entitlement.countBlocks(p && p.id === state.activePageId && Array.isArray(state.stack) ? state.stack : p && p.stack), 0);
+  }
+  return Entitlement.countBlocks(state.stack);
+}
+
+module.exports = { quote, countProjectBlocks, DESTINATIONS, TRIAL_DAYS };

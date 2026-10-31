@@ -6,6 +6,8 @@ const Pay = require('../functions/lib/payment.js');
 const U1 = '11111111-1111-4111-8111-111111111111';
 const SECRET = 'whsec' + '_' + 'fake'.repeat(6), NOW_S = 1798800000; // the secret is a made-up value built in pieces, not a real one; // 2027-01-01T10:40:00Z
 const ENV = { STRIPE_SECRET_KEY: 'sk_test_' + 'a'.repeat(24), STRIPE_WEBHOOK_SECRET: SECRET, STRIPE_PRICE_MONTHLY: 'price_month', STRIPE_PRICE_YEARLY: 'price_year', SUPABASE_URL: 'https://x.supabase.co', SUPABASE_ANON_KEY: 'anon', SUPABASE_SERVICE_ROLE_KEY: 'service' };
+const PID = '33333333-3333-4333-8333-333333333333', U2 = '22222222-2222-4222-8222-222222222222';
+const blocks = (n) => Array.from({ length: n }, (_, i) => ({ slug: 'hero-' + i }));
 const asset = async () => new Response('static');
 let count = 0;
 const test = async (name, fn) => { await fn(); count++; };
@@ -14,6 +16,9 @@ function fakeDb() {
   const rows = [];
   return {
     rows,
+    projects: [], purchases: [],
+    async projectForUser(id, userId) { return this.projects.find((x) => x.id === id && x.user_id === userId) || null; },
+    async purchaseForProject(id) { return this.purchases.filter((x) => x.project_id === id).slice(-1)[0] || null; },
     async placeBySession(id) { return rows.find((r) => r.stripe_session_id === id) || null; },
     async insertPlace(row) { if (rows.some((r) => r.stripe_session_id === row.stripe_session_id || (row.stripe_subscription_id && r.stripe_subscription_id === row.stripe_subscription_id))) throw Object.assign(new Error('dup'), { code: 'duplicate' }); rows.push(Object.assign({ id: 'ent-' + (rows.length + 1) }, row)); return row; },
     async extendBySubscription(sub, until) { rows.filter((r) => r.stripe_subscription_id === sub && r.status === 'active').forEach((r) => { r.paid_until = until; }); },
@@ -33,7 +38,9 @@ function world(env) {
   const deps = { payment: { db, user: async (t) => (t === 'token-for-user-one-aaaaaaaa' ? { id: U1, email: 'a@example.com' } : null), fetchImpl, nowSec: () => NOW_S } };
   const call = (path, init, headers) => http.route(new Request('https://edvlabs.test' + path, Object.assign({ method: 'POST' }, init, { headers: headers || {} })), env || ENV, asset, deps);
   const hook = async (obj, over) => { const body = JSON.stringify(obj); return call('/api/stripe-webhook', { body }, { 'Stripe-Signature': await signed(body, NOW_S, over && over.secret), 'Content-Type': 'application/json' }); };
-  return { db, calls, call, hook };
+  db.projects.push({ id: PID, user_id: U1, name: 'Shop', status: 'draft', state: { stack: blocks(5) } });
+  const order = (over) => JSON.stringify(Object.assign({ projectId: PID, destination: 'edvlabs', editor: true, hosting: 'monthly', deployHelp: false }, over || {}));
+  return { db, calls, call, hook, order, tok: { Authorization: 'Bearer token-for-user-one-aaaaaaaa' } };
 }
 
 (async () => {
@@ -114,28 +121,68 @@ function world(env) {
     assert.strictEqual((await hook(event('checkout.session.completed', session()))).status, 500);
   });
 
-  await test('checkout: sign-in required, POST only, same-site only, a known plan only; it asks Stripe for a subscription with a free month and answers the Stripe address', async () => {
-    const { calls, call } = world();
-    const tok = { Authorization: 'Bearer token-for-user-one-aaaaaaaa' }, body = (plan) => ({ body: JSON.stringify({ plan }) });
-    assert.strictEqual((await call('/api/checkout', body('monthly'), {})).status, 401);
-    assert.strictEqual((await call('/api/checkout', body('monthly'), { Authorization: 'Bearer wrong-token-wrong-token' })).status, 401);
-    assert.strictEqual((await call('/api/checkout', { method: 'GET' }, {})).status, 405);
-    assert.strictEqual((await call('/api/stripe-webhook', { method: 'GET' }, {})).status, 405);
-    assert.strictEqual((await call('/api/checkout', body('monthly'), Object.assign({ Origin: 'https://evil.example' }, tok))).status, 403);
-    for (const bad of ['weekly', '', undefined, 'price_year']) assert.strictEqual((await call('/api/checkout', body(bad), tok)).status, 400, String(bad));
-    assert.strictEqual((await call('/api/checkout', { body: 'junk' }, tok)).status, 400);
-    assert.strictEqual(calls.length, 0, 'nothing was sent to Stripe for those');
-    const r = await call('/api/checkout', body('yearly'), Object.assign({ Origin: 'https://edvlabs.test' }, tok)); const j = await r.json();
+  await test('quote: sign-in required, POST only; the price comes from the stored project and ignores anything the browser says about prices or blocks', async () => {
+    const { call, order, tok } = world();
+    assert.strictEqual((await call('/api/quote', { body: order() }, {})).status, 401);
+    assert.strictEqual((await call('/api/quote', { method: 'GET' }, tok)).status, 405);
+    const forged = JSON.parse(order()); forged.blocks = 1; forged.price = 1; forged.payToday = 1; forged.amount = 1;
+    const r = await call('/api/quote', { body: JSON.stringify(forged) }, tok), j = await r.json();
+    assert.strictEqual(r.status, 200); assert.strictEqual(j.ok, true); assert.strictEqual(j.payToday, 96); assert.strictEqual(j.hosting.amount, 3); assert.strictEqual(j.testMode, true);
+    assert.deepStrictEqual(j.lines.map((l) => l.key), ['base', 'extra', 'editor']);
+  });
+
+  await test('quote and checkout refuse: another person\'s project (404), a bad id, bad combinations, no blocks, anything not strictly true counts as false', async () => {
+    const w = world(), { call, order, tok } = w;
+    w.db.projects.push({ id: '44444444-4444-4444-8444-444444444444', user_id: U2, name: 'Theirs', state: { stack: blocks(3) } }, { id: '55555555-5555-4555-8555-555555555555', user_id: U1, name: 'Empty', state: { stack: [] } });
+    for (const path of ['/api/quote', '/api/checkout']) {
+      assert.strictEqual((await call(path, { body: order({ projectId: '44444444-4444-4444-8444-444444444444' }) }, tok)).status, 404, path + ' another person\'s project');
+      assert.strictEqual((await call(path, { body: order({ projectId: 'nope' }) }, tok)).status, 400, path + ' bad id');
+      assert.strictEqual((await call(path, { body: order({ deployHelp: true }) }, tok)).status, 400, path + ' deploy help on an edvlabs address');
+      assert.strictEqual((await call(path, { body: order({ destination: 'download' }) }, tok)).status, 400, path + ' hosting on a download');
+      assert.strictEqual((await call(path, { body: order({ projectId: '55555555-5555-4555-8555-555555555555' }) }, tok)).status, 400, path + ' no blocks');
+      assert.strictEqual((await call(path, { body: 'junk' }, tok)).status, 400, path + ' not JSON');
+    }
+    assert.strictEqual((await (await call('/api/quote', { body: order({ editor: 'yes' }) }, tok)).json()).payToday, 57, '"yes" is not true, so no admin panel is charged');
+    assert.strictEqual(w.calls.length, 0, 'nothing reached Stripe');
+  });
+
+  await test('checkout: same-site only; hosting asks Stripe for a subscription with the free month, the right recurring price and the one-time items in cents; metadata names the project and the order', async () => {
+    const { calls, call, order, tok } = world();
+    assert.strictEqual((await call('/api/checkout', { body: order() }, Object.assign({ Origin: 'https://evil.example' }, tok))).status, 403);
+    assert.strictEqual((await call('/api/checkout', { body: order() }, {})).status, 401);
+    assert.strictEqual(calls.length, 0);
+    const r = await call('/api/checkout', { body: order({ hosting: 'yearly' }) }, Object.assign({ Origin: 'https://edvlabs.test' }, tok)), j = await r.json();
     assert.strictEqual(r.status, 200); assert(j.ok && j.url === 'https://checkout.stripe.com/c/pay/cs_test_9' && j.testMode === true);
-    assert.strictEqual(calls.length, 1); assert.strictEqual(calls[0].url, 'https://api.stripe.com/v1/checkout/sessions');
-    assert.strictEqual(calls[0].init.headers.Authorization, 'Bearer ' + ENV.STRIPE_SECRET_KEY);
+    assert.strictEqual(calls[0].url, 'https://api.stripe.com/v1/checkout/sessions'); assert.strictEqual(calls[0].init.headers.Authorization, 'Bearer ' + ENV.STRIPE_SECRET_KEY);
+    const f = new URLSearchParams(String(calls[0].init.body)), items = {};
+    for (const [k, v] of f) { const m = /^line_items\[(\d+)\]\[(.+)\]$/.exec(k); if (m) (items[m[1]] = items[m[1]] || {})[m[2]] = v; }
+    assert.strictEqual(f.get('mode'), 'subscription'); assert.strictEqual(f.get('subscription_data[trial_period_days]'), '30');
+    const list = Object.values(items);
+    assert(list.some((i) => i.price === 'price_year' && i.quantity === '1'), 'the yearly price');
+    assert(list.some((i) => i['price_data][unit_amount'] === '3900' && i.quantity === '1'), 'base 39 EUR in cents');
+    assert(list.some((i) => i['price_data][unit_amount'] === '900' && i.quantity === '2'), '2 extra blocks at 9 EUR');
+    assert(list.every((i) => i.price || i['price_data][currency'] === 'eur'));
+    for (const key of ['metadata', 'subscription_data[metadata]']) {
+      assert.strictEqual(f.get(key + '[user_id]'), U1); assert.strictEqual(f.get(key + '[project_id]'), PID); assert.strictEqual(f.get(key + '[destination]'), 'edvlabs');
+      assert.strictEqual(f.get(key + '[editor]'), '1'); assert.strictEqual(f.get(key + '[blocks]'), '5'); assert.strictEqual(f.get(key + '[price_version]'), 'v1'); assert.strictEqual(f.get(key + '[deploy_help]'), '0');
+    }
+    assert.strictEqual(f.get('client_reference_id'), U1); assert.strictEqual(f.get('success_url'), 'https://edvlabs.test/builder/?paid=1'); assert.strictEqual(f.get('cancel_url'), 'https://edvlabs.test/builder/?paid=0');
+  });
+
+  await test('checkout for a download is a single payment with no trial and no recurring price; a project already bought pays only the difference, and nothing-to-pay is a plain 409', async () => {
+    const w = world(), { calls, call, order, tok } = w;
+    const dl = { destination: 'download', hosting: null, deployHelp: true };
+    await call('/api/checkout', { body: order(dl) }, tok);
     const f = new URLSearchParams(String(calls[0].init.body));
-    assert.strictEqual(f.get('mode'), 'subscription'); assert.strictEqual(f.get('line_items[0][price]'), 'price_year'); assert.strictEqual(f.get('line_items[0][quantity]'), '1');
-    assert.strictEqual(f.get('subscription_data[trial_period_days]'), '30'); assert.strictEqual(f.get('subscription_data[metadata][user_id]'), U1);
-    assert.strictEqual(f.get('metadata[user_id]'), U1); assert.strictEqual(f.get('client_reference_id'), U1);
-    assert.strictEqual(f.get('success_url'), 'https://edvlabs.test/builder/?paid=1'); assert.strictEqual(f.get('cancel_url'), 'https://edvlabs.test/builder/?paid=0');
-    await call('/api/checkout', body('monthly'), tok);
-    assert.strictEqual(new URLSearchParams(String(calls[1].init.body)).get('line_items[0][price]'), 'price_month');
+    assert.strictEqual(f.get('mode'), 'payment'); assert.strictEqual(f.get('subscription_data[trial_period_days]'), null); assert.strictEqual(f.get('metadata[deploy_help]'), '1');
+    assert(![...f.keys()].some((k) => /\[price\]$/.test(k)), 'no recurring price id');
+    w.db.purchases.push({ project_id: PID, user_id: U1, allowance: 5, editor: true, price_version: 'v1' });
+    const q = await (await call('/api/quote', { body: order({ destination: 'download', hosting: null }) }, tok)).json();
+    assert.strictEqual(q.status === undefined && q.ok, false); assert.strictEqual(q.alreadyBought, true);
+    assert.strictEqual((await call('/api/checkout', { body: order({ destination: 'download', hosting: null }) }, tok)).status, 409);
+    w.db.projects[0].state.stack = blocks(6);
+    const more = await (await call('/api/quote', { body: order({ destination: 'download', hosting: null }) }, tok)).json();
+    assert.strictEqual(more.payToday, 9, 'only the one new block');
   });
 
   await test('billing portal: sign-in required; no customer yet is a plain 404; with one it answers the Stripe billing address for that customer only', async () => {
@@ -153,9 +200,9 @@ function world(env) {
   await test('Stripe trouble gives a plain 502 that does not leak the key or the reason; a live key is reported as not test mode', async () => {
     const hdr = { Authorization: 'Bearer token-for-user-one-aaaaaaaa' };
     const w = world();
-    let r = await http.route(new Request('https://edvlabs.test/api/checkout', { method: 'POST', headers: hdr, body: '{"plan":"monthly"}' }), ENV, asset, { payment: { user: async () => ({ id: U1, email: '' }), db: w.db, fetchImpl: async () => new Response(JSON.stringify({ error: { message: 'No such price: ' + ENV.STRIPE_SECRET_KEY } }), { status: 400 }) } });
+    let r = await http.route(new Request('https://edvlabs.test/api/checkout', { method: 'POST', headers: hdr, body: w.order() }), ENV, asset, { payment: { user: async () => ({ id: U1, email: '' }), db: w.db, fetchImpl: async () => new Response(JSON.stringify({ error: { message: 'No such price: ' + ENV.STRIPE_SECRET_KEY } }), { status: 400 }) } });
     let text = await r.text(); assert.strictEqual(r.status, 502); assert(!text.includes(ENV.STRIPE_SECRET_KEY) && !text.includes('No such'));
-    r = await http.route(new Request('https://edvlabs.test/api/checkout', { method: 'POST', headers: hdr, body: '{"plan":"monthly"}' }), ENV, asset, { payment: { user: async () => ({ id: U1 }), db: w.db, fetchImpl: async () => { throw new Error('network'); } } });
+    r = await http.route(new Request('https://edvlabs.test/api/checkout', { method: 'POST', headers: hdr, body: w.order() }), ENV, asset, { payment: { user: async () => ({ id: U1 }), db: w.db, fetchImpl: async () => { throw new Error('network'); } } });
     assert.strictEqual(r.status, 502);
     assert.strictEqual(Pay.isTestKey('sk_live_' + 'a'.repeat(24)), false); assert.strictEqual(Pay.isTestKey(ENV.STRIPE_SECRET_KEY), true);
   });
