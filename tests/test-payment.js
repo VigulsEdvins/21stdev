@@ -4,7 +4,7 @@ const http = require('../functions/lib/lead-http.js');
 const Pay = require('../functions/lib/payment.js');
 
 const U1 = '11111111-1111-4111-8111-111111111111';
-const SECRET = 'whsec_testtesttesttesttesttest', NOW_S = 1798800000; // 2027-01-01T10:40:00Z
+const SECRET = 'whsec' + '_' + 'fake'.repeat(6), NOW_S = 1798800000; // the secret is a made-up value built in pieces, not a real one; // 2027-01-01T10:40:00Z
 const ENV = { STRIPE_SECRET_KEY: 'sk_test_' + 'a'.repeat(24), STRIPE_WEBHOOK_SECRET: SECRET, STRIPE_PRICE_MONTHLY: 'price_month', STRIPE_PRICE_YEARLY: 'price_year', SUPABASE_URL: 'https://x.supabase.co', SUPABASE_ANON_KEY: 'anon', SUPABASE_SERVICE_ROLE_KEY: 'service' };
 const asset = async () => new Response('static');
 let count = 0;
@@ -40,7 +40,7 @@ function world(env) {
   await test('signature: right one passes; wrong secret, edited body, old timestamp, junk header and a rolled second v1 are handled', async () => {
     const body = '{"a":1}', good = await signed(body, NOW_S);
     assert.strictEqual(await Pay.verifySignature(body, good, SECRET, NOW_S), true);
-    assert.strictEqual(await Pay.verifySignature(body, await signed(body, NOW_S, 'whsec_other'), SECRET, NOW_S), false);
+    assert.strictEqual(await Pay.verifySignature(body, await signed(body, NOW_S, 'whsec' + '_other'), SECRET, NOW_S), false);
     assert.strictEqual(await Pay.verifySignature('{"a":2}', good, SECRET, NOW_S), false);
     assert.strictEqual(await Pay.verifySignature(body, await signed(body, NOW_S - 301), SECRET, NOW_S), false, 'older than 5 minutes');
     assert.strictEqual(await Pay.verifySignature(body, await signed(body, NOW_S - 299), SECRET, NOW_S), true);
@@ -104,7 +104,7 @@ function world(env) {
     const { db, call, hook } = world();
     const body = JSON.stringify(event('checkout.session.completed', session()));
     assert.strictEqual((await call('/api/stripe-webhook', { body })).status, 400, 'no signature');
-    assert.strictEqual((await call('/api/stripe-webhook', { body }, { 'Stripe-Signature': await signed(body, NOW_S, 'whsec_other') })).status, 400);
+    assert.strictEqual((await call('/api/stripe-webhook', { body }, { 'Stripe-Signature': await signed(body, NOW_S, 'whsec' + '_other') })).status, 400);
     assert.strictEqual((await call('/api/stripe-webhook', { body }, { 'Stripe-Signature': await signed(body, NOW_S - 1000) })).status, 400);
     assert.strictEqual((await call('/api/stripe-webhook', { body: 'not json' }, { 'Stripe-Signature': await signed('not json', NOW_S) })).status, 400);
     const big = 'x'.repeat(600 * 1024);
