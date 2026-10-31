@@ -19,8 +19,10 @@
     return '';
   }
 
+  const tr = (s, v) => (typeof EdvI18n !== 'undefined' ? EdvI18n.t(s, v) : (v ? s.replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m)) : s)); // js/i18n.js, when the page loads it
+
   function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
-  function when(iso) { const t = Date.parse(iso); return Number.isFinite(t) ? new Date(t).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : ''; }
+  function when(iso) { const t = Date.parse(iso); return Number.isFinite(t) ? new Date(t).toLocaleString(tr('en-GB'), { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : ''; }
 
   function create(deps) {
     const f = deps.fetchImpl || ((...a) => fetch(...a));
@@ -35,15 +37,15 @@
       let json = null; try { json = await r.json(); } catch (e) { json = null; }
       return { status: r.status, json };
     }
-    const words = (r) => (r.json && r.json.errors && r.json.errors[0]) || (r.status === 401 ? 'Please sign in again.' : 'That did not work just now. Please try again.');
+    const words = (r) => tr((r.json && r.json.errors && r.json.errors[0]) || (r.status === 401 ? 'Please sign in again.' : 'That did not work just now. Please try again.'));
 
     function linkRow(label, url, greyed) {
       const row = el('p', 'ws-line');
-      row.append(el('strong', '', label + ' '));
-      if (greyed) { row.append(el('span', 'ws-off', url + ' (the website is offline)')); }
+      row.append(el('strong', '', tr(label) + ' '));
+      if (greyed) { row.append(el('span', 'ws-off', url + ' ' + tr('(the website is offline)'))); }
       else { const a = el('a', '', url); a.href = url; a.target = '_blank'; a.rel = 'noopener'; row.append(a); }
-      const copy = el('button', 'btn btn--secondary btn--small', 'Copy'); copy.type = 'button'; copy.setAttribute('aria-label', 'Copy the ' + label.toLowerCase() + ' link');
-      copy.addEventListener('click', async () => { try { await (deps.clipboard || navigator.clipboard).writeText(url); copy.textContent = 'Copied'; setTimeout(() => { copy.textContent = 'Copy'; }, 1500); } catch (e) { note('Copying did not work here. Select the address and copy it by hand.', 'error'); } });
+      const copy = el('button', 'btn btn--secondary btn--small', tr('Copy')); copy.type = 'button'; copy.setAttribute('aria-label', tr('Copy the {label} link', { label: tr(label).toLowerCase() }));
+      copy.addEventListener('click', async () => { try { await (deps.clipboard || navigator.clipboard).writeText(url); copy.textContent = tr('Copied'); setTimeout(() => { copy.textContent = tr(tr('Copy')); }, 1500); } catch (e) { note(tr('Copying did not work here. Select the address and copy it by hand.'), 'error'); } });
       row.append(' ', copy);
       return row;
     }
@@ -63,7 +65,7 @@
       });
       const err = el('p', 'error-text'); err.setAttribute('role', 'alert');
       const go = el('button', 'btn', submitLabel); go.type = 'submit';
-      const cancel = el('button', 'btn btn--secondary', 'Cancel'); cancel.type = 'button';
+      const cancel = el('button', 'btn btn--secondary', tr('Cancel')); cancel.type = 'button';
       box.append(err, el('div', 'btn-row')); box.lastChild.append(go, ' ', cancel);
       cancel.addEventListener('click', () => box.remove());
       box.addEventListener('submit', async (e) => {
@@ -79,12 +81,12 @@
 
     /** What is wrong with a new username and password, in the page's own words (the server checks again). '' when fine. */
     function localProblem(values, withUser) {
-      if (withUser && !/^[A-Za-z0-9][A-Za-z0-9._-]{2,30}[A-Za-z0-9]$/.test(String(values.username || '').trim())) return 'The username needs 4 to 32 letters, numbers, dots, dashes or underscores, starting and ending with a letter or number.';
+      if (withUser && !/^[A-Za-z0-9][A-Za-z0-9._-]{2,30}[A-Za-z0-9]$/.test(String(values.username || '').trim())) return tr('The username needs 4 to 32 letters, numbers, dots, dashes or underscores, starting and ending with a letter or number.');
       if (values.password !== undefined) {
-        if (values.password !== values.password2) return 'The two passwords are not the same.';
+        if (values.password !== values.password2) return tr('The two passwords are not the same.');
         const rules = typeof window !== 'undefined' ? window.EdvPassword : (typeof require === 'function' ? require('./password.js') : null), why = rules ? rules.problem(values.password, { email: '' }) : '';
         if (why) return why;
-        if (withUser && values.password.toLowerCase().includes(String(values.username).trim().toLowerCase())) return 'The password must not contain the username.';
+        if (withUser && values.password.toLowerCase().includes(String(values.username).trim().toLowerCase())) return tr('The password must not contain the username.');
       }
       return '';
     }
@@ -97,18 +99,18 @@
 
     function adminBlock(site, li) {
       const a = site.admin, box = el('div', 'ws-admin');
-      box.append(el('h4', '', 'Admin panel'));
+      box.append(el('h4', '', tr('Admin panel')));
       const offline = site.status !== 'live';
-      if (a === null || a === undefined) { box.append(el('p', 'hint', 'The admin panel could not be read just now. Reload the page to try again.')); return box; }
+      if (a === null || a === undefined) { box.append(el('p', 'hint', tr('The admin panel could not be read just now. Reload the page to try again.'))); return box; }
       if (!a.on) {
-        box.append(el('p', 'hint', 'Change texts, pictures and links on your live website yourself, with a username and a strong password. It lives at a secret address that only you will see here.'));
-        const open = el('button', 'btn btn--secondary', 'Add admin panel'); open.type = 'button';
+        box.append(el('p', 'hint', tr('Change texts, pictures and links on your live website yourself, with a username and a strong password. It lives at a secret address that only you will see here.')));
+        const open = el('button', 'btn btn--secondary', tr('Add admin panel')); open.type = 'button';
         open.addEventListener('click', () => {
           if (box.querySelector('.ws-form')) return;
-          const fm = form(site, 'Add an admin panel', [{ id: 'username', label: 'Username', autocomplete: 'username' }, { id: 'password', label: 'Password', type: 'password', autocomplete: 'new-password' }, { id: 'password2', label: 'Repeat the password', type: 'password', autocomplete: 'new-password' }], 'Add admin panel', async (v) => {
+          const fm = form(site, tr('Add an admin panel'), [{ id: 'username', label: tr('Username'), autocomplete: 'username' }, { id: 'password', label: tr('Password'), type: 'password', autocomplete: 'new-password' }, { id: 'password2', label: tr('Repeat the password'), type: 'password', autocomplete: 'new-password' }], tr('Add admin panel'), async (v) => {
             const p = localProblem(v, true); if (p) return p;
-            return act(site, 'enable', { username: v.username.trim(), password: v.password }, async (j) => { await show(); note(j.needsPublish ? 'The admin panel is on. Put your page online once more from the builder, so there is something to edit.' : 'The admin panel is on.', 'ok'); });
-          }, 'The password needs 10 or more characters with a lowercase letter, a capital, a number and a symbol.');
+            return act(site, 'enable', { username: v.username.trim(), password: v.password }, async (j) => { await show(); note(j.needsPublish ? tr('The admin panel is on. Put your page online once more from the builder, so there is something to edit.') : tr('The admin panel is on.'), 'ok'); });
+          }, tr('The password needs 10 or more characters with a lowercase letter, a capital, a number and a symbol.'));
           box.append(fm); fm.querySelector('input').focus();
         });
         box.append(open);
@@ -116,29 +118,29 @@
       }
       const addr = safeUrl(a.address, true);
       if (addr) box.append(linkRow('Admin panel:', addr, offline));
-      box.append(el('p', 'ws-line', 'Username: ' + a.username + (a.lastLoginAt ? ' · last signed in ' + when(a.lastLoginAt) : ' · not signed in yet')));
+      box.append(el('p', 'ws-line', tr('Username: {name}', { name: a.username }) + (a.lastLoginAt ? tr(' · last signed in {date}', { date: when(a.lastLoginAt) }) : tr(' · not signed in yet'))));
       const row = el('div', 'btn-row');
       const mk = (label, run) => { const b = el('button', 'btn btn--secondary btn--small', label); b.type = 'button'; b.addEventListener('click', () => { const old = box.querySelector('.ws-form'); if (old) old.remove(); run(); }); row.append(b, ' '); return b; };
-      mk('Change password', () => box.append(form(site, 'Change the password', [{ id: 'password', label: 'New password', type: 'password', autocomplete: 'new-password' }, { id: 'password2', label: 'Repeat the new password', type: 'password', autocomplete: 'new-password' }], 'Change password', async (v) => {
+      mk(tr('Change password'), () => box.append(form(site, tr('Change the password'), [{ id: 'password', label: tr('New password'), type: 'password', autocomplete: 'new-password' }, { id: 'password2', label: tr('Repeat the new password'), type: 'password', autocomplete: 'new-password' }], tr('Change password'), async (v) => {
         const p = localProblem(Object.assign({ username: a.username }, v), true); if (p) return p;
-        return act(site, 'change', { password: v.password }, async () => { await show(); note('The password is changed. Anyone signed in to the admin panel has been signed out.', 'ok'); });
+        return act(site, 'change', { password: v.password }, async () => { await show(); note(tr('The password is changed. Anyone signed in to the admin panel has been signed out.'), 'ok'); });
       })));
-      mk('Change username', () => box.append(form(site, 'Change the username', [{ id: 'username', label: 'New username', autocomplete: 'username' }], 'Change username', async (v) => {
+      mk(tr('Change username'), () => box.append(form(site, tr('Change the username'), [{ id: 'username', label: tr('New username'), autocomplete: 'username' }], tr('Change username'), async (v) => {
         const p = localProblem(v, true); if (p) return p;
-        return act(site, 'change', { username: v.username.trim() }, async () => { await show(); note('The username is changed. Anyone signed in to the admin panel has been signed out.', 'ok'); });
+        return act(site, 'change', { username: v.username.trim() }, async () => { await show(); note(tr('The username is changed. Anyone signed in to the admin panel has been signed out.'), 'ok'); });
       })));
-      mk('New secret address', () => {
-        const ask = el('div', 'ws-form'); ask.append(el('p', '', 'The admin panel moves to a new secret address and the old one stops working. Use this if you think the address was seen by someone.'));
-        const yes = el('button', 'btn', 'Make a new address'); yes.type = 'button'; const no = el('button', 'btn btn--secondary', 'Cancel'); no.type = 'button';
+      mk(tr('New secret address'), () => {
+        const ask = el('div', 'ws-form'); ask.append(el('p', '', tr('The admin panel moves to a new secret address and the old one stops working. Use this if you think the address was seen by someone.')));
+        const yes = el('button', 'btn', tr('Make a new address')); yes.type = 'button'; const no = el('button', 'btn btn--secondary', tr('Cancel')); no.type = 'button';
         no.addEventListener('click', () => ask.remove());
-        yes.addEventListener('click', async () => { yes.disabled = true; const p = await act(site, 'change', { newAddress: true }, async () => { await show(); note('The admin panel has a new secret address, shown above.', 'ok'); }); if (p) { yes.disabled = false; note(p, 'error'); } });
+        yes.addEventListener('click', async () => { yes.disabled = true; const p = await act(site, 'change', { newAddress: true }, async () => { await show(); note(tr('The admin panel has a new secret address, shown above.'), 'ok'); }); if (p) { yes.disabled = false; note(p, 'error'); } });
         ask.append(yes, ' ', no); box.append(ask);
       });
-      mk('Remove admin panel', () => {
-        const ask = el('div', 'ws-form'); ask.append(el('p', '', 'This removes the admin panel and every change made in it. The website goes back to how the builder made it. You can add a new admin panel later.'));
-        const yes = el('button', 'btn', 'Yes, remove it'); yes.type = 'button'; const no = el('button', 'btn btn--secondary', 'Keep it'); no.type = 'button';
+      mk(tr('Remove admin panel'), () => {
+        const ask = el('div', 'ws-form'); ask.append(el('p', '', tr('This removes the admin panel and every change made in it. The website goes back to how the builder made it. You can add a new admin panel later.')));
+        const yes = el('button', 'btn', tr('Yes, remove it')); yes.type = 'button'; const no = el('button', 'btn btn--secondary', tr('Keep it')); no.type = 'button';
         no.addEventListener('click', () => ask.remove());
-        yes.addEventListener('click', async () => { yes.disabled = true; const p = await act(site, 'remove', {}, async () => { await show(); note('The admin panel is removed.', 'ok'); }); if (p) { yes.disabled = false; note(p, 'error'); } });
+        yes.addEventListener('click', async () => { yes.disabled = true; const p = await act(site, 'remove', {}, async () => { await show(); note(tr('The admin panel is removed.'), 'ok'); }); if (p) { yes.disabled = false; note(p, 'error'); } });
         ask.append(yes, ' ', no); box.append(ask);
       });
       box.append(row);
@@ -149,76 +151,76 @@
     function domainBlock(site) {
       if (site.domain === undefined) return null; // own domains are not set up on this server: say nothing
       const box = el('div', 'ws-domain');
-      box.append(el('h4', '', 'Your own domain'));
+      box.append(el('h4', '', tr('Your own domain')));
       const body = el('div', 'ws-domain-body'); box.append(body);
       let timer = null;
       const stop = () => { if (timer) { clearTimeout(timer); timer = null; } };
 
       function recordRow(label, r) {
         const p = el('p', 'ws-line');
-        p.append(el('strong', '', label + ' '), 'type ', el('code', '', r.type), ', name ', el('code', '', r.name), ', value ', el('code', '', r.value));
+        p.append(el('strong', '', tr(label) + ' '), tr('type '), el('code', '', r.type), tr(', name '), el('code', '', r.name), tr(', value '), el('code', '', r.value));
         return p;
       }
 
       function showInfo(info) {
-        stop(); body.replaceChildren();
+        stop(); body.replaceChildren(); body.dataset.state = info.status || '';
         const row = el('div', 'btn-row');
-        const remove = el('button', 'btn btn--secondary btn--small', 'Remove domain'); remove.type = 'button';
+        const remove = el('button', 'btn btn--secondary btn--small', tr('Remove domain')); remove.type = 'button';
         remove.addEventListener('click', () => {
-          const ask = el('div', 'ws-form'); ask.append(el('p', '', 'The website goes back to its edvlabs address. ' + (info.status === 'active' ? 'Visitors who use your own domain will see nothing until you add it again.' : '')));
-          const yes = el('button', 'btn', 'Yes, remove it'); yes.type = 'button'; const no = el('button', 'btn btn--secondary', 'Keep it'); no.type = 'button';
+          const ask = el('div', 'ws-form'); ask.append(el('p', '', tr('The website goes back to its edvlabs address.') + (info.status === 'active' ? ' ' + tr('Visitors who use your own domain will see nothing until you add it again.') : '')));
+          const yes = el('button', 'btn', tr('Yes, remove it')); yes.type = 'button'; const no = el('button', 'btn btn--secondary', tr('Keep it')); no.type = 'button';
           no.addEventListener('click', () => ask.remove());
-          yes.addEventListener('click', async () => { yes.disabled = true; const r = await call('POST', '/site-domain', { action: 'remove', siteId: site.id }); if (r.status === 200 && r.json && r.json.ok) { await show(); note('The domain is removed.', 'ok'); } else { yes.disabled = false; note(words(r), 'error'); } });
+          yes.addEventListener('click', async () => { yes.disabled = true; const r = await call('POST', '/site-domain', { action: 'remove', siteId: site.id }); if (r.status === 200 && r.json && r.json.ok) { await show(); note(tr('The domain is removed.'), 'ok'); } else { yes.disabled = false; note(words(r), 'error'); } });
           ask.append(yes, ' ', no); body.append(ask);
         });
         if (info.status === 'active') {
           const addr = safeUrl('https://' + info.hostname + '/', false);
-          body.append(el('p', 'hint', 'Your domain is working. Visitors who use the edvlabs address are sent to it.'));
+          body.append(el('p', 'hint', tr('Your domain is working. Visitors who use the edvlabs address are sent to it.')));
           if (addr) body.append(linkRow('Your domain:', addr, site.status !== 'live'));
           row.append(remove); body.append(row);
           return;
         }
         if (info.status === 'failed') {
-          body.append(el('p', 'error-text', info.hostname + ': ' + (info.error || 'This did not work.')));
+          body.append(el('p', 'error-text', info.hostname + ': ' + (info.error ? tr(info.error) : tr('This did not work.'))));
           row.append(remove); body.append(row);
           return;
         }
-        body.append(el('p', 'hint', 'Almost there for ' + info.hostname + '. At the company where you bought the domain (your domain provider), add this record:'));
+        body.append(el('p', 'hint', tr('Almost there for {host}. At the company where you bought the domain (your domain provider), add this record:', { host: info.hostname })));
         (info.records || []).forEach((r) => body.append(recordRow('Add:', r)));
-        body.append(el('p', 'hint', 'Some providers want only the first part as the name (for example www). It can take a few minutes, and sometimes a few hours, before it works. This page checks by itself.'));
-        if (info.error) body.append(el('p', 'hint', 'Not yet: ' + info.error));
+        body.append(el('p', 'hint', tr('Some providers want only the first part as the name (for example www). It can take a few minutes, and sometimes a few hours, before it works. This page checks by itself.')));
+        if (info.error) body.append(el('p', 'hint', tr('Not yet: {error}', { error: tr(info.error) })));
         if ((info.optionalRecords || []).length) {
-          const more = el('details', 'ws-more'); more.append(el('summary', '', 'Still waiting after an hour? Add this record too'));
+          const more = el('details', 'ws-more'); more.append(el('summary', '', tr('Still waiting after an hour? Add this record too')));
           info.optionalRecords.forEach((r) => more.append(recordRow('Also:', r)));
           body.append(more);
         }
-        const check = el('button', 'btn btn--secondary btn--small', 'Check now'); check.type = 'button';
+        const check = el('button', 'btn btn--secondary btn--small', tr('Check now')); check.type = 'button';
         check.addEventListener('click', async () => { check.disabled = true; await refresh(); });
         row.append(check, ' ', remove); body.append(row);
-        timer = setTimeout(function again() { if (!box.isConnected) return; refresh().then(() => { if (box.isConnected && body.querySelector('.btn-row button') && !/working/.test(body.textContent)) timer = setTimeout(again, 20000); }); }, 20000);
+        timer = setTimeout(function again() { if (!box.isConnected) return; refresh().then(() => { if (box.isConnected && body.querySelector('.btn-row button') && body.dataset.state !== 'active') timer = setTimeout(again, 20000); }); }, 20000);
       }
 
       async function refresh() {
         const r = await call('GET', '/site-domain?siteId=' + encodeURIComponent(site.id));
         if (r.status === 200 && r.json && r.json.ok && r.json.hostname) {
-          if (r.json.status === 'active' && site.domain && site.domain.status !== 'active') { await show(); note('Your domain is working.', 'ok'); return; }
+          if (r.json.status === 'active' && site.domain && site.domain.status !== 'active') { await show(); note(tr('Your domain is working.'), 'ok'); return; }
           showInfo(r.json);
         } else if (r.status === 200) { await show(); } else { stop(); body.replaceChildren(el('p', 'error-text', words(r))); }
       }
 
-      if (site.domain) { body.append(el('p', 'hint', 'Checking ' + site.domain.hostname + '…')); refresh(); return box; }
-      if (site.status !== 'live') { body.append(el('p', 'hint', 'Put the website online first, then you can use your own domain.')); return box; }
-      body.append(el('p', 'hint', 'Show this website at your own domain, for example www.yourdomain.com, instead of the edvlabs address. You keep the domain at your domain provider; you only add one record there.'));
-      const open = el('button', 'btn btn--secondary', 'Use my own domain'); open.type = 'button';
+      if (site.domain) { body.append(el('p', 'hint', tr('Checking {host}…', { host: site.domain.hostname }))); refresh(); return box; }
+      if (site.status !== 'live') { body.append(el('p', 'hint', tr('Put the website online first, then you can use your own domain.'))); return box; }
+      body.append(el('p', 'hint', tr('Show this website at your own domain, for example www.yourdomain.com, instead of the edvlabs address. You keep the domain at your domain provider; you only add one record there.')));
+      const open = el('button', 'btn btn--secondary', tr('Use my own domain')); open.type = 'button';
       open.addEventListener('click', () => {
         if (body.querySelector('.ws-form')) return;
-        const fm = form(site, 'Your domain', [{ id: 'hostname', label: 'Domain address (like www.yourdomain.com)', autocomplete: 'off', max: 253 }], 'Continue', async (v) => {
+        const fm = form(site, tr('Your domain'), [{ id: 'hostname', label: tr('Domain address (like www.yourdomain.com)'), autocomplete: 'off', max: 253 }], tr('Continue'), async (v) => {
           const h = String(v.hostname || '').trim();
-          if (!h) return 'Type the address of your domain, for example www.yourdomain.com.';
+          if (!h) return tr('Type the address of your domain, for example www.yourdomain.com.');
           const r = await call('POST', '/site-domain', { action: 'add', siteId: site.id, hostname: h });
           if (r.status === 200 && r.json && r.json.ok) { site.domain = { hostname: r.json.hostname, status: r.json.status }; showInfo(r.json); return ''; }
           return words(r);
-        }, 'Use a name with something in front, like www or shop. If you want the bare domain too, ask your domain provider to send it to the www name.');
+        }, tr('Use a name with something in front, like www or shop. If you want the bare domain too, ask your domain provider to send it to the www name.'));
         body.append(fm); fm.querySelector('input').focus();
       });
       body.append(open);
@@ -230,7 +232,7 @@
       li.append(el('h3', 'ws-name', site.name));
       const addr = safeUrl(site.address, false);
       if (addr) li.append(linkRow('Website:', addr, site.status !== 'live'));
-      if (site.status !== 'live') li.append(el('p', 'hint', site.status === 'blocked' ? 'This website has been blocked. Please contact edvlabs.' : 'This website is offline. Put it online again from the builder.'));
+      if (site.status !== 'live') li.append(el('p', 'hint', site.status === 'blocked' ? tr('This website has been blocked. Please contact edvlabs.') : tr('This website is offline. Put it online again from the builder.')));
       li.append(adminBlock(site, li));
       const domain = domainBlock(site); if (domain) li.append(domain);
       return li;

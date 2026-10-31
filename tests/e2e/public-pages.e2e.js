@@ -9,6 +9,7 @@ const P = require('../../site/js/prices.js');
 
 const SITE = path.join(__dirname, '../../site');
 const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/', 'guide/', 'about/'];
+const LV_PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/', 'about/'];
 
 (async () => {
   const srv = await startServer();
@@ -127,9 +128,41 @@ const PAGES = ['', 'how-it-works/', 'pricing/', 'faq/', 'contact/', 'start/', 'g
   console.log('  ✓ each example card opens its sample in a new tab, which links to the home page and on to the questions');
   console.log('  ✓ home page: nine examples of our own pages with descriptions, and the 200+ claim is true');
 
+  // Latvian pages (plan 2026-10-31-latvian-storefront.md): each English page has a Latvian twin that points back, and the scripts speak Latvian
+  for (const p of LV_PAGES) {
+    const src = fs.readFileSync(path.join(SITE, 'lv', p, 'index.html'), 'utf8'), en = p; // the English page has the same path without lv/
+    assert(/<html lang="lv">/.test(src), 'lv/' + p + ': lang="lv"');
+    assert(!/\sstyle=/.test(src) && !/\son[a-z]+=/.test(src) && !/<script(?![^>]*\bsrc=)(?![^>]*ld\+json)[^>]*>/.test(src), 'lv/' + p + ': no inline style, handler or script');
+    assert(src.includes(`<link rel="canonical" href="https://edvlabs.com/lv/${p}">`), 'lv/' + p + ': canonical');
+    assert(src.includes(`hreflang="en" href="https://edvlabs.com/${en}"`) && src.includes(`hreflang="lv" href="https://edvlabs.com/lv/${p}"`), 'lv/' + p + ': hreflang pair');
+    const twin = fs.readFileSync(path.join(SITE, en, 'index.html'), 'utf8');
+    assert(twin.includes(`hreflang="lv" href="https://edvlabs.com/lv/${p}"`), en + ': points at its Latvian twin');
+    if (p) assert(sitemap.includes(`<loc>https://edvlabs.com/lv/${p}</loc>`), 'lv/' + p + ': in sitemap'); else assert(sitemap.includes('<loc>https://edvlabs.com/lv/</loc>'), 'lv home in sitemap');
+    await page.goto(srv.url + '/site/lv/' + p + 'index.html');
+    assert.strictEqual(await page.locator('h1').count(), 1, 'lv/' + p + ': one h1');
+    const t = await page.title(); assert(!titles.has(t), 'lv/' + p + ': its own title'); titles.add(t);
+    assert.strictEqual(await page.locator('a.lang-switch').getAttribute('href'), p ? '../../' + p : '../', 'lv/' + p + ': switcher goes to the English page');
+  }
+  const ldLv = JSON.parse((fs.readFileSync(path.join(SITE, 'lv/faq/index.html'), 'utf8').match(/ld\+json">(.*?)<\/script>/) || [])[1]);
+  await page.goto(srv.url + '/site/lv/faq/index.html');
+  assert.deepStrictEqual(await page.$$eval('details summary', (s) => s.map((x) => x.textContent)), ldLv.mainEntity.map((q) => q.name), 'the Latvian FAQ markup matches the visible questions');
+  assert.strictEqual(ldLv.mainEntity.length, ld.mainEntity.length, 'as many Latvian questions as English ones');
+  await page.goto(srv.url + '/site/lv/index.html');
+  assert.strictEqual(await page.innerText('#band-from'), 'No ' + P.eur(P.self(P.table.included, false)), 'the price band is filled in Latvian');
+  await page.goto(srv.url + '/site/lv/pricing/index.html');
+  assert.strictEqual(await page.innerText('#calc-ed'), 'nav izvēlēts'); await page.check('#calc-editor'); assert.strictEqual(await page.innerText('#calc-ed'), P.eur(P.table.editor));
+  await page.goto(srv.url + '/site/lv/start/index.html'); await page.evaluate(() => localStorage.clear()); await page.goto(srv.url + '/site/lv/start/index.html#q1');
+  assert.strictEqual(await page.innerText('#q-count'), '1. jautājums no 10'); assert((await page.innerText('#q-title')).includes('Kam domāta lapa?'));
+  assert(await page.locator('label.option', { hasText: 'Vēl nezinu' }).count() === 1, 'the “I don’t know yet” answer is in Latvian');
+  await page.click('label.option:has-text("Mans uzņēmums")'); const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('edvlabs.brief_v1')).answers.purpose.value); assert.strictEqual(stored, 'business', 'the stored answer is the id, not the Latvian label');
+  await page.goto(srv.url + '/site/start/index.html#q1'); assert.strictEqual(await page.innerText('#q-count'), 'Question 1 of 10', 'the English questions are unchanged');
+  await page.goto(srv.url + '/site/lv/contact/index.html'); await page.fill('#k-email', 'abc'); await page.click('button[type=submit]');
+  assert((await page.innerText('#k-err-email')).includes('Tā neizskatās pēc e-pasta adreses'), 'contact form problems are in Latvian');
+  console.log('  ✓ Latvian pages: twins point at each other, in the sitemap, scripts speak Latvian, answers are stored as ids');
+
   // phone width: no sideways scroll on any page, and the menu button still reachable
   await page.setViewportSize({ width: 375, height: 800 });
-  for (const p of PAGES) { await page.goto(srv.url + '/site/' + p + 'index.html'); assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'sideways scroll at 375px on /' + p); }
+  for (const p of PAGES.concat(LV_PAGES.map((x) => 'lv/' + x))) { await page.goto(srv.url + '/site/' + p + 'index.html'); assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'sideways scroll at 375px on /' + p); }
   console.log('  ✓ no sideways scroll at 375px on any page');
 
   assert.deepStrictEqual(errors.filter(e => !/Failed to load resource.*404|api\/lead/.test(e)), [], 'no console errors: ' + errors.join(' | '));

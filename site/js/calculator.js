@@ -11,7 +11,7 @@
     $('calc-base').textContent = P.eur(T.base);
     $('calc-extra-n').textContent = String(extra);
     $('calc-extra').textContent = P.eur(extra * T.extra);
-    $('calc-ed').textContent = ed ? P.eur(T.editor) : 'not chosen';
+    $('calc-ed').textContent = ed ? P.eur(T.editor) : window.EdvI18n.t('not chosen');
     $('calc-self').textContent = P.eur(P.self(n, ed));
     $('calc-done').textContent = P.eur(P.done(n, ed));
   }

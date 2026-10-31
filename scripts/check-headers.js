@@ -54,7 +54,7 @@ async function main() {
   const arg = process.argv[2];
   let errs = [];
   if (arg) {
-    for (const p of ['/', '/pricing/', '/start/', '/account/', '/examples/yearbook/']) {
+    for (const p of ['/', '/pricing/', '/start/', '/account/', '/lv/', '/lv/start/', '/lv/account/', '/examples/yearbook/']) {
       const r = await fetch(new URL(p, arg), { redirect: 'follow' });
       const h = {}; r.headers.forEach((v, k) => { h[k] = v; });
       errs = errs.concat(problems(h, p.startsWith('/examples/') ? { strictStyles: false, frameAncestors: ["'self'"] } : {}).map((e) => `${p}: ${e}`));
@@ -69,18 +69,18 @@ async function main() {
     }
     // a rule that sets its own Cache-Control must first remove the general one, or the browser receives both
     for (const [r, h] of Object.entries(rules)) if (r !== '/*' && h['cache-control'] && !(h['!detach'] || []).includes('cache-control')) errs.push(r + ': sets Cache-Control without removing the general one first ("! Cache-Control")');
-    if (rules['/account/*']) {
-      errs = errs.concat(problems(effective(rules, '/account/*')).map((e) => '/account/*: ' + e)); // as strict as everywhere, only connect-src names one more address
-      const c = parseCsp(effective(rules, '/account/*')['content-security-policy'] || '');
+    for (const A of ['/account/*', '/lv/account/*']) if (rules[A] || A === '/account/*') { // the Latvian account page (site/lv/account/) needs the same rules
+      errs = errs.concat(problems(effective(rules, A)).map((e) => A + ': ' + e)); // as strict as everywhere, only connect-src names one more address
+      const c = parseCsp(effective(rules, A)['content-security-policy'] || '');
       const extra = (c['connect-src'] || []).filter((x) => x !== "'self'");
-      if (extra.length !== 1 || !/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(extra[0])) errs.push('/account/*: connect-src may add only the one Supabase address');
+      if (extra.length !== 1 || !/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(extra[0])) errs.push(A + ': connect-src may add only the one Supabase address');
       const only = (d, host) => { const v = (c[d] || []).filter((x) => x !== "'self'"); return v.length === 0 || (v.length === 1 && v[0] === host); };
-      if (!only('script-src', 'https://challenges.cloudflare.com')) errs.push('/account/*: script-src may add only https://challenges.cloudflare.com (the spam check)');
-      if (!only('frame-src', 'https://challenges.cloudflare.com')) errs.push('/account/*: frame-src may only be https://challenges.cloudflare.com (the spam check)');
-      if ((c['style-src'] || []).some((x) => x !== "'self'")) errs.push('/account/*: style-src must stay as strict as everywhere');
-      if (!(rules['/account/*']['!detach'] || []).includes('content-security-policy')) errs.push('/account/*: must detach the strict policy first, or the browser applies both');
+      if (!only('script-src', 'https://challenges.cloudflare.com')) errs.push(A + ': script-src may add only https://challenges.cloudflare.com (the spam check)');
+      if (!only('frame-src', 'https://challenges.cloudflare.com')) errs.push(A + ': frame-src may only be https://challenges.cloudflare.com (the spam check)');
+      if ((c['style-src'] || []).some((x) => x !== "'self'")) errs.push(A + ': style-src must stay as strict as everywhere');
+      if (!(rules[A]['!detach'] || []).includes('content-security-policy')) errs.push(A + ': must detach the strict policy first, or the browser applies both');
     }
-    for (const r of ['/contact/*', '/start/*']) { // the lead forms: as strict as everywhere, only the spam check's own address is added to script-src and frame-src
+    for (const r of ['/contact/*', '/start/*', '/lv/contact/*', '/lv/start/*']) { // the lead forms: as strict as everywhere, only the spam check's own address is added to script-src and frame-src
       if (!rules[r]) { errs.push(r + ': missing; the page shows the spam check and needs its address in script-src and frame-src'); continue; }
       errs.push(...problems(effective(rules, r)).map((e) => r + ': ' + e));
       const c = parseCsp(effective(rules, r)['content-security-policy'] || '');

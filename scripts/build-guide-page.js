@@ -14,8 +14,8 @@ const DESC = 'A step-by-step guide to putting a page online: Netlify, Cloudflare
 
 function build() {
   const icon = faq.match(/<link rel="icon"[^>]*>/)[0];
-  const header = faq.match(/<div class="wrap"><header class="site-header">[\s\S]*?<\/header><\/div>/)[0].replace(' aria-current="page"', '');
-  const footer = faq.match(/<footer class="site-footer">[\s\S]*?<\/footer>/)[0];
+  const header = faq.match(/<div class="wrap"><header class="site-header">[\s\S]*?<\/header><\/div>/)[0].replace(' aria-current="page"', '').replace('href="../lv/faq/"', 'href="../lv/"'); // the guide has no Latvian twin: the switcher goes to the Latvian home page
+  const footer = faq.match(/<footer class="site-footer">[\s\S]*?<\/footer>/)[0].replace('href="../lv/faq/"', 'href="../lv/"');
   const toc = guide.CHAPTERS.map((c) => `<li><a href="#${c.id}">${c.title.replace(/&/g, '&amp;')}</a></li>`).join('');
   const existing = fs.existsSync(FILE) ? fs.readFileSync(FILE, 'utf8') : '';
   const sharing = (existing.match(/<!-- sharing:start -->[\s\S]*?<!-- sharing:end -->/) || ['<!-- sharing:start -->\n<!-- sharing:end -->'])[0];

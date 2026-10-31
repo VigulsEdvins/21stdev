@@ -56,6 +56,12 @@
   ! Content-Security-Policy
   Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://idvirglyjvqneaudnsuu.supabase.co; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 
+# The Latvian twin of the account page has exactly the same rules.
+/lv/account/*
+  X-Robots-Tag: noindex
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://idvirglyjvqneaudnsuu.supabase.co; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
 # The contact page and the start questions send a message to /api/lead and show the Cloudflare spam check (Turnstile) when a site key is configured
 # (js/spam-check.js). Same strict rules as everywhere, plus challenges.cloudflare.com for script-src and frame-src. Nothing else is loosened.
 # "!" removes the strict policy from /* first, because a second policy would be added to it, not replace it.
@@ -63,7 +69,15 @@
   ! Content-Security-Policy
   Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 
+/lv/contact/*
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
 /start/*
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+/lv/start/*
   ! Content-Security-Policy
   Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://challenges.cloudflare.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
 

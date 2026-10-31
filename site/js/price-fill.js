@@ -7,5 +7,5 @@
     if (v) el.textContent = el.dataset.price === 'included' ? String(v()) : P.eur(v());
   });
   const band = document.getElementById('band-from');
-  if (band) band.textContent = 'From ' + P.eur(P.self(T.included, false));
+  if (band) band.textContent = window.EdvI18n.t('From {price}', { price: P.eur(P.self(T.included, false)) });
 })();

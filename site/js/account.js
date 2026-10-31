@@ -5,6 +5,20 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const A = window.EdvAuth;
+  const { t: tr } = window.EdvI18n; // words on the screen, in the page's language (js/i18n.js)
+  const lowerFirst = (x) => x.charAt(0).toLowerCase() + x.slice(1);
+  /** A message from auth.js or password.js, which are written in English: translated here, where it is shown. Most are fixed sentences; three carry a number or a list. */
+  function say(text) {
+    const m = String(text || '');
+    let r;
+    if ((r = /^That password is too long\. Use at most (\d+) characters\.$/.exec(m))) return tr('That password is too long. Use at most {max} characters.', { max: r[1] });
+    if ((r = /^Make the password stronger\. It still needs: (.*)\.$/.exec(m))) {
+      const labels = window.EdvPassword.RULES.map((x) => x.label);
+      return tr('Make the password stronger. It still needs: {list}.', { list: r[1].split('; ').map((p) => { const l = labels.find((x) => lowerFirst(x) === p); return l ? lowerFirst(tr(l)) : p; }).join('; ') });
+    }
+    if (m.startsWith('That password is too easy to guess. ')) return tr('That password is too easy to guess.') + ' ' + tr(m.slice('That password is too easy to guess. '.length));
+    return tr(m);
+  }
   let auth = null, answersSync = null, extras = null, websites = null, mode = 'in', mailKind = null, pending = null, captcha = null, lastSent = 0, knownEmail = '';
 
   const VIEWS = ['a-loading', 'a-closed', 'a-out', 'f-code', 'a-in', 'f-new'];
@@ -23,7 +37,7 @@
     const input = $(id); if (!input || input.parentElement.classList.contains('pw-wrap')) return;
     const wrap = document.createElement('div'); wrap.className = 'pw-wrap'; input.replaceWith(wrap); wrap.append(input);
     const b = document.createElement('button'); b.type = 'button'; b.className = 'pw-toggle'; b.setAttribute('aria-controls', id);
-    const set = (show) => { input.type = show ? 'text' : 'password'; b.textContent = show ? 'Hide' : 'Show'; b.setAttribute('aria-label', (show ? 'Hide' : 'Show') + ' ' + (input.closest('.field').querySelector('label').textContent.toLowerCase())); };
+    const set = (show) => { input.type = show ? 'text' : 'password'; b.textContent = show ? tr('Hide') : tr('Show'); b.setAttribute('aria-label', tr(show ? 'Hide {what}' : 'Show {what}', { what: input.closest('.field').querySelector('label').textContent.toLowerCase() })); };
     b.addEventListener('click', () => { set(input.type === 'password'); input.focus(); });
     wrap.append(b); set(false); boxes.push({ input, set });
   }
@@ -36,7 +50,7 @@
     const bar = document.createElement('div'); bar.className = 'pw-bar'; bar.setAttribute('aria-hidden', 'true'); for (let i = 0; i < 3; i++) bar.append(document.createElement('span'));
     const label = document.createElement('p'); label.className = 'pw-label'; label.setAttribute('aria-live', 'polite');
     const list = document.createElement('ul'); list.className = 'pw-rules';
-    const items = window.EdvPassword.RULES.map((r) => { const li = document.createElement('li'); li.dataset.rule = r.id; const mark = document.createElement('span'); mark.className = 'pw-mark'; mark.setAttribute('aria-hidden', 'true'); const sr = document.createElement('span'); sr.className = 'sr-only'; const t = document.createElement('span'); t.textContent = r.label; li.append(mark, sr, t); list.append(li); return { li, mark, sr }; });
+    const items = window.EdvPassword.RULES.map((r) => { const li = document.createElement('li'); li.dataset.rule = r.id; const mark = document.createElement('span'); mark.className = 'pw-mark'; mark.setAttribute('aria-hidden', 'true'); const sr = document.createElement('span'); sr.className = 'sr-only'; const t = document.createElement('span'); t.textContent = tr(r.label); li.append(mark, sr, t); list.append(li); return { li, mark, sr }; });
     const notes = document.createElement('p'); notes.className = 'pw-notes';
     meter.append(bar, label, list, notes);
     field.insertBefore(meter, errEl);
@@ -44,9 +58,9 @@
     function update() {
       const c = window.EdvPassword.check(input.value, { email: getEmail() });
       bar.dataset.level = c.level;
-      if (c.level !== lastLevel) { lastLevel = c.level; label.replaceChildren(); if (c.level !== 'empty') { label.append('Password strength: '); const strong = document.createElement('strong'); strong.textContent = { low: 'Low', medium: 'Medium', high: 'High' }[c.level]; label.append(strong); } }
-      c.rules.forEach((r, i) => { items[i].li.dataset.ok = String(r.ok); items[i].mark.textContent = r.ok ? '✓' : '○'; items[i].sr.textContent = r.ok ? 'Done: ' : 'Still needed: '; });
-      notes.textContent = c.notes[0] || '';
+      if (c.level !== lastLevel) { lastLevel = c.level; label.replaceChildren(); if (c.level !== 'empty') { label.append(tr('Password strength: ')); const strong = document.createElement('strong'); strong.textContent = tr({ low: 'Low', medium: 'Medium', high: 'High' }[c.level]); label.append(strong); } }
+      c.rules.forEach((r, i) => { items[i].li.dataset.ok = String(r.ok); items[i].mark.textContent = r.ok ? '✓' : '○'; items[i].sr.textContent = r.ok ? tr('Done: ') : tr('Still needed: '); });
+      notes.textContent = c.notes[0] ? say(c.notes[0]) : '';
     }
     input.addEventListener('input', update);
     return { update, show(on) { meter.hidden = !on; if (on) update(); } };
@@ -56,7 +70,7 @@
   function addMatch(repeatId, firstId) {
     const rep = $(repeatId), first = $(firstId), field = rep.closest('.field');
     const hint = document.createElement('p'); hint.className = 'hint pw-match'; hint.setAttribute('aria-live', 'polite'); field.insertBefore(hint, $(repeatId + '-err'));
-    const update = () => { hint.textContent = !rep.value ? '' : rep.value === first.value ? 'The passwords match.' : 'Not the same yet.'; hint.dataset.state = !rep.value ? '' : rep.value === first.value ? 'same' : 'different'; };
+    const update = () => { hint.textContent = !rep.value ? '' : rep.value === first.value ? tr('The passwords match.') : tr('Not the same yet.'); hint.dataset.state = !rep.value ? '' : rep.value === first.value ? 'same' : 'different'; };
     rep.addEventListener('input', update); first.addEventListener('input', update);
     return update;
   }
@@ -70,9 +84,9 @@
   }
   function problem(r, map) {
     const id = map[r.field];
-    if (!id) { notice(r.message, 'error'); return; }
+    if (!id) { notice(say(r.message), 'error'); return; }
     const input = $(id), err = $(id + '-err');
-    err.textContent = r.message; input.closest('.field').classList.add('has-error'); input.setAttribute('aria-invalid', 'true'); input.focus();
+    err.textContent = say(r.message); input.closest('.field').classList.add('has-error'); input.setAttribute('aria-invalid', 'true'); input.focus();
   }
 
   /** The spam check. Without a site key nothing is shown and no token is sent (and Supabase's own check is off). */
@@ -100,23 +114,23 @@
   }
   /** true when the check is on but has not finished: tell the visitor instead of sending something that would be refused */
   function waitForCheck(id) {
-    if (captcha.on && !captcha.ready(id)) { notice('Please wait a moment for the spam check to finish, then press the button again.', 'info'); return true; }
+    if (captcha.on && !captcha.ready(id)) { notice(tr('Please wait a moment for the spam check to finish, then press the button again.'), 'info'); return true; }
     return false;
   }
 
   async function showSignedIn(who) {
     if (window.EdvNav) window.EdvNav.refresh();
-    const how = { google: 'Signed in with Google.', github: 'Signed in with GitHub.', email: 'Signed in with your email address.' }[who.provider] || 'Signed in.';
+    const how = tr({ google: 'Signed in with Google.', github: 'Signed in with GitHub.', email: 'Signed in with your email address.' }[who.provider] || 'Signed in.');
     knownEmail = who.email; $('i-who').textContent = who.email; $('i-how').textContent = how; $('b-newpass').hidden = who.provider !== 'email'; // a Google or GitHub account has no password of its own here
-    title('You are signed in.', 'This is your edvlabs account.'); view('a-in'); focusTitle();
+    title(tr('You are signed in.'), tr('This is your edvlabs account.')); view('a-in'); focusTitle();
     if (extras) extras.show(who);
     if (websites) websites.show();
     const toBuilder = takeBuilderIntent();
-    if (toBuilder) title('You are signed in.', 'Opening the builder…');
+    if (toBuilder) title(tr('You are signed in.'), tr('Opening the builder…'));
     // the answers from the questions: this browser's go to the account, or the account's come back here (site/js/brief-sync.js)
     const r = answersSync ? await answersSync.sync({ userId: who.id }) : { action: 'none' };
-    if (r.action === 'saved') notice('Your answers are saved to your account.', 'ok');
-    else if (r.action === 'restored') notice('We found your saved answers and put them back in this browser.', 'ok');
+    if (r.action === 'saved') notice(tr('Your answers are saved to your account.'), 'ok');
+    else if (r.action === 'restored') notice(tr('We found your saved answers and put them back in this browser.'), 'ok');
     if (toBuilder) window.location.assign(BUILDER_URL);
   }
   /* "I will build it" on the questions page sends people here with ?from=start. The wish is remembered in this browser, so it also survives the
@@ -130,12 +144,12 @@
     const st = store(); if (!st) return false;
     try { if (st.getItem(INTENT_KEY) !== 'builder') return false; st.removeItem(INTENT_KEY); return true; } catch (_) { return false; }
   }
-  function showSignedOut() { if (window.EdvNav) window.EdvNav.refresh(); title(from === 'builder' ? 'Sign in to unlock every block.' : fromStart ? 'Sign in to build your page.' : 'Sign in or create an account.', from === 'builder' ? 'A free account unlocks every block. Your page stays as it is. Use Google, GitHub or your email address.' : fromStart ? 'We save your answers to your account, so you can carry on from any device. Use Google, GitHub or your email address.' : 'Use Google, GitHub or your email address.'); view('a-out'); setMode('in'); showPass(); }
+  function showSignedOut() { if (window.EdvNav) window.EdvNav.refresh(); title(tr(from === 'builder' ? 'Sign in to unlock every block.' : fromStart ? 'Sign in to build your page.' : 'Sign in or create an account.'), tr(from === 'builder' ? 'A free account unlocks every block. Your page stays as it is. Use Google, GitHub or your email address.' : fromStart ? 'We save your answers to your account, so you can carry on from any device. Use Google, GitHub or your email address.' : 'Use Google, GitHub or your email address.')); view('a-out'); setMode('in'); showPass(); }
 
   function setMode(m) {
     mode = m;
     $('t-in').setAttribute('aria-pressed', String(m === 'in')); $('t-up').setAttribute('aria-pressed', String(m === 'up'));
-    $('p-go').textContent = m === 'in' ? 'Sign in' : 'Create account';
+    $('p-go').textContent = m === 'in' ? tr('Sign in') : tr('Create account');
     $('p-pass').autocomplete = m === 'in' ? 'current-password' : 'new-password';
     $('p-hint').hidden = m === 'in'; $('p-pass2-field').hidden = m === 'in'; $('l-forgot').hidden = m === 'up';
     if (meters.sign) meters.sign.show(m === 'up'); // the rules and the bar are for choosing a password, not for typing an existing one
@@ -144,29 +158,29 @@
   function showPass() { $('f-pass').hidden = false; $('f-mail').hidden = true; captcha.mount('p-captcha'); }
   function showMail(kind) {
     mailKind = kind; clearErrors(); $('f-pass').hidden = true; $('f-mail').hidden = false; captcha.mount('m-captcha');
-    $('m-intro').textContent = kind === 'reset' ? 'Type your email address and we will send you a code and a link to choose a new password.' : 'Type your email address and we will send you a code and a link that sign you in. No password needed.';
-    $('m-go').textContent = kind === 'reset' ? 'Send the code' : 'Email me a code';
+    $('m-intro').textContent = tr(kind === 'reset' ? 'Type your email address and we will send you a code and a link to choose a new password.' : 'Type your email address and we will send you a code and a link that sign you in. No password needed.');
+    $('m-go').textContent = tr(kind === 'reset' ? 'Send the code' : 'Email me a code');
     $('m-email').value = $('p-email').value; $('m-email').focus();
   }
   /** The "type the code from the email" step. kind: 'signup', 'link' or 'recovery'. */
   function showCode(email, kind) {
     pending = { email, kind }; lastSent = Date.now(); clearErrors(); $('c-code').value = '';
-    $('c-intro').textContent = 'We sent a code to ' + email + '. Type it here, or press the link in the same email. It can take a minute to arrive; look in your spam folder too.';
+    $('c-intro').textContent = tr('We sent a code to {email}. Type it here, or press the link in the same email. It can take a minute to arrive; look in your spam folder too.', { email });
     $('c-note').hidden = kind !== 'signup'; // the service says nothing about whether an address is registered, so the page tells the person what to do if no email comes
-    title('Check your email.', 'One more step.'); view('f-code'); captcha.mount('c-captcha'); $('c-code').focus();
+    title(tr('Check your email.'), tr('One more step.')); view('f-code'); captcha.mount('c-captcha'); $('c-code').focus();
   }
 
   async function oauth(provider) {
     notice(''); clearErrors();
     const r = await auth.oauthUrl(provider);
-    if (!r.ok) { notice(r.message, 'error'); return; }
+    if (!r.ok) { notice(say(r.message), 'error'); return; }
     window.location.assign(r.url);
   }
 
   async function submitPass(e) {
     e.preventDefault(); clearErrors(); notice('');
     const email = $('p-email').value.trim(), pass = $('p-pass').value;
-    if ($('p-trap').value) { if (mode === 'up') showCode(email || 'your address', 'signup'); return; } // a bot filled the hidden box: look like it worked, send nothing
+    if ($('p-trap').value) { if (mode === 'up') showCode(email || tr('your address'), 'signup'); return; } // a bot filled the hidden box: look like it worked, send nothing
     if (waitForCheck('p-captcha')) return;
     const opts = { captchaToken: captcha.token('p-captcha') };
     let r;
@@ -194,30 +208,30 @@
     e.preventDefault(); clearErrors(); notice('');
     const r = await auth.verifyCode(pending.email, $('c-code').value, pending.kind);
     if (!r.ok) return problem(r, { code: 'c-code' });
-    if (r.kind === 'recovery') { title('Choose a new password.', ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); return; }
+    if (r.kind === 'recovery') { title(tr('Choose a new password.'), ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); return; }
     const who = await auth.current(); who ? showSignedIn(who) : showSignedOut();
   }
   async function resendCode() {
     clearErrors(); notice('');
-    if (Date.now() - lastSent < 30000) { notice('Please wait half a minute before asking for another code.', 'info'); return; }
+    if (Date.now() - lastSent < 30000) { notice(tr('Please wait half a minute before asking for another code.'), 'info'); return; }
     if (waitForCheck('c-captcha')) return;
     const r = await auth.resend(pending.email, pending.kind, { captchaToken: captcha.token('c-captcha') });
     captcha.reset('c-captcha');
     if (!r.ok) return problem(r, { email: 'c-code' });
-    lastSent = Date.now(); notice('We sent a new code to ' + pending.email + '. Use the newest one.', 'ok');
+    lastSent = Date.now(); notice(tr('We sent a new code to {email}. Use the newest one.', { email: pending.email }), 'ok');
   }
   async function submitNew(e) {
     e.preventDefault(); clearErrors(); notice('');
     const r = await auth.setPassword($('n-pass').value, { repeat: $('n-pass2').value, email: knownEmail || (pending && pending.email) || '' });
     if (!r.ok) return problem(r, { password: 'n-pass', password2: 'n-pass2' });
-    $('n-pass').value = ''; $('n-pass2').value = ''; notice('Your password is changed.', 'ok');
+    $('n-pass').value = ''; $('n-pass2').value = ''; notice(tr('Your password is changed.'), 'ok');
     const who = await auth.current(); who ? showSignedIn(who) : showSignedOut();
   }
 
   async function start() {
     let cfg = null;
     try { const r = await fetch('/api/config', { cache: 'no-store' }); if (r.ok) cfg = await r.json(); } catch (_) { /* the page says accounts are not open */ }
-    if (!cfg || !cfg.supabaseUrl || !cfg.anonKey) { title('Your account.', ''); view('a-closed'); return; }
+    if (!cfg || !cfg.supabaseUrl || !cfg.anonKey) { title(tr('Your account.'), ''); view('a-closed'); return; }
     const safe = (k) => { try { return window[k]; } catch (_) { return null; } };
     const mem = () => { const m = new Map(); return { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => { m.set(k, String(v)); }, removeItem: (k) => { m.delete(k); } }; };
     auth = A.createAuth({ url: cfg.supabaseUrl, anonKey: cfg.anonKey, storage: safe('localStorage') || mem(), tempStorage: safe('sessionStorage') || mem(), origin: window.location.origin, returnTo: window.location.origin + window.location.pathname.replace(/index\.html$/, '') });
@@ -237,18 +251,18 @@
     $('l-forgot').addEventListener('click', () => showMail('reset')); $('l-link').addEventListener('click', () => showMail('link'));
     $('m-back').addEventListener('click', () => { notice(''); clearErrors(); showPass(); $('p-email').focus(); });
     $('c-resend').addEventListener('click', resendCode); $('c-other').addEventListener('click', () => { notice(''); showSignedOut(); });
-    $('b-newpass').addEventListener('click', () => { notice(''); title('Change your password.', ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); });
-    $('b-out').addEventListener('click', async () => { await auth.signOut(); notice('You are signed out.', 'ok'); showSignedOut(); });
+    $('b-newpass').addEventListener('click', () => { notice(''); title(tr('Change your password.'), ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); });
+    $('b-out').addEventListener('click', async () => { await auth.signOut(); notice(tr('You are signed out.'), 'ok'); showSignedOut(); });
 
     // coming back from Google, GitHub or an emailed link: ?code=… (or ?error=…)
     const q = new URLSearchParams(window.location.search);
     if (q.has('code') || q.has('error')) {
       history.replaceState(null, '', window.location.pathname); // the code is single-use and must not stay in the address bar or history
-      if (q.has('error')) { notice('That did not work. ' + (q.get('error_description') ? 'Please try again.' : ''), 'error'); }
+      if (q.has('error')) { notice(tr('That did not work.') + (q.get('error_description') ? ' ' + tr('Please try again.') : ''), 'error'); }
       else {
         const r = await auth.finishFromCode(q.get('code'));
-        if (!r.ok) notice(r.message, 'error');
-        else if (r.kind === 'recovery') { title('Choose a new password.', ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); return; }
+        if (!r.ok) notice(say(r.message), 'error');
+        else if (r.kind === 'recovery') { title(tr('Choose a new password.'), ''); view('f-new'); meters.fresh.show(true); $('n-pass').focus(); return; }
       }
     }
     const who = await auth.current();

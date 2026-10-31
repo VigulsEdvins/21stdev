@@ -6,6 +6,7 @@
   if (typeof module === 'object' && module.exports) module.exports = api; else { root.EdvNav = api; api.start(root); }
 })(typeof self !== 'undefined' ? self : this, function () {
   const SESSION_KEY = 'edvlabs.session';
+  const tr = (s) => (typeof EdvI18n !== 'undefined' ? EdvI18n.t(s) : s); // js/i18n.js, when the page loads it
 
   /** True when this browser holds a saved session. */
   function signedIn(storage) {
@@ -14,7 +15,7 @@
 
   /** Sets the label of every menu link that points at the account page. */
   function label(doc, isIn) {
-    Array.prototype.forEach.call(doc.querySelectorAll('.nav a[href$="account/"]'), (a) => { a.textContent = isIn ? 'My account' : 'Sign in'; });
+    Array.prototype.forEach.call(doc.querySelectorAll('.nav a[href$="account/"]'), (a) => { a.textContent = tr(isIn ? 'My account' : 'Sign in'); });
   }
 
   function start(win) {

@@ -234,6 +234,23 @@ const { start } = require('../lib/fake-supabase.js');
   await guarded.close();
   console.log('  ✓ without the token the service refuses, so skipping the page does not help');
 
+  // the Latvian page (site/lv/account/): the same page, its words, problems and the password rules in Latvian
+  const lv = await ctx.newPage(); const lvErrors = []; lv.on('pageerror', (e) => lvErrors.push(e.message));
+  await lv.route('**/api/config', config());
+  await lv.goto(srv.url + '/site/lv/account/index.html');
+  await lv.waitForSelector('#a-out:not([hidden])');
+  assert.strictEqual((await lv.textContent('#a-title')).trim(), 'Pieslēdzieties vai izveidojiet kontu.');
+  await lv.click('#p-go'); await lv.waitForFunction(() => /vards@piemers|name@example/.test(document.querySelector('#p-email-err').textContent) || document.querySelector('#p-email-err').textContent.includes('e-pasta adreses'));
+  assert((await lv.textContent('#p-email-err')).includes('Tā neizskatās pēc e-pasta adreses'), 'a problem from auth.js is shown in Latvian');
+  await lv.click('#t-up'); await lv.fill('#p-email', 'anna@example.com'); await lv.fill('#p-pass', 'abc');
+  assert((await lv.textContent('#p-pass-meter')).includes('Paroles stiprums') && (await lv.textContent('#p-pass-meter')).includes('Vismaz 10 rakstzīmes'), 'the strength meter and rules are in Latvian');
+  await lv.fill('#p-pass2', 'abd'); assert.strictEqual((await lv.textContent('#p-pass2-field .pw-match')).trim(), 'Vēl nav vienādas.');
+  await lv.click('#p-go'); await lv.waitForFunction(() => document.querySelector('#p-pass-err').textContent.length > 0);
+  assert(/^Padariet paroli stiprāku\. Tai vēl vajag: /.test(await lv.textContent('#p-pass-err')), 'a message with a list in it is translated: ' + await lv.textContent('#p-pass-err'));
+  assert.strictEqual(await lv.getAttribute('.pw-toggle[aria-controls="p-pass"]', 'aria-label'), 'Parādīt: parole');
+  assert.deepStrictEqual(lvErrors, [], lvErrors.join(' | '));
+  console.log('  ✓ the Latvian account page: its words, its problems and its password rules');
+
   await browser.close(); await fake.close(); srv.close && srv.close();
   console.log('✅ Account page passed!');
 })().catch((e) => { console.error(e); process.exit(1); });
