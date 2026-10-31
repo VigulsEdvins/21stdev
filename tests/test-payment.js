@@ -111,11 +111,13 @@ function world(env) {
   await test('my purchases: sign-in required, only the caller\'s own, and it says whether the buying flow is switched on', async () => {
     const w = world(), { call, tok } = w;
     w.db.purchasesByUser = async (u) => w.db.purchases.filter((x) => x.user_id === u);
+    w.db.deployRequestsByUser = async (u) => w.db.deployRequests.filter((x) => x.user_id === u);
+    w.db.deployRequests.push({ purchase_id: 'pur-1', user_id: U1, status: 'open', domain: null, notes: null });
     w.db.purchases.push({ id: 'pur-1', project_id: PID, user_id: U1, allowance: 5, editor: true, destination: 'edvlabs', created_at: 'x', stripe_session_id: 'cs_secret' }, { id: 'pur-2', project_id: PID, user_id: U2, allowance: 9, editor: false, destination: 'download' });
     assert.strictEqual((await call('/api/my-purchases', { method: 'GET' }, {})).status, 401);
     assert.strictEqual((await call('/api/my-purchases', { method: 'POST' }, tok)).status, 405);
     const j = await (await call('/api/my-purchases', { method: 'GET' }, tok)).json();
-    assert.strictEqual(j.ok, true); assert.strictEqual(j.purchases.length, 1); assert.strictEqual(j.purchases[0].projectId, PID); assert.strictEqual(j.purchases[0].id, 'pur-1'); assert.strictEqual(j.purchases[0].allowance, 5);
+    assert.strictEqual(j.ok, true); assert.strictEqual(j.purchases.length, 1); assert.strictEqual(j.purchases[0].projectId, PID); assert.strictEqual(j.purchases[0].id, 'pur-1'); assert.strictEqual(j.purchases[0].allowance, 5); assert.strictEqual(j.purchases[0].deployHelp, true, 'deploy help was bought'); assert.strictEqual(j.purchases[0].deployDetailsSent, false, 'and its details are still to come');
     assert(!JSON.stringify(j).includes('cs_secret'), 'Stripe ids are not sent to the browser'); assert.strictEqual(j.paymentOn, false, 'off until BUYING_FLOW is set to 1');
     const on = await (await http.route(new Request('https://edvlabs.test/api/my-purchases', { headers: tok }), Object.assign({ BUYING_FLOW: '1' }, ENV), asset, { payment: { db: w.db, user: async () => ({ id: U1 }) } })).json();
     assert.strictEqual(on.paymentOn, true);

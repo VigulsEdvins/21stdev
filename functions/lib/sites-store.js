@@ -74,6 +74,7 @@ function createDb(env, fetchImpl) {
         throw e;
       }
     },
+    deployRequestsByUser: (userId) => all('deploy_requests?select=purchase_id,user_id,domain,status&limit=200&user_id=eq.' + enc(userId)),
     deployRequestsOpen: () => all('deploy_requests?select=*,project_purchases(created_at,destination)&order=created_at.asc&limit=200&status=eq.open'),
     markProjectPaid: (projectId) => rest('PATCH', 'projects?id=eq.' + enc(projectId), { status: 'paid' }),
     refundByIntent: (intent) => rest('PATCH', 'site_entitlements?stripe_payment_intent=eq.' + enc(intent), { status: 'refunded' }),

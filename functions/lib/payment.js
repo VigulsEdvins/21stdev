@@ -140,8 +140,10 @@ const buyingOn = (env) => !!env && env.BUYING_FLOW === '1' && !!env.STRIPE_SECRE
 
 /** What this person has bought, for the builder (no Stripe ids). */
 async function listPurchases({ db, user, env }) {
-  const rows = await db.purchasesByUser(user.id);
-  return { status: 200, json: { ok: true, paymentOn: buyingOn(env), purchases: rows.map((r) => ({ id: r.id, projectId: r.project_id, allowance: r.allowance, editor: !!r.editor, destination: r.destination, createdAt: r.created_at })) } };
+  const rows = await db.purchasesByUser(user.id), requests = db.deployRequestsByUser ? await db.deployRequestsByUser(user.id) : [];
+  const asked = (id) => requests.find((q) => q.purchase_id === id);
+  return { status: 200, json: { ok: true, paymentOn: buyingOn(env), purchases: rows.map((r) => ({ id: r.id, projectId: r.project_id, allowance: r.allowance, editor: !!r.editor, destination: r.destination, createdAt: r.created_at,
+    deployHelp: !!asked(r.id), deployDetailsSent: !!(asked(r.id) && asked(r.id).domain) })) } };
 }
 
 const domainOk = (d) => d.length >= 4 && d.length <= 253 && /^[a-z0-9.-]+$/.test(d) && d.includes('.') && !d.includes('..') && !/^[.-]|[.-]$/.test(d);

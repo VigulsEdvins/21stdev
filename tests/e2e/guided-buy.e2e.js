@@ -47,7 +47,9 @@ const UID = '11111111-1111-4111-8111-111111111111';
 
   const PID = '33333333-3333-4333-8333-333333333333';
   const buy = { paymentOn: true, purchases: [], quotes: [], checkouts: [], testMode: true, payToday: 96 };
-  await page.route('**/api/my-purchases', (r) => r.fulfill({ json: { ok: true, paymentOn: buy.paymentOn, purchases: buy.purchases } }));
+  buy.polls = 0; buy.pending = null; buy.deploy = [];
+  await page.route('**/api/my-purchases', (r) => { if (buy.pending && ++buy.polls >= 3) buy.purchases = buy.pending; r.fulfill({ json: { ok: true, paymentOn: buy.paymentOn, purchases: buy.purchases } }); });
+  await page.route('**/api/deploy-request', (r) => { buy.deploy.push(JSON.parse(r.request().postData())); r.fulfill({ json: { ok: true } }); });
   await page.route('**/api/quote', (r) => { const b = JSON.parse(r.request().postData()); buy.quotes.push(b); r.fulfill({ json: { ok: true, lines: [{ key: 'base', label: 'Website, 3 blocks included', amount: 39 }, { key: 'editor', label: 'Admin panel', amount: 39 }], payToday: buy.payToday, hosting: b.hosting ? { plan: b.hosting, amount: b.hosting === 'monthly' ? 3 : 29, trialDays: 30 } : null, blocks: 5, testMode: buy.testMode } }); });
   await page.route('**/api/checkout', (r) => { buy.checkouts.push(JSON.parse(r.request().postData())); r.fulfill({ json: { ok: true, url: 'https://checkout.stripe.com/c/pay/cs_test_1', testMode: true } }); });
   await page.route('https://checkout.stripe.com/**', (r) => r.fulfill({ contentType: 'text/html', body: '<title>Stripe</title>' }));
@@ -96,6 +98,27 @@ const UID = '11111111-1111-4111-8111-111111111111';
   await page.goto(srv.url + '/builder.html?paid=0'); await page.waitForSelector('#paneGet', { state: 'attached' }); await page.click('#guidedStep-get'); await page.waitForSelector('#buyProceed');
   await page.waitForFunction(() => /nothing was charged/i.test((document.getElementById('buyNote') || {}).textContent || ''));
   console.log('  ✓ Escape returns to the builder untouched; a cancelled payment says nothing was charged');
+
+  // nothing is unlocked before the purchase; the purchase unlocks the download and the publish box
+  buy.purchases = []; await open(); await page.waitForSelector('#buyProceed'); await page.waitForTimeout(600);
+  assert(!(await page.isVisible('#getDownload')), 'the download waits for the purchase'); assert(!(await page.isVisible('#publishBox')), 'so does "Put it online"');
+  buy.purchases = [{ id: 'pur-1', projectId: PID, allowance: 5, editor: true, destination: 'download', createdAt: '2026-11-02T10:00:00Z', deployHelp: false, deployDetailsSent: false }];
+  await open(); await page.waitForSelector('#buyProceed'); await page.waitForSelector('#getDownload', { state: 'visible' }); await page.waitForSelector('#publishBox', { state: 'visible' });
+  buy.purchases = [{ id: 'pur-9', projectId: '99999999-9999-4999-8999-999999999999', allowance: 5, editor: true, destination: 'download', createdAt: 'x', deployHelp: false, deployDetailsSent: false }];
+  await open(); await page.waitForSelector('#buyProceed'); await page.waitForTimeout(600);
+  assert(!(await page.isVisible('#getDownload')), 'a purchase for another page does not unlock this one');
+  console.log('  ✓ download and "Put it online" wait for the purchase of this page');
+
+  // back from Stripe: the webhook can be a moment late, so the page looks again, then unlocks and asks for the deploy details once
+  buy.purchases = []; buy.polls = 0; buy.pending = [{ id: 'pur-2', projectId: PID, allowance: 5, editor: false, destination: 'domain', createdAt: '2026-11-03T10:00:00Z', deployHelp: true, deployDetailsSent: false }];
+  await page.goto(srv.url + '/builder.html?paid=1'); await page.waitForSelector('#paneGet', { state: 'attached' }); await page.click('#guidedStep-get');
+  await page.waitForFunction(() => /confirming/i.test((document.getElementById('buyNote') || {}).textContent || ''));
+  await page.waitForFunction(() => /payment received/i.test((document.getElementById('buyNote') || {}).textContent || ''), null, { timeout: 15000 });
+  assert(await page.isVisible('#getDownload'), 'unlocked after the payment'); assert(await page.isVisible('#buyDeployForm'), 'the details for "we put it online for you" are asked for');
+  await page.fill('#buyDeployDomain', 'shop.example.com'); await page.fill('#buyDeployNotes', 'Registered at Namecheap'); await page.click('#buyDeploySend');
+  await page.waitForFunction(() => !document.getElementById('buyDeployForm') || document.getElementById('buyDeployForm').hidden);
+  assert.deepStrictEqual(buy.deploy, [{ purchaseId: 'pur-2', domain: 'shop.example.com', notes: 'Registered at Namecheap' }]);
+  console.log('  ✓ after paying the page unlocks and the deploy details are collected once');
 
   assert.deepStrictEqual(errors, [], errors.join(' | '));
   await browser.close(); await srv.close();
