@@ -150,7 +150,8 @@ async function route(request, env, json, deps) {
   try {
     return reply(await pub.publish({ userId: user.id, name: body.name, files: body.files, projectId, adminStructure: body.adminStructure }));
   } catch (e) {
-    return json(500, { ok: false, errors: ['Publishing did not work just now. Please try again.'] }); // the reason stays in the Worker's own log, not in the answer
+    console.error('publish failed: ' + (e && (e.code || e.status || '')) + ' ' + (e && e.message)); // seen with `npx wrangler tail`; the answer to the browser stays plain
+    return json(500, { ok: false, errors: ['Publishing did not work just now. Please try again.'] });
   }
 }
 

@@ -488,5 +488,16 @@ const test = async (name, fn) => { await fn(); count++; };
     assert.strictEqual((await flagged.publish({ userId: 'u2', name: 'second-shop', files: [html()] })).status, 402, 'but a new site needs a purchase');
   });
 
+  await test('the page id is only recorded when that page exists in the person\'s account: an unknown or foreign id never breaks publishing', async () => {
+    const PID = '33333333-3333-4333-8333-333333333333', OTHER = '44444444-4444-4444-8444-444444444444';
+    const { f, pub } = setup(); f.addEntitlement('u1', FUTURE); f.addEntitlement('u1', FUTURE); f.addEntitlement('u1', FUTURE); f.addProject('u1', PID, 3); f.addProject('u2', OTHER, 3);
+    const known = await pub.publish({ userId: 'u1', name: 'known-page', files: [html()], projectId: PID }); assert.strictEqual(known.status, 200);
+    assert.strictEqual(f.sites.find((x) => x.name === 'known-page').project_id, PID, 'a page of this person is recorded');
+    const unknown = await pub.publish({ userId: 'u1', name: 'unknown-page', files: [html()], projectId: '55555555-5555-4555-8555-555555555555' }); assert.strictEqual(unknown.status, 200);
+    assert.strictEqual(f.sites.find((x) => x.name === 'unknown-page').project_id, null, 'an id that is not in the account is left out');
+    const foreign = await pub.publish({ userId: 'u1', name: 'foreign-page', files: [html()], projectId: OTHER }); assert.strictEqual(foreign.status, 200);
+    assert.strictEqual(f.sites.find((x) => x.name === 'foreign-page').project_id, null, 'somebody else\'s page is never linked');
+  });
+
   console.log(`✓ publish: ${count} groups (files, scan, payment, names, versions, failures, limits, unpublish)`);
 })().catch((e) => { console.error(e); process.exit(1); });

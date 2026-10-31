@@ -240,6 +240,8 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
     if (scriptProblem) return fail(400, scriptProblem, { details: [scriptProblem], reason: 'files' });
     if (await rateLimited(userId, 'publishes', limits.publishesPerHour)) return fail(429, 'Too many publishes this hour (' + limits.publishesPerHour + ' are allowed).' + (limits.canBuyMore.publishesPerHour ? ' More is available: ask edvlabs.' : '') + ' Please try again later.', { reason: 'rate' });
 
+    // the page id is only linked when that page is in this person's account; an old or foreign id must never make publishing fail (the link is a foreign key)
+    const linked = typeof projectId === 'string' && db.projectForUser && (await db.projectForUser(projectId, userId)) ? projectId : null;
     let site = await db.siteByName(c.name), created = false, entitlement;
     if (site && site.user_id !== userId) return fail(409, 'This name is taken.', { reason: 'taken' });
     if (site && site.status === 'blocked') return fail(403, 'This site has been blocked. Please contact edvlabs.', { reason: 'blocked' });
@@ -251,7 +253,7 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
       if (hold && hold.user_id !== userId && new Date(hold.expires_at).getTime() > new Date(now()).getTime()) return fail(409, 'This name is taken.', { reason: 'taken' });
       const free = (await db.freeEntitlements(userId)).filter((e) => entitlementState(e, now()) === 'active');
       if (!free.length) return fail(402, 'Publishing on an edvlabs address is a paid extra. Please add it to your account first.', { reason: 'payment-needed' });
-      try { site = await db.insertSite({ user_id: userId, name: c.name, project_id: projectId || null }); } catch (e) {
+      try { site = await db.insertSite({ user_id: userId, name: c.name, project_id: linked }); } catch (e) {
         if (e && e.code === 'name-taken') return fail(409, 'This name is taken.', { reason: 'taken' });
         if (e && e.code === 'too-many') return fail(409, 'You have reached the most sites one account can have.', { reason: 'too-many' });
         throw e;
@@ -267,7 +269,7 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
         await bucket.put(key(site.id, version, f.path), f.bytes, { httpMetadata: { contentType: f.type } });
         written.push(key(site.id, version, f.path));
       }
-      await db.goLive(site.id, version, { project_id: projectId || site.project_id || null });
+      await db.goLive(site.id, version, { project_id: linked || site.project_id || null });
       await kv.put(kvKey(c.name), JSON.stringify({ id: site.id, version, status: 'live' }));
     } catch (e) {
       for (const k of written) { try { await bucket.delete(k); } catch (e2) { /* the next publish removes leftovers */ } }
