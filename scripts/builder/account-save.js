@@ -98,7 +98,17 @@
     }
 
     // ---- on start ----
-    const wanted = new URLSearchParams(win.location.search).get('project');
+    const params = new URLSearchParams(win.location.search);
+    if (params.get('new') === '1') { // "Create a new website" on the account page: let go of the account page this builder was tied to, and begin a fresh one
+      try { win.history.replaceState(null, '', win.location.pathname + win.location.hash); } catch (_) { /* the address stays; harmless */ }
+      if (cs.link(who.id)) await tick(true).catch(() => {}); // the old page is saved once more first, so nothing of it is lost
+      cs.unlink();
+      if (api.loadStarterTemplate) api.loadStarterTemplate(true);
+      say('New website: saved to your account when you change something');
+      notice(win, 'A new website. Your other pages are still in My pages on your account.');
+      return start();
+    }
+    const wanted = params.get('project');
     let link = cs.link(who.id);
     if (wanted) {
       try { win.history.replaceState(null, '', win.location.pathname + win.location.hash); } catch (_) { /* the address stays; harmless */ }

@@ -37,5 +37,7 @@ assert.strictEqual(M.cleanRow({ id: ID, name: 'x'.repeat(500) }).name.length, M.
   assert.deepStrictEqual(JSON.parse(calls[1].body), { deleted_at: '2026-10-28T12:00:00.000Z' }, 'delete only sets a date, nothing is erased');
   assert.deepStrictEqual(JSON.parse(calls[2].body), { deleted_at: null }, 'undo clears it');
   assert(calls.every((c) => !/status|user_id/.test(c.body)), 'the page never sends status or owner');
+  const html = require('fs').readFileSync(require('path').join(__dirname, '..', 'site', 'account', 'index.html'), 'utf8');
+  assert(/id="pg-new"[^>]*href="\/builder\/\?new=1"|href="\/builder\/\?new=1"[^>]*id="pg-new"/.test(html), 'My pages has a "Create a new website" button that opens the builder with ?new=1');
   console.log('my pages ok');
 })().catch((e) => { console.error(e); process.exit(1); });
