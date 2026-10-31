@@ -56,6 +56,11 @@ function createDb(env, fetchImpl) {
     projectForUser: (projectId, userId) => (UUID.test(String(projectId)) && UUID.test(String(userId)) ? first('projects?select=id,name,state,status&limit=1&deleted_at=is.null&id=eq.' + enc(projectId) + '&user_id=eq.' + enc(userId)) : Promise.resolve(null)),
     purchaseForProject: (projectId) => (UUID.test(String(projectId)) ? first('project_purchases?select=*&limit=1&order=created_at.desc&project_id=eq.' + enc(projectId)) : Promise.resolve(null)),
     purchaseBySession: (sessionId) => first('project_purchases?select=*&limit=1&stripe_session_id=eq.' + enc(sessionId)),
+    purchaseById: (id) => (UUID.test(String(id)) ? first('project_purchases?select=*&limit=1&id=eq.' + enc(id)) : Promise.resolve(null)),
+    deployRequestForPurchase: (purchaseId) => (UUID.test(String(purchaseId)) ? first('deploy_requests?select=*&limit=1&purchase_id=eq.' + enc(purchaseId)) : Promise.resolve(null)),
+    /* only while the details are still empty, so they can be sent once; false when they were already sent */
+    async fillDeployRequest(purchaseId, details) { const rows = await rest('PATCH', 'deploy_requests?domain=is.null&notes=is.null&purchase_id=eq.' + enc(purchaseId), details, 'return=representation'); return Array.isArray(rows) && rows.length === 1; },
+    markDeployRequestDone: (id) => rest('PATCH', 'deploy_requests?id=eq.' + enc(id), { status: 'done' }),
     purchasesByUser: (userId) => all('project_purchases?select=*&order=created_at.desc&user_id=eq.' + enc(userId)),
     async insertPurchase(row) {
       try { return (await rest('POST', 'project_purchases', row, 'return=representation'))[0]; } catch (e) {

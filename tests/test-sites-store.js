@@ -116,6 +116,18 @@ const test = async (name, fn) => { await fn(); count++; };
     await assert.rejects(db.insertDeployRequest({ purchase_id: 'p1' }), (e) => e.code === 'duplicate');
   });
 
+  await test('deploy details are filled once (only while empty); lookups by id are never sent for a bad id', async () => {
+    const PID = '22222222-2222-4222-8222-222222222222';
+    const s = stub([{ status: 200, body: [{ id: 'd1' }] }, { status: 200, body: [] }, { status: 200, body: [] }]);
+    const db = store.createDb(ENV, s.fetchImpl);
+    assert.strictEqual(await db.fillDeployRequest(PID, { domain: 'a.example.com', notes: '' }), true);
+    assert(s.calls[0].url.includes('domain=is.null') && s.calls[0].url.includes('notes=is.null') && s.calls[0].url.includes('purchase_id=eq.' + PID), s.calls[0].url);
+    assert.strictEqual(await db.fillDeployRequest(PID, { domain: 'b.example.com', notes: '' }), false, 'already filled: nothing changed');
+    await db.markDeployRequestDone(PID); assert.deepStrictEqual(JSON.parse(s.calls[2].body), { status: 'done' });
+    const before = s.calls.length;
+    assert.strictEqual(await db.purchaseById('nope'), null); assert.strictEqual(await db.deployRequestForPurchase('nope'), null); assert.strictEqual(s.calls.length, before);
+  });
+
   await test('a database error carries its status and code but never the keys', async () => {
     const s = stub([{ status: 503, body: { message: 'upstream unavailable' } }]);
     await assert.rejects(store.createDb(ENV, s.fetchImpl).siteByName('abc'), (e) => e.status === 503 && !/SECRET|anon-key/.test(e.message));

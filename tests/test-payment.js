@@ -24,6 +24,9 @@ function fakeDb() {
     async insertPurchase(row) { if (this.purchases.some((x) => x.stripe_session_id === row.stripe_session_id)) throw Object.assign(new Error('dup'), { code: 'duplicate' }); const r = Object.assign({ id: 'pur-' + (this.purchases.length + 1) }, row); this.purchases.push(r); return r; },
     async insertDeployRequest(row) { if (this.deployRequests.some((x) => x.purchase_id === row.purchase_id)) throw Object.assign(new Error('dup'), { code: 'duplicate' }); this.deployRequests.push(row); return row; },
     async markProjectPaid(id) { this.paidMarks.push(id); },
+    async purchaseById(id) { return this.purchases.find((x) => x.id === id) || null; },
+    async deployRequestForPurchase(id) { return this.deployRequests.find((x) => x.purchase_id === id) || null; },
+    async fillDeployRequest(id, d) { const r = this.deployRequests.find((x) => x.purchase_id === id && x.domain == null && x.notes == null); if (!r) return false; Object.assign(r, d); return true; },
     async placeBySession(id) { return rows.find((r) => r.stripe_session_id === id) || null; },
     async insertPlace(row) { if (rows.some((r) => r.stripe_session_id === row.stripe_session_id || (row.stripe_subscription_id && r.stripe_subscription_id === row.stripe_subscription_id))) throw Object.assign(new Error('dup'), { code: 'duplicate' }); rows.push(Object.assign({ id: 'ent-' + (rows.length + 1) }, row)); return row; },
     async extendBySubscription(sub, until) { rows.filter((r) => r.stripe_subscription_id === sub && r.status === 'active').forEach((r) => { r.paid_until = until; }); },
@@ -103,6 +106,36 @@ function world(env) {
       assert.strictEqual((await hook(event('checkout.session.completed', m(o)))).status, 400, JSON.stringify(o));
     }
     assert.strictEqual(db.purchases.length + db.rows.length + db.deployRequests.length + db.paidMarks.length, 0);
+  });
+
+  await test('my purchases: sign-in required, only the caller\'s own, and it says whether the buying flow is switched on', async () => {
+    const w = world(), { call, tok } = w;
+    w.db.purchasesByUser = async (u) => w.db.purchases.filter((x) => x.user_id === u);
+    w.db.purchases.push({ id: 'pur-1', project_id: PID, user_id: U1, allowance: 5, editor: true, destination: 'edvlabs', created_at: 'x', stripe_session_id: 'cs_secret' }, { id: 'pur-2', project_id: PID, user_id: U2, allowance: 9, editor: false, destination: 'download' });
+    assert.strictEqual((await call('/api/my-purchases', { method: 'GET' }, {})).status, 401);
+    assert.strictEqual((await call('/api/my-purchases', { method: 'POST' }, tok)).status, 405);
+    const j = await (await call('/api/my-purchases', { method: 'GET' }, tok)).json();
+    assert.strictEqual(j.ok, true); assert.strictEqual(j.purchases.length, 1); assert.strictEqual(j.purchases[0].projectId, PID); assert.strictEqual(j.purchases[0].id, 'pur-1'); assert.strictEqual(j.purchases[0].allowance, 5);
+    assert(!JSON.stringify(j).includes('cs_secret'), 'Stripe ids are not sent to the browser'); assert.strictEqual(j.paymentOn, false, 'off until BUYING_FLOW is set to 1');
+    const on = await (await http.route(new Request('https://edvlabs.test/api/my-purchases', { headers: tok }), Object.assign({ BUYING_FLOW: '1' }, ENV), asset, { payment: { db: w.db, user: async () => ({ id: U1 }) } })).json();
+    assert.strictEqual(on.paymentOn, true);
+  });
+
+  await test('deploy-request: only the buyer, only if deploy help was bought, a good domain, once', async () => {
+    const w = world(), { call, tok } = w;
+    w.db.purchases.push({ id: 'pur-1', project_id: PID, user_id: U1 }, { id: 'pur-2', project_id: PID, user_id: U2 });
+    w.db.deployRequests.push({ purchase_id: 'pur-1', user_id: U1, status: 'open', domain: null, notes: null }, { purchase_id: 'pur-2', user_id: U2, status: 'open', domain: null, notes: null });
+    const send = (b, h) => call('/api/deploy-request', { body: JSON.stringify(b) }, h || tok);
+    assert.strictEqual((await send({ purchaseId: 'pur-1', domain: 'shop.example.com' }, {})).status, 401);
+    assert.strictEqual((await send({ purchaseId: 'pur-2', domain: 'shop.example.com' })).status, 404, 'somebody else\'s purchase');
+    for (const domain of ['', 'nodots', 'a..b.com', 'bad domain.com', 'x'.repeat(260) + '.com', 5, undefined]) assert.strictEqual((await send({ purchaseId: 'pur-1', domain })).status, 400, String(domain).slice(0, 12));
+    assert.strictEqual((await send({ purchaseId: 'pur-1', domain: 'shop.example.com', notes: 'x'.repeat(2001) })).status, 400);
+    assert.strictEqual(w.db.deployRequests[0].domain, null, 'nothing was saved by the refusals');
+    assert.strictEqual((await send({ purchaseId: 'pur-1', domain: 'Shop.Example.com', notes: 'Registered at Namecheap' })).status, 200);
+    assert.strictEqual(w.db.deployRequests[0].domain, 'shop.example.com'); assert.strictEqual(w.db.deployRequests[0].notes, 'Registered at Namecheap');
+    assert.strictEqual((await send({ purchaseId: 'pur-1', domain: 'other.example.com' })).status, 409, 'details are sent once');
+    w.db.purchases.push({ id: 'pur-3', project_id: PID, user_id: U1 });
+    assert.strictEqual((await send({ purchaseId: 'pur-3', domain: 'shop.example.com' })).status, 404, 'no deploy help was bought with that purchase');
   });
 
   await test('other events and sessions without a valid person or subscription make no place', async () => {

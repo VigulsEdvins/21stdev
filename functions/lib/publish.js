@@ -178,7 +178,8 @@ function entitlementState(ent, now) {
 const key = (siteId, version, path) => 'sites/' + siteId + '/' + version + '/' + path;
 const kvKey = (name) => 'site:' + name;
 
-function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defaults, adminHook }) {
+function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defaults, adminHook, paymentOn }) {
+  // paymentOn: Stripe is switched on, so a page must have been bought (by the person who publishes it) before it can go online
   // adminHook: { afterPublish(siteId, structure) }, the admin panel of a site (site-admin.js); called after the new version is live
   const host = domain || 'edvlabs.com';
   /** What this person may do: the defaults for everyone, with any upgrade in their account_limits row applied. */
@@ -221,6 +222,10 @@ function createPublisher({ db, bucket, kv, now, domain, addressOf, scripts, defa
     if (!userId) return fail(401, 'Please sign in.');
     const c = Names.check(name);
     if (!c.ok) return fail(400, c.message, { reason: c.reason });
+    if (paymentOn) {
+      const bought = typeof projectId === 'string' && db.purchaseForProject ? await db.purchaseForProject(projectId) : null;
+      if (!bought || bought.user_id !== userId) return fail(402, 'Please buy this page first. You can do that from the “Proceed” button.', { reason: 'purchase-needed' });
+    }
     const limits = await limitsFor(userId);
     const checked = checkFiles(files, { totalBytes: limits.siteMb * 1024 * 1024, fileBytes: limits.fileMb * 1024 * 1024, more: limits.canBuyMore.siteMb });
     if (!checked.ok) return fail(400, checked.errors[0], { details: checked.errors, reason: 'files' });

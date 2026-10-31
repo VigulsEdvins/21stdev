@@ -135,6 +135,30 @@ async function createPortal({ env, db, user, origin, fetchImpl }) {
   return { status: 200, json: { ok: true, url: r.json.url } };
 }
 
+/** The buying flow gates publishing only when the owner switches it on (Worker setting BUYING_FLOW=1) and Stripe is set up, so nobody who already publishes is locked out by a deploy. */
+const buyingOn = (env) => !!env && env.BUYING_FLOW === '1' && !!env.STRIPE_SECRET_KEY;
+
+/** What this person has bought, for the builder (no Stripe ids). */
+async function listPurchases({ db, user, env }) {
+  const rows = await db.purchasesByUser(user.id);
+  return { status: 200, json: { ok: true, paymentOn: buyingOn(env), purchases: rows.map((r) => ({ id: r.id, projectId: r.project_id, allowance: r.allowance, editor: !!r.editor, destination: r.destination, createdAt: r.created_at })) } };
+}
+
+const domainOk = (d) => d.length >= 4 && d.length <= 253 && /^[a-z0-9.-]+$/.test(d) && d.includes('.') && !d.includes('..') && !/^[.-]|[.-]$/.test(d);
+
+/** The details for "We put it online for you": the domain and a note, sent once by the person who bought it. */
+async function submitDeployRequest({ db, user, body }) {
+  const b = body && typeof body === 'object' ? body : {};
+  const purchase = typeof b.purchaseId === 'string' ? await db.purchaseById(b.purchaseId) : null;
+  const request = purchase && purchase.user_id === user.id ? await db.deployRequestForPurchase(purchase.id) : null;
+  if (!request) return bad(404, 'We could not find that order.');
+  const domain = typeof b.domain === 'string' ? b.domain.trim().toLowerCase() : '';
+  if (!domainOk(domain)) return bad(400, 'Please type the domain name, like yourname.com.');
+  if (b.notes !== undefined && (typeof b.notes !== 'string' || b.notes.length > 2000)) return bad(400, 'Your note is too long. Please keep it under 2000 characters.');
+  if (!(await db.fillDeployRequest(purchase.id, { domain, notes: typeof b.notes === 'string' && b.notes.trim() ? b.notes.trim() : '' }))) return bad(409, 'You have already sent the details. We will be in touch.');
+  return { status: 200, json: { ok: true } };
+}
+
 function createPayments({ db, now, env }) {
   const ok = (extra) => ({ status: 200, json: Object.assign({ ok: true }, extra || {}) });
   const id = (v) => (typeof v === 'string' ? v : v && typeof v.id === 'string' ? v.id : null); // Stripe sends an id, or the whole object when expanded
@@ -220,4 +244,4 @@ function createPayments({ db, now, env }) {
   };
 }
 
-module.exports = { createOrderCheckout, createQuote, createPortal, createPayments, verifySignature, hmacHex, isTestKey, missing, NEEDED, PLANS, TRIAL_DAYS };
+module.exports = { createOrderCheckout, createQuote, createPortal, listPurchases, submitDeployRequest, buyingOn, createPayments, verifySignature, hmacHex, isTestKey, missing, NEEDED, PLANS, TRIAL_DAYS };
