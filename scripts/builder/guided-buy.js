@@ -238,6 +238,19 @@
       else note.textContent = (r.json && r.json.errors && r.json.errors[0]) || 'The details could not be sent just now. Please try again.';
     });
 
+    /* An edvlabs address: right after paying, the page goes online at the name that was chosen, by pressing the same "Put it online" button for the person. */
+    async function putOnline(name) {
+      note.textContent = 'Payment received. Putting your site online at ' + name + '.edvlabs.com…';
+      let box = null, go = null;
+      for (let i = 0; i < 30 && !(box && go); i++) { box = doc.getElementById('publishName'); go = doc.getElementById('publishGo'); if (!(box && go)) await new Promise((res) => setTimeout(res, 200)); }
+      if (!box || !go) { note.textContent = 'Payment received. Choose the name ' + name + ' and press “Put it online”.'; return; }
+      box.value = name; box.dispatchEvent(new win.Event('input', { bubbles: true }));
+      for (let i = 0; i < 40 && go.disabled; i++) await new Promise((res) => setTimeout(res, 250)); // the name is checked while it is typed
+      if (go.disabled) { note.textContent = 'Payment received. The name ' + name + ' could not be used just now. Please choose a name and press “Put it online”.'; return; }
+      go.click();
+      note.textContent = 'Payment received. Your site is going online at ' + name + '.edvlabs.com.';
+    }
+
     /* Back from Stripe: the payment is confirmed by Stripe telling our server, which can take a moment, so look a few times. */
     async function afterPayment() {
       note.textContent = 'Thank you. Confirming your payment…';
@@ -250,8 +263,8 @@
             purchases = r.json.purchases; await applyLock(); showDeployForm();
             note.textContent = fresh.destination === 'download' ? 'Payment received. Your download is ready: use “Go to the download”.' : fresh.destination === 'edvlabs' ? 'Payment received. Choose the name you picked and press “Put it online”.' : 'Payment received. Your site is yours to put online; your own domain can be connected from “My websites” on your account page.';
             let name = ''; try { name = win.sessionStorage.getItem(NAME_KEY) || ''; win.sessionStorage.removeItem(NAME_KEY); } catch (_) { name = ''; }
-            const box = doc.getElementById('publishName'); if (box && name && fresh.destination === 'edvlabs') { box.value = name; box.dispatchEvent(new win.Event('input', { bubbles: true })); }
             doc.dispatchEvent(new win.CustomEvent('edvlabs:purchased'));
+            if (fresh.destination === 'edvlabs' && name) await putOnline(name);
             return;
           }
         }

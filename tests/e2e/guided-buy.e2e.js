@@ -146,6 +146,15 @@ const UID = '11111111-1111-4111-8111-111111111111';
   assert.deepStrictEqual(buy.deploy, [{ purchaseId: 'pur-2', domain: 'shop.example.com', notes: 'Registered at Namecheap' }]);
   console.log('  ✓ after paying the page unlocks and the deploy details are collected once');
 
+  // an edvlabs address: right after paying, the page goes online at the chosen name without another click
+  buy.purchases = []; buy.polls = 0; api.published = []; api.sites = []; api.freePlaces = 1;
+  buy.pending = [{ id: 'pur-3', projectId: PID, allowance: 5, editor: false, destination: 'edvlabs', createdAt: '2026-11-04T10:00:00Z', deployHelp: false, deployDetailsSent: false }];
+  await page.evaluate(() => sessionStorage.setItem('edvlabs.buy_name', 'bakery-anna'));
+  await page.goto(srv.url + '/builder.html?paid=1'); await page.waitForSelector('#paneGet', { state: 'attached' }); await page.click('#guidedStep-get');
+  await page.waitForFunction(() => /bakery-anna\.edvlabs\.com/.test((document.getElementById('publishResult') || {}).textContent || ''), null, { timeout: 25000 }).catch(async () => { throw new Error('note: ' + await page.textContent('#buyNote') + ' | result: ' + await page.textContent('#publishResult') + ' | name: ' + await page.inputValue('#publishName') + ' | go disabled: ' + await page.isDisabled('#publishGo')); });
+  assert.strictEqual(api.published.length, 1, 'published once, with no click'); assert.strictEqual(api.published[0].name, 'bakery-anna'); assert.strictEqual(api.published[0].projectId, PID);
+  console.log('  ✓ after paying for an edvlabs address the page goes online by itself');
+
   assert.deepStrictEqual(errors, [], errors.join(' | '));
   await browser.close(); await srv.close();
   console.log('Guided buy e2e ok');
