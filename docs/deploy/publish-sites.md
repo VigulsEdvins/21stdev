@@ -214,3 +214,19 @@ Owner steps, in this order (all in the Cloudflare dashboard for `edvlabs.com`; n
 Everyday: a domain that is still waiting after a day shows an extra TXT record under "Still waiting after an hour?"; most customers never need it. The hourly clean-up removes the Cloudflare entry of any domain whose site or account was deleted. Look at what Cloudflare holds: dashboard → SSL/TLS → Custom Hostnames. To switch the feature off, delete the secret `CLOUDFLARE_API_TOKEN` from the main Worker: the endpoints answer 503 and the account page shows nothing about domains, while domains that are already active keep working (they only need the sites Worker and KV).
 
 Known limits: a site's `sitemap.xml`, canonical link and share tags still name the address the customer typed in the builder; if they used the edvlabs address, search engines follow the 301 to the domain. A site that goes offline or is unpublished keeps its domain attached and shows "not available" there; the customer can remove the domain from the account page. Bare domains are not supported yet.
+
+## Paying for a place with Stripe (test mode first)
+
+Plan: `docs/superpowers/plans/2026-10-31-stripe-publish-places.md`. Code is built and tested (`npm run test:payment`); nothing is deployed or applied yet. Do these in order, with **test mode** switched on in the Stripe dashboard (the "Test mode" / sandbox toggle).
+
+1. **Supabase:** run `supabase/migrations/20261031140000_stripe_payments.sql` in the SQL Editor (adds two Stripe columns to `site_entitlements`; the browser cannot read them).
+2. **Stripe (test mode):** Product catalog → add a product "Publishing place (1 year)", one-time price (you choose the amount). Copy the **Price ID** (`price_…`). Developers → API keys → copy the test **secret key** (`sk_test_…`).
+3. **Webhook (test mode):** Developers → Webhooks → add endpoint `https://edvlabs.com/api/stripe-webhook`, events `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `charge.refunded`. Copy its **signing secret** (`whsec_…`).
+4. **Worker settings** (main Worker `21stdev`; secrets never go in git):
+   ```bash
+   npx wrangler secret put STRIPE_SECRET_KEY      # sk_test_…
+   npx wrangler secret put STRIPE_WEBHOOK_SECRET  # whsec_…
+   ```
+   and add the plain variable `STRIPE_PRICE_ID` (`price_…`) in the dashboard (Settings → Variables). `keep_vars` keeps it across deploys.
+5. **Try it:** builder → Put it online → "Buy a place" → card `4242 4242 4242 4242`, any future date, any CVC. Back in the builder the place appears within a few seconds. Declined card: `4000 0000 0000 0002`. Refund the payment in the Stripe dashboard: the place becomes `refunded`.
+6. **Going live later:** repeat steps 2–4 in live mode (live product/price, live key, a live webhook endpoint with its own `whsec_…`), then one small real payment and refund. Settle VAT and invoices with the accountant first (plan E8.1, E8.4).

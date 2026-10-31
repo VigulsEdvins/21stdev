@@ -74,7 +74,7 @@
     return '';
   }
 
-  /** The six calls. `token()` gives the access token; `fetchImpl` is fetch (replaced in tests). Each returns { status, json }. */
+  /** The calls. `token()` gives the access token; `fetchImpl` is fetch (replaced in tests). Each returns { status, json }. */
   function createClient({ fetchImpl, token, base }) {
     const f = fetchImpl || ((...a) => fetch(...a)), root = base || '/api';
     async function call(method, path, body) {
@@ -93,7 +93,8 @@
       publish: (name, collected, projectId) => call('POST', '/publish', Object.assign({ name, files: toFiles(collected) }, projectId ? { projectId } : {}, collected && collected.adminStructure ? { adminStructure: collected.adminStructure } : {})),
       siteAdmin: (action, siteId, extra) => call('POST', '/site-admin', Object.assign({ action, siteId }, extra || {})),
       unpublish: (siteId) => call('POST', '/unpublish', { siteId }),
-      rename: (siteId, name) => call('POST', '/rename', { siteId, name })
+      rename: (siteId, name) => call('POST', '/rename', { siteId, name }),
+      checkout: () => call('POST', '/checkout', {})
     };
   }
 

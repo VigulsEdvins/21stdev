@@ -53,7 +53,9 @@
     const go = el(doc, 'button', { type: 'button', class: 'builder-btn-primary gt-go', id: 'publishGo' }, 'Put it online');
     const out = el(doc, 'p', { id: 'publishResult', role: 'status', 'aria-live': 'polite' });
     const ask = el(doc, 'a', { class: 'builder-btn-subtle gt-ask', id: 'publishAsk', href: help, target: '_blank', rel: 'noopener', hidden: '' }, 'Ask edvlabs to switch it on for me');
-    box.append(head, intro, signedOut, list, places, nameLabel, nameNote, go, out, ask);
+    const buy = el(doc, 'button', { type: 'button', class: 'builder-btn-primary gt-buy', id: 'publishBuy', hidden: '' }, 'Buy a place');
+    const buyNote = el(doc, 'small', { id: 'publishBuyNote', role: 'status', 'aria-live': 'polite' });
+    box.append(head, intro, signedOut, list, places, nameLabel, nameNote, go, out, buy, buyNote, ask);
     pane.append(box);
 
     let state = { signedIn: false, sites: [], freePlaces: 0, limits: null }, busy = false, timer = null, lastChecked = '';
@@ -85,8 +87,37 @@
     }
 
     function renderPlaces() {
-      places.textContent = state.freePlaces > 0 ? 'You have ' + state.freePlaces + ' paid place' + (state.freePlaces === 1 ? '' : 's') + ' left for a new site.' : 'You have no paid place for a new site yet. Payment is not switched on, so edvlabs adds it for you.';
+      places.textContent = state.freePlaces > 0 ? 'You have ' + state.freePlaces + ' paid place' + (state.freePlaces === 1 ? '' : 's') + ' left for a new site.' : 'You have no paid place for a new site yet. Buy one, or ask edvlabs to add it for you.';
       ask.hidden = state.freePlaces > 0;
+      buy.hidden = state.freePlaces > 0 || state.payment === 'off';
+    }
+
+    /* Payment: the server makes the Stripe page and the browser goes there. A place appears when Stripe tells the server (the webhook), a second or two after the person comes back. */
+    async function startCheckout() {
+      if (busy) return;
+      setBusy(true); buyNote.textContent = 'Opening the payment page…';
+      try {
+        const r = await client.checkout();
+        if (r.status === 200 && r.json && r.json.ok && typeof r.json.url === 'string' && /^https:\/\/checkout\.stripe\.com\//.test(r.json.url)) { win.location.assign(r.json.url); return; }
+        if (r.status === 503) { state.payment = 'off'; buyNote.textContent = ''; renderPlaces(); say('Payment is not switched on yet, so edvlabs adds a place for you.', false); return; }
+        buyNote.textContent = (r.json && r.json.errors && r.json.errors[0]) || Client.explain(r.status, r.json).message;
+      } finally { setBusy(false); }
+    }
+    buy.addEventListener('click', startCheckout);
+
+    /* Back from Stripe (?paid=1): look a few times for the new place, because the webhook can arrive after the redirect. */
+    async function afterPayment() {
+      let back = ''; try { back = new win.URLSearchParams(win.location.search).get('paid') || ''; } catch (_) { back = ''; }
+      if (back === '0') { say('Payment was cancelled. Nothing was charged.', false); return; }
+      if (back !== '1') return;
+      say('Thank you. Confirming your payment…', false);
+      const before = state.freePlaces;
+      for (let i = 0; i < 8; i++) {
+        await load();
+        if (state.freePlaces > before) { say('Payment received. You have a paid place for a new site.', false); return; }
+        await new Promise((res) => setTimeout(res, 1500));
+      }
+      say('Your payment is being confirmed. If the place does not appear within a few minutes, contact edvlabs; you will not be charged twice.', false);
     }
 
     async function load() {
@@ -205,7 +236,7 @@
       } finally { setBusy(false); }
     }
 
-    load();
+    load().then(afterPayment);
     return { load, box };
   }
 

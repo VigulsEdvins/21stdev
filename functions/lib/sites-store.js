@@ -41,6 +41,15 @@ function createDb(env, fetchImpl) {
     entitlementForSite: (siteId) => first('site_entitlements?select=*&limit=1&site_id=eq.' + enc(siteId)),
     entitlementsByUser: (userId) => all('site_entitlements?select=*&user_id=eq.' + enc(userId)),
     insertEntitlement: async (row) => (await rest('POST', 'site_entitlements', row, 'return=representation'))[0],
+    /* Stripe payments (functions/lib/payment.js): a place made by a payment, found again by its Checkout Session or payment, never twice (unique index on stripe_session_id). */
+    placeBySession: (sessionId) => first('site_entitlements?select=id&limit=1&stripe_session_id=eq.' + enc(sessionId)),
+    async insertPlace(row) {
+      try { return (await rest('POST', 'site_entitlements', row, 'return=representation'))[0]; } catch (e) {
+        if (e.code === '23505') throw Object.assign(e, { code: 'duplicate' });
+        throw e;
+      }
+    },
+    refundByIntent: (intent) => rest('PATCH', 'site_entitlements?stripe_payment_intent=eq.' + enc(intent), { status: 'refunded' }),
     freeEntitlements: (userId) => all('site_entitlements?select=*&status=eq.active&site_id=is.null&order=paid_until.desc&user_id=eq.' + enc(userId)),
     async insertSite(row) {
       try {
