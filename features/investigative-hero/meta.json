@@ -1,0 +1,70 @@
+{
+  "slug": "investigative-hero",
+  "title": "Investigative Aperture Hero",
+  "category": "Heroes",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Cinema-style investigative aperture hero with lens focus brackets, tactile noise grain, kinetic split typography, and interactive defogging aperture.",
+  "tags": [
+    "hero",
+    "investigative",
+    "editorial",
+    "aperture",
+    "monochrome",
+    "brackets",
+    "typography"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 20,
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "dark",
+    "editorial",
+    "minimal"
+  ],
+  "industry": [
+    "media",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "top_word",
+      "label": "Top Display Word",
+      "type": "text",
+      "selector": ":scope .inv-hero-word--top"
+    },
+    {
+      "id": "bot_word",
+      "label": "Bottom Display Word",
+      "type": "text",
+      "selector": ":scope .inv-hero-word--bottom"
+    },
+    {
+      "id": "line1",
+      "label": "Subline 1",
+      "type": "text",
+      "selector": ":scope .inv-hero-line--a"
+    },
+    {
+      "id": "line2",
+      "label": "Subline 2",
+      "type": "text",
+      "selector": ":scope .inv-hero-line--b"
+    },
+    {
+      "id": "cta",
+      "label": "Action CTA",
+      "type": "text",
+      "selector": ":scope .inv-hero-cta"
+    }
+  ]
+}

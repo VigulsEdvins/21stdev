@@ -1,0 +1,153 @@
+.dar-section {
+  padding: 80px 24px;
+  background: var(--bg, #121211);
+  color: var(--text, #f3f4f3);
+  font-family: var(--font-body, "Instrument Sans", sans-serif);
+}
+
+.dar-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dar-head {
+  margin-bottom: 40px;
+}
+
+.dar-title {
+  font-family: var(--font-display, "Hubot Sans", sans-serif);
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+}
+
+.dar-lede {
+  color: rgba(243, 244, 243, 0.65);
+  font-size: 17px;
+  max-width: 48ch;
+  margin: 0;
+}
+
+.dar-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.dar-filter {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 1px solid rgba(243, 244, 243, 0.15);
+  background: rgba(243, 244, 243, 0.05);
+  color: rgba(243, 244, 243, 0.7);
+  font-family: var(--font-display, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dar-filter:hover, .dar-filter.is-active {
+  background: var(--text, #f3f4f3);
+  color: var(--bg, #121211);
+  border-color: var(--text, #f3f4f3);
+}
+
+.dar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dar-row {
+  border-top: 1px solid rgba(243, 244, 243, 0.15);
+  transition: opacity 0.3s ease, background-color 0.2s ease;
+}
+
+.dar-row:last-child {
+  border-bottom: 1px solid rgba(243, 244, 243, 0.15);
+}
+
+.dar-row.is-hidden {
+  display: none;
+}
+
+.dar-link {
+  display: grid;
+  grid-template-columns: 120px 1fr 200px;
+  gap: 32px;
+  align-items: center;
+  padding: 32px 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.2s;
+}
+
+.dar-row:hover {
+  background-color: rgba(243, 244, 243, 0.03);
+}
+
+.dar-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dar-year {
+  font-family: var(--font-display, sans-serif);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.dar-topic {
+  font-size: 14px;
+  color: rgba(243, 244, 243, 0.6);
+}
+
+.dar-row-title {
+  font-family: var(--font-display, sans-serif);
+  font-size: clamp(20px, 2.4vw, 32px);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+  transition: color 0.2s;
+}
+
+.dar-row:hover .dar-row-title {
+  color: var(--accent, #c89f83);
+}
+
+.dar-text {
+  font-size: 15px;
+  color: rgba(243, 244, 243, 0.7);
+  margin: 0;
+}
+
+.dar-photo {
+  aspect-ratio: 3.2 / 1.8;
+  overflow: hidden;
+  border-radius: var(--radius, 8px);
+  background: #2a2926;
+}
+
+.dar-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.dar-row:hover .dar-photo img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .dar-link {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

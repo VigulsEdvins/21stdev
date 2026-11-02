@@ -1,0 +1,52 @@
+{
+  "slug": "recon-horizontal-field",
+  "title": "Recon Horizontal Field Reel",
+  "category": "Interactions & Physics",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Tactile horizontal field reconnaissance reel with drag and scroll navigation, dynamic depth scaling, location captions, and photo parallax preview.",
+  "tags": [
+    "horizontal",
+    "reel",
+    "gallery",
+    "physics",
+    "investigative",
+    "reconnaissance",
+    "drag"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 22,
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "dark",
+    "editorial",
+    "minimal"
+  ],
+  "industry": [
+    "media",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .rhf-title"
+    },
+    {
+      "id": "lede",
+      "label": "Lead Description",
+      "type": "text",
+      "selector": ":scope .rhf-lede"
+    }
+  ]
+}

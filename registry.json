@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-29T12:40:02.102Z",
+  "generatedAt": "2026-11-02T07:43:00.781Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 238,
+  "totalFeatures": 245,
   "categories": [
     "Heroes",
     "Headers & Nav",
@@ -1427,6 +1427,73 @@
       ]
     },
     {
+      "slug": "horizontal-weekly-schedule",
+      "title": "Horizontal Weekly Schedule",
+      "category": "Interactions & Physics",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "editorial"
+      ],
+      "industry": [
+        "general",
+        "education"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "badge",
+          "label": "Section Badge",
+          "type": "text",
+          "selector": ":scope .hws-badge"
+        },
+        {
+          "id": "title",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .hws-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Interactive 7-day horizontal timetable with discipline category filtering (Endurance, Strength, Recovery), touch drag scroll, and progress indicator.",
+      "tags": [
+        "schedule",
+        "timetable",
+        "calendar",
+        "horizontal-scroll",
+        "filter",
+        "fitness"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/horizontal-weekly-schedule",
+      "relativePath": "features/horizontal-weekly-schedule",
+      "previewUrl": "features/horizontal-weekly-schedule/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "polaroid-string-carousel",
       "title": "Polaroid Sagging String & Breeze Physics Carousel",
       "category": "3D & Carousels",
@@ -2038,6 +2105,80 @@
       ]
     },
     {
+      "slug": "sports-bento-collage",
+      "title": "Sports Bento Collage",
+      "category": "Galleries & Bento",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "portfolio",
+        "general"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "badge",
+          "label": "Section Badge",
+          "type": "text",
+          "selector": ":scope .sbc-badge"
+        },
+        {
+          "id": "title",
+          "label": "Section Title",
+          "type": "text",
+          "selector": ":scope .sbc-title"
+        },
+        {
+          "id": "lead",
+          "label": "Section Subtitle",
+          "type": "text",
+          "selector": ":scope .sbc-lead"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Dynamic 8-tile sports discipline collage bento grid with asymmetric cards, sport tags, active stat indicators, and interactive hover elevation.",
+      "tags": [
+        "bento",
+        "collage",
+        "grid",
+        "sports",
+        "gallery",
+        "cards",
+        "fitness"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/sports-bento-collage",
+      "relativePath": "features/sports-bento-collage",
+      "previewUrl": "features/sports-bento-collage/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "client-logo-marquee",
       "title": "Infinite Dual-Direction Partner Logo Marquee",
       "category": "Galleries & Bento",
@@ -2260,6 +2401,80 @@
       "relativePath": "features/split-screen-entrance",
       "previewUrl": "features/split-screen-entrance/index.html",
       "thumb": "thumbs/split-screen-entrance.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "athletic-pricing-cards",
+      "title": "Athletic Pricing Cards",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "minimal",
+        "editorial"
+      ],
+      "industry": [
+        "saas",
+        "general"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "badge",
+          "label": "Section Badge",
+          "type": "text",
+          "selector": ":scope .apc-badge"
+        },
+        {
+          "id": "title",
+          "label": "Section Title",
+          "type": "text",
+          "selector": ":scope .apc-title"
+        },
+        {
+          "id": "lead",
+          "label": "Section Subtitle",
+          "type": "text",
+          "selector": ":scope .apc-lead"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "High-performance 3-tier athletic membership cards with animated billing toggle (Monthly vs Annual -20%), feature lists, and highlighted tier.",
+      "tags": [
+        "pricing",
+        "cards",
+        "membership",
+        "toggle",
+        "tier",
+        "subscription",
+        "fitness"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/athletic-pricing-cards",
+      "relativePath": "features/athletic-pricing-cards",
+      "previewUrl": "features/athletic-pricing-cards/index.html",
+      "thumb": null,
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,
@@ -3163,6 +3378,93 @@
       ]
     },
     {
+      "slug": "investigative-hero",
+      "title": "Investigative Aperture Hero",
+      "category": "Heroes",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "editorial",
+        "minimal"
+      ],
+      "industry": [
+        "media",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "top_word",
+          "label": "Top Display Word",
+          "type": "text",
+          "selector": ":scope .inv-hero-word--top"
+        },
+        {
+          "id": "bot_word",
+          "label": "Bottom Display Word",
+          "type": "text",
+          "selector": ":scope .inv-hero-word--bottom"
+        },
+        {
+          "id": "line1",
+          "label": "Subline 1",
+          "type": "text",
+          "selector": ":scope .inv-hero-line--a"
+        },
+        {
+          "id": "line2",
+          "label": "Subline 2",
+          "type": "text",
+          "selector": ":scope .inv-hero-line--b"
+        },
+        {
+          "id": "cta",
+          "label": "Action CTA",
+          "type": "text",
+          "selector": ":scope .inv-hero-cta"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Cinema-style investigative aperture hero with lens focus brackets, tactile noise grain, kinetic split typography, and interactive defogging aperture.",
+      "tags": [
+        "hero",
+        "investigative",
+        "editorial",
+        "aperture",
+        "monochrome",
+        "brackets",
+        "typography"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/investigative-hero",
+      "relativePath": "features/investigative-hero",
+      "previewUrl": "features/investigative-hero/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "oklch-ambient-glow-hero",
       "title": "OKLCH Ambient Aurora Hero",
       "category": "Heroes",
@@ -3356,6 +3658,75 @@
       ]
     },
     {
+      "slug": "dossier-archive-rail",
+      "title": "Dossier Archive Rail",
+      "category": "Galleries & Bento",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "editorial",
+        "minimal"
+      ],
+      "industry": [
+        "media",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .dar-title"
+        },
+        {
+          "id": "lede",
+          "label": "Lead Description",
+          "type": "text",
+          "selector": ":scope .dar-lede"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Tactile investigative archive rail with category filter chips, dynamic focus tracking, corner classification brackets, and hover reveal photography.",
+      "tags": [
+        "archive",
+        "rail",
+        "dossier",
+        "investigative",
+        "filters",
+        "gallery",
+        "editorial"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/dossier-archive-rail",
+      "relativePath": "features/dossier-archive-rail",
+      "previewUrl": "features/dossier-archive-rail/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "liquid-metal-shader-card",
       "title": "Iridescent Liquid-Metal Shader Card",
       "category": "Audio & Shaders",
@@ -3416,6 +3787,144 @@
       "relativePath": "features/liquid-metal-shader-card",
       "previewUrl": "features/liquid-metal-shader-card/index.html",
       "thumb": "thumbs/liquid-metal-shader-card.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "recon-horizontal-field",
+      "title": "Recon Horizontal Field Reel",
+      "category": "Interactions & Physics",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "editorial",
+        "minimal"
+      ],
+      "industry": [
+        "media",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .rhf-title"
+        },
+        {
+          "id": "lede",
+          "label": "Lead Description",
+          "type": "text",
+          "selector": ":scope .rhf-lede"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Tactile horizontal field reconnaissance reel with drag and scroll navigation, dynamic depth scaling, location captions, and photo parallax preview.",
+      "tags": [
+        "horizontal",
+        "reel",
+        "gallery",
+        "physics",
+        "investigative",
+        "reconnaissance",
+        "drag"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/recon-horizontal-field",
+      "relativePath": "features/recon-horizontal-field",
+      "previewUrl": "features/recon-horizontal-field/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "impact-metric-counters",
+      "title": "Impact & Outcome Counters",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "light",
+        "editorial",
+        "minimal"
+      ],
+      "industry": [
+        "media",
+        "general"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .imc-title"
+        },
+        {
+          "id": "lede",
+          "label": "Lead Description",
+          "type": "text",
+          "selector": ":scope .imc-lede"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Bold investigative impact metric cards with animated numbers, funding transparency progress bars, and high-contrast editorial typography.",
+      "tags": [
+        "impact",
+        "metrics",
+        "counters",
+        "transparency",
+        "progress",
+        "cards",
+        "investigative"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/impact-metric-counters",
+      "relativePath": "features/impact-metric-counters",
+      "previewUrl": "features/impact-metric-counters/index.html",
+      "thumb": null,
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,

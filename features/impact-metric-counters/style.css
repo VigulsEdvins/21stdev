@@ -1,0 +1,131 @@
+.imc-section {
+  padding: 80px 24px;
+  background: var(--bg, #f3f4f3);
+  color: var(--text, #121211);
+  font-family: var(--font-body, "Instrument Sans", sans-serif);
+}
+
+.imc-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.imc-head {
+  margin-bottom: 50px;
+}
+
+.imc-title {
+  font-family: var(--font-display, "Hubot Sans", sans-serif);
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+
+.imc-lede {
+  color: rgba(18, 18, 17, 0.7);
+  font-size: 17px;
+  max-width: 48ch;
+  margin: 0;
+}
+
+.imc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+  margin-bottom: 60px;
+}
+
+.imc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+}
+
+.imc-rule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(18, 18, 17, 0.2);
+}
+
+.imc-number {
+  font-family: var(--font-display, sans-serif);
+  font-size: clamp(48px, 6vw, 84px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.imc-desc {
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(18, 18, 17, 0.7);
+  margin: 0;
+}
+
+.imc-funding {
+  padding-top: 32px;
+  border-top: 1px solid rgba(18, 18, 17, 0.15);
+}
+
+.imc-funding-title {
+  font-family: var(--font-display, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 20px;
+}
+
+.imc-bars {
+  display: grid;
+  gap: 16px;
+  max-width: 600px;
+}
+
+.imc-bar {
+  display: grid;
+  grid-template-columns: 180px 1fr 50px;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.imc-bar-track {
+  position: relative;
+  height: 12px;
+  background: rgba(18, 18, 17, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.imc-bar-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--text, #121211);
+  border-radius: 9999px;
+  transform-origin: 0 50%;
+  transition: transform 1s ease-out;
+}
+
+.imc-bar-val {
+  text-align: right;
+  font-family: var(--font-display, sans-serif);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .imc-bar {
+    grid-template-columns: 1fr auto;
+  }
+  .imc-bar-track {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}
