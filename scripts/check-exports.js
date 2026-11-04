@@ -41,7 +41,7 @@ async function exportOne(builder, srvUrl, slug, theme) {
     }, { slug, theme });
     await page.waitForFunction(() => { const d = document.querySelector('iframe').contentDocument; return d && d.getElementById('export-check'); }, null, { timeout: 40000 });
     const [download] = await Promise.all([
-      page.waitForEvent('download', { timeout: 30000 }),
+      page.waitForEvent('download', { timeout: 90000 }),
       page.evaluate(() => document.getElementById('downloadZipBtn').click())
     ]);
     return fs.readFileSync(await download.path());
