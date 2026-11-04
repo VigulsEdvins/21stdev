@@ -6,6 +6,8 @@
  *   node tests/snapshot-assembler.js            compare with the golden file (exit 1 on any difference)
  *   node tests/snapshot-assembler.js --write    rewrite the golden file from the current code
  */
+// the zip stamps local time, so the golden file is tied to the zone it was recorded in
+process.env.TZ = 'Europe/Riga';
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');

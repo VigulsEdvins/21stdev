@@ -40,7 +40,8 @@ function resolveSafePath(urlPath, referer = '') {
   } catch {
     return null;
   }
-  const rel = cleanUrl === '/' ? '/index.html' : cleanUrl;
+  // the site's icon files are linked from the site root on the live host
+  const rel = cleanUrl === '/' ? '/index.html' : /^\/(favicon\.(ico|svg)|apple-touch-icon\.png)$/.test(cleanUrl) ? '/site' + cleanUrl : cleanUrl;
 
   // Never serve repository internals or local data: dot folders (.git, .github, .superpowers), database files, a NUL byte
   if (cleanUrl.includes('\0') || cleanUrl.split('/').some(seg => seg.startsWith('.') && seg !== '') || /\.(db|rvf)(\.|$)/i.test(cleanUrl) || /(^|\/)agentdb\./i.test(cleanUrl)) return null;

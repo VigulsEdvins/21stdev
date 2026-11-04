@@ -1,4 +1,4 @@
-export function initRepairServiceCards(root = document) {
+function initRepairServiceCards(root = document) {
   const wrap = root.querySelector('.rep-wrap');
   if (!wrap) return;
 

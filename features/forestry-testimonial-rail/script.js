@@ -1,4 +1,4 @@
-export default function() {
+(function () {
   const slides = document.querySelectorAll('.ftr-slide');
   const prevBtn = document.querySelector('.ftr-btn-prev');
   const nextBtn = document.querySelector('.ftr-btn-next');
@@ -17,4 +17,4 @@ export default function() {
       update((current + 1) % slides.length);
     });
   }
-}
+})();

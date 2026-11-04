@@ -67,7 +67,8 @@ const { startServer, launchBrowser } = require('../../scripts/lib/browser');
   v = await view();
   assert.strictEqual(v.select, 'custom', 'reload keeps the custom theme in the select');
   assert.strictEqual(v.sideBg.toLowerCase(), '#102030', 'reload shows the custom background in the palette');
-  assert.notStrictEqual(await page.evaluate(() => getComputedStyle(document.getElementById('customColorsControls')).display), 'none', 'the custom colour pickers are shown for a custom theme');
+  await page.click('#customThemeToggle'); // the colour pickers sit in a popover that the Colours button opens
+  assert.notStrictEqual(await page.evaluate(() => getComputedStyle(document.getElementById('customColorsControls')).display), 'none', 'the custom colour pickers open for a custom theme');
   assert.strictEqual(await page.getAttribute('#viewportTabletBtn', 'aria-pressed'), 'true', 'the tablet button is pressed after reload');
   console.log('  ✓ reload: custom colours and viewport shown');
 

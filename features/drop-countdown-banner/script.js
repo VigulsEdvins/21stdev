@@ -1,4 +1,4 @@
-export function initDropCountdownBanner(root = document) {
+function initDropCountdownBanner(root = document) {
   const wrap = root.querySelector('.drop-bar-wrap');
   if (!wrap) return;
 

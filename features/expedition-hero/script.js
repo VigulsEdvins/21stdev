@@ -1,4 +1,4 @@
-export function initExpeditionHero(root = document) {
+function initExpeditionHero(root = document) {
   const wrap = root.querySelector('.exp-hero-wrap');
   if (!wrap) return;
   const frame = wrap.querySelector('.exp-hero-frame');

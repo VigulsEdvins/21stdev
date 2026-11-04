@@ -1,4 +1,4 @@
-export default function() {
+(function () {
   document.querySelectorAll('.fsb-card').forEach(card => {
     card.addEventListener('click', () => {
       const link = card.querySelector('.fsb-link');
@@ -8,4 +8,4 @@ export default function() {
       }
     });
   });
-}
+})();

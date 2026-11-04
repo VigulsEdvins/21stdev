@@ -1,4 +1,4 @@
-export function initArchivalProductGrid(root = document) {
+function initArchivalProductGrid(root = document) {
   const wrap = root.querySelector('.arch-grid-wrap');
   if (!wrap) return;
 

@@ -1,4 +1,4 @@
-export default function() {
+(function () {
   const form = document.querySelector('.lsih-form');
   const feedback = document.querySelector('.lsih-feedback');
   if (!form || !feedback) return;
@@ -19,4 +19,4 @@ export default function() {
     feedback.textContent = 'Survey request submitted successfully. A forestry specialist will be in touch shortly.';
     form.reset();
   });
-}
+})();

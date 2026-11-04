@@ -1,4 +1,4 @@
-export function initItineraryTimeline(root = document) {
+function initItineraryTimeline(root = document) {
   const stops = root.querySelectorAll('.itin-stop');
   stops.forEach(stop => {
     stop.addEventListener('click', () => {

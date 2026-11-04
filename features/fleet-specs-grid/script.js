@@ -1,4 +1,4 @@
-export function initFleetSpecsGrid(root = document) {
+function initFleetSpecsGrid(root = document) {
   const items = root.querySelectorAll('.fleet-grid-item');
   items.forEach(it => {
     it.addEventListener('mouseenter', () => {

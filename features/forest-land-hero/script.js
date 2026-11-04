@@ -1,4 +1,4 @@
-export default function() {
+(function () {
   const primaryBtn = document.querySelector('.flh-btn-primary');
   if (primaryBtn) {
     primaryBtn.addEventListener('click', (e) => {
@@ -9,4 +9,4 @@ export default function() {
       }
     });
   }
-}
+})();

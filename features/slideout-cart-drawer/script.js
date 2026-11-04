@@ -1,4 +1,4 @@
-export function initSlideoutCartDrawer(root = document) {
+function initSlideoutCartDrawer(root = document) {
   const wrap = root.querySelector('.sc-wrapper');
   if (!wrap) return;
 
