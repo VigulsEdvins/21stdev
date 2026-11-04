@@ -1,0 +1,44 @@
+{
+  "slug": "industry-sectors-accordion",
+  "title": "Industry Sectors Accordion",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "Interactive tabbed sector matrix with dual synchronised split photography preview and deep domain capability specs.",
+  "tags": [
+    "industry",
+    "sectors",
+    "accordion",
+    "tabs",
+    "split-view",
+    "enterprise"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "editorial"
+  ],
+  "industry": [
+    "fintech",
+    "agency"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ".isa-title"
+    }
+  ],
+  "order": 999
+}

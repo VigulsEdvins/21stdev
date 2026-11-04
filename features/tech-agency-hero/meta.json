@@ -1,0 +1,50 @@
+{
+  "slug": "tech-agency-hero",
+  "title": "Tech Agency Hero",
+  "category": "Heroes",
+  "source": "custom",
+  "type": "component",
+  "description": "High-contrast midnight technology agency hero with Clutch 4.9/5 credibility badge, interactive dual CTA buttons, and floating metric counters.",
+  "tags": [
+    "tech",
+    "agency",
+    "hero",
+    "startup",
+    "metrics",
+    "counters"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "futuristic"
+  ],
+  "industry": [
+    "agency",
+    "saas"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ".tah-title"
+    },
+    {
+      "id": "subtitle",
+      "label": "Subtitle",
+      "type": "text",
+      "selector": ".tah-desc"
+    }
+  ],
+  "order": 999
+}

@@ -1,0 +1,78 @@
+.exp-hero-wrap {
+  --sand: #e1c49c;
+  --sky: #89b3aa;
+  --moss: #26352c;
+  --ink: #181412;
+  --coral: #e06244;
+  position: relative;
+  min-height: 540px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--sand);
+  color: var(--ink);
+  overflow: hidden;
+  font-family: 'Hubot Sans', system-ui, sans-serif;
+}
+.exp-hero-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  clip-path: inset(48% 24px 0 24px);
+  transition: clip-path 1.2s cubic-bezier(.2, .7, .1, 1);
+}
+.exp-hero-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 70%;
+}
+.exp-hero-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(38,53,44,0.65) 0%, transparent 60%);
+}
+.exp-hero-spec {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 32px 0;
+  text-align: center;
+  font-size: 14px;
+}
+.exp-hero-spec dt {
+  font-weight: 700;
+  opacity: .75;
+}
+.exp-hero-spec dd {
+  margin: 4px 0 0;
+  font-weight: 500;
+}
+.exp-hero-word {
+  position: relative;
+  z-index: 2;
+  margin: auto 24px 0;
+  text-align: center;
+  font-family: 'Special Gothic', 'Arial Narrow', sans-serif;
+  font-weight: 700;
+  font-size: clamp(54px, 12vw, 160px);
+  line-height: .8;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--sky);
+}
+.exp-hero-cap {
+  position: relative;
+  z-index: 2;
+  margin: 20px auto 40px;
+  max-width: 50ch;
+  text-align: center;
+  color: var(--sand);
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 0 20px;
+}

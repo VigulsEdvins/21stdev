@@ -1,0 +1,45 @@
+{
+  "slug": "archival-product-grid",
+  "title": "Curated Rails Product Grid",
+  "category": "Cards & Tiles",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Curated vintage product showcase with category filtering, condition tags, era indicators, and quick-add actions.",
+  "tags": [
+    "vintage",
+    "ecommerce",
+    "cards",
+    "filter",
+    "grid",
+    "apparel"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 22,
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "retro",
+    "minimal"
+  ],
+  "industry": [
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Section Title",
+      "type": "text",
+      "selector": ":scope .arch-title"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "slideout-cart-drawer",
+  "title": "Slide-out Cart Drawer",
+  "category": "Interactions & Physics",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Smooth slide-out archive cart drawer with item quantity controls, removal, subtotal calculation, and backdrop dismissal.",
+  "tags": [
+    "cart",
+    "drawer",
+    "ecommerce",
+    "slideout",
+    "interactions"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 24,
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "retro",
+    "minimal"
+  ],
+  "industry": [
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "drawerTitle",
+      "label": "Drawer Title",
+      "type": "text",
+      "selector": ":scope .sc-drawer-title"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "consultation-inquiry-hub",
+  "title": "Consultation Inquiry Hub",
+  "category": "Footers & Endings",
+  "source": "custom",
+  "type": "component",
+  "description": "Enterprise contact and project inquiry suite with direct communication channels, input-sanitized submission form, and subject routing.",
+  "tags": [
+    "contact",
+    "form",
+    "inquiry",
+    "consultation",
+    "channels",
+    "footer"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "minimal"
+  ],
+  "industry": [
+    "agency",
+    "saas"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ".cih-title"
+    }
+  ],
+  "order": 999
+}

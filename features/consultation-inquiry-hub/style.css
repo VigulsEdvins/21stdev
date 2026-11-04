@@ -1,0 +1,227 @@
+:root {
+  --bg: #040d43;
+  --surface: #0a1138;
+  --text: #ffffff;
+  --muted: #94a3b8;
+  --accent: #c8f8a9;
+  --radius: 1.25rem;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+.cih-section {
+  padding: 5rem 1.5rem;
+}
+
+.cih-container {
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+.cih-header {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 3.5rem;
+}
+
+.cih-badge {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(200, 248, 169, 0.3);
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.cih-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.cih-desc {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.cih-body {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 2.5rem;
+}
+
+@media (max-width: 850px) {
+  .cih-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cih-channels-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.cih-channel-card {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.cih-icon {
+  font-size: 1.75rem;
+}
+
+.cih-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.cih-val {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.cih-val:hover {
+  color: var(--accent);
+}
+
+.cih-form {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+}
+
+.cih-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 600px) {
+  .cih-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cih-field {
+  margin-bottom: 1.25rem;
+}
+
+.cih-field label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.cih-field input,
+.cih-field select,
+.cih-field textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.cih-field input:focus,
+.cih-field select:focus,
+.cih-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.cih-field select option {
+  background: #040d43;
+  color: #fff;
+}
+
+.cih-consent {
+  margin-bottom: 1.5rem;
+}
+
+.cih-consent label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.cih-consent input {
+  margin-top: 0.25rem;
+}
+
+.cih-submit-btn {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  color: #040d43;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cih-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(200, 248, 169, 0.4);
+}
+
+.cih-status {
+  margin-top: 1.25rem;
+  padding: 0.85rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.cih-status.success {
+  background: rgba(200, 248, 169, 0.1);
+  border: 1px solid rgba(200, 248, 169, 0.3);
+  color: var(--accent);
+}
+
+.cih-status.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}

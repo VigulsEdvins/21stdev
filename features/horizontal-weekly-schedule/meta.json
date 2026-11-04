@@ -1,0 +1,50 @@
+{
+  "slug": "horizontal-weekly-schedule",
+  "title": "Horizontal Weekly Schedule",
+  "category": "Interactions & Physics",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Interactive 7-day horizontal timetable with discipline category filtering (Endurance, Strength, Recovery), touch drag scroll, and progress indicator.",
+  "tags": [
+    "schedule",
+    "timetable",
+    "calendar",
+    "horizontal-scroll",
+    "filter",
+    "fitness"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 12,
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "editorial"
+  ],
+  "industry": [
+    "general",
+    "education"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "badge",
+      "label": "Section Badge",
+      "type": "text",
+      "selector": ":scope .hws-badge"
+    },
+    {
+      "id": "title",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .hws-title"
+    }
+  ]
+}

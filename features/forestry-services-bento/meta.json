@@ -1,0 +1,44 @@
+{
+  "slug": "forestry-services-bento",
+  "title": "Forestry Services Bento",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "6-item interactive forestry services grid with capability tags, image hover zoom, and quote triggers.",
+  "tags": [
+    "services",
+    "bento",
+    "forestry",
+    "cards",
+    "agriculture",
+    "land"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "agency"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Title",
+      "type": "text",
+      "selector": ".fsb-title"
+    }
+  ],
+  "order": 999
+}

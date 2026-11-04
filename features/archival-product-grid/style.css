@@ -1,0 +1,134 @@
+.arch-grid-wrap {
+  padding: 3rem 1.5rem;
+  background: #100c0d;
+  color: #e2dcce;
+  font-family: system-ui, sans-serif;
+}
+.arch-head {
+  max-width: 900px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+.arch-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.03em;
+}
+.arch-lead {
+  font-size: 1.1rem;
+  color: rgba(226, 220, 206, 0.75);
+  margin-bottom: 1.5rem;
+}
+.arch-filters {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.arch-filter-btn {
+  background: rgba(226, 220, 206, 0.1);
+  border: 1px solid rgba(226, 220, 206, 0.25);
+  color: #e2dcce;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.arch-filter-btn.is-active,
+.arch-filter-btn:hover {
+  background: #e2dcce;
+  color: #100c0d;
+}
+.arch-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.arch-card {
+  background: #181415;
+  border: 1px solid rgba(226, 220, 206, 0.15);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.arch-card__thumb {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: #2a1515;
+}
+.arch-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.arch-card:hover .arch-card__thumb img {
+  transform: scale(1.05);
+}
+.arch-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #a72d2d;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.arch-card__info {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.arch-meta {
+  font-size: 0.8rem;
+  color: rgba(226, 220, 206, 0.6);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+.arch-card__name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.arch-card__desc {
+  font-size: 0.9rem;
+  color: rgba(226, 220, 206, 0.75);
+  flex: 1;
+  margin-bottom: 1rem;
+}
+.arch-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(226, 220, 206, 0.1);
+}
+.arch-price {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+.arch-add-btn {
+  background: #e2dcce;
+  color: #100c0d;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.arch-add-btn:hover {
+  opacity: 0.85;
+}

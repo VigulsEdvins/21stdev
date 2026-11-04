@@ -1,0 +1,44 @@
+{
+  "slug": "process-step-timeline",
+  "title": "Process Step Timeline",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "Four-stage agile software engineering workflow timeline with numbered milestone badges and bulleted acceptance points.",
+  "tags": [
+    "process",
+    "workflow",
+    "timeline",
+    "steps",
+    "engineering",
+    "agile"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "minimal"
+  ],
+  "industry": [
+    "agency",
+    "saas"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ".pst-title"
+    }
+  ],
+  "order": 999
+}

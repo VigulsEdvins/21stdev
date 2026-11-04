@@ -1,0 +1,44 @@
+{
+  "slug": "drop-countdown-banner",
+  "title": "Drop Countdown Sticky Bar",
+  "category": "Headers & Nav",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Sticky drop countdown notification bar with real-time countdown clock and live pulse indicator.",
+  "tags": [
+    "banner",
+    "countdown",
+    "timer",
+    "header",
+    "notification"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 23,
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "retro",
+    "minimal"
+  ],
+  "industry": [
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "notice",
+      "label": "Banner Notice",
+      "type": "text",
+      "selector": ":scope .drop-bar-notice"
+    }
+  ]
+}

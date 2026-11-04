@@ -92,13 +92,14 @@ function scanFiles(files, readFile) {
 }
 
 function scanHistory() {
+  const waived = allowed();
   const findings = [];
   const log = git(['log', '--all', '-p', '--no-color', '--unified=0', '--diff-filter=AM', '--', '.', ':!package-lock.json']);
   let file = '';
   log.split('\n').forEach((line, i) => {
     if (line.startsWith('+++ b/')) { file = line.slice(6); return; }
     if (!line.startsWith('+') || line.startsWith('+++') || SKIP_EXT.test(file)) return;
-    scanText(line.slice(1)).forEach(x => findings.push({ file: file + ' (history)', rule: x.rule, line: i + 1, sample: x.sample }));
+    scanText(line.slice(1)).forEach(x => { if (!waived.some(w => w.file === file && w.rule === x.rule)) findings.push({ file: file + ' (history)', rule: x.rule, line: i + 1, sample: x.sample }); });
   });
   return findings;
 }

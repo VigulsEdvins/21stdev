@@ -1,0 +1,57 @@
+{
+  "slug": "sports-bento-collage",
+  "title": "Sports Bento Collage",
+  "category": "Galleries & Bento",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Dynamic 8-tile sports discipline collage bento grid with asymmetric cards, sport tags, active stat indicators, and interactive hover elevation.",
+  "tags": [
+    "bento",
+    "collage",
+    "grid",
+    "sports",
+    "gallery",
+    "cards",
+    "fitness"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 14,
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "dark",
+    "minimal"
+  ],
+  "industry": [
+    "portfolio",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "badge",
+      "label": "Section Badge",
+      "type": "text",
+      "selector": ":scope .sbc-badge"
+    },
+    {
+      "id": "title",
+      "label": "Section Title",
+      "type": "text",
+      "selector": ":scope .sbc-title"
+    },
+    {
+      "id": "lead",
+      "label": "Section Subtitle",
+      "type": "text",
+      "selector": ":scope .sbc-lead"
+    }
+  ]
+}

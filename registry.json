@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-02T07:43:00.781Z",
+  "generatedAt": "2026-11-04T10:53:48.754Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 245,
+  "totalFeatures": 262,
   "categories": [
     "Heroes",
     "Headers & Nav",
@@ -262,12 +262,6 @@
           "label": "Text 3",
           "type": "text",
           "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1)"
-        },
-        {
-          "id": "text-4",
-          "label": "Text 4",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(3)"
         },
         {
           "id": "text-5",
@@ -1096,49 +1090,49 @@
           "id": "headline",
           "label": "Headline",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)"
+          "selector": ":scope .tl-track article:nth-of-type(1) h3"
         },
         {
           "id": "subheading-1",
           "label": "Subheading 1",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1)"
+          "selector": ":scope .tl-track article:nth-of-type(2) h3"
         },
         {
           "id": "subheading-2",
           "label": "Subheading 2",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(3) > div:nth-of-type(1) > h3:nth-of-type(1)"
+          "selector": ":scope .tl-track article:nth-of-type(3) h3"
         },
         {
           "id": "subheading-3",
           "label": "Subheading 3",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(4) > div:nth-of-type(2) > h3:nth-of-type(1)"
+          "selector": ":scope .tl-track article:nth-of-type(4) h3"
         },
         {
           "id": "subheading-4",
           "label": "Subheading 4",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(5) > div:nth-of-type(1) > h3:nth-of-type(1)"
+          "selector": ":scope .tl-track article:nth-of-type(5) h3"
         },
         {
           "id": "subheading-5",
           "label": "Subheading 5",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(6) > div:nth-of-type(1) > h3:nth-of-type(1)"
+          "selector": ":scope .tl-track article:nth-of-type(6) h3"
         },
         {
           "id": "subheading-6",
           "label": "Subheading 6",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(7) > div:nth-of-type(2) > h3:nth-of-type(1)"
+          "selector": ":scope .tl-track article:nth-of-type(7) h3"
         },
         {
           "id": "subheading-7",
           "label": "Subheading 7",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(8) > div:nth-of-type(1) > h3:nth-of-type(1)"
+          "selector": ":scope .tl-track article:nth-of-type(8) h3"
         }
       ],
       "nativeWhen": [],
@@ -1206,37 +1200,37 @@
           "id": "subheading-1",
           "label": "Subheading 1",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1)"
+          "selector": ":scope .conv-pillar:nth-of-type(1) h3"
         },
         {
           "id": "subheading-2",
           "label": "Subheading 2",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > h3:nth-of-type(1)"
+          "selector": ":scope .conv-pillar:nth-of-type(2) h3"
         },
         {
           "id": "subheading-3",
           "label": "Subheading 3",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > h3:nth-of-type(1)"
+          "selector": ":scope .conv-pillar:nth-of-type(3) h3"
         },
         {
           "id": "intro-text",
           "label": "Intro text",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
+          "selector": ":scope .conv-pillar:nth-of-type(1) p"
         },
         {
           "id": "paragraph-1",
           "label": "Paragraph 1",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)"
+          "selector": ":scope .conv-pillar:nth-of-type(2) p"
         },
         {
           "id": "paragraph-2",
           "label": "Paragraph 2",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(3) > p:nth-of-type(1)"
+          "selector": ":scope .conv-pillar:nth-of-type(3) p"
         },
         {
           "id": "section-heading",
@@ -2354,7 +2348,7 @@
           "id": "small-label",
           "label": "Small label",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1)"
+          "selector": ":scope .curtain-top .monogram-text"
         },
         {
           "id": "paragraph",
@@ -2372,7 +2366,7 @@
           "id": "text",
           "label": "Text",
           "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1)"
+          "selector": ":scope .curtain-bottom .monogram-text"
         },
         {
           "id": "button-text",
@@ -3727,6 +3721,137 @@
       ]
     },
     {
+      "slug": "expedition-hero",
+      "title": "Topographic Wilderness Hero",
+      "category": "Heroes",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "editorial",
+        "retro",
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "word",
+          "label": "Display Word",
+          "type": "text",
+          "selector": ":scope .exp-hero-word"
+        },
+        {
+          "id": "caption",
+          "label": "Hero Caption",
+          "type": "text",
+          "selector": ":scope .exp-hero-cap"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Wilderness expedition hero with topographic framing, telemetry spec badges, dynamic text knockout, and smooth panoramic unmasking.",
+      "tags": [
+        "hero",
+        "expedition",
+        "overland",
+        "telemetry",
+        "knockout",
+        "typography",
+        "panoramic"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/expedition-hero",
+      "relativePath": "features/expedition-hero",
+      "previewUrl": "features/expedition-hero/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "archival-product-grid",
+      "title": "Curated Rails Product Grid",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "editorial",
+        "retro",
+        "minimal"
+      ],
+      "industry": [
+        "ecommerce",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Section Title",
+          "type": "text",
+          "selector": ":scope .arch-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Curated vintage product showcase with category filtering, condition tags, era indicators, and quick-add actions.",
+      "tags": [
+        "vintage",
+        "ecommerce",
+        "cards",
+        "filter",
+        "grid",
+        "apparel"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/archival-product-grid",
+      "relativePath": "features/archival-product-grid",
+      "previewUrl": "features/archival-product-grid/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "liquid-metal-shader-card",
       "title": "Iridescent Liquid-Metal Shader Card",
       "category": "Audio & Shaders",
@@ -3867,6 +3992,130 @@
       ]
     },
     {
+      "slug": "fleet-specs-grid",
+      "title": "Vehicle Fleet Specs Grid",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "retro",
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "portfolio"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Fleet Title",
+          "type": "text",
+          "selector": ":scope .fleet-grid-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Expedition fleet specification cards featuring rugged chassis details, technical telemetry badges, and hover photo scale.",
+      "tags": [
+        "fleet",
+        "vehicles",
+        "specs",
+        "telemetry",
+        "automotive",
+        "dark",
+        "overland"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/fleet-specs-grid",
+      "relativePath": "features/fleet-specs-grid",
+      "previewUrl": "features/fleet-specs-grid/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "drop-countdown-banner",
+      "title": "Drop Countdown Sticky Bar",
+      "category": "Headers & Nav",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "editorial",
+        "retro",
+        "minimal"
+      ],
+      "industry": [
+        "ecommerce",
+        "general"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "notice",
+          "label": "Banner Notice",
+          "type": "text",
+          "selector": ":scope .drop-bar-notice"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Sticky drop countdown notification bar with real-time countdown clock and live pulse indicator.",
+      "tags": [
+        "banner",
+        "countdown",
+        "timer",
+        "header",
+        "notification"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/drop-countdown-banner",
+      "relativePath": "features/drop-countdown-banner",
+      "previewUrl": "features/drop-countdown-banner/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "impact-metric-counters",
       "title": "Impact & Outcome Counters",
       "category": "Cards & Tiles",
@@ -3924,6 +4173,68 @@
       "folderPath": "/home/edvins/features-for-web/web-for-options/features/impact-metric-counters",
       "relativePath": "features/impact-metric-counters",
       "previewUrl": "features/impact-metric-counters/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "itinerary-timeline",
+      "title": "Interactive Route Itinerary",
+      "category": "Scroll & Parallax",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "editorial",
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Itinerary Title",
+          "type": "text",
+          "selector": ":scope .itin-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Interactive day-by-day expedition route itinerary cards with waypoint badges and active state feedback.",
+      "tags": [
+        "itinerary",
+        "timeline",
+        "waypoints",
+        "routes",
+        "travel",
+        "cards"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/itinerary-timeline",
+      "relativePath": "features/itinerary-timeline",
+      "previewUrl": "features/itinerary-timeline/index.html",
       "thumb": null,
       "liveSiteUrl": null,
       "adminUrl": null,
@@ -4020,62 +4331,7 @@
         "license": "own"
       },
       "updatedAt": "2026-10-25",
-      "customizable": [
-        {
-          "id": "small-label-1",
-          "label": "Small label 1",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
-        },
-        {
-          "id": "small-label-2",
-          "label": "Small label 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
-        },
-        {
-          "id": "small-label-3",
-          "label": "Small label 3",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3)"
-        },
-        {
-          "id": "text-1",
-          "label": "Text 1",
-          "type": "text",
-          "selector": ":scope span.tpl-kicker"
-        },
-        {
-          "id": "headline",
-          "label": "Headline",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h1:nth-of-type(1)"
-        },
-        {
-          "id": "button-link-1",
-          "label": "Button link 1",
-          "type": "link",
-          "selector": ":scope a.primary"
-        },
-        {
-          "id": "button-link-2",
-          "label": "Button link 2",
-          "type": "link",
-          "selector": ":scope a.secondary"
-        },
-        {
-          "id": "text-2",
-          "label": "Text 2",
-          "type": "text",
-          "selector": ":scope div.tpl-actions"
-        },
-        {
-          "id": "intro-text",
-          "label": "Intro text",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
-        }
-      ],
+      "customizable": [],
       "nativeWhen": [],
       "ownPalette": true,
       "exportAssets": [],
@@ -4114,6 +4370,67 @@
       ]
     },
     {
+      "slug": "slideout-cart-drawer",
+      "title": "Slide-out Cart Drawer",
+      "category": "Interactions & Physics",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "editorial",
+        "retro",
+        "minimal"
+      ],
+      "industry": [
+        "ecommerce",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "drawerTitle",
+          "label": "Drawer Title",
+          "type": "text",
+          "selector": ":scope .sc-drawer-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Smooth slide-out archive cart drawer with item quantity controls, removal, subtotal calculation, and backdrop dismissal.",
+      "tags": [
+        "cart",
+        "drawer",
+        "ecommerce",
+        "slideout",
+        "interactions"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/slideout-cart-drawer",
+      "relativePath": "features/slideout-cart-drawer",
+      "previewUrl": "features/slideout-cart-drawer/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "template-arena",
       "title": "edvlabs Arena — 3D Cylinder & CMS Website",
       "category": "Full Websites",
@@ -4135,62 +4452,7 @@
         "license": "own"
       },
       "updatedAt": "2026-10-25",
-      "customizable": [
-        {
-          "id": "small-label-1",
-          "label": "Small label 1",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
-        },
-        {
-          "id": "small-label-2",
-          "label": "Small label 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
-        },
-        {
-          "id": "small-label-3",
-          "label": "Small label 3",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3)"
-        },
-        {
-          "id": "text-1",
-          "label": "Text 1",
-          "type": "text",
-          "selector": ":scope span.tpl-kicker"
-        },
-        {
-          "id": "headline",
-          "label": "Headline",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h1:nth-of-type(1)"
-        },
-        {
-          "id": "button-link-1",
-          "label": "Button link 1",
-          "type": "link",
-          "selector": ":scope a.primary"
-        },
-        {
-          "id": "button-link-2",
-          "label": "Button link 2",
-          "type": "link",
-          "selector": ":scope a.secondary"
-        },
-        {
-          "id": "text-2",
-          "label": "Text 2",
-          "type": "text",
-          "selector": ":scope div.tpl-actions"
-        },
-        {
-          "id": "intro-text",
-          "label": "Intro text",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
-        }
-      ],
+      "customizable": [],
       "nativeWhen": [],
       "ownPalette": true,
       "exportAssets": [],
@@ -4229,6 +4491,68 @@
       ]
     },
     {
+      "slug": "repair-service-cards",
+      "title": "Garment Repair Service Accordion",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "editorial",
+        "retro",
+        "minimal"
+      ],
+      "industry": [
+        "ecommerce",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "heading",
+          "label": "Heading",
+          "type": "text",
+          "selector": ":scope .rep-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Atelier garment repair service cards with turnaround badges, fixed pricing, and interactive quote estimator modal.",
+      "tags": [
+        "repair",
+        "atelier",
+        "services",
+        "pricing",
+        "sustainability",
+        "cards"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/repair-service-cards",
+      "relativePath": "features/repair-service-cards",
+      "previewUrl": "features/repair-service-cards/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "template-roster",
       "title": "edvlabs Roster — 5-Column Editorial & CMS Website",
       "category": "Full Websites",
@@ -4250,62 +4574,7 @@
         "license": "own"
       },
       "updatedAt": "2026-10-25",
-      "customizable": [
-        {
-          "id": "small-label-1",
-          "label": "Small label 1",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)"
-        },
-        {
-          "id": "small-label-2",
-          "label": "Small label 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)"
-        },
-        {
-          "id": "small-label-3",
-          "label": "Small label 3",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3)"
-        },
-        {
-          "id": "text-1",
-          "label": "Text 1",
-          "type": "text",
-          "selector": ":scope span.tpl-kicker"
-        },
-        {
-          "id": "headline",
-          "label": "Headline",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > h1:nth-of-type(1)"
-        },
-        {
-          "id": "button-link-1",
-          "label": "Button link 1",
-          "type": "link",
-          "selector": ":scope a.primary"
-        },
-        {
-          "id": "button-link-2",
-          "label": "Button link 2",
-          "type": "link",
-          "selector": ":scope a.secondary"
-        },
-        {
-          "id": "text-2",
-          "label": "Text 2",
-          "type": "text",
-          "selector": ":scope div.tpl-actions"
-        },
-        {
-          "id": "intro-text",
-          "label": "Intro text",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)"
-        }
-      ],
+      "customizable": [],
       "nativeWhen": [],
       "ownPalette": true,
       "exportAssets": [],
@@ -4363,92 +4632,7 @@
         "license": "own"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [
-        {
-          "id": "button-link-1",
-          "label": "Button link 1",
-          "type": "link",
-          "selector": ":scope a.primary"
-        },
-        {
-          "id": "button-link-2",
-          "label": "Button link 2",
-          "type": "link",
-          "selector": ":scope a.secondary"
-        },
-        {
-          "id": "button-link-3",
-          "label": "Button link 3",
-          "type": "link",
-          "selector": ":scope a.accent"
-        },
-        {
-          "id": "small-label",
-          "label": "Small label",
-          "type": "text",
-          "selector": ":scope span.live-pill"
-        },
-        {
-          "id": "text-1",
-          "label": "Text 1",
-          "type": "text",
-          "selector": ":scope div.template-actions"
-        },
-        {
-          "id": "headline",
-          "label": "Headline",
-          "type": "text",
-          "selector": ":scope h2.template-title"
-        },
-        {
-          "id": "intro-text",
-          "label": "Intro text",
-          "type": "text",
-          "selector": ":scope p.template-subtitle"
-        },
-        {
-          "id": "hero-photo-1",
-          "label": "Hero photo 1",
-          "type": "image",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > img:nth-of-type(1)"
-        },
-        {
-          "id": "hero-photo-2",
-          "label": "Hero photo 2",
-          "type": "image",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > img:nth-of-type(1)"
-        },
-        {
-          "id": "hero-photo-3",
-          "label": "Hero photo 3",
-          "type": "image",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > img:nth-of-type(1)"
-        },
-        {
-          "id": "text-2",
-          "label": "Text 2",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1)"
-        },
-        {
-          "id": "text-3",
-          "label": "Text 3",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1)"
-        },
-        {
-          "id": "text-4",
-          "label": "Text 4",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1)"
-        },
-        {
-          "id": "text-5",
-          "label": "Text 5",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1)"
-        }
-      ],
+      "customizable": [],
       "nativeWhen": [],
       "ownPalette": true,
       "exportAssets": [],
@@ -4510,62 +4694,7 @@
         "license": "own"
       },
       "updatedAt": "2026-10-22",
-      "customizable": [
-        {
-          "id": "button-link",
-          "label": "Button link",
-          "type": "link",
-          "selector": ":scope a.launch-btn"
-        },
-        {
-          "id": "small-label-1",
-          "label": "Small label 1",
-          "type": "text",
-          "selector": ":scope span.live-pill"
-        },
-        {
-          "id": "small-label-2",
-          "label": "Small label 2",
-          "type": "text",
-          "selector": ":scope div.template-actions"
-        },
-        {
-          "id": "headline",
-          "label": "Headline",
-          "type": "text",
-          "selector": ":scope h2.template-title"
-        },
-        {
-          "id": "intro-text",
-          "label": "Intro text",
-          "type": "text",
-          "selector": ":scope p.template-subtitle"
-        },
-        {
-          "id": "text-1",
-          "label": "Text 1",
-          "type": "text",
-          "selector": ":scope div.teal"
-        },
-        {
-          "id": "text-2",
-          "label": "Text 2",
-          "type": "text",
-          "selector": ":scope div.navy"
-        },
-        {
-          "id": "text-3",
-          "label": "Text 3",
-          "type": "text",
-          "selector": ":scope div.ats"
-        },
-        {
-          "id": "text-4",
-          "label": "Text 4",
-          "type": "text",
-          "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1)"
-        }
-      ],
+      "customizable": [],
       "nativeWhen": [],
       "ownPalette": false,
       "exportAssets": [],
@@ -12738,7 +12867,7 @@
           "id": "footer-heading-2",
           "label": "Address heading",
           "type": "text",
-          "selector": ":scope .kf-col:nth-child(1) h3"
+          "selector": ":scope .kf-col:nth-child(1) .kf-h"
         },
         {
           "id": "footer-text-1",
@@ -12750,13 +12879,13 @@
           "id": "footer-heading-3",
           "label": "Explore heading",
           "type": "text",
-          "selector": ":scope .kf-cols nav:nth-child(2) h3"
+          "selector": ":scope .kf-cols .kf-col:nth-child(2) .kf-h"
         },
         {
           "id": "footer-heading-4",
           "label": "Follow heading",
           "type": "text",
-          "selector": ":scope .kf-cols nav:nth-child(3) h3"
+          "selector": ":scope .kf-cols .kf-col:nth-child(3) .kf-h"
         },
         {
           "id": "small-label",
@@ -21138,6 +21267,67 @@
       ]
     },
     {
+      "slug": "consultation-inquiry-hub",
+      "title": "Consultation Inquiry Hub",
+      "category": "Footers & Endings",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "agency",
+        "saas"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ".cih-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Enterprise contact and project inquiry suite with direct communication channels, input-sanitized submission form, and subject routing.",
+      "tags": [
+        "contact",
+        "form",
+        "inquiry",
+        "consultation",
+        "channels",
+        "footer"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/consultation-inquiry-hub",
+      "relativePath": "features/consultation-inquiry-hub",
+      "previewUrl": "features/consultation-inquiry-hub/index.html",
+      "thumb": "thumbs/consultation-inquiry-hub.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "find-us-hours",
       "title": "Find us and opening hours",
       "category": "Cards & Tiles",
@@ -21224,6 +21414,196 @@
       ]
     },
     {
+      "slug": "forest-land-hero",
+      "title": "Forest Land Hero",
+      "category": "Heroes",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "agency"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ".flh-title"
+        },
+        {
+          "id": "subtitle",
+          "label": "Subtitle",
+          "type": "text",
+          "selector": ".flh-desc"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Atmospheric woodland canopy hero with glowing eyebrow badge, high-contrast headline, stat ribbon, and dual survey CTA actions.",
+      "tags": [
+        "hero",
+        "forest",
+        "outdoor",
+        "land",
+        "stats",
+        "atmospheric",
+        "cta"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/forest-land-hero",
+      "relativePath": "features/forest-land-hero",
+      "previewUrl": "features/forest-land-hero/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "forestry-services-bento",
+      "title": "Forestry Services Bento",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "agency"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Title",
+          "type": "text",
+          "selector": ".fsb-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "6-item interactive forestry services grid with capability tags, image hover zoom, and quote triggers.",
+      "tags": [
+        "services",
+        "bento",
+        "forestry",
+        "cards",
+        "agriculture",
+        "land"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/forestry-services-bento",
+      "relativePath": "features/forestry-services-bento",
+      "previewUrl": "features/forestry-services-bento/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "forestry-testimonial-rail",
+      "title": "Forestry Testimonial Rail",
+      "category": "3D & Carousels",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "editorial"
+      ],
+      "industry": [
+        "general",
+        "agency"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Title",
+          "type": "text",
+          "selector": ".ftr-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Client endorsement slider with star ratings, quotes, and smooth carousel controls.",
+      "tags": [
+        "testimonials",
+        "carousel",
+        "slider",
+        "reviews",
+        "forestry",
+        "quotes"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/forestry-testimonial-rail",
+      "relativePath": "features/forestry-testimonial-rail",
+      "previewUrl": "features/forestry-testimonial-rail/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "how-we-work-steps",
       "title": "How we work, step by step",
       "category": "Cards & Tiles",
@@ -21287,6 +21667,379 @@
       "relativePath": "features/how-we-work-steps",
       "previewUrl": "features/how-we-work-steps/index.html",
       "thumb": "thumbs/how-we-work-steps.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "industry-sectors-accordion",
+      "title": "Industry Sectors Accordion",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "editorial"
+      ],
+      "industry": [
+        "fintech",
+        "agency"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ".isa-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Interactive tabbed sector matrix with dual synchronised split photography preview and deep domain capability specs.",
+      "tags": [
+        "industry",
+        "sectors",
+        "accordion",
+        "tabs",
+        "split-view",
+        "enterprise"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/industry-sectors-accordion",
+      "relativePath": "features/industry-sectors-accordion",
+      "previewUrl": "features/industry-sectors-accordion/index.html",
+      "thumb": "thumbs/industry-sectors-accordion.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "land-survey-inquiries-hub",
+      "title": "Land Survey Inquiries Hub",
+      "category": "Footers & Endings",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "general",
+        "agency"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "title",
+          "label": "Title",
+          "type": "text",
+          "selector": ".lsih-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "High-contrast consultation hub with direct channels (phone, email, depot) and multi-field site survey request form.",
+      "tags": [
+        "contact",
+        "survey",
+        "form",
+        "hub",
+        "inquiries",
+        "forestry",
+        "footer"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/land-survey-inquiries-hub",
+      "relativePath": "features/land-survey-inquiries-hub",
+      "previewUrl": "features/land-survey-inquiries-hub/index.html",
+      "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "process-step-timeline",
+      "title": "Process Step Timeline",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "agency",
+        "saas"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ".pst-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Four-stage agile software engineering workflow timeline with numbered milestone badges and bulleted acceptance points.",
+      "tags": [
+        "process",
+        "workflow",
+        "timeline",
+        "steps",
+        "engineering",
+        "agile"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/process-step-timeline",
+      "relativePath": "features/process-step-timeline",
+      "previewUrl": "features/process-step-timeline/index.html",
+      "thumb": "thumbs/process-step-timeline.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "service-capabilities-grid",
+      "title": "Service Capabilities Grid",
+      "category": "Cards & Tiles",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "agency",
+        "saas"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ".scg-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Interactive six-card enterprise engineering capabilities matrix with lime vector hover states and clean typographic hierarchy.",
+      "tags": [
+        "services",
+        "capabilities",
+        "grid",
+        "cards",
+        "tech",
+        "agency"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/service-capabilities-grid",
+      "relativePath": "features/service-capabilities-grid",
+      "previewUrl": "features/service-capabilities-grid/index.html",
+      "thumb": "thumbs/service-capabilities-grid.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "tech-agency-hero",
+      "title": "Tech Agency Hero",
+      "category": "Heroes",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "futuristic"
+      ],
+      "industry": [
+        "agency",
+        "saas"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ".tah-title"
+        },
+        {
+          "id": "subtitle",
+          "label": "Subtitle",
+          "type": "text",
+          "selector": ".tah-desc"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "High-contrast midnight technology agency hero with Clutch 4.9/5 credibility badge, interactive dual CTA buttons, and floating metric counters.",
+      "tags": [
+        "tech",
+        "agency",
+        "hero",
+        "startup",
+        "metrics",
+        "counters"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/tech-agency-hero",
+      "relativePath": "features/tech-agency-hero",
+      "previewUrl": "features/tech-agency-hero/index.html",
+      "thumb": "thumbs/tech-agency-hero.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "verified-review-carousel",
+      "title": "Verified Review Carousel",
+      "category": "3D & Carousels",
+      "legacyCategory": null,
+      "status": "stable",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "agency",
+        "saas"
+      ],
+      "weight": "light",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "custom",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-02",
+      "customizable": [
+        {
+          "id": "headline",
+          "label": "Headline",
+          "type": "text",
+          "selector": ".vrc-title"
+        }
+      ],
+      "nativeWhen": [],
+      "ownPalette": false,
+      "exportAssets": [],
+      "source": "custom",
+      "type": "component",
+      "description": "Interactive client testimony slider featuring verified Clutch and Google review badges, star ratings, and smooth carousel navigation.",
+      "tags": [
+        "reviews",
+        "testimonials",
+        "carousel",
+        "clutch",
+        "ratings",
+        "social-proof"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/verified-review-carousel",
+      "relativePath": "features/verified-review-carousel",
+      "previewUrl": "features/verified-review-carousel/index.html",
+      "thumb": "thumbs/verified-review-carousel.webp",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,

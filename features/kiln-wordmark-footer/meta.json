@@ -48,7 +48,7 @@
       "id": "footer-heading-2",
       "label": "Address heading",
       "type": "text",
-      "selector": ":scope .kf-col:nth-child(1) h3"
+      "selector": ":scope .kf-col:nth-child(1) .kf-h"
     },
     {
       "id": "footer-text-1",
@@ -60,13 +60,13 @@
       "id": "footer-heading-3",
       "label": "Explore heading",
       "type": "text",
-      "selector": ":scope .kf-cols nav:nth-child(2) h3"
+      "selector": ":scope .kf-cols .kf-col:nth-child(2) .kf-h"
     },
     {
       "id": "footer-heading-4",
       "label": "Follow heading",
       "type": "text",
-      "selector": ":scope .kf-cols nav:nth-child(3) h3"
+      "selector": ":scope .kf-cols .kf-col:nth-child(3) .kf-h"
     },
     {
       "id": "small-label",

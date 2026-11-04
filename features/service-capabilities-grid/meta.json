@@ -1,0 +1,44 @@
+{
+  "slug": "service-capabilities-grid",
+  "title": "Service Capabilities Grid",
+  "category": "Cards & Tiles",
+  "source": "custom",
+  "type": "component",
+  "description": "Interactive six-card enterprise engineering capabilities matrix with lime vector hover states and clean typographic hierarchy.",
+  "tags": [
+    "services",
+    "capabilities",
+    "grid",
+    "cards",
+    "tech",
+    "agency"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "minimal"
+  ],
+  "industry": [
+    "agency",
+    "saas"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ".scg-title"
+    }
+  ],
+  "order": 999
+}

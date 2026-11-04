@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verified Review Carousel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="vrc-section">
+    <div class="vrc-container">
+      <div class="vrc-header">
+        <span class="vrc-badge">Client Proof</span>
+        <h2 class="vrc-title">Growth Stories From Those Who Trust Us</h2>
+        <div class="vrc-badges-row">
+          <div class="vrc-proof-badge">
+            <span class="vrc-platform">Clutch</span>
+            <span class="vrc-stars">★★★★★</span>
+            <span class="vrc-rating-text">4.9/5 (20+ Reviews)</span>
+          </div>
+          <div class="vrc-proof-badge">
+            <span class="vrc-platform">Google</span>
+            <span class="vrc-stars">★★★★★</span>
+            <span class="vrc-rating-text">5.0/5 Score</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vrc-slider">
+        <div class="vrc-card active" data-slide="0">
+          <div class="vrc-stars-quote">★★★★★</div>
+          <blockquote class="vrc-quote">
+            "Partnering with edvlabs transformed our engineering velocity. Their AI debugging and automated cloud workflow engine alone shaved two months off our launch timeline."
+          </blockquote>
+          <div class="vrc-author-wrap">
+            <div class="vrc-avatar">SM</div>
+            <div>
+              <strong class="vrc-name">Sarah Mitchell</strong>
+              <span class="vrc-role">CTO, Nova Cloud Platforms</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vrc-card hidden" data-slide="1">
+          <div class="vrc-stars-quote">★★★★★</div>
+          <blockquote class="vrc-quote">
+            "The architectural depth and attention to design systems set edvlabs apart. Our checkout conversion rate surged 42% within four weeks of deployment."
+          </blockquote>
+          <div class="vrc-author-wrap">
+            <div class="vrc-avatar">PR</div>
+            <div>
+              <strong class="vrc-name">Priya Raman</strong>
+              <span class="vrc-role">VP Product, Finova Global</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vrc-card hidden" data-slide="2">
+          <div class="vrc-stars-quote">★★★★★</div>
+          <blockquote class="vrc-quote">
+            "A seamless cloud migration with zero user downtime. The edvlabs team owned the process end-to-end, from the initial audit to the final Kubernetes rollout."
+          </blockquote>
+          <div class="vrc-author-wrap">
+            <div class="vrc-avatar">TE</div>
+            <div>
+              <strong class="vrc-name">Tom Eriksen</strong>
+              <span class="vrc-role">Head of Tech, ApexHealth</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vrc-nav">
+          <button type="button" class="vrc-nav-btn" id="vrc-prev" aria-label="Previous review">←</button>
+          <div class="vrc-dots">
+            <span class="vrc-dot active" data-dot="0"></span>
+            <span class="vrc-dot" data-dot="1"></span>
+            <span class="vrc-dot" data-dot="2"></span>
+          </div>
+          <button type="button" class="vrc-nav-btn" id="vrc-next" aria-label="Next review">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>

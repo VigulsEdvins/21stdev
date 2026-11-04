@@ -1,0 +1,57 @@
+{
+  "slug": "athletic-pricing-cards",
+  "title": "Athletic Pricing Cards",
+  "category": "Cards & Tiles",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "High-performance 3-tier athletic membership cards with animated billing toggle (Monthly vs Annual -20%), feature lists, and highlighted tier.",
+  "tags": [
+    "pricing",
+    "cards",
+    "membership",
+    "toggle",
+    "tier",
+    "subscription",
+    "fitness"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 16,
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "minimal",
+    "editorial"
+  ],
+  "industry": [
+    "saas",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "badge",
+      "label": "Section Badge",
+      "type": "text",
+      "selector": ":scope .apc-badge"
+    },
+    {
+      "id": "title",
+      "label": "Section Title",
+      "type": "text",
+      "selector": ":scope .apc-title"
+    },
+    {
+      "id": "lead",
+      "label": "Section Subtitle",
+      "type": "text",
+      "selector": ":scope .apc-lead"
+    }
+  ]
+}

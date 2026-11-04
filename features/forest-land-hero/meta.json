@@ -1,0 +1,51 @@
+{
+  "slug": "forest-land-hero",
+  "title": "Forest Land Hero",
+  "category": "Heroes",
+  "source": "custom",
+  "type": "component",
+  "description": "Atmospheric woodland canopy hero with glowing eyebrow badge, high-contrast headline, stat ribbon, and dual survey CTA actions.",
+  "tags": [
+    "hero",
+    "forest",
+    "outdoor",
+    "land",
+    "stats",
+    "atmospheric",
+    "cta"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "agency"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ".flh-title"
+    },
+    {
+      "id": "subtitle",
+      "label": "Subtitle",
+      "type": "text",
+      "selector": ".flh-desc"
+    }
+  ],
+  "order": 999
+}

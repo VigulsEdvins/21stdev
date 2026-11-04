@@ -1,0 +1,52 @@
+{
+  "slug": "expedition-hero",
+  "title": "Topographic Wilderness Hero",
+  "category": "Heroes",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Wilderness expedition hero with topographic framing, telemetry spec badges, dynamic text knockout, and smooth panoramic unmasking.",
+  "tags": [
+    "hero",
+    "expedition",
+    "overland",
+    "telemetry",
+    "knockout",
+    "typography",
+    "panoramic"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 21,
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "retro",
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "hospitality"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "word",
+      "label": "Display Word",
+      "type": "text",
+      "selector": ":scope .exp-hero-word"
+    },
+    {
+      "id": "caption",
+      "label": "Hero Caption",
+      "type": "text",
+      "selector": ":scope .exp-hero-cap"
+    }
+  ]
+}

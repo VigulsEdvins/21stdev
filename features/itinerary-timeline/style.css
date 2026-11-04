@@ -1,0 +1,76 @@
+.itin-wrap {
+  --sand: #e1c49c;
+  --sea: #3b6a5f;
+  --ink: #181412;
+  --coral: #e06244;
+  --paper: #ede5da;
+  background: var(--sand);
+  color: var(--ink);
+  padding: clamp(40px, 6vw, 80px) 24px;
+  font-family: 'Hubot Sans', system-ui, sans-serif;
+}
+.itin-head {
+  max-width: 800px;
+  margin-bottom: 36px;
+}
+.itin-title {
+  font-family: 'Special Gothic', 'Arial Narrow', sans-serif;
+  font-size: clamp(36px, 6vw, 64px);
+  line-height: .9;
+  text-transform: lowercase;
+  color: var(--sea);
+  margin-bottom: 12px;
+}
+.itin-lead {
+  font-size: 16px;
+  opacity: .85;
+}
+.itin-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 24px;
+}
+.itin-stop {
+  background: var(--paper);
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: transform .3s ease, border-color .3s ease;
+}
+.itin-stop:hover, .itin-stop.is-active {
+  transform: translateY(-4px);
+  border-color: var(--coral);
+}
+.itin-badge {
+  font-family: 'Special Gothic', 'Arial Narrow', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--sea);
+}
+.itin-stop.is-active .itin-badge {
+  color: var(--coral);
+}
+.itin-ph {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.itin-ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.itin-stop-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+.itin-stop-desc {
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: .85;
+}

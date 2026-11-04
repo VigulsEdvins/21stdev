@@ -21,6 +21,7 @@
       const key = norm(en), lv = dict.texts[en];
       if (/\{\w+\}/.test(key)) {
         const names = [];
+        // eslint-disable-next-line security/detect-non-literal-regexp -- the pattern comes from our own dictionary, every literal part passes through esc()
         const re = new RegExp('^' + key.split(/(\{\w+\})/).map((p) => { const m = /^\{(\w+)\}$/.exec(p); if (m) { names.push(m[1]); return '(.+?)'; } return esc(p); }).join('') + '$');
         templates.push({ re, names, lv, size: key.replace(/\{\w+\}/g, '').length });
       } else exact.set(key, lv);

@@ -1,0 +1,44 @@
+{
+  "slug": "verified-review-carousel",
+  "title": "Verified Review Carousel",
+  "category": "3D & Carousels",
+  "source": "custom",
+  "type": "component",
+  "description": "Interactive client testimony slider featuring verified Clutch and Google review badges, star ratings, and smooth carousel navigation.",
+  "tags": [
+    "reviews",
+    "testimonials",
+    "carousel",
+    "clutch",
+    "ratings",
+    "social-proof"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "minimal"
+  ],
+  "industry": [
+    "agency",
+    "saas"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "headline",
+      "label": "Headline",
+      "type": "text",
+      "selector": ".vrc-title"
+    }
+  ],
+  "order": 999
+}

@@ -1,0 +1,45 @@
+{
+  "slug": "repair-service-cards",
+  "title": "Garment Repair Service Accordion",
+  "category": "Cards & Tiles",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Atelier garment repair service cards with turnaround badges, fixed pricing, and interactive quote estimator modal.",
+  "tags": [
+    "repair",
+    "atelier",
+    "services",
+    "pricing",
+    "sustainability",
+    "cards"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 25,
+  "status": "stable",
+  "weight": "medium",
+  "mood": [
+    "editorial",
+    "retro",
+    "minimal"
+  ],
+  "industry": [
+    "ecommerce",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "heading",
+      "label": "Heading",
+      "type": "text",
+      "selector": ":scope .rep-title"
+    }
+  ]
+}

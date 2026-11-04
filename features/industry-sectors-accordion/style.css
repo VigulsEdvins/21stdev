@@ -1,0 +1,190 @@
+:root {
+  --bg: #040d43;
+  --surface: #0a1138;
+  --text: #ffffff;
+  --muted: #94a3b8;
+  --accent: #c8f8a9;
+  --radius: 1.25rem;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+.isa-section {
+  padding: 5rem 1.5rem;
+}
+
+.isa-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.isa-header {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 3.5rem;
+}
+
+.isa-badge {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(200, 248, 169, 0.3);
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.isa-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.isa-desc {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.isa-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (max-width: 850px) {
+  .isa-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.isa-panel {
+  display: none;
+}
+
+.isa-panel.active {
+  display: block;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.isa-panel-card {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+}
+
+.isa-panel-tag {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.isa-panel-headline {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.isa-panel-text {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.isa-metrics {
+  display: flex;
+  gap: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.5rem;
+}
+
+.isa-metrics strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.isa-metrics span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.isa-tabs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.isa-tab-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.isa-tab-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.isa-tab-item.active {
+  background: rgba(200, 248, 169, 0.06);
+  border-color: rgba(200, 248, 169, 0.4);
+}
+
+.isa-tab-num {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.isa-tab-item.active .isa-tab-num {
+  color: var(--accent);
+}
+
+.isa-tab-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.isa-tab-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}

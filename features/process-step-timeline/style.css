@@ -1,0 +1,126 @@
+:root {
+  --bg: #040d43;
+  --surface: #0b1236;
+  --text: #ffffff;
+  --muted: #94a3b8;
+  --accent: #c8f8a9;
+  --radius: 1.25rem;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+.pst-section {
+  padding: 5rem 1.5rem;
+}
+
+.pst-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pst-header {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 3.5rem;
+}
+
+.pst-badge {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(200, 248, 169, 0.3);
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.pst-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.pst-desc {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.pst-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.pst-card {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 2.25rem 1.75rem;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  position: relative;
+}
+
+.pst-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200, 248, 169, 0.4);
+}
+
+.pst-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.pst-card-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.pst-card-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 1.5rem;
+}
+
+.pst-list {
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+}
+
+.pst-list li {
+  font-size: 0.85rem;
+  color: var(--muted);
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.pst-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}

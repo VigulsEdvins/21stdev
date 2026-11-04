@@ -13,7 +13,7 @@ const TITLE = 'Put your page online yourself · edvlabs';
 const DESC = 'A step-by-step guide to putting a page online: Netlify, Cloudflare Pages, GitHub Pages or an ordinary web host, your own domain, Google and contact forms.';
 
 function build() {
-  const icon = faq.match(/<link rel="icon"[^>]*>/)[0];
+  const icon = faq.match(/<link rel="(?:icon|apple-touch-icon)"[^>]*>/g).join('');
   const header = faq.match(/<div class="wrap"><header class="site-header">[\s\S]*?<\/header><\/div>/)[0].replace(' aria-current="page"', '').replace('href="../lv/faq/"', 'href="../lv/"'); // the guide has no Latvian twin: the switcher goes to the Latvian home page
   const footer = faq.match(/<footer class="site-footer">[\s\S]*?<\/footer>/)[0].replace('href="../lv/faq/"', 'href="../lv/"');
   const toc = guide.CHAPTERS.map((c) => `<li><a href="#${c.id}">${c.title.replace(/&/g, '&amp;')}</a></li>`).join('');

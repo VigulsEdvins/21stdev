@@ -1,0 +1,46 @@
+{
+  "slug": "fleet-specs-grid",
+  "title": "Vehicle Fleet Specs Grid",
+  "category": "Cards & Tiles",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Expedition fleet specification cards featuring rugged chassis details, technical telemetry badges, and hover photo scale.",
+  "tags": [
+    "fleet",
+    "vehicles",
+    "specs",
+    "telemetry",
+    "automotive",
+    "dark",
+    "overland"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 22,
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "dark",
+    "retro",
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "portfolio"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Fleet Title",
+      "type": "text",
+      "selector": ":scope .fleet-grid-title"
+    }
+  ]
+}

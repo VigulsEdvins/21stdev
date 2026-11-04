@@ -1,0 +1,70 @@
+<div class="sc-wrapper">
+  <div class="sc-trigger-bar">
+    <button type="button" class="sc-open-btn" id="sc-open-trigger">
+      <span>🛍️ View Archive Bag</span>
+      <span class="sc-badge" id="sc-count-badge">2</span>
+    </button>
+  </div>
+
+  <div class="sc-backdrop" id="sc-backdrop"></div>
+  <aside class="sc-drawer" id="sc-drawer" aria-label="Shopping Cart">
+    <div class="sc-head">
+      <h3 class="sc-drawer-title">Archive Bag</h3>
+      <button type="button" class="sc-close-btn" id="sc-close-trigger" aria-label="Close cart">✕</button>
+    </div>
+
+    <div class="sc-body">
+      <ul class="sc-items-list" id="sc-items-list">
+        <li class="sc-item" data-id="item-1">
+          <div class="sc-item-thumb">
+            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=200&q=75" alt="Aran Cardigan">
+          </div>
+          <div class="sc-item-info">
+            <div class="sc-item-top">
+              <h4>1974 Irish Aran Cardigan</h4>
+              <button type="button" class="sc-del-btn" aria-label="Remove item">✕</button>
+            </div>
+            <p class="sc-meta">Size: Medium · Natural Horn Buttons</p>
+            <div class="sc-item-bottom">
+              <div class="sc-qty-box">
+                <button type="button" class="sc-qty-sub">-</button>
+                <span class="sc-qty-val">1</span>
+                <button type="button" class="sc-qty-add">+</button>
+              </div>
+              <strong class="sc-item-price">€185</strong>
+            </div>
+          </div>
+        </li>
+
+        <li class="sc-item" data-id="item-2">
+          <div class="sc-item-thumb">
+            <img src="https://images.unsplash.com/photo-1542272604-780c96856592?auto=format&fit=crop&w=200&q=75" alt="Selvedge 501s">
+          </div>
+          <div class="sc-item-info">
+            <div class="sc-item-top">
+              <h4>1982 Indigo Selvedge 501s</h4>
+              <button type="button" class="sc-del-btn" aria-label="Remove item">✕</button>
+            </div>
+            <p class="sc-meta">Size: 32/34 · Redline Selvedge</p>
+            <div class="sc-item-bottom">
+              <div class="sc-qty-box">
+                <button type="button" class="sc-qty-sub">-</button>
+                <span class="sc-qty-val">1</span>
+                <button type="button" class="sc-qty-add">+</button>
+              </div>
+              <strong class="sc-item-price">€210</strong>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sc-foot">
+      <div class="sc-total-row">
+        <span>Order Total</span>
+        <strong id="sc-total-val">€395</strong>
+      </div>
+      <button type="button" class="sc-checkout-btn" id="sc-checkout-trigger">Proceed to Checkout →</button>
+    </div>
+  </aside>
+</div>

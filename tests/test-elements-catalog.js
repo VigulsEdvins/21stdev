@@ -51,7 +51,7 @@ const buttonFeatures = registry.items.filter(f => matchesCategory(f, 'Buttons & 
 assert(buttonFeatures.length >= 9, `Buttons & UI must contain at least 9 features, got ${buttonFeatures.length}`);
 
 const carouselFeatures = registry.items.filter(f => matchesCategory(f, '3D & Carousels'));
-assert.strictEqual(carouselFeatures.length, 21, `3D & Carousels must contain 21 features, got ${carouselFeatures.length}`);
+assert.strictEqual(carouselFeatures.length, 22, `3D & Carousels must contain 22 features, got ${carouselFeatures.length}`);
 
 // Full websites (own pages and CMS) are told apart from landing pages (a whole page in one section)
 const websites = registry.items.filter(f => matchesCategory(f, 'Full Websites')).map(f => f.slug).sort();

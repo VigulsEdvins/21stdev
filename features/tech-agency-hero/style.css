@@ -1,0 +1,152 @@
+:root {
+  --bg: #040d43;
+  --surface: #0d122b;
+  --text: #ffffff;
+  --muted: #94a3b8;
+  --accent: #c8f8a9;
+  --radius: 1rem;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tah-hero {
+  padding: 6rem 1.5rem;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 20%, rgba(200, 248, 169, 0.08), transparent 70%);
+}
+
+.tah-container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tah-badge-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.tah-badge {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(200, 248, 169, 0.3);
+  color: var(--accent);
+  background: rgba(200, 248, 169, 0.05);
+}
+
+.tah-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.tah-desc {
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 650px;
+  margin: 0 auto 2.5rem;
+}
+
+.tah-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+
+.tah-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.tah-btn-primary {
+  background-color: var(--accent);
+  color: #040d43;
+}
+
+.tah-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(200, 248, 169, 0.4);
+}
+
+.tah-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.tah-stars {
+  color: #ef4444;
+  letter-spacing: 2px;
+}
+
+.tah-score {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.tah-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.tah-stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  backdrop-blur: 10px;
+  transition: border-color 0.2s ease;
+}
+
+.tah-stat-card:hover {
+  border-color: rgba(200, 248, 169, 0.3);
+}
+
+.tah-stat-number {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.tah-stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}

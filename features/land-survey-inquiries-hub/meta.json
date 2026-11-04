@@ -1,0 +1,45 @@
+{
+  "slug": "land-survey-inquiries-hub",
+  "title": "Land Survey Inquiries Hub",
+  "category": "Footers & Endings",
+  "source": "custom",
+  "type": "component",
+  "description": "High-contrast consultation hub with direct channels (phone, email, depot) and multi-field site survey request form.",
+  "tags": [
+    "contact",
+    "survey",
+    "form",
+    "hub",
+    "inquiries",
+    "forestry",
+    "footer"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "minimal"
+  ],
+  "industry": [
+    "general",
+    "agency"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Title",
+      "type": "text",
+      "selector": ".lsih-title"
+    }
+  ],
+  "order": 999
+}

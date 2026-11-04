@@ -1,6 +1,14 @@
 /** A full website added in the builder shows the real site (the same page its live URL serves), not a showcase card. */
 const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
 const { startServer, launchBrowser } = require('../../scripts/lib/browser');
+
+// The five whole websites live in folders next to this repo; a fresh checkout (CI) does not have them.
+if (!['mom', 'cvmaker', 'edv-roster', 'edv-yearbook', 'edv-arena'].every(d => fs.existsSync(path.join(__dirname, '..', '..', '..', d)))) {
+  console.log('Full website in the builder: skipped (the whole-website folders are not next to this repo)');
+  process.exit(0);
+}
 
 (async () => {
   const srv = await startServer();

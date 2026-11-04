@@ -1,0 +1,101 @@
+.fsb-section {
+  padding: 80px 24px;
+  background-color: var(--bg, #03210d);
+  color: var(--text, #e8ede4);
+  font-family: var(--font-body, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+}
+
+.fsb-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fsb-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 50px;
+}
+
+.fsb-eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent, #82c785);
+  margin-bottom: 12px;
+}
+
+.fsb-title {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.fsb-subtitle {
+  color: #b5c4ad;
+  font-size: 1.05rem;
+}
+
+.fsb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.fsb-card {
+  background: rgba(1, 20, 6, 0.6);
+  border: 1px solid rgba(162, 203, 181, 0.16);
+  border-radius: 16px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.fsb-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(130, 199, 133, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.fsb-card-badge {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent, #e2b43b);
+  background: rgba(226, 180, 59, 0.12);
+  border: 1px solid rgba(226, 180, 59, 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.fsb-card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.fsb-card-desc {
+  font-size: 0.95rem;
+  color: #d6dfd0;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.fsb-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent, #82c785);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.fsb-card:hover .fsb-link {
+  color: #ffffff;
+}

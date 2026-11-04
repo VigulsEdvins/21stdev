@@ -1,0 +1,44 @@
+{
+  "slug": "forestry-testimonial-rail",
+  "title": "Forestry Testimonial Rail",
+  "category": "3D & Carousels",
+  "source": "custom",
+  "type": "component",
+  "description": "Client endorsement slider with star ratings, quotes, and smooth carousel controls.",
+  "tags": [
+    "testimonials",
+    "carousel",
+    "slider",
+    "reviews",
+    "forestry",
+    "quotes"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "stable",
+  "mood": [
+    "dark",
+    "editorial"
+  ],
+  "industry": [
+    "general",
+    "agency"
+  ],
+  "weight": "light",
+  "needsAssets": false,
+  "origin": {
+    "source": "custom",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Title",
+      "type": "text",
+      "selector": ".ftr-title"
+    }
+  ],
+  "order": 999
+}

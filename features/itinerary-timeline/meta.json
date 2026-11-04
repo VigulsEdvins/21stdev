@@ -1,0 +1,45 @@
+{
+  "slug": "itinerary-timeline",
+  "title": "Interactive Route Itinerary",
+  "category": "Scroll & Parallax",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Interactive day-by-day expedition route itinerary cards with waypoint badges and active state feedback.",
+  "tags": [
+    "itinerary",
+    "timeline",
+    "waypoints",
+    "routes",
+    "travel",
+    "cards"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "order": 23,
+  "status": "stable",
+  "weight": "light",
+  "mood": [
+    "editorial",
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "hospitality",
+    "general"
+  ],
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-02",
+  "customizable": [
+    {
+      "id": "title",
+      "label": "Itinerary Title",
+      "type": "text",
+      "selector": ":scope .itin-title"
+    }
+  ]
+}
