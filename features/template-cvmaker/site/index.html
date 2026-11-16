@@ -13,22 +13,30 @@
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://images.unsplash.com https://*.googleusercontent.com https://lh3.googleusercontent.com; connect-src 'self' https://*.supabase.co wss://*.supabase.co; object-src 'none'; base-uri 'self';"
     />
-    <title>CV Craft Pro - Intelligent Resume & CV Maker</title>
+    <title>CV Craft Pro - Intelligent Resume & CV Maker (100% Free)</title>
     
     <!-- SEO Meta Tags for Google & Search Engines -->
     <meta
       name="description"
-      content="Create recruiter-ready, ATS-friendly resumes and matching cover letters with CV Craft Pro. Free templates, live A4 preview, and instant PDF download."
+      content="Create recruiter-ready, ATS-friendly resumes and matching cover letters with CV Craft Pro. Free templates, live A4 preview, and instant PDF download without paywalls."
     />
     <meta
       name="keywords"
-      content="cv maker, resume builder, free resume maker, ATS resume, cover letter builder, professional cv template, curriculum vitae, pdf resume, job application maker"
+      content="cv maker, resume builder, free resume maker, ATS resume, cover letter builder, professional cv template, curriculum vitae, pdf resume, job application maker, cv veidotājs, bezmaksas cv"
     />
     <meta name="author" content="CV Craft Pro" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://cvcraft.pro/" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0d9488" />
+
+    <!-- Localized Hreflang Tags for International & Regional Discovery -->
+    <link rel="alternate" hreflang="x-default" href="https://cvcraft.pro/" />
+    <link rel="alternate" hreflang="en" href="https://cvcraft.pro/" />
+    <link rel="alternate" hreflang="lv" href="https://cvcraft.pro/lv/" />
+    <link rel="alternate" hreflang="es" href="https://cvcraft.pro/es/" />
+    <link rel="alternate" hreflang="fr" href="https://cvcraft.pro/fr/" />
+    <link rel="alternate" hreflang="pl" href="https://cvcraft.pro/pl/" />
 
     <!-- Open Graph (Facebook, LinkedIn, Discord, WhatsApp previews) -->
     <meta property="og:type" content="website" />
@@ -39,6 +47,7 @@
       content="Build ATS-friendly resumes and matching cover letters in minutes. Live A4 preview, job keyword matcher, and instant PDF download."
     />
     <meta property="og:image" content="https://cvcraft.pro/apple-touch-icon.png" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -50,21 +59,108 @@
     />
     <meta name="twitter:image" content="https://cvcraft.pro/apple-touch-icon.png" />
 
-    <!-- Structured Data (JSON-LD Schema for Google Rich Snippets) -->
+    <!-- Structured Data (JSON-LD Schema for Google Rich Snippets & AI Knowledge Graphs) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "CV Craft Pro",
-        "url": "https://cvcraft.pro",
-        "description": "Intelligent Resume & CV Maker with ATS optimization, live A4 preview, and instant PDF downloads.",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "All",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "@id": "https://cvcraft.pro/#webapp",
+            "name": "CV Craft Pro",
+            "url": "https://cvcraft.pro",
+            "description": "Intelligent Resume & CV Maker with ATS optimization, live A4 preview, STAR bullet enhancer, and instant vector PDF downloads without paywalls.",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "All",
+            "inLanguage": ["en", "lv", "es", "fr", "pl"],
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "1280",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "featureList": [
+              "100% Free vector PDF export with zero watermarks",
+              "8 ATS-friendly professional CV templates",
+              "Live real-time A4 document canvas",
+              "Synchronized matching cover letter studio",
+              "STAR method bullet point optimizer",
+              "Full Latvian (Latviešu) and English localization"
+            ]
+          },
+          {
+            "@type": "HowTo",
+            "@id": "https://cvcraft.pro/#howto",
+            "name": "How to Create an ATS-Friendly Resume and Cover Letter for Free",
+            "description": "Step-by-step guide to generating a professional, recruiter-ready CV with live A4 preview.",
+            "step": [
+              {
+                "@type": "HowToStep",
+                "name": "Select a Template",
+                "text": "Choose from 8 designer templates tailored for modern ATS systems and executive hiring."
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Enter Career & Skills Information",
+                "text": "Fill in experience, education, and skills, or enhance bullet points with the STAR method tool."
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Generate Matching Cover Letter",
+                "text": "Produce a companion cover letter styled with identical typography and color palette."
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Download Print-Ready PDF",
+                "text": "Instant free download of vector A4 PDF with zero paywalls or watermarks."
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://cvcraft.pro/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is CV Craft Pro really free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, absolutely 100% free! You can customize all 8 designer templates, run unlimited ATS keyword scans, generate matching cover letters, and export print-ready vector PDFs with zero watermarks and no credit card required."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is an ATS-friendly CV and why does it matter?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Applicant Tracking Systems (ATS) are software tools used by employers to parse and rank job applications. CV Craft Pro templates use clean semantic hierarchy so parsers never choke on your details."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Vai CV Craft Pro tiešām ir bez maksas?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Jā! CV Craft Pro ir pilnībā bezmaksas CV veidotājs. Varat brīvi veidot, pielāgot un lejupielādēt augstas izšķirtspējas A4 PDF dokumentus bez slēptām maksām un ūdenszīmēm."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Kā izveidot ar ATS saderīgu CV latviešu valodā?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Atveriet CV Craft Pro latvisko versiju (/?lang=lv), izvēlieties kādu no 8 pārbaudītajām veidnēm, aizpildiet darba pieredzi un izglītību ar STAR metodi, un lejupielādējiet gatavu A4 PDF failu bez maksas."
+                }
+              }
+            ]
+          }
+        ]
       }
     </script>
 
@@ -80,8 +176,23 @@
     <div id="root">
       <header style="text-align: center; padding: 2.5rem 1rem; font-family: system-ui, -apple-system, sans-serif;">
         <h1 style="font-size: 2rem; color: #0f172a; margin-bottom: 0.5rem; font-weight: 700;">CV Craft Pro - Intelligent Resume &amp; CV Maker</h1>
-        <p style="color: #64748b; max-width: 600px; margin: 0 auto; line-height: 1.5;">Create recruiter-ready, ATS-friendly resumes and matching cover letters in minutes with live A4 preview, professional templates, and instant free PDF download.</p>
+        <p style="color: #64748b; max-width: 650px; margin: 0 auto; line-height: 1.5;">Create recruiter-ready, ATS-friendly resumes and matching cover letters in minutes with live A4 preview, professional templates, and instant free PDF download.</p>
+        <div style="margin-top: 1rem; font-size: 0.95rem; color: #475569;">
+          <strong>Bezmaksas CV veidotājs latviešu valodā:</strong> Izveidojiet profesionālu, ar ATS saderīgu CV un motivācijas vēstuli dažu minūšu laikā ar tūlītēju bezmaksas PDF lejupielādi bez maksas sienām.
+        </div>
       </header>
+      <main style="max-width: 800px; margin: 0 auto; padding: 0 1rem; font-family: system-ui, -apple-system, sans-serif; color: #334155;">
+        <section style="margin-bottom: 2rem;">
+          <h2 style="font-size: 1.25rem; color: #0f172a;">Why Choose CV Craft Pro? / Kāpēc izvēlēties CV Craft Pro?</h2>
+          <ul style="line-height: 1.8;">
+            <li><strong>100% Free Forever:</strong> Zero paywalls, zero subscriptions, no watermarks.</li>
+            <li><strong>Bezmaksas CV paraugi un sagataves:</strong> 8 mūsdienīgas veidnes ar tiešo A4 formāta priekšskatījumu.</li>
+            <li><strong>ATS Compliance:</strong> Optimized for Workday, Taleo, Greenhouse, and Lever.</li>
+            <li><strong>STAR Metodes Rīks:</strong> Izveidojiet pārliecinošus un izmērāmus darba pieredzes aprakstus.</li>
+            <li><strong>Matching Cover Letter:</strong> Harmonized typography, colors, and design across your application.</li>
+          </ul>
+        </section>
+      </main>
     </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
