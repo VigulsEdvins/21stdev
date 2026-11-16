@@ -107,9 +107,19 @@ function buildSite({ out = path.join(ROOT, 'dist'), log = () => {} } = {}) {
       }
     }
   }
+  // Templates kept only for client previews (meta.json "previewOnly": scripts/preview/make-preview.js reads them from the repository) never reach the site:
+  // not their files, not their thumbs, not their line in the builder's registry, so not even the "Drafts" box shows them
+  const previewOnly = new Set(fs.readdirSync(path.join(ROOT, 'features')).filter(slug => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'features', slug, 'meta.json'), 'utf8')).previewOnly === true; } catch (_) { return false; } }));
+  const reg = path.join(B, 'registry.js');
+  if (previewOnly.size && fs.existsSync(reg)) {
+    const text = fs.readFileSync(reg, 'utf8'), m = text.match(/^(window\.FEATURE_REGISTRY = )(\[[\s\S]*\]);\s*$/m);
+    if (!m) throw new Error('registry.js: expected "window.FEATURE_REGISTRY = [...];"');
+    fs.writeFileSync(reg, text.replace(m[0], m[1] + JSON.stringify(JSON.parse(m[2]).filter(i => !previewOnly.has(i.slug))) + ';'));
+  }
   for (const dir of RUN_TIME_DIRS) {
     walk(path.join(ROOT, dir), (from, rel) => {
       if (dir === 'features' && SKIP_IN_FEATURES.test(rel)) return;
+      if ((dir === 'features' && previewOnly.has(rel.split('/')[0])) || (dir === 'thumbs' && previewOnly.has(rel.replace(/\.[^.]+$/, '')))) return;
       const to = path.join(B, dir, rel);
       if (fs.existsSync(to)) return; // already staged because builder.html loads it (scripts/cms/form-rules.js)
       copyFile(from, to); n++;

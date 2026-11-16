@@ -25,6 +25,16 @@ const walkAll = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) =>
 const all = walkAll(out);
 assert.strictEqual(all.length, files, 'the count matches');
 assert(!all.some((f) => /\.(tsx|swp)$|\.dev\.vars|\.env/.test(f)), 'no sources or private files');
+// templates kept only for client previews (meta.json "previewOnly") are nowhere on the site: no files, no thumbs, no registry line
+const previewOnly = fs.readdirSync(path.join(__dirname, '..', 'features')).filter((s) => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'features', s, 'meta.json'), 'utf8')).previewOnly === true; } catch (_) { return false; } });
+assert(previewOnly.length >= 40, 'preview-only templates found: ' + previewOnly.length);
+const staged = new Function('window', fs.readFileSync(path.join(out, 'builder', 'registry.js'), 'utf8') + ';return window.FEATURE_REGISTRY;')({});
+for (const s of previewOnly) {
+  assert(!has('builder/features/' + s) && !has('builder/thumbs/' + s + '.webp'), s + ': not staged');
+  assert(!staged.some((i) => i.slug === s), s + ': not in the staged registry');
+}
+assert(staged.some((i) => i.slug === 'mega-menu-header') && staged.length > 200, 'other blocks, drafts included, are still there');
+assert(fs.readFileSync(path.join(__dirname, '..', 'registry.js'), 'utf8').includes('"slug":"dental-mintline"'), 'the repository registry is untouched');
 fs.rmSync(out, { recursive: true, force: true });
 console.log('  ✓ dist has the site, the builder, its run-time folders; nothing private');
 console.log('build-site ok');

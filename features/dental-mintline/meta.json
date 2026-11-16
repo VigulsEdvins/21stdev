@@ -38,5 +38,6 @@
   "tech": [
     "CSS",
     "Vanilla JS"
-  ]
+  ],
+  "previewOnly": true
 }
