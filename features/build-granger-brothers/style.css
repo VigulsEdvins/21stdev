@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400&display=swap");
+/* Layout study of an employee-owned builder at 1440px: espresso #2e2a25, bone #ebebea, signal red #dc1e35, condensed caps in two weights. */
+.gb { --ink: #2e2a25; --bone: #ebebea; --red: #dc1e35; --f: "Roboto Condensed", "Arial Narrow", Arial, sans-serif; font-family: "Roboto", Arial, sans-serif; color: var(--ink); background: #fff; overflow-x: clip; }
+.gb *, .gb *::before, .gb *::after { box-sizing: border-box; }
+:where(.gb) h1, :where(.gb) h2, :where(.gb) h3, :where(.gb) p, :where(.gb) dl, :where(.gb) dd, :where(.gb) ul { margin: 0; padding: 0; font-family: var(--f); font-weight: 400; }
+:where(.gb) a { color: inherit; text-decoration: none; }
+:where(.gb) img { display: block; }
+:where(.gb) ul { list-style: none; }
+
+.gb-nav { position: absolute; inset: 0 0 auto; z-index: 5; height: 80px; padding: 0 56px; display: flex; align-items: center; justify-content: space-between; color: #fff; font-family: var(--f); }
+.gb-logo { font-size: 26px; font-weight: 700; letter-spacing: 2px; line-height: .9; } .gb-logo span { display: block; font-size: 12px; letter-spacing: 6px; margin-top: 4px; }
+.gb-nav nav { display: flex; gap: 32px; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; } .gb-nav nav a { transition: opacity .2s; } .gb-nav nav a:hover { opacity: .6; }
+.gb-btn { display: inline-block; padding: 8px 16px; background: var(--red); color: #fff; font-family: var(--f); font-size: 16px; line-height: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; transition: filter .2s, transform .2s; } .gb-btn:hover { filter: brightness(1.15); } .gb-dk { background: var(--ink); }
+
+.gb-hero { position: relative; height: 900px; background: var(--ink); color: #fff; overflow: hidden; }
+.gb-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; animation: gb-pan 14s ease-out both; }
+@keyframes gb-pan { from { transform: scale(1.1); } to { transform: scale(1); } }
+.gb-hero-in { position: absolute; left: 139px; bottom: 120px; } .gb-hero h1 { font-size: 88px; line-height: 92px; font-weight: 700; text-transform: uppercase; letter-spacing: -.6px; animation: gb-up .9s ease both; } .gb-hero-in div { margin-top: 36px; display: flex; gap: 10px; animation: gb-up .9s .2s ease both; }
+@keyframes gb-up { from { opacity: 0; transform: translateY(24px); } }
+.gb-tags { position: absolute; right: 56px; bottom: 56px; display: flex; gap: 20px; font-size: 18px; font-weight: 700; text-transform: uppercase; } .gb-tags li { padding-bottom: 4px; border-bottom: 2px solid transparent; transition: border-color .2s; } .gb-tags li:hover { border-color: var(--red); }
+
+.gb-who { background: var(--bone); padding: 200px 139px 160px; min-height: 1985px; } .gb-who h2, .gb-years h2, .gb-safe h2, .gb-end h2, .gb-partner h2 { text-transform: uppercase; } .gb-who h2 { font-size: 88px; line-height: 92px; letter-spacing: -.6px; max-width: 800px; }
+.gb h2 span { font-weight: 400; } .gb h2 strong { font-weight: 700; }
+.gb-who-row { display: flex; align-items: center; gap: 80px; margin: 100px 0 360px; } .gb-who-row p { font-family: "Roboto", sans-serif; font-size: 18px; line-height: 26px; color: #65615d; max-width: 520px; }
+.gb-love { padding: 280px 0; }
+.gb-partner { background: var(--ink); color: #fff; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; padding: 0 139px 0 0; min-height: 1008px; } .gb-partner img { width: 100%; height: 100%; min-height: 760px; object-fit: cover; }
+.gb-partner h2 { font-size: 48px; line-height: 52px; letter-spacing: -.34px; } .gb-partner p { font-family: "Roboto", sans-serif; font-size: 18px; line-height: 26px; margin: 28px 0 30px; color: #d7d6d6; max-width: 480px; }
+
+.gb-years { padding: 200px 305px 160px; min-height: 1351px; } .gb-years h2 { font-size: 56px; line-height: 60px; letter-spacing: -.4px; max-width: 830px; }
+.gb-cap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 80px -165px 0; } .gb-cap li { position: relative; height: 340px; overflow: hidden; color: #fff; } .gb-cap img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; } .gb-cap li:hover img { transform: scale(1.07); }
+.gb-cap span { position: absolute; left: 20px; bottom: 18px; font-size: 18.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; text-shadow: 0 1px 8px rgb(0 0 0 / .45); }
+.gb-safe { padding: 0 139px 160px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px 80px; min-height: 1238px; align-content: start; } .gb-safe h2 { font-size: 56px; line-height: 60px; grid-column: 1 / -1; max-width: 747px; }
+.gb-safe h3 { font-size: 28px; line-height: 32px; font-weight: 700; text-transform: uppercase; max-width: 386px; margin-bottom: 18px; } .gb-safe p { font-family: "Roboto", sans-serif; font-size: 18px; line-height: 26px; color: #65615d; max-width: 480px; }
+.gb-safe dl { display: grid; gap: 22px; } .gb-safe dl div { display: flex; align-items: baseline; gap: 24px; border-bottom: 1px solid #d7d6d6; padding-bottom: 14px; } .gb-safe dt { font-size: 64px; font-weight: 700; min-width: 190px; color: var(--red); } .gb-safe dd { font-family: "Roboto", sans-serif; font-size: 15px; color: #65615d; }
+.gb-news { background: var(--bone); padding: 120px 139px 160px; } .gb-news h2 { font-size: 56px; line-height: 60px; font-weight: 700; text-transform: uppercase; } .gb-ng { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 56px; }
+.gb-ng article { background: #fff; padding-bottom: 28px; } .gb-ng img { width: 100%; height: 240px; object-fit: cover; } .gb-ng span, .gb-ng h3, .gb-ng p { margin: 0 24px; display: block; } .gb-ng span { margin-top: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: var(--red); } .gb-ng h3 { font-size: 22px; line-height: 28px; font-weight: 700; margin-top: 8px; } .gb-ng p { font-family: "Roboto", sans-serif; font-size: 15px; line-height: 22px; color: #65615d; margin-top: 10px; }
+.gb-end { position: relative; height: 900px; background: #d7d6d6; display: grid; place-items: center; text-align: center; overflow: hidden; } .gb-end img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; } .gb-end h2 { position: relative; font-size: 120px; line-height: 118px; color: #fff; text-shadow: 0 2px 30px rgb(0 0 0 / .25); } .gb-end h2 strong { font-weight: 700; }
+.gb-foot { background: var(--ink); color: #fff; padding: 80px 139px 60px; display: grid; gap: 30px; } .gb-foot b { font-family: var(--f); font-size: 32px; letter-spacing: 4px; } .gb-foot nav { display: flex; gap: 28px; font-family: var(--f); font-weight: 700; text-transform: uppercase; font-size: 14px; } .gb-foot p { font-size: 13px; color: #aaa59f; }
+
+.gb.js [data-r] { opacity: 0; transform: translateY(32px); transition: opacity .8s ease, transform .8s ease; } .gb.js [data-r].in { opacity: 1; transform: none; }
+@media (max-width: 900px) { .gb-nav { padding: 0 24px; } .gb-nav nav, .gb-tags { display: none; } .gb-hero { height: 680px; } .gb-hero-in { left: 24px; } .gb-hero h1, .gb-who h2 { font-size: 46px; line-height: 50px; } .gb-who, .gb-years, .gb-safe, .gb-news { padding: 80px 24px; min-height: 0; } .gb-who-row { flex-direction: column; align-items: flex-start; margin: 40px 0 60px; gap: 24px; } .gb-love { padding: 60px 0; } .gb-partner { grid-template-columns: 1fr; padding: 0 24px 60px; min-height: 0; gap: 30px; } .gb-partner img { min-height: 300px; margin: 0 -24px; width: calc(100% + 48px); } .gb-partner h2, .gb-years h2, .gb-safe h2, .gb-news h2 { font-size: 34px; line-height: 38px; } .gb-cap { grid-template-columns: 1fr 1fr; margin: 40px 0 0; } .gb-cap li { height: 200px; } .gb-safe, .gb-ng { grid-template-columns: 1fr; } .gb-safe dt { font-size: 40px; min-width: 110px; } .gb-end { height: 560px; } .gb-end h2 { font-size: 52px; line-height: 54px; } .gb-foot { padding: 60px 24px; } }
+@media (prefers-reduced-motion: reduce) { .gb *, .gb *::before, .gb *::after { animation: none !important; transition: none !important; } .gb.js [data-r] { opacity: 1; transform: none; } }

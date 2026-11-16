@@ -1,0 +1,42 @@
+{
+  "slug": "dental-quiet-co",
+  "title": "Quiet & Co",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Airy dental page: full-bleed hero with wide-tracked caps, split photo pair, three-column services, coral booking button. Latvian, slot-driven.",
+  "tags": [
+    "dental",
+    "airy",
+    "caps",
+    "landing",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-16",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of seattledentalco.com (measured 2026-11-16); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ]
+}

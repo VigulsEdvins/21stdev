@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap");
+/* Layout study of a wellness-club site at 1440px: brown ink #4d362b, blush #f2ede9, card #f8f6f4, thin display serif + light sans, 110px gutters. */
+.ts { --ink: #4d362b; --blush: #f2ede9; --card: #f8f6f4; --serif: "Cormorant Garamond", "Chronicle Display", Georgia, serif; --sans: "DM Sans", Helvetica, Arial, sans-serif;
+  background: #fff; color: var(--ink); font-family: var(--sans); font-weight: 300; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+.ts *, .ts *::before, .ts *::after { box-sizing: border-box; }
+:where(.ts) h1, :where(.ts) h2, :where(.ts) h3, :where(.ts) h4, :where(.ts) p { margin: 0; font-weight: 300; }
+:where(.ts) a { color: inherit; text-decoration: none; }
+:where(.ts) img { display: block; }
+:where(.ts) button { font: inherit; color: inherit; cursor: pointer; }
+.ts h1, .ts h2, .ts h3, .ts h4 { font-family: var(--serif); }
+
+.ts-head { position: sticky; top: 0; z-index: 50; height: 81px; background: #fff; border-bottom: 1px solid var(--blush); display: flex; align-items: center; padding: 0 110px; }
+.ts-logo { display: flex; align-items: center; gap: 6px; color: var(--ink); }
+.ts-logo span { font-size: 10px; line-height: 9px; letter-spacing: 1.6px; font-weight: 500; }
+.ts-nav { display: flex; gap: 30px; margin-left: 40px; }
+.ts-nav a { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 400; transition: opacity .15s ease-in-out; }
+.ts-nav a:hover { opacity: .75; }
+.ts-nav i { font-style: normal; font-size: 10px; }
+.ts-search { margin-left: auto; width: 34px; height: 34px; border-radius: 4px; border: 0; background: transparent; display: grid; place-items: center; transition: background-color .2s, opacity .2s; }
+.ts-search:hover { background: rgb(77 54 43 / .05); opacity: .5; }
+
+.ts-hero { position: relative; height: 860px; color: #fefefe; overflow: hidden; }
+.ts-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ts-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(0 0 0 / .28), transparent 65%); }
+.ts-hero-in { position: absolute; z-index: 1; left: 110px; top: 288px; }
+.ts-hero h1 { font-size: 80px; line-height: 80px; color: #fefefe; }
+.ts-pill { display: inline-flex; align-items: center; height: 44px; margin-top: 40px; padding: 0 24px; border-radius: 999px; background: #fff; color: var(--ink); font-size: 14px; line-height: 20px; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 400; transition: opacity .15s ease-in-out; }
+.ts-pill:hover { opacity: .75; }
+.ts-arrow { position: absolute; z-index: 1; left: 50%; bottom: 28px; font-size: 26px; animation: ts-nudge 2s ease-in-out infinite; }
+@keyframes ts-nudge { 50% { transform: translateY(6px); } }
+
+.ts-intro { padding: 144px 0 144px; }
+.ts-intro p { width: 800px; max-width: calc(100% - 48px); margin: 0 auto; text-align: center; font-family: var(--serif); font-size: 30px; line-height: 36px; }
+
+.ts-integrated { background: var(--blush); padding: 96px 120px; }
+.ts-integrated h2 { text-align: center; font-size: 36px; line-height: 43.2px; }
+.ts-three { display: grid; grid-template-columns: repeat(3, 384px); justify-content: space-between; margin-top: 40px; }
+.ts-three article { background: var(--card); height: 481px; padding-bottom: 32px; display: flex; flex-direction: column; }
+.ts-three img { width: 100%; height: 216px; object-fit: cover; }
+.ts-three h3 { margin: 32px 32px 0; font-size: 22px; line-height: 26.4px; }
+.ts-three p { margin: 9px 32px 0; font-size: 14px; line-height: 21px; }
+.ts-link { display: inline-block; margin: auto 32px 0; font-size: 12px; line-height: 15.3px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 400; transition: opacity .15s ease-in-out; }
+.ts-link:hover { opacity: .75; }
+
+.ts-locations { padding: 96px 110px; text-align: center; }
+.ts-locations > h2 { font-size: 48px; line-height: 52.8px; }
+.ts-two { display: grid; grid-template-columns: repeat(2, 530px); justify-content: center; gap: 40px; margin-top: 50px; }
+.ts-loc-img { position: relative; height: 282px; overflow: hidden; }
+.ts-loc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+.ts-two article:hover img { transform: scale(1.04); }
+.ts-loc-img span { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--serif); font-size: 30px; color: #fefefe; text-shadow: 0 1px 10px rgb(0 0 0 / .4); }
+.ts-two h3 { margin-top: 20px; font-size: 36px; line-height: 43.2px; }
+.ts-two .ts-desc { margin-top: 24px; font-size: 22px; line-height: 26.4px; }
+.ts-two .ts-link { margin-top: 20px; }
+
+.ts-slider { padding: 96px 0; overflow: hidden; }
+.ts-sand { background: var(--blush); }
+.ts-sl-head { display: grid; grid-template-columns: 489px 489px auto; gap: 40px; padding: 0 110px 0; align-items: start; }
+.ts-sl-head h2 { font-size: 36px; line-height: 46.8px; }
+.ts-sl-head p { margin-top: 10px; font-size: 18px; line-height: 27px; }
+.ts-sl-head p em { font-style: italic; }
+.ts-arrows { display: flex; gap: 20px; }
+.ts-arrows button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); background: transparent; font-size: 16px; transition: background-color .2s, color .2s; }
+.ts-arrows button:hover { background: var(--ink); color: #fefefe; }
+.ts-arrows--light button { width: 40px; height: 40px; border-color: #ccc; }
+.ts-track { display: flex; gap: 40px; padding: 0 30px; margin-top: 64px; transition: transform .6s ease; }
+.ts-card { flex: 0 0 340px; }
+.ts-card img { width: 100%; height: 189px; object-fit: cover; }
+.ts-card > div { background: var(--blush); padding: 30px; min-height: 285px; }
+.ts-sand .ts-card > div { background: var(--blush); }
+.ts-card h3 { font-size: 22px; line-height: 26.4px; }
+.ts-card p { margin-top: 10px; font-size: 18px; line-height: 27px; }
+.ts-card--team > div { min-height: 330px; }
+.ts-card--team em { display: block; margin-top: 14px; font-size: 18px; line-height: 27px; font-style: italic; }
+.ts-card--team p { margin-top: 14px; }
+.ts-card--team img { filter: saturate(.7); }
+
+.ts-quotes { padding: 96px 0 140px 110px; }
+.ts-q-head { display: flex; justify-content: space-between; align-items: center; padding-right: 110px; }
+.ts-q-head h2 { font-size: 36px; line-height: 43.2px; }
+.ts-q-body { display: grid; grid-template-columns: 500px 345px 345px; gap: 30px; margin-top: 50px; padding-left: 45px; }
+.ts-q-text { position: relative; min-height: 370px; }
+.ts-q { position: absolute; inset: 0 0 auto; opacity: 0; transition: opacity 1s ease; pointer-events: none; }
+.ts-q.is-on { opacity: 1; pointer-events: auto; }
+.ts-q p { font-size: 18px; line-height: 27px; }
+.ts-q p + p { margin-top: 18px; }
+.ts-q-text .ts-link { position: absolute; left: 0; bottom: 120px; margin: 0; }
+.ts-q-body > img { width: 345px; height: 370px; object-fit: cover; }
+
+.ts-foot { background: var(--ink); color: #fefefe; padding: 64px 110px 40px; display: grid; grid-template-columns: 578px 227px 1fr; row-gap: 120px; }
+.ts-foot h2 { font-size: 22px; line-height: 26.4px; color: #fefefe; max-width: 450px; }
+.ts-foot > div > h2 { margin-bottom: 20px; }
+.ts-foot > div > a { display: block; font-size: 12px; line-height: 15.3px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 400; margin-bottom: 12px; max-width: 187px; transition: opacity .15s; }
+.ts-foot > div > a:hover { opacity: .75; }
+.ts-mail { display: flex; width: 450px; margin-top: 40px; border-bottom: 1px solid #fefefe; }
+.ts-mail input { flex: 1; height: 52px; background: none; border: 0; color: #fefefe; font: 14px var(--sans); outline: none; }
+.ts-mail input::placeholder { color: rgb(255 255 255 / .7); }
+.ts-mail button { background: none; border: 0; color: #fefefe; font-size: 22px; transition: transform .3s; }
+.ts-mail button:hover { transform: translateX(4px); }
+.ts-legal { display: flex; gap: 20px; grid-column: 1 / 3; align-self: end; }
+.ts-legal a { font-size: 14px; line-height: 21px; }
+.ts-logo--foot { justify-self: end; color: #fefefe; }
+
+.ts-up { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s ease; }
+.ts-up.is-in { opacity: 1; transform: none; }
+
+@media (max-width: 1100px) {
+  .ts-head { padding: 0 20px; } .ts-nav { display: none; }
+  .ts-hero-in { left: 20px; right: 20px; } .ts-hero h1 { font-size: 48px; line-height: 50px; }
+  .ts-intro p { font-size: 24px; line-height: 30px; }
+  .ts-integrated, .ts-locations { padding: 72px 20px; }
+  .ts-three, .ts-two { grid-template-columns: 1fr; gap: 24px; }
+  .ts-three article { height: auto; }
+  .ts-sl-head { grid-template-columns: 1fr; padding: 0 20px; }
+  .ts-quotes { padding: 72px 20px; } .ts-q-head { padding: 0; flex-wrap: wrap; gap: 16px; }
+  .ts-q-body { grid-template-columns: 1fr; padding: 0; } .ts-q-body > img { width: 100%; }
+  .ts-foot { grid-template-columns: 1fr; padding: 48px 20px; row-gap: 40px; } .ts-mail { width: 100%; } .ts-legal { grid-column: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .ts * { animation: none !important; transition: none !important; } .ts-up { opacity: 1; transform: none; } }

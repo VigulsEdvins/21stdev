@@ -1,0 +1,42 @@
+{
+  "slug": "stay-lark-and-lantern",
+  "title": "Lark & Lantern",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "UK glamping marketplace: search bar over hero, 4-up listing grids, gift-card band, host story, forest footer.",
+  "tags": [
+    "stay",
+    "glamping",
+    "listings",
+    "search",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "editorial"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of canopyandstars.co.uk (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ]
+}

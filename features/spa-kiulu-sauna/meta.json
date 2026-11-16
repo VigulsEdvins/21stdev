@@ -1,0 +1,43 @@
+{
+  "slug": "spa-kiulu-sauna",
+  "title": "Kiulu Sauna Restaurant",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Nordic sauna restaurant site in olive grey: transparent header that shrinks and fills on scroll, quote over the hero, opening-hours strip, three link tiles, parallax band and news cards.",
+  "tags": [
+    "sauna",
+    "restaurant",
+    "nordic",
+    "parallax",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "minimal",
+    "light"
+  ],
+  "industry": [
+    "hospitality",
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of loylyhelsinki.fi (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ]
+}

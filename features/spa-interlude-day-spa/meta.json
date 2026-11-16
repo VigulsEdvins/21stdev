@@ -1,0 +1,43 @@
+{
+  "slug": "spa-interlude-day-spa",
+  "title": "Interlude Day Spa",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Day spa and med spa site: (word) logo, hero with soft colour orbs and a welcome card, membership block, periwinkle locations rail, news grid, social grid and periwinkle footer.",
+  "tags": [
+    "spa",
+    "day-spa",
+    "membership",
+    "periwinkle",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "hospitality",
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of hiatusspa.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ]
+}

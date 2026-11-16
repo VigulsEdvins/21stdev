@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Libre+Baskerville:ital@1&family=Open+Sans:wght@400;500&display=swap");
+/* Layout study of a US heavy-civil builder at 1440px: black/white with red #ee373d, caps grotesk, italic serif sub-heads, square 2px-outline buttons. */
+.tm { --red: #ee373d; --ink: #414042; --f: "Archivo", "Univers", Arial, sans-serif; font-family: "Open Sans", Arial, sans-serif; color: var(--ink); background: #fff; overflow-x: clip; }
+.tm *, .tm *::before, .tm *::after { box-sizing: border-box; }
+:where(.tm) h1, :where(.tm) h2, :where(.tm) h3, :where(.tm) h4, :where(.tm) p, :where(.tm) form { margin: 0; font-weight: 500; font-family: var(--f); }
+:where(.tm) a { color: inherit; text-decoration: none; }
+:where(.tm) img { display: block; }
+
+.tm-nav { position: absolute; inset: 0 0 auto; z-index: 5; height: 90px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; color: #fff; font-family: var(--f); }
+.tm-logo { font-size: 34px; font-weight: 600; letter-spacing: 6px; } .tm-nav nav { display: flex; gap: 34px; font-size: 16px; text-transform: uppercase; letter-spacing: .6px; }
+.tm-nav nav a { transition: color .25s; } .tm-nav nav a:hover { color: var(--red); }
+
+.tm-hero { position: relative; height: 760px; background: #111; color: #fff; overflow: hidden; }
+.tm-slide { position: absolute; inset: 0; opacity: 0; transition: opacity .5s ease; display: flex; align-items: center; justify-content: center; text-align: center; } .tm-slide.is-on { opacity: 1; }
+.tm-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.tm-slide div { position: relative; max-width: 1152px; padding: 0 40px; }
+.tm-slide h2 { font-size: 58px; line-height: 58px; text-transform: uppercase; font-weight: 500; }
+.tm-slide p { font-family: "Open Sans", sans-serif; font-size: 16px; line-height: 28px; margin: 20px 0; }
+.tm-slide.is-on h2 { animation: tm-in 3s ease-in-out both; } .tm-slide.is-on p, .tm-slide.is-on .tm-btn { animation: tm-in 5s ease-in-out both; }
+@keyframes tm-in { 0%, 20% { opacity: 0; transform: translateY(20%); } 100% { opacity: 1; transform: none; } }
+.tm-ctl { position: absolute; inset: auto 40px 40px auto; display: flex; gap: 10px; } .tm-ctl button { width: 46px; height: 46px; border: 2px solid #fff; background: transparent; color: #fff; font-size: 28px; line-height: 1; cursor: pointer; transition: background-color .2s, color .2s; } .tm-ctl button:hover { background: #fff; color: #111; }
+.tm-btn { display: inline-block; margin-top: 18px; padding: 12px 22px; border: 2px solid #fff; color: #fff; font-family: var(--f); font-size: 18px; text-transform: uppercase; letter-spacing: .23px; transition: color .2s, background-color .2s, border-color .2s; }
+.tm-btn:hover { background: #fff; color: #111; } .tm-red { background: var(--red); border-color: var(--red); } .tm-red:hover { background: transparent; color: var(--red); }
+.tm-ghost { color: var(--red); border-color: var(--red); } .tm-ghost:hover { background: var(--red); color: #fff; }
+
+.tm-feat { padding: 64px 0 0; text-align: center; } .tm-feat h2 { font-size: 58px; text-transform: uppercase; color: var(--ink); }
+.tm-strip { display: flex; gap: 80px; padding: 56px 235px 20px; overflow-x: auto; text-align: left; scrollbar-width: none; }
+.tm-strip article { flex: 0 0 270px; } .tm-strip img { width: 270px; height: 190px; object-fit: cover; transition: transform .4s ease; } .tm-strip article:hover img { transform: translateY(-6px); }
+.tm-strip h3 { font-size: 18px; line-height: 22px; font-weight: 500; margin-top: 14px; text-transform: uppercase; }
+.tm-more { padding: 10px 0 45px; }
+.tm-sign { background: var(--red); color: #fff; padding: 45px 205px; min-height: 244px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+.tm-sign h3 { font-size: 34px; text-transform: uppercase; } .tm-sign form { display: flex; gap: 10px; } .tm-sign input { width: 360px; height: 38px; border: 1px solid #fff; background: transparent; color: #fff; padding: 0 12px; font: 400 14px "Open Sans", sans-serif; } .tm-sign input::placeholder { color: #ffe3e4; }
+.tm-sign button { height: 38px; padding: 0 12px; border: 1px solid #fff; background: transparent; color: #fff; text-transform: uppercase; font: 500 18px var(--f); cursor: pointer; } .tm-sign button:hover { background: #fff; color: var(--red); }
+.tm-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+.tm-about { position: relative; min-height: 900px; display: grid; place-items: center; text-align: center; color: #fff; padding: 0 248px; }
+.tm-about > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.6); }
+.tm-about div { position: relative; } .tm-about h1 { font-size: 80px; line-height: 80px; text-transform: uppercase; } .tm-about p { font: 400 16px/28px "Open Sans", sans-serif; max-width: 640px; margin: 24px auto 10px; }
+.tm-news { padding: 96px 150px 90px; text-align: left; } .tm-news h3 { font-family: "Libre Baskerville", Georgia, serif; font-style: italic; font-size: 38px; color: var(--red); font-weight: 400; }
+.tm-news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; margin: 44px 0 40px; } .tm-news-grid article { border-top: 3px solid var(--red); padding-top: 18px; }
+.tm-news h4 { font-size: 32px; line-height: 38px; font-weight: 500; text-transform: capitalize; } .tm-news-grid p { font: 400 16px/26px "Open Sans", sans-serif; margin-top: 12px; }
+.tm-talk { background: #1d1d1d; color: #fff; padding: 110px 150px; min-height: 510px; display: flex; align-items: center; justify-content: space-between; gap: 40px; } .tm-talk h2 { font-size: 58px; text-transform: uppercase; } .tm-talk div { display: flex; gap: 14px; }
+.tm-foot { background: #111; color: #fff; padding: 62px 150px 40px; min-height: 373px; display: grid; align-content: start; gap: 30px; } .tm-foot b { font-family: var(--f); font-size: 40px; letter-spacing: 8px; } .tm-foot nav { display: flex; gap: 26px; font-family: var(--f); text-transform: uppercase; font-size: 16px; } .tm-foot a:hover { color: var(--red); }
+.tm-foot p { font: italic 20px/28px "Libre Baskerville", serif; font-size: 15px; color: #bbb; }
+
+.tm.js [data-r] { opacity: 0; transform: translateY(20px); transition: opacity .8s ease, transform .8s ease; } .tm.js [data-r].in { opacity: 1; transform: none; }
+@media (max-width: 900px) { .tm-nav nav { display: none; } .tm-slide h2 { font-size: 36px; line-height: 38px; } .tm-feat h2, .tm-talk h2 { font-size: 36px; } .tm-strip { padding: 32px 24px 20px; gap: 24px; } .tm-sign, .tm-talk { padding: 40px 24px; flex-direction: column; align-items: flex-start; } .tm-sign input { width: 100%; } .tm-sign form { width: 100%; } .tm-about { padding: 0 24px; min-height: 560px; } .tm-about h1 { font-size: 44px; line-height: 46px; } .tm-news, .tm-foot { padding-left: 24px; padding-right: 24px; } .tm-news-grid { grid-template-columns: 1fr; } .tm-news h4 { font-size: 24px; line-height: 30px; } }
+@media (prefers-reduced-motion: reduce) { .tm *, .tm *::before, .tm *::after { animation: none !important; transition: none !important; } .tm.js [data-r] { opacity: 1; transform: none; } }

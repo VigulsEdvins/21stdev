@@ -1,0 +1,42 @@
+{
+  "slug": "stay-wildhut-camps",
+  "title": "Wildhut Camps",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "European camp network: deep green, search strip over hero, offer cards, map band with pulsing pins.",
+  "tags": [
+    "stay",
+    "camping",
+    "map",
+    "green",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of huttopia.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ]
+}

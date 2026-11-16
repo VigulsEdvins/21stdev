@@ -1,0 +1,41 @@
+{
+  "slug": "build-pellham-federal",
+  "title": "Pellham Federal Builders",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Federal contractor site in charcoal and crimson: thin 65px headlines, Plan / Build / Manage columns, alternating case studies, filterable news grid, header that hides on scroll down.",
+  "tags": [
+    "federal",
+    "thin-type",
+    "filter",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "minimal",
+    "editorial"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of henselphelps.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ]
+}

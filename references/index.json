@@ -1,0 +1,668 @@
+{
+ "items": [
+  {
+   "host": "turnerconstruction.com",
+   "url": "https://turnerconstruction.com",
+   "slug": "build-halvorsen-dale",
+   "industries": {
+    "buvnieciba": "native",
+    "konsultacijas": "borrowed"
+   },
+   "why": "huge white type, mega-menu, news grid",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 1
+  },
+  {
+   "host": "mortenson.com",
+   "url": "https://mortenson.com",
+   "slug": "build-ironvale",
+   "industries": {
+    "buvnieciba": "native",
+    "autoserviss": "borrowed"
+   },
+   "why": "condensed caps, orange accent, project slider",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 2
+  },
+  {
+   "host": "sundt.com",
+   "url": "https://sundt.com",
+   "slug": "build-tamm-heavy-civil",
+   "industries": {
+    "buvnieciba": "native"
+   },
+   "why": "civil/heavy: serif italic accents, full-bleed projects",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 3
+  },
+  {
+   "host": "gilbaneco.com",
+   "url": "https://gilbaneco.com",
+   "slug": "build-marlowe-hargrove",
+   "industries": {
+    "konsultacijas": "borrowed",
+    "buvnieciba": "native"
+   },
+   "why": "red accent, long family-business story",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 4
+  },
+  {
+   "host": "henselphelps.com",
+   "url": "https://henselphelps.com",
+   "slug": "build-pellham-federal",
+   "industries": {
+    "tirdznieciba": "borrowed",
+    "konsultacijas": "borrowed",
+    "buvnieciba": "native"
+   },
+   "why": "plan/build/manage triptych, case studies",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 5
+  },
+  {
+   "host": "skanska.com",
+   "url": "https://skanska.com",
+   "slug": "build-norrland",
+   "industries": {
+    "tirdznieciba": "borrowed",
+    "cita": "borrowed"
+   },
+   "why": "frosted floating header, sticky story scroller",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 6
+  },
+  {
+   "host": "mccarthy.com",
+   "url": "https://mccarthy.com",
+   "slug": "build-granger-brothers",
+   "industries": {
+    "autoserviss": "borrowed",
+    "buvnieciba": "native"
+   },
+   "why": "employee-owned, safety stats, red condensed",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 7
+  },
+  {
+   "host": "clarkconstruction.com",
+   "url": "https://clarkconstruction.com",
+   "slug": "build-wexcombe",
+   "industries": {
+    "buvnieciba": "native"
+   },
+   "why": "clean blue, featured-projects rail, testimonials",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 8
+  },
+  {
+   "host": "balfourbeatty.com",
+   "url": "https://balfourbeatty.com",
+   "slug": "build-teesdale",
+   "industries": {
+    "autoserviss": "borrowed"
+   },
+   "why": "infrastructure, tall hero video, sustainability blocks",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 9
+  },
+  {
+   "host": "dpr.com",
+   "url": "https://dpr.com",
+   "slug": "build-kestrel-rowe",
+   "industries": {
+    "tirdznieciba": "borrowed"
+   },
+   "why": "technical sectors, mission/vision/values",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 10
+  },
+  {
+   "host": "othership.us",
+   "url": "https://othership.us",
+   "slug": "spa-driftward-bathhouse",
+   "industries": {
+    "skaistumkopsana": "native"
+   },
+   "why": "pill nav, condensed serif, marquee",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 1
+  },
+  {
+   "host": "aescape.com",
+   "url": "https://aescape.com",
+   "slug": "spa-kinetiq-robotic-massage",
+   "industries": {
+    "skaistumkopsana": "native"
+   },
+   "why": "floating dark nav, lilac, numbered steps",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 2
+  },
+  {
+   "host": "abathhouse.com",
+   "url": "https://abathhouse.com",
+   "slug": "spa-stillhouse-mono",
+   "industries": {
+    "medicina": "borrowed",
+    "zobarstnieciba": "borrowed",
+    "skaistumkopsana": "native"
+   },
+   "why": "all-black mono, opening-hours sun arc",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 3
+  },
+  {
+   "host": "remedyplace.com",
+   "url": "https://remedyplace.com",
+   "slug": "spa-solace-social-club",
+   "industries": {
+    "skaistumkopsana": "native"
+   },
+   "why": "red-light hero, booking bar",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 4
+  },
+  {
+   "host": "shawellness.com",
+   "url": "https://shawellness.com",
+   "slug": "spa-nao-longevity",
+   "industries": {
+    "medicina": "borrowed",
+    "zobarstnieciba": "borrowed"
+   },
+   "why": "medical wellness, stats, programme cards",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 5
+  },
+  {
+   "host": "lanserhof.com",
+   "url": "https://lanserhof.com",
+   "slug": "spa-almenhof-medical",
+   "industries": {
+    "medicina": "borrowed",
+    "zobarstnieciba": "borrowed"
+   },
+   "why": "stacked logo, italic serif, split panels",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 6
+  },
+  {
+   "host": "loylyhelsinki.fi",
+   "url": "https://loylyhelsinki.fi",
+   "slug": "spa-kiulu-sauna",
+   "industries": {
+    "skaistumkopsana": "native"
+   },
+   "why": "thin caps, shrinking header",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 7
+  },
+  {
+   "host": "squeezemassage.com",
+   "url": "https://squeezemassage.com",
+   "slug": "spa-kneaded-massage",
+   "industries": {
+    "skaistumkopsana": "native"
+   },
+   "why": "aqua, wide-tracked caps, app focus",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 8
+  },
+  {
+   "host": "the-well.com",
+   "url": "https://the-well.com",
+   "slug": "spa-the-spring-club",
+   "industries": {
+    "skaistumkopsana": "native",
+    "zobarstnieciba": "borrowed",
+    "cita": "borrowed"
+   },
+   "why": "blush, thin serif, testimonial carousel",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 9
+  },
+  {
+   "host": "hiatusspa.com",
+   "url": "https://hiatusspa.com",
+   "slug": "spa-interlude-day-spa",
+   "industries": {
+    "skaistumkopsana": "native"
+   },
+   "why": "(word) logo, periwinkle blocks, membership",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 10
+  },
+  {
+   "host": "autocamp.com",
+   "url": "https://autocamp.com",
+   "slug": "stay-pinecrest-trailers",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "sand + serif, carousels",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 1
+  },
+  {
+   "host": "collectiveretreats.com",
+   "url": "https://collectiveretreats.com",
+   "slug": "stay-fieldstone-retreats",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "hover-expanding panels",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 2
+  },
+  {
+   "host": "unyoked.co",
+   "url": "https://unyoked.co",
+   "slug": "stay-quietwood-cabins",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "colour-blocked off-grid cabins",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 3
+  },
+  {
+   "host": "canopyandstars.co.uk",
+   "url": "https://canopyandstars.co.uk",
+   "slug": "stay-lark-and-lantern",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "listing marketplace with search",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 4
+  },
+  {
+   "host": "hipcamp.com",
+   "url": "https://hipcamp.com",
+   "slug": "stay-pitchwise",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "search hero + round cards",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 5
+  },
+  {
+   "host": "postcardcabins.com",
+   "url": "https://postcardcabins.com",
+   "slug": "stay-hollow-cabins",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "amenities row, accordion FAQ",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 6
+  },
+  {
+   "host": "huttopia.com",
+   "url": "https://huttopia.com",
+   "slug": "stay-wildhut-camps",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "search strip, map band",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 7
+  },
+  {
+   "host": "yonderescalante.com",
+   "url": "https://yonderescalante.com",
+   "slug": "stay-mesa-outpost",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "two-section desert hotel",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 8
+  },
+  {
+   "host": "koa.com",
+   "url": "https://koa.com",
+   "slug": "stay-trailhead-parks",
+   "industries": {
+    "turisms": "native"
+   },
+   "why": "campground network, rewards band",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 9
+  },
+  {
+   "host": "kampaoh.com",
+   "url": "https://kampaoh.com",
+   "slug": "stay-sunnycamp",
+   "industries": {
+    "turisms": "native",
+    "cita": "borrowed"
+   },
+   "why": "yellow blocks, heavy italic",
+   "status": "built",
+   "studied": "2026-11-15",
+   "rank": 10
+  },
+  {
+   "host": "whiting-turner.com",
+   "url": "https://whiting-turner.com",
+   "slug": null,
+   "industries": {},
+   "why": "bot protection, not bypassed",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "qualmax.com",
+   "url": "https://qualmax.com",
+   "slug": null,
+   "industries": {},
+   "why": "expired certificate",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "mattconstruction.com",
+   "url": "https://mattconstruction.com",
+   "slug": null,
+   "industries": {},
+   "why": "page did not render headless",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "swinerton.com",
+   "url": "https://swinerton.com",
+   "slug": null,
+   "industries": {},
+   "why": "page did not render headless",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "under-canvas.com",
+   "url": "https://under-canvas.com",
+   "slug": null,
+   "industries": {},
+   "why": "certificate error",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "getaway.house",
+   "url": "https://getaway.house",
+   "slug": null,
+   "industries": {},
+   "why": "same site as postcardcabins.com",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "tentrr.com",
+   "url": "https://tentrr.com",
+   "slug": null,
+   "industries": {},
+   "why": "gear shop, not a stay",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "tangan.fr",
+   "url": "https://tangan.fr",
+   "slug": null,
+   "industries": {},
+   "why": "bot protection, not bypassed",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "beaire.com",
+   "url": "https://beaire.com",
+   "slug": null,
+   "industries": {},
+   "why": "bot protection, not bypassed",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "bodyfreedom.com.au",
+   "url": "https://bodyfreedom.com.au",
+   "slug": null,
+   "industries": {},
+   "why": "TLS error",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "chillhouse.com",
+   "url": "https://chillhouse.com",
+   "slug": null,
+   "industries": {},
+   "why": "nail-polish shop, not a spa",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "sixsenses.com/spas",
+   "url": "https://sixsenses.com/spas",
+   "slug": null,
+   "industries": {},
+   "why": "plain list page",
+   "status": "dropped",
+   "studied": "2026-11-15"
+  },
+  {
+   "host": "dentologie.com",
+   "url": "https://dentologie.com",
+   "slug": "dental-mintline",
+   "industries": {
+    "zobarstnieciba": "native",
+    "medicina": "borrowed"
+   },
+   "why": "warm greige, mint/peach blocks, Playfair",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 5
+  },
+  {
+   "host": "austindentalworks.com",
+   "url": "https://austindentalworks.com",
+   "slug": "dental-tealwork",
+   "industries": {
+    "zobarstnieciba": "native"
+   },
+   "why": "white + teal boutique, caps serif",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 6
+  },
+  {
+   "host": "seattledentalco.com",
+   "url": "https://seattledentalco.com",
+   "slug": "dental-quiet-co",
+   "industries": {
+    "zobarstnieciba": "native"
+   },
+   "why": "airy white, wide-tracked caps",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 7
+  },
+  {
+   "host": "wrightdentalcenter.com",
+   "url": "https://wrightdentalcenter.com",
+   "slug": "dental-hearthstone",
+   "industries": {
+    "zobarstnieciba": "native"
+   },
+   "why": "dark umber, full-bleed hero, serif display",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 8
+  },
+  {
+   "host": "coxbonddental.com",
+   "url": "https://coxbonddental.com",
+   "slug": "dental-slatebond",
+   "industries": {
+    "zobarstnieciba": "native"
+   },
+   "why": "slate + tan, Cormorant, full-screen hero",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 9
+  },
+  {
+   "host": "onemedical.com",
+   "url": "https://onemedical.com",
+   "slug": "clinic-greenroom",
+   "industries": {
+    "medicina": "native",
+    "zobarstnieciba": "borrowed"
+   },
+   "why": "cream + mint, deep green, large serif",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 10
+  },
+  {
+   "host": "parsleyhealth.com",
+   "url": "https://parsleyhealth.com",
+   "slug": "clinic-rootline",
+   "industries": {
+    "medicina": "native"
+   },
+   "why": "sand + teal, serif headline, rounded blocks",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 6
+  },
+  {
+   "host": "asktia.com",
+   "url": "https://asktia.com",
+   "slug": "clinic-bloomwell",
+   "industries": {
+    "medicina": "native"
+   },
+   "why": "cream, arched hero, burgundy footer",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 7
+  },
+  {
+   "host": "mavenclinic.com",
+   "url": "https://mavenclinic.com",
+   "slug": "clinic-evergreen",
+   "industries": {
+    "medicina": "native"
+   },
+   "why": "deep forest hero, light serif, mint accent",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 8
+  },
+  {
+   "host": "kindbody.com",
+   "url": "https://kindbody.com",
+   "slug": "clinic-sunrise",
+   "industries": {
+    "medicina": "native"
+   },
+   "why": "yellow header, navy statement, paper cards",
+   "status": "built",
+   "studied": "2026-11-16",
+   "rank": 9
+  },
+  {
+   "host": "tend.com",
+   "url": "https://tend.com",
+   "slug": null,
+   "industries": {},
+   "why": "is a farm-software site now",
+   "status": "dropped",
+   "studied": "2026-11-16",
+   "rank": 1
+  },
+  {
+   "host": "aspendental.com",
+   "url": "https://aspendental.com",
+   "slug": null,
+   "industries": {},
+   "why": "did not render headless",
+   "status": "dropped",
+   "studied": "2026-11-16",
+   "rank": 1
+  },
+  {
+   "host": "sesamecare.com",
+   "url": "https://sesamecare.com",
+   "slug": null,
+   "industries": {},
+   "why": "did not render headless",
+   "status": "dropped",
+   "studied": "2026-11-16",
+   "rank": 1
+  },
+  {
+   "host": "carbonhealth.com",
+   "url": "https://carbonhealth.com",
+   "slug": null,
+   "industries": {},
+   "why": "bot protection, not bypassed",
+   "status": "dropped",
+   "studied": "2026-11-16",
+   "rank": 1
+  },
+  {
+   "host": "bowlesdental.com",
+   "url": "https://bowlesdental.com",
+   "slug": null,
+   "industries": {},
+   "why": "no DNS",
+   "status": "dropped",
+   "studied": "2026-11-16",
+   "rank": 1
+  },
+  {
+   "host": "lavenirdental.com",
+   "url": "https://lavenirdental.com",
+   "slug": null,
+   "industries": {},
+   "why": "no DNS",
+   "status": "dropped",
+   "studied": "2026-11-16",
+   "rank": 1
+  }
+ ]
+}

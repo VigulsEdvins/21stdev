@@ -1,0 +1,43 @@
+{
+  "slug": "spa-kneaded-massage",
+  "title": "Kneaded Massage Studio",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Friendly massage-studio site in aqua: wide-tracked caps hero with a curved edge and bouncing smile, three feature columns, app download block and a curved footer.",
+  "tags": [
+    "massage",
+    "friendly",
+    "app",
+    "curved",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "playful",
+    "light"
+  ],
+  "industry": [
+    "hospitality",
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of squeezemassage.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ]
+}

@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap");
+/* Layout study of a federal general contractor at 1440px: charcoal #2c2a29, crimson #a61e2e, Roboto Thin headlines, header that hides on scroll down. */
+.pf { --ch: #2c2a29; --red: #a61e2e; --f: "Roboto", Arial, sans-serif; font-family: var(--f); color: var(--ch); background: #fff; overflow-x: clip; }
+.pf *, .pf *::before, .pf *::after { box-sizing: border-box; }
+:where(.pf) h2, :where(.pf) h3, :where(.pf) p { margin: 0; font-weight: 300; }
+:where(.pf) a { color: inherit; text-decoration: none; }
+:where(.pf) img { display: block; }
+
+.pf-nav { position: fixed; inset: 0 0 auto; z-index: 20; height: 99px; padding: 0 60px; display: flex; align-items: center; justify-content: space-between; color: #fff; transition: top .25s ease-in-out, background-color .25s ease-in-out; }
+.pf-nav.is-scrolled { background: var(--ch); } .pf-nav.is-hidden { top: -110px; }
+.pf-logo { font-size: 28px; font-weight: 700; letter-spacing: 3px; line-height: 1; } .pf-logo b { display: block; font-size: 11px; letter-spacing: 7px; font-weight: 300; margin-top: 4px; }
+.pf-nav nav { display: flex; gap: 32px; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; } .pf-nav nav a { transition: color .2s; } .pf-nav nav a:hover { color: #e46a79; }
+
+.pf-hero { position: relative; height: 783px; background: var(--ch); color: #fff; }
+.pf-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.pf-hero-in { position: absolute; left: 120px; top: 250px; max-width: 540px; } .pf-hero h2 { font-size: 65px; line-height: 65px; font-weight: 100; animation: pf-in 1s ease both; }
+.pf-hero p { margin-top: 24px; font-size: 18px; line-height: 24px; animation: pf-in 1s .2s ease both; } .pf-hero p span { display: block; font-size: 65px; line-height: 70px; font-weight: 700; margin-top: 14px; letter-spacing: .5px; text-transform: uppercase; }
+@keyframes pf-in { from { opacity: 0; transform: translateY(18px); } }
+
+.pf-process { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; padding: 60px 140px 0; min-height: 537px; }
+.pf-process h2 { font-size: 64px; font-weight: 100; color: var(--red); margin-bottom: 20px; } .pf-process p { font-size: 18px; line-height: 24px; font-weight: 300; max-width: 340px; }
+.pf-process a { display: inline-block; margin-top: 22px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--red); border-bottom: 1px solid transparent; transition: border-color .2s; } .pf-process a:hover { border-color: var(--red); }
+
+.pf-case { position: relative; height: 620px; background: var(--ch); color: #fff; display: flex; align-items: center; overflow: hidden; }
+.pf-case img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .6; transition: transform 6s ease; } .pf-case:hover img { transform: scale(1.04); }
+.pf-case div { position: relative; width: 312px; margin: 0 60px; } .pf-r div { margin-left: auto; margin-right: 372px; } .pf-case h3 { font-size: 42px; line-height: 46px; font-weight: 100; text-transform: capitalize; } .pf-case p { margin: 16px 0 6px; font-size: 18px; line-height: 24px; }
+.pf-btn { display: inline-block; margin-top: 14px; padding: 7px 20px; border-radius: 5px; background: rgb(255 255 255 / .15); border: 1px solid #fff; color: #fff; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; transition: background-color .2s, color .2s; } .pf-btn:hover { background: #fff; color: var(--ch); }
+.pf-red { background: var(--red); border-color: var(--red); } .pf-red:hover { background: var(--ch); color: #fff; border-color: var(--ch); }
+
+.pf-news { padding: 100px 100px 90px; background: #fff; }
+.pf-news-head { display: flex; align-items: center; justify-content: space-between; } .pf-news h3 { font-size: 63px; font-weight: 100; color: var(--ch); }
+.pf-filter { display: flex; align-items: center; gap: 14px; margin: 36px 0; font-size: 18px; } .pf-filter button { border: 0; background: none; font: 700 13px var(--f); letter-spacing: 1px; text-transform: uppercase; color: var(--ch); padding: 6px 2px; border-bottom: 2px solid transparent; cursor: pointer; transition: color .2s, border-color .2s; } .pf-filter button:hover, .pf-filter .is-on { color: var(--red); border-color: var(--red); }
+.pf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 74px 76px; } .pf-grid article { background: var(--ch); color: #fff; min-height: 300px; position: relative; overflow: hidden; transition: opacity .3s ease; } .pf-grid article.is-off { display: none; }
+.pf-grid img { width: 100%; height: 150px; object-fit: cover; transition: transform .5s ease; } .pf-grid article:hover img { transform: scale(1.06); } .pf-grid h2 { font-size: 18px; line-height: 22px; font-weight: 700; padding: 18px 20px 24px; }
+
+.pf-legacy { position: relative; height: 560px; background: var(--ch); color: #fff; display: flex; align-items: center; } .pf-legacy img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; } .pf-legacy div { position: relative; margin-left: 120px; max-width: 640px; } .pf-legacy h3 { font-size: 64px; line-height: 70px; font-weight: 100; }
+.pf-foot { height: 301px; padding: 30px 60px 26px; display: grid; align-content: space-between; border-top: 1px solid #e6e4e3; } .pf-foot b { font-size: 24px; letter-spacing: 3px; } .pf-foot nav { display: flex; gap: 24px; font-size: 12px; } .pf-foot p { font-size: 13px; }
+
+.pf.js [data-r] { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; } .pf.js [data-r].in { opacity: 1; transform: none; }
+@media (max-width: 900px) { .pf-nav { padding: 0 24px; } .pf-nav nav { display: none; } .pf-hero-in { left: 24px; top: 190px; } .pf-hero h2, .pf-hero p span { font-size: 40px; line-height: 44px; } .pf-process { grid-template-columns: 1fr; padding: 50px 24px; min-height: 0; gap: 34px; } .pf-case div, .pf-r div { margin: 0 24px; } .pf-case { height: 520px; } .pf-news { padding: 60px 24px; } .pf-news h3, .pf-legacy h3 { font-size: 38px; line-height: 44px; } .pf-grid { grid-template-columns: 1fr 1fr; gap: 24px; } .pf-legacy div { margin-left: 24px; } .pf-foot { padding: 30px 24px; } }
+@media (prefers-reduced-motion: reduce) { .pf *, .pf *::before, .pf *::after { animation: none !important; transition: none !important; } .pf.js [data-r] { opacity: 1; transform: none; } }
