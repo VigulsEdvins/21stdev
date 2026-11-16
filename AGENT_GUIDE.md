@@ -58,6 +58,8 @@ Whenever the user asks you to *"add this feature/design to `web-for-options`"*:
    ```
    Selectors are resolved inside the section (`:scope`). Types: `text`, `image`, `link`, `color`.
 
+**Rebuilding real sites as landing pages** (a batch per industry): follow [`docs/replica-playbook.md`](docs/replica-playbook.md); tools in `scripts/replica/`.
+
 ## 3. Everyday Commands
 
 | Command | What it does |

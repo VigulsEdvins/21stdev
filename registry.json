@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-04T11:13:25.944Z",
+  "generatedAt": "2026-11-16T06:52:23.235Z",
   "vaultRoot": "/home/edvins/features-for-web/web-for-options",
-  "totalFeatures": 262,
+  "totalFeatures": 302,
   "categories": [
     "Heroes",
     "Headers & Nav",
@@ -21267,6 +21267,111 @@
       ]
     },
     {
+      "slug": "spa-almenhof-medical",
+      "title": "Almenhof Medical Spa",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "luxury",
+        "light"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Alpine medical-spa site: glass pill header, split 550/890 panels with drifting light, italic serif over spaced caps, a thirteen-item picker wheel, four places and an awards slider.",
+      "tags": [
+        "spa",
+        "medical",
+        "alpine",
+        "split",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-almenhof-medical",
+      "relativePath": "features/spa-almenhof-medical",
+      "previewUrl": "features/spa-almenhof-medical/index.html",
+      "thumb": "thumbs/spa-almenhof-medical.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "clinic-bloomwell",
+      "title": "Bloomwell",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Women health clinic page: cream, arched hero image, two comfort cards, serif services, burgundy contact block. Latvian, slot-driven.",
+      "tags": [
+        "clinic",
+        "cream",
+        "arch",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/clinic-bloomwell",
+      "relativePath": "features/clinic-bloomwell",
+      "previewUrl": "features/clinic-bloomwell/index.html",
+      "thumb": "thumbs/clinic-bloomwell.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "consultation-inquiry-hub",
       "title": "Consultation Inquiry Hub",
       "category": "Footers & Endings",
@@ -21317,6 +21422,163 @@
       "relativePath": "features/consultation-inquiry-hub",
       "previewUrl": "features/consultation-inquiry-hub/index.html",
       "thumb": "thumbs/consultation-inquiry-hub.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spa-driftward-bathhouse",
+      "title": "Driftward Sauna Bathhouse",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "playful",
+        "editorial"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Full sauna and ice-bath bathhouse site: lime offer bar, pill navigation, condensed serif over full-bleed photos, class card rail, floating icons, practice tabs with a spinning badge, story slider and marquees.",
+      "tags": [
+        "sauna",
+        "bathhouse",
+        "ice-bath",
+        "marquee",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-driftward-bathhouse",
+      "relativePath": "features/spa-driftward-bathhouse",
+      "previewUrl": "features/spa-driftward-bathhouse/index.html",
+      "thumb": "thumbs/spa-driftward-bathhouse.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "clinic-evergreen",
+      "title": "Evergreen",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "dark",
+        "luxury"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Care platform page: deep forest hero with 76px light serif, pine feature panel, white rounded service tiles, mint accents. Latvian, slot-driven.",
+      "tags": [
+        "clinic",
+        "forest",
+        "dark",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/clinic-evergreen",
+      "relativePath": "features/clinic-evergreen",
+      "previewUrl": "features/clinic-evergreen/index.html",
+      "thumb": "thumbs/clinic-evergreen.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-fieldstone-retreats",
+      "title": "Fieldstone Retreats",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "luxury",
+        "editorial"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Luxury camping retreats: cream and olive, serif headlines, three hover-expanding experience panels, retreat carousel.",
+      "tags": [
+        "stay",
+        "camping",
+        "hover-panels",
+        "olive",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-fieldstone-retreats",
+      "relativePath": "features/stay-fieldstone-retreats",
+      "previewUrl": "features/stay-fieldstone-retreats/index.html",
+      "thumb": "thumbs/stay-fieldstone-retreats.webp",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,
@@ -21604,6 +21866,264 @@
       ]
     },
     {
+      "slug": "build-granger-brothers",
+      "title": "Granger Brothers Construction",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "editorial",
+        "dark"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Employee-owned builder site in espresso, bone and red: 88px condensed caps statements, capability tiles, safety figures, closing full-screen statement.",
+      "tags": [
+        "builder",
+        "condensed",
+        "red",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-granger-brothers",
+      "relativePath": "features/build-granger-brothers",
+      "previewUrl": "features/build-granger-brothers/index.html",
+      "thumb": "thumbs/build-granger-brothers.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "clinic-greenroom",
+      "title": "Greenroom",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Primary care page: cream hero with large serif headline, mint comfort cards, rounded service tiles, deep green contact block. Latvian, slot-driven.",
+      "tags": [
+        "clinic",
+        "green",
+        "cream",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/clinic-greenroom",
+      "relativePath": "features/clinic-greenroom",
+      "previewUrl": "features/clinic-greenroom/index.html",
+      "thumb": "thumbs/clinic-greenroom.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "build-halvorsen-dale",
+      "title": "Halvorsen & Dale Builders",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Large-project builder site in royal blue: full-bleed hero with a light headline and serif accent word, three path links, news mosaic, office panels, FAQ and blue contact footer.",
+      "tags": [
+        "builder",
+        "blue",
+        "news",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-halvorsen-dale",
+      "relativePath": "features/build-halvorsen-dale",
+      "previewUrl": "features/build-halvorsen-dale/index.html",
+      "thumb": "thumbs/build-halvorsen-dale.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "dental-hearthstone",
+      "title": "Hearthstone",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "dark",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Family dental page: dark umber, full-bleed hero, IM Fell display headings, red-topped service cards, photo strip. Latvian, slot-driven.",
+      "tags": [
+        "dental",
+        "dark",
+        "serif",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/dental-hearthstone",
+      "relativePath": "features/dental-hearthstone",
+      "previewUrl": "features/dental-hearthstone/index.html",
+      "thumb": "thumbs/dental-hearthstone.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-hollow-cabins",
+      "title": "Hollow Cabins",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Design-forward cabin rentals: charcoal hero, moss booking bar, amenities row, popular-cabin cards, accordion FAQ.",
+      "tags": [
+        "stay",
+        "cabins",
+        "faq",
+        "moss",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-hollow-cabins",
+      "relativePath": "features/stay-hollow-cabins",
+      "previewUrl": "features/stay-hollow-cabins/index.html",
+      "thumb": "thumbs/stay-hollow-cabins.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "how-we-work-steps",
       "title": "How we work, step by step",
       "category": "Cards & Tiles",
@@ -21739,6 +22259,320 @@
       ]
     },
     {
+      "slug": "spa-interlude-day-spa",
+      "title": "Interlude Day Spa",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Day spa and med spa site: (word) logo, hero with soft colour orbs and a welcome card, membership block, periwinkle locations rail, news grid, social grid and periwinkle footer.",
+      "tags": [
+        "spa",
+        "day-spa",
+        "membership",
+        "periwinkle",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-interlude-day-spa",
+      "relativePath": "features/spa-interlude-day-spa",
+      "previewUrl": "features/spa-interlude-day-spa/index.html",
+      "thumb": "thumbs/spa-interlude-day-spa.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "build-ironvale",
+      "title": "Ironvale Construction",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "dark",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Builder and developer site in charcoal and orange: fading hero slides with 100px condensed caps, dark numbered project list, horizontal project and news tracks.",
+      "tags": [
+        "builder",
+        "condensed",
+        "slider",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-ironvale",
+      "relativePath": "features/build-ironvale",
+      "previewUrl": "features/build-ironvale/index.html",
+      "thumb": "thumbs/build-ironvale.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "build-kestrel-rowe",
+      "title": "Kestrel & Rowe Construction",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "luxury",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Self-performing contractor site: white fixed header, 96px Bodoni headline over a full-screen hero, core-values list, five market columns and a blue closing band.",
+      "tags": [
+        "contractor",
+        "serif",
+        "values",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-kestrel-rowe",
+      "relativePath": "features/build-kestrel-rowe",
+      "previewUrl": "features/build-kestrel-rowe/index.html",
+      "thumb": "thumbs/build-kestrel-rowe.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spa-kinetiq-robotic-massage",
+      "title": "Kinetiq Robotic Massage",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Full robotic-massage site: floating dark capsule nav with lilac promo tab, glowing ring hero, black/sand/white section rhythm, four-column features, booking steps, packages and a partner marquee.",
+      "tags": [
+        "massage",
+        "wellness",
+        "tech",
+        "capsule-nav",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-kinetiq-robotic-massage",
+      "relativePath": "features/spa-kinetiq-robotic-massage",
+      "previewUrl": "features/spa-kinetiq-robotic-massage/index.html",
+      "thumb": "thumbs/spa-kinetiq-robotic-massage.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spa-kiulu-sauna",
+      "title": "Kiulu Sauna Restaurant",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Nordic sauna restaurant site in olive grey: transparent header that shrinks and fills on scroll, quote over the hero, opening-hours strip, three link tiles, parallax band and news cards.",
+      "tags": [
+        "sauna",
+        "restaurant",
+        "nordic",
+        "parallax",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-kiulu-sauna",
+      "relativePath": "features/spa-kiulu-sauna",
+      "previewUrl": "features/spa-kiulu-sauna/index.html",
+      "thumb": "thumbs/spa-kiulu-sauna.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spa-kneaded-massage",
+      "title": "Kneaded Massage Studio",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "playful",
+        "light"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Friendly massage-studio site in aqua: wide-tracked caps hero with a curved edge and bouncing smile, three feature columns, app download block and a curved footer.",
+      "tags": [
+        "massage",
+        "friendly",
+        "app",
+        "curved",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-kneaded-massage",
+      "relativePath": "features/spa-kneaded-massage",
+      "previewUrl": "features/spa-kneaded-massage/index.html",
+      "thumb": "thumbs/spa-kneaded-massage.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "land-survey-inquiries-hub",
       "title": "Land Survey Inquiries Hub",
       "category": "Footers & Endings",
@@ -21790,6 +22624,472 @@
       "relativePath": "features/land-survey-inquiries-hub",
       "previewUrl": "features/land-survey-inquiries-hub/index.html",
       "thumb": null,
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-lark-and-lantern",
+      "title": "Lark & Lantern",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "editorial"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "UK glamping marketplace: search bar over hero, 4-up listing grids, gift-card band, host story, forest footer.",
+      "tags": [
+        "stay",
+        "glamping",
+        "listings",
+        "search",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-lark-and-lantern",
+      "relativePath": "features/stay-lark-and-lantern",
+      "previewUrl": "features/stay-lark-and-lantern/index.html",
+      "thumb": "thumbs/stay-lark-and-lantern.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "build-marlowe-hargrove",
+      "title": "Marlowe Hargrove Group",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Family-owned builder site in navy and red: pinned hero where a window opens to full screen on scroll, frosted sticky header, card sliders with a progress bar.",
+      "tags": [
+        "builder",
+        "pinned-hero",
+        "navy",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-marlowe-hargrove",
+      "relativePath": "features/build-marlowe-hargrove",
+      "previewUrl": "features/build-marlowe-hargrove/index.html",
+      "thumb": "thumbs/build-marlowe-hargrove.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-mesa-outpost",
+      "title": "Mesa Outpost",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "luxury",
+        "minimal"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Desert boutique hotel: cocoa and brass, 122px condensed caps headline over a full-bleed hero, split intro, brass footer.",
+      "tags": [
+        "stay",
+        "hotel",
+        "desert",
+        "condensed",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-mesa-outpost",
+      "relativePath": "features/stay-mesa-outpost",
+      "previewUrl": "features/stay-mesa-outpost/index.html",
+      "thumb": "thumbs/stay-mesa-outpost.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "dental-mintline",
+      "title": "Mintline",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Warm greige dental page: Playfair headings, mint and peach blocks, blurred sticky header, services grid, visit steps. Latvian, slot-driven.",
+      "tags": [
+        "dental",
+        "greige",
+        "mint",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/dental-mintline",
+      "relativePath": "features/dental-mintline",
+      "previewUrl": "features/dental-mintline/index.html",
+      "thumb": "thumbs/dental-mintline.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spa-nao-longevity",
+      "title": "NAO Longevity Destination",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "luxury",
+        "minimal"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Medical longevity destination site: hero slideshow, upright plus italic caps headlines, counting stats, filterable programme cards, clip-path scroll wipe and pinned destinations that cross-fade.",
+      "tags": [
+        "wellness",
+        "medical",
+        "longevity",
+        "scroll",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-nao-longevity",
+      "relativePath": "features/spa-nao-longevity",
+      "previewUrl": "features/spa-nao-longevity/index.html",
+      "thumb": "thumbs/spa-nao-longevity.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "build-norrland",
+      "title": "Norrland Build",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "futuristic"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Nordic builder US site in deep blue: floating frosted header, 97px extra-bold hero, offering cards, sticky story scroller with step dots, numbers band.",
+      "tags": [
+        "builder",
+        "sticky-scroll",
+        "blue",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-norrland",
+      "relativePath": "features/build-norrland",
+      "previewUrl": "features/build-norrland/index.html",
+      "thumb": "thumbs/build-norrland.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "build-pellham-federal",
+      "title": "Pellham Federal Builders",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "minimal",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Federal contractor site in charcoal and crimson: thin 65px headlines, Plan / Build / Manage columns, alternating case studies, filterable news grid, header that hides on scroll down.",
+      "tags": [
+        "federal",
+        "thin-type",
+        "filter",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-pellham-federal",
+      "relativePath": "features/build-pellham-federal",
+      "previewUrl": "features/build-pellham-federal/index.html",
+      "thumb": "thumbs/build-pellham-federal.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-pinecrest-trailers",
+      "title": "Pinecrest Trailers",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "luxury",
+        "editorial"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Trailer-and-tent boutique camp hotel: sand and cream, light serif 75px headline, mono caps labels, horizontal snap carousels.",
+      "tags": [
+        "stay",
+        "camping",
+        "carousel",
+        "sand",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-pinecrest-trailers",
+      "relativePath": "features/stay-pinecrest-trailers",
+      "previewUrl": "features/stay-pinecrest-trailers/index.html",
+      "thumb": "thumbs/stay-pinecrest-trailers.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-pitchwise",
+      "title": "Pitchwise",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "playful"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Campsite marketplace: centred search hero with photo mosaic, orange host band, round-cornered style cards.",
+      "tags": [
+        "stay",
+        "camping",
+        "marketplace",
+        "orange",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-pitchwise",
+      "relativePath": "features/stay-pitchwise",
+      "previewUrl": "features/stay-pitchwise/index.html",
+      "thumb": "thumbs/stay-pitchwise.webp",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,
@@ -21862,6 +23162,162 @@
       ]
     },
     {
+      "slug": "dental-quiet-co",
+      "title": "Quiet & Co",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Airy dental page: full-bleed hero with wide-tracked caps, split photo pair, three-column services, coral booking button. Latvian, slot-driven.",
+      "tags": [
+        "dental",
+        "airy",
+        "caps",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/dental-quiet-co",
+      "relativePath": "features/dental-quiet-co",
+      "previewUrl": "features/dental-quiet-co/index.html",
+      "thumb": "thumbs/dental-quiet-co.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-quietwood-cabins",
+      "title": "Quietwood Cabins",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "minimal",
+        "editorial"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Off-grid cabin brand: forest green, linen and mustard colour blocks, mono body, quiz callout, three-up reasons.",
+      "tags": [
+        "stay",
+        "cabins",
+        "off-grid",
+        "green",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-quietwood-cabins",
+      "relativePath": "features/stay-quietwood-cabins",
+      "previewUrl": "features/stay-quietwood-cabins/index.html",
+      "thumb": "thumbs/stay-quietwood-cabins.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "clinic-rootline",
+      "title": "Rootline",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Medical practice page: sand hero, ice strip, ruled service list with photo, teal two-step block, rounded photo strip. Latvian, slot-driven.",
+      "tags": [
+        "clinic",
+        "sand",
+        "teal",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/clinic-rootline",
+      "relativePath": "features/clinic-rootline",
+      "previewUrl": "features/clinic-rootline/index.html",
+      "thumb": "thumbs/clinic-rootline.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "service-capabilities-grid",
       "title": "Service Capabilities Grid",
       "category": "Cards & Tiles",
@@ -21912,6 +23368,371 @@
       "relativePath": "features/service-capabilities-grid",
       "previewUrl": "features/service-capabilities-grid/index.html",
       "thumb": "thumbs/service-capabilities-grid.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "dental-slatebond",
+      "title": "Slatebond",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "luxury",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Slate and tan dental page: full-screen hero with Cormorant lines, ruled service list, tan split panel, four-photo strip. Latvian, slot-driven.",
+      "tags": [
+        "dental",
+        "slate",
+        "tan",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/dental-slatebond",
+      "relativePath": "features/dental-slatebond",
+      "previewUrl": "features/dental-slatebond/index.html",
+      "thumb": "thumbs/dental-slatebond.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spa-solace-social-club",
+      "title": "Solace Social Wellness Club",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "dark",
+        "luxury"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Social wellness club site in warm greys on black: red-light hero with a reservation bar, ritual mosaic with slow image zoom, club tiles, carousel, press marquee and a glowing concierge pill.",
+      "tags": [
+        "wellness",
+        "club",
+        "luxury",
+        "dark",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-solace-social-club",
+      "relativePath": "features/spa-solace-social-club",
+      "previewUrl": "features/spa-solace-social-club/index.html",
+      "thumb": "thumbs/spa-solace-social-club.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spa-stillhouse-mono",
+      "title": "Stillhouse Monospace Bathhouse",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "dark",
+        "minimal"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "All-black monospace bathhouse site: booking bar on the hero, location cards that cross-fade a second photo on hover, offerings grid and an opening-hours arc with a sun that follows the clock.",
+      "tags": [
+        "bathhouse",
+        "monospace",
+        "dark",
+        "booking",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-stillhouse-mono",
+      "relativePath": "features/spa-stillhouse-mono",
+      "previewUrl": "features/spa-stillhouse-mono/index.html",
+      "thumb": "thumbs/spa-stillhouse-mono.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-sunnycamp",
+      "title": "Sunnycamp",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "playful",
+        "light"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Ready-pitched camping brand: sunshine yellow blocks, heavy italic Lato headlines, destination cards, steps, accordion FAQ.",
+      "tags": [
+        "stay",
+        "camping",
+        "yellow",
+        "faq",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-sunnycamp",
+      "relativePath": "features/stay-sunnycamp",
+      "previewUrl": "features/stay-sunnycamp/index.html",
+      "thumb": "thumbs/stay-sunnycamp.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "clinic-sunrise",
+      "title": "Sunrise",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "playful",
+        "light"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Family health centre page: sunshine header, split hero, navy statement block, paper service cards, yellow photo band. Latvian, slot-driven.",
+      "tags": [
+        "clinic",
+        "yellow",
+        "navy",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/clinic-sunrise",
+      "relativePath": "features/clinic-sunrise",
+      "previewUrl": "features/clinic-sunrise/index.html",
+      "thumb": "thumbs/clinic-sunrise.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "build-tamm-heavy-civil",
+      "title": "Tamm Heavy Civil",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "dark",
+        "editorial"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Heavy-civil contractor site in black and red: rotating hero messages with staggered fade-up, featured project strip, red email band, italic serif news heading.",
+      "tags": [
+        "civil",
+        "red",
+        "slider",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-tamm-heavy-civil",
+      "relativePath": "features/build-tamm-heavy-civil",
+      "previewUrl": "features/build-tamm-heavy-civil/index.html",
+      "thumb": "thumbs/build-tamm-heavy-civil.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "dental-tealwork",
+      "title": "Tealwork",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-16",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "White and teal boutique dental page: framed hero with caption card, caps serif headings, teal services band, three-photo strip. Latvian, slot-driven.",
+      "tags": [
+        "dental",
+        "teal",
+        "boutique",
+        "landing",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/dental-tealwork",
+      "relativePath": "features/dental-tealwork",
+      "previewUrl": "features/dental-tealwork/index.html",
+      "thumb": "thumbs/dental-tealwork.webp",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,
@@ -21990,6 +23811,162 @@
       ]
     },
     {
+      "slug": "build-teesdale",
+      "title": "Teesdale Infrastructure",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "futuristic"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Infrastructure group site in teal and lime: rotating hero messages with a progress bar and pause button, news rail, serif pull-quote band, pill buttons.",
+      "tags": [
+        "infrastructure",
+        "lime",
+        "pills",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-teesdale",
+      "relativePath": "features/build-teesdale",
+      "previewUrl": "features/build-teesdale/index.html",
+      "thumb": "thumbs/build-teesdale.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "spa-the-spring-club",
+      "title": "The Spring Wellness Club",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "minimal",
+        "light"
+      ],
+      "industry": [
+        "hospitality",
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Wellness club site in blush and brown ink: thin display serif, integrated three-card band, locations, card sliders for pillars and experts, fading testimonials and a brown footer.",
+      "tags": [
+        "wellness",
+        "club",
+        "serif",
+        "slider",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/spa-the-spring-club",
+      "relativePath": "features/spa-the-spring-club",
+      "previewUrl": "features/spa-the-spring-club/index.html",
+      "thumb": "thumbs/spa-the-spring-club.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-trailhead-parks",
+      "title": "Trailhead Parks",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "playful"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "National campground network: red and yellow, condensed Fjalla headings, tall photo hero with search, options grid, rewards band.",
+      "tags": [
+        "stay",
+        "campground",
+        "search",
+        "red",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-trailhead-parks",
+      "relativePath": "features/stay-trailhead-parks",
+      "previewUrl": "features/stay-trailhead-parks/index.html",
+      "thumb": "thumbs/stay-trailhead-parks.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
       "slug": "verified-review-carousel",
       "title": "Verified Review Carousel",
       "category": "3D & Carousels",
@@ -22040,6 +24017,109 @@
       "relativePath": "features/verified-review-carousel",
       "previewUrl": "features/verified-review-carousel/index.html",
       "thumb": "thumbs/verified-review-carousel.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "build-wexcombe",
+      "title": "Wexcombe Construction",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "general"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "Builder site in royal blue: 94px light headline over a blue-tinted hero, ice-blue news band, two-column featured projects, rotating colleague quotes, blue contact band.",
+      "tags": [
+        "builder",
+        "blue",
+        "testimonials",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/build-wexcombe",
+      "relativePath": "features/build-wexcombe",
+      "previewUrl": "features/build-wexcombe/index.html",
+      "thumb": "thumbs/build-wexcombe.webp",
+      "liveSiteUrl": null,
+      "adminUrl": null,
+      "sourceRepoPath": null,
+      "availableFiles": [
+        "combined",
+        "html",
+        "css",
+        "js"
+      ]
+    },
+    {
+      "slug": "stay-wildhut-camps",
+      "title": "Wildhut Camps",
+      "category": "Landing Pages",
+      "legacyCategory": null,
+      "status": "draft",
+      "mood": [
+        "light",
+        "minimal"
+      ],
+      "industry": [
+        "hospitality"
+      ],
+      "weight": "medium",
+      "access": "account",
+      "needsAssets": false,
+      "origin": {
+        "source": "edvlabs",
+        "license": "own"
+      },
+      "updatedAt": "2026-11-15",
+      "customizable": [],
+      "nativeWhen": [],
+      "ownPalette": true,
+      "exportAssets": [],
+      "source": "edvlabs",
+      "type": "component",
+      "description": "European camp network: deep green, search strip over hero, offer cards, map band with pulsing pins.",
+      "tags": [
+        "stay",
+        "camping",
+        "map",
+        "green",
+        "full-page"
+      ],
+      "dependencies": [
+        "Vanilla HTML/CSS/JS"
+      ],
+      "folderPath": "/home/edvins/features-for-web/web-for-options/features/stay-wildhut-camps",
+      "relativePath": "features/stay-wildhut-camps",
+      "previewUrl": "features/stay-wildhut-camps/index.html",
+      "thumb": "thumbs/stay-wildhut-camps.webp",
       "liveSiteUrl": null,
       "adminUrl": null,
       "sourceRepoPath": null,

@@ -1,0 +1,43 @@
+{
+  "slug": "clinic-rootline",
+  "title": "Rootline",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Medical practice page: sand hero, ice strip, ruled service list with photo, teal two-step block, rounded photo strip. Latvian, slot-driven.",
+  "tags": [
+    "clinic",
+    "sand",
+    "teal",
+    "landing",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "editorial"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-16",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of parsleyhealth.com (measured 2026-11-16); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Condensed:wght@600;700&display=swap");
+/* Layout study of a Washington-area builder at 1440px: royal blue #005eb8, navy ink #041c2c, ice blue #cde2ff, condensed caps nav, big 94px light-weight headline. */
+.wx { --blue: #005eb8; --ink: #041c2c; --ice: #cde2ff; --grey: #e8e8e8; --c: "Roboto Condensed", Arial, sans-serif; font-family: "Roboto", Arial, sans-serif; color: var(--ink); background: #fff; overflow-x: clip; }
+.wx *, .wx *::before, .wx *::after { box-sizing: border-box; }
+:where(.wx) h1, :where(.wx) h2, :where(.wx) h3, :where(.wx) p, :where(.wx) figure, :where(.wx) blockquote { margin: 0; font-weight: 400; }
+:where(.wx) a { color: inherit; text-decoration: none; }
+:where(.wx) img { display: block; }
+
+.wx-top { height: 102px; padding: 0 93px; display: flex; align-items: center; justify-content: space-between; background: #fff; }
+.wx-logo { font-family: var(--c); font-size: 30px; font-weight: 700; letter-spacing: 3px; color: var(--blue); }
+.wx-top nav { display: flex; gap: 34px; font-family: var(--c); font-size: 15.7px; font-weight: 700; text-transform: uppercase; } .wx-top nav a { padding-bottom: 4px; border-bottom: 3px solid transparent; transition: border-color .25s; } .wx-top nav a:hover { border-color: var(--blue); }
+
+.wx-hero { position: relative; height: 798px; background: var(--blue); color: #fff; } .wx-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: .8; }
+.wx-hero h1 { position: absolute; left: 93px; bottom: 120px; max-width: 760px; font-size: 94px; line-height: 112.9px; font-weight: 500; letter-spacing: -1px; animation: wx-in 1s ease both; } @keyframes wx-in { from { opacity: 0; transform: translateY(30px); } }
+
+.wx-news { background: var(--ice); padding: 0; min-height: 724px; } .wx-head { display: flex; align-items: baseline; justify-content: space-between; padding: 100px 93px 0; } .wx-head h2 { font-size: 39px; line-height: 49px; }
+.wx-link { font-family: var(--c); font-size: 16.7px; font-weight: 700; text-transform: uppercase; color: var(--blue); border-bottom: 2px solid var(--blue); }
+.wx-feat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 50px 93px 80px; } .wx-feat img { width: 100%; height: 280px; object-fit: cover; margin-bottom: 18px; } .wx-feat a { font-size: 18.6px; line-height: 28px; display: block; } .wx-feat a:hover { color: var(--blue); text-decoration: underline; }
+
+.wx-proj { padding: 94px 93px 120px; min-height: 2270px; } .wx-proj h2 { font-size: 39px; line-height: 49px; } .wx-sent { font-size: 34.3px; line-height: 44.6px; max-width: 900px; margin: 30px 0 80px; } .wx-sent strong { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 700; }
+.wx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 80px 60px; } .wx-grid img { width: 100%; height: 420px; object-fit: cover; transition: transform .5s ease; } .wx-grid a { display: block; overflow: hidden; } .wx-grid a:hover img { transform: scale(1.03); } .wx-grid span { display: block; font-family: var(--c); font-size: 19.6px; line-height: 24.5px; font-weight: 600; text-transform: uppercase; color: var(--blue); margin: 18px 0 8px; } .wx-grid p { font-size: 17.6px; line-height: 26.5px; max-width: 520px; }
+
+.wx-join { display: grid; grid-template-columns: 1.1fr 1fr; background: var(--blue); color: #fff; min-height: 761px; } .wx-quotes { position: relative; padding: 220px 90px 0 93px; } .wx-quotes figure { position: absolute; inset: 220px 90px auto 93px; opacity: 0; transform: translateX(20px); transition: opacity .6s ease, transform .6s ease; } .wx-quotes figure.is-on { opacity: 1; transform: none; }
+.wx-quotes blockquote { font-size: 21.6px; line-height: 32.3px; font-weight: 300; } .wx-quotes figcaption { font-family: var(--c); font-size: 17.6px; font-weight: 700; text-transform: uppercase; margin-top: 22px; }
+.wx-join-r { padding: 220px 93px 0 90px; } .wx-join-r h3 { font-size: 34.3px; line-height: 44.6px; max-width: 432px; margin-bottom: 36px; }
+.wx-btn { display: inline-block; padding: 19px 39px; background: #fff; color: var(--blue); font-family: var(--c); font-size: 15.7px; font-weight: 700; text-transform: uppercase; border: 2px solid #fff; transition: background-color .2s, color .2s; } .wx-btn:hover { background: transparent; color: #fff; } .wx-bl { background: var(--blue); color: #fff; border-color: var(--blue); } .wx-bl:hover { background: transparent; color: var(--blue); }
+
+.wx-act { background: var(--grey); display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 423px; } .wx-act div { padding-left: 156px; } .wx-act h3 { font-size: 34.3px; line-height: 44.6px; margin-bottom: 30px; } .wx-act img { width: 100%; height: 423px; object-fit: cover; }
+.wx-biz { display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 700px; } .wx-biz img { width: 100%; height: 100%; min-height: 560px; object-fit: cover; } .wx-biz div { padding: 0 156px 0 90px; } .wx-biz h2 { font-size: 39px; line-height: 49px; margin-bottom: 20px; } .wx-biz p { font-size: 17.6px; line-height: 26.5px; margin-bottom: 34px; max-width: 420px; } .wx-biz .wx-btn { background: var(--blue); color: #fff; border-color: var(--blue); } .wx-biz .wx-btn:hover { background: transparent; color: var(--blue); }
+.wx-cta { background: var(--blue); color: #fff; text-align: center; padding: 47px 0; min-height: 292px; } .wx-cta h2 { font-size: 39px; line-height: 49px; margin: 30px 0 40px; }
+.wx-foot { background: var(--grey); padding: 44px 93px; min-height: 197px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; font-size: 15.7px; } .wx-soc { display: flex; gap: 8px; } .wx-soc a { width: 40px; height: 40px; display: grid; place-items: center; background: var(--blue); color: #fff; font-family: var(--c); font-weight: 700; text-transform: uppercase; transition: background-color .2s; } .wx-soc a:hover { background: var(--ink); } .wx-foot p { grid-column: 1 / -1; font-size: 13px; color: #55606a; }
+
+.wx.js [data-r] { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; } .wx.js [data-r].in { opacity: 1; transform: none; }
+@media (max-width: 900px) { .wx-top { padding: 0 24px; } .wx-top nav { display: none; } .wx-hero h1 { left: 24px; right: 24px; font-size: 48px; line-height: 56px; } .wx-head, .wx-feat, .wx-proj { padding-left: 24px; padding-right: 24px; } .wx-feat, .wx-grid, .wx-join, .wx-act, .wx-biz { grid-template-columns: 1fr; } .wx-proj { min-height: 0; } .wx-sent { font-size: 24px; line-height: 32px; } .wx-grid img { height: 280px; } .wx-quotes { padding: 70px 24px 160px; } .wx-quotes figure { inset: 70px 24px auto 24px; } .wx-join-r { padding: 0 24px 60px; } .wx-act div { padding: 40px 24px; } .wx-biz div { padding: 40px 24px; } .wx-foot { padding: 30px 24px; } }
+@media (prefers-reduced-motion: reduce) { .wx *, .wx *::before, .wx *::after { animation: none !important; transition: none !important; } .wx.js [data-r] { opacity: 1; transform: none; } }

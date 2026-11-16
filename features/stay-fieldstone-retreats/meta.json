@@ -1,0 +1,43 @@
+{
+  "slug": "stay-fieldstone-retreats",
+  "title": "Fieldstone Retreats",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Luxury camping retreats: cream and olive, serif headlines, three hover-expanding experience panels, retreat carousel.",
+  "tags": [
+    "stay",
+    "camping",
+    "hover-panels",
+    "olive",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "luxury",
+    "editorial"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of collectiveretreats.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

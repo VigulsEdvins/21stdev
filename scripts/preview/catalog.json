@@ -1,0 +1,152 @@
+{
+  "industries": {
+    "buvnieciba": {
+      "native": [
+        "build-halvorsen-dale",
+        "build-ironvale",
+        "build-marlowe-hargrove",
+        "build-pellham-federal",
+        "build-granger-brothers",
+        "build-wexcombe",
+        "build-tamm-heavy-civil"
+      ],
+      "borrowed": [],
+      "pick": [
+        "build-halvorsen-dale",
+        "build-ironvale",
+        "build-marlowe-hargrove"
+      ]
+    },
+    "autoserviss": {
+      "native": [],
+      "borrowed": [
+        "build-ironvale",
+        "build-granger-brothers",
+        "build-teesdale"
+      ],
+      "pick": [
+        "build-ironvale",
+        "build-granger-brothers",
+        "build-teesdale"
+      ]
+    },
+    "skaistumkopsana": {
+      "native": [
+        "spa-stillhouse-mono",
+        "spa-kneaded-massage",
+        "spa-the-spring-club",
+        "spa-interlude-day-spa",
+        "spa-driftward-bathhouse",
+        "spa-kinetiq-robotic-massage",
+        "spa-solace-social-club",
+        "spa-kiulu-sauna"
+      ],
+      "borrowed": [],
+      "pick": [
+        "spa-stillhouse-mono",
+        "spa-kneaded-massage",
+        "spa-the-spring-club"
+      ]
+    },
+    "medicina": {
+      "native": [
+        "clinic-rootline",
+        "clinic-bloomwell",
+        "clinic-evergreen",
+        "clinic-sunrise",
+        "clinic-greenroom"
+      ],
+      "borrowed": [
+        "spa-stillhouse-mono",
+        "spa-nao-longevity",
+        "dental-mintline",
+        "spa-almenhof-medical"
+      ],
+      "pick": [
+        "clinic-rootline",
+        "clinic-bloomwell",
+        "clinic-evergreen"
+      ]
+    },
+    "zobarstnieciba": {
+      "native": [
+        "dental-mintline",
+        "dental-tealwork",
+        "dental-quiet-co",
+        "dental-hearthstone",
+        "dental-slatebond"
+      ],
+      "borrowed": [
+        "spa-stillhouse-mono",
+        "spa-nao-longevity",
+        "spa-almenhof-medical",
+        "spa-the-spring-club",
+        "clinic-greenroom"
+      ],
+      "pick": [
+        "dental-mintline",
+        "dental-tealwork",
+        "dental-quiet-co"
+      ]
+    },
+    "turisms": {
+      "native": [
+        "stay-lark-and-lantern",
+        "stay-hollow-cabins",
+        "stay-sunnycamp",
+        "stay-pinecrest-trailers",
+        "stay-fieldstone-retreats",
+        "stay-quietwood-cabins",
+        "stay-pitchwise",
+        "stay-wildhut-camps",
+        "stay-mesa-outpost",
+        "stay-trailhead-parks"
+      ],
+      "borrowed": [],
+      "pick": [
+        "stay-lark-and-lantern",
+        "stay-hollow-cabins",
+        "stay-sunnycamp"
+      ]
+    },
+    "tirdznieciba": {
+      "native": [],
+      "borrowed": [
+        "build-pellham-federal",
+        "build-norrland",
+        "build-kestrel-rowe"
+      ],
+      "pick": [
+        "build-pellham-federal",
+        "build-norrland",
+        "build-kestrel-rowe"
+      ]
+    },
+    "konsultacijas": {
+      "native": [],
+      "borrowed": [
+        "build-halvorsen-dale",
+        "build-marlowe-hargrove",
+        "build-pellham-federal"
+      ],
+      "pick": [
+        "build-halvorsen-dale",
+        "build-marlowe-hargrove",
+        "build-pellham-federal"
+      ]
+    },
+    "cita": {
+      "native": [],
+      "borrowed": [
+        "build-norrland",
+        "spa-the-spring-club",
+        "stay-sunnycamp"
+      ],
+      "pick": [
+        "build-norrland",
+        "spa-the-spring-club",
+        "stay-sunnycamp"
+      ]
+    }
+  }
+}

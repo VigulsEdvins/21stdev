@@ -1,0 +1,42 @@
+{
+  "slug": "build-wexcombe",
+  "title": "Wexcombe Construction",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Builder site in royal blue: 94px light headline over a blue-tinted hero, ice-blue news band, two-column featured projects, rotating colleague quotes, blue contact band.",
+  "tags": [
+    "builder",
+    "blue",
+    "testimonials",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of clarkconstruction.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

@@ -1,0 +1,44 @@
+{
+  "slug": "spa-solace-social-club",
+  "title": "Solace Social Wellness Club",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Social wellness club site in warm greys on black: red-light hero with a reservation bar, ritual mosaic with slow image zoom, club tiles, carousel, press marquee and a glowing concierge pill.",
+  "tags": [
+    "wellness",
+    "club",
+    "luxury",
+    "dark",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "dark",
+    "luxury"
+  ],
+  "industry": [
+    "hospitality",
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of remedyplace.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

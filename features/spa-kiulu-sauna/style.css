@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,700;1,100;1,200;1,500&display=swap");
+/* Layout study of a Helsinki-style sauna restaurant at 1440px: olive grey #989991, off-white #f8f4f4, thin geometric caps. */
+.ki { --olive: #989991; --nav: #7d7d7d; --paper: #f8f4f4; --f: "Jost", "Futura", Arial, sans-serif;
+  background: var(--olive); color: var(--paper); font-family: var(--f); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+.ki *, .ki *::before, .ki *::after { box-sizing: border-box; }
+:where(.ki) h2, :where(.ki) h3, :where(.ki) p, :where(.ki) figure, :where(.ki) blockquote { margin: 0; font-weight: 300; }
+:where(.ki) a { color: inherit; text-decoration: none; }
+:where(.ki) img { display: block; }
+
+/* nav: transparent 101px over the hero, then #7d7d7d and 77px (Webflow navbar) */
+.ki-nav { position: fixed; inset: 0 0 auto; z-index: 50; height: 101px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: transparent; transition: height .4s ease, background-color .4s ease; }
+.ki-nav.is-scrolled { height: 77px; background: var(--nav); }
+.ki-book { display: flex; align-items: center; gap: 8px; font-size: 16px; line-height: 24px; font-weight: 500; }
+.ki-book b { letter-spacing: 2px; font-weight: 700; margin-right: 6px; }
+.ki-book a { letter-spacing: 1px; text-transform: uppercase; text-decoration: underline; text-underline-offset: 4px; }
+.ki-logo { position: absolute; left: 50%; transform: translateX(-50%); font-size: 38px; font-weight: 200; letter-spacing: 8px; transition: font-size .4s ease, opacity .4s ease; }
+.ki-nav.is-scrolled .ki-logo { font-size: 22px; opacity: .55; }
+.ki-r { display: flex; align-items: center; gap: 26px; }
+.ki-lang { font-size: 19.2px; text-transform: uppercase; }
+.ki-burger { width: 28px; height: 22px; background: none; border: 0; padding: 0; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+.ki-burger span { height: 2px; background: var(--paper); transition: transform .35s ease, opacity .35s ease; }
+.ki-burger[aria-expanded=true] span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+.ki-burger[aria-expanded=true] span:nth-child(2) { opacity: 0; }
+.ki-burger[aria-expanded=true] span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+.ki-menu { position: fixed; inset: 0; z-index: 45; background: rgb(125 125 125 / .97); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; }
+.ki-menu[hidden] { display: none; }
+.ki-menu a { font-size: 28.8px; line-height: 43.2px; font-weight: 100; text-transform: uppercase; opacity: 0; transform: translateY(12px); animation: ki-in .5s ease forwards; transition: font-weight .2s; }
+.ki-menu a:hover { font-weight: 300; }
+.ki-menu a:nth-child(2) { animation-delay: .05s; } .ki-menu a:nth-child(3) { animation-delay: .1s; } .ki-menu a:nth-child(4) { animation-delay: .15s; } .ki-menu a:nth-child(5) { animation-delay: .2s; } .ki-menu a:nth-child(6) { animation-delay: .25s; } .ki-menu a:nth-child(7) { animation-delay: .3s; }
+@keyframes ki-in { to { opacity: 1; transform: none; } }
+
+.ki-hero { position: relative; height: 900px; overflow: hidden; }
+.ki-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ki-quote { position: absolute; left: 870px; top: 421px; width: 530px; padding: 16px 32px 32px 16px; text-align: right; }
+.ki-quote blockquote { font-size: 41.6px; line-height: 58.24px; font-weight: 100; font-style: italic; text-shadow: 0 1px 12px rgb(0 0 0 / .25); }
+.ki-quote figcaption { margin-top: 16px; display: flex; flex-direction: column; align-items: flex-end; }
+.ki-quote b { font-size: 30px; line-height: 32px; font-weight: 500; letter-spacing: 3px; }
+.ki-quote span { font-size: 16px; line-height: 24px; color: #000; }
+.ki-hours { position: absolute; left: 50%; top: 706px; transform: translateX(-50%); width: 594px; padding: 8px 16px; background: rgb(28 28 28 / .4); text-align: center; }
+.ki-hours p { font-size: 14.4px; line-height: 21.6px; font-weight: 500; text-transform: uppercase; }
+.ki-hours p span { letter-spacing: 1px; }
+.ki-hours i { font-style: normal; margin: 0 14px; }
+.ki-hours a { font-size: 16px; font-weight: 500; text-decoration: underline; }
+
+.ki-intro { padding: 128px 208px 128px; text-align: center; }
+.ki-mark { font-size: 52px; line-height: 61px; font-weight: 100; letter-spacing: 10px; }
+.ki-intro h2 { margin-top: 32px; font-size: 35.2px; line-height: 42.24px; font-weight: 400; text-transform: uppercase; }
+.ki-lead { max-width: 768px; margin: 32px auto 32px; font-size: 19.2px; line-height: 28.8px; font-weight: 200; }
+.ki-lead a { font-weight: 500; text-decoration: underline; }
+.ki-tiles { display: grid; grid-template-columns: repeat(3, 331px); justify-content: center; gap: 15px; }
+.ki-tile { position: relative; height: 218px; overflow: hidden; display: grid; place-items: center; }
+.ki-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.7); transition: transform .8s ease, filter .8s ease; }
+.ki-tile:hover img { transform: scale(1.08); filter: brightness(.55); }
+.ki-tile span { position: relative; font-size: 19.2px; line-height: 28.8px; font-weight: 500; text-transform: uppercase; padding-bottom: 18px; }
+.ki-tile span::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 24px; height: 13px; margin-left: -12px; background: linear-gradient(45deg, transparent 45%, var(--paper) 45% 55%, transparent 55%) left / 50% 100% no-repeat, linear-gradient(-45deg, transparent 45%, var(--paper) 45% 55%, transparent 55%) right / 50% 100% no-repeat; transition: transform .4s ease; }
+.ki-tile:hover span::after { transform: translateY(4px); }
+
+.ki-band { height: 384px; overflow: hidden; }
+.ki-band img { width: 100%; height: 130%; object-fit: cover; transform: translateY(var(--py, 0px)); will-change: transform; }
+
+.ki-news { padding: 128px 80px 116px; }
+.ki-news h2 { text-align: center; font-size: 28.8px; line-height: 34.56px; text-transform: uppercase; }
+.ki-cards { display: flex; gap: 32px; margin-top: 32px; }
+.ki-card { position: relative; width: 405px; height: 354px; border-bottom: 0; }
+.ki-card img { position: absolute; left: 40px; top: 0; width: 365px; height: 227px; object-fit: cover; border: 1px solid var(--paper); transition: transform .6s ease; }
+.ki-card:hover img { transform: translateY(-6px); }
+.ki-card div { position: absolute; left: 0; top: 196px; width: 365px; height: 158px; background: var(--paper); padding: 16px; }
+.ki-card small { display: block; font-size: 12.8px; line-height: 19.2px; font-weight: 300; color: #686666; }
+.ki-card h3 { margin-top: 8px; font-size: 22.4px; line-height: 29.12px; font-weight: 300; text-transform: uppercase; color: #1c1c1c; }
+
+.ki-foot { padding: 48px 80px 64px; text-align: center; }
+.ki-flogo { font-size: 46px; font-weight: 100; letter-spacing: 9px; }
+.ki-contacts { margin-top: 46px; font-size: 12.8px; line-height: 19.2px; font-weight: 200; font-style: italic; text-transform: uppercase; }
+.ki-contacts i { font-style: normal; margin: 0 22px; }
+.ki-foot hr { width: 210px; margin: 34px auto; border: 0; border-top: 1px solid rgb(248 244 244 / .5); }
+.ki-soc { display: flex; justify-content: center; gap: 16px; font-size: 15px; }
+.ki-copy { margin-top: 64px; font-size: 12.8px; line-height: 19.2px; font-weight: 200; font-style: italic; text-transform: uppercase; }
+.ki-copy a { font-weight: 500; margin: 0 40px; }
+
+@media (max-width: 1100px) {
+  .ki-nav { padding: 0 20px; } .ki-book a, .ki-book span { display: none; }
+  .ki-quote { left: auto; right: 0; width: 100%; } .ki-quote blockquote { font-size: 30px; line-height: 40px; }
+  .ki-hours { width: calc(100% - 32px); } .ki-hours i { display: block; height: 0; overflow: hidden; }
+  .ki-intro { padding: 96px 20px; } .ki-tiles { grid-template-columns: 1fr; }
+  .ki-news { padding: 96px 20px; } .ki-cards { flex-direction: column; align-items: center; }
+  .ki-card { width: 100%; max-width: 405px; }
+  .ki-contacts i { display: block; height: 4px; overflow: hidden; }
+}
+@media (prefers-reduced-motion: reduce) { .ki * { animation: none !important; transition: none !important; } .ki-menu a { opacity: 1; transform: none; } }

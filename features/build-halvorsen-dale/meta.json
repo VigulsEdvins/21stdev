@@ -1,0 +1,42 @@
+{
+  "slug": "build-halvorsen-dale",
+  "title": "Halvorsen & Dale Builders",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Large-project builder site in royal blue: full-bleed hero with a light headline and serif accent word, three path links, news mosaic, office panels, FAQ and blue contact footer.",
+  "tags": [
+    "builder",
+    "blue",
+    "news",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "minimal"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of turnerconstruction.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

@@ -1,0 +1,42 @@
+{
+  "slug": "build-tamm-heavy-civil",
+  "title": "Tamm Heavy Civil",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Heavy-civil contractor site in black and red: rotating hero messages with staggered fade-up, featured project strip, red email band, italic serif news heading.",
+  "tags": [
+    "civil",
+    "red",
+    "slider",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "dark",
+    "editorial"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of sundt.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

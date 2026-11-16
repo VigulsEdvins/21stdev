@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@400;500&family=Libre+Franklin:wght@400;500;800&display=swap");
+/* Layout study of a self-performing contractor at 1440px: slate #414042, blue #005b9c, white fixed 80px header, Bodoni display over a full-screen hero. */
+.kr { --ink: #414042; --blue: #005b9c; --grey: #e6e6e6; --b: "Libre Bodoni", "Bodoni 72", Georgia, serif; --f: "Libre Franklin", "Franklin Gothic", Arial, sans-serif; font-family: var(--f); color: var(--ink); background: #fff; overflow-x: clip; }
+.kr *, .kr *::before, .kr *::after { box-sizing: border-box; }
+:where(.kr) h1, :where(.kr) h2, :where(.kr) h3, :where(.kr) p, :where(.kr) ul { margin: 0; padding: 0; font-weight: 400; }
+:where(.kr) a { color: inherit; text-decoration: none; }
+:where(.kr) img { display: block; }
+:where(.kr) ul { list-style: none; }
+
+.kr-nav { position: fixed; inset: 0 0 auto; z-index: 20; height: 80px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; background: #fff; box-shadow: 0 1px 0 rgb(0 0 0 / .08); }
+.kr-logo { font-family: var(--b); font-size: 28px; letter-spacing: -.5px; } .kr-logo i { color: var(--blue); } .kr-nav nav { display: flex; gap: 34px; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: .4px; } .kr-nav nav a { border-bottom: 2px solid transparent; padding-bottom: 4px; transition: border-color .2s, color .2s; } .kr-nav nav a:hover { color: var(--blue); border-color: var(--blue); }
+.kr-menu { background: none; border: 0; font: 400 20px/30px var(--b); color: var(--ink); cursor: pointer; }
+
+.kr-hero { position: relative; height: 900px; padding-top: 80px; background: #85888c; color: #fff; overflow: hidden; }
+.kr-hero > img { position: absolute; inset: 80px 0 0; width: 100%; height: calc(100% - 80px); object-fit: cover; opacity: .7; }
+.kr-hero-in { position: absolute; left: 0; right: 0; top: 270px; text-align: center; padding: 0 40px; } .kr-hero h1 { font-family: var(--b); font-size: 96px; line-height: 96px; font-weight: 400; max-width: 1192px; margin: 0 auto; animation: kr-in 1s ease both; }
+.kr-hero-in > p { font-size: 24px; line-height: 36px; font-weight: 800; text-transform: uppercase; margin: 28px auto 34px; max-width: 760px; animation: kr-in 1s .15s ease both; }
+.kr-btn { display: inline-block; padding: 7px 32px; border: 1px solid #fff; border-radius: 4px; color: #fff; font-size: 18px; line-height: 27px; text-transform: uppercase; transition: background-color .2s, color .2s; animation: kr-in 1s .3s ease both; } .kr-btn:hover { background: #fff; color: var(--ink); } .kr-dk { border-color: var(--ink); color: var(--ink); } .kr-dk:hover { background: var(--ink); color: #fff; }
+@keyframes kr-in { from { opacity: 0; transform: translateY(24px); } }
+.kr-cookie { position: absolute; left: 0; right: 0; bottom: 0; background: rgb(255 255 255 / .95); color: var(--ink); font-size: 14px; line-height: 21px; padding: 14px 40px; animation: kr-slide 1s ease-out both; } @keyframes kr-slide { from { transform: translateY(100%); } }
+
+.kr-mission { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center; padding: 120px 40px 120px 120px; min-height: 900px; }
+.kr-core h2 { font-family: var(--b); font-size: 64px; line-height: 64px; letter-spacing: -1.6px; } .kr-core > p { font-size: 16px; line-height: 24px; margin: 28px 0 40px; max-width: 520px; }
+.kr-core li { display: grid; grid-template-columns: 120px 1fr; gap: 20px; align-items: baseline; padding: 20px 0; border-top: 1px solid #c9c9ca; transition: padding-left .3s ease; } .kr-core li:hover { padding-left: 14px; } .kr-core span { font-family: var(--b); font-size: 20px; line-height: 25px; } .kr-core strong { font-size: 16px; line-height: 24px; font-weight: 800; }
+.kr-mission > img { width: 100%; height: 640px; object-fit: cover; }
+
+.kr-build { background: var(--grey); padding: 100px 40px 120px; } .kr-tag { font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 40px; }
+.kr-mk { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; } .kr-mk img { width: 100%; height: 360px; object-fit: cover; margin-bottom: 18px; transition: filter .3s ease, transform .5s ease; } .kr-mk li:hover img { transform: translateY(-6px); } .kr-mk h3 { font-family: var(--b); font-size: 20px; line-height: 25px; } .kr-mk p { font-size: 14px; line-height: 21px; margin-top: 6px; }
+.kr-band { min-height: 480px; background: var(--blue); color: #fff; display: grid; place-items: center; text-align: center; } .kr-band h2 { font-family: var(--b); font-size: 64px; line-height: 64px; letter-spacing: -1.6px; max-width: 780px; margin-bottom: 36px; } .kr-band .kr-btn { border-color: #fff; color: #fff; } .kr-band .kr-btn:hover { background: #fff; color: var(--blue); }
+.kr-foot { background: #2b2a2c; color: #fff; padding: 70px 40px 50px; display: grid; gap: 28px; } .kr-foot b { font-family: var(--b); font-size: 30px; font-weight: 400; } .kr-foot nav { display: flex; gap: 26px; font-size: 14px; text-transform: uppercase; } .kr-foot a:hover { color: #8ec5ee; } .kr-foot p { font-size: 13px; color: #b3b3b4; }
+
+.kr.js [data-r] { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; } .kr.js [data-r].in { opacity: 1; transform: none; }
+@media (max-width: 900px) { .kr-nav { padding: 0 20px; } .kr-nav nav { display: none; } .kr-hero h1 { font-size: 48px; line-height: 50px; } .kr-hero-in { top: 200px; } .kr-hero-in > p { font-size: 16px; line-height: 24px; } .kr-mission { grid-template-columns: 1fr; padding: 60px 24px; min-height: 0; } .kr-core h2, .kr-band h2 { font-size: 38px; line-height: 40px; } .kr-core li { grid-template-columns: 1fr; gap: 4px; } .kr-mission > img { height: 360px; } .kr-build { padding: 60px 24px; } .kr-mk { grid-template-columns: 1fr 1fr; } .kr-mk img { height: 220px; } .kr-foot { padding: 50px 24px; } }
+@media (prefers-reduced-motion: reduce) { .kr *, .kr *::before, .kr *::after { animation: none !important; transition: none !important; } .kr.js [data-r] { opacity: 1; transform: none; } }

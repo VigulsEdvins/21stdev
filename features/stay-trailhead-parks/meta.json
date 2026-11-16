@@ -1,0 +1,43 @@
+{
+  "slug": "stay-trailhead-parks",
+  "title": "Trailhead Parks",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "National campground network: red and yellow, condensed Fjalla headings, tall photo hero with search, options grid, rewards band.",
+  "tags": [
+    "stay",
+    "campground",
+    "search",
+    "red",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "playful"
+  ],
+  "industry": [
+    "hospitality"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of koa.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiet &amp; Co | Zobārstniecība</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="qc">
+  <header class="qc-nav"><a class="qc-logo" href="#">Quiet &amp; Co</a><nav aria-label="Galvenā"><a href="#par">Par mums</a><a href="#pakalpojumi">Pakalpojumi</a><a href="#kontakti">Kontakti</a></nav></header>
+  <section class="qc-hero"><img src="/assets/library/spa-ph-sky.svg" alt="Klīnika"><h1 data-slot="tagline" data-fallback="name">Quiet &amp; Co</h1></section>
+  <section class="qc-about" id="par" data-need="about"><h2 data-r>Par mums</h2><p data-r data-slot="about">Ģimenes uzņēmums, kas par pacienta ērtībām rūpējas kopš pirmās vizītes.</p></section>
+  <section class="qc-split"><img data-r src="/assets/library/spa-ph-sand.svg" alt="Kabinets"><img data-r src="/assets/library/spa-ph-stone.svg" alt="Aprīkojums"></section>
+  <section class="qc-sv" id="pakalpojumi" data-need="services"><h2 data-r>Pakalpojumi</h2><ul>
+    <li data-card="service:1" data-r><h3 data-slot="service:1">Apskate un konsultācija</h3><p data-slot="serviceText:1">Skaidrs izklāsts par to, kā noris šis pakalpojums.</p></li>
+    <li data-card="service:2" data-r><h3 data-slot="service:2">Zobu ārstēšana</h3><p data-slot="serviceText:2">Ārsts izvērtē situāciju un piedāvā piemērotu risinājumu.</p></li>
+    <li data-card="service:3" data-r><h3 data-slot="service:3">Higiēna un profilakse</h3><p data-slot="serviceText:3">Laiks jautājumiem un saprotams turpmāko soļu plāns.</p></li>
+    <li data-card="service:4" data-r><h3 data-slot="service:4">Smaganu ārstēšana</h3><p data-slot="serviceText:4">Pieraksts pa tālruni vai e-pastā.</p></li>
+    <li data-card="service:5" data-r><h3 data-slot="service:5">Zobu ķirurģija</h3><p data-slot="serviceText:5">Izmeklējums klīnikā vienas vizītes laikā.</p></li>
+    <li data-card="service:6" data-r><h3 data-slot="service:6">Rentgens</h3><p data-slot="serviceText:6">Ieteikumi, kā saglabāt rezultātu mājās.</p></li>
+  </ul></section>
+  <section class="qc-book" id="kontakti"><h2 data-r>Pieraksts</h2><p data-r><a class="qc-btn" data-slot="phone" data-href="tel:">+371 20000000</a></p><ul data-r><li><span>Adrese</span> <i data-slot="address">Piemēra iela 1</i> <i data-slot="city">Rīga</i></li><li><span>E-pasts</span> <a data-slot="email" data-href="mailto:">info@piemers.lv</a></li><li data-need="hours"><span>Darba laiks</span> <i data-slot="hours">P–Pk 9:00–18:00</i></li></ul></section>
+  <footer class="qc-foot"><small>&copy; 2026 Quiet &amp; Co. Melnraksts.</small></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

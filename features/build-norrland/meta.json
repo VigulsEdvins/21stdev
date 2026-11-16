@@ -1,0 +1,42 @@
+{
+  "slug": "build-norrland",
+  "title": "Norrland Build",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Nordic builder US site in deep blue: floating frosted header, 97px extra-bold hero, offering cards, sticky story scroller with step dots, numbers band.",
+  "tags": [
+    "builder",
+    "sticky-scroll",
+    "blue",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "futuristic"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-15",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of skanska.com (measured 2026-11-15); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

@@ -1,0 +1,43 @@
+{
+  "slug": "clinic-greenroom",
+  "title": "Greenroom",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Primary care page: cream hero with large serif headline, mint comfort cards, rounded service tiles, deep green contact block. Latvian, slot-driven.",
+  "tags": [
+    "clinic",
+    "green",
+    "cream",
+    "landing",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "light",
+    "editorial"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-16",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of onemedical.com (measured 2026-11-16); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

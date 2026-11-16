@@ -1,0 +1,3 @@
+
+## Round 3: real information and photos (owner, 2026-11-15)
+See `web-for-options/docs/superpowers/plans/2026-11-15-client-previews.md`, "Round 4". Done: `client-facts.js` reads the zl.lv listing + gallery and Facebook/Instagram public pages; `make-preview.js` fills every placeholder picture from a photo pool and hides/blanks invented content in the four spa/medical templates; `stock.js` (Unsplash/Pexels key, Commons fallback). Open: the owner's free Unsplash or Pexels key (Commons photos are not good enough); invented content in the build/stay templates; JS-generated text in some templates stays English.

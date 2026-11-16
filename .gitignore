@@ -22,3 +22,8 @@ agentdb.rvf*
 dist/
 
 dist.tmp/
+
+# client design previews (name clients)
+previews/
+previews-src/
+scripts/preview/stock-keys.json

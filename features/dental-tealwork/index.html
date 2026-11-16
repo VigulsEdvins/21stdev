@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tealwork | Zobārstniecība</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="tw">
+  <header class="tw-nav"><a class="tw-logo" href="#">Tealwork</a><nav aria-label="Galvenā"><a href="#pakalpojumi">Pakalpojumi</a><a href="#par">Par mums</a><a href="#kontakti">Kontakti</a></nav></header>
+  <section class="tw-hero"><img src="/assets/library/spa-ph-water.svg" alt="Klīnika"><div><h1 data-slot="tagline" data-fallback="name">Tealwork</h1><a class="tw-btn" data-slot="phone" data-href="tel:">+371 20000000</a></div></section>
+  <section class="tw-about" id="par" data-need="about"><h2 data-r>Par mums</h2><p data-r data-slot="about">Ģimenes uzņēmums, kas par pacienta ērtībām rūpējas kopš pirmās vizītes.</p><img data-r src="/assets/library/spa-ph-sand.svg" alt="Kabinets"></section>
+  <section class="tw-teal" id="pakalpojumi" data-need="services"><h2 data-r>Pakalpojumi</h2><div>
+    <article data-card="service:1" data-r><h3 data-slot="service:1">Apskate un konsultācija</h3><p data-slot="serviceText:1">Skaidrs izklāsts par to, kā noris šis pakalpojums.</p></article>
+    <article data-card="service:2" data-r><h3 data-slot="service:2">Zobu ārstēšana</h3><p data-slot="serviceText:2">Ārsts izvērtē situāciju un piedāvā piemērotu risinājumu.</p></article>
+    <article data-card="service:3" data-r><h3 data-slot="service:3">Higiēna un profilakse</h3><p data-slot="serviceText:3">Laiks jautājumiem un saprotams turpmāko soļu plāns.</p></article>
+    <article data-card="service:4" data-r><h3 data-slot="service:4">Smaganu ārstēšana</h3><p data-slot="serviceText:4">Pieraksts pa tālruni vai e-pastā.</p></article>
+    <article data-card="service:5" data-r><h3 data-slot="service:5">Zobu ķirurģija</h3><p data-slot="serviceText:5">Izmeklējums klīnikā vienas vizītes laikā.</p></article>
+    <article data-card="service:6" data-r><h3 data-slot="service:6">Rentgens</h3><p data-slot="serviceText:6">Ieteikumi, kā saglabāt rezultātu mājās.</p></article>
+  </div></section>
+  <section class="tw-gal"><img data-r src="/assets/library/spa-ph-forest.svg" alt="Klīnika"><img data-r src="/assets/library/spa-ph-stone.svg" alt="Aprīkojums"><img data-r src="/assets/library/spa-ph-sky.svg" alt="Uzgaidāmā zona"></section>
+  <section class="tw-hours" data-need="hours"><h2 data-r>Darba laiks</h2><p data-r data-slot="hours">P–Pk 9:00–18:00</p></section>
+  <section class="tw-contact" id="kontakti"><h2 data-r>Kontakti</h2><p data-r><span data-slot="address">Piemēra iela 1</span> <span data-slot="city">Rīga</span></p><p data-r><a data-slot="phone" data-href="tel:">+371 20000000</a></p><p data-r><a data-slot="email" data-href="mailto:">info@piemers.lv</a></p></section>
+  <footer class="tw-foot"><b>Tealwork</b><small>&copy; 2026 Tealwork. Melnraksts.</small></footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

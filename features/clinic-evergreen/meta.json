@@ -1,0 +1,43 @@
+{
+  "slug": "clinic-evergreen",
+  "title": "Evergreen",
+  "category": "Landing Pages",
+  "source": "edvlabs",
+  "type": "component",
+  "description": "Care platform page: deep forest hero with 76px light serif, pine feature panel, white rounded service tiles, mint accents. Latvian, slot-driven.",
+  "tags": [
+    "clinic",
+    "forest",
+    "dark",
+    "landing",
+    "full-page"
+  ],
+  "dependencies": [
+    "Vanilla HTML/CSS/JS"
+  ],
+  "status": "draft",
+  "mood": [
+    "dark",
+    "luxury"
+  ],
+  "industry": [
+    "general"
+  ],
+  "weight": "medium",
+  "needsAssets": false,
+  "origin": {
+    "source": "edvlabs",
+    "license": "own"
+  },
+  "updatedAt": "2026-11-16",
+  "customizable": [],
+  "order": 999,
+  "ownPalette": true,
+  "palette": "designed",
+  "paletteNote": "Layout and motion study of mavenclinic.com (measured 2026-11-16); brand, copy, photos and fonts are original or free stand-ins.",
+  "tech": [
+    "CSS",
+    "Vanilla JS"
+  ],
+  "previewOnly": true
+}

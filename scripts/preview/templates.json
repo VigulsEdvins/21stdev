@@ -1,0 +1,592 @@
+{
+  "build-halvorsen-dale": {
+    "accent": "#0b5dd0",
+    "names": [
+      "Halvorsen & Dale",
+      "Halvorsen and Dale",
+      "Halvorsen un Dale"
+    ],
+    "strings": 56,
+    "slots": {
+      "service": [
+        12,
+        13,
+        14
+      ],
+      "about": [
+        27
+      ],
+      "city": [
+        26,
+        39
+      ],
+      "address": [
+        44
+      ]
+    }
+  },
+  "build-ironvale": {
+    "accent": "#f88900",
+    "names": [
+      "Ironvale"
+    ],
+    "strings": 78,
+    "slots": {
+      "tagline": [
+        10
+      ],
+      "about": [
+        14
+      ],
+      "service": [
+        7,
+        8,
+        9,
+        15,
+        17,
+        19,
+        21,
+        23
+      ]
+    }
+  },
+  "build-wexcombe": {
+    "accent": "#005eb8",
+    "names": [
+      "Wexcombe Construction",
+      "Wexcombe Group",
+      "Wexcombe"
+    ],
+    "strings": 64,
+    "slots": {
+      "tagline": [
+        8
+      ],
+      "service": [
+        18,
+        20,
+        22,
+        24,
+        26,
+        28
+      ],
+      "serviceText": [
+        19,
+        21,
+        23,
+        25,
+        27,
+        29
+      ]
+    }
+  },
+  "build-granger-brothers": {
+    "accent": "#dc1e35",
+    "names": [
+      "Granger Brothers",
+      "Granger Holdings",
+      "Granger"
+    ],
+    "strings": 71,
+    "slots": {
+      "about": [
+        20
+      ],
+      "service": [
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    }
+  },
+  "build-teesdale": {
+    "accent": "#005d99",
+    "names": [
+      "Teesdale"
+    ],
+    "strings": 50,
+    "slots": {
+      "tagline": [
+        8
+      ],
+      "about": [
+        9
+      ],
+      "service": [
+        11,
+        14
+      ],
+      "serviceText": [
+        12,
+        15
+      ]
+    }
+  },
+  "build-norrland": {
+    "accent": "#143275",
+    "names": [
+      "Norrland Build",
+      "Norrland"
+    ],
+    "strings": 60,
+    "slots": {
+      "about": [
+        13
+      ],
+      "service": [
+        14,
+        15,
+        17
+      ]
+    }
+  },
+  "build-pellham-federal": {
+    "accent": "#a61e2e",
+    "names": [
+      "Pellham Federal",
+      "Pellham"
+    ],
+    "strings": 62,
+    "slots": {
+      "tagline": [
+        8
+      ],
+      "about": [
+        9
+      ],
+      "service": [
+        11,
+        14,
+        17
+      ],
+      "serviceText": [
+        12,
+        15,
+        18
+      ]
+    }
+  },
+  "build-kestrel-rowe": {
+    "accent": "#005b9c",
+    "names": [
+      "Kestrel & Rowe",
+      "Kestrel and Rowe",
+      "Kestrel un Rowe",
+      "Kestrel <i>&amp;</i> Rowe"
+    ],
+    "strings": 46,
+    "slots": {
+      "tagline": [
+        9
+      ],
+      "about": [
+        10
+      ],
+      "service": [
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "serviceText": [
+        23,
+        25,
+        27,
+        29,
+        31
+      ]
+    }
+  },
+  "build-marlowe-hargrove": {
+    "accent": "#ee0018",
+    "names": [
+      "Marlowe Hargrove"
+    ],
+    "strings": 54,
+    "slots": {
+      "tagline": [
+        9
+      ],
+      "about": [
+        10
+      ],
+      "service": [
+        24,
+        25,
+        26,
+        27,
+        28
+      ]
+    }
+  },
+  "spa-the-spring-club": {
+    "accent": "#4d362b",
+    "names": [
+      "The Spring"
+    ],
+    "strings": 113,
+    "slots": {
+      "about": [
+        15
+      ],
+      "service": [
+        33,
+        35,
+        37,
+        39,
+        41,
+        43
+      ],
+      "serviceText": [
+        34,
+        36,
+        38,
+        40,
+        42,
+        44
+      ]
+    },
+    "hide": [
+      "section.ts-slider:not(.ts-sand)",
+      ".ts-quotes",
+      ".ts-locations"
+    ]
+  },
+  "spa-interlude-day-spa": {
+    "accent": "#ee7868",
+    "names": [
+      "(interlude)",
+      "interludespa"
+    ],
+    "strings": 90,
+    "slots": {
+      "tagline": [
+        12
+      ],
+      "about": [
+        14
+      ]
+    },
+    "lvFont": {
+      "from": "Fraunces",
+      "to": "Lora",
+      "import": "Lora:ital,wght@0,400;0,500;0,700;1,400"
+    }
+  },
+  "spa-kneaded-massage": {
+    "accent": "#8dd1d8",
+    "names": [
+      "Kneaded"
+    ],
+    "strings": 53,
+    "slots": {
+      "about": [
+        13
+      ]
+    }
+  },
+  "stay-sunnycamp": {
+    "accent": "#ffd129",
+    "strings": 56,
+    "slots": {
+      "tagline": [
+        7
+      ],
+      "about": [
+        8
+      ],
+      "service": [
+        12,
+        15,
+        17,
+        19,
+        21,
+        23
+      ],
+      "serviceText": [
+        13,
+        16,
+        18,
+        20,
+        22,
+        24
+      ]
+    }
+  },
+  "stay-hollow-cabins": {
+    "accent": "#67724d",
+    "names": [
+      "Hollow Cabins"
+    ],
+    "strings": 75,
+    "slots": {
+      "tagline": [
+        7
+      ],
+      "about": [
+        9
+      ],
+      "service": [
+        12,
+        14,
+        16,
+        18
+      ],
+      "serviceText": [
+        13,
+        15,
+        17,
+        19
+      ]
+    },
+    "lvFont": {
+      "from": "Fraunces",
+      "to": "Lora",
+      "import": "Lora:ital,wght@0,400;0,500;0,700;1,400"
+    }
+  },
+  "stay-lark-and-lantern": {
+    "accent": "#324f45",
+    "strings": 74,
+    "slots": {
+      "tagline": [
+        7
+      ],
+      "service": [
+        15,
+        18,
+        21,
+        24
+      ]
+    }
+  },
+  "spa-almenhof-medical": {
+    "names": [
+      "Almenhof"
+    ],
+    "strings": 105,
+    "slots": {
+      "about": [
+        11
+      ],
+      "service": [
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ]
+    },
+    "hide": [
+      "section:has(.ah-panel-top--awards)",
+      ".ah-places"
+    ]
+  },
+  "spa-nao-longevity": {
+    "names": [
+      "NAO"
+    ],
+    "strings": 129,
+    "slots": {
+      "about": [
+        7
+      ],
+      "service": [
+        28,
+        30,
+        32,
+        34
+      ],
+      "serviceText": [
+        29,
+        31,
+        33,
+        35
+      ],
+      "tagline": [
+        6
+      ],
+      "blank": [
+        5
+      ]
+    },
+    "hide": [
+      ".na-board",
+      ".na-voice",
+      ".na-team",
+      ".na-dest",
+      ".na-trust",
+      ".na-proof",
+      ".na-dark",
+      ".na-unique"
+    ]
+  },
+  "spa-stillhouse-mono": {
+    "names": [
+      "Stillhouse"
+    ],
+    "strings": 101,
+    "slots": {
+      "about": [
+        54
+      ],
+      "service": [
+        32,
+        34,
+        36,
+        38,
+        41,
+        43,
+        45
+      ],
+      "hours": [
+        62
+      ],
+      "email": [
+        75
+      ],
+      "address": [
+        21,
+        56
+      ],
+      "blank": [
+        1,
+        2,
+        14,
+        15,
+        16,
+        17,
+        18,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        33,
+        35,
+        37,
+        39,
+        47,
+        48,
+        57,
+        58,
+        59,
+        61,
+        72,
+        73,
+        74,
+        83
+      ],
+      "serviceText": [
+        42,
+        44,
+        46
+      ],
+      "ifHours": [
+        60
+      ]
+    },
+    "hide": [
+      ".sx-book",
+      ".sx-main > .sx-h2:first-child",
+      ".sx-grid3:has(.sx-loc-card)",
+      ".sx-hours",
+      ".sx-cols > div:nth-child(3) p:nth-of-type(n+2):nth-of-type(-n+4)"
+    ]
+  },
+  "dental-mintline": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#9ee5c8",
+    "names": [
+      "Mintline"
+    ]
+  },
+  "dental-tealwork": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#7bb1b2",
+    "names": [
+      "Tealwork"
+    ]
+  },
+  "dental-quiet-co": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#d64545",
+    "names": [
+      "Quiet & Co"
+    ]
+  },
+  "dental-hearthstone": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#c02b0a",
+    "names": [
+      "Hearthstone"
+    ]
+  },
+  "dental-slatebond": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#323d4f",
+    "names": [
+      "Slatebond"
+    ]
+  },
+  "clinic-greenroom": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#068466",
+    "names": [
+      "Greenroom"
+    ]
+  },
+  "clinic-rootline": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#284849",
+    "names": [
+      "Rootline"
+    ]
+  },
+  "clinic-bloomwell": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#831a4a",
+    "names": [
+      "Bloomwell"
+    ]
+  },
+  "clinic-evergreen": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#035748",
+    "names": [
+      "Evergreen"
+    ]
+  },
+  "clinic-sunrise": {
+    "lang": "lv",
+    "contact": false,
+    "accent": "#ffe664",
+    "names": [
+      "Sunrise"
+    ]
+  }
+}

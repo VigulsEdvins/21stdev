@@ -1,0 +1,278 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "features/spa-driftward-bathhouse/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.099Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "features/spa-driftward-bathhouse/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.116Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "organic-clip-path",
+        "value": "*",
+        "files": [
+          "features/spa-driftward-bathhouse/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.135Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "features/spa-driftward-bathhouse/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.153Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "features/spa-driftward-bathhouse/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.171Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          "features/spa-driftward-bathhouse/style.css"
+        ],
+        "createdAt": "2026-11-15T09:30:21.189Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          "features/spa-driftward-bathhouse/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.208Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "features/spa-kinetiq-robotic-massage/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.226Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "features/spa-kinetiq-robotic-massage/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.244Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "kicker-above-heading",
+        "value": "*",
+        "files": [
+          "features/spa-solace-social-club/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.262Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "pulsing-dot",
+        "value": "*",
+        "files": [
+          "features/spa-solace-social-club/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.281Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "features/spa-solace-social-club/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.299Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "features/spa-solace-social-club/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.318Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          "features/spa-solace-social-club/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.337Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "features/spa-solace-social-club/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.355Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "features/spa-nao-longevity/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.374Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "features/spa-nao-longevity/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.393Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          "features/spa-nao-longevity/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.412Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          "features/spa-nao-longevity/style.css"
+        ],
+        "createdAt": "2026-11-15T09:30:21.431Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          "features/spa-almenhof-medical/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.451Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "features/spa-almenhof-medical/index.html"
+        ],
+        "createdAt": "2026-11-15T09:30:21.469Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "features/spa-interlude-day-spa/index.html"
+        ],
+        "createdAt": "2026-11-15T11:33:09.739Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          "features/spa-interlude-day-spa/index.html"
+        ],
+        "createdAt": "2026-11-15T11:33:09.760Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          "features/spa-interlude-day-spa/style.css"
+        ],
+        "createdAt": "2026-11-15T11:33:09.780Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "features/spa-interlude-day-spa/index.html"
+        ],
+        "createdAt": "2026-11-15T11:33:09.800Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "features/spa-kneaded-massage/index.html"
+        ],
+        "createdAt": "2026-11-15T11:33:09.820Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "features/spa-kneaded-massage/index.html"
+        ],
+        "createdAt": "2026-11-15T11:33:09.839Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "*",
+        "files": [
+          "features/spa-kneaded-massage/style.css"
+        ],
+        "createdAt": "2026-11-15T11:33:09.858Z",
+        "reason": "Claude: deliberate small nudge on the Discover badge that invites scrolling; respects prefers-reduced-motion"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "features/spa-the-spring-club/index.html"
+        ],
+        "createdAt": "2026-11-15T11:33:09.877Z",
+        "reason": "Owner asked for an exact replica of the measured original (2026-11-15); this pattern is copied from it"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "features/spa-the-spring-club/index.html"
+        ],
+        "createdAt": "2026-11-15T11:33:09.897Z",
+        "reason": "Claude: false positive, THE SPRING is the logo wordmark beside an icon, not functional UI text"
+      }
+    ]
+  }
+}
